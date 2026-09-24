@@ -1,0 +1,43 @@
+{
+"sys_id":"9fdb37831b796d10a530426fe54bcb1a",
+"name":"Liberação de acesso de terceiros como solicitante na Plataforma de Atendimento Natura &Co",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Outros",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Liberar acesso de um terceiro de sua equipe à Plataforma de Atendimento Natura & Co",
+"description":"Completar as informações necessárias para liberar acesso de um terceiro de sua equipe à Plataforma de Atendimento Natura & Co",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de adicionar/remover membros em grupos. Faz só o mínimo: grava item com o sysparm_id da URL.",
+"variaveis":[
+{"name":"third_party_information","type":"32","order":200,"question_text":"Third party information"},
+{"name":"v_selecionar_usuario","type":"8","reference":"sys_user","reference_qual":"employee_number=Consultant^user_nameLIKE@avon.com^NQemployee_numberISEMPTY^user_nameLIKE@natura.net^user_nameLIKE.a^ORuser_nameLIKE.b^ORuser_nameLIKE.c^ORuser_nameLIKE.d^ORuser_nameLIKE.e^ORuser_nameLIKE.f^ORuser_nameLIKE.g^ORuser_nameLIKE.h^ORuser_nameLIKE.i^ORuser_nameLIKE.j^ORuser_nameLIKE.l^ORuser_nameLIKE.o^ORuser_nameLIKE.m^ORuser_nameLIKE.n^ORuser_nameLIKE.k^ORuser_nameLIKE.q^ORuser_nameLIKE.p^ORuser_nameLIKE.r^ORuser_nameLIKE.s^ORuser_nameLIKE.t^ORuser_nameLIKE.u^ORuser_nameLIKE.w^ORuser_nameLIKE.x^ORuser_nameLIKE.y^ORuser_nameLIKE.z^EQ","reference_qual_condition":"employee_number=Consultant^user_nameLIKE@avon.com^NQemployee_numberISEMPTY^user_nameLIKE@natura.net^user_nameLIKE.a^ORuser_nameLIKE.b^ORuser_nameLIKE.c^ORuser_nameLIKE.d^ORuser_nameLIKE.e^ORuser_nameLIKE.f^ORuser_nameLIKE.g^ORuser_nameLIKE.h^ORuser_nameLIKE.i^ORuser_nameLIKE.j^ORuser_nameLIKE.l^ORuser_nameLIKE.o^ORuser_nameLIKE.m^ORuser_nameLIKE.n^ORuser_nameLIKE.k^ORuser_nameLIKE.q^ORuser_nameLIKE.p^ORuser_nameLIKE.r^ORuser_nameLIKE.s^ORuser_nameLIKE.t^ORuser_nameLIKE.u^ORuser_nameLIKE.w^ORuser_nameLIKE.x^ORuser_nameLIKE.y^ORuser_nameLIKE.z^EQ","order":300,"question_text":"Select user"},
+{"name":"v_e_mail_do_terceiro","type":"6","order":400,"question_text":"Third party email (Natura/Avon/TBS corporate email)"},
+{"name":"v_nome_completo","type":"6","order":500,"question_text":"Full name"},
+{"name":"v_setor","type":"8","reference":"cmn_department","reference_qual":"u_status=active^EQ","reference_qual_condition":"u_status=active^EQ","order":700,"question_text":"Sector"},
+{"name":"v_centro_de_custo","type":"6","order":800,"question_text":"Cost center"},
+{"name":"v_local_de_trabalho","type":"8","reference":"cmn_location","reference_qual":"nameISNOTEMPTY^u_location_codeISNOTEMPTY^u_status=active^EQ","reference_qual_condition":"nameISNOTEMPTY^u_location_codeISNOTEMPTY^u_status=active^EQ","order":900,"question_text":"Location"},
+{"name":"v_id_do_terceiro_network_id","type":"6","order":1000,"question_text":"Third Party ID (Network ID)"},
+{"name":"v_cpf_do_terceiro","type":"6","order":1100,"question_text":"Third party's CPF"},
+{"name":"v_login_do_terceiro","type":"6","order":1200,"question_text":"Third party login","read_only":true},
+{"name":"v_cargo","type":"6","order":1300,"question_text":"Role"},
+{"name":"v_declaracao_de_veracidade","type":"7","order":1400,"question_text":"Statement of veracity"},
+{"name":"v_declaracao","type":"32","order":1500}
+],
+"ui_policies":[{"sys_id":"5fa404171bb96d10a530426fe54bcb1b","short_description":"EY: Read Only Fields","conditions":"","actions":["v_login_do_terceiro: readonly=true","v_opened_by: readonly=true"]},{"sys_id":"c20588171bb96d10a530426fe54bcb0f","short_description":"EY: Required Fields","conditions":"","actions":["vs_which_company: mandatory=true","v_selecionar_usuario: mandatory=true","v_cpf_do_terceiro: mandatory=true","v_centro_de_custo: mandatory=true","v_setor: mandatory=true","v_declaracao_de_veracidade: mandatory=true","v_nome_completo: mandatory=true","v_e_mail_do_terceiro: mandatory=true","v_local_de_trabalho: mandatory=true","v_id_do_terceiro_network_id: mandatory=true"]}],
+"client_scripts":[{"sys_id":"16c6ccd71bb96d10a530426fe54bcbde","name":"EY: Get Consultant informations","type":"onChange","cat_variable":"a31e7b0b1b796d10a530426fe54bcb6a","ui_type":"10","script":"Catalog Client Script onChange que busca as informações do consultor a partir do solicitante selecionado."},{"sys_id":"7ec7049b1bb96d10a530426fe54bcbf9","name":"EY: Get Manager Information","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que busca as informações do gestor a partir de 'v_opened_by'. Tem uma linha de depuração com alert comentada."},{"sys_id":"d567c05b1bb96d10a530426fe54bcbb6","name":"EY:EmailTerceiroErrorMessage","type":"onChange","cat_variable":"2f50005f1b796d10a530426fe54bcb15","ui_type":"10","script":"Catalog Client Script onChange de 1,7 KB que valida o e-mail de terceiro e monta a mensagem de erro correspondente."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Liberar acesso de terceiro à Plataforma de Atendimento",
+"short_description":"Gestores liberam um terceiro da equipe para abrir chamados na Plataforma de Atendimento Natura &Co.",
+"description":"Use se você é gestor e precisa que um terceiro (consultor ou prestador) da sua equipe consiga abrir solicitações na Plataforma de Atendimento Natura &Co. O terceiro já precisa ter e-mail corporativo Natura, Avon ou The Body Shop. Você escolhe o terceiro, confirma CPF e cargo e declara que as informações são verdadeiras. Não serve para dar acesso a grupos de atendimento do CSC nem a outros sistemas.",
+"frases_exemplo":["Preciso liberar um terceiro para abrir chamado no portal","Meu consultor não consegue abrir solicitação, como libero?","Dar acesso de solicitante para prestador da minha equipe","liberar terceiro na plataforma de atendimento","terceiro sem acesso ao portal de RH"],
+"labels":{"v_selecionar_usuario":"Qual terceiro você quer liberar? (nome ou e-mail corporativo)","v_cpf_do_terceiro":"Qual o CPF (Cadastro de Pessoa Física) do terceiro?","v_cargo":"Qual o cargo ou função do terceiro?","v_declaracao_de_veracidade":"Você confirma que as informações do terceiro são verdadeiras?"},
+"acoes":{"v_declaracao_de_veracidade":"alterar_tipo:Yes/No com Include None","v_e_mail_do_terceiro":"derivar","v_nome_completo":"derivar","v_setor":"derivar","v_centro_de_custo":"derivar","v_local_de_trabalho":"derivar","v_id_do_terceiro_network_id / v_login_do_terceiro":"derivar","third_party_information / v_declaracao":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Get Consultant informations","acao":"converter","substituicao":"Auto-populate nas variáveis derivadas."},{"nome":"EY: Get Manager Information","acao":"converter","substituicao":"v_opened_by com default gs.getUserID() e dados do gestor por auto-populate."},{"nome":"EY:EmailTerceiroErrorMessage","acao":"converter","substituicao":"Validation Regex de domínio corporativo em v_e_mail_do_terceiro."},{"nome":"EY: Required Fields","acao":"converter","substituicao":"Mandatory direto nas variáveis perguntadas."},{"nome":"EY: Read Only Fields","acao":"converter","substituicao":"Read-only direto em v_login_do_terceiro e v_opened_by."}]
+}
+}

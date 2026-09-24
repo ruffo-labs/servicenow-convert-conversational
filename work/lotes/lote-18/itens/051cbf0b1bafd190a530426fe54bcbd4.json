@@ -1,0 +1,37 @@
+{
+"sys_id":"051cbf0b1bafd190a530426fe54bcbd4",
+"name":"OurTalents",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Aprendizagem, Desenvolvimento e Desempenho",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"OurTalents é um momento colegiado, atuando de forma colaborativa e complementar para falar sobre o desenvolvimento de nossos talentos com foco no futuro",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_cont_start_ourtalents","type":"19","order":300,"question_text":"OurTalents"},{"name":"faq_text","type":"32","order":350,"question_text":"A resposta para sua dúvida sobre o processo pode estar disponível na FAQ, no portal na opção \"Base de Conhecimento\" ou pesquisando através da Lupa na Home temática."},{"name":"v_choose_request_type","type":"5","order":400,"question_text":"Choose request type","include_none":true,"choices":["Question about the OurTalents process","System error","General requests about OurTalents"]},{"name":"v_classify_request_type","type":"5","order":500,"question_text":"Classify the request type","include_none":true,"choices":["Other Requests","Report"]},{"name":"v_describe_your_need","type":"2","order":700,"question_text":"Describe your need in this field"},{"name":"v_attach_your_evidence","type":"33","order":800,"question_text":"Attach your evidence here"},{"name":"v_description_for_report","type":"2","order":900,"question_text":"Detail in the field below what information you need in this report and possible filters such as: Brand, Country, Management Level, Range, Position and Period."},{"name":"v_description_for_other","type":"2","order":950,"question_text":"Describe your need in this field"}],
+"ui_policies":[
+{"sys_id":"4c9680bf1bfb59d4d1abda4ce54bcbc7","short_description":"EY: Field description","conditions":"v_choose_request_type=Question about the OurTalents process^NQv_choose_request_type=System error","actions":["v_describe_your_need: visible=true,mandatory=true"]},
+{"sys_id":"6879b88a1bd45a50514cbaef4b4bcb27","short_description":"EY: Hide country in catalog item view ","conditions":"vs_country_of_the_request=","applies_catalog":false,"actions":["vs_country_of_the_request: visible=false,mandatory=false"]},
+{"sys_id":"d30384db1b231590a530426fe54bcb34","short_description":"EY: Mandatory fields","conditions":"","actions":["v_choose_request_type: visible=true,mandatory=true","v_choose_request_type: visible=true,mandatory=true"]},
+{"sys_id":"a46400531b631590a530426fe54bcbbf","short_description":"EY: Field attach if error","conditions":"v_choose_request_type=System error","actions":["v_attach_your_evidence: visible=true,mandatory=true"]},
+{"sys_id":"8b5cc1231baf1990d1abda4ce54bcbd9","short_description":"EY: If field classify type","conditions":"v_choose_request_type=General requests about OurTalents","actions":["v_classify_request_type: visible=true,mandatory=true"]},
+{"sys_id":"8564dd671b235990d1abda4ce54bcbbb","short_description":"EY: If classify is report","conditions":"v_choose_request_type=General requests about OurTalents^v_classify_request_type=Report","actions":["v_description_for_report: visible=true,mandatory=true"]},
+{"sys_id":"452691ef1b235990d1abda4ce54bcb5b","short_description":"EY: If classify is other","conditions":"v_choose_request_type=General requests about OurTalents^v_classify_request_type=Other Requests","actions":["v_description_for_other: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"109c768d1bc4d650514cbaef4b4bcbf3","name":"EY: Hide fields onLoad","type":"onLoad","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onLoad que esconde 'vs_country_of_the_request' e 'vs_kb_text' na abertura."},{"sys_id":"34a117311b581a50514cbaef4b4bcb63","name":"EY: Fill employee","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados do colaborador, limpando os campos quando o valor fica vazio."},{"sys_id":"924cf68d1bc4d650514cbaef4b4bcbcb","name":"EY: View fields Hispana","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que exibe os campos do fluxo hispânico conforme o colaborador selecionado em 'vs_employee'."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100},{"sys_id":"98a054933bff4e10924d0247f4e45ad8","title":"EY: Request Hispana","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Dúvida ou problema no OurTalents (comitê de talentos)",
+"short_description":"Dúvidas, erros de sistema, relatórios e outros pedidos sobre o OurTalents, o comitê de desenvolvimento de talentos.",
+"description":"O OurTalents é o momento colegiado em que os líderes discutem o desenvolvimento e o futuro dos talentos (comitê de talentos, potencial, sucessão). Use este item para dúvidas sobre o processo, erro no sistema, pedido de relatório (por marca, país, nível, faixa, cargo, período) ou outros pedidos relacionados. Não use para metas e avaliação de desempenho: para isso use o item do MyPerformance.",
+"frases_exemplo":["dúvida sobre o comitê de talentos OurTalents","preciso de um relatório do OurTalents da minha área","erro no sistema do OurTalents","como funciona a avaliação de potencial?","quando acontece o comitê de talentos?"],
+"labels":{"v_choose_request_type":"O que você precisa: tirar uma dúvida, relatar um erro no sistema, pedir um relatório ou outra coisa?","v_describe_your_need":"Descreva o que você precisa. Se for relatório, diga quais informações e filtros (marca, país, nível, faixa, cargo, período).","v_attach_your_evidence":"Envie um print da tela com o erro."},
+"acoes":{"v_choose_request_type":"alterar_tipo:Selecionar Caixa com opções achatadas: Dúvida sobre o processo, Erro no sistema, Relatório, Outro pedido","v_classify_request_type":"remover","v_description_for_report":"remover","v_description_for_other":"remover","faq_text":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: If classify is other / EY: If classify is report / EY: If field classify type","acao":"remover","substituicao":"Desnecessárias com a select achatada e a descrição única."},{"nome":"EY: Field description","acao":"converter","substituicao":"mandatory direto em v_describe_your_need. A condição atual usa NQ (OR) de forma confusa."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"mandatory direto em v_choose_request_type. A ação sobre 'choose_request_type' aponta para uma variável inexistente: remover."},{"nome":"EY: Field attach if error","acao":"manter","substituicao":"Policy sem script, VA Supported."}]
+}
+}

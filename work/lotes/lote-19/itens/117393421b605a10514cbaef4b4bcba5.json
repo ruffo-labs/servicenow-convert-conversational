@@ -1,0 +1,29 @@
+{
+"sys_id":"117393421b605a10514cbaef4b4bcba5",
+"name":"Solicitação de apólice de seguro / seguro de vida",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Política/ Seguro de vida",
+"sc_catalogs":"Catálogo hispânico, Hire to Retire (HTR)",
+"short_description":"Use este formulário para fazer solicitações relacionadas ao registro e/ou modificação do serviço.",
+"description":"Use este formulário para fazer solicitações relacionadas ao registro e/ou modificação do serviço.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+"variaveis":[{"name":"v_type_of_request","type":"5","order":101,"question_text":"Type of request","include_none":true,"choices":["High Benefit [=high_benefit]","Coverage Modification [=coverage_modification]","Modification Beneficiaries [=modification_beneficiaries]"]},{"name":"FAQs","type":"32","order":200},{"name":"v_legend_two_arg_avon","type":"32","order":300},{"name":"v_legend_two_arg_new","type":"32","order":300},{"name":"v_legent_two_peru","type":"32","order":310},{"name":"v_legent_two_chile","type":"32","order":320},{"name":"v_life_insurance_form","type":"33","order":400,"question_text":"Life Insurance Form"},{"name":"v_checkbox_contractual","type":"7","order":500,"question_text":"I declare that I have prior and express knowledge of the contractual terms and conditions of the request made."},{"name":"v_legend_document","type":"32","order":600}],
+"ui_policies":[{"sys_id":"19a3ab861be05a10514cbaef4b4bcb95","short_description":"EY: Mandatory variables","conditions":"","actions":["v_life_insurance_form: visible=true,mandatory=true","v_checkbox_contractual: visible=true,mandatory=true","v_type_of_request: visible=true,mandatory=true"]},{"sys_id":"365405ea1b2cda10514cbaef4b4bcb81","short_description":"EY : Show Forms PER","conditions":"v_country=PER","actions":["v_legent_two_peru: visible=true"]},{"sys_id":"ece305ea1b2cda10514cbaef4b4bcb00","short_description":"EY : Show Forms CHI","conditions":"v_countrySTARTSWITHCHL","actions":["v_legent_two_chile: visible=true"]}],
+"client_scripts":[{"sys_id":"af9cf5eb3be55610924d0247f4e45a6b","name":"EY : Show Forms ARG","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"10","script":"Catalog Client Script onChange que decide quais formulários exibir para usuários da Argentina. Chama o Script Include EYHispanic_Employee_Information, método getUserInformation, via GlideAjax, e usa os dados do colaborador retornados para mostrar ou esconder blocos do formulário."},{"sys_id":"fc520e273b295610924d0247f4e45aea","name":"EY : Show Forms ARG","type":"onLoad","ui_type":"10","script":"Versão onLoad do script anterior. Sai cedo se 'v_employee' estiver vazio, senão faz a mesma chamada a EYHispanic_Employee_Information.getUserInformation para montar o formulário já no estado correto na abertura."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Aderir ou alterar seguro de vida",
+"short_description":"Faça adesão ou altere beneficiários do seu seguro de vida (Argentina, Chile e Peru).",
+"description":"Use para aderir ao seguro de vida ou alterar a apólice, como a troca de beneficiários, se você trabalha na Argentina, no Chile ou no Peru. Baixe o formulário de seguro de vida do seu país (link no artigo de KB), preencha e anexe no final. Não use para plano de saúde, EPS ou seguro complementar de saúde e odontológico, que têm itens próprios.",
+"frases_exemplo":["Quero aderir ao seguro de vida","Preciso trocar os beneficiários do meu seguro de vida","Como altero minha apólice?","seguro de vida alta","cambio de beneficiarios del seguro"],
+"labels":{"v_type_of_request":"Você quer aderir ao seguro de vida ou alterar sua apólice?","v_checkbox_contractual":"Você declara conhecer os termos e condições do contrato desse pedido?","v_life_insurance_form":"Anexe o formulário de seguro de vida preenchido."},
+"acoes":{"v_checkbox_contractual":"alterar_tipo:Yes/No com Include None","v_life_insurance_form":"alterar_tipo:Anexo do record producer","FAQs / v_legend_two_arg_avon / v_legend_two_arg_new / v_legent_two_peru / v_legent_two_chile / v_legend_document":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY : Show Forms ARG (onChange e onLoad)","acao":"remover","substituicao":"KB por país."},{"nome":"EY : Show Forms PER / EY : Show Forms CHI","acao":"remover","substituicao":"Legendas saem do item."},{"nome":"EY: Mandatory variables","acao":"converter","substituicao":"Mandatory direto nas variáveis; anexo obrigatório no record producer."}]
+}
+}

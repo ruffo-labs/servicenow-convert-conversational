@@ -1,0 +1,10 @@
+{
+"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8",
+"title":"EY: Tax - Company Avon/Natura - Subcompany",
+"internal_name":"ey_tax_company_avon_natura_subcompany",
+"order":100,
+"description":"",
+"variaveis":[{"name":"vs_which_company_is_your_request","type":"5","order":100,"question_text":"Which company is your request for?","include_none":true,"choices":["Avon [=AVON Latam]","Natura"]},{"name":"vs_which_sub_company_is_the_request_from","type":"8","reference":"core_company","reference_qual":"javascript:'u_brand='+current.variables.vs_which_company_is_your_request","reference_qual_condition":"u_source_systemISNOTEMPTY^EQ","order":200,"question_text":"Which sub-company is the request from?","include_none":true,"choices":["Branches [=vs_branches]","Avon [=vs_avon]","Natura [=vs_natura]"]}],
+"ui_policies":[{"sys_id":"efb165331b3cf510d1abda4ce54bcbd4","short_description":"EY: Mandatory Fields","conditions":"","actions":["vs_which_company_is_your_request: mandatory=true","vs_which_sub_company_is_the_request_from: mandatory=true"]}],
+"client_scripts":[{"sys_id":"2fd2bb7387e00b90ec360e530cbb351e","name":"EY: If company is 7900","type":"onChange","cat_variable":"ed469ffa1bb0f110d1abda4ce54bcbfd","ui_type":"10","script":"Catalog Client Script onChange que trata a empresa 7900. Compara o sys_id do formulário e a sub-empresa com valores fixos: na combinação específica de emissão de nota de retorno, esconde e desobriga 'vs_which_company_do_you_want_to_ship_to'; nos demais casos exibe e torna obrigatório. Regras cravadas por sys_id."},{"sys_id":"fec5dd741b0dbd10a530426fe54bcbd1","name":"EY: Clear subcompany","type":"onChange","cat_variable":"47a391701b0dbd10a530426fe54bcb5d","ui_type":"10","script":"Catalog Client Script onChange que limpa 'vs_which_sub_company_is_the_request_from' quando o campo anterior muda. Variante do mesmo padrão, sobre a variável do variable set."}]
+}

@@ -1,0 +1,19 @@
+{
+"sys_id":"5061c7c41b21a590a530426fe54bcb8a",
+"name":"Envio De Informações de Fechamento Contábil",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Envio de arquivos para o fechamento contábil",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Envie o arquivo necessário para a atividade de fechamento contábil",
+"description":"Envie o arquivo necessário para a atividade de fechamento contábil",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a19307841ba1a590a530426fe54bcb72","title":"EY VS - Envio De Informações de Fechamento Contábil ","order":200}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Enviar arquivo para o fechamento contábil","short_description":"Envie à Contabilidade o arquivo pedido para o fechamento contábil do mês","description":"Use para enviar à Contabilidade um arquivo ou informação exigido no fechamento contábil mensal (por exemplo, relatório de provisões, posição de estoque ou controles da sua área). Você vai descrever o que está enviando e anexar o arquivo. Não use para pedir lançamentos específicos como apropriação, reclassificação ou ajuste de inventário: esses têm itens próprios.","frases_exemplo":["enviar arquivo do fechamento contábil","mandar o relatório do fechamento do mês","a contabilidade pediu a planilha de fechamento","entregar informação para o fechamento","onde envio o arquivo do fechamento?"],"labels":{"v_describe_the_information_you_need":"Qual arquivo ou informação você está enviando e de qual período?"},"acoes":{"v_attach_file":"remover"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory (set Fechamento Contábil)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só a descrição; anexo vira \"Mandatory attachment\"."},{"nome":"EY: Read-Only (set Fechamento Contábil)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]}
+}

@@ -1,0 +1,10 @@
+{
+"sys_id":"55e3c9e887837a10017d65790cbb35d4",
+"title":"EY: Requester Info",
+"internal_name":"ey_requester_info",
+"order":100,
+"description":"",
+"variaveis":[{"name":"opened_by","type":"8","reference":"sys_user","default_value":"javascript: gs.getUserID();","order":50,"question_text":"Opened By","read_only":true,"include_none":true},{"name":"request_for_who","type":"5","reference":"x_nasm_hr_profile","order":100,"question_text":"Request for who?","include_none":true,"choices":["For me [=me]","Another collaborator [=another]"]},{"name":"employee","type":"8","reference":"x_nasm_hr_profile","order":200,"question_text":"Employee's name","include_none":true}],
+"ui_policies":[{"sys_id":"03977d248787ba10017d65790cbb3525","short_description":"EY: Requested for me","conditions":"request_for_who=me","actions":["employee: visible=true,readonly=true"]},{"sys_id":"b42731ec8747ba10017d65790cbb35a9","short_description":"EY: Requested for who","conditions":"request_for_who=another","actions":["employee: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"d90971a087c7ba10017d65790cbb35bf","name":"EY: Request for who Control","type":"onChange","cat_variable":"6ff34d2c87837a10017d65790cbb3597","ui_type":"10","script":"Catalog Client Script onChange sobre 'para quem é a solicitação'. Se o valor for 'me', chama o Script Include EY_HTRUtils, método getHRProfile, via GlideAjax, passando o sys_id do usuário logado; o retorno vem em JSON e o campo sysId da resposta é gravado na variável 'employee'. Se o valor for 'another', limpa 'employee' para o usuário informar outra pessoa."}]
+}

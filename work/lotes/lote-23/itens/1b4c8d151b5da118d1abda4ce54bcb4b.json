@@ -1,0 +1,36 @@
+{
+"sys_id":"1b4c8d151b5da118d1abda4ce54bcb4b",
+"name":"Solicitação de acesso ao portal GED",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Outros Serviços",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Formulário para Solicitar acesso ao portal GED",
+"description":"Formulário para Solicitar acesso ao portal GED",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+"variaveis":[{"name":"registration_number","type":"6","order":100,"question_text":"Registration number (plate number)"},{"name":"email","type":"6","order":200,"question_text":"E-mail"},{"name":"phone_number","type":"6","order":300,"question_text":"Phone Number"},{"name":"full_name","type":"6","order":400,"question_text":"Full name"},{"name":"model_users_mirror","type":"5","order":500,"question_text":"Model users to mirror?","include_none":true,"choices":["Yes [=yes]","No [=no]"]},{"name":"name_user_mirrored","type":"6","order":600,"question_text":"Enter the username to be mirrored"},{"name":"email_user_mirrored","type":"6","order":700,"question_text":"Enter the email of the user to be mirrored"},{"name":"type_of_access","type":"5","order":800,"question_text":"What type of access?","include_none":true,"choices":["Maintenance [=maintenance]","Law Suit [=law_suit]","Reports [=reports]","Users [=users]"]},{"name":"inclua_as_ilhas_necessarias","type":"16","order":905,"question_text":"Qual a ilha solicitada?"},{"name":"attachment_approval","type":"33","order":1000,"question_text":"Approval (copy of the manager's email approving)"}],
+"ui_policies":[
+{"sys_id":"0013a1dd1b55e118d1abda4ce54bcb0e","short_description":"EY: Read Only/Visible Fields in Target view - Model User Mirror = No","conditions":"model_users_mirror=no","applies_catalog":false,"actions":["inclua_as_ilhas_necessarias: visible=true,readonly=true","type_of_access: visible=true,readonly=true"]},
+{"sys_id":"4033eddd1b55e118d1abda4ce54bcbd6","short_description":"EY: Read Only Fields in Target View","conditions":"","applies_catalog":false,"actions":["full_name: readonly=true","registration_number: readonly=true","attachment_approval: readonly=true","email: readonly=true","phone_number: readonly=true","model_users_mirror: readonly=true"]},
+{"sys_id":"846225d91b55e118d1abda4ce54bcbc8","short_description":"EY: Mandatory Fields in Service Portal - Model User Mirror = Yes","conditions":"model_users_mirror=yes","actions":["name_user_mirrored: visible=true,mandatory=true","email_user_mirrored: visible=true,mandatory=true"]},
+{"sys_id":"92d16d191b55e118d1abda4ce54bcb49","short_description":"EY: Mandatory Fields in Service Portal","conditions":"","actions":["attachment_approval: mandatory=true","email: mandatory=true","model_users_mirror: mandatory=true","registration_number: mandatory=true","phone_number: mandatory=true","full_name: mandatory=true"]},
+{"sys_id":"b1b2291d1b55e118d1abda4ce54bcb18","short_description":"EY: Mandatory Fields in Service Portal - Model User Mirror = No","conditions":"model_users_mirror=no","actions":["inclua_as_ilhas_necessarias: visible=true,mandatory=true","type_of_access: visible=true,mandatory=true"]},
+{"sys_id":"e8f2659d1b55e118d1abda4ce54bcbf5","short_description":"EY: Read Only/Visible Fields in Target view - Model User Mirror = Yes","conditions":"model_users_mirror=yes","applies_catalog":false,"actions":["name_user_mirrored: visible=true,readonly=true","email_user_mirrored: visible=true,readonly=true"]}
+],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar acesso ao portal GED (Gestão Eletrônica de Documentos)",
+"short_description":"Pedir acesso ao portal GED de Gestão Eletrônica de Documentos, espelhando um usuário modelo ou escolhendo tipo de acesso e ilha",
+"description":"Use para pedir acesso ao portal GED (Gestão Eletrônica de Documentos) usado pelo HUB de Pagamentos. Você pode copiar o perfil de um usuário modelo (informando nome e e-mail dele) ou indicar o tipo de acesso e a ilha de trabalho. É necessário anexar o e-mail do seu gestor aprovando o acesso. Não use para acesso a outros sistemas (SAP, Coupa, Ariba) nem para dúvidas sobre documentos ou pagamentos.",
+"frases_exemplo":["preciso de acesso ao GED","quero acesso ao portal de gestão eletrônica de documentos","liberar GED igual ao do meu colega","não tenho acesso ao portal GED","acesso ao GED para a ilha de fornecedores"],
+"labels":{"model_users_mirror":"Você quer o mesmo acesso de um colega (usuário modelo)?","name_user_mirrored":"Qual colega devemos usar como modelo?","type_of_access":"Que tipo de acesso você precisa?","inclua_as_ilhas_necessarias":"Para qual ilha de trabalho é o acesso?","attachment_approval":"Anexe o e-mail do seu gestor aprovando o acesso."},
+"acoes":{"name_user_mirrored":"alterar_tipo:Reference (sys_user)","email_user_mirrored":"derivar","full_name":"derivar","email":"derivar","registration_number":"derivar","phone_number":"derivar"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory Fields in Service Portal","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"EY: Mandatory Fields in Service Portal - Model User Mirror = Yes / = No","acao":"manter","substituicao":"Policies sem script, compatíveis; remover a ação sobre requested_island."},{"nome":"EY: Read Only Fields in Target View / Read Only/Visible Fields in Target view (Yes/No)","acao":"manter","substituicao":"Só na visão do caso."}]
+}
+}

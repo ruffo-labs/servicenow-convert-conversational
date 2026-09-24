@@ -1,0 +1,9 @@
+{
+ "sys_id": "2bedd8701be16950d1abda4ce54bcbc6",
+ "status": "analise_humana",
+ "criterio": "formulario_complexo",
+ "motivo": "O item usa a variable set 'EY VS - Empresas Natura', que traz 8 variantes quase idênticas de sub-empresa (vs_which_sub_company e vs_which_sub_company_2 a _8), cada uma com reference_qual dinâmico e um client script onChange irmão. A visibilidade da variante correta para cada produtor é decidida por um script onLoad ('Set Variables Subcompanies Visible') que compara o sys_id do formulário contra listas fixas de record producers, cujo código completo não temos acesso. Sem essa lógica não é seguro determinar qual variante mostrar (ou ocultar) sem risco de perda de dado ou de repetir a mesma pergunta 8 vezes; a 1ª análise não tratou nenhuma dessas variáveis (nem vs_which_company, called_area, called_area_others, v_country).",
+ "divergencias": [
+  "erro_1a_analise"
+ ]
+}

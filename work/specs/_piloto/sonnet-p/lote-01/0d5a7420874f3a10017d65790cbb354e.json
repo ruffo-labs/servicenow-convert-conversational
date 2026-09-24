@@ -1,0 +1,91 @@
+{
+ "sys_id": "0d5a7420874f3a10017d65790cbb354e",
+ "status": "dividido",
+ "motivo": "O item cobre três intenções distintas (mapear, desmapear e solicitar relatório/certificado de treinamento de NR), cada uma com perguntas próprias, por isso foi dividido conforme a 1ª análise. A unificação do modo de mapeamento num List Collector de colaboradores, sugerida na 1ª análise, exigiria alterar uma variável de variable set compartilhado, o que o formato não permite; mantivemos a variável como está (colaborador único). Variáveis dos variable sets (Requester Info, Training Info, Training Info M2M, Additional information) não têm o label alterado por serem compartilhadas entre itens.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "select_which_trainings_should_be_mapped": {
+   "label": "Qual treinamento de NR você quer mapear?",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "label_training": "visual",
+  "label_training_2": "visual",
+  "label_training_3": "visual"
+ },
+ "policies": {
+  "f63475208747ba10017d65790cbb3599": "remover",
+  "fe152795879bf610ec360e530cbb357d": "remover",
+  "ba2902e4878fba10017d65790cbb35e6": "remover",
+  "9f2235648707ba10017d65790cbb35cd": "remover",
+  "e81539648747ba10017d65790cbb3533": {
+   "conditions": "",
+   "actions": {
+    "request_for_who": {
+     "visible": true,
+     "mandatory": true
+    },
+    "employee": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "61a80ae0878fba10017d65790cbb3566": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "what_is_the_request": "solicitacao_mapeamento",
+    "select_mapping_type": "1"
+   },
+   "sem_sets": [
+    "55e3c9e887837a10017d65790cbb35d4",
+    "778c8dac87877a10017d65790cbb35dd"
+   ],
+   "sem_policies": [
+    "e81539648747ba10017d65790cbb3533"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "what_is_the_request": "solicitacao_desmapeamento"
+   },
+   "sem_sets": [
+    "55e3c9e887837a10017d65790cbb35d4",
+    "e429096887477a10017d65790cbb35ae"
+   ],
+   "sem_vars": [
+    "select_mapping_type",
+    "select_which_trainings_should_be_mapped"
+   ],
+   "sem_policies": [
+    "e81539648747ba10017d65790cbb3533"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "what_is_the_request": "solicitacao_relatorios"
+   },
+   "sem_sets": [
+    "e429096887477a10017d65790cbb35ae",
+    "778c8dac87877a10017d65790cbb35dd"
+   ],
+   "sem_vars": [
+    "select_mapping_type",
+    "select_which_trainings_should_be_mapped"
+   ]
+  }
+ ]
+}

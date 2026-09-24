@@ -1,0 +1,39 @@
+{
+"sys_id":"aecc23c61b5d6910d1abda4ce54bcb8c",
+"name":"Comprovante de Pagamento Internacional",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Formulário para envio de comprovante de pagamento internacional.",
+"description":"Formulário para envio de comprovante de pagamento internacional.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+"atencao":["v_supplier_code: opções dinâmicas (core_company)","v_supplier_name: opções dinâmicas (core_company)","set EY: Company: NTCO - Subcompany/vs_responsible_area2: opções dinâmicas (x_nasm_ptp_area_responsible_for_hiring)"],
+"variaveis":[
+{"name":"v_fill_informations","type":"32","order":100},
+{"name":"v_request_type","type":"5","order":400,"question_text":"Request type","include_none":true,"choices":["Import of Goods [=import_goods]","International Services [=international_services]"]},
+{"name":"v_supplier_name","type":"8","reference":"core_company","lookup_table":"core_company","lookup_value":"name","lookup_label":"u_sap_code","reference_qual":"u_source_systemSTARTSWITHECC^ORu_source_systemSTARTSWITHE1^ORu_source_systemSTARTSWITHBIDs^nameISNOTEMPTY^EQ","reference_qual_condition":"u_source_systemSTARTSWITHECC^ORu_source_systemSTARTSWITHE1^ORu_source_systemSTARTSWITHBIDs^nameISNOTEMPTY^EQ","order":450,"question_text":"Supplier name:","include_none":true},
+{"name":"v_supplier_code","type":"18","reference":"core_company","lookup_table":"core_company","lookup_value":"u_vendor_id","lookup_label":"u_vendor_id","reference_qual":"javascript: 'u_vendor_id='+ current.variables.v_supplier_name.u_vendor_id","reference_qual_condition":"u_sap_codeISNOTEMPTY^EQ","order":500,"question_text":"Supplier code:"},
+{"name":"v_request_number","type":"6","order":700,"question_text":"Request number","include_none":true},
+{"name":"v_invoice_number","type":"6","order":800,"question_text":"Invoice number","include_none":true},
+{"name":"v_coin","type":"8","reference":"fx_currency","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":900,"question_text":"Coin","include_none":true},
+{"name":"v_value","type":"6","order":1000,"question_text":"Value","include_none":true}
+],
+"ui_policies":[{"sys_id":"1512b3c61bdd6910d1abda4ce54bcb36","short_description":"EY: Read Only Field - Resolver View","conditions":"","applies_catalog":false,"actions":["v_coin: readonly=true","v_request_number: readonly=true","v_supplier_code: readonly=true","v_supplier_name: readonly=true","v_value: readonly=true","v_request_type: readonly=true","v_invoice_number: readonly=true"]},{"sys_id":"93b1fb0a1bdd6910d1abda4ce54bcba8","short_description":"EY: Mandatory/ Read Only Field - Catalog Item View","conditions":"","actions":["v_coin: mandatory=true","v_request_number: mandatory=true","v_request_type: mandatory=true","v_supplier_code: readonly=true","v_value: mandatory=true","v_invoice_number: mandatory=true","v_supplier_name: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"b6290e291b19e110d1abda4ce54bcb04","title":"EY: Company: NTCO - Subcompany","order":300}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar comprovante de pagamento internacional",
+"short_description":"Peça o comprovante de um pagamento feito a fornecedor no exterior",
+"description":"Use para pedir o comprovante (por exemplo, o SWIFT ou recibo bancário) de um pagamento internacional já realizado a um fornecedor. Você vai informar o fornecedor, o número da solicitação ou da nota (invoice), a moeda e o valor. Não use para pedir um novo pagamento de serviço internacional (há item próprio) nem para consultar pagamento atrasado.",
+"frases_exemplo":["preciso do comprovante de um pagamento internacional","o fornecedor lá fora pediu o swift do pagamento","comprovante de pagamento em dólar para fornecedor","me manda o recibo do pagamento internacional da invoice","quero o comprovante da remessa ao exterior"],
+"labels":{"v_request_type":"Que tipo de solicitação é essa?","v_supplier_name":"Qual o fornecedor?","v_request_number":"Qual o número da solicitação de pagamento?","v_invoice_number":"Qual o número da invoice?","v_coin":"Em qual moeda foi o pagamento?","v_value":"Qual o valor pago?"},
+"acoes":{"v_supplier_code":"derivar","v_fill_informations":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Read Only Field - Resolver View","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Mandatory/ Read Only Field - Catalog Item View","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Manter v_supplier_code read-only no atributo da variável."}]
+}
+}

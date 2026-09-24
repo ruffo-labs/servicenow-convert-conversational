@@ -1,0 +1,54 @@
+{
+  "sys_id": "0d5a7420874f3a10017d65790cbb354e",
+  "status": "dividido",
+  "motivo": "Três intenções distintas sobre treinamentos normativos (NR): mapear, desmapear e pedir relatório/certificado, cada uma com perguntas e sets próprios.",
+  "divergencias": [{"outro": "select_mapping_type foi mantida (não unificada com enter_employee_name) porque o spec não permite alterar type nem escolhas de variável de set."}],
+  "vars": {
+    "select_which_trainings_should_be_mapped": {"label": "Qual treinamento de NR você quer mapear?"},
+    "select_mapping_type": {"label": "Você quer mapear um treinamento específico ou vários treinamentos de uma vez?", "props": {"mandatory": true}}
+  },
+  "remover": {
+    "label_training": "visual",
+    "label_training_2": "visual",
+    "label_training_3": "visual"
+  },
+  "policies": {
+    "f63475208747ba10017d65790cbb3599": "remover",
+    "fe152795879bf610ec360e530cbb357d": "remover",
+    "ba2902e4878fba10017d65790cbb35e6": "remover"
+  },
+  "scripts": {
+    "61a80ae0878fba10017d65790cbb3566": {"remover": "sem_efeito"}
+  },
+  "itens": [
+    {
+      "name": "Mapear treinamento normativo (NR) para colaborador",
+      "short_description": "Inclua um treinamento de NR na trilha obrigatória de um ou mais colaboradores",
+      "description": "Use para pedir que um treinamento obrigatório de Norma Regulamentadora (NR) seja atribuído a um ou mais colaboradores. Não use para retirar treinamento (use Desmapear) nem para pedir relatório.",
+      "frases_exemplo": ["mapear NR-35 para três pessoas do meu time", "incluir treinamento de NR para um colaborador novo", "o colaborador precisa fazer a NR-10"],
+      "fixas": {"what_is_the_request": "solicitacao_mapeamento"},
+      "sem_sets": ["55e3c9e887837a10017d65790cbb35d4", "778c8dac87877a10017d65790cbb35dd"],
+      "sem_policies": ["e81539648747ba10017d65790cbb3533"]
+    },
+    {
+      "name": "Desmapear treinamento normativo (NR) de colaborador",
+      "short_description": "Retire um treinamento de NR da trilha obrigatória de colaboradores",
+      "description": "Use para pedir a retirada de treinamentos de NR que foram atribuídos a colaboradores por engano ou que deixaram de se aplicar (por exemplo, mudança de função). Não use para incluir treinamento.",
+      "frases_exemplo": ["tirar a NR-35 de um colaborador", "esse treinamento de NR não se aplica mais à função dele", "desmapear treinamento obrigatório"],
+      "fixas": {"what_is_the_request": "solicitacao_desmapeamento"},
+      "sem_vars": ["select_which_trainings_should_be_mapped", "select_mapping_type"],
+      "sem_sets": ["55e3c9e887837a10017d65790cbb35d4", "e429096887477a10017d65790cbb35ae"],
+      "sem_policies": ["9f2235648707ba10017d65790cbb35cd", "e81539648747ba10017d65790cbb3533"]
+    },
+    {
+      "name": "Solicitar relatório ou certificado de treinamento normativo (NR)",
+      "short_description": "Peça relatórios ou certificados de treinamentos de NR",
+      "description": "Use para pedir relatório de situação dos treinamentos normativos ou o certificado de um treinamento de NR já concluído.",
+      "frases_exemplo": ["preciso do certificado da NR-35", "relatório de treinamentos normativos do meu time", "quero comprovar que fiz a NR-10"],
+      "fixas": {"what_is_the_request": "solicitacao_relatorios"},
+      "sem_vars": ["select_which_trainings_should_be_mapped", "select_mapping_type"],
+      "sem_sets": ["e429096887477a10017d65790cbb35ae", "778c8dac87877a10017d65790cbb35dd"],
+      "sem_policies": ["9f2235648707ba10017d65790cbb35cd"]
+    }
+  ]
+}

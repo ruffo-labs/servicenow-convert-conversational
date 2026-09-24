@@ -1,0 +1,20 @@
+{
+"sys_id":"7a4a85391ba16110a530426fe54bcb79",
+"name":"Outros lançamentos contábeis - Intercompany, mercadoria e caixa em trânsito",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Lançamentos Contábeis",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um lançamento contábil",
+"description":"Solicite um lançamento contábil",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"vs_rep_templates"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit/vs_rep_templates: custom/macro/widget (type 17)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":150},{"sys_id":"baea89791ba16110a530426fe54bcbf0","title":"EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit","order":200},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar lançamento intercompany ou em trânsito","short_description":"Peça lançamentos contábeis intercompany, de caixa em trânsito ou de mercadoria em trânsito.","description":"Use para pedir à Contabilidade (RTR) lançamentos entre empresas do grupo (intercompany), de caixa em trânsito ou de mercadoria em trânsito. Você escolhe o tipo, indica o aprovador e anexa a planilha modelo e o documento de suporte. Não use para lançamentos manuais comuns ou reclassificações (use \"Solicitar lançamento contábil\"), provisões ou estornos.","frases_exemplo":["Preciso de um lançamento intercompany","lançar mercadoria em trânsito entre empresas","ajustar caixa em trânsito","conciliação intercompany precisa de lançamento","lançamento entre Natura e Avon"],"labels":{"v_request_type":"Que tipo de lançamento você precisa: intercompany, caixa em trânsito ou mercadoria em trânsito?","v_select_approver":"Quem vai aprovar esse lançamento?","v_launch_template":"Anexe a planilha modelo de lançamento preenchida.","v_document_repository":"Agora anexe o documento de suporte.","v_additional_information":"Quer acrescentar alguma informação?"},"acoes":{"vs_rep_templates":"remover","vs_repository_template":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Read-Only (set Intercompany)","acao":"converter","substituicao":"Aplicar só no registro destino; hoje tipo, aprovador e anexos seriam pulados na conversa."}]}
+}

@@ -1,0 +1,19 @@
+{
+"sys_id":"05c76e3f1bb83910a530426fe54bcb71",
+"name":"Resíduos",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Formulário para Solicitação de Emissão de Nota Fiscal de Vendas e Remessas (Doação)",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_template_other_outputs","type":"32","order":400,"question_text":"Template other outputs"}],
+"ui_policies":[{"sys_id":"522aa2f31bf83910a530426fe54bcb0b","short_description":"EY: Mandatory fields","conditions":"","actions":["v_template_other_outputs: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"d1dac2b01b45fd10a530426fe54bcb64","title":"EY: Tax - Company (Customer code)","order":300},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":800}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar nota fiscal de venda ou doação de resíduos","short_description":"Peça a nota fiscal para venda, remessa ou doação de resíduos e sucata.","description":"Use para pedir ao Fiscal a nota fiscal de saída de resíduos: venda de sucata ou recicláveis, remessa para descarte/tratamento ou doação. Informe empresa, sub-empresa, o cliente ou destinatário e anexe a planilha modelo com materiais, quantidades e valores. Não use para venda de mercadoria ou matéria-prima nem para outras saídas (testes, eventos, transferência).","frases_exemplo":["Preciso de nota para vender sucata","emitir nota de doação de resíduos","remessa de resíduos para reciclagem","nota fiscal de venda de papelão","descarte de resíduos precisa de NF"],"labels":{"vs_which_company_is_the_request_for_customer":"Para quem vão os resíduos (comprador ou destinatário)? Pode informar nome ou código.","vs_attach_template":"Anexe a planilha modelo com os resíduos, quantidades e valores."},"acoes":{"v_template_other_outputs":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Tirar o rótulo dos obrigatórios."}]}
+}

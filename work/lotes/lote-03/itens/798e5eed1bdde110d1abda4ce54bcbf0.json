@@ -1,0 +1,40 @@
+{
+"sys_id":"798e5eed1bdde110d1abda4ce54bcbf0",
+"name":"Solicitar Pagamento de Serviço Internacional",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Formulário para solicitação de pagamento de serviço internacional para empresa Natura",
+"description":"Formulário para solicitação de pagamento de serviço internacional para empresa Natura",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+"atencao":["v_supplier_code: opções dinâmicas (core_company)","set EY: Company: NTCO - Subcompany/vs_responsible_area2: opções dinâmicas (x_nasm_ptp_area_responsible_for_hiring)"],
+"variaveis":[
+{"name":"v_questions_about_process","type":"32","order":100,"question_text":"If you have questions about the process, click here to consult the FAQ"},
+{"name":"v_provider_name","type":"8","reference":"core_company","reference_qual":"u_source_system=ECC^customer=false^EQ","reference_qual_condition":"u_source_system=ECC^customer=false^EQ","order":400,"question_text":"Provider's name"},
+{"name":"v_supplier_code","type":"18","lookup_table":"core_company","lookup_value":"u_vendor_id","reference_qual":"javascript: 'u_vendor_id='+ current.variables.v_provider_name.u_vendor_id","order":500,"question_text":"Supplier Code"},
+{"name":"v_kind_of_payment","type":"5","order":600,"question_text":"What kind of payment?","include_none":true,"choices":["Via Purchase Order [=purchase_order]"]},
+{"name":"v_due_date","type":"9","order":650,"question_text":"Due date"},
+{"name":"v_purchase_order_number","type":"6","order":700,"question_text":"Purchase order number"},
+{"name":"v_document_number","type":"6","order":800,"question_text":"Document number"},
+{"name":"v_attach_manual_document","type":"33","order":900,"question_text":"Attach manual document"},
+{"name":"v_download_template","type":"32","order":1000,"question_text":"If you have questions about the process, click here to consult the FAQ"},
+{"name":"v_attach_int_service_payment","type":"33","order":1100,"question_text":"Attach International Service Payment Form"},
+{"name":"v_attach_invoice","type":"33","order":1200,"question_text":"Attach Invoice"},
+{"name":"v_attach_copy_contract","type":"33","order":1300,"question_text":"Attach a copy of the contract"}
+],
+"ui_policies":[
+{"sys_id":"127ece751b11a110a530426fe54bcbda","short_description":"EY: Payment is Via Purchase Order - Resolver View","conditions":"v_kind_of_payment=purchase_order","applies_catalog":false,"actions":["v_purchase_order_number: visible=true,readonly=true"]},
+{"sys_id":"1a5d0a311b11a110a530426fe54bcbcb","short_description":"EY: Payment is Via Purchase Order - Catalog Item View","conditions":"v_kind_of_payment=purchase_order","actions":["v_purchase_order_number: visible=true,mandatory=true"]},
+{"sys_id":"495e86751b11a110a530426fe54bcbd5","short_description":"EY: Payment is Via Manual Payment - Resolver View","conditions":"v_kind_of_payment=manual_payment","applies_catalog":false,"actions":["v_document_number: visible=true,readonly=true","v_attach_manual_document: visible=true,readonly=true"]},
+{"sys_id":"4dcd0a311b11a110a530426fe54bcbe4","short_description":"EY: Payment is Via Manual Payment - Catalog Item View","conditions":"v_kind_of_payment=manual_payment","actions":["v_attach_manual_document: visible=true,mandatory=true","v_document_number: visible=true,mandatory=true"]},
+{"sys_id":"bc97ea211bd12510d1abda4ce54bcba2","short_description":"EY: Mandatory Fields in Catalog Item View","conditions":"","actions":["v_provider_name: mandatory=true","v_attach_invoice: mandatory=true","v_due_date: mandatory=true","v_kind_of_payment: mandatory=true","v_supplier_code: readonly=true","v_attach_int_service_payment: mandatory=true"]},
+{"sys_id":"c53c86391bdd6110a530426fe54bcbc0","short_description":"EY: Read Only Variables in Resolver View","conditions":"","applies_catalog":false,"actions":["v_supplier_code: readonly=true","v_kind_of_payment: readonly=true","v_attach_invoice: readonly=true","v_attach_int_service_payment: readonly=true","v_attach_copy_contract: readonly=true","v_provider_name: readonly=true"]}
+],
+"client_scripts":[{"sys_id":"626b86391bdd6110a530426fe54bcb9f","name":"EY: Remove Company Options","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que remove a opção 'TBS' da lista de empresas. A linha que também removeria 'Avon LATAM' está comentada."}],
+"variable_sets":[{"sys_id":"b6290e291b19e110d1abda4ce54bcb04","title":"EY: Company: NTCO - Subcompany","order":300}],
+"primeira_analise":{"recomendacao":"manter_formulario","nome":"Solicitar pagamento de serviço internacional","short_description":"Peça o pagamento de um serviço prestado por fornecedor do exterior","description":"Use para pedir o pagamento de um serviço contratado de fornecedor no exterior (importação de serviço), por pedido de compra ou pagamento manual. Você vai anexar o formulário de pagamento de serviço internacional, a invoice e, se houver, o contrato. Não use para pedir comprovante de pagamento internacional já feito nem para compra de mercadoria.","frases_exemplo":["pagar serviço de fornecedor no exterior","pagamento de invoice de consultoria internacional","preciso pagar um fornecedor estrangeiro","importação de serviço, como pago?","pagamento internacional de serviço com PO"],"labels":{},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"EY: Remove Company Options","acao":"manter","substituicao":"Funciona no formulário; alternativa no-code é desativar o choice \"TBS\" no próprio set."},{"nome":"Policies Resolver View / Catalog Item View","acao":"manter","substituicao":"Sem mudança enquanto for formulário."}]}
+}

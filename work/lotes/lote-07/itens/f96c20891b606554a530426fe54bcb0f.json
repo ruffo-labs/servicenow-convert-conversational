@@ -1,0 +1,19 @@
+{
+"sys_id":"f96c20891b606554a530426fe54bcb0f",
+"name":"Informações de motoboy, correios e malotes corporativos",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Serviços Administrativos",
+"sc_catalogs":"Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+"short_description":"",
+"description":"Chamado para solicitar serviços de correios, malotes corporativos e retirar dúvidas sobre o processo",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_faq","type":"32","order":10},{"name":"v_portal","type":"32","order":20},{"name":"v_doubt","type":"5","order":50,"question_text":"What type of doubt do you have?","include_none":true,"choices":["How the request is charged to the cost center [=60]","Improper expenses in the cost center [=10]","Supplier makes private posts [=40]","What types of deliveries does the supplier perform (Mode used for delivery) [=70]","What is the mailing process [=50]","Service complaint [=20]","Delivery time via courier [=30]","Outras [=80]"]},{"name":"v_describe_your_doubt","type":"2","order":60,"question_text":"Describe your doubt"}],
+"ui_policies":[{"sys_id":"5388e9d61be02190d1abda4ce54bcbbc","short_description":"EY: Mandatory fields","conditions":"","actions":["v_describe_your_doubt: mandatory=true","v_doubt: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"724f41271b446dd8a530426fe54bcb28","title":"EY: Opened by - Requested for data","order":30},{"sys_id":"2c876b8b1b0ca5d8a530426fe54bcbdc","title":"EY: Company: Natura/Avon/TBS - Subcompany","order":40},{"sys_id":"9385c79d1bb71d14a530426fe54bcb24","title":"EY: Additional information","order":70}],
+"primeira_analise":{"recomendacao":"conversacional","nome":"Tirar dúvida sobre motoboy, correios e malote","short_description":"Dúvidas sobre envio por motoboy, correios e malote corporativo.","description":"Use para tirar dúvidas sobre envio de documentos e objetos por motoboy, correios ou malote corporativo: prazos, rastreio, como pedir, custos. O pedido do serviço em si é feito no portal de serviços indicado na base de conhecimento. Não use para serviços de cartório.","frases_exemplo":["como faço para mandar um documento por motoboy?","meu malote não chegou","qual o prazo do malote para a fábrica?","dúvida sobre envio pelos correios","preciso rastrear uma correspondência"],"labels":{"v_doubt":"Sua dúvida é sobre motoboy, correios ou malote?","v_describe_your_doubt":"Conte qual é a sua dúvida."},"acoes":{"vs_additional_information":"remover"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas duas variáveis."}]}
+}

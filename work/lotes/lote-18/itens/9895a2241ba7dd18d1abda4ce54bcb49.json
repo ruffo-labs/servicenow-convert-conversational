@@ -1,0 +1,19 @@
+{
+"sys_id":"9895a2241ba7dd18d1abda4ce54bcb49",
+"name":"Solicitação de Cadastro de Aposentadoria",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Declarações e Documentos",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Informar aposentadoria de colaborador",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_description","type":"2","order":400,"question_text":"Description"},{"name":"v_communicate_retirement_attach_the_inss_decision","type":"33","order":500,"question_text":"To communicate retirement, attach the INSS decision notice"}],
+"ui_policies":[{"sys_id":"82122c411ba79558d1abda4ce54bcb60","short_description":"EY: Mandatory fields","conditions":"","actions":["v_description: visible=true,mandatory=true","v_communicate_retirement_attach_the_inss_decision: visible=true,mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Comunicar aposentadoria pelo INSS","short_description":"Informar ao RH que você (ou um colaborador) teve a aposentadoria concedida pelo INSS, anexando a carta de concessão.","description":"Use para comunicar ao RH que a aposentadoria foi concedida pelo INSS (Instituto Nacional do Seguro Social), anexando a carta de concessão, para atualização do cadastro. Não use para pedir documentos para dar entrada na aposentadoria (use 'Solicitar PPP') nem para pedir desligamento.","frases_exemplo":["me aposentei, como informo o RH?","saiu minha aposentadoria do INSS","quero cadastrar minha aposentadoria","enviar carta de concessão do INSS","comunicar aposentadoria de colaborador"],"labels":{"v_communicate_retirement_attach_the_inss_decision":"Anexe a carta de concessão da aposentadoria do INSS.","v_description":"Quer acrescentar alguma informação, como a data de início da aposentadoria?"},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas duas variáveis; excluir a policy."}]}
+}

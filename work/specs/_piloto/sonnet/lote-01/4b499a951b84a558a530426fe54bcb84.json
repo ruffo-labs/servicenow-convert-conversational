@@ -1,0 +1,42 @@
+{
+  "sys_id": "4b499a951b84a558a530426fe54bcb84",
+  "status": "conversacional",
+  "motivo": "Solicitação de pagamento do varejo com perguntas condicionadas à empresa e ao tipo de pagamento, já resolvidas pelas UI policies existentes.",
+  "divergencias": [{"outro": "v_request_type e v_request_type_tbs mantidas como duas variáveis separadas (visibilidade por vs_company via policies existentes), em vez de unificadas, pois o spec não permite editar choices."}],
+  "vars": {
+    "v_request_type_tbs": {"label": "Que tipo de pagamento você precisa?"},
+    "v_value": {"props": {"mandatory": true}},
+    "v_account_type": {"props": {"mandatory": true}},
+    "v_accounting": {"props": {"mandatory": true}},
+    "v_cost_center": {"props": {"mandatory": true}},
+    "v_attach_approval": {"props": {"mandatory": true}},
+    "v_country": {"props": {"hidden": true}}
+  },
+  "remover": {
+    "formatter": "visual",
+    "formatter2": "visual",
+    "v_label_payment": "visual",
+    "v_bank_details": "visual"
+  },
+  "policies": {
+    "a84112611b8ca958a530426fe54bcb47": "remover",
+    "ac96fb033be76ad0924d0247f4e45a23": "remover",
+    "c7c123a41bb1a5d0d1abda4ce54bcbdd": {
+      "conditions": "v_request_type_tbs=tbs",
+      "actions": {
+        "v_accounting": {"visible": true, "mandatory": true},
+        "vs_agency": {"visible": true, "mandatory": true},
+        "vs_digit": {"visible": true, "mandatory": true},
+        "v_account_type": {"visible": true, "mandatory": true},
+        "v_cost_center": {"visible": true, "mandatory": true},
+        "vs_account": {"visible": true, "mandatory": true},
+        "vs_bank": {"visible": true, "mandatory": true}
+      }
+    }
+  },
+  "scripts": {
+    "9c0e6a211b84e958a530426fe54bcb1d": {"converter": "regex"},
+    "d86e8da21b9d2150d1abda4ce54bcb94": {"converter": "regex"},
+    "daeef53e1b54a990a530426fe54bcb28": {"converter": "regex"}
+  }
+}

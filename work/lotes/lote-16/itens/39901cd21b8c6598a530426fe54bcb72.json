@@ -1,0 +1,29 @@
+{
+"sys_id":"39901cd21b8c6598a530426fe54bcb72",
+"name":"Solicitar reembolso de nota de crédito\t",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Chamado para solicitar reembolso de nota de crédito específica",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"v_credit_repaid","type":"6","order":30,"question_text":"What credit note must be repaid?"},{"name":"v_refund_amount","type":"6","example_text":"9999,99","order":40,"question_text":"What is the refund amount?"},{"name":"v_order_number","type":"6","order":50,"question_text":"What is the order number?"},{"name":"v_total_value","type":"6","example_text":"9999,99","order":60,"question_text":"Total order value"},{"name":"v_refunds_info","type":"11","order":70,"question_text":"We do not issue refunds to third-party or savings accounts. In case of Hispanic countries cannot be refunded to a digital bank"},{"name":"v_describe_request","type":"6","order":90,"question_text":"Describe the request"},{"name":"v_attach_info","type":"11","order":100,"question_text":"Attach documents, if necessary"}],
+"ui_policies":[{"sys_id":"4d27291b1b5a6d50a530426fe54bcb7d","short_description":"EY: Show Data Search","conditions":"vs_company!=","actions":["vs_data_search: visible=true,mandatory=true"]},{"sys_id":"83b43c9e1bc4a598a530426fe54bcb3c","short_description":"EY: Mandatory fields","conditions":"","actions":["v_order_number: mandatory=true","v_describe_request: mandatory=true","v_refund_amount: mandatory=true","v_total_value: mandatory=true","v_credit_repaid: mandatory=true"]}],
+"client_scripts":[{"sys_id":"83a1404a1b552510a530426fe54bcb31","name":"EY: Validate value \"Refund amount\"","type":"onChange","cat_variable":"5f35e01e1bc0a598a530426fe54bcb64","ui_type":"10","script":"Catalog Client Script onChange que valida valor monetário brasileiro em 'v_refund_amount'. Inválido: limpa e mostra mensagem de valor inválido."},{"sys_id":"a672c40a1b552510a530426fe54bcb7d","name":"EY: Validate value \"Total value\"","type":"onChange","cat_variable":"7277e0d21b04a598a530426fe54bcb83","ui_type":"10","script":"Catalog Client Script onChange que valida valor monetário brasileiro em 'v_total_value'. Inválido: limpa e mostra mensagem de valor inválido."}],
+"variable_sets":[{"sys_id":"4c55a4791bbfd154d1abda4ce54bcb1a","title":"EY: Opened by","order":10},{"sys_id":"4526141e1bcc6598a530426fe54bcb4e","title":"EY: Company:Natura/Avon/TBS - Collaborator","order":20},{"sys_id":"95cc20de1b44a598a530426fe54bcb9c","title":"EY: Bank data","order":80}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar reembolso de nota de crédito",
+"short_description":"Devolução em conta bancária do valor de uma nota de crédito",
+"description":"Use para pedir que o valor de uma nota de crédito específica de consultora, representante ou franqueado seja devolvido em conta bancária do próprio titular. Não fazemos reembolso para conta de terceiros ou poupança, e nos países hispânicos não para banco digital. Não use para criar uma nova nota de crédito (use \"Solicitar criação de nota de crédito\").",
+"frases_exemplo":["a consultora quer o dinheiro da nota de crédito de volta","reembolso de crédito na conta","devolver valor da nota de crédito","transformar crédito em reembolso bancário"],
+"labels":{"v_credit_repaid":"Qual nota de crédito deve ser reembolsada?","v_order_number":"Qual é o número do pedido?","v_total_value":"Qual é o valor total do pedido?","v_refund_amount":"Quanto deve ser reembolsado?","v_describe_request":"Conte o motivo do reembolso."},
+"acoes":{"v_describe_request":"alterar_tipo:Multi Line Text","v_refunds_info":"remover","v_attach_info":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Validate value \"Refund amount\" / \"Total value\"","acao":"converter","substituicao":"Validation Regex de moeda brasileira nas variáveis."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"EY: Show Data Search","acao":"manter","substituicao":"Pertence ao fluxo do set."}]
+}
+}

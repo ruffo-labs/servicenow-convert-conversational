@@ -1,0 +1,43 @@
+{
+"sys_id":"b81351591b08a558d1abda4ce54bcbdd",
+"name":"Tratamento e Regularização das Contas de FGTS",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Meus Pagamentos e Folha de Pagamento",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Para solicitar correções e/ou atualização de dados cadastrais ou financeiros do FGTS.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[
+{"name":"v_cont_start_fgts","type":"19","order":200,"question_text":"Treatment and Regularization of FGTS Accounts"},
+{"name":"v_what_is_your_request","type":"5","order":300,"question_text":"What is your request?","include_none":true,"choices":["Data rectification (need to change FGTS registration data) [=v_data_rectification]","Account merger (you have more than one active FGTS account and want to unify the balance) [=v_account_merger]","I couldn't find my FGTS deposit on my Caixa Econômica Federal statement [=v_couldnt_find]"]},
+{"name":"v_text_checkbox","type":"11","order":400,"question_text":"What data needs to be rectified with Caixa Econômica Federal?"},
+{"name":"v_name_fgts","type":"7","order":500,"question_text":"Name"},
+{"name":"v_date_of_birth_fgts","type":"7","order":510,"question_text":"Date of birth"},
+{"name":"v_mother_name_fgts","type":"7","order":520,"question_text":"Mother's name"},
+{"name":"v_pis_fgts","type":"7","order":530,"question_text":"PIS"},
+{"name":"v_ctps_fgts","type":"7","order":540,"question_text":"CTPS - Work Record Booklet"},
+{"name":"v_description_fgts","type":"2","order":600,"question_text":"Description"},
+{"name":"v_attach_pis","type":"33","order":750,"question_text":"Attach the PIS document"},
+{"name":"v_attach_updated","type":"33","order":800,"question_text":"Attach updated proof of data to be rectified"},
+{"name":"v_attach_fgts","type":"33","order":800,"question_text":"If you have different FGTS accounts in the same employment contract, attach the statements for these accounts, issued by Caixa Econômica Federal, so that we can unify them."},
+{"name":"v_text_fgts","type":"32","order":900,"question_text":"Simply access the Caixa website or the FGTS application, enter the requested data, click on “Complete Statement”, select the periods and print.\nHyperlink: https://www.caixa.gov.br/beneficios-trabalhador/fgts/extrato-fgts/PAGINAS/DEFAULT.ASPX"}
+],
+"ui_policies":[{"sys_id":"5499dd191b88a558d1abda4ce54bcb7c","short_description":"EY: Filds Mandatory","conditions":"","actions":["v_attach_pis: mandatory=true","v_what_is_your_request: mandatory=true"]},{"sys_id":"aaa3a95d1b4ca558d1abda4ce54bcb77","short_description":"EY: Fields mandatory if FGTS extract","conditions":"v_what_is_your_request=v_fgts_extract","actions":["v_text_fgts: visible=true"]},{"sys_id":"07c9dd191b88a558d1abda4ce54bcb84","short_description":"EY: Fields mandatory when rectification","conditions":"v_what_is_your_request=v_data_rectification","actions":["v_text_checkbox: visible=true,mandatory=true","v_ctps_fgts: visible=true","v_mother_name_fgts: visible=true","v_date_of_birth_fgts: visible=true","v_name_fgts: visible=true","v_attach_updated: visible=true,mandatory=true","v_pis_fgts: visible=true"]},{"sys_id":"6863add91b4ca558d1abda4ce54bcb99","short_description":"EY: Fields mandatory if  unification","conditions":"v_what_is_your_request=v_account_merger","actions":["v_attach_fgts: visible=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Corrigir dados ou unificar contas do FGTS",
+"short_description":"Peça correção de dados cadastrais no FGTS ou unificação de contas do mesmo contrato.",
+"description":"Use para pedir correção de dados cadastrais do FGTS (Fundo de Garantia do Tempo de Serviço) junto à Caixa Econômica Federal, como nome, data de nascimento, nome da mãe, PIS ou carteira de trabalho, ou para unificar contas de FGTS diferentes no mesmo contrato de trabalho. Para ver o extrato, acesse o app FGTS ou o site da Caixa, sem abrir chamado. Não use para saque de FGTS.",
+"frases_exemplo":["meu nome está errado no FGTS","tenho duas contas de FGTS na mesma empresa","corrigir PIS no FGTS","unificar contas do FGTS","data de nascimento errada na Caixa"],
+"labels":{"v_what_is_your_request":"Você quer corrigir dados cadastrais ou unificar contas do FGTS?","nova_dados_corrigir":"Quais dados precisam ser corrigidos: nome, data de nascimento, nome da mãe, PIS ou carteira de trabalho?","v_description_fgts":"Explique o que está errado e qual o dado correto.","v_attach_pis":"Envie o documento do PIS.","v_attach_updated":"Envie o documento que comprova o dado correto.","v_attach_fgts":"Envie os extratos das contas de FGTS que devem ser unificadas."},
+"acoes":{"nova_dados_corrigir":"nova:List Collector","v_name_fgts":"remover","v_text_fgts":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Fields mandatory when rectification","acao":"converter","substituicao":"Mostrar nova_dados_corrigir e v_attach_updated; remover mandatory do label v_text_checkbox."},{"nome":"EY: Fields mandatory if FGTS extract","acao":"remover","substituicao":"Opção de extrato removida."},{"nome":"EY: Fields mandatory if unification","acao":"manter","substituicao":"Remover ação vazia em v_text_unification (inexistente); tornar v_attach_fgts obrigatório."}]
+}
+}

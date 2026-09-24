@@ -1,0 +1,19 @@
+{
+"sys_id":"66ac57671b98e9d0a530426fe54bcbcd",
+"name":"Sobre Aviso",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Controle de Jornada",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Utilize esse formulário para solicitações de Sobre Aviso do controle de jornada",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_company","type":"6","order":200,"question_text":"Company"},{"name":"v_template","type":"32","order":300},{"name":"v_attach_template","type":"33","order":400,"question_text":"Attach About Notice Template"},{"name":"v_attach","type":"33","order":600,"question_text":"Manager approval attachment"}],
+"ui_policies":[{"sys_id":"42d1e36f1bd8e9d0a530426fe54bcbb7","short_description":"EY: Mandatory fields","conditions":"","actions":["v_company: visible=true,readonly=true","v_attach: visible=true,mandatory=true","v_attach_template: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"359267231b1ce9d0a530426fe54bcb57","name":"EY: Get company","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando o valor fica vazio."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Registrar sobreaviso","short_description":"Enviar as horas de sobreaviso (plantão à distância) com a aprovação do gestor.","description":"Use para enviar ao RH o registro de horas de sobreaviso (quando você fica à disposição da empresa fora do expediente, em plantão à distância), com a planilha modelo preenchida e o e-mail de aprovação do seu gestor. Não use para horas extras comuns, correção de ponto ou dúvidas gerais de jornada.","frases_exemplo":["preciso lançar meu sobreaviso","fiquei de plantão no fim de semana","como envio as horas de sobreaviso","registrar sobre aviso do mês"],"labels":{"v_attach_template":"Anexe a planilha de sobreaviso preenchida.","v_attach":"Agora anexe o e-mail de aprovação do seu gestor."},"acoes":{"v_company":"ocultar_na_conversa","v_template":"remover"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Get company","acao":"converter","substituicao":"Auto-populate de v_company a partir de vs_employee (dot-walk no perfil)."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Atributos mandatory/read-only direto nas variáveis."}]}
+}

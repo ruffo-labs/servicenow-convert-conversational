@@ -1,0 +1,29 @@
+{
+"sys_id":"247c37d53be81610924d0247f4e45af9",
+"name":"Serviço de transporte para ir ao trabalho",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Transporte para chegar ao trabalho",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Use este formulário para fazer solicitações de transporte para o trabalho",
+"description":"Use este formulário para fazer solicitações de transporte para o trabalho",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+"variaveis":[{"name":"category","type":"5","order":150,"question_text":"Category","include_none":true,"choices":["Commute to work [=translado_trabalho]","Cabify [=cabify]"]},{"name":"FAQs","type":"32","order":200},{"name":"detail_request","type":"2","order":300,"question_text":"Use the field below to detail your request"},{"name":"checkbox_declaracao","type":"7","order":400,"question_text":"I declare that I have prior knowledge and agree that the costs of the trip undertaken will be the responsibility of the cost center to which I belong."}],
+"ui_policies":[{"sys_id":"06b10d3b1bcdde10514cbaef4b4bcb57","short_description":"EY: Hide unfilled fields","conditions":"v_who_is_this_request_for=","applies_catalog":false,"actions":["v_who_is_this_request_for: visible=false,mandatory=false"]},{"sys_id":"1743e12d3ba85610924d0247f4e45ab4","short_description":"EY: Visibility checkbox ","conditions":"v_country_of_residenceINargentina,chile^category=cabify","actions":["checkbox_declaracao: visible=true,mandatory=true"]},{"sys_id":"23add12d3b685610924d0247f4e45af4","short_description":"EY: Show category","conditions":"v_employeeISNOTEMPTY","actions":["category: visible=true,mandatory=true"]},{"sys_id":"5f8616b31bc91250514cbaef4b4bcb6b","short_description":"EY: Hide fields > for me","conditions":"v_who_is_this_request_for=for_me^ORv_who_is_this_request_for=","applies_catalog":false,"actions":["v_reason_on_behalf: visible=false,mandatory=false"]},{"sys_id":"f928dc293bec1610924d0247f4e45a21","short_description":"EY: Country is Argentina","conditions":"v_country_of_residence=argentina","actions":["FAQs: visible=true"]}],
+"client_scripts":[{"sys_id":"a6a73af81b09d6d0514cbaef4b4bcb35","name":"EY: Conditions for the Category Field","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"1","script":"Catalog Client Script onChange de 3,8 KB que monta a lista de categorias conforme o usuário. Começa removendo as opções 'cabify' e 'translado_trabalho' e depois recoloca o que for pertinente ao perfil de quem abriu."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar transporte para o trabalho",
+"short_description":"Pedidos de transporte corporativo, como Cabify ou traslado, para ir ao trabalho",
+"description":"Use para pedir ou tirar dúvidas sobre o transporte para ir e voltar do trabalho oferecido pela empresa nos países hispânicos: corridas por aplicativo corporativo (Cabify), traslado ou fretado. O custo da viagem é debitado do seu centro de custo. Não use para viagens a negócios nem para reembolso de despesas.",
+"frases_exemplo":["preciso de Cabify para ir ao trabalho","quero usar o traslado da empresa","como peço transporte para chegar na fábrica?","necesito transporte para ir a trabajar"],
+"labels":{"category":"Que tipo de transporte você precisa?","detail_request":"Conte os detalhes: trajeto, dias e horários.","checkbox_declaracao":"Você está ciente e concorda que o custo das viagens será do seu centro de custo?"},
+"acoes":{"checkbox_declaracao":"alterar_tipo:Yes/No (Include None, mandatory)","FAQs":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Conditions for the Category Field","acao":"converter","substituicao":"Choice Qualifier ou Lookup Select Box com qualificador simples, ou opções estáticas mais a validação no flow."},{"nome":"EY: Show category","acao":"converter","substituicao":"Deixar category sempre visível e obrigatória direto na variável; v_employee já é preenchido por padrão."},{"nome":"EY: Visibility checkbox","acao":"manter","substituicao":"UI Policy sem script, compatível (país Argentina/Chile e category = cabify)."},{"nome":"EY: Country is Argentina","acao":"remover","substituicao":"O FAQ sai do formulário."},{"nome":"EY: Hide unfilled fields / EY: Hide fields > for me","acao":"manter","substituicao":"Pertencem ao set; tratar na análise geral do set Hispana Personal Information."}]
+}
+}

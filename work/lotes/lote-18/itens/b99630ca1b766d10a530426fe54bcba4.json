@@ -1,0 +1,38 @@
+{
+"sys_id":"b99630ca1b766d10a530426fe54bcba4",
+"name":"Dúvidas, reclamações e sugestões relacionadas a benefícios",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Dúvidas, reclamações e sugestões relacionadas a benefícios",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Este é um formulário genérico para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre Informações ou Dúvidas relacionadas a benefícios.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"ai_search_assist"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"ai_search_assist"},{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"contextual_search_results"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Remove options based on country"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+"atencao":["ai_search_assist: custom/macro/widget (type 14)","contextual_search_results: custom/macro/widget (type 14)"],
+"variaveis":[
+{"name":"Info","type":"32","order":50},
+{"name":"request_type","type":"5","order":900,"question_text":"Request Type","include_none":true,"choices":["Complaints [=complaints]","Queries [=queries]","Suggestions [=suggestions]"]},
+{"name":"beneficios","type":"5","order":1000,"question_text":"Select the benefit","include_none":true,"choices":["Health care [=health_care]","Dental Care [=dental_care]","Childcare Assistance [=childcare_assistance]","Internet Aid [=internet_aid]","Nursery [=bercario]","Fathers and Mothers Celebrations [=fathers_and_ mothers_celebrations]","Pharmacy [=pharmacy]","Chartered [=chartered]","Wellhub [=gympass]","Ecommerce [=ecommerce]","PAP [=pap]","Private Pension [=private_pension]","Living Psychology [=living_psychology]","Restaurant [=restaurant]","Life Insurance [=life_insurance]","Relationship Time [=relationship_time]","Food Voucher [=food _voucher]","Meal Voucher [=meal_voucher]","Transportation Valley [=transportation_valley]","Fuel Assistance [=fuel_assistance]"]},
+{"name":"v_text_vale_ref_alim","type":"32","order":1100},
+{"name":"v_description_details","type":"2","order":1550,"question_text":"Use the field below to detail your request"},
+{"name":"contextual_search_results","type":"14","order":1600,"question_text":"Contextual Search Results","macro":"cxs_rp_search","sp_widget":"Pesquisa contextual: Resultados em Linha"},
+{"name":"ai_search_assist","type":"14","order":1700,"question_text":"AI Search Assist","sp_widget":"Assistência para pesquisa com IA"}
+],
+"ui_policies":[{"sys_id":"3669bc821bb66d10a530426fe54bcbe7","short_description":"NVLX: Mandatory Fields","conditions":"","actions":["beneficios: mandatory=true","request_type: mandatory=true","v_description_details: mandatory=true"]},{"sys_id":"d999dc1e3b047610924d0247f4e45a9d","short_description":"EY: Set text vale refeição/alimentação","conditions":"beneficios=food _voucher^ORbeneficios=meal_voucher","actions":["v_text_vale_ref_alim: visible=true"]}],
+"client_scripts":[{"sys_id":"c24a3c461bb66d10a530426fe54bcb27","name":"NVLX: Minimum caracter ","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo da descrição. Variante 'NVLX' do validador — prefixo diferente dos EY/ACN usados no resto."},{"sys_id":"cb7640ad33a983d098331c07ee5c7b5d","name":"EY: Remove options based on country","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que remove opções de benefício quando o idioma do usuário é português. Opção condicionada a idioma, não a país — mesmo padrão visto no catálogo Hispanic."}],
+"variable_sets":[{"sys_id":"1a401a591b15f510a530426fe54bcb1a","title":"Informações pessoais - Benefícios","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida ou reclamar sobre benefícios (Brasil)",
+"short_description":"Dúvidas, reclamações ou sugestões sobre benefícios (plano de saúde, odontológico, vale-refeição, vale-alimentação etc.) quando não houver formulário específico.",
+"description":"Use para enviar ao RH uma dúvida, reclamação ou sugestão sobre benefícios no Brasil, como plano de saúde, plano odontológico, vale-refeição, vale-alimentação, seguro de vida, auxílio-creche e similares, quando não houver formulário específico nem resposta nos materiais de apoio. Não use se você trabalha em país da América Hispânica (use o formulário hispânico de benefícios) nem para salário, férias ou licenças.",
+"frases_exemplo":["meu vale-refeição não caiu","dúvida sobre o plano de saúde","quero incluir meu filho no plano odontológico","reclamação sobre o cartão alimentação","como funciona o auxílio-creche?","o reembolso do plano não foi pago"],
+"labels":{"request_type":"É uma dúvida, reclamação ou sugestão?","beneficios":"Sobre qual benefício?","v_description_details":"Conte em detalhes o que você precisa."},
+"acoes":{"Info / v_text_vale_ref_alim":"remover","contextual_search_results / ai_search_assist":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Remove options based on country","acao":"remover","substituicao":"Desativar as opções não aplicáveis na tabela de choices."},{"nome":"NVLX: Mandatory Fields","acao":"converter","substituicao":"Mandatory direto em beneficios, request_type e v_description_details."},{"nome":"EY: Set text vale refeição/alimentação","acao":"remover","substituicao":"Texto vai para a descrição."},{"nome":"NVLX: Minimum caracter","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."}]
+}
+}

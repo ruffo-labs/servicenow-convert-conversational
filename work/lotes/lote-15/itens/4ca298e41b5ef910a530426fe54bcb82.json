@@ -1,0 +1,35 @@
+{
+"sys_id":"4ca298e41b5ef910a530426fe54bcb82",
+"name":"Solicitação de RPE",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"RPE",
+"sc_catalogs":{"_display_value":"OTC Serviços de Suporte Administrativo","__text":"925117101be86914a530426fe54bcbf6"},
+"short_description":"Este formulário é necessário para criação de Solicitações de Produtos Acabados em Estoque (RPE)",
+"description":"This form is required for creating Finished Goods Requests (FPR)",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"attach_mandatory_widget"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"attach_mandatory_widget"}]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"atencao":["attach_mandatory_widget: custom/macro/widget (type 14)"],
+"variaveis":[{"name":"v_attach_mandatory","type":"6","order":0,"question_text":"Attach mandatory","hidden":true},{"name":"attach_mandatory_widget","type":"14","order":0,"question_text":"Attach mandatory widget","sp_widget":"Attach mandatory"},{"name":"vs_delivery_location","type":"5","order":2200,"question_text":"Delivery location","include_none":true,"choices":["Cabreúva [=cabreuva]","NASP [=nasp]","Cajamar [=cajamar]","Ecoparque [=ecoparque]"]},{"name":"v_label_attach","type":"33","order":3000,"question_text":"Attach approval from the logistics operator here for items over 1000 units"}],
+"ui_policies":[{"sys_id":"0831fc401bed0610d1abda4ce54bcba1","short_description":"EY: Remove attach when not find CC","conditions":"vs_did_you_find_the_cost_center=No","actions":["v_label_attach: visible=false,mandatory=false"]},{"sys_id":"2db8dfff1b550610d1abda4ce54bcb5c","short_description":"EY: if attach not mandatory hide attach variable","conditions":"v_attach_mandatoryISEMPTY","actions":["v_label_attach: visible=false,mandatory=false"]},{"sys_id":"dbb96e201b2efd10a530426fe54bcb40","short_description":"EY: Hide approver variable","conditions":"","actions":["vs_approver_user: readonly=true"]},{"sys_id":"ebb126561bd18214a530426fe54bcbd1","short_description":"EY: Hide Label and Attachment over 1000 products","conditions":"","actions":["v_label_attach: visible=false,mandatory=false"]}],
+"client_scripts":[
+{"sys_id":"03f3b4041bed0610d1abda4ce54bcb0f","name":"EY: If it is not found CC will not open","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que BLOQUEIA o envio. Se a resposta a 'encontrou o centro de custo' for 'No', exibe mensagem dizendo que não é possível enviar sem o centro de custo cadastrado e retorna false, impedindo a submissão. Observação: compara com 'No' com N maiúsculo, enquanto outro script do mesmo formulário compara o mesmo campo com 'no' minúsculo — se o valor real for minúsculo, esta trava não pega."},
+{"sys_id":"638660471b150a14a530426fe54bcb70","name":"EY: Mandat attach over 100 products","type":"onChange","cat_variable":"277ce6ff1b110610d1abda4ce54bcb9f","ui_type":"1","script":"Catalog Client Script onChange sobre um multi-row variable set. Faz parse do JSON das linhas e percorre cada uma verificando quantidade requerida maior ou igual a 1000 com o produto não marcado como amostra. Havendo alguma linha nessa condição, marca a necessidade de anexo obrigatório."},
+{"sys_id":"70317f3b1b190610d1abda4ce54bcbe3","name":"EY: Clear value of Attach mandatory","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que limpa 'v_attach_mandatory' no momento do envio. Como roda no submit, o valor do campo não chega a ser gravado no registro — é uma variável de controle usada só durante o preenchimento."},
+{"sys_id":"9f11ffaf1bd27910a530426fe54bcbb6","name":"EY: Read only","type":"onLoad","applies_catalog":false,"ui_type":"10","script":"Catalog Client Script onLoad que chama g_form.setVariablesReadOnly(true), tornando TODAS as variáveis do formulário somente leitura na abertura. Efeito amplo: o formulário inteiro fica não editável, a menos que outro script reverta."}
+],
+"variable_sets":[{"sys_id":"f563d0e81b5ef910a530426fe54bcbd9","title":"EY VS - Solicitação de RPE","order":100},{"sys_id":"5a54054f1b523510a530426fe54bcbc4","title":"Add more","order":200}],
+"primeira_analise":{
+"recomendacao":"manter_formulario",
+"nome":"Solicitar produtos acabados do estoque (RPE)",
+"short_description":"Pedir produtos acabados do estoque (RPE) para eventos, amostras ou uso interno, com centro de custo.",
+"description":"Use para fazer uma Solicitação de Produtos Acabados em Estoque (RPE): pedir produtos do estoque para eventos, ações, amostras ou uso interno, informando destinatário, centro de custo, finalidade e a lista de produtos (código de venda e quantidade). Pedidos acima de 1000 unidades (exceto amostra) exigem aprovação do operador logístico em anexo. É preciso ter o centro de custo cadastrado. Para dúvidas sobre o processo, use \"Tirar dúvida sobre RPE\". O pedido é feito no formulário.",
+"frases_exemplo":["quero fazer um RPE","preciso pedir produtos do estoque para um evento","solicitar produtos acabados para amostra","abrir RPE para o meu centro de custo","pedido de produto do estoque para ação de marketing","como peço produtos Natura para uso interno?"],
+"labels":{},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Read only","acao":"remover","substituicao":"Avaliar remoção: deixa o formulário inteiro somente leitura na abertura."},{"nome":"EY: If it is not found CC will not open","acao":"manter","substituicao":"Corrigir a comparação de caixa (\"No\" x \"no\")."},{"nome":"EY: Hide Label and Attachment over 1000 products","acao":"manter","substituicao":"Formulário."},{"nome":"EY: Mandat attach over 100 products / EY: Clear value of Attach mandatory","acao":"manter","substituicao":"Formulário."}]
+}
+}

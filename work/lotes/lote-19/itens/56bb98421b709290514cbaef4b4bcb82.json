@@ -1,0 +1,29 @@
+{
+"sys_id":"56bb98421b709290514cbaef4b4bcb82",
+"name":"Solicitação de Outros Reembolsos de Saúde",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Reembolsos",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Use este formulário para solicitar outros reembolsos de saúde",
+"description":"Use este formulário para solicitar outros reembolsos de saúde",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: SetOptions onChange"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"variaveis":[{"name":"v_message_refund","type":"32","order":200},{"name":"v_type_of_refund","type":"5","order":300,"question_text":"Type of refund","include_none":true,"lookup_unique":true,"choices":["Wellbeing during pregnancy [=pregnancy]","Lenses and frames [=lenses]","Coaching sessions [=coaching]","Non-pregnant medications [=non_pregnant]"]},{"name":"v_month","type":"5","order":400,"question_text":"What month does your payment receipt correspond to?","include_none":true,"lookup_unique":true,"choices":["January [=01]","February [=02]","March [=03]","April [=04]","May [=05]","June [=06]","July [=07]","August [=08]","September [=09]","October [=10]","November [=11]","December [=12]"]},{"name":"v_year","type":"5","order":500,"question_text":"What year does your payment receipt correspond to?","include_none":true,"lookup_unique":true},{"name":"v_month_year","type":"6","order":600,"question_text":"Complete date","include_none":true,"lookup_unique":true},{"name":"v_message_attach","type":"32","order":700,"question_text":"Concatenation of month and year","include_none":true,"lookup_unique":true}],
+"ui_policies":[{"sys_id":"2123a8821b349290514cbaef4b4bcbe4","short_description":"EY: Mandatory fields","conditions":"v_employeeISNOTEMPTY","actions":["v_message_refund: visible=true","v_type_of_refund: visible=true,mandatory=true","v_message_attach: visible=true"]},{"sys_id":"44004d8e1b3c9290514cbaef4b4bcbbc","short_description":"EY: Show month and year","conditions":"v_type_of_refund=pregnancy","actions":["v_month: visible=true,mandatory=true","v_year: visible=true,mandatory=true"]},{"sys_id":"8af8f8c21bf89290514cbaef4b4bcbb9","short_description":"EY: Hide portal variables","conditions":"v_month_yearISEMPTY","actions":["v_month_year: visible=false"]}],
+"client_scripts":[{"sys_id":"32e245ca1b7c9290514cbaef4b4bcb3f","name":"EY: Remove options onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que remove várias opções do tipo de reembolso ('pregnancy', 'lenses', 'coaching' e outras) na abertura."},{"sys_id":"4dbe748a1b3c9290514cbaef4b4bcbde","name":"EY: Set year","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que monta a lista de anos dinamicamente com o ano atual e o anterior, em vez de deixá-los cravados."},{"sys_id":"a143cd0e1b7c9290514cbaef4b4bcb49","name":"EY: SetOptions onChange","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","va_supported":false,"ui_type":"10","script":"Par onChange do anterior: remove as mesmas opções de tipo de reembolso e recoloca as pertinentes conforme a escolha. Faz a remoção também no ramo de valor vazio."},{"sys_id":"b5d001061b7c9290514cbaef4b4bcb37","name":"EY: Set complete date","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que monta a data completa a partir do mês e do ano preenchidos, verificando antes que os dois existam."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Pedir outros reembolsos de saúde",
+"short_description":"Solicite reembolsos de saúde como lentes, gravidez ou coaching (Argentina, Colômbia e Peru).",
+"description":"Use para pedir reembolsos de saúde que não são cobertos pelo plano de saúde, como lentes e óculos, despesas de gravidez ou coaching, conforme as regras do seu país (Argentina, Colômbia ou Peru). Informe o tipo de reembolso e anexe o comprovante de pagamento. Não use para creche, escola ou energia elétrica, que têm itens próprios, nem para adesão ao plano de saúde.",
+"frases_exemplo":["Quero reembolso das minhas lentes","Reembolso de despesas da gravidez","Como peço reembolso de óculos?","reintegro de lentes","reembolso de coaching"],
+"labels":{"v_type_of_refund":"Que tipo de reembolso de saúde você quer pedir?","v_month":"De que mês é o comprovante de pagamento?","v_year":"E de que ano?","nova_anexo_comprovante":"Anexe o comprovante de pagamento."},
+"acoes":{"v_type_of_refund":"alterar_tipo:Lookup Select Box","nova_anexo_comprovante":"nova","v_month_year":"derivar","v_message_refund / v_message_attach":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: SetOptions onChange / EY: Remove options onLoad","acao":"converter","substituicao":"Lookup em tabela de tipos por país."},{"nome":"EY: Set year","acao":"converter","substituicao":"Choices fixas."},{"nome":"EY: Set complete date","acao":"converter","substituicao":"Producer script."},{"nome":"EY: Mandatory fields / EY: Show month and year / EY: Hide portal variables","acao":"manter","substituicao":"Sem script; mover mandatory/hidden fixos para a variável."}]
+}
+}

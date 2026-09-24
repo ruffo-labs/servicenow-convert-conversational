@@ -1,0 +1,77 @@
+{
+"sys_id":"5c8fbbfe1b754e90d1abda4ce54bcba5",
+"name":"Solicitação de compras descentralizadas",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"HUB de Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Esse formulário é exclusivo para compras descentralizadas até R$ 125.000,00 ou $ 25.000,00 (dólares) para pagamentos em moedas estrangeira, para criação de PR, CW e Folha e aceite de Serviço.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de compras descentralizadas. Grava x_nasm_hr_item com o sysparm_id da URL, copia o tipo de solicitação para o campo 'decentralized_purchases' e resolve o solicitante indo ao x_nasm_hr_profile indicado pela variável 'vs_in_the_name_of' para pegar o campo 'user'.",
+"atencao":["5 variable sets"],
+"variaveis":[{"name":"v_faq_about_process","type":"32","order":10},{"name":"v_info_exclusively_decentralized_purchases","type":"32","order":20},{"name":"v_term_responsibility_contracting","type":"32","order":90},{"name":"v_download_template","type":"32","order":100},{"name":"v_attach_completed_template","type":"33","order":110,"question_text":"Attach the completed template here"},{"name":"v_attach_supplier_email_with_commercial_proposal","type":"33","order":120,"question_text":"Attach the supplier's email with commercial proposal here"}],
+"ui_policies":[
+{"sys_id":"2090772b1bfd0ed0a530426fe54bcbae","short_description":"EY: Mandatory field","conditions":"","actions":["v_attach_supplier_email_with_commercial_proposal: mandatory=true"]},
+{"sys_id":"0bdd2ba31bfd0ed0a530426fe54bcbea","short_description":"EY: If the \"What is the type of request?\" is \"PR Creation\" and \"Payment will be made in reais or foreign currency?\" is \"Payment in foreign currency\"","conditions":"vs_type_of_request=pr_creation^vs_payment_in_reais_or_foreign_currency=foreign^vs_type_of_contract!=material","actions":["vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts: visible=true,mandatory=true","vs_download_nm_2041_3_0: visible=true,mandatory=true","vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier: visible=true,mandatory=true","vs_select_type_of_service: visible=true,mandatory=true","vs_summary_contracted_service: visible=true,mandatory=true","vs_service_provided_abroad_bring_economic_results_to_natura_brasil: visible=true,mandatory=true","vs_tax_benefit_linked_service: visible=true,mandatory=true","vs_supplier_bank_details: visible=true,mandatory=true"]},
+{"sys_id":"b718ef781b8e0610d1abda4ce54bcbf4","short_description":"EY: If controller is true","conditions":"vs_controller=true","actions":["vs_type_of_request: visible=false,mandatory=false","vs_end_date_service_provision: visible=false,mandatory=false","vs_order_line: visible=false,mandatory=false","v_term_responsibility_contracting: visible=false","v_attach_completed_template: visible=false,mandatory=false","vs_confirm_service_provision: visible=false,mandatory=false","vs_purchase_order_number: visible=false,mandatory=false","vs_email_supplier: visible=false,mandatory=false","vs_service_description: visible=false,mandatory=false","v_download_template: visible=false","vs_start_date_service_provision: visible=false,mandatory=false","vs_cnpj_tax_supplier_id: visible=false,mandatory=false","vs_location_service_provision: visible=false,mandatory=false","vs_email_supplier_registration: visible=false,mandatory=false","v_attach_supplier_email_with_commercial_proposal: visible=false,mandatory=false","vs_info_email_supplier: visible=false"]},
+{"sys_id":"4071f6cc1b6e0e10a530426fe54bcb85","short_description":"EY: Hide fields on PR Creation","conditions":"vs_type_of_request=pr_creation","actions":["vs_order_line: visible=false","vs_purchase_order_number: visible=false","vs_start_date_service_provision: visible=false","vs_location_service_provision: visible=false","vs_end_date_service_provision: visible=false","vs_confirm_service_provision: visible=false","vs_service_description: visible=false"]},
+{"sys_id":"b0107ff01b2ece10d1abda4ce54bcb77","short_description":"EY: Hide fields on Creation and Acceptance of Service Sheet or None","conditions":"vs_type_of_request=creation_acceptance_service_sheet^ORvs_type_of_request=","actions":["v_term_responsibility_contracting: visible=false,mandatory=false","v_attach_completed_template: visible=false,mandatory=false","v_download_template: visible=false,mandatory=false"]},
+{"sys_id":"7a02b7f41b2ece10d1abda4ce54bcb0e","short_description":"EY: Mandatory fields on PR creation","conditions":"vs_type_of_request=pr_creation","actions":["vs_start_date_service_provision: visible=true,mandatory=true","v_term_responsibility_contracting: visible=true,mandatory=true","vs_end_date_service_provision: visible=true,mandatory=true","v_download_template: visible=true,mandatory=true","v_attach_completed_template: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"2ff694051be20250d1abda4ce54bcb10","name":"EY: Clear value when Creation and Accept","type":"onChange","cat_variable":"2d23f5871bb18e90d1abda4ce54bcbed","ui_type":"1","script":"Catalog Client Script onChange que limpa os anexos de termo do fornecedor e template preenchido quando o tipo de solicitação é 'creation_acceptance_service_sheet'."},{"sys_id":"b57c37151b9ac690a530426fe54bcbc4","name":"EY: Clear Fields when Currency Changes","type":"onChange","cat_variable":"4a54a98b1b318e90d1abda4ce54bcb44","ui_type":"1","script":"Catalog Client Script onChange que zera o bloco de serviços quando a moeda muda: prestação de serviço, carbono, financeiro, passageiro e demais tipos de serviço."},{"sys_id":"e517aff81b8e0610d1abda4ce54bcb7f","name":"EY: Block submit if value great than","type":"onSubmit","ui_type":"1","script":"Catalog Client Script onSubmit que BLOQUEIA o envio. Lê a variável de controle 'vs_controller' e, se estiver como 'true', exibe 'Não é possível criar a solicitação' e retorna false. O nome do script sugere um teto de valor, mas a decisão já vem pronta na variável de controle — a regra de valor é calculada em outro lugar."}],
+"variable_sets":[{"sys_id":"8c795dc71bfd4e90d1abda4ce54bcb26","title":"Initial Data","order":30},{"sys_id":"1d53a5871b318e90d1abda4ce54bcbae","title":"Value","order":40},{"sys_id":"bfe6ed8f1b318e90d1abda4ce54bcb41","title":"Supplier","order":50},{"sys_id":"815231471bb18e90d1abda4ce54bcb1b","title":"Type of request","order":60},{"sys_id":"021e52a31b310ed0a530426fe54bcb64","title":"Payment","order":70}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Compras descentralizadas (até R$ 125 mil)",
+"short_description":"Compras descentralizadas até R$ 125.000,00 ou US$ 25.000,00: criação de requisição (PR/CW) ou criação e aceite de folha de serviço",
+"description":"Compras descentralizadas feitas pela própria área, com valor total até R$ 125.000,00 (ou US$ 25.000,00 em moeda estrangeira), no Brasil. Acima desse valor a compra é centralizada e deve seguir o pedido de compra padrão.",
+"frases_exemplo":["compra descentralizada","preciso fazer uma compra de até 125 mil"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{
+"nome":"Solicitar requisição de compra descentralizada (PR ou CW)",
+"short_description":"Criar requisição de compra (PR) ou contrato (CW) para compra descentralizada até R$ 125 mil / US$ 25 mil",
+"descricao":"Use quando sua área vai contratar um serviço ou comprar um material por conta própria, com valor total até R$ 125.000,00 (ou US$ 25.000,00 em moeda estrangeira), e precisa que o HUB crie a requisição de compra (PR) ou o contrato (CW). Tenha em mãos o CNPJ/Tax ID do fornecedor, o valor, o template de compra preenchido e o e-mail do fornecedor com a proposta comercial. Não use para valores acima do limite (compra centralizada, use o pedido de compra padrão) nem para gerar ou aceitar folha de serviço de um pedido já existente.",
+"frases_exemplo":["preciso criar uma PR de compra descentralizada","quero contratar um fornecedor de até 50 mil reais","abrir CW para serviço de consultoria pequeno","compra descentralizada em dólar","preciso de requisição de compra para um evento da minha área"],
+"fixar":"vs_type_of_request = pr_creation (default/hidden)",
+"perguntas":[
+{"ordem":1,"variavel":"vs_which_company_request_for","conversational_label":"A compra é para qual empresa?"},
+{"ordem":2,"variavel":"vs_sub_company","conversational_label":"Para qual subempresa?"},
+{"ordem":3,"variavel":"vs_select_physical_center","conversational_label":"Qual é o centro físico?"},
+{"ordem":4,"variavel":"vs_area_will_call_opened","conversational_label":"Qual área está fazendo a compra?"},
+{"ordem":5,"variavel":"vs_total_purchase_value","conversational_label":"Qual é o valor total da compra?"},
+{"ordem":6,"variavel":"vs_payment_in_reais_or_foreign_currency","conversational_label":"O pagamento será em reais ou em moeda estrangeira?"},
+{"ordem":7,"variavel":"vs_type_of_contract","conversational_label":"É compra de material ou contratação de serviço?"},
+{"ordem":8,"variavel":"vs_cnpj_tax_supplier_id","conversational_label":"Qual é o CNPJ (ou Tax ID) do fornecedor?"},
+{"ordem":9,"variavel":"vs_email_supplier","conversational_label":"Qual é o e-mail de contato do fornecedor?"},
+{"ordem":10,"variavel":"vs_email_supplier_registration","conversational_label":"Qual e-mail devemos usar para o cadastro do fornecedor?"},
+{"ordem":11,"variavel":"vs_start_date_service_provision","conversational_label":"Quando começa a prestação do serviço?"},
+{"ordem":12,"variavel":"vs_end_date_service_provision","conversational_label":"Quando termina a prestação do serviço?"},
+{"ordem":13,"variavel":"vs_select_type_of_service","conversational_label":"(só moeda estrangeira) Qual é o tipo de serviço contratado?"},
+{"ordem":14,"variavel":"nova_codigo_lc116","conversational_label":"(só moeda estrangeira) Qual é a classificação do serviço na Lei Complementar 116/2003?"},
+{"ordem":15,"variavel":"vs_summary_contracted_service","conversational_label":"(só moeda estrangeira) Resuma o serviço contratado."},
+{"ordem":16,"variavel":"vs_tax_benefit_linked_service","conversational_label":"(só moeda estrangeira) Qual benefício fiscal está ligado ao serviço?"},
+{"ordem":17,"variavel":"vs_service_provided_abroad_bring_economic_results_to_natura_brasil","conversational_label":"(só moeda estrangeira) O serviço prestado no exterior trará resultado econômico para a Natura Brasil? Se não, explique por quê."},
+{"ordem":18,"variavel":"vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier","conversational_label":"(só moeda estrangeira) Os impostos do contrato serão pagos pela Natura ou pelo fornecedor?"},
+{"ordem":19,"variavel":"vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts","conversational_label":"(só moeda estrangeira) Os valores vão ultrapassar os limites da norma NM-2041.3.0?"},
+{"ordem":20,"variavel":"vs_supplier_bank_details","conversational_label":"(só moeda estrangeira) Quais são os dados bancários do fornecedor?"},
+{"ordem":21,"variavel":"v_attach_completed_template","conversational_label":"Anexe o template de compra preenchido."},
+{"ordem":22,"variavel":"v_attach_supplier_email_with_commercial_proposal","conversational_label":"Anexe o e-mail do fornecedor com a proposta comercial."}
+]
+},
+{
+"nome":"Solicitar criação e aceite de folha de serviço (compra descentralizada)",
+"short_description":"Criar e aceitar folha de serviço de um pedido de compra descentralizada já emitido",
+"descricao":"Use quando o pedido de compra descentralizada já existe e o serviço foi prestado: o HUB cria e aceita a folha de serviço para liberar o pagamento ao fornecedor. Informe o número e a linha do pedido, o local e o período da prestação e confirme se o serviço foi entregue. Não use para abrir uma nova requisição de compra (PR/CW) nem para folhas de serviço de pedidos centralizados (use o item de pedido de compra e folha de serviço padrão).",
+"frases_exemplo":["preciso aceitar a folha de serviço do pedido 4500012345","o fornecedor já prestou o serviço, como libero o pagamento?","criar folha de serviço de compra descentralizada","dar aceite no serviço prestado","gerar FS do pedido para pagar o fornecedor"],
+"fixar":"vs_type_of_request = creation_acceptance_service_sheet (default/hidden)",
+"perguntas":[{"ordem":1,"variavel":"vs_purchase_order_number","conversational_label":"Qual é o número do pedido de compra?"},{"ordem":2,"variavel":"vs_order_line","conversational_label":"Qual é a linha do pedido?"},{"ordem":3,"variavel":"vs_which_company_request_for","conversational_label":"O pedido é de qual empresa?"},{"ordem":4,"variavel":"vs_sub_company","conversational_label":"De qual subempresa?"},{"ordem":5,"variavel":"vs_area_will_call_opened","conversational_label":"Qual área está solicitando?"},{"ordem":6,"variavel":"vs_total_purchase_value","conversational_label":"Qual é o valor da folha de serviço?"},{"ordem":7,"variavel":"vs_location_service_provision","conversational_label":"Em que local o serviço foi prestado?"},{"ordem":8,"variavel":"vs_service_description","conversational_label":"Descreva o serviço prestado."},{"ordem":9,"variavel":"vs_start_date_service_provision","conversational_label":"Quando o serviço começou?"},{"ordem":10,"variavel":"vs_end_date_service_provision","conversational_label":"Quando o serviço terminou?"},{"ordem":11,"variavel":"vs_confirm_service_provision","conversational_label":"Você confirma que o serviço foi prestado?"}]
+}
+],
+"scripts_e_policies":[{"nome":"EY: Block submit if value great than","acao":"converter","substituicao":"Mensagem e bloqueio logo após o valor (UI policy sem script) + limite explícito na descrição."},{"nome":"EY: Clear Fields when Currency Changes","acao":"remover","substituicao":"Desnecessário com um único campo de classificação LC116."},{"nome":"EY: Clear value when Creation and Accept","acao":"remover","substituicao":"Com a divisão, os anexos de PR não existem no item de folha de serviço."},{"nome":"EY: Hide fields on PR Creation / EY: Mandatory fields on PR creation / EY: Hide fields on Creation and Acceptance of Service Sheet or None","acao":"remover","substituicao":"Viram a composição fixa de cada item derivado."},{"nome":"EY: If the \"What is the type of request?\" is \"PR Creation\" and ... foreign currency","acao":"manter","substituicao":"Fica no item derivado de PR, condicionada só à moeda estrangeira e ao tipo de contratação diferente de material."},{"nome":"EY: Mandatory field","acao":"converter","substituicao":"Mandatory direto na variável v_attach_supplier_email_with_commercial_proposal (item de PR)."}]
+}
+}

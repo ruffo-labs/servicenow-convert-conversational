@@ -1,0 +1,29 @@
+{
+"sys_id":"daebc4ad3b001290924d0247f4e45a0c",
+"name":"Solicitar pagamento de Aluguel e Condomínio Varejo\t\t\t\t\t\t\t",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"HUB de Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Solicite pagamentos relacionados a boletos de aluguel, condomínios e contas de consumo das lojas de varejo",
+"description":"Solicite pagamentos relacionados a boletos de aluguel, condomínios e contas de consumo das lojas de varejo",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[{"name":"v_requesters_name","type":"8","reference":"sys_user","order":50,"question_text":"Requester's name:"},{"name":"v_which_company_is_you_request_for","type":"5","order":100,"question_text":"Which company is you request for?","include_none":true,"choices":["The Body Shop [=tbs]","Natura [=natura]"]},{"name":"v_store_name","type":"8","reference":"x_nasm_ptp_store_name_rent","order":150,"question_text":"Store's Name"},{"name":"v_label_others_store","type":"32","order":200,"question_text":"In case you don't find the store you are searching for, select \"Others\" in the field above"},{"name":"v_store_cnpj","type":"6","order":250,"question_text":"Store's CNPJ"},{"name":"v_others_cnpj","type":"32","order":300},{"name":"v_cost_center","type":"6","order":350,"question_text":"Cost Center"},{"name":"v_bill_expiration_date","type":"9","order":400,"question_text":"Bill expiration date"},{"name":"v_allowed_format","type":"32","order":450},{"name":"v_attach_bill","type":"33","order":500,"question_text":"Attach bill"}],
+"ui_policies":[{"sys_id":"828294213b041290924d0247f4e45acf","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_others_cnpj: mandatory=true","v_allowed_format: mandatory=true","v_store_cnpj: mandatory=true","v_attach_bill: mandatory=true","v_requesters_name: mandatory=true","v_bill_expiration_date: mandatory=true","v_cost_center: mandatory=true","v_store_name: mandatory=true","v_which_company_is_you_request_for: mandatory=true"]},{"sys_id":"a1c967f43b985650924d0247f4e45ab3","short_description":"EY: Readonly Variables Resolver","conditions":"","applies_catalog":false,"actions":["v_store_name: readonly=true"]}],
+"client_scripts":[{"sys_id":"48b314a53b041290924d0247f4e45a0e","name":"EY: Get Store CNPJ","type":"onChange","cat_variable":"166f44293b801290924d0247f4e45af3","ui_type":"10","script":"Catalog Client Script onChange que busca o CNPJ da loja. Limpa o campo e, para uma loja específica identificada por sys_id fixo no código, trava o campo como somente leitura. Regra cravada por sys_id."},{"sys_id":"8f8a05363b841610924d0247f4e45a10","name":"EY: onChange only number CC","type":"onChange","cat_variable":"1ae1d0693bc01290924d0247f4e45a80","ui_type":"10","script":"Catalog Client Script onChange que aceita apenas dígitos no centro de custo. Inválido: limpa o campo. Observação: diferente dos irmãos, não mostra mensagem de erro — o valor some sem explicação para o usuário."},{"sys_id":"c9f2d4a13b041290924d0247f4e45a7b","name":"EY: Fill Form Information ","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que preenche 'v_requesters_name' com o usuário logado e trava o campo como somente leitura."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Pagar aluguel, condomínio ou conta de consumo de loja",
+"short_description":"Enviar boleto de aluguel, condomínio ou conta de consumo (água, luz) das lojas de varejo para pagamento",
+"description":"Use para enviar ao HUB de Pagamentos o boleto de aluguel, condomínio ou conta de consumo (água, luz, gás) de uma loja de varejo para pagamento. Informe a empresa, a loja (se não encontrar, escolha 'Outros'), o CNPJ da loja, o centro de custo e o vencimento, e anexe o boleto em PDF. Não use para aluguel de escritórios ou imóveis corporativos, pagamento manual a fornecedores (use 'Solicitar pagamento manual ou ITP') ou adiantamento a fornecedor.",
+"frases_exemplo":["preciso pagar o aluguel da loja","boleto de condomínio da loja do shopping vence sexta","enviar conta de luz da loja para pagamento","pagar condomínio da loja 123","tenho um boleto de aluguel do varejo"],
+"labels":{"v_which_company_is_you_request_for":"O pagamento é de qual empresa?","v_store_name":"De qual loja é o boleto?","v_store_cnpj":"Qual é o CNPJ da loja?","v_cost_center":"Qual é o centro de custo da loja?","v_bill_expiration_date":"Qual é a data de vencimento do boleto?","v_attach_bill":"Anexe o boleto, por favor."},
+"acoes":{"v_requesters_name":"derivar","v_label_others_store":"remover","v_others_cnpj":"remover","v_allowed_format":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Fill Form Information","acao":"remover","substituicao":"Default value gs.getUserID() e read-only na variável v_requesters_name."},{"nome":"EY: Get Store CNPJ","acao":"converter","substituicao":"Auto-populate de v_store_cnpj pela referência v_store_name; regra por sys_id fixo vira UI policy sem script (loja = Outros → CNPJ editável e obrigatório)."},{"nome":"EY: onChange only number CC","acao":"converter","substituicao":"Validation Regex ^\\d+$ com mensagem de erro."},{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Mandatory direto nas variáveis; tirar mandatory dos rótulos v_others_cnpj e v_allowed_format."},{"nome":"EY: Readonly Variables Resolver","acao":"manter","substituicao":"Só na visão do caso."}]
+}
+}

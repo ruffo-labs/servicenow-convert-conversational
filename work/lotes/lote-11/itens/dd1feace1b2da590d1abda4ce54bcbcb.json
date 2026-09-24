@@ -1,0 +1,29 @@
+{
+"sys_id":"dd1feace1b2da590d1abda4ce54bcbcb",
+"name":"Lançamento Contábil - Natura + TBS",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Lançamentos Contábeis",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um lançamento contábil",
+"description":"Solicite um lançamento contábil",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":125},{"sys_id":"d252faca1b6da590d1abda4ce54bcba3","title":"EY VS - Lancamento Contabil - Natura + TBS","order":150},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar lançamento contábil (Natura e TBS)",
+"short_description":"Peça um lançamento ou reclassificação contábil manual para Natura ou The Body Shop, com planilha modelo.",
+"description":"Use para pedir à Contabilidade (RTR) um lançamento contábil manual ou uma reclassificação entre contas/centros de custo nas empresas Natura ou The Body Shop (TBS). Você escolhe a empresa, indica o aprovador, anexa a planilha modelo de lançamento preenchida e o documento de suporte. O modelo está no repositório indicado no artigo de KB. Não use para empresas Avon (use \"Solicitar lançamento contábil Avon\"), para lançamentos intercompany ou de mercadoria/caixa em trânsito, para provisões ou para estornos.",
+"frases_exemplo":["Preciso fazer um lançamento contábil na Natura","reclassificar despesa de centro de custo","lançamento manual TBS","quero corrigir a conta de uma despesa lançada errada","subir planilha de lançamento contábil","solicitar reclass contábil Natura"],
+"labels":{"vs_approver":"Quem vai aprovar esse lançamento?","vs_attachment":"Anexe a planilha modelo de lançamento preenchida.","vs_attachment_avon":"Agora anexe o documento de suporte (nota, e-mail, relatório).","v_additional_information":"Quer acrescentar alguma informação sobre o lançamento?"},
+"acoes":{"vs_attachment_information":"ocultar_na_conversa","vs_repository_pb":"ocultar_na_conversa","vs_repository_es":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY - ReadOnly on Target Record (set Natura + TBS)","acao":"manter","substituicao":"Confirmar que não se aplica na visão do item; senão aprovador e anexo são pulados."}]
+}
+}

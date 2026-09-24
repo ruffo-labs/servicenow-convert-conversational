@@ -1,0 +1,37 @@
+{
+ "sys_id": "96a7a46c1ba161d0a530426fe54bcb01",
+ "status": "dividido",
+ "motivo": "Duas intenções bem distintas (alteração cadastral/centro de custo vs. transferência física entre filiais ou comodato), como na 1ª análise. As 6 legendas de link de template e as policies que só as escondem por sub-empresa saem da conversa (viram conteúdo de KB). Todas as variáveis de dado do item (v_request_type, v_assets_number, v_invoice_issue, v_attach_file, v_attach_email_with_approval, v_opened_by, vs_which_company, vs_which_sub_company_8, v_country, v_additional_information) pertencem a variable sets compartilhados: não é possível, no formato da spec de item, escrever labels para elas, restringir v_request_type a um subconjunto de choices por derivado, nem ocultar/definir default para v_invoice_issue. Mantemos os textos e choices originais e os client scripts que ainda calculam/ajustam esses campos (não flagados como bloqueadores), preservando o comportamento sem perda de dado. Só o script sem \"VA Supported\" e o script que só escondia as variáveis de link (já removidas) saem da conversa.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "remover": {
+  "v_link_template_1": "visual",
+  "v_link_template_2": "visual",
+  "v_link_template_3": "visual",
+  "v_link_template_4": "visual",
+  "v_link_template_5": "visual",
+  "v_link_template_6": "visual"
+ },
+ "policies": {
+  "d06dbd9e8706d650ec360e530cbb3544": "remover",
+  "e25b696a87c65a50ec360e530cbb353f": "remover",
+  "f88d612e87c65a50ec360e530cbb35cb": "remover"
+ },
+ "scripts": {
+  "416865ea87865a50ec360e530cbb35c3": {
+   "remover": "sem_efeito"
+  },
+  "fc02f5de8702d650ec360e530cbb35dd": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0
+  },
+  {
+   "de_1a": 1
+  }
+ ]
+}

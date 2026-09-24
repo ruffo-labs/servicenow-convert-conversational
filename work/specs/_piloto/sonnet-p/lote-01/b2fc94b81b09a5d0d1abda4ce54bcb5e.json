@@ -1,0 +1,82 @@
+{
+ "sys_id": "b2fc94b81b09a5d0d1abda4ce54bcb5e",
+ "status": "conversacional",
+ "motivo": "Fluxo único de reclassificação/legalização de adiantamento LATAM com perguntas condicionadas ao tipo de processo. A policy onLoad vira prop nas variáveis; as validações de valor e mês viram regex.",
+ "vars": {
+  "v_which_country": {
+   "label": "Em qual país?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_audience_is_question": {
+   "label": "De qual público é o colaborador?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_process_is_the_request_for": {
+   "label": "O que você precisa: anular, reclassificar, reintegrar depósito ou legalizar pagamento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_month": {
+   "label": "De qual mês são os lançamentos? (MM/AAAA)",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+   }
+  },
+  "v_enter_the_total_amount_of_the_accounting": {
+   "label": "Qual o valor total contábil?",
+   "props": {
+    "validation_regex": "^[0-9]+([.,][0-9]{1,2})?$"
+   }
+  },
+  "v_enter_the_total_amount_of_legalization_requested": {
+   "label": "Qual o valor total a legalizar?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_currency_is_used": {
+   "label": "Em qual moeda?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_the_report_or_detail_of_the_request": {
+   "label": "Anexe o relatório ou detalhamento do pedido."
+  },
+  "v_attach_the_claim_vouchers": {
+   "label": "Se tiver, anexe os comprovantes."
+  },
+  "v_attach_approval": {
+   "label": "Anexe a aprovação.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_additional_information": {
+   "label": "Quer acrescentar alguma informação?"
+  },
+  "v_opened_by": {
+   "props": {
+    "hidden": true,
+    "read_only": true
+   }
+  }
+ },
+ "policies": {
+  "666049891b45e9d0d1abda4ce54bcb47": "remover"
+ },
+ "scripts": {
+  "751076e51b952510d1abda4ce54bcb63": {
+   "converter": "regex"
+  },
+  "988591b81b49e5d0d1abda4ce54bcbee": {
+   "converter": "regex"
+  }
+ }
+}

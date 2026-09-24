@@ -1,0 +1,9 @@
+{
+ "sys_id": "db9c46e71bdd2910d1abda4ce54bcb0e",
+ "status": "analise_humana",
+ "criterio": "formulario_complexo",
+ "motivo": "O item multiplexa três fluxos distintos (criação de PR em Coupa/Ariba/Linx, criação e aceite de folha de serviço) em cerca de 90 variáveis, incluindo um motor de classificação fiscal (LC116) com mais de 30 variáveis de subcódigo cujos valores se repetem com significados diferentes conforme a categoria de serviço (ex.: os códigos 2, 5, 7, 13, 14, 16, 17 e 28 representam coisas distintas em listas diferentes). Não é seguro unir essas listas num único campo sem colisão de valores e risco de erro na classificação fiscal, e a 1ª análise deixa em aberto como o campo v_type_of_request deveria se comportar para diferenciar Coupa/Ariba/Linx dentro do derivado de criação de pedido. Recomendo avaliação humana da regra de negócio e da classificação LC116 antes de qualquer conversão.",
+ "divergencias": [
+  "regra_negocio"
+ ]
+}

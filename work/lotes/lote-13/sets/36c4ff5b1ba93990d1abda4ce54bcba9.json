@@ -1,0 +1,32 @@
+{
+"sys_id":"36c4ff5b1ba93990d1abda4ce54bcba9",
+"title":"EY VS: Repayment of title",
+"internal_name":"ey_vs_repayment_of_title",
+"order":200,
+"description":"VS do item Repayment of title",
+"variaveis":[
+{"name":"vs_order_individual_or_batch","type":"5","order":100,"question_text":"The order is: (individual or batch)","include_none":true,"choices":["Individual [=individual]","Batch [=batch]"]},
+{"name":"vs_select_the_approver","type":"8","reference":"sys_user_grmember","reference_qual":"group=c45be7b43b869250924d0247f4e45a87^EQ","reference_qual_condition":"group=c45be7b43b869250924d0247f4e45a87^EQ","order":150,"question_text":"Select the approver"},
+{"name":"vs_describe_reason_request","type":"2","order":200,"question_text":"Describe the reason for your request"},
+{"name":"vs_annex_credit_approval","type":"33","order":300,"question_text":"Attach completed template"},
+{"name":"vs_data_search","type":"5","order":400,"question_text":"What data do you want to search for?","include_none":true,"choices":["Name [=name]","CPF/CNPJ [=cpf_cnpj]","Code [=code]","Email [=email]"]},
+{"name":"vs_consultant_name_new","type":"8","reference":"core_company","reference_qual":"u_source_system=ECC^customer=true^EQ","reference_qual_condition":"u_source_system=ECC^customer=true^EQ","order":500,"question_text":"Consultant's name"},
+{"name":"v_search_cpf_cnpj","type":"8","reference":"core_company","reference_qual":"u_source_system=ECC^customer=true^EQ","reference_qual_condition":"u_source_system=ECC^customer=true^EQ","order":600,"question_text":"Search by CPF/CNPJ"},
+{"name":"vs_representative_code","type":"8","reference":"core_company","reference_qual":"customer=true^EQ","reference_qual_condition":"customer=true^EQ","order":700,"question_text":"Representative's code search"},
+{"name":"vs_representative_email_new","type":"8","reference":"core_company","reference_qual":"customer=true^u_source_system=BIDs^EQ","reference_qual_condition":"customer=true^u_source_system=BIDs^EQ","order":750,"question_text":"Representative's email search"},
+{"name":"vs_number_bond","type":"6","order":800,"question_text":"What is the number of the bond to be rescheduled?"},
+{"name":"vs_maturity_bond","type":"9","order":900,"question_text":"What is the maturity of the bond?"},
+{"name":"vs_many_parcels","type":"5","order":1000,"question_text":"How many parcels","include_none":true,"choices":["1","2","3","4","5","6","7","8","9","10"]},
+{"name":"vs_describe_the_reason_for_your_request","type":"2","order":1100,"question_text":"Describe the reason for your request"}
+],
+"ui_policies":[
+{"sys_id":"01135c2f1bad3990d1abda4ce54bcbad","short_description":"EY: Show Fields for Individual Order","conditions":"vs_order_individual_or_batch=individual","actions":["vs_many_parcels: visible=true,mandatory=true","vs_describe_the_reason_for_your_request: visible=true,mandatory=true","vs_maturity_bond: visible=true,mandatory=true","vs_data_search: visible=true,mandatory=true","vs_number_bond: visible=true,mandatory=true"]},
+{"sys_id":"2406c87f1b21b1d0a530426fe54bcb19","short_description":"EY: Show Fields Code Search","conditions":"vs_order_individual_or_batch=individual^vs_data_search=code","actions":["vs_representative_code: visible=true,mandatory=true"]},
+{"sys_id":"2b2784ff1b21b1d0a530426fe54bcb6b","short_description":"EY: Mandatory Fields Catalog Item View","conditions":"","actions":["vs_select_the_approver: mandatory=true","vs_order_individual_or_batch: mandatory=true"]},
+{"sys_id":"568190eb1bad3990d1abda4ce54bcb90","short_description":"EY: Show Fields for Batch Order","conditions":"vs_order_individual_or_batch=batch","actions":["vs_describe_reason_request: visible=true,mandatory=true","vs_annex_credit_approval: visible=true,mandatory=true"]},
+{"sys_id":"81b698631bed3990d1abda4ce54bcb51","short_description":"EY: Show Fields CPF Search","conditions":"vs_order_individual_or_batch=individual^vs_data_search=cpf_cnpj","actions":["v_search_cpf_cnpj: visible=true,mandatory=true"]},
+{"sys_id":"8df644ff1b21b1d0a530426fe54bcbdb","short_description":"EY: Show Fields Email Search","conditions":"vs_order_individual_or_batch=individual^vs_data_search=email","actions":["vs_representative_email_new: visible=true,mandatory=true"]},
+{"sys_id":"a24498af1bad3990d1abda4ce54bcbb9","short_description":"EY: Show Fields Name Search","conditions":"vs_order_individual_or_batch=individual^vs_data_search=name","actions":["vs_consultant_name_new: visible=true,mandatory=true"]}
+],
+"client_scripts":[]
+}

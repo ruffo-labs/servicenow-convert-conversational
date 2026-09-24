@@ -1,0 +1,29 @@
+{
+"sys_id":"3a4932df87544b14ec360e530cbb3516",
+"name":"Solicitação de Prévia de Rescisão",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Desligamento",
+"sc_catalogs":{"_display_value":"Hire to Retire (HTR)","__text":"d48274d01b167010d1abda4ce54bcb5d"},
+"short_description":"Este formulário deve ser utilizado exclusivamente para prévia de rescisão de diretores e cargos acima, além de colaboradores com mais de 20 anos de relação ou com pacotes de desligamento.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Prévia de Rescisão. Grava item com o sysparm_id e define requested_for como o usuário logado.",
+"variaveis":[{"name":"select_collaborator","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":100,"question_text":"Select the collaborator"},{"name":"global_id","type":"6","reference":"sys_user","order":200,"question_text":"Global ID"},{"name":"name","type":"6","reference":"sys_user","order":300,"question_text":"Name"},{"name":"date_admission","type":"9","order":400,"question_text":"Date of Admission"},{"name":"reason_requesting_preliminary_approval","type":"5","reference":"x_nasm_hr_profile","reference_qual":"user.nameISNOTEMPTY^EQ","reference_qual_condition":"user.nameISNOTEMPTY^EQ","order":500,"question_text":"Reason for requesting the Preliminary Approval","include_none":true,"choices":["Employee experience [=employee_experience]","Financial impact [=financial_impact]"]},{"name":"expected_shutdown_date","type":"9","order":600,"question_text":"Expected Shutdown Date"},{"name":"termination_fee","type":"1","order":700,"question_text":"Will there be a termination fee?","include_none":true},{"name":"additional_payment","type":"1","order":800,"question_text":"Will there be any additional payment?","include_none":true},{"name":"additional_payment_included_termination_settlement","type":"2","order":900,"question_text":"Describe what additional payment will be included in the termination settlement."},{"name":"additional_information","type":"2","order":1000,"question_text":"Additional information"}],
+"ui_policies":[{"sys_id":"4044486f875c8b14ec360e530cbb35c6","short_description":"Aoop: Show mandatory fields","conditions":"","actions":["additional_payment: mandatory=true","date_admission: readonly=true","termination_fee: mandatory=true","expected_shutdown_date: mandatory=true","reason_requesting_preliminary_approval: mandatory=true","select_collaborator: mandatory=true","name: readonly=true","global_id: readonly=true"]},{"sys_id":"e1930cab875c8b14ec360e530cbb355e","short_description":"Aoop: Show Describe what additional payment","conditions":"additional_payment=Yes","actions":["additional_payment_included_termination_settlement: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"4ee2d9e187308710ec360e530cbb3579","name":"Aoop: Validate Expected Shutdown Date","type":"onChange","cat_variable":"4cb5df9787108b14ec360e530cbb356c","ui_type":"10","script":"Catalog Client Script onChange que valida a data prevista de desligamento chamando o Script Include RequestProcess via GlideAjax."},{"sys_id":"814bd72b87144f14ec360e530cbb356b","name":"Aoop: Set Date of Admission","type":"onChange","cat_variable":"a832835b87584b14ec360e530cbb35be","ui_type":"10","script":"Catalog Client Script onChange que preenche a data de admissão chamando x_nasm_hr.ACN_ValidateUtils via GlideAjax."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar prévia de rescisão (diretores, +20 anos ou pacote de desligamento)",
+"short_description":"Pedir a simulação prévia da rescisão de diretores e cargos acima, colaboradores com mais de 20 anos de casa ou com pacote de desligamento.",
+"description":"Use para pedir ao RH uma prévia (simulação) dos valores de rescisão antes de um desligamento, exclusivamente para diretores e cargos acima, colaboradores com mais de 20 anos de empresa ou desligamentos com pacote. Informe o colaborador, o motivo, a data prevista e se haverá multa ou pagamento adicional. Não use para comunicar o desligamento em si nem para rescisão complementar.",
+"frases_exemplo":["preciso de uma prévia de rescisão de um diretor","simular rescisão antes de desligar","quanto vai custar o desligamento desse colaborador com 25 anos de casa?","prévia de rescisão com pacote"],
+"labels":{"select_collaborator":"Para qual colaborador é a prévia de rescisão?","reason_requesting_preliminary_approval":"Qual é o motivo da prévia: cargo de diretor ou acima, mais de 20 anos de empresa ou pacote de desligamento?","expected_shutdown_date":"Qual é a data prevista do desligamento?","termination_fee":"Haverá multa rescisória?","additional_payment":"Haverá algum pagamento adicional?","additional_payment_included_termination_settlement":"Qual pagamento adicional será incluído na rescisão?","additional_information":"Quer acrescentar alguma informação?"},
+"acoes":{"global_id / name / date_admission":"derivar"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"Aoop: Set Date of Admission","acao":"converter","substituicao":"Auto-populate da data de admissão, se estiver em campo do sys_user/perfil."},{"nome":"Aoop: Validate Expected Shutdown Date","acao":"manter","substituicao":"VA Supported; manter se a regra de negócio (calendário efetivo) não puder ser expressa sem script."},{"nome":"Aoop: Show mandatory fields","acao":"converter","substituicao":"Atributos mandatory/read-only direto nas variáveis."},{"nome":"Aoop: Show Describe what additional payment","acao":"manter","substituicao":"UI Policy simples sem script."}]
+}
+}

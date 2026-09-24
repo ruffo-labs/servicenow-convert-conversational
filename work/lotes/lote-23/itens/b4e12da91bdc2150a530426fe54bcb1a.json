@@ -1,0 +1,30 @@
+{
+"sys_id":"b4e12da91bdc2150a530426fe54bcb1a",
+"name":"Informações ou dúvidas relacionadas à Férias",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Férias",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Este formulário é destinado a dúvidas relacionadas às férias, para situações onde as informações não foram encontradas na Norma STD-00536 - Férias de Colaboradores localizada no Portal docs",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"contextual_search_results"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"ai_search_assist"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"ai_search_assist"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+"atencao":["contextual_search_results: custom/macro/widget (type 14)","ai_search_assist: custom/macro/widget (type 14)"],
+"variaveis":[{"name":"Info","type":"32","order":50},{"name":"v_description_details","type":"2","order":1550,"question_text":"Use the field below to detail your request"},{"name":"contextual_search_results","type":"14","order":1600,"question_text":"Contextual Search Results","macro":"cxs_rp_search","sp_widget":"Pesquisa contextual: Resultados em Linha"},{"name":"ai_search_assist","type":"14","order":1700,"question_text":"AI Search Assist","sp_widget":"Assistência para pesquisa com IA"},{"name":"request_type","type":"5","order":1900,"question_text":"Request type","include_none":true,"choices":["Complaints [=complaints]","Questions [=questions]","Suggestions [=suggestions]"]},{"name":"selecione_o_tema","type":"5","order":2000,"question_text":"Select the topic","include_none":true,"choices":["Intern recess [=intern_recess]","Leaves and vacation [=leaves_vacation]","Mandatory vacation [=mandatory_vacation]","Vacation payment and calculation [=vacation_payment]","Collective vacation [=collective_vacation]","Vacation scheduling [=vacation_scheduling]"]},{"name":"mandatory_vacations_txt","type":"32","order":2100},{"name":"programming_vacations_txt","type":"32","order":2200}],
+"ui_policies":[{"sys_id":"41e1e9e91bdc2150a530426fe54bcb7c","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_description_details: mandatory=true"]},{"sys_id":"680520393bae9a10924d0247f4e45a46","short_description":"EY: Theme = Schudele Vacation","conditions":"selecione_o_tema=vacation_scheduling","actions":["programming_vacations_txt: visible=true"]},{"sys_id":"8e4ca4393bee9a10924d0247f4e45aab","short_description":"EY: Mandatory select boxes","conditions":"","actions":["selecione_o_tema: mandatory=true","request_type: mandatory=true"]},{"sys_id":"93a4a8793bae9a10924d0247f4e45ab5","short_description":"EY: Theme = Mandatory vacation","conditions":"selecione_o_tema=mandatory_vacation","actions":["mandatory_vacations_txt: visible=true"]}],
+"client_scripts":[{"sys_id":"77b84f021b906d50a530426fe54bcb6e","name":"EY: Minimum caracter ","type":"onSubmit","cat_variable":"01e1e9e91bdc2150a530426fe54bcb3a","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida sobre férias (Brasil)",
+"short_description":"Envie ao RH uma dúvida sobre férias quando a resposta não estiver na norma de férias (STD-00536).",
+"description":"Use para tirar dúvidas sobre férias no Brasil (programação, férias obrigatórias/coletivas, abono, adiantamento de 13º, pagamento das férias) quando a resposta não estiver na Norma STD-00536 - Férias de Colaboradores. Não use para dar ciência do aviso de férias (use 'Dar ciência das minhas férias programadas'), para programar férias (faça no ADP) nem se você trabalha em país da América Hispânica.",
+"frases_exemplo":["dúvida sobre minhas férias","posso vender 10 dias de férias?","quando cai o pagamento das férias?","como funcionam as férias coletivas?","não consigo programar férias no ADP","tenho férias vencendo, o que faço?"],
+"labels":{"selecione_o_tema":"Sua dúvida é sobre qual tema de férias?","request_type":"É uma dúvida, reclamação ou sugestão?","v_description_details":"Conte em detalhes a sua dúvida sobre férias."},
+"acoes":{"Info / mandatory_vacations_txt / programming_vacations_txt":"remover","contextual_search_results / ai_search_assist":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show kb link","acao":"remover","substituicao":"Policy órfã (v_have_you_tried_searching_the_knowledge_base e link_kb não existem)."},{"nome":"EY: Mandatory Fields / EY: Mandatory select boxes","acao":"converter","substituicao":"Mandatory direto em v_description_details, selecione_o_tema e request_type; remover ações órfãs."},{"nome":"EY: Theme = Schudele Vacation / EY: Theme = Mandatory vacation","acao":"remover","substituicao":"Textos vão para KB/descrição."},{"nome":"EY: Minimum caracter","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."}]
+}
+}

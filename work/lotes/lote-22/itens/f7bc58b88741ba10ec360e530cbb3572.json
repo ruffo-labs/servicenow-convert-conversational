@@ -1,0 +1,48 @@
+{
+"sys_id":"f7bc58b88741ba10ec360e530cbb3572",
+"name":"Solicitação de Exceção para Payment Run",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Para solicitar a inclusão ou exclusão de fornecedores na exceção do Payment Run",
+"description":"Para solicitar a inclusão ou exclusão de fornecedores na exceção do Payment Run",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+"variaveis":[
+{"name":"who_is_your_request_for","type":"5","order":100,"question_text":"Who is your request for?","include_none":true,"choices":["For me [=1]","For another employee [=2]"]},
+{"name":"select_the_employee","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":200,"question_text":"Select the employee","include_none":true,"choices":["Natura","Avon [=Avon LATAM]"]},
+{"name":"which_brand_is_impacted","type":"21","reference":"sys_user","reference_qual":"question=5a567f3487013e10ec360e530cbb35f1","reference_qual_condition":"active=true^EQ","order":300,"question_text":"Which brand is impacted?","include_none":true},
+{"name":"select_the_natura_subsidiaries_that_will_be_impacted","type":"21","reference":"sys_user","reference_qual":"javascript: \"name=Todas^NQu_brand=Natura\"\r\n","order":400,"question_text":"Select the Natura subsidiaries that will be impacted","include_none":true},
+{"name":"select_the_avon_subsidiaries_that_will_be_impacted","type":"21","reference":"sys_user","reference_qual":"javascript: \"name=Todas^NQu_brand=Avon LATAM^countryINMexico,México,Chile,Brasil,Brazil,Uruguay,Uruguai^ORDERBYname\"","order":500,"question_text":"Select the Avon subsidiaries that will be impacted","include_none":true},
+{"name":"type_of_request","type":"5","order":600,"question_text":"Type of request","include_none":true,"choices":["Inclusion [=1]","Exclusion [=2]"]},
+{"name":"suppliers_cnpj","type":"6","order":700,"question_text":"Supplier's CNPJ","include_none":true},
+{"name":"suppliers_name","type":"6","order":800,"question_text":"Supplier's name","include_none":true},
+{"name":"suppliers_code","type":"6","order":900,"question_text":"Supplier's code","include_none":true},
+{"name":"attach_approval_label","type":"32","order":1000,"question_text":"Attach the approval"},
+{"name":"attach_approval","type":"33","order":1010,"question_text":"Attach the approval"},
+{"name":"describe_the_justification_for_the_request","type":"2","order":10000,"question_text":"Describe the justification for the request","include_none":true}
+],
+"ui_policies":[
+{"sys_id":"5ad6940d87493e10ec360e530cbb35ff","short_description":"EY: Select the employee","conditions":"who_is_your_request_for=2","actions":["select_the_employee: visible=true,mandatory=true"]},
+{"sys_id":"9ee89c8587893e10ec360e530cbb35aa","short_description":"EY: Select the Avon subsidiaries that will be impacted","conditions":"which_brand_is_impactedLIKE7ed7773c87013e10ec360e530cbb35b1","actions":["select_the_avon_subsidiaries_that_will_be_impacted: visible=true,mandatory=true"]},
+{"sys_id":"b9d8d4c587893e10ec360e530cbb359c","short_description":"EY: Select the Natura subsidiaries that will be impacted","conditions":"which_brand_is_impactedLIKE1466333487013e10ec360e530cbb35f9","actions":["select_the_natura_subsidiaries_that_will_be_impacted: visible=true,mandatory=true"]},
+{"sys_id":"fd57588d87493e10ec360e530cbb3506","short_description":"EY: Mandatory fields","conditions":"","actions":["who_is_your_request_for: mandatory=true","attach_approval_label: visible=true","suppliers_name: mandatory=true","type_of_request: mandatory=true","describe_the_justification_for_the_request: mandatory=true","suppliers_code: mandatory=true","suppliers_cnpj: mandatory=true","which_brand_is_impacted: mandatory=true","attach_approval: visible=true,mandatory=true"]},
+{"sys_id":"a78c5981870d7e10ec360e530cbb355a","short_description":"EY: Readonly fields (record)","conditions":"","applies_catalog":false,"actions":["suppliers_code: readonly=true","select_the_natura_subsidiaries_that_will_be_impacted: readonly=true","which_brand_is_impacted: readonly=true","suppliers_name: readonly=true","select_the_avon_subsidiaries_that_will_be_impacted: readonly=true","describe_the_justification_for_the_request: readonly=true","suppliers_cnpj: readonly=true","type_of_request: readonly=true","select_the_employee: readonly=true","who_is_your_request_for: readonly=true"]}
+],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Incluir ou excluir fornecedor da exceção do Payment Run",
+"short_description":"Peça para incluir ou tirar um fornecedor da lista de exceção da rodada automática de pagamentos",
+"description":"Use para pedir que um fornecedor seja incluído na lista de exceção do Payment Run (rodada automática de pagamentos do SAP), para que não seja pago automaticamente, ou retirado dela. Você vai informar a ação (inclusão ou exclusão), a marca e as subsidiárias afetadas, o CNPJ, o nome e o código do fornecedor, a justificativa e anexar a aprovação. Não use para bloquear um pagamento específico (use bloqueio de pagamento).",
+"frases_exemplo":["tirar fornecedor do payment run","incluir fornecedor na exceção do pagamento automático","não quero que o fornecedor entre na rodada de pagamento","excluir fornecedor da lista de exceção do payment run","exceção de payment run para fornecedor da Avon"],
+"labels":{"type_of_request":"Você quer incluir ou excluir o fornecedor da exceção do Payment Run?","suppliers_name":"Qual o nome do fornecedor?","suppliers_cnpj":"Qual o CNPJ do fornecedor?","suppliers_code":"Qual o código do fornecedor no SAP?","which_brand_is_impacted":"Qual marca é afetada: Natura, Avon ou as duas?","select_the_natura_subsidiaries_that_will_be_impacted":"Quais subsidiárias da Natura serão afetadas?","select_the_avon_subsidiaries_that_will_be_impacted":"Quais subsidiárias da Avon serão afetadas?","describe_the_justification_for_the_request":"Qual a justificativa do pedido?"},
+"acoes":{"which_brand_is_impacted":"alterar_tipo:Select Box","who_is_your_request_for":"derivar","select_the_employee":"derivar","attach_approval":"remover","attach_approval_label":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Select the Avon/Natura subsidiaries that will be impacted","acao":"converter","substituicao":"Refazer a condição sobre o novo Select Box de marca (Avon/Ambas, Natura/Ambas), sem LIKE em sys_id. Desmarcar \"On load\"."},{"nome":"EY: Select the employee","acao":"manter","substituicao":"Condicional sem script; desmarcar \"On load\"."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). attach_approval e attach_approval_label saem; usar \"Mandatory attachment\" do producer."},{"nome":"EY: Readonly fields (record)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

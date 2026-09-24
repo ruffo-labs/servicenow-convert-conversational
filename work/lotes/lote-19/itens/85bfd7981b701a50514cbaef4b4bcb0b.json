@@ -1,0 +1,29 @@
+{
+"sys_id":"85bfd7981b701a50514cbaef4b4bcb0b",
+"name":"Pedidos relacionados Despesas",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Pedidos relacionados Despesas",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Utilize este formulário para gerenciar solicitações relacionadas a despesas, como simulações, envio de notícias, solicitações de documentação, entre outros",
+"description":"Utilize este formulário para gerenciar solicitações relacionadas a despesas, como simulações, envio de notícias, solicitações de documentação, entre outros",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"variaveis":[{"name":"who_is_this_request_for","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^user.location.countryINARG,CHL,PER,COL,ECU,URY^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^user.location.countryINARG,CHL,PER,COL,ECU,URY^EQ","order":200,"question_text":"Who is this request for?"},{"name":"type_of_request","type":"5","order":300,"question_text":"Type of request","include_none":true,"choices":["Simulations [=simulations]","New outflows [=new_outflows]","Outgoing documentation [=outgoing_documentation]","Expenses [=expenses]"]},{"name":"detail","type":"2","order":400,"question_text":"Use the field below to detail your need"},{"name":"v_min_characters","type":"32","order":500}],
+"ui_policies":[{"sys_id":"d8c3243c1bb89a50514cbaef4b4bcbeb","short_description":"EY: Madatory variables","conditions":"","actions":["who_is_this_request_for: mandatory=true","detail: mandatory=true","type_of_request: mandatory=true"]},{"sys_id":"e45460bc1bb89a50514cbaef4b4bcbc5","short_description":"EY: Hide  v_who_is_this_request_for","conditions":"","actions":["v_who_is_this_request_for: visible=false,mandatory=false","v_reason_on_behalf: visible=false,mandatory=false"]}],
+"client_scripts":[{"sys_id":"278128b41bb89a50514cbaef4b4bcbb2","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda 'v_min_characters' na abertura."},{"sys_id":"4ba120f41bb89a50514cbaef4b4bcba8","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando o campo 'detail' tem menos de 40 caracteres."},{"sys_id":"e5c1a4f41bb89a50514cbaef4b4bcbc8","name":"EY: Show error message onChange","type":"onChange","cat_variable":"8ea0a8341bb89a50514cbaef4b4bcb45","ui_type":"10","script":"Par onChange da validação de 40 caracteres sobre 'detail'."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Pedidos sobre despesas corporativas",
+"short_description":"Peça simulações, documentos e outros serviços relacionados a despesas.",
+"description":"Use para pedidos relacionados a despesas nos países hispânicos, como simulação de valores, envio de documentação de despesas, correções e dúvidas sobre um lançamento de despesa. Descreva o que precisa em pelo menos 40 caracteres. Não use para enviar novidades de folha de pagamento (use \"Enviar novidades para a folha de pagamento\") nem para reembolsos de benefícios como energia, creche ou escola, que têm itens próprios.",
+"frases_exemplo":["Preciso de uma simulação de despesas","Quero enviar a documentação de uma despesa","Tenho uma dúvida sobre uma despesa lançada","solicitud de gastos","preciso corrigir uma despesa"],
+"labels":{"who_is_this_request_for":"Para quem é esta solicitação? (para você ou para outro colaborador)","type_of_request":"Que tipo de pedido de despesa você quer fazer?","detail":"Descreva o que você precisa (mínimo de 40 caracteres)."},
+"acoes":{"v_min_characters":"remover","v_employee":"derivar"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Hide error message onLoad / Show error message onSubmit / onChange","acao":"remover","substituicao":"Validation Regex em detail."},{"nome":"EY: Madatory variables","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"EY: Hide  v_who_is_this_request_for","acao":"converter","substituicao":"Visibilidade/obrigatoriedade definida direto no item (ou ocultar as variáveis do set via configuração da variável)."}]
+}
+}

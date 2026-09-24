@@ -1,0 +1,29 @@
+{
+"sys_id":"d3cfa71c1bff99d0d1abda4ce54bcb7d",
+"name":"Consulta/aplicação de pagamento",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Chamados para consulta e aplicação de pagamento",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"v_claim_number","type":"6","order":20,"question_text":"What is the number of the claimed title?"},{"name":"v_what_installment","type":"6","order":30,"question_text":"What's the installment?"},{"name":"v_value_installment","type":"6","order":40,"question_text":"What is the value of the installment?"},{"name":"v_maturity_bond","type":"9","order":50,"question_text":"What is the maturity of the bond?"},{"name":"v_status_title","type":"6","order":60,"question_text":"What is the status of the title?"},{"name":"v_what_request","type":"6","order":70,"question_text":"What is your request?"},{"name":"v_mandatory_attach","type":"11","order":80,"question_text":"It is mandatory to attach proof. If you have the ticket, attach it below along with the receipt."},{"name":"v_attach_payment","type":"33","order":90,"question_text":"Attach proof of payment for the title claimed"}],
+"ui_policies":[{"sys_id":"3e3d186c1b3fd9d0d1abda4ce54bcbde","short_description":"EY: Mandatory fields","conditions":"","actions":["v_maturity_bond: mandatory=true","v_attach_payment: mandatory=true","v_what_request: mandatory=true","v_what_installment: mandatory=true","v_value_installment: mandatory=true","v_claim_number: mandatory=true"]},{"sys_id":"7769f4601bf31dd0d1abda4ce54bcb6d","short_description":"EY: Show Select Franchisee","conditions":"1b64bf9c1b33d9d0d1abda4ce54bcb19=TBS","actions":[],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},{"sys_id":"a5a974a81bf31dd0d1abda4ce54bcb11","short_description":"EY: Show Select Representative","conditions":"1b64bf9c1b33d9d0d1abda4ce54bcb19=Avon LATAM","actions":[],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},{"sys_id":"e357b0a01bf31dd0d1abda4ce54bcb0b","short_description":"EY: Show Select Consultant","conditions":"1b64bf9c1b33d9d0d1abda4ce54bcb19=Natura","actions":[],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"}],
+"client_scripts":[{"sys_id":"58a634d21b0e2510d0f8eb1a3b4bcbdf","name":"EY: Remove TBS","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que remove a opção 'TBS' da lista 'vs_company'."},{"sys_id":"d863ec701b7b1114d1abda4ce54bcbde","name":"EY: Clear sub-company and select person","type":"onChange","cat_variable":"1b64bf9c1b33d9d0d1abda4ce54bcb19","ui_type":"10","script":"Catalog Client Script onChange que limpa a sub-empresa e as três variáveis de seleção de pessoa: consultor, representante e franqueado."}],
+"variable_sets":[{"sys_id":"e7c6a4311bffd154d1abda4ce54bcb54","title":"EY: Company:Natura/Avon/TBS - Collaborator - Code","order":10},{"sys_id":"9385c79d1bb71d14a530426fe54bcb24","title":"EY: Additional information","order":900}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Enviar comprovante para localizar e aplicar pagamento de título",
+"short_description":"Envio de comprovante para localizar e aplicar o pagamento de um título de consultora, representante ou franqueado",
+"description":"Use quando uma consultora, representante ou franqueado pagou um título (boleto/parcela) e o pagamento não aparece baixado. Informe o número do título, a parcela, o valor, o vencimento e anexe o comprovante (e o boleto, se tiver). Não use para pagamento em duplicidade no cartão ou Pix, para reclassificação de recebimentos em lote nem para pagamentos de outros clientes (não Força de Vendas).",
+"frases_exemplo":["a consultora pagou o boleto e não baixou","preciso aplicar um pagamento de título","tenho o comprovante de pagamento da parcela, onde envio?","título pago aparece em aberto","consultar pagamento de título da representante"],
+"labels":{"v_claim_number":"Qual é o número do título pago?","v_what_installment":"Qual é a parcela?","v_value_installment":"Qual é o valor da parcela?","v_maturity_bond":"Qual era o vencimento do título?","v_what_request":"O que você precisa: só consultar ou aplicar o pagamento?","v_attach_payment":"Anexe o comprovante de pagamento e, se tiver, o boleto."},
+"acoes":{"v_status_title":"remover","v_mandatory_attach":"remover","v_attach_payment":"alterar_tipo:Anexo do chamado"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas variáveis; tirar v_status_title."},{"nome":"EY: Show Select Franchisee / Representative / Consultant","acao":"remover","substituicao":"Policies sem nenhuma ação e com condição em sys_id de variável; não fazem nada."},{"nome":"EY: Remove TBS (onLoad)","acao":"manter","substituicao":"VA Supported; alternativa no-code na análise do set."},{"nome":"EY: Clear sub-company and select person","acao":"manter","substituicao":"Pertence ao set; sem efeito negativo na conversa."}]
+}
+}

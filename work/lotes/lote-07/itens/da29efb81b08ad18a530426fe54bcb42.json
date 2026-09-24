@@ -1,0 +1,38 @@
+{
+"sys_id":"da29efb81b08ad18a530426fe54bcb42",
+"name":"Dúvidas sobre veículo corporativo",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Frotas",
+"sc_catalogs":"Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+"short_description":"",
+"description":"Chamado para retirar dúvidas sobre os processos de veículo corporativo, como multas, manutenções, devolução de veículos, elegibilidade, upgrades e descontos em folha",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[
+{"name":"v_faq","type":"32","order":10,"question_text":"If you have questions about the process, click here to consult the FAQ available in the knowledge base"},
+{"name":"v_doubts","type":"5","order":40,"question_text":"Inform which process you want to remove doubts for","include_none":true,"choices":["Vehicle return [=return]","Eligibility [=eligibility]","Vehicle maintenance [=maintenance]","Fines [=fines]","Others(a) [=other]"]},
+{"name":"v_suppliers_info","type":"32","order":50},
+{"name":"v_doubt_fines","type":"5","order":60,"question_text":"What type of doubt do you have?","include_none":true,"choices":["Payroll discount [=payroll]","Fines for vehicles sold [=fines]","Others(a) [=other]"]},
+{"name":"v_doubt_maintenance","type":"5","order":70,"question_text":"What type of doubt do you have?","include_none":true,"choices":["Spare car [=spare]","Accredited Dealers and Workshops [=accredited]","Payroll discount [=payroll]","Preventive maintenance [=preventive]","Service complaints [=complaints]","Others(a) [=others]"]},
+{"name":"v_doubt_return","type":"5","order":80,"question_text":"What type of doubt do you have?","include_none":true,"choices":["Vehicle purchase [=vehicle_purchase]","Payroll discount [=payroll_discount]","Return locations [=return_locations]","Vehicle policy [=vehicle_policy]","Vehicle exchange or renewal [=exchenge_renewal]","Reserve vehicle [=reserve_vehicle]","Others(a) [=others]"]},
+{"name":"v_doubt_eligibility","type":"5","order":90,"question_text":"What type of doubt do you have?","include_none":true,"choices":["Temporary car [=temporary_car]","Vehicle catalog [=vehicle_catalog]","Eligibility [=eligibility]","Vehicle arrival time [=arrival_time]","Upgrades and/or armor [=upgrades_armor]","Others(a) [=others]"]},
+{"name":"v_inform_doubt","type":"2","order":100,"question_text":"Inform your doubt"}
+],
+"ui_policies":[{"sys_id":"1e7c3fc31bc0e5d8a530426fe54bcba0","short_description":"EY: Show maintenance options","conditions":"v_doubts=maintenance","actions":["v_doubt_maintenance: visible=true,mandatory=true"]},{"sys_id":"33fbf7831bc0e5d8a530426fe54bcb65","short_description":"EY: Show fines options","conditions":"v_doubts=fines","actions":["v_doubt_fines: visible=true,mandatory=true"]},{"sys_id":"3cbdb7cb1bc0e5d8a530426fe54bcb48","short_description":"EY: Mandatory fields","conditions":"","actions":["v_inform_doubt: mandatory=true","v_doubts: mandatory=true"]},{"sys_id":"8acc37871bc0e5d8a530426fe54bcb0b","short_description":"EY: Show eligibility options","conditions":"v_doubts=eligibility","actions":["v_doubt_eligibility: visible=true,mandatory=true"]},{"sys_id":"f79cf3471bc0e5d8a530426fe54bcbd7","short_description":"EY: Show vehicle return options","conditions":"v_doubts=return","actions":["v_doubt_return: visible=true,mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"724f41271b446dd8a530426fe54bcb28","title":"EY: Opened by - Requested for data","order":20},{"sys_id":"2c876b8b1b0ca5d8a530426fe54bcbdc","title":"EY: Company: Natura/Avon/TBS - Subcompany","order":30}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida sobre veículo corporativo",
+"short_description":"Dúvidas sobre multas, manutenção, devolução, elegibilidade, upgrade e desconto em folha do carro da empresa.",
+"description":"Use para tirar dúvidas sobre o veículo corporativo (carro da frota): multas, manutenção, devolução do veículo, quem tem direito, upgrade de modelo e descontos em folha. Não use para informar que um colaborador passou a ter direito a veículo (use \"Informar direito a veículo corporativo\") nem para dúvidas sobre cartão combustível.",
+"frases_exemplo":["recebi uma multa com o carro da empresa, o que faço?","como agendo a manutenção do carro corporativo?","vou sair da empresa, como devolvo o carro?","tenho direito a carro da empresa?","por que descontaram o carro na minha folha?","dúvida upgrade veículo frota"],
+"labels":{"v_doubts":"Sua dúvida é sobre multa, manutenção, devolução, elegibilidade ou outro assunto?","v_doubt_fines":"Sobre multas, qual é a dúvida?","v_doubt_maintenance":"Sobre manutenção, qual é a dúvida?","v_doubt_return":"Sobre devolução do veículo, qual é a dúvida?","v_doubt_eligibility":"Sobre elegibilidade, qual é a dúvida?","v_inform_doubt":"Conte com detalhes qual é a sua dúvida."},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto em v_doubts e v_inform_doubt."},{"nome":"EY: Show maintenance / fines / eligibility / vehicle return options","acao":"manter","substituicao":"Policies sem script, compatíveis; cada uma mostra só uma das subperguntas."}]
+}
+}

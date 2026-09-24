@@ -1,0 +1,19 @@
+{
+"sys_id":"7cc6a1dd1bc46558a530426fe54bcbb9",
+"name":"Solicitar tratativa da loja",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Varejo e Fechamento de Caixa",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Chamado para tratativa de inconsistência em lojas próprias e franqueadas.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"v_select_the_approving_supervisor","type":"8","reference":"sys_user_grmember","reference_qual":"group=fc3dd6a687fd07d0ec360e530cbb354d^EQ","reference_qual_condition":"group=fc3dd6a687fd07d0ec360e530cbb354d^EQ","order":32,"question_text":"Select the approving supervisor."},{"name":"select_the_approver","type":"8","reference":"sys_user_grmember","reference_qual":"group=c45be7b43b869250924d0247f4e45a87^EQ","reference_qual_condition":"group=c45be7b43b869250924d0247f4e45a87^EQ","order":35,"question_text":"Indicate the manager responsible for approval."},{"name":"v_request_detail","type":"19","order":40,"question_text":"Use the field below to describe your request in detail"},{"name":"v_inform_request","type":"2","order":50,"question_text":"Inform your request"},{"name":"v_attachment","type":"33","order":60,"question_text":"Attachment"}],
+"ui_policies":[{"sys_id":"a5adc2111bc0a558a530426fe54bcb56","short_description":"EY: Mandatory field","conditions":"","actions":["select_the_approver: mandatory=true","v_inform_request: mandatory=true","v_select_the_approving_supervisor: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"4c55a4791bbfd154d1abda4ce54bcb1a","title":"EY: Opened by","order":10},{"sys_id":"b9d4b5991bc86558a530426fe54bcba7","title":"EY: Company: Natura/TBS/Aesop","order":20},{"sys_id":"c0f13edd87f7a210ec360e530cbb352e","title":"EY: Store (Reference)","order":30}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Reportar inconsistência na loja","short_description":"Tratativa de inconsistências em lojas próprias e franqueadas","description":"Use para pedir tratativa de uma inconsistência em loja própria ou franqueada que não se encaixa nos outros itens de varejo (por exemplo divergência de lançamento ou problema de conciliação da loja). Descreva o problema e anexe evidências. Não use para cancelamento de venda, venda corporativa, ajuste de caixa ou pagamentos do varejo, que têm itens próprios.","frases_exemplo":["tem uma inconsistência na loja","preciso de tratativa para um problema na loja franqueada","divergência nos lançamentos da loja","problema financeiro na loja, a quem recorro?"],"labels":{"vs_store_reference":"De qual loja é a inconsistência?","v_inform_request":"Descreva a inconsistência.","v_select_the_approving_supervisor":"Quem é o supervisor que aprova?","select_the_approver":"Qual gerente é responsável pela aprovação?","v_attachment":"Quer anexar alguma evidência?"},"acoes":{"v_attachment":"alterar_tipo:Anexo do chamado"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory field","acao":"converter","substituicao":"Mandatory direto nas variáveis."}]}
+}

@@ -1,0 +1,30 @@
+{
+"sys_id":"eec5bf8d33104f9098331c07ee5c7b53",
+"name":"Solicitação de Aplicação de Pagamentos - Outros clientes",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":{"_display_value":"OTC Suporte à Força de Vendas e Recebíveis","__text":"90c6e4ac1bbfd9d0d1abda4ce54bcb34"},
+"short_description":"Utilize este formulário para informar a pagamentos de faturas de outros clientes.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Aplicação de Pagamentos - Outros clientes. Grava x_nasm_hr_item com o sysparm_id da URL e define requested_for a partir da variável 'requesting_person'.",
+"atencao":["which_subsidiary_is_the_service_for: opções dinâmicas (core_company)"],
+"variaveis":[{"name":"requesting_person","type":"8","reference":"sys_user","default_value":"javascript:gs.getUserID()","order":100,"question_text":"Requesting person","read_only":true},{"name":"which_company_your_request_for","type":"5","reference":"sys_user","default_value":"javascript:gs.getUserId();","order":200,"question_text":"Which company is your request for?","include_none":true,"choices":["Natura [=natura]","Avon Latam [=avon_latam]"]},{"name":"which_subsidiary_is_the_service_for","type":"8","reference":"core_company","choice_table":"core_company","reference_qual":"javascript: new x_nasm_rtr.EY_RTRUtils().getAllSubcompanies(current.variables.which_company_your_request_for, current.cat_item);","order":300,"question_text":"Which subsidiary is the service for?"},{"name":"country","type":"6","order":400,"question_text":"Country"},{"name":"invoice_number","type":"6","order":500,"question_text":"Invoice Number"},{"name":"registration_number","type":"6","order":600,"question_text":"Registration Number"},{"name":"additional_information","type":"2","order":700,"question_text":"Additional Information"}],
+"ui_policies":[{"sys_id":"c5cf9791339ccf9098331c07ee5c7b41","short_description":"Aoop: Show field Country after fild in which subsidiary was selected ","conditions":"which_subsidiary_is_the_service_forISNOTEMPTY","actions":["country: visible=true,readonly=true"]},{"sys_id":"c82fd711339ccf9098331c07ee5c7b70","short_description":"Aoop: Set mandatory fields at begin of request","conditions":"","actions":["registration_number: mandatory=true","which_subsidiary_is_the_service_for: mandatory=true","invoice_number: mandatory=true","which_company_your_request_for: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Informar pagamento de fatura de outros clientes",
+"short_description":"Aplicação de pagamento recebido de outros clientes (fora da Força de Vendas)",
+"description":"Use para informar que um cliente que não é consultora, representante ou franqueado (outros clientes) pagou uma fatura, para que o pagamento seja aplicado. Informe a subsidiária, o número da fatura e o número de registro do cliente. Não use para títulos da Força de Vendas nem para registrar uma nova fatura (use \"Registrar fatura de outros clientes\").",
+"frases_exemplo":["um cliente pagou a fatura e preciso aplicar o pagamento","aplicação de pagamento de outros clientes","recebemos pagamento da fatura 1234 de um cliente corporativo","informar pagamento de fatura de cliente externo"],
+"labels":{"which_company_your_request_for":"Para qual empresa é o pedido?","which_subsidiary_is_the_service_for":"Qual é a subsidiária?","invoice_number":"Qual é o número da fatura paga?","registration_number":"Qual é o número de registro (CNPJ/ID fiscal) do cliente?","additional_information":"Quer acrescentar alguma informação ou anexar o comprovante?"},
+"acoes":{"requesting_person":"derivar","country":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"Aoop: Set mandatory fields at begin of request","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"Aoop: Show field Country after fild in which subsidiary was selected","acao":"manter","substituicao":"Sem script; country fica read-only."}]
+}
+}

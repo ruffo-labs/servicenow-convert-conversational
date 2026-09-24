@@ -1,0 +1,30 @@
+{
+"sys_id":"6c0c3c2d1b902150a530426fe54bcb7c",
+"name":"Informações ou dúvidas relacionadas à Folha de Pagamento",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Meus Pagamentos e Folha de Pagamento",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Este formulário é destinado a dúvidas relacionadas à folha de pagamento, incluindo valores pagos, descontos, inconsistências, e informações gerais.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"ai_search_assist"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"ai_search_assist"},{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"contextual_search_results"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"contextual_search_results"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+"atencao":["ai_search_assist: custom/macro/widget (type 14)","contextual_search_results: custom/macro/widget (type 14)"],
+"variaveis":[{"name":"Info","type":"32","order":50},{"name":"formatter","type":"20","order":600},{"name":"v_description_details","type":"2","order":1550,"question_text":"Describe what you need in this field"},{"name":"tipo_de_solicitacao","type":"5","order":1560,"question_text":"Request type","include_none":true,"choices":["Questions [=questions]","Suggestions [=suggestions]","Complaints [=complaints]"]},{"name":"select_the_topic","type":"5","order":1570,"question_text":"Select the Topic","include_none":true,"choices":["Income Report (IR)","Information about Payment Deductions","Biweekly Advance","Bonus (Retail)","Recognition (FV)","Alimony","Operational Bonus","Payroll Loan","Wage Adjustment","Union Deduction","Profit Sharing (PLR)","Hazard Pay"]},{"name":"pensao_alimenticia","type":"32","order":1580},{"name":"plr","type":"32","order":1590},{"name":"contextual_search_results","type":"14","order":1600,"question_text":"Contextual Search Results","macro":"cxs_rp_search","sp_widget":"Pesquisa contextual: Resultados em Linha"},{"name":"ai_search_assist","type":"14","order":1700,"question_text":"AI Search Assist","sp_widget":"Assistência para pesquisa com IA"}],
+"ui_policies":[{"sys_id":"0a38140a87269a10ec360e530cbb35b4","short_description":"EY: Mandatory variables","conditions":"","actions":["tipo_de_solicitacao: mandatory=true","select_the_topic: mandatory=true"]},{"sys_id":"27d758c687269a10ec360e530cbb35ab","short_description":"EY: Theme = PLR","conditions":"select_the_topic=Profit Sharing (PLR)","actions":["plr: visible=true"]},{"sys_id":"dd0cb46d1b902150a530426fe54bcb4a","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_description_details: mandatory=true"]},{"sys_id":"fd97dc8687269a10ec360e530cbb35ab","short_description":"EY: Theme = Alimony","conditions":"select_the_topic=Alimony","actions":["pensao_alimenticia: visible=true"]}],
+"client_scripts":[{"sys_id":"3542446e1b58ed50d1abda4ce54bcb16","name":"EY: Minimun caracter","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvidas sobre a folha de pagamento",
+"short_description":"Tire dúvidas sobre valores pagos, descontos, inconsistências no holerite e outras questões da folha.",
+"description":"Use para dúvidas ou problemas na folha de pagamento: valor recebido diferente do esperado, desconto que você não reconhece, verba faltando, PLR (Participação nos Lucros e Resultados), pensão alimentícia descontada, 13º, entre outros. Descreva o que aconteceu e o mês de referência. Não use para ver ou baixar o holerite (demonstrativo) ou o informe de rendimentos (disponíveis na ADP), para cadastrar pensão alimentícia (use 'Cadastrar pensão alimentícia') nem para lançamentos contábeis da folha.",
+"frases_exemplo":["meu salário veio errado","tem um desconto no meu holerite que não entendi","não caiu minha PLR","dúvida sobre o desconto da pensão","o valor das horas extras está errado","por que meu líquido diminuiu esse mês?"],
+"labels":{"select_the_topic":"Sobre qual assunto é sua dúvida (por exemplo: salário, descontos, PLR, pensão alimentícia)?","tipo_de_solicitacao":"É uma dúvida, uma inconsistência no pagamento ou um pedido de informação?","v_description_details":"Conte o que aconteceu, incluindo o mês de referência."},
+"acoes":{"contextual_search_results":"remover","ai_search_assist":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Minimun caracter (onSubmit)","acao":"converter","substituicao":"Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{20,}$)."},{"nome":"EY: Mandatory Fields / EY: Show kb link","acao":"remover","substituicao":"Referenciam variáveis inexistentes (v_have_you_tried_searching_the_knowledge_base, v_have_you_already_searched_the_portals_search_engine, link_kb)."},{"nome":"EY: Mandatory variables","acao":"converter","substituicao":"Mandatory direto em tipo_de_solicitacao e select_the_topic."},{"nome":"EY: Theme = PLR / EY: Theme = Alimony","acao":"manter","substituicao":"Rich text informativo; revisar texto para ser curto e sem mídia."}]
+}
+}

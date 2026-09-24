@@ -1,0 +1,32 @@
+{
+"sys_id":"1a401a591b15f510a530426fe54bcb1a",
+"title":"Informações pessoais - Benefícios",
+"internal_name":"informa_es_pessoais_benef_cios",
+"order":100,
+"description":"",
+"variaveis":[
+{"name":"solicitation_to_whom","type":"5","order":100,"question_text":"Solicitation to whom?","include_none":true,"choices":["My request [=my_request]","Request for another employee [=another_employee]"]},
+{"name":"why_opening","type":"5","order":150,"question_text":"Employee status","include_none":true,"choices":["Active [=active]","Away [=leave_license]"]},
+{"name":"employee","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^user.location.country=BRA^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^user.location.country=BRA^EQ","order":200,"question_text":"Employee","read_only":true},
+{"name":"information_workday","type":"32","order":300},
+{"name":"id_global","type":"6","order":400,"question_text":"ID Global","read_only":true},
+{"name":"corporate_email","type":"6","order":500,"question_text":"Corporate email","read_only":true},
+{"name":"manegar_name","type":"6","order":600,"question_text":"Manager name","read_only":true},
+{"name":"country","type":"6","order":700,"question_text":"Country","read_only":true},
+{"name":"company","type":"6","order":800,"question_text":"Company","read_only":true},
+{"name":"location","type":"6","order":850,"question_text":"Location","read_only":true},
+{"name":"discharge_date","type":"6","order":900,"question_text":"Discharge date","read_only":true},
+{"name":"position_title","type":"6","order":1000,"question_text":"Position","read_only":true},
+{"name":"management_level","type":"6","order":1100,"question_text":"Management level","read_only":true},
+{"name":"address","type":"6","order":1200,"question_text":"Address","read_only":true},
+{"name":"national_id","type":"6","order":1300,"question_text":"National ID","read_only":true}
+],
+"ui_policies":[
+{"sys_id":"44945ed11b55f510a530426fe54bcb2b","short_description":"EY: Campos Obrigatorios","conditions":"","actions":["01bb46fe1ba81150a530426fe54bcbbc: mandatory=true"]},
+{"sys_id":"84c35e911b55f510a530426fe54bcb9d","short_description":"EY: HTR  When \"Solicitation Whom\" is not \"-- None --\" show \"Employee\" field","conditions":"solicitation_to_whom=","actions":["284d5abe1b2c1150a530426fe54bcb8a: visible=false","fbeb96fa1b2c1150a530426fe54bcbb4: visible=false","b81d92be1b2c1150a530426fe54bcbfb: visible=false","7ebdd6fe1b2c1150a530426fe54bcb84: visible=false","4ffd5afe1b2c1150a530426fe54bcbe0: visible=false","2b6d12fe1b2c1150a530426fe54bcb8e: visible=false","dfdd12321b6c1150a530426fe54bcb66: visible=false","64ec567e1b2c1150a530426fe54bcbdc: visible=false","8fac9e3e1b2c1150a530426fe54bcb52: visible=false","fa4c0efe1ba81150a530426fe54bcbaf: visible=false"]},
+{"sys_id":"e464da911b55f510a530426fe54bcb05","short_description":"EY: HTR_When \"Solicitation Whom\" is \"None\" doesn't show \"Update information link\"","conditions":"solicitation_to_whom=","actions":["a52e4eb21be81150a530426fe54bcb85: visible=false"]},
+{"sys_id":"ec8496551b55f510a530426fe54bcb9b","short_description":"EY: HTR_When \"Solicitation Whom\" is \"Other employee\" the employee is Mandatory","conditions":"solicitation_to_whom=another_employee","actions":["fa4c0efe1ba81150a530426fe54bcbaf: visible=true,mandatory=true","1ab29eba1be81150a530426fe54bcbee: visible=true,mandatory=true"]},
+{"sys_id":"fdd35ed11b55f510a530426fe54bcb8a","short_description":"EY: HTR_When \"Solicitation Whom\" is \"My request\" show \"Update information link\" , \"Adress\", \"National ID\" , \"name\" fields","conditions":"solicitation_to_whom=my_request","actions":["fa4c0efe1ba81150a530426fe54bcbaf: readonly=true","6a82623a1b6c1150a530426fe54bcbe1: visible=true","d62226f61b6c1150a530426fe54bcbc8: visible=true","bdf025931be15d90a530426fe54bcbe7: visible=true,readonly=true"]}
+],
+"client_scripts":[{"sys_id":"9416da591b55f510a530426fe54bcb04","name":"EY: HTR_Employee for whom","type":"onChange","cat_variable":"703196d91b15f510a530426fe54bcb05","ui_type":"10","script":"Catalog Client Script onChange que resolve para qual colaborador é a solicitação, consultando o servidor via GlideAjax."},{"sys_id":"d3c596551b55f510a530426fe54bcb43","name":"EY: HTR If the solicitation changes","type":"onChange","cat_variable":"703196d91b15f510a530426fe54bcb05","ui_type":"10","script":"Catalog Client Script onChange que limpa a categoria quando a solicitação muda."},{"sys_id":"dbf5ded11b55f510a530426fe54bcb5d","name":"EY: HTR_Fill employee information","type":"onChange","cat_variable":"dc715ad91b15f510a530426fe54bcb40","ui_type":"10","script":"Catalog Client Script onChange que preenche as informações do colaborador a partir do valor selecionado."}]
+}

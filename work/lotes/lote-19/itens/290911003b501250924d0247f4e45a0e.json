@@ -1,0 +1,30 @@
+{
+"sys_id":"290911003b501250924d0247f4e45a0e",
+"name":"Outras solicitações de licença",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Outras Licenças",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Utilize este formulário para solicitar licenças diferentes de maternidade e paternidade",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"atencao":["v_leave: opções dinâmicas (x_nasm_hr_rules_hispanic_otras_licencias_solicitud)"],
+"variaveis":[{"name":"v_faq","type":"32","order":50},{"name":"v_leave","type":"18","lookup_table":"x_nasm_hr_rules_hispanic_otras_licencias_solicitud","lookup_value":"hispanic_category","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);","order":150,"question_text":"What leave do you want to report?","include_none":true,"lookup_unique":true},{"name":"v_leave_start_date_requester","type":"9","order":200,"question_text":"Inform Leave Start Date"},{"name":"v_leave_end_date_requester","type":"9","order":300,"question_text":"Inform Leave End Date"},{"name":"v_details","type":"2","order":400,"question_text":"Use the following field to detail your need:"},{"name":"v_minimun_characters","type":"32","order":410,"question_text":"You must enter more than 40 characters in your description detail"},{"name":"v_attach_documentation","type":"33","order":450,"question_text":"Attach below the necessary documentation to make your request"},{"name":"v_attachment_info","type":"32","order":500}],
+"ui_policies":[{"sys_id":"792682e11b681610514cbaef4b4bcbd1","short_description":"EY: View category ","conditions":"v_employeeISNOTEMPTY","actions":["v_leave: visible=true,mandatory=true"]},{"sys_id":"b15ea1c83b141250924d0247f4e45a32","short_description":"EY: Mandatory fields - Catalog item view","conditions":"","actions":["v_details: mandatory=true","v_leave_start_date_requester: mandatory=true","v_leave_end_date_requester: mandatory=true"]}],
+"client_scripts":[{"sys_id":"4339ce613bec5610924d0247f4e45a10","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando 'v_details' tem menos de 40 caracteres."},{"sys_id":"58390aa13bec5610924d0247f4e45afe","name":"EY: Show error message onChange","type":"onChange","cat_variable":"2e68e1cc3bd01250924d0247f4e45a9e","ui_type":"10","script":"Par onChange do anterior, exibindo a legenda de mínimo enquanto o texto está entre 1 e 39 caracteres."},{"sys_id":"c8c94ee51b681610514cbaef4b4bcbb3","name":"EY: Mandatory Attachment","type":"onChange","cat_variable":"5daa21043b141250924d0247f4e45af8","ui_type":"1","script":"Variante do anterior, com a mesma regra de anexo obrigatório baseada no retorno '1' do Script Include de categorias."},{"sys_id":"d7290ea13bec5610924d0247f4e45a15","name":"EY: Hide error message onLoad + attach","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres e o campo de anexo de documentação na abertura."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar outras licenças",
+"short_description":"Informe licenças como casamento, luto, doação de sangue, mudança ou estudos (exceto maternidade e paternidade).",
+"description":"Use para informar ao RH uma licença que não seja maternidade nem paternidade, como casamento, falecimento de familiar, doação de sangue, mudança de domicílio ou prova/estudos, para colaboradores da Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Você informa o tipo de licença, a data de início e fim, descreve o motivo e anexa o comprovante quando exigido. Não use para licença-maternidade, licença-paternidade, férias ou atestado médico.",
+"frases_exemplo":["Vou me casar e preciso da licença","Faleceu meu avô, como informo a licença por luto?","Quero informar licença por mudança de casa","Preciso de licença para fazer uma prova da faculdade","licencia por examen","doei sangue hoje, tenho direito a folga"],
+"labels":{"v_leave":"Qual licença você quer informar?","v_leave_start_date_requester":"Qual a data de início da licença? (aaaa-mm-dd)","v_leave_end_date_requester":"E a data de término? (aaaa-mm-dd)","v_details":"Conte o motivo e os detalhes da licença (mínimo de 40 caracteres).","v_attach_documentation":"Anexe o comprovante da licença (certidão, atestado ou declaração)."},
+"acoes":{"v_leave":"alterar_tipo:Reference","v_attach_documentation":"alterar_tipo:Anexo do record producer","v_faq / v_attachment_info / v_minimun_characters":"remover","nova_v_requires_attachment":"nova"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show error message onSubmit / onChange","acao":"remover","substituicao":"Validation Regex em v_details."},{"nome":"EY: Mandatory Attachment","acao":"converter","substituicao":"Auto-populate de nova_v_requires_attachment + UI Policy sem script."},{"nome":"EY: Hide error message onLoad + attach","acao":"remover","substituicao":"Visibilidade inicial definida direto nas variáveis."},{"nome":"EY: Mandatory fields - Catalog item view","acao":"converter","substituicao":"Mandatory direto em v_details e nas datas."},{"nome":"EY: View category","acao":"manter","substituicao":"Sem script, compatível."}]
+}
+}

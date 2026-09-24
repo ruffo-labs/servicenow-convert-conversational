@@ -1,0 +1,42 @@
+{
+ "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+ "status": "conversacional",
+ "motivo": "Fluxo único (excluir ajuste aprovado indevidamente). Torna-se obrigatória a data e somente leitura a empresa, e troca-se o formatter de contexto por uma pergunta aberta sobre o ajuste. Não foi possível ocultar v_company_s nem o set 'Add new contributors' da conversa: sem um valor padrão confiável para a empresa e sem um segundo derivado para onde mover o set, isso causaria perda de dado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_company_s": {
+   "label": "Qual é a empresa do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_dates": {
+   "label": "Qual a data do ajuste que foi aprovado indevidamente?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_detalhe_ajuste": {
+   "nova": {
+    "type": "2",
+    "question_text": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.",
+    "mandatory": true,
+    "order": 900
+   }
+  }
+ },
+ "remover": {
+  "547f68411bcced18a530426fe54bcba3": "visual"
+ },
+ "policies": {
+  "a08335d11bc86558a530426fe54bcb93": "remover",
+  "a3e5f1301b8129d0d1abda4ce54bcbda": "remover"
+ },
+ "scripts": {
+  "ad6d60491b8ced18a530426fe54bcba4": {
+   "converter": "auto_populate"
+  }
+ }
+}

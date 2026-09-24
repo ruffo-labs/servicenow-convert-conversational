@@ -1,0 +1,51 @@
+{
+"sys_id":"7fd2d33987beb214ec360e530cbb35cf",
+"name":"Solicitação de Pagamento Via SPR",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":{"_display_value":"PTP_","__text":"bfa3add11b95e118d1abda4ce54bcbfc"},
+"short_description":"Criação de form para o fluxo de SPR - Pagamento Manual",
+"description":"Solicitações de pagamentos manuais: impostos, taxas, processos jurídicos e judiciais.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pagamento Via SPR. Faz só o mínimo: grava x_nasm_hr_item com o sysparm_id da URL.",
+"atencao":["v_currency: opções dinâmicas (fx_currency)"],
+"variaveis":[
+{"name":"v_info_about_spr","type":"11","order":0,"question_text":"Only one SPR request is allowed per ticket!"},
+{"name":"v_emission_date","type":"9","order":200,"question_text":"Emission date"},
+{"name":"v_accounting_only","type":"7","order":290,"question_text":"Apenas Contabilização"},
+{"name":"v_supplier","type":"8","reference":"core_company","reference_qual":"javascript: new x_nasm_ptp.EY_PTPUtils().getSupplierAvon(current.variables.vs_which_sub_company);","reference_qual_condition":"u_source_systemISNOTEMPTY^customer=false^EQ","order":300,"question_text":"Supplier"},
+{"name":"v_supplier_number","type":"6","reference":"sn_customerservice_supplier_case","reference_qual_condition":"x_nasm_hr_item=^EQ","order":400,"question_text":"Supplier's number"},
+{"name":"v_payment_amount","type":"6","order":500,"question_text":"Payment amount"},
+{"name":"v_currency","type":"8","reference":"fx_currency","choice_table":"fx_currency","choice_field":"name","order":600,"question_text":"Currency"},
+{"name":"v_payday","type":"9","order":700,"question_text":"Payday"},
+{"name":"v_spr_number","type":"6","order":800,"question_text":"SPR Number"},
+{"name":"v_additional_details","type":"2","order":810,"question_text":"Detalhes Adicionais"},
+{"name":"v_approval_attachment","type":"33","order":900,"question_text":"Approval attachment"},
+{"name":"v_form_template","type":"32","order":1000,"question_text":"Download the form template here for filling out","read_only":true},
+{"name":"v_attach_here_spr_form","type":"33","order":1100,"question_text":"Attach here the filled Global SPR form"},
+{"name":"v_support_documentation","type":"33","order":1200,"question_text":"Attach here any support documentation"}
+],
+"ui_policies":[{"sys_id":"2ebe544687327614ec360e530cbb3578","short_description":"Check if the request is for Another user","conditions":"vs_for_who=another_user","actions":["vs_select_the_collaborator: visible=true,readonly=false"]},{"sys_id":"78ad581287be3210ec360e530cbb3537","short_description":"EY: Set variables to mandatory","conditions":"","actions":["v_attach_here_spr_form: mandatory=true","vs_requesters_name: readonly=true","vs_which_company: mandatory=true","v_approval_attachment: mandatory=true","v_payday: mandatory=true","v_support_documentation: mandatory=false","v_supplier_number: readonly=true","v_spr_number: mandatory=true","v_info_about_spr: mandatory=true","v_emission_date: mandatory=true","v_payment_amount: mandatory=true","v_currency: mandatory=true","vs_which_sub_company: mandatory=true","v_supplier: ","vs_for_who: mandatory=true","v_form_template: mandatory=true"]}],
+"client_scripts":[
+{"sys_id":"10dd605687367210ec360e530cbb351e","name":"EY: Set Supplier Code","type":"onChange","cat_variable":"d3dd1b3d8772f214ec360e530cbb3580","ui_type":"10","script":"Catalog Client Script onChange que busca o código do fornecedor. Chama o Script Include EY_PTPUtils, método getSupplierCode, via GlideAjax, e preenche o campo com o retorno."},
+{"sys_id":"6376945287fa3210ec360e530cbb3532","name":"EY: Máscara de Moeda","type":"onChange","cat_variable":"1da123b987f2f214ec360e530cbb3500","ui_type":"10","script":"Catalog Client Script onChange que valida o valor do pagamento aceitando apenas dígitos, ponto e vírgula. Inválido: limpa 'v_payment_amount' e mostra mensagem traduzida via getMessage com callback. Observação: a linha `var regex = regex = /.../` faz atribuição dupla — funciona, mas é erro de digitação."},
+{"sys_id":"7370a91a87b6b210ec360e530cbb3587","name":"EY: Set requester name based on collabor","type":"onChange","cat_variable":"2344d37d87beb214ec360e530cbb35b2","ui_type":"10","script":"Catalog Client Script onChange que copia o colaborador selecionado para o campo de nome do solicitante."},
+{"sys_id":"99e1e89687fe3210ec360e530cbb35dc","name":"EY: Cant select a payday before today","type":"onChange","cat_variable":"dc79eb7187b6f214ec360e530cbb3528","ui_type":"10","script":"Catalog Client Script onChange que impede data de pagamento no passado. Zera as horas de hoje para comparar só a data e, se a data escolhida for anterior, rejeita. Validação de regra de negócio, não de formato."},
+{"sys_id":"c52b119e87b2b210ec360e530cbb35f4","name":"EY: Set Requester name","type":"onChange","cat_variable":"ffc3d3f987beb214ec360e530cbb353d","ui_type":"10","script":"Catalog Client Script onChange que, ao escolher 'for_me', preenche tanto o nome do solicitante quanto o colaborador selecionado com o usuário logado; caso contrário, libera os campos para escolha manual."}
+],
+"variable_sets":[{"sys_id":"4ab31bf987beb214ec360e530cbb354b","title":"EY VS - SPR Request","order":100}],
+"primeira_analise":{
+"recomendacao":"manter_formulario",
+"nome":"Solicitar pagamento via SPR (formulário Global SPR)",
+"short_description":"Envie um formulário Global SPR preenchido para pagamento manual de imposto, taxa ou processo judicial",
+"description":"Use quando o pagamento manual precisa do formulário Global SPR (Special Payment Request): impostos, taxas, processos jurídicos e judiciais. Você vai baixar o modelo, preenchê-lo e anexá-lo junto com a aprovação; só uma SPR por chamado. Não use para pagamento manual comum sem SPR (use pagamento manual / pré-edição) nem para serviço internacional.",
+"frases_exemplo":["preciso abrir uma SPR","pagamento de processo judicial via SPR","enviar formulário global SPR","pagar taxa com SPR","solicitação de pagamento especial SPR"],
+"labels":{},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Máscara de Moeda","acao":"converter","substituicao":"Trocar por Validation Regex em v_payment_amount (corrige também a atribuição dupla \"var regex = regex\")."},{"nome":"EY: Cant select a payday before today","acao":"manter","substituicao":"Regra de negócio; funciona no formulário."},{"nome":"EY: Set requester name / Set requester name based on collabor / Set Supplier Code","acao":"manter","substituicao":"Funcionam no formulário; numa conversão futura trocar por auto-populate."},{"nome":"EY: Set variables to mandatory","acao":"converter","substituicao":"Tirar mandatory de v_info_about_spr e v_form_template (rótulos) e marcar Mandatory direto nas variáveis."}]
+}
+}

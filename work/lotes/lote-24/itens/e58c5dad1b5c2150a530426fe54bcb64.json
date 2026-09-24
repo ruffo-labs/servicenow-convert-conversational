@@ -1,0 +1,30 @@
+{
+"sys_id":"e58c5dad1b5c2150a530426fe54bcb64",
+"name":"Informações ou dúvidas relacionadas à Declarações",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Declarações e Documentos",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Este é um formulário genérico para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre declarações.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"ai_search_assist"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"ai_search_assist"},{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"contextual_search_results"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"contextual_search_results"}]},
+"producer_script":"Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+"atencao":["ai_search_assist: custom/macro/widget (type 14)","contextual_search_results: custom/macro/widget (type 14)"],
+"variaveis":[{"name":"Info","type":"32","order":50},{"name":"formatter","type":"20","order":600},{"name":"v_description_details","type":"2","order":1550,"question_text":"Describe what you need in this field"},{"name":"contextual_search_results","type":"14","order":1600,"question_text":"Contextual Search Results","macro":"cxs_rp_search","sp_widget":"Pesquisa contextual: Resultados em Linha"},{"name":"ai_search_assist","type":"14","order":1700,"question_text":"AI Search Assist","sp_widget":"Assistência para pesquisa com IA"}],
+"ui_policies":[{"sys_id":"bd8c9dad1b5c2150a530426fe54bcb0d","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_description_details: mandatory=true"]}],
+"client_scripts":[{"sys_id":"6a2db3961b18ed50d1abda4ce54bcb33","name":"EY: Limit minimun caracter","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida sobre declarações e documentos do RH",
+"short_description":"Envie ao RH uma dúvida sobre declarações e documentos quando não houver formulário específico nem resposta nos materiais de apoio.",
+"description":"Use para tirar dúvidas sobre declarações e documentos emitidos pelo RH (prazos, conteúdo, validade, como pedir) quando o assunto não tiver formulário próprio. Não use para pedir a emissão de uma declaração (use 'Solicitar declaração' ou 'Pedir declaração de vínculo, lotação ou escala de trabalho'), nem para PPP ou documentos de processo trabalhista.",
+"frases_exemplo":["tenho uma dúvida sobre declaração","quanto tempo demora para sair minha declaração?","a declaração que recebi está errada","que tipo de declaração o RH emite?","dúvida sobre documento do RH"],
+"labels":{"v_description_details":"Qual é a sua dúvida sobre declarações ou documentos? Conte com detalhes."},
+"acoes":{"Info":"remover","contextual_search_results":"remover","ai_search_assist":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show kb link","acao":"remover","substituicao":"Condição usa v_have_you_tried_searching_the_knowledge_base e ação em link_kb, variáveis que não existem mais no item (policy órfã). Remover."},{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Marcar v_description_details como Mandatory direto na variável e remover as ações órfãs (v_have_you_already_searched_the_portals_search_engine, v_have_you_tried_searching_the_knowledge_base). Depois excluir a policy."},{"nome":"EY: Limit minimun caracter","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."}]
+}
+}

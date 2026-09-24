@@ -1,0 +1,29 @@
+{
+"sys_id":"7e680bf31bc8a51cd1abda4ce54bcb7f",
+"name":"Aprovar reembolsos diários por país",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Solicitar programação de pagamento de reembolso para consultoras/representantes/franqueados",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"v_number_of_refunds_requested","type":"6","order":300,"question_text":"Number of refunds requested?"},{"name":"v_which_currency","type":"5","order":400,"question_text":"Which currency","include_none":true,"choices":["Argentina - Argentine Peso (ARS) [=argentina]","Brazil - Real(BRL) [=brazil]","Colombia - Colombian Peso (COP) [=colombia]","Chile - Chilean Peso (CLP) [=chile]","Equador - Dolar Americano (USD) [=equador]","Mexico - Mexican Peso (MXN) [=mexico]","Peru - Soles (SUN) [=peru]"]},{"name":"v_what_is_the_refund_amount","type":"6","order":500,"question_text":"What is the refund amount?"},{"name":"v_attach_payment_list","type":"33","order":600,"question_text":"Attach a payment list"}],
+"ui_policies":[{"sys_id":"e516f9691bdc5650514cbaef4b4bcbfc","short_description":"EY: Hide fields VS ","conditions":"","actions":["v_opened_by: visible=false,mandatory=false"]},{"sys_id":"fc82d7731b8ca51cd1abda4ce54bcbaf","short_description":"EY: Mandatory fields","conditions":"","actions":["v_attach_payment_list: mandatory=true","v_number_of_refunds_requested: mandatory=true","v_what_is_the_refund_amount: mandatory=true","v_which_currency: mandatory=true"]}],
+"client_scripts":[{"sys_id":"1a6e39a11b109650514cbaef4b4bcb2f","name":"EY: Hide TBS","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que remove a opção 'tbs' da lista de empresas, escondendo a TBS deste formulário."}],
+"variable_sets":[{"sys_id":"64da79341ba5fd50a530426fe54bcb7e","title":"EY VS - Empresas Natura/Avon","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar programação de pagamento de reembolsos",
+"short_description":"Programar o pagamento diário de reembolsos a consultoras, representantes e franqueados por país",
+"description":"Use para pedir a programação e aprovação do pagamento de reembolsos do dia a consultoras, representantes ou franqueados, informando país (pela sub-empresa), moeda, quantidade e valor total, e anexando a lista de pagamentos. Não use para pedir reembolso de uma nota de crédito específica nem estorno de pagamento duplicado ou por fraude.",
+"frases_exemplo":["preciso programar o pagamento dos reembolsos de hoje","aprovar reembolsos do dia para o Peru","enviar lista de reembolsos para pagamento","tenho 30 reembolsos para consultoras, como programo?","programação de pagamento de reembolso em pesos"],
+"labels":{"v_number_of_refunds_requested":"Quantos reembolsos serão pagos?","v_which_currency":"Em qual moeda?","v_what_is_the_refund_amount":"Qual é o valor total dos reembolsos?","v_attach_payment_list":"Anexe a lista de pagamentos."},
+"acoes":{"v_attach_payment_list":"alterar_tipo:Anexo do chamado"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Marcar mandatory direto nas 4 variáveis e remover a policy; apagar as referências a v_which_country_is_the_refund_for e select_the_approver, que não existem no item."},{"nome":"EY: Hide fields VS (v_opened_by)","acao":"manter","substituicao":"Esconde o aberto por; ok."},{"nome":"EY: Hide TBS (onLoad)","acao":"manter","substituicao":"VA Supported e só remove uma opção; alternativa no-code é um set de empresa sem a opção TBS (tratar na análise dos sets)."}]
+}
+}

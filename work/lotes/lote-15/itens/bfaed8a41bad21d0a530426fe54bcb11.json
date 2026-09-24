@@ -1,0 +1,29 @@
+{
+"sys_id":"bfaed8a41bad21d0a530426fe54bcb11",
+"name":"Informações Bloco K",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Estoques e Custos",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um relatório ou efetue uma consulta sobre bloco K",
+"description":"Solicite um relatório ou efetue uma consulta sobre bloco K",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"beaf14601bed21d0a530426fe54bcbd6","title":"EY VS - Informações Bloco K","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar relatório ou consulta sobre Bloco K",
+"short_description":"Peça um relatório ou tire uma dúvida sobre o Bloco K (controle de produção e estoque do SPED Fiscal)",
+"description":"Use para pedir um relatório do Bloco K (registro de controle da produção e do estoque enviado no SPED Fiscal / EFD ICMS IPI) de um período, ou para fazer uma consulta sobre as informações entregues. Você vai escolher se é relatório ou consulta, informar o período e descrever o que precisa. Não use para pedir ajuste de inventário.",
+"frases_exemplo":["preciso do relatório do bloco K de março","dúvida sobre o bloco K do SPED","consultar informação do bloco K","extrair bloco K do período","relatório de produção e estoque do SPED fiscal"],
+"labels":{"v_request_type":"Você quer um relatório ou fazer uma consulta sobre o Bloco K?","v_report_start_date":"Qual a data inicial do período?","v_report_end_date":"Qual a data final do período?","v_describe_the_information_you_need":"Descreva o que você precisa"},
+"acoes":{"v_attach_file":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Informações Bloco K)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). v_attach_file sai da lista de obrigatórios."},{"nome":"EY: Read-Only (set Informações Bloco K)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

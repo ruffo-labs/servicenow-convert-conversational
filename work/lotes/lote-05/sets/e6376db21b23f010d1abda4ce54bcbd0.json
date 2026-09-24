@@ -1,0 +1,10 @@
+{
+"sys_id":"e6376db21b23f010d1abda4ce54bcbd0",
+"title":"Beneficiary(ies) data (The sum of the participation percentages must be 100%.)",
+"internal_name":"beneficiary_data",
+"order":2300,
+"description":"",
+"variaveis":[{"name":"full_name","type":"6","order":100,"question_text":"Full name"},{"name":"cpf","type":"6","order":150,"question_text":"CPF"},{"name":"birth_date","type":"9","order":200,"question_text":"Birth Date"},{"name":"affinity","type":"6","order":300,"question_text":"Affinity"},{"name":"participation","type":"6","example_text":" Between 1% and 100%","order":400,"question_text":"Participation"}],
+"ui_policies":[{"sys_id":"a08bcecb1b633410d1abda4ce54bcb91","short_description":"ACN: A date later than the current date cannot be entered.","conditions":"birth_date>javascript:gs.endOfToday()","actions":[]},{"sys_id":"f50cd5ae1b8ae110d1abda4ce54bcbad","short_description":"EY: Campos Obrigatorios","conditions":"","actions":["birth_date: mandatory=true","full_name: mandatory=true","cpf: mandatory=true","affinity: mandatory=true","participation: mandatory=true"]}],
+"client_scripts":[{"sys_id":"b1ecb7a087cc0b94ec360e530cbb35d4","name":"Aoop: Validate Percentage","type":"onChange","cat_variable":"a818e5361b23f010d1abda4ce54bcb8a","va_supported":false,"ui_type":"10","script":"Catalog Client Script onChange que valida o percentual informado, normalizando o valor antes de testar."},{"sys_id":"cbf626ea1b45c110a530426fe54bcb22","name":"Validate CPF","type":"onChange","cat_variable":"c92f9ea21b45c110a530426fe54bcb84","ui_type":"10","script":"Catalog Client Script onChange que valida o CPF do beneficiário com máscara, documentado por comentário."}]
+}

@@ -1,0 +1,38 @@
+{
+"sys_id":"0f3d986c87508390ec360e530cbb35c5",
+"name":"Celebrações e Eventos da Jornada da pessoa Colaboradora",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Celebrações e Eventos da Jornada do Colaborador",
+"sc_catalogs":{"_display_value":"Hire to Retire (HTR)","__text":"d48274d01b167010d1abda4ce54bcb5d"},
+"short_description":"Informações ou Dúvidas Relacionadas a Celebrações e Eventos da Jornada da pessoa Colaboradora",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Add Option"}]},
+"producer_script":"Script do Record Producer de Celebrações e Eventos. Ramifica conforme a resposta 'para quem é a solicitação': sendo 'for_me', usa a variável do próprio colaborador como requested_for; caso contrário usa a variável da outra pessoa. Grava current.item nos dois ramos.",
+"variaveis":[
+{"name":"more_info_text_item","type":"32","order":50},
+{"name":"who_is_this_request_for","type":"5","order":100,"question_text":"Who is this request for?","include_none":true,"choices":["For me [=for_me]","To another colleague [=to_another_colleague]"]},
+{"name":"employee_name_for_me","type":"8","reference":"sys_user","default_value":"javascript:gs.getUserID();","order":140,"question_text":"Employee Name"},
+{"name":"employee_name_to_other_colleague","type":"8","reference":"sys_user","order":140,"question_text":"Employee Name"},
+{"name":"type_of_request","type":"5","reference":"sys_user","order":150,"question_text":"Type of request?","include_none":true,"choices":["Complaints [=complaints]","Questions [=questions]","Suggestions [=suggestions]"]},
+{"name":"select_the_celebration_event_below","type":"5","reference":"sys_user","order":200,"question_text":"Select the celebration and/or event below","include_none":true,"choices":["Children's Day [=children_day]","Pregnant Women's Gathering [=pregnant_women_gathering]","Nursery Closing Ceremony [=nursery_closing_ceremony]","Family Party [=family_party]","End-of-Year Celebrations [=end_of_year_celebrations]","Wellness Week [=wellness_week]","Other [=other]"]},
+{"name":"please_describe_the_celebration_event","type":"6","reference":"sys_user","order":250,"question_text":"Please describe the celebration and/or event","include_none":true},
+{"name":"use_field_below_to_provide","type":"2","reference":"sys_user","order":300,"question_text":"Use the field below to provide details about your request","include_none":true}
+],
+"ui_policies":[{"sys_id":"60fcb928871cc390ec360e530cbb357a","short_description":"Aoop: Hide some fields at resolver view","conditions":"","applies_catalog":false,"actions":["more_info_text_item: visible=false"]},{"sys_id":"74aaa06087948390ec360e530cbb3506","short_description":"Aoop: Set some fields mandatory","conditions":"","actions":["use_field_below_to_provide: mandatory=true","select_the_celebration_event_below: mandatory=true","who_is_this_request_for: mandatory=true","type_of_request: mandatory=true"]},{"sys_id":"918ba4a487948390ec360e530cbb358a","short_description":"Aoop: This request is for me","conditions":"who_is_this_request_for=for_me","actions":["employee_name_for_me: visible=true,readonly=true"]},{"sys_id":"b09fa42c87d48390ec360e530cbb356f","short_description":"Aoop: Show field Please describe the event, if the choice option was selected as other","conditions":"select_the_celebration_event_below=other","actions":["please_describe_the_celebration_event: visible=true,mandatory=true"]},{"sys_id":"f89ea06c87948390ec360e530cbb35b2","short_description":"Aoop: This request is to another colleague","conditions":"who_is_this_request_for=to_another_colleague","actions":["employee_name_to_other_colleague: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"2b01d86533ad83d098331c07ee5c7b0f","name":"EY: Add Option","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que acrescenta a opção 'Celebrações de Pais e Mães' à lista, apenas quando o idioma do usuário é português ('pb'). Opção condicionada a idioma, não a país."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Dúvidas sobre celebrações e eventos para colaboradores",
+"short_description":"Informações e dúvidas sobre celebrações e eventos da jornada do colaborador (Dia dos Pais e Mães, datas comemorativas, eventos internos).",
+"description":"Use para tirar dúvidas ou pedir informações sobre celebrações e eventos da empresa ligados à jornada do colaborador, como Dia das Mães e dos Pais, datas comemorativas e eventos internos. Pode ser para você ou para um colega. Não use para benefícios, folha de pagamento ou férias.",
+"frases_exemplo":["quando vai ser a comemoração do dia das mães","não recebi o presente do dia dos pais","dúvida sobre evento de fim de ano","quero informação sobre a celebração de tempo de casa","meu colega não foi convidado para o evento"],
+"labels":{"who_is_this_request_for":"O pedido é para você ou para outro colega?","employee_name_to_other_colleague":"Qual o nome do colega?","type_of_request":"É uma dúvida, um pedido de informação ou outro tipo de solicitação?","select_the_celebration_event_below":"Sobre qual celebração ou evento?","please_describe_the_celebration_event":"Qual é o evento?","use_field_below_to_provide":"Conte os detalhes do que você precisa."},
+"acoes":{"employee_name_for_me":"ocultar_na_conversa","more_info_text_item":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Add Option","acao":"remover","substituicao":"Choice fixa na variável."},{"nome":"Aoop: Set some fields mandatory","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"Aoop: This request is for me / to another colleague / Show field Please describe","acao":"manter","substituicao":"UI policies sem script, compatíveis."}]
+}
+}

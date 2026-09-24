@@ -1,0 +1,26 @@
+{
+"sys_id":"85c518911bc19ad0514cbaef4b4bcb8b",
+"title":"Data to make your refund",
+"internal_name":"data_to_make_your_refund",
+"order":600,
+"description":"",
+"variaveis":[
+{"name":"v_attention","type":"2","default_value":"Si tu dependiente no figura en la lista desplegable, puede deberse a que:\r\n\r\n- No esté registrado en Workday\r\n- No esté en la franja de edad que este beneficio se aplica\r\n\r\nPor favor, revisa estas opciones antes de continuar con la solicitud.","order":50,"question_text":"Attention","read_only":true},
+{"name":"v_employee_name","type":"8","reference":"x_nasm_hr_profile","order":50,"question_text":"Employee Name","hidden":true},
+{"name":"v_your_child_s_name","type":"8","reference":"x_nasm_hr_beneficiary","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Beneficiary().getEmployeeBeneficiariesDaycareCrib(current.variables.v_employee_name);","order":100,"question_text":"Your child's name"},
+{"name":"dependent_date_birth","type":"9","order":120,"question_text":"Dependent's Date of Birth"},
+{"name":"v_what_type_of_refund_are_you_requesting","type":"5","order":150,"question_text":"What type of refund are you requesting?","include_none":true,"choices":["Home care [=home_care]","Nursery / Crib Room [=nursery_crib_room]","Caring for people [=caring_for_people]","Caring for people - Child with disabilities [=child_disable]","Daycare - Child with disabilities [=daycare_child_disable]"]},
+{"name":"v_invoice_number","type":"6","order":200,"question_text":"Invoice Number"},
+{"name":"v_salary_receipt_number","type":"6","order":250,"question_text":"Salary Receipt Number"},
+{"name":"v_refund_amount","type":"6","order":300,"question_text":"Refund amount"}
+],
+"ui_policies":[{"sys_id":"9f86e17c1b11d650514cbaef4b4bcb7b","short_description":"EY: Invoice Visible","conditions":"v_what_type_of_refund_are_you_requestingINnursery_crib_room,daycare_child_disable","actions":["v_invoice_number: visible=true,mandatory=true"]},{"sys_id":"d308e5301b51d650514cbaef4b4bcb39","short_description":"EY: Salary Number Visible","conditions":"v_what_type_of_refund_are_you_requestingINcaring_for_people,child_disable","actions":["v_salary_receipt_number: visible=true"]},{"sys_id":"d4aab45d1b4d9ad0514cbaef4b4bcbec","short_description":"EY: Mandatory variables","conditions":"","actions":["v_your_child_s_name: mandatory=true","v_month_mrvs: mandatory=true","v_year_mrvs: mandatory=true","v_refund_amount: mandatory=true","v_what_type_of_refund_are_you_requesting: mandatory=true"]},{"sys_id":"efd8087d873ba610ec360e530cbb3521","short_description":"EY: Read only fields","conditions":"","actions":["dependent_date_birth: readonly=true"]}],
+"client_scripts":[
+{"sys_id":"1aa59da21b815610514cbaef4b4bcb78","name":"EY: Validate Fiels","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit de 4,1 KB que valida os campos contra o histórico de faturas guardado no sessionStorage, lendo também o mês do formulário pai. É a validação mais complexa do catálogo, e depende de estado do navegador."},
+{"sys_id":"320662ca3bfd6e50924d0247f4e45abf","name":"EY: Show dependent message","type":"onChange","cat_variable":"751c5c591b459ad0514cbaef4b4bcb02","ui_type":"10","script":"Catalog Client Script onChange que exibe mensagem específica sobre o dependente, a partir do colaborador informado."},
+{"sys_id":"3aa6e9691b055ed0514cbaef4b4bcb11","name":"EY: Get Employee Country","type":"onChange","cat_variable":"751c5c591b459ad0514cbaef4b4bcb02","ui_type":"10","script":"Catalog Client Script onChange que busca o país do colaborador via GlideAjax e usa o retorno para ajustar o formulário."},
+{"sys_id":"414d498e1b155210514cbaef4b4bcbb4","name":"EY: Máscara de Moeda","type":"onChange","cat_variable":"5d3324951b099ad0514cbaef4b4bcbab","ui_type":"10","script":"Variante do script de máscara de moeda, aceitando dígitos, vírgula e ponto."},
+{"sys_id":"5cdc145d1b459ad0514cbaef4b4bcb3e","name":"EY: Set employee","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que copia o colaborador do formulário pai para 'v_employee_name' e trava o campo. Roda dentro de multi-row variable set."},
+{"sys_id":"8d2682c187b19210ec360e530cbb35c6","name":"EY: Clear fields on change of type","type":"onChange","cat_variable":"7fc1ac111b099ad0514cbaef4b4bcb8a","ui_type":"1","script":"Catalog Client Script onChange que limpa os campos dependentes quando o tipo muda."}
+]
+}

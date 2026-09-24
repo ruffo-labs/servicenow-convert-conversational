@@ -1,0 +1,29 @@
+{
+"sys_id":"8486edc11b549250514cbaef4b4bcb28",
+"name":"Solicitações relacionadas à rescisão",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Rescisão",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Use este formulário para solicitar um relatório ou saque de indenização por rescisão",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de solicitações de rescisão. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor. ATENÇÃO: as linhas que gravariam x_nasm_hr_item e item com o sysparm_id estão COMENTADAS — diferente de todos os irmãos deste catálogo. Sem esse campo, as triggers de flow que condicionam no item não conseguem identificar a origem do registro.",
+"variaveis":[{"name":"v_faq","type":"32","order":50},{"name":"v_category","type":"5","order":200,"question_text":"Category","include_none":true,"choices":["Severance Report [=severance_report]","Severance Pay Withdrawal [=severance_pay_withdrawal]"]},{"name":"v_details","type":"2","order":300,"question_text":"Use the field below to detail your request"},{"name":"v_minimun_characters","type":"32","order":350},{"name":"v_attachment","type":"33","order":400,"question_text":"Attach document"},{"name":"v_download_document","type":"32","order":500}],
+"ui_policies":[{"sys_id":"07213cdd3b581a50924d0247f4e45a24","short_description":"EY: Mandatory Fields - Category = Severance Pay Withdrawal","conditions":"v_category=severance_pay_withdrawal","actions":["v_attachment: visible=true,mandatory=true","v_download_document: visible=true"]},{"sys_id":"a1c074dd3b581a50924d0247f4e45a72","short_description":"EY: Mandatory Fields - Always","conditions":"","actions":["v_details: mandatory=true","v_category: mandatory=true"]}],
+"client_scripts":[{"sys_id":"04c955ec1b289a90514cbaef4b4bcbc1","name":"EY: Set Colombia onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que fixa 'v_country_of_residence' em 'colombia' e trava o campo como somente leitura."},{"sys_id":"1a8238913b981a50924d0247f4e45a03","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."},{"sys_id":"1f32bc513b981a50924d0247f4e45a0c","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando a descrição tem menos de 30 caracteres. Observação: o mínimo aqui é 30, enquanto a maioria dos formulários do catálogo usa 40 — os limites não são uniformes."},{"sys_id":"58823c913b981a50924d0247f4e45a99","name":"EY: Show error message onChange","type":"onChange","cat_variable":"c6ff241d3b581a50924d0247f4e45aeb","ui_type":"10","script":"Par onChange da validação de 30 caracteres."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar extrato ou saque de cesantías (indenização por rescisão)",
+"short_description":"Peça o extrato ou o saque das suas cesantías / indenização por rescisão (Colômbia).",
+"description":"Use, na Colômbia, para pedir o extrato (relatório) das suas cesantías ou para solicitar o saque parcial dessa indenização (por exemplo, para moradia ou educação). No saque, anexe o documento que comprova o uso. Não use para dúvidas sobre sua rescisão de contrato ou desligamento.",
+"frases_exemplo":["quero sacar minhas cesantías","necesito el certificado de cesantías","retiro parcial de cesantías para vivienda","preciso do extrato da indenização por rescisão"],
+"labels":{"v_category":"Você quer o extrato ou o saque das cesantías?","v_details":"Descreva o seu pedido (por exemplo, o motivo do saque)."},
+"acoes":{"v_attachment":"remover","v_minimun_characters":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show error message onSubmit / onChange / EY: Hide error message onLoad","acao":"converter","substituicao":"Validation Regex ^[\\s\\S]{30,}$ em v_details."},{"nome":"EY: Set Colombia onLoad","acao":"manter","substituicao":"VA Supported; alternativa: derivar país pelo perfil (item já restrito à Colômbia por user criteria)."},{"nome":"EY: Mandatory Fields - Always","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"EY: Mandatory Fields - Category = Severance Pay Withdrawal","acao":"manter","substituicao":"UI policy sem script (retirar o anexo e o rótulo de download)."}]
+}
+}

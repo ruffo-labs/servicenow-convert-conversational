@@ -1,0 +1,48 @@
+{
+"sys_id":"55d956d71b3711d4a530426fe54bcb29",
+"name":"Solicitação de Adiantamento e Complemento Previdenciário",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Licenças e Ausências",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Solicitar adiantamento ou complemento previdenciário para colaborador afastado pelo INSS",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Attach is mandatory"}]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"nomes_ambiguos":["container_start","formatter"],
+"variaveis":[
+{"sys_id":"36e4e6131b3b11d4a530426fe54bcbf8","name":"container_start","type":"19","order":500,"question_text":"Your request"},
+{"name":"v_request_type","type":"5","order":600,"question_text":"Request type","include_none":true,"choices":["Social Security Advance","Pension Supplement"]},
+{"name":"v_was_the_medical_examination_scheduled_at_the_inss","type":"1","order":700,"question_text":"Was the medical examination scheduled at the INSS?","include_none":true},
+{"name":"v_observation_necessary_scheduled_expertise","type":"32","order":800,"question_text":"According to the removal manual, to request the social security advance, it is necessary that you have already scheduled the expertise."},
+{"name":"v_what_is_the_date_of_the_medical_examination","type":"9","order":900,"question_text":"What is the date of the medical examination"},
+{"name":"v_observation_expertise_this_month","type":"32","order":1000,"question_text":"If the inspection takes place in the same month as the request, the payment will not be made, as it must be made by the INSS."},
+{"name":"v_formulario_adiantamento_salario_afastamento","type":"32","order":1200},
+{"name":"v_attach_the_completed_social_security_advance_form","type":"33","order":1300,"question_text":"Attach the completed Social Security Advance form"},
+{"name":"v_attach_the_proof_of_scheduling_the_expertise","type":"33","order":1400,"question_text":"Attach the proof of scheduling the expertise"},
+{"name":"v_text_attach","type":"32","order":1500,"question_text":"Attach the decision statement and letter of concession from the INSS"},
+{"sys_id":"eef9aa1b1b7b11d4a530426fe54bcb34","name":"formatter","type":"20","order":1600}
+],
+"ui_policies":[
+{"sys_id":"1ae250f31b37d5d4a530426fe54bcba3","short_description":"EY: make field visible - \"Attach the decision statement and letter of concession from the INSS\"","conditions":"v_request_type=Pension Supplement","actions":["v_text_attach: visible=true,mandatory=true"]},
+{"sys_id":"6d1058371bf3d5d4a530426fe54bcb7f","short_description":"EY: make field visible - \"Social Security Advance\" condition and \"No\" INSS","conditions":"v_request_type=Social Security Advance^v_was_the_medical_examination_scheduled_at_the_inss=No","actions":["v_observation_necessary_scheduled_expertise: visible=true,mandatory=true"]},
+{"sys_id":"7b2ef0841bcc2dd4a530426fe54bcb37","short_description":"EY: mandatory fields","conditions":"","actions":["v_request_type: mandatory=true"]},
+{"sys_id":"80c1183f1bf3d5d4a530426fe54bcb57","short_description":"EY: make field visible - \"Was the medical examination scheduled at the INSS?\"","conditions":"v_request_type=Social Security Advance","actions":["v_was_the_medical_examination_scheduled_at_the_inss: visible=true,mandatory=true"]},
+{"sys_id":"f57b0c731bb3d5d4a530426fe54bcb22","short_description":"EY: make field visible - \"Social Security Advance\" condition and \"Yes\" INSS","conditions":"v_request_type=Social Security Advance^v_was_the_medical_examination_scheduled_at_the_inss=Yes","actions":["v_what_is_the_date_of_the_medical_examination: visible=true,mandatory=true","v_formulario_adiantamento_salario_afastamento: visible=true,mandatory=true","v_attach_the_proof_of_scheduling_the_expertise: visible=true,mandatory=true","v_attach_the_completed_social_security_advance_form: visible=true,mandatory=true","v_observation_expertise_this_month: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"b11ee7881b38a114d1abda4ce54bcba1","name":"EY: Attach is mandatory","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que exige anexo quando o tipo de solicitação é 'Pension Supplement'. Usa `this.document.getElementsByClassName` para inspecionar o DOM — frágil e fora do padrão da API g_form."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar adiantamento ou complemento do INSS durante afastamento",
+"short_description":"Peça adiantamento salarial enquanto aguarda a perícia do INSS ou o complemento do benefício previdenciário.",
+"description":"Use quando você (ou um colaborador) está afastado pelo INSS (Instituto Nacional do Seguro Social) e precisa de: 1) adiantamento previdenciário, enquanto aguarda a perícia, que já deve estar agendada; ou 2) complemento previdenciário, depois que o INSS concedeu o benefício. Para o adiantamento, tenha a data da perícia, o comprovante de agendamento e o formulário de adiantamento preenchido (disponível no artigo da base de conhecimento). Se a perícia for no mesmo mês da solicitação, o pagamento é feito pelo INSS e não pela empresa. Para o complemento, anexe a carta de concessão e o comunicado de decisão do INSS. Não use para enviar atestado (use 'Enviar atestado médico') nem para comunicar retorno ao trabalho.",
+"frases_exemplo":["estou afastado pelo INSS e preciso de adiantamento","quero pedir o complemento previdenciário","a perícia do INSS está marcada, posso pedir adiantamento?","recebi a carta de concessão do INSS, e agora?","adiantamento de salário durante afastamento"],
+"labels":{"v_request_type":"Você quer o adiantamento previdenciário (aguardando perícia) ou o complemento do benefício já concedido?","v_was_the_medical_examination_scheduled_at_the_inss":"A perícia no INSS já está agendada?","v_what_is_the_date_of_the_medical_examination":"Qual a data da perícia?","v_attach_the_proof_of_scheduling_the_expertise":"Envie o comprovante de agendamento da perícia.","v_attach_the_completed_social_security_advance_form":"Envie o formulário de adiantamento preenchido e assinado.","nova_carta_concessao_inss":"Envie a carta de concessão e o comunicado de decisão do INSS."},
+"acoes":{"nova_carta_concessao_inss":"nova:Attachment","v_text_attach":"remover","v_formulario_adiantamento_salario_afastamento":"remover","v_observation_expertise_this_month":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Attach is mandatory","acao":"remover","substituicao":"Variável Attachment obrigatória via UI Policy sem script."},{"nome":"EY: mandatory fields","acao":"converter","substituicao":"Mandatory direto em v_request_type."},{"nome":"UI Policies de visibilidade por v_request_type / perícia","acao":"manter","substituicao":"São no-code e VA Supported; remover da policy a referência a v_download_the_form_below_to_fill_it_out (variável inexistente) e desmarcar mandatory em rich text."}]
+}
+}

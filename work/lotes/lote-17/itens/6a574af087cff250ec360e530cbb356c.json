@@ -1,0 +1,80 @@
+{
+"sys_id":"6a574af087cff250ec360e530cbb356c",
+"name":"Solicitações Workday Learning",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Serviços de Ações de Aprendizagem",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search, Catálogo hispânico",
+"short_description":"Este caminho é para cadastro de conteúdo, registro de presenças e outras dúvidas relacionadas à Workday Learning",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+"variaveis":[
+{"name":"what_is_the_request","type":"5","order":200,"question_text":"What is the request?","include_none":true,"choices":["Cadastro de conteúdo no Workday Learning [=cadastro_conteudo_workday_learning]","Workday Learning Questions or Requests [=duvidas_workday_learning]"]},
+{"name":"categoria_de_aprendizagem","type":"5","order":201,"question_text":"Categoria de Aprendizagem","include_none":true,"choices":["Núcleo [=nucleo]","HUB [=hub]","Células [=celulas]","Portas de Entrada [=portas_entrada]"]},
+{"name":"seleciona_o_hub","type":"5","order":202,"question_text":"Selecione o HUB","include_none":true,"choices":["Essence, Brands, Products, and Customers [=essence_brands_products_customers]","Data, AI, and Agility [=data_ai_agility]","Business, Markets & Channels, and Execution [=business_markets_channels_execution]","Soft Skills, Compliance, and Mandatory Training [=softskills_compliance_mandatory_training]"]},
+{"name":"nome_da_celula","type":"6","order":203,"question_text":"Nome da Célula"},
+{"name":"acao_obrigatoria","type":"1","order":204,"question_text":"Ação obrigatória?","include_none":true},
+{"name":"training_name","type":"6","order":500,"question_text":"Training Title"},
+{"name":"training_objective","type":"6","order":600,"question_text":"Course description"},
+{"name":"responsible_for_content","type":"6","order":650,"question_text":"Responsible for content"},
+{"name":"data_horario_inicio","type":"10","order":700,"question_text":"Data e horário de início"},
+{"name":"insert_link_Customer_satisfaction_survey_form","type":"6","order":750,"question_text":"Insert the link to the Customer Satisfaction Survey form."},
+{"name":"enter_the_link_to_the_content_to_be_loaded","type":"6","order":755,"question_text":"Enter the link to the content to be loaded."},
+{"name":"do_you_wish_to_perform_a_bulk_enrollment","type":"5","order":760,"question_text":"Do you wish to perform a bulk enrollment or create a campaign for this course?","include_none":true,"choices":["Bulk Registration [=bulk_registration]","Campaign [=campaign]","Not applicable [= not_applicable]"]},
+{"name":"link_eligibles_database_collaborator_id","type":"6","order":770,"question_text":"Enter the link to the Eligibles database (The database must contain the collaborator ID)."},
+{"name":"download_the_form_compaing_here","type":"33","order":775,"question_text":"Fill out the form and attach it."},
+{"name":"anexo_conteudo_carregado_lista_presenca","type":"33","order":800,"question_text":"Attach cover image"},
+{"name":"additional_information","type":"6","order":10000,"question_text":"Additional information"}
+],
+"ui_policies":[
+{"sys_id":"39647e3887437650ec360e530cbb3557","short_description":"EY: Nome da célula","conditions":"what_is_the_request=cadastro_conteudo_workday_learning^categoria_de_aprendizagem=celulas","actions":["nome_da_celula: visible=true,mandatory=true"]},
+{"sys_id":"3a51f81d8723f610ec360e530cbb3543","short_description":"EY: Mandatory Fields","conditions":"","actions":["what_is_the_request: visible=true,mandatory=true"]},
+{"sys_id":"4d333ab087437650ec360e530cbb3592","short_description":"EY: Dúvidas de Workday Learning","conditions":"what_is_the_request=duvidas_workday_learning","actions":["additional_information: visible=true"]},
+{"sys_id":"6ec3feb087437650ec360e530cbb35e0","short_description":"EY: Cadastro de conteúdo no Workday Learning","conditions":"what_is_the_request=cadastro_conteudo_workday_learning^ORwhat_is_the_request=add_another_course","actions":["enter_the_link_to_the_content_to_be_loaded: visible=true,mandatory=true","do_you_wish_to_perform_a_bulk_enrollment: visible=true,mandatory=true","data_horario_inicio: visible=true,mandatory=true","categoria_de_aprendizagem: visible=true,mandatory=true","training_objective: visible=true,mandatory=true","training_name: visible=true,mandatory=true","anexo_conteudo_carregado_lista_presenca: visible=true,mandatory=true","acao_obrigatoria: visible=true,mandatory=true","insert_link_Customer_satisfaction_survey_form: visible=true","responsible_for_content: visible=true,mandatory=true"]},
+{"sys_id":"a204a8f533f6431098331c07ee5c7b22","short_description":"EY: Inscricao  Massiva","conditions":"do_you_wish_to_perform_a_bulk_enrollment=bulk_registration","actions":["link_eligibles_database_collaborator_id: visible=true,mandatory=true"]},
+{"sys_id":"a31624f933f6431098331c07ee5c7bdd","short_description":"EY: Criar Campanha","conditions":"do_you_wish_to_perform_a_bulk_enrollment=campaign","actions":["download_the_form_compaing_here: visible=true,mandatory=true"]},
+{"sys_id":"aa2876fc87837650ec360e530cbb35b7","short_description":"EY: Request for who","conditions":"","actions":["request_for_who: visible=true,mandatory=true"]},
+{"sys_id":"f5447ab487437650ec360e530cbb351f","short_description":"EY: Selecione o HUB","conditions":"what_is_the_request=cadastro_conteudo_workday_learning^categoria_de_aprendizagem=hub","actions":["seleciona_o_hub: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"d575febc87437650ec360e530cbb359d","name":"EY: Clear when request changes","type":"onChange","cat_variable":"8068067887cff250ec360e530cbb3562","ui_type":"10","script":"Catalog Client Script onChange que limpa o formulário quando a solicitação muda, por uma função interna clearForm documentada em comentário."}],
+"variable_sets":[{"sys_id":"55e3c9e887837a10017d65790cbb35d4","title":"EY: Requester Info","order":100}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Solicitações de cursos no Workday Learning",
+"short_description":"Cadastrar cursos e conteúdos ou tirar dúvidas sobre o Workday Learning",
+"description":"Use para pedidos à equipe de Aprendizagem sobre a plataforma Workday Learning: cadastrar um curso, treinamento ou conteúdo novo (incluindo inscrição em massa ou campanha) e tirar dúvidas de uso da plataforma. Não use para treinamentos obrigatórios por Norma Regulamentadora (NR), que têm item próprio (Treinamentos Normativos).",
+"frases_exemplo":["preciso cadastrar um curso no Workday Learning","quero subir um treinamento novo na plataforma de aprendizagem","como faço inscrição em massa num curso do Workday?","tenho uma dúvida sobre o Workday Learning","quero criar uma campanha para um curso"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{
+"nome":"Cadastrar curso no Workday Learning",
+"short_description":"Cadastre um curso, treinamento ou conteúdo novo no Workday Learning",
+"descricao":"Use para pedir o cadastro de um curso, treinamento ou conteúdo novo (ou de mais uma turma) no Workday Learning, com a opção de inscrição em massa ou campanha. Não use para tirar dúvidas sobre a plataforma nem para treinamentos obrigatórios por NR.",
+"frases_exemplo":["quero cadastrar um curso no Workday Learning","preciso publicar um treinamento novo","adicionar mais uma turma de um curso","subir conteúdo na plataforma de aprendizagem e inscrever o time todo"],
+"fixar":"what_is_the_request = cadastro_conteudo_workday_learning (default/hidden). Se 'add_another_course' tiver fluxo diferente, virar a pergunta nova_novo_ou_nova_turma.",
+"perguntas":[
+{"ordem":1,"variavel":"training_name","conversational_label":"Qual é o nome do curso?"},
+{"ordem":2,"variavel":"training_objective","conversational_label":"Descreva o curso em poucas palavras."},
+{"ordem":3,"variavel":"categoria_de_aprendizagem","conversational_label":"Qual é a categoria de aprendizagem do curso?"},
+{"ordem":4,"variavel":"seleciona_o_hub","conversational_label":"Para qual HUB é o curso?"},
+{"ordem":5,"variavel":"nome_da_celula","conversational_label":"Qual é o nome da célula?"},
+{"ordem":6,"variavel":"acao_obrigatoria","conversational_label":"O curso é obrigatório?"},
+{"ordem":7,"variavel":"responsible_for_content","conversational_label":"Quem é o responsável pelo conteúdo?"},
+{"ordem":8,"variavel":"data_horario_inicio","conversational_label":"Qual é a data e o horário de início?"},
+{"ordem":9,"variavel":"enter_the_link_to_the_content_to_be_loaded","conversational_label":"Qual é o link do conteúdo que vamos cadastrar?"},
+{"ordem":10,"variavel":"insert_link_Customer_satisfaction_survey_form","conversational_label":"Tem link da pesquisa de satisfação? Se tiver, informe."},
+{"ordem":11,"variavel":"do_you_wish_to_perform_a_bulk_enrollment","conversational_label":"Quer fazer inscrição em massa ou criar uma campanha para o curso?"},
+{"ordem":12,"variavel":"link_eligibles_database_collaborator_id","conversational_label":"Qual é o link da base de elegíveis (com a matrícula de cada colaborador)?"},
+{"ordem":13,"variavel":"download_the_form_compaing_here","conversational_label":"Anexe o formulário da campanha preenchido."},
+{"ordem":14,"variavel":"anexo_conteudo_carregado_lista_presenca","conversational_label":"Anexe a imagem de capa do curso."}
+]
+},
+{"nome":"Tirar dúvida sobre o Workday Learning","short_description":"Envie dúvidas sobre o uso do Workday Learning","descricao":"Use para dúvidas sobre a plataforma Workday Learning: como acessar, encontrar ou concluir um curso, registro de presença, certificado e outras questões de uso. Não use para cadastrar curso novo.","frases_exemplo":["não estou conseguindo acessar meu curso no Workday","dúvida no Workday Learning","minha presença não foi registrada no treinamento","como emito o certificado do curso?"],"fixar":"what_is_the_request = duvidas_workday_learning (default/hidden)","perguntas":[{"ordem":1,"variavel":"additional_information","conversational_label":"Qual é a sua dúvida sobre o Workday Learning?"}]}
+],
+"scripts_e_policies":[{"nome":"EY: Mandatory Fields","acao":"remover","substituicao":"what_is_the_request vira default value e fica oculta em cada item derivado."},{"nome":"EY: Cadastro de conteúdo no Workday Learning","acao":"converter","substituicao":"Marcar as variáveis como mandatory direto na variável do item de cadastro, sem policy onLoad."},{"nome":"EY: Dúvidas de Workday Learning","acao":"remover","substituicao":"additional_information fica visível e obrigatória direto no item de dúvidas."},{"nome":"EY: Nome da célula / EY: Selecione o HUB","acao":"manter","substituicao":"UI Policy sem script, compatível; desmarcar On load onde der."},{"nome":"EY: Inscricao  Massiva / EY: Criar Campanha","acao":"manter","substituicao":"UI Policy sem script, compatível com a conversa."},{"nome":"EY: Clear when request changes","acao":"remover","substituicao":"Não é mais preciso com o tipo fixo."}]
+}
+}

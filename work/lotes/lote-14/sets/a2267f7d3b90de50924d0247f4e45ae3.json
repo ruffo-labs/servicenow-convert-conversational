@@ -1,0 +1,16 @@
+{
+"sys_id":"a2267f7d3b90de50924d0247f4e45ae3",
+"title":"Your children's data",
+"internal_name":"dados_dos_seus_filhos",
+"order":1110,
+"description":"",
+"variaveis":[{"name":"employee_reference","type":"8","reference":"x_nasm_hr_profile","order":10,"question_text":"Employee Name","hidden":true},{"name":"v_child_name_new","type":"8","reference":"x_nasm_hr_beneficiary","lookup_table":"x_nasm_hr_beneficiary","lookup_value":"beneficiary_name","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Beneficiary().getEmployeeBeneficiariesSchoolKit(current.variables.employee_reference);","order":300,"question_text":"Child name","include_none":true,"lookup_unique":true},{"name":"v_total_amount_of_expenses_new","type":"6","order":500,"question_text":"Total amount of expenses"},{"name":"v_tope","type":"6","order":700,"question_text":"Tope","read_only":true}],
+"ui_policies":[{"sys_id":"2fa0e6701b05d6d0514cbaef4b4bcb4c","short_description":"EY: Hide tope","conditions":"","actions":["v_tope: visible=false"]},{"sys_id":"6a6d19563b589290924d0247f4e45a8d","short_description":"EY: Mandatory fields","conditions":"","actions":["v_child_name_new: mandatory=true","v_total_amount_of_expenses_new: mandatory=true"]}],
+"client_scripts":[
+{"sys_id":"073bb8023b101290924d0247f4e45a1e","name":"EY: Count number of children","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que conta o número de filhos lendo a lista do sessionStorage ('children_list_2')."},
+{"sys_id":"1e5ca52c1b0d16d0514cbaef4b4bcbf4","name":"EY: Get tope to apply in amount OnLoad","type":"onLoad","va_supported":false,"ui_type":"1","script":"Catalog Client Script onLoad que calcula o teto de reembolso aplicável ao valor, lendo o colaborador do formulário pai e montando a data de referência com o dia fixado em '01'."},
+{"sys_id":"2100185c1b4d52d0514cbaef4b4bcb91","name":"EY: Get tope to apply in amount OnChange","type":"onChange","cat_variable":"eae9c8023b54de50924d0247f4e45aea","va_supported":false,"ui_type":"1","script":"Par onChange do cálculo de teto. Observação: a linha `g_form.clearMessages;` está SEM os parênteses — referencia a função em vez de executá-la, então as mensagens não são limpas."},
+{"sys_id":"6015f8123bd85290924d0247f4e45a38","name":"EY: Set employee","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."},
+{"sys_id":"ac699d163b189290924d0247f4e45a53","name":"EY: Set amount regex","type":"onChange","cat_variable":"eae9c8023b54de50924d0247f4e45aea","ui_type":"10","script":"Catalog Client Script onChange que valida o valor no formato brasileiro/hispânico (milhar com ponto, decimais com vírgula)."}
+]
+}

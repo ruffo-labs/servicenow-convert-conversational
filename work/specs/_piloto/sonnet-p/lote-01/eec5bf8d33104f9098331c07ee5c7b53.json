@@ -1,0 +1,60 @@
+{
+ "sys_id": "eec5bf8d33104f9098331c07ee5c7b53",
+ "status": "conversacional",
+ "motivo": "Formulário simples de aplicação de pagamento com poucas perguntas objetivas. Mandatory fixo via prop e requesting_person/country ficam fora da conversa por serem derivados/somente leitura.",
+ "vars": {
+  "requesting_person": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "which_company_your_request_for": {
+   "label": "Para qual empresa é o pedido?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_subsidiary_is_the_service_for": {
+   "label": "Qual é a subsidiária?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "country": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "invoice_number": {
+   "label": "Qual é o número da fatura paga?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "registration_number": {
+   "label": "Qual é o número de registro (CNPJ/ID fiscal) do cliente?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_information": {
+   "label": "Quer acrescentar alguma informação ou anexar o comprovante?"
+  }
+ },
+ "policies": {
+  "c82fd711339ccf9098331c07ee5c7b70": "remover"
+ },
+ "itens": [
+  {
+   "name": "Informar pagamento de fatura de outros clientes",
+   "short_description": "Aplicação de pagamento recebido de outros clientes (fora da Força de Vendas)",
+   "description": "Use para informar que um cliente que não é consultora, representante ou franqueado (outros clientes) pagou uma fatura, para que o pagamento seja aplicado. Informe a subsidiária, o número da fatura e o número de registro do cliente. Não use para títulos da Força de Vendas nem para registrar uma nova fatura (use \"Registrar fatura de outros clientes\").",
+   "frases_exemplo": [
+    "um cliente pagou a fatura e preciso aplicar o pagamento",
+    "aplicação de pagamento de outros clientes",
+    "recebemos pagamento da fatura 1234 de um cliente corporativo",
+    "informar pagamento de fatura de cliente externo"
+   ]
+  }
+ ]
+}

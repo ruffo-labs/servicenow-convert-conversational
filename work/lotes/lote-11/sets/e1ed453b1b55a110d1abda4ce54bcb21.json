@@ -1,0 +1,31 @@
+{
+"sys_id":"e1ed453b1b55a110d1abda4ce54bcb21",
+"title":"EY VS - Baixa de Ativo Fixo",
+"internal_name":"ey_vs_baixa_de_ativo_fixo",
+"order":200,
+"description":"Variable Set referente ao Form Baixa de Ativo Fixo",
+"variaveis":[
+{"name":"select_the_manager_who_apprends_this_request","type":"18","reference":"sys_user","lookup_table":"sys_user","lookup_value":"name","reference_qual":"active=true^x_nasm_hr_rangeING,H,I,J,K,L","reference_qual_condition":"active=true^x_nasm_hr_rangeING,H,I,J,K,L^EQ","order":0,"question_text":"Select the manager who apprends this request","include_none":true},
+{"name":"v_what_kind_of_casualty","type":"5","order":100,"question_text":"What kind of casualty?","include_none":true,"choices":["1) Write-off due to Destruction/Obsolescence [=destruction_obsolescence]","2) Write-off by Return [=baixa_devolucao]","3) Write-off by Donation [=donation]","4) Write-off due to Theft/Loss [=baixa_furto_perda]","5) Write-off by Sale [=sale]"]},
+{"name":"legenda_doacao","type":"32","order":150},
+{"name":"legenda_destruicao","type":"32","order":150},
+{"name":"legenda_furto_perda","type":"32","order":150},
+{"name":"legenda_devolucao","type":"32","order":150},
+{"name":"legenda_venda","type":"32","order":150},
+{"name":"v_number_assets","type":"5","order":160,"question_text":"Enter the number of assets (according to the attached template)","include_none":true,"choices":["1 - 10 [=1_10]","11 - 20 [=11_20]","21 - 30 [=21_30]","31 - 40 [=31_40]","41 - 50 [=41_50]","51 - 60 [=51_60]","61 - 70 [=61_70]","71 - 80 [=71_80]","81 - 90 [=81_90]","91 - 100 [=91_100]"]},
+{"name":"v_issuing_invoice","type":"5","order":200,"question_text":"Issuing invoice?","include_none":true,"choices":["Yes [=yes]","No [=no]"]},
+{"name":"link_sn_avon","type":"32","order":250,"question_text":"Download Template - Natura Fixed Asset Write-Off"},
+{"name":"link_sn_obsolescencia","type":"32","order":250,"question_text":"Download Template - Natura Fixed Asset Write-Off"},
+{"name":"link_renf","type":"32","order":250,"question_text":"Download Template - Natura Fixed Asset Write-Off"},
+{"name":"link_senf_nota","type":"32","order":250,"question_text":"Download Template - Natura Fixed Asset Write-Off"},
+{"name":"v_legenda_attach","type":"32","order":450},
+{"name":"v_attach_files","type":"33","order":500,"question_text":"Attach Template"},
+{"name":"v_attach_email_with_approval","type":"33","order":700,"question_text":"Attach Documentation Support"},
+{"name":"documentos_furto_perda","type":"32","order":750,"question_text":"Required Documents:\r\nPolice Report"},
+{"name":"documentos_doacao","type":"32","order":750,"question_text":"Required Documents:\r\nPolice Report"},
+{"name":"documentos_destruicao","type":"32","order":750,"question_text":"Required Documents:\r\nPolice Report"},
+{"name":"documentos_venda","type":"32","order":750,"question_text":"Required Documents:\r\nPolice Report"}
+],
+"ui_policies":[{"sys_id":"3376c2f71bd5e110d1abda4ce54bcbe9","short_description":"EY: Mandatory","conditions":"","actions":["v_what_kind_of_casualty: mandatory=true","select_the_manager_who_apprends_this_request: mandatory=true","v_issuing_invoice: ","v_invoice_available: ","v_number_assets: mandatory=true","v_attach_files: mandatory=true","v_attach_email_with_approval: mandatory=true"]},{"sys_id":"f7018c261b616990d1abda4ce54bcb78","short_description":"EY: Read-Only","conditions":"","applies_catalog":false,"actions":["v_attach_invoice_2: readonly=true","v_number_assets: readonly=true","v_what_kind_of_casualty: readonly=true","v_issuing_invoice: readonly=true","v_attach_invoice: readonly=true","v_comments: readonly=true","v_invoice_available_2: readonly=true","v_attach_files: readonly=true","select_the_manager_who_apprends_this_request: readonly=true","v_attach_email_with_approval: readonly=true","v_invoice_available: readonly=true"]}],
+"client_scripts":[{"sys_id":"348e360b1bcc5610514cbaef4b4bcb8e","name":"EY: Issuance of Invoice","type":"onChange","cat_variable":"041ec1bb1b55a110d1abda4ce54bcbd2","ui_type":"10","script":"Catalog Client Script onChange sobre emissão de nota fiscal. Mantém duas listas de sys_ids de sub-empresa: uma com três entradas e outra com doze. Conforme a sub-empresa escolhida caia numa lista, na outra ou em nenhuma, define o valor de emissão de nota e o estado do campo (preenchido e travado, ou liberado)."}]
+}

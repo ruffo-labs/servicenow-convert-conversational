@@ -1,0 +1,10 @@
+{
+"sys_id":"6671c7b51b11e110a530426fe54bcb63",
+"title":"EY VS - Notificação de pagamentos incorretos ou duplicados",
+"internal_name":"ey_vs_notifica_o_de_pagamentos_incorretos_ou_duplicados",
+"order":300,
+"description":"Variable Set referente ao Form Notificação de pagamentos incorretos ou duplicados",
+"variaveis":[{"name":"v_tipo_de_notifica_o","type":"5","order":100,"question_text":"Notification Type","include_none":true,"choices":["Incorrect [=v_incorrect]","Duplicate [=v_duplicated]"]},{"name":"v_document_number_invoice","type":"6","order":200,"question_text":"Document Number (Invoice)"},{"name":"v_due_date","type":"9","order":300,"question_text":"Due Date"},{"name":"v_amount","type":"6","order":400,"question_text":"Amount"}],
+"ui_policies":[{"sys_id":"6d3b77ad1b69e190d1abda4ce54bcbbf","short_description":"EY: Somente leitura","conditions":"","applies_catalog":false,"actions":["v_document_number_invoice: readonly=true","v_due_date: readonly=true","v_amount: readonly=true","v_tipo_de_notifica_o: readonly=true"]},{"sys_id":"ca0ae3821b1d6910d1abda4ce54bcb69","short_description":"EY: Mandatory","conditions":"","actions":["v_amount: mandatory=true","v_document_number_invoice: mandatory=true","v_tipo_de_notifica_o: mandatory=true","v_due_date: mandatory=true"]}],
+"client_scripts":[{"sys_id":"501b81b91ba16110a530426fe54bcb49","name":"EY: Máscara de Moeda","type":"onChange","cat_variable":"cbc28b3d1b11e110a530426fe54bcb4f","ui_type":"10","script":"Catalog Client Script onChange que formata 'v_amount' como moeda. Variante da série formatarMoeda."}]
+}

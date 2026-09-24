@@ -1,0 +1,41 @@
+{
+"sys_id":"39b3c12b1b912910d1abda4ce54bcb6f",
+"name":"Baixa de Ativo Fixo",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Ativo Fixo",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite uma Baixa por Devolução, Doação, Furto, Obsolescência/Descarte ou Venda de Ativo Imobilizado",
+"description":"Solicite uma Baixa por Devolução, Doação, Furto, Obsolescência/Descarte ou Venda de Ativo Imobilizado",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS - Baixa de Ativo Fixo/select_the_manager_who_apprends_this_request: opções dinâmicas (sys_user)"],
+"variaveis":[],
+"ui_policies":[
+{"sys_id":"14dd734f3bd81a90924d0247f4e45a3e","short_description":"EY: Tipo de Baixa \" Destruição/Obsolescência\"","conditions":"v_what_kind_of_casualty=destruction_obsolescence","actions":["documentos_destruicao: visible=true","legenda_destruicao: visible=true"]},
+{"sys_id":"24aa021f1b04d610514cbaef4b4bcb84","short_description":"EY: Company = Natura and Invoice = No","conditions":"vs_which_company=natura^v_issuing_invoice=no","actions":["link_sn_obsolescencia: visible=true,mandatory=true"]},
+{"sys_id":"282d86571b44d610514cbaef4b4bcbd6","short_description":"EY: Company = Avon and Invoice = No","conditions":"vs_which_companyNOT INnatura,tbs^v_issuing_invoice=no^vs_which_sub_company_8!=7f04f4d61b0acd10237642ece54bcb1f^vs_which_sub_company_8!=93388c3a1b417910a530426fe54bcb79^vs_which_sub_company_8!=cc14b8d6db0a01104f0d5e7cf39619cd","actions":["link_sn_avon: visible=true"]},
+{"sys_id":"33bcc2d31b44d610514cbaef4b4bcbf0","short_description":"EY: Company = Avon and Invoice = Yes","conditions":"vs_which_companyNOT INnatura,tbs^v_issuing_invoice=yes^vs_which_sub_company_8!=7f04f4d61b0acd10237642ece54bcb1f^vs_which_sub_company_8!=93388c3a1b417910a530426fe54bcb79^vs_which_sub_company_8!=cc14b8d6db0a01104f0d5e7cf39619cd","actions":["link_renf: visible=true"]},
+{"sys_id":"387703f21bea6510d1abda4ce54bcb7c","short_description":"EY: Issuing Invoice Mandatory","conditions":"","actions":["v_issuing_invoice: visible=true,mandatory=true"]},
+{"sys_id":"3e0db3cb3bd81a90924d0247f4e45aa3","short_description":"EY: Tipo de Baixa \"Doação\"","conditions":"v_what_kind_of_casualty=donation","actions":["legenda_doacao: visible=true","documentos_doacao: visible=true"]},
+{"sys_id":"742eff4f3bd81a90924d0247f4e45ad8","short_description":"EY: Tipo de Baixa \"Furto/Perda\"","conditions":"v_what_kind_of_casualty=baixa_furto_perda","actions":["documentos_furto_perda: visible=true","legenda_furto_perda: visible=true"]},
+{"sys_id":"a8598e171b04d610514cbaef4b4bcba8","short_description":"EY: Company = Natura and Invoice = Yes","conditions":"vs_which_company=natura^v_issuing_invoice=yes","actions":["link_senf_nota: visible=true,mandatory=true"]},
+{"sys_id":"bff0c0173b1c1a90924d0247f4e45ac0","short_description":"EY: Tipo de Baixa \"Devolução\"","conditions":"v_what_kind_of_casualty=baixa_devolucao","actions":["legenda_devolucao: visible=true"]},
+{"sys_id":"c70fb7033b1c1a90924d0247f4e45a04","short_description":"EY: Tipo de Baixa \"Venda\"","conditions":"v_what_kind_of_casualty=sale","actions":["legenda_venda: visible=true","documentos_venda: visible=true"]}
+],
+"client_scripts":[{"sys_id":"b2ca65d81bbde1d0d1abda4ce54bcbed","name":"Hide Fields OnLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad. Esconde 'v_issuing_invoice_2' e 'v_legenda_attach' na abertura do formulário. A linha que esconderia 'v_invoice_available' está comentada."},{"sys_id":"b5dc2b763bced290924d0247f4e45ac9","name":"EY:IF subcompany 305, 315, 347, 332","type":"onChange","cat_variable":"9de674fc3bf1de10924d0247f4e45a7e","ui_type":"10","script":"Catalog Client Script onChange. Compara a sub-empresa escolhida ('vs_which_sub_company_8') com quatro sys_ids fixos. Se for um deles, esconde e desobriga 'v_issuing_invoice' e exibe a legenda de anexo; caso contrário, exibe e obriga a emissão de nota e esconde a legenda. Duas linhas que controlariam os links 'link_sn_avon' e 'link_renf' estão comentadas."},{"sys_id":"fcfbb02f1b481a10514cbaef4b4bcb60","name":"EY: If sub-company is one of","type":"onChange","cat_variable":"9de674fc3bf1de10924d0247f4e45a7e","ui_type":"10","script":"Catalog Client Script onChange. Mantém uma lista de 11 sys_ids de sub-empresas. Se a sub-empresa escolhida ('vs_which_sub_company_8') estiver na lista, força 'v_issuing_invoice' para 'no' e trava o campo como somente leitura; se não estiver, limpa o campo e o destrava."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"e1ed453b1b55a110d1abda4ce54bcb21","title":"EY VS - Baixa de Ativo Fixo","order":200},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{
+"recomendacao":"manter_formulario",
+"nome":"Solicitar baixa de ativo imobilizado",
+"short_description":"Peça a baixa de ativo fixo por devolução, doação, furto/perda, obsolescência/descarte ou venda",
+"description":"Use para pedir à Contabilidade a baixa de um bem do ativo imobilizado (máquina, móvel, equipamento, veículo) por devolução, doação, furto ou perda, obsolescência ou descarte, ou venda. Você vai escolher o tipo de baixa, o gestor aprovador, a quantidade de ativos e anexar o template preenchido e os documentos exigidos (por exemplo, boletim de ocorrência em caso de furto). Não use para transferir ativo entre centros de custo ou filiais (use transferência de ativos).",
+"frases_exemplo":["preciso dar baixa em um ativo","o notebook foi roubado, como baixo o ativo?","baixa de equipamento obsoleto","vender um ativo imobilizado","doação de móveis do patrimônio","descartar máquina quebrada do ativo fixo"],
+"labels":{},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: If sub-company is one of / EY:IF subcompany 305, 315, 347, 332 / EY: Issuance of Invoice","acao":"converter","substituicao":"Três scripts disputam o mesmo campo v_issuing_invoice com listas diferentes de sys_ids. Consolidar num só (ou num campo na tabela de sub-empresa lido por auto-populate) mesmo mantendo o formulário."},{"nome":"Hide Fields OnLoad","acao":"remover","substituicao":"Esconde variáveis inexistentes (v_issuing_invoice_2); marcar hidden direto na variável v_legenda_attach."},{"nome":"UI policies de legenda por tipo de baixa","acao":"manter","substituicao":"Funcionam no formulário."}]
+}
+}

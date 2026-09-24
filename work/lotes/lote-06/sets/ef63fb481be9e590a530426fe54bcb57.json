@@ -1,0 +1,22 @@
+{
+"sys_id":"ef63fb481be9e590a530426fe54bcb57",
+"title":"EY VS - Antecipação do Vencimento para Pagamento",
+"internal_name":"ey_vs_antecipa_o_do_vencimento_para_pagamento",
+"order":250,
+"description":"Variable Set destinada a Variaveis do Form Antecipação do Vencimento para Pagamento",
+"variaveis":[
+{"name":"v_type_of_payment","type":"5","order":100,"question_text":"Payment type","include_none":true,"choices":["Vendors [=suppliers]","Taxes [=taxes]","Utilities [=concessionaires]","Others [=others]","Benefit Sharing","Incentives and Sponsorships"]},
+{"name":"v_select_request_type_v2","type":"11","order":110,"question_text":"Select request type"},
+{"name":"v_early_payment_v2","type":"7","order":115,"question_text":"Early Payment","mandatory":true},
+{"name":"v_due_date_extension_v2","type":"7","order":130,"question_text":"Due Date Extension","mandatory":true},
+{"name":"select_approver_v2","type":"8","reference":"sys_user","reference_qual":"javascript: new x_nasm_ptp.EY_PTPUtils().getApproverCompras();","order":135,"question_text":"Select the approver"},
+{"name":"v_form_of_payment","type":"5","order":200,"question_text":"Payment method","include_none":true,"choices":["Account Credit [=account_credit]","Tax Guide [=tax_guide]","Boleto [=ticket]"]},
+{"name":"v_document_number_invoice","type":"6","order":300,"question_text":"Document number (invoice)"},
+{"name":"v_currency","type":"8","reference":"fx_currency","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":400,"question_text":"Coin"},
+{"name":"v_value","type":"6","order":500,"question_text":"Amount"},
+{"name":"original_expiration_date","type":"9","order":600,"question_text":"Original expiration date"},
+{"name":"v_payment_s_date_requested","type":"9","order":700,"question_text":"Payment's date requested"}
+],
+"ui_policies":[{"sys_id":"4bd4aa438742cb90ec360e530cbb3597","short_description":"EY: Clear Due Date Ext. v2","conditions":"v_early_payment_v2=true","actions":["v_due_date_extension_v2: visible=false,readonly=true"]},{"sys_id":"9d94aa038742cb90ec360e530cbb354c","short_description":"EY: Clear Early Payment v2","conditions":"v_due_date_extension_v2=true","actions":["v_early_payment_v2: visible=false,readonly=true"]},{"sys_id":"fa343c701b29e5d0a530426fe54bcb8d","short_description":"EY: Variaveis Read Only","conditions":"","applies_catalog":false,"actions":["v_value: readonly=true","v_form_of_payment: readonly=true","v_document_number_invoice: readonly=true","v_currency: readonly=true","v_type_of_payment: readonly=true","v_payment_s_date_requested: readonly=true","original_expiration_date: readonly=true"]}],
+"client_scripts":[{"sys_id":"d9dfa0781ba96950d1abda4ce54bcbb5","name":"EY: Máscara de Moeda","type":"onChange","cat_variable":"afee53dc1badad90a530426fe54bcbb4","ui_type":"10","script":"Catalog Client Script onChange que formata 'v_value' como moeda pela função formatarMoeda. Observação: a implementação usa parseInt no valor, o que descarta os centavos antes de formatar."}]
+}

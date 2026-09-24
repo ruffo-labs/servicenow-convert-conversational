@@ -1,0 +1,17 @@
+{
+"sys_id":"cf3da7791bf83910d1abda4ce54bcb99",
+"title":"EY VS - Empresas Avon - Lançamento Contábil Avon",
+"internal_name":"ey_vs_empresas_avon_lan_amento_cont_bil_avon",
+"order":100,
+"description":"VS criada parao formulario \"Lançamento Contábil Avon\" para trazer Sub-empresas Avon de Brasil e Colombia",
+"variaveis":[{"name":"vs_opened_by","type":"8","reference":"sys_user","default_value":"javascript:gs.getUserID()","order":50,"question_text":"Opened By","read_only":true},{"name":"vs_which_company","type":"5","order":100,"question_text":"Is your request for which company?","include_none":true},{"name":"vs_which_sub_company","type":"8","reference":"core_company","reference_qual":"javascript: new x_nasm_rtr.EY_RTRUtils().getAvonBRCOLEQARURCH(current.variables.vs_which_company);","order":200,"question_text":"Which sub-company is the service for?"},{"name":"vs_country","type":"6","order":300,"question_text":"Country"}],
+"ui_policies":[{"sys_id":"683849921bca8e10d1abda4ce54bcbbd","short_description":"EY: ReadOnly Case","conditions":"","applies_catalog":false,"actions":["vs_which_sub_company: readonly=true","vs_country: readonly=true","vs_which_company: readonly=true"]}],
+"client_scripts":[
+{"sys_id":"478cb7fd1b3c3910d1abda4ce54bcb0c","name":"Set Country OnChange RTR","type":"","ui_type":"0","script":"Igual aos irmãos de país, lendo 'vs_which_sub_company_2', mas chamando EY_RTRUtils.getCountry em vez de EY_PTPUtils. Grava o país retornado em 'v_country' e trava o campo."},
+{"sys_id":"950237fd1bf83910d1abda4ce54bcb38","name":"EY: Set Companies OnLoad","type":"onLoad","ui_type":"1","script":"Catalog Client Script onLoad. Começa escondendo 'vs_which_sub_company' e depois usa a lista longa de sys_ids 'Avon' para decidir quais variáveis de empresa e sub-empresa exibir. Variante do 'Set Companies OnLoad', com a mesma duplicata comentada na lista."},
+{"sys_id":"a65c33fd1b3c3910d1abda4ce54bcbba","name":"Clear Sub Company OnChange","type":"onChange","cat_variable":"8a5febb91bf83910d1abda4ce54bcb2c","ui_type":"10","script":"Catalog Client Script onChange. Sempre que o valor muda em relação ao anterior, limpa 'vs_which_sub_company', 'vs_which_sub_company_2' e 'v_country' — zera a cascata de sub-empresa e país para ser repreenchida."},
+{"sys_id":"b9d6a5e13be85610924d0247f4e45ade","name":"EY: Set subcompany","type":"onChange","cat_variable":"8a5febb91bf83910d1abda4ce54bcb2c","ui_type":"10","script":"Catalog Client Script onChange simples. Se o novo valor for vazio, esconde e desobriga 'vs_which_sub_company'; havendo qualquer valor, exibe e torna obrigatória."},
+{"sys_id":"c6a67f751b3c3910d1abda4ce54bcb5d","name":"Set Opened By OnLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad. Preenche 'v_opened_by' com o sys_id do usuário logado. Versão reduzida do irmão — aqui o campo não é travado como somente leitura."},
+{"sys_id":"faf3b7b11b3c3910d1abda4ce54bcb09","name":"Set Country OnChange","type":"onChange","cat_variable":"c020377d1bf83910d1abda4ce54bcb57","ui_type":"10","script":"Igual aos irmãos de país, lendo 'vs_which_sub_company' e chamando EY_RTRUtils.getCountry. Observação: grava o retorno em 'vs_country' (com prefixo vs_), enquanto os demais gravam em 'v_country' — nomes de variável diferentes entre scripts que fazem a mesma coisa."}
+]
+}

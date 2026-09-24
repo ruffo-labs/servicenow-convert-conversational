@@ -1,0 +1,28 @@
+{
+ "itens": 3,
+ "sem_spec": [],
+ "com_divergencia": 3,
+ "nao_declaradas": 0,
+ "status_igual": 1,
+ "labels": 12,
+ "labels_modelo": 9
+}
+
+## Seguro de Vida Complementar (dividir → analise_humana)
+  comparação: STATUS
+  STATUS: modelo=analise_humana; 1ª análise=dividir (→ dividido)
+  declaradas: divisao_diferente  criterio: formulario_complexo
+  motivo: O fluxo de adesão tem cerca de 90 variáveis: declaração de saúde com 13 perguntas condicionais para titular e cônjuge, dados de cônjuge, lista de beneficiários, simulador de desconto e assinatura eletrônica. Dois dos widgets usados (popup_info_for e show_signature) são custom (type 14) e o diagnóstico prévio os marca como bloqueados; há também 3 client scripts sem suporte a VA (assinatura, elegibilidade, validação de percentual). Não é seguro dividir e rotular automaticamente esse volume de perguntas condicionais sem revisão humana, mesmo mantendo o formulário não conversacional só para a adesão.
+
+## Solicitação de compras descentralizadas (dividir → dividido)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Duas intenções claras: criar requisição de compra (PR/CW) x criar/aceitar folha de serviço de um pedido já existente, como na 1ª análise. vs_type_of_request pertence ao set compartilhado 'Type of request' e não pode ser removida nem ter props alteradas por derivado; por isso ela é fixada por derivado via 'fixas' (mecanismo já usado na 1ª análise: 'default/hidden'). Pelo mesmo motivo, as demais perguntas específicas de cada fluxo que também pertencem a sets compartilhados ('Type of request': vs_type_of_contract; 'Value': vs_payment_in_reais_or_foreign_currency) não podem ser tiradas por sem_vars — permanecem nos dois derivados e são ocultadas no derivado onde não se aplicam por policy com condição real (baseada no valor fixo de vs_type_of_request), do mesmo jeito que as policies originais do próprio set já fazem para os campos de cada ramo. Os sets 'Supplier' e 'Payment' são de uso exclusivo do fluxo de PR e por isso são removidos inteiros do derivado de folha de serviço via sem_sets, sem perda de dado.
+
+## Emissão de Notas Fiscais de Industrialização (manter_formulario → conversacional)
+  comparação: STATUS, REMOVIDA_A_MAIS
+  STATUS: modelo=conversacional; 1ª análise=manter_formulario (→ analise_humana)
+  REMOVIDA_A_MAIS: modelo remove variável de dado: v_attachment ({"substituida_por":"nova_anexo"}), v_yes ({"substituida_por":"nova_anexo"})
+  declaradas: erro_1a_analise  criterio: —
+  motivo: Intenção única (pedir emissão de NF de remessa para industrialização). O bloqueio era o widget custom de anexo (v_attachment, type 14): existe equivalente OOB (anexo type 33), então convertemos para nova_anexo em vez de manter formulário. Os regex de validação (telefone, e-mail, CPF/CNPJ, número da nota) e a policy de obrigatoriedade sem condição viram props/validation_regex nas variáveis.

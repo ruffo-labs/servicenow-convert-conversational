@@ -1,0 +1,61 @@
+{
+"sys_id":"1d7ecc1c1be41a90514cbaef4b4bcba7",
+"name":"Seguro complementar (saúde, vida e odontológico)",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Seguro Complementar",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Use this form to apply for supplemental insurance, change your plan or modify your dependents.",
+"description":"Use this form to apply for supplemental insurance, change your plan or modify your dependents.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"mrvs_monitor"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"mrvs_monitor"},{"code":"client_script_sem_va","detail":"3 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Clear session OnLoad, EY: Set employee_reference, EY: Block same beneficiaries"}]},
+"producer_script":"Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+"atencao":["mrvs_monitor: custom/macro/widget (type 14)"],
+"variaveis":[
+{"name":"FAQs","type":"32","order":0},
+{"name":"mrvs_monitor","type":"14","order":0,"question_text":"MRVS Monitor","sp_widget":"EY: MRV Macro widget Beneficiary 4"},
+{"name":"type_of_request","type":"5","order":200,"question_text":"Type of request","include_none":true,"choices":["Initial incorporation collaborator [=initial_incorporation_collaborator]","Plan change [=plan_change]","Dependent registration [=dependent_registration]","Termination of dependents [=termination_dependents]"]},
+{"name":"apply_to_your_dependents","type":"5","order":300,"question_text":"Does this application apply to any of your dependents?","include_none":true,"choices":["Yes [=yes]","No [=no]"]},
+{"name":"legend_one","type":"32","order":400},
+{"name":"select_the_dependent","type":"32","order":500},
+{"name":"template","type":"32","order":1010},
+{"name":"legend_attach","type":"32","order":1100,"question_text":"Date of birth"},
+{"name":"details","type":"2","order":1200,"question_text":"To request a change of plan, please see the following details"},
+{"name":"attach_form","type":"33","order":1300,"question_text":"Supplemental Insurance Form"},
+{"name":"v_container_start","type":"19","order":1400},
+{"name":"checkbox_one","type":"7","order":1500,"question_text":"I declare that I have prior and express knowledge of the contractual terms and conditions of the request made."},
+{"name":"v_container_start_midle","type":"19","order":1550},
+{"name":"checkbox_two","type":"7","order":1600,"question_text":"I declare that I assume full responsibility for the accuracy of the information contained in this form."}
+],
+"ui_policies":[
+{"sys_id":"081bbd753b601a10924d0247f4e45a4a","short_description":"EY: Show apply to your dependents","conditions":"type_of_request=initial_incorporation_collaborator","actions":["apply_to_your_dependents: visible=true,mandatory=true"]},
+{"sys_id":"1ff065d23b4a5e50924d0247f4e45ac4","short_description":"EY: Set hide attachment","conditions":"type_of_request=termination_dependents^ORtype_of_request=plan_change^ORtype_of_request=","actions":["attach_form: visible=false"]},
+{"sys_id":"207867f33bdd9a10924d0247f4e45a9f","short_description":"EY: Show template link and legenda","conditions":"type_of_request=initial_incorporation_collaborator^ORtype_of_request=dependent_registration","actions":["legend_attach: visible=true","template: visible=true"]},
+{"sys_id":"2317eb7f3b9d9a10924d0247f4e45a8a","short_description":"EY: Show legenda workday","conditions":"apply_to_your_dependents=yes^NQtype_of_request=dependent_registration^ORtype_of_request=termination_dependents","actions":["legend_one: visible=true"]},
+{"sys_id":"3715892e1b2cda10514cbaef4b4bcb06","short_description":"EY: Set checkbox one mandatory","conditions":"","actions":["checkbox_one: visible=true,mandatory=true"]},
+{"sys_id":"458aa3bb3bdd9a10924d0247f4e45a36","short_description":"EY: Mandatory attachment","conditions":"type_of_request=initial_incorporation_collaborator^ORtype_of_request=dependent_registration","actions":["attach_form: mandatory=true"]},
+{"sys_id":"797469ad3ba85610924d0247f4e45acc","short_description":"EY: Set checkbox two mandatory","conditions":"","actions":["checkbox_two: visible=true,mandatory=true"]},
+{"sys_id":"7b3f1d8b3b11d210924d0247f4e45a30","short_description":"EY: Show detais","conditions":"type_of_request=plan_change","actions":["details: visible=true,mandatory=true"]},
+{"sys_id":"82e565613be85610924d0247f4e45add","short_description":"EY: Set type_of_request mandatory","conditions":"","actions":["type_of_request: mandatory=true"]},
+{"sys_id":"ba5482693bac5610924d0247f4e45af1","short_description":"EY: Show multirow","conditions":"apply_to_your_dependents=yes^NQtype_of_request=dependent_registration^ORtype_of_request=termination_dependents","actions":["select_the_dependent: visible=true"]},
+{"sys_id":"ebeec92d3be45610924d0247f4e45a42","short_description":"EY: ReadOnly v_country_of_residence","conditions":"","actions":["v_country_of_residence: mandatory=false,readonly=true"]}
+],
+"client_scripts":[{"sys_id":"5cf429d23b8a5e50924d0247f4e45aad","name":"EY: Clear Values","type":"onChange","cat_variable":"e3dbacec1b249a90514cbaef4b4bcbde","ui_type":"10","script":"Catalog Client Script onChange que limpa 'apply_to_your_dependents', 'details' e campos relacionados quando o valor anterior muda."},{"sys_id":"8986a99e3b8a5e50924d0247f4e45a20","name":"EY: Clear session OnLoad","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que remove a chave 'dependents_list' do sessionStorage do navegador. Uso incomum: o formulário guarda a lista de dependentes no armazenamento da sessão do browser, e este script zera esse cache na abertura."},{"sys_id":"bd0f55da3b0a5e50924d0247f4e45ac4","name":"EY: Clear Values","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"10","script":"Catalog Client Script onChange que limpa o tipo de solicitação e o bloco de dependentes quando o valor anterior muda."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100},{"sys_id":"62cbed6d3be85610924d0247f4e45a0b","title":"Inclusion of dependents","order":550}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Seguro complementar de saúde, vida e odontológico (Chile)",
+"short_description":"Adesão, inclusão ou exclusão de dependentes e troca de plano do seguro complementar (Chile).",
+"description":"Item-pai do seguro complementar de saúde, vida e odontológico para colaboradores no Chile. Dividido em: aderir/incluir dependentes (formulário), trocar de plano e excluir dependentes (conversacionais).",
+"frases_exemplo":["quero aderir ao seguro complementar","incluir meu filho no seguro de saúde","trocar o plano do seguro complementar","tirar um dependente do seguro"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{"nome":"Aderir ao seguro complementar ou incluir dependentes (Chile)","short_description":"Faça sua adesão ao seguro complementar de saúde, vida e odontológico ou inclua dependentes (Chile).","descricao":"Use para entrar no seguro complementar pela primeira vez ou incluir dependentes. É preciso preencher e anexar o formulário do seguro e informar os dados dos dependentes (nome, parentesco, documento, data de nascimento). Os dependentes precisam estar cadastrados no Workday. Abre como formulário. Não use para trocar de plano ou excluir dependentes.","frases_exemplo":["quero entrar no seguro complementar","incluir minha esposa no seguro de saúde","adesão ao seguro odontológico","agregar carga al seguro complementario"],"fixar":"type_of_request = initial_incorporation_collaborator | dependent_registration (formulário, non-conversational)","perguntas":[]},
+{"nome":"Trocar o plano do seguro complementar (Chile)","short_description":"Peça a mudança de plano do seu seguro complementar de saúde, vida e odontológico (Chile).","descricao":"Use para pedir a troca de plano do seguro complementar que você já tem. Diga qual plano quer e o motivo. Não use para aderir pela primeira vez ou para incluir/excluir dependentes.","frases_exemplo":["quero trocar meu plano do seguro complementar","mudar de plano de saúde complementar","cambiar plan del seguro complementario","subir de plano no seguro"],"fixar":"type_of_request = plan_change (default/hidden)","perguntas":[{"ordem":1,"variavel":"details","conversational_label":"Para qual plano você quer mudar e por quê?"},{"ordem":2,"variavel":"nova_confirmacao_declaracoes","conversational_label":"Você confirma que conhece as condições do contrato e que as informações são verdadeiras?"}]},
+{"nome":"Excluir dependente do seguro complementar (Chile)","short_description":"Peça a exclusão de um ou mais dependentes do seu seguro complementar (Chile).","descricao":"Use para retirar dependentes do seu seguro complementar de saúde, vida e odontológico. Informe quem deve sair e o motivo. Não use para incluir dependentes ou trocar de plano.","frases_exemplo":["tirar meu filho do seguro","excluir dependente do seguro complementar","dar de baja una carga del seguro","remover minha ex-esposa do plano"],"fixar":"type_of_request = termination_dependents (default/hidden)","perguntas":[{"ordem":1,"variavel":"nova_dependentes_excluir","conversational_label":"Quais dependentes devem ser excluídos do seguro?"},{"ordem":2,"variavel":"nova_motivo_exclusao","conversational_label":"Qual o motivo da exclusão?"},{"ordem":3,"variavel":"nova_confirmacao_declaracoes","conversational_label":"Você confirma que conhece as condições do contrato e que as informações são verdadeiras?"}]}
+],
+"scripts_e_policies":[{"nome":"UI policies por type_of_request (EY: Show apply to your dependents, EY: Show detais, EY: Show multirow etc.)","acao":"converter","substituicao":"Cada derivado fixa type_of_request e herda só as policies do seu ramo."},{"nome":"EY: Clear Values (2x)","acao":"remover","substituicao":"Desnecessário com type_of_request fixo."}]
+}
+}

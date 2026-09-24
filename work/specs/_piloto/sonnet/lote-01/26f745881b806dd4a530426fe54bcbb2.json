@@ -1,0 +1,30 @@
+{
+  "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+  "status": "conversacional",
+  "motivo": "Intenção única de excluir um ajuste de ponto aprovado indevidamente, com data e detalhe do ajuste como perguntas principais. O set 'Add new contributors' não é usado nesta intenção e fica oculto por policy.",
+  "vars": {
+    "v_dates": {"props": {"mandatory": true}},
+    "v_company_s": {"props": {"hidden": true}},
+    "nova_detalhe_ajuste": {"nova": {"type": "2", "question_text": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.", "mandatory": true, "order": 550}}
+  },
+  "remover": {
+    "547f68411bcced18a530426fe54bcba3": "visual"
+  },
+  "policies": {
+    "a08335d11bc86558a530426fe54bcb93": "remover",
+    "a3e5f1301b8129d0d1abda4ce54bcbda": "remover",
+    "nova_ocultar_add_contributors": {
+      "short_description": "Oculta o set de novo colaborador, não usado nesta intenção",
+      "conditions": "v_employee_s_full_nameISNOTEMPTY^ORv_employee_s_full_nameISEMPTY",
+      "actions": {
+        "v_employee_s_full_name": {"visible": false},
+        "v_id": {"visible": false},
+        "v_company": {"visible": false},
+        "v_date": {"visible": false}
+      }
+    }
+  },
+  "scripts": {
+    "ad6d60491b8ced18a530426fe54bcba4": {"converter": "auto_populate"}
+  }
+}

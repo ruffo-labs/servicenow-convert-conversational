@@ -1,0 +1,10 @@
+{
+"sys_id":"0a851af93b241a10924d0247f4e45a70",
+"title":"Dependent data",
+"internal_name":"inclusion_of_dependents",
+"order":800,
+"description":"",
+"variaveis":[{"name":"employee_reference","type":"8","reference":"x_nasm_hr_profile","order":10,"question_text":"Employee Name","hidden":true},{"name":"v_full_name","type":"8","reference":"x_nasm_hr_beneficiary","reference_qual":"javascript: 'employee=' + current.variables.employee_reference.sys_id ","order":100,"question_text":"Full name"},{"name":"v_dni_dependent","type":"6","order":200,"question_text":"DNI"},{"name":"v_date_of_birth","type":"6","order":300,"question_text":"Date of birth"}],
+"ui_policies":[{"sys_id":"8320e6fd3b641a10924d0247f4e45ae1","short_description":"EY: ReadOnly variables","conditions":"","actions":["v_date_of_birth: readonly=true"]},{"sys_id":"ea732a753ba41a10924d0247f4e45a73","short_description":"EY: Mandatory fields","conditions":"","actions":["v_dni_dependent: mandatory=true","v_full_name: mandatory=true"]}],
+"client_scripts":[{"sys_id":"4d89763d3b281a10924d0247f4e45a01","name":"EY: Block same beneficiaries","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que impede beneficiários repetidos. Lê a lista de dependentes do sessionStorage e bloqueia o envio quando há duplicidade. Depende de estado guardado no navegador, não no formulário."},{"sys_id":"4fd32eb53ba41a10924d0247f4e45a87","name":"EY: Get dependent's data","type":"onChange","cat_variable":"e5e5923d3b241a10924d0247f4e45acf","ui_type":"10","script":"Catalog Client Script onChange que busca os dados do dependente via EYHispanic_Employee_Information com GlideAjax."},{"sys_id":"74522af13ba41a10924d0247f4e45a03","name":"EY: Set employee_reference","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."}]
+}

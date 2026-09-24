@@ -1,0 +1,249 @@
+{
+ "sys_id": "1ccb68a91bdf0a10d1abda4ce54bcb5c",
+ "status": "dividido",
+ "motivo": "Três intenções distintas (status/comprovante, composição, lançamento/divergência) conforme v_type_of_query. Os 5 blocos numerados (até 30 variáveis) são consolidados em uma única nova_lista_notas por derivado, texto livre de até 5 linhas, eliminando as dezenas de policies que só mostravam/escondiam os blocos. Os 3 client scripts bloqueadores foram tratados: 2 resolvidos com ajuste de VA Supported e 1 (Auto Populate Infos) removido por ficar sem efeito após a consolidação.",
+ "divergencias": [
+  "limite_formato",
+  "erro_1a_analise",
+  {
+   "outro": "EY: Validate e-mail mantida: v_your_e_mail não existe no pacote do item. EY: Read Only Variables removida: variáveis-alvo substituídas por nova_lista_notas."
+  }
+ ],
+ "vars": {
+  "v_type_of_query": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_produtivo_improdutivo_servicos": {
+   "label": "Você é fornecedor direto (produto) ou indireto/serviços?"
+  },
+  "nova_lista_notas": {
+   "nova": {
+    "type": "2",
+    "order": 600,
+    "mandatory": true,
+    "question_text": "Informe o número e o valor de cada nota fiscal (até 5, uma por linha)."
+   }
+  }
+ },
+ "remover": {
+  "v_how_many_records_do_you_want_to_insert": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_numero_da_fatura_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_status": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_nvoice_amount_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_diverg": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_for_more_information": "texto_movido_descricao",
+  "v_label_produtivo_improdutivo_servico": "visual",
+  "attach_info": "visual"
+ },
+ "policies": {
+  "184df6b11bdf0e10d1abda4ce54bcb69": "remover",
+  "1cebe4e91bdf0a10d1abda4ce54bcb61": "remover",
+  "2febace91bdf0a10d1abda4ce54bcbde": "remover",
+  "33ebece91bdf0a10d1abda4ce54bcb72": "remover",
+  "3bebece91bdf0a10d1abda4ce54bcbec": "remover",
+  "4beb2ce91bdf0a10d1abda4ce54bcb9e": "remover",
+  "4c9efaf11bdf0e10d1abda4ce54bcba1": "remover",
+  "50ebe4e91bdf0a10d1abda4ce54bcb9f": "remover",
+  "62ebe8e91bdf0a10d1abda4ce54bcbce": "remover",
+  "63ebace91bdf0a10d1abda4ce54bcbae": "remover",
+  "66ebe8e91bdf0a10d1abda4ce54bcb2f": {
+   "conditions": "v_type_of_query=divergence_releases",
+   "actions": {
+    "v_what_needs_to_be_fixed": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "6aebe8e91bdf0a10d1abda4ce54bcb53": "remover",
+  "6eebe8e91bdf0a10d1abda4ce54bcb77": "remover",
+  "6fdba4e91bdf0a10d1abda4ce54bcb10": "remover",
+  "7fdba4e91bdf0a10d1abda4ce54bcb81": "remover",
+  "83eb2ce91bdf0a10d1abda4ce54bcbe8": "remover",
+  "83eb6ce91bdf0a10d1abda4ce54bcb3e": "remover",
+  "859c727d1b9f0e10d1abda4ce54bcbfc": "remover",
+  "86eba8e91bdf0a10d1abda4ce54bcbc3": "remover",
+  "9cebe4e91bdf0a10d1abda4ce54bcbb6": "remover",
+  "9eeba8e91bdf0a10d1abda4ce54bcbe7": "remover",
+  "ae4b7a791b9f0e10d1abda4ce54bcb05": "remover",
+  "afdba4e91bdf0a10d1abda4ce54bcb50": "remover",
+  "b7ebece91bdf0a10d1abda4ce54bcbaf": "remover",
+  "bdea406587dcf210ec360e530cbb3572": {
+   "conditions": "vs_which_company=Avon LATAM^ORvs_which_company=natura^v_country=Argentina",
+   "actions": {
+    "v_produtivo_improdutivo_servicos": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "beeb2ce91bdf0a10d1abda4ce54bcb17": "remover",
+  "cb67060d3b4c1e50924d0247f4e45ade": "remover",
+  "ccebe4e91bdf0a10d1abda4ce54bcb49": "remover",
+  "daeba8e91bdf0a10d1abda4ce54bcbff": "remover",
+  "dbeb6ce91bdf0a10d1abda4ce54bcbdd": "remover",
+  "f51c36bd1b9f0e10d1abda4ce54bcb9e": "remover"
+ },
+ "scripts": {
+  "4faab1093bc81e50924d0247f4e45af6": {
+   "remover": "sem_efeito"
+  },
+  "5bdb64e91bdf0a10d1abda4ce54bcbee": {
+   "remover": "sem_efeito"
+  },
+  "711e8ced87dcf210ec360e530cbb35fb": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "da0e042187103610ec360e530cbb356a": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "dbdb64e91bdf0a10d1abda4ce54bcbe3": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_what_needs_to_be_fixed",
+    "v_add_attachment"
+   ],
+   "sem_policies": [
+    "66ebe8e91bdf0a10d1abda4ce54bcb2f"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_type_of_query": "request_composition_of_payment"
+   },
+   "sem_vars": [
+    "v_what_needs_to_be_fixed",
+    "v_add_attachment"
+   ],
+   "sem_policies": [
+    "66ebe8e91bdf0a10d1abda4ce54bcb2f"
+   ],
+   "vars": {
+    "nova_lista_notas": {
+     "nova": {
+      "type": "2",
+      "order": 600,
+      "mandatory": true,
+      "question_text": "Informe o valor e a data de cada pagamento recebido (até 5, um por linha)."
+     }
+    }
+   }
+  },
+  {
+   "de_1a": 2,
+   "sem_vars": [
+    "additional_information_2"
+   ],
+   "vars": {
+    "nova_lista_notas": {
+     "nova": {
+      "type": "2",
+      "order": 600,
+      "mandatory": true,
+      "question_text": "Informe o número de cada nota fiscal e o pedido de compra (até 5, uma por linha)."
+     }
+    }
+   }
+  }
+ ]
+}

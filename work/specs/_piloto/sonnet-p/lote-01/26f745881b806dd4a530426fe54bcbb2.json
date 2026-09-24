@@ -1,0 +1,41 @@
+{
+ "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+ "status": "conversacional",
+ "motivo": "Intenção única de excluir um ajuste aprovado indevidamente. As duas policies condicionais viram props diretas (mandatory em v_dates, readonly em v_company_s, que também fica fora da conversa por ser auto-preenchida). O set 'Add new contributors' não pode ser ocultado porque este é o único derivado do item.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_dates": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company_s": {
+   "props": {
+    "read_only": true,
+    "not_available_conversation": true
+   }
+  },
+  "nova_detalhe_ajuste": {
+   "nova": {
+    "type": "2",
+    "question_text": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.",
+    "mandatory": false,
+    "order": 900
+   }
+  }
+ },
+ "remover": {
+  "547f68411bcced18a530426fe54bcba3": "visual"
+ },
+ "policies": {
+  "a08335d11bc86558a530426fe54bcb93": "remover",
+  "a3e5f1301b8129d0d1abda4ce54bcbda": "remover"
+ },
+ "scripts": {
+  "ad6d60491b8ced18a530426fe54bcba4": {
+   "converter": "auto_populate"
+  }
+ }
+}

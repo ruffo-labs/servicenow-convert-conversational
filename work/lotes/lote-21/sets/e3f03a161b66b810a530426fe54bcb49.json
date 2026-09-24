@@ -1,0 +1,21 @@
+{
+"sys_id":"e3f03a161b66b810a530426fe54bcb49",
+"title":"Transportation tickets",
+"internal_name":"bono_de_transporte_adicional",
+"order":300,
+"description":"Adicinar nova linha/dia",
+"variaveis":[
+{"name":"additional_request_start_date","type":"10","example_text":"dd/mm/aaaa","order":100,"question_text":"Start date"},
+{"name":"end_date_of_additional_request","type":"10","example_text":"dd/mm/aaaa","order":200,"question_text":"End date"},
+{"name":"transport_city","type":"18","lookup_table":"x_nasm_hr_rates","lookup_value":"city","choice_table":"sys_choice","choice_field":"label","reference_qual":"type=VT","order":300,"question_text":"Transport city","include_none":true,"lookup_unique":true},
+{"name":"line_name","type":"18","lookup_table":"x_nasm_hr_rates","lookup_value":"line_name","reference_qual":"javascript: 'type=VT^city='+current.variables.transport_city+'^NQline_name=Outros'","order":400,"question_text":"Line Name","include_none":true},
+{"name":"others","type":"6","order":450,"question_text":"Enter below the city and line you want"},
+{"name":"quantity_one_way_day","type":"4","order":500,"question_text":"Quantity one way/day"},
+{"name":"quantity_return_day","type":"4","order":600,"question_text":"Quantity Return/Day"},
+{"name":"unit_value","type":"18","example_text":"100,00","lookup_table":"x_nasm_hr_rates","lookup_value":"value","reference_qual":"javascript: 'type=VT^line_name='+current.variables.line_name","order":700,"question_text":"Unit value (R$)","include_none":true,"lookup_unique":true},
+{"name":"city_and_line","type":"6","order":750,"question_text":"Inform unit value below"},
+{"name":"already_have_vt_card","type":"1","order":800,"question_text":"Already have VT card?","include_none":true}
+],
+"ui_policies":[],
+"client_scripts":[]
+}

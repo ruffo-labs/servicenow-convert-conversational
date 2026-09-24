@@ -1,0 +1,83 @@
+{
+ "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas (tirar dúvida sobre o cartão vs. avisar viagem internacional), cada uma com perguntas próprias. As policies de intenção viram mandatory direto nas variáveis de cada derivado.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_what_type_of_doubt_do_you_have": {
+   "label": "Sobre qual assunto é a sua dúvida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_describe_your_question": {
+   "label": "Conte qual é a sua dúvida.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_which_audience_do_you_belong_to": {
+   "label": "Você é do administrativo, varejo ou força de vendas?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_the_destination_of_the_international_trip": {
+   "label": "Para qual país ou cidade você vai viajar?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"
+   }
+  },
+  "v_what_is_the_start_date_of_the_trip": {
+   "label": "Em que data a viagem começa?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_the_end_date_of_the_trip": {
+   "label": "E em que data termina?",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_if_you_have_questions_about_the_process": "visual",
+  "v_corporate_card_information": "visual"
+ },
+ "policies": {
+  "b3e6aba31b50a1d0d1abda4ce54bcbac": "remover"
+ },
+ "scripts": {
+  "09850b361b68a990d1abda4ce54bcb91": {
+   "remover": "sem_efeito"
+  },
+  "14a1c9701bc1e5d0d1abda4ce54bcb3b": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_which_audience_do_you_belong_to",
+    "v_what_is_the_destination_of_the_international_trip",
+    "v_what_is_the_start_date_of_the_trip",
+    "v_what_is_the_end_date_of_the_trip"
+   ],
+   "sem_policies": [
+    "ba7767671b50a1d0d1abda4ce54bcb06"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "sem_vars": [
+    "v_what_type_of_doubt_do_you_have",
+    "v_describe_your_question"
+   ]
+  }
+ ]
+}

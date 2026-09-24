@@ -1,0 +1,30 @@
+{
+"sys_id":"ce21f4bd1bed2110a530426fe54bcba3",
+"name":"Solicitação de Provisões de Fatura",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Provisões de Fatura",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um lançamento de provisão de fatura",
+"description":"Solicite um lançamento de provisão de fatura",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_template_provision_avon_natura"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_template_provision_avon_natura"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_template_provision_avon_natura"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS -  Solicitação de Provisões de Fatura/v_template_provision_avon_natura: custom/macro/widget (type 17)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":200},{"sys_id":"9494b8f11b216110a530426fe54bcbb6","title":"EY VS -  Solicitação de Provisões de Fatura","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar provisão de fatura",
+"short_description":"Peça o lançamento de provisão de despesa para fatura de fornecedor ainda não recebida ou não lançada.",
+"description":"Use para pedir à Contabilidade (RTR) a provisão de uma despesa cuja fatura ou nota do fornecedor ainda não entrou no mês (serviço prestado sem nota, fatura atrasada). Você informa o tipo de provisão, a área solicitante e anexa a planilha modelo e o documento de suporte. Pedidos durante o fechamento contábil seguem o calendário de fechamento publicado. Não use para provisão de estoque (use \"Solicitar provisão de estoque\"), para lançamento contábil comum ou para estorno.",
+"frases_exemplo":["Preciso provisionar uma fatura","provisão de despesa sem nota fiscal","fornecedor não mandou a nota, quero provisionar","lançar provisão de fatura do mês","accrual de serviço prestado"],
+"labels":{"v_request_type":"Que tipo de provisão você precisa?","v_request_description":"Descreva o tipo de provisão.","vs_requesting_area":"Qual área está pedindo a provisão?","v_attach_template_file":"Anexe a planilha modelo de provisão preenchida.","v_document_repository":"Agora anexe o documento de suporte (contrato, pedido, e-mail do fornecedor).","v_additional_information":"Quer acrescentar alguma informação?"},
+"acoes":{"v_template_provision_avon_natura":"remover","v_informative_note_1":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Data fechamento onLoad","acao":"converter","substituicao":"Script só exibe aviso de janela de fechamento via GlideAjax. Mover a regra para o flow (avisar na resposta do caso quando aberto no fechamento) e deixar o aviso fixo na descrição; remover do item."},{"nome":"EY: Mandatory (set Provisões)","acao":"converter","substituicao":"Tirar v_informative_note_1 e v_informative_note_2 (rótulos) da lista de obrigatórios."},{"nome":"EY: Read-Only (set Provisões)","acao":"converter","substituicao":"Só no registro destino."}]
+}
+}

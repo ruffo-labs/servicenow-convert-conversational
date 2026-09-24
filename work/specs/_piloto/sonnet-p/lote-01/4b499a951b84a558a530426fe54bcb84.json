@@ -1,0 +1,154 @@
+{
+ "sys_id": "4b499a951b84a558a530426fe54bcb84",
+ "status": "conversacional",
+ "motivo": "Um único fluxo de solicitação de pagamento do varejo. v_request_type e v_request_type_tbs foram unificados em uma variável só (nova_request_type), pois os dois listavam praticamente as mesmas opções, com condições reescritas para essa variável nova. Campos de banco/contábil continuam visíveis só para TBS, e mandatórios sempre, replicando o comportamento original. v_country fica oculto via prop (nunca é perguntado), preservando o comportamento original sem remover a variável.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_cpf": {
+   "props": {
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "v_cnpj": {
+   "props": {
+    "validation_regex": "^(\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}|\\d{14})$"
+   }
+  },
+  "v_value": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$"
+   }
+  },
+  "v_account_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_accounting": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cost_center": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_approval": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_country": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "nova_request_type": {
+   "nova": {
+    "type": "5",
+    "question_text": "Que tipo de pagamento você precisa?",
+    "include_none": true,
+    "choices": [
+     "OP Request (SAC Payment Order) [=op]",
+     "Initial store balance request (without withdrawal card) [=balance]",
+     "TBS Franchise Return Request [=tbs]"
+    ],
+    "mandatory": true,
+    "order": 40
+   }
+  }
+ },
+ "remover": {
+  "v_request_type": {
+   "substituida_por": "nova_request_type"
+  },
+  "v_request_type_tbs": {
+   "substituida_por": "nova_request_type"
+  },
+  "v_label_payment": "visual",
+  "formatter2": "visual",
+  "v_bank_details": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "07aa4e611b0ca958a530426fe54bcbcc": {
+   "conditions": "nova_request_typeINop,balance",
+   "actions": {
+    "v_collaborator_name": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cpf": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "40e1656a1bbd6114d1abda4ce54bcb52": "remover",
+  "1aab02e51b0ca958a530426fe54bcb61": {
+   "conditions": "nova_request_type=tbs",
+   "actions": {
+    "v_franchise_name": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cnpj": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "986062e91b80e958a530426fe54bcb83": "remover",
+  "c8d0e22d1b80e958a530426fe54bcb63": "remover",
+  "a84112611b8ca958a530426fe54bcb47": "remover",
+  "ac96fb033be76ad0924d0247f4e45a23": "remover",
+  "c7c123a41bb1a5d0d1abda4ce54bcbdd": {
+   "conditions": "nova_request_type=tbs",
+   "actions": {
+    "v_accounting": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_agency": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_digit": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_account_type": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cost_center": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_account": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_bank": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "9c0e6a211b84e958a530426fe54bcb1d": {
+   "converter": "regex"
+  },
+  "d86e8da21b9d2150d1abda4ce54bcb94": {
+   "converter": "regex"
+  },
+  "daeef53e1b54a990a530426fe54bcb28": {
+   "converter": "regex"
+  }
+ }
+}

@@ -1,0 +1,46 @@
+{
+"sys_id":"aef6af841b65e590a530426fe54bcb4c",
+"name":"Solicitação de Antecipação de Vencimento e Postergação",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Solicite a antecipação de um pagamento em relação à data de vencimento original",
+"description":"Solicite a antecipação de um pagamento em relação à data de vencimento original",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[{"sys_id":"2b13e7901b61ed90a530426fe54bcbe6","short_description":"Variaveis Obrigatorias ","conditions":"","actions":["original_expiration_date: mandatory=true","v_value: mandatory=true","v_currency: mandatory=true","v_document_number_invoice: mandatory=true","v_type_of_payment: mandatory=true","v_form_of_payment: mandatory=true","v_payment_s_date_requested: mandatory=true"]},{"sys_id":"97ac522d33d1435098331c07ee5c7b02","short_description":"EY: Select the approver","conditions":"v_type_of_payment=suppliers^v_early_payment_v2=true","actions":["select_approver_v2: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"ce9ae0783356831098331c07ee5c7b3d","name":"EY: Clear Select Approver v2","type":"onChange","cat_variable":"f6d57fc81b2de590a530426fe54bcbec","ui_type":"10","script":"Catalog Client Script onChange que limpa 'select_approver_v2'. Envolve a limpeza numa função interna chamada logo em seguida, sem necessidade."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"ef63fb481be9e590a530426fe54bcb57","title":"EY VS - Antecipação do Vencimento para Pagamento","order":250},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Antecipar pagamento ou prorrogar vencimento (item original)",
+"short_description":"Item original a ser substituído pelos dois itens derivados",
+"description":"Manter só enquanto os itens derivados não estiverem publicados; depois desativar ou tirar do catálogo do Virtual Agent para não concorrer com eles.",
+"frases_exemplo":["antecipar pagamento de fornecedor","prorrogar vencimento de nota","mudar a data de pagamento da nota","postergar pagamento"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{
+"nome":"Solicitar antecipação de pagamento a fornecedor",
+"short_description":"Peça para pagar uma nota antes da data de vencimento original",
+"descricao":"Use para pedir que uma nota ou título seja pago antes do vencimento original (por exemplo, acordo comercial com desconto ou necessidade do fornecedor). Você vai informar o fornecedor, a nota, a moeda, o valor, o vencimento original, a data desejada e, para fornecedores, o gestor que aprova. Não use para adiar o vencimento (use prorrogação de vencimento).",
+"frases_exemplo":["preciso antecipar o pagamento de uma nota","fornecedor pediu para receber antes do vencimento","pagar a NF antes da data","antecipação de pagamento com desconto","adiantar o vencimento do boleto"],
+"fixar":"v_early_payment_v2 = true e v_due_date_extension_v2 = false (default value, ocultos)",
+"perguntas":[{"ordem":1,"variavel":"v_type_of_payment","conversational_label":"O pagamento é para fornecedor ou de outro tipo?"},{"ordem":2,"variavel":"v_document_number_invoice","conversational_label":"Qual o número da nota fiscal?"},{"ordem":3,"variavel":"v_value","conversational_label":"Qual o valor da nota?"},{"ordem":4,"variavel":"v_currency","conversational_label":"Em qual moeda?"},{"ordem":5,"variavel":"original_expiration_date","conversational_label":"Qual a data de vencimento original?"},{"ordem":6,"variavel":"v_payment_s_date_requested","conversational_label":"Para qual data você quer antecipar o pagamento?"},{"ordem":7,"variavel":"v_form_of_payment","conversational_label":"Qual a forma de pagamento?"},{"ordem":8,"variavel":"select_approver_v2","conversational_label":"Quem é o gestor que aprova a antecipação?"},{"ordem":9,"variavel":"v_additional_information","conversational_label":"Quer acrescentar alguma informação?"}]
+},
+{
+"nome":"Solicitar prorrogação de vencimento de pagamento",
+"short_description":"Peça para adiar a data de vencimento de uma nota ou título a pagar",
+"descricao":"Use para pedir que o vencimento de uma nota ou título a pagar seja adiado para uma data posterior (postergação), por exemplo por acordo com o fornecedor ou pendência de documentação. Você vai informar o fornecedor, a nota, a moeda, o valor, o vencimento original e a nova data. Não use para antecipar pagamento nem para bloquear o pagamento sem nova data (use bloqueio de pagamento).",
+"frases_exemplo":["preciso prorrogar o vencimento de uma nota","adiar o pagamento do fornecedor","postergar vencimento da NF","mudar o vencimento para o mês que vem","estender prazo de pagamento"],
+"fixar":"v_due_date_extension_v2 = true e v_early_payment_v2 = false (default value, ocultos); select_approver_v2 oculto",
+"perguntas":[{"ordem":1,"variavel":"v_type_of_payment","conversational_label":"O pagamento é para fornecedor ou de outro tipo?"},{"ordem":2,"variavel":"v_document_number_invoice","conversational_label":"Qual o número da nota fiscal?"},{"ordem":3,"variavel":"v_value","conversational_label":"Qual o valor da nota?"},{"ordem":4,"variavel":"v_currency","conversational_label":"Em qual moeda?"},{"ordem":5,"variavel":"original_expiration_date","conversational_label":"Qual a data de vencimento original?"},{"ordem":6,"variavel":"v_payment_s_date_requested","conversational_label":"Para qual nova data você quer prorrogar?"},{"ordem":7,"variavel":"v_form_of_payment","conversational_label":"Qual a forma de pagamento?"},{"ordem":8,"variavel":"v_additional_information","conversational_label":"Quer acrescentar alguma informação?"}]
+}
+],
+"scripts_e_policies":[{"nome":"EY: Clear Due Date Ext. v2 / EY: Clear Early Payment v2","acao":"remover","substituicao":"Desnecessárias com o tipo fixado em cada item derivado."},{"nome":"EY: Select the approver","acao":"converter","substituicao":"No item de antecipação a condição fica só v_type_of_payment = suppliers (a outra parte já é fixa). Desmarcar \"On load\"."},{"nome":"EY: Clear Select Approver v2","acao":"remover","substituicao":"Usar \"clear value when hidden\" na UI policy do aprovador."},{"nome":"Variaveis Obrigatorias","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). A entrada v_attachment não é variável do item: trocar pela opção \"Mandatory attachment\" do record producer, e o anexo é pedido ao final da conversa."},{"nome":"EY: Variaveis Read Only (set Antecipação do Vencimento)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Máscara de Moeda (set Antecipação do Vencimento)","acao":"converter","substituicao":"Remover o script e usar Validation Regex na variável v_value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."}]
+}
+}

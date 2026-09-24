@@ -1,0 +1,35 @@
+{
+"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b",
+"title":"EY: Hispana Personal Information",
+"internal_name":"ey_hispana_personal_information",
+"order":100,
+"description":"",
+"variaveis":[
+{"name":"v_unionized_employee","type":"6","order":1,"question_text":"Unionized Employee","hidden":true},
+{"name":"v_created_by","type":"8","reference":"sys_user","order":5,"question_text":"Created by"},
+{"name":"v_who_is_this_request_for","type":"5","order":10,"question_text":"Who is this request for?","include_none":true,"choices":["For me [=for_me]","For somebody else [=for_somebody_else]"]},
+{"name":"v_reason_on_behalf","type":"5","order":20,"question_text":"Reason for opening on behalf or another person:","include_none":true,"choices":["License/Absence [=license_absence]","No access [=no_access]","Dosn't know how to use platform [=doesnt_know]"]},
+{"name":"v_employee","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^user.location.countryINARG,COL,CHL,URY,ECU,PER,^user.employee_numberNOT LIKE_old^user.user_nameNOT LIKE_old^user.locked_out=false^EQ","reference_qual_condition":"user.active=true^user.location.countryINARG,COL,CHL,URY,ECU,PER,^user.employee_numberNOT LIKE_old^user.user_nameNOT LIKE_old^user.locked_out=false^EQ","order":40,"question_text":"Employee"},
+{"name":"v_employee_id","type":"6","order":90,"question_text":"Employee ID"},
+{"name":"v_corporate_e_mail","type":"6","order":100,"question_text":"Corporate e-mail"},
+{"name":"v_country_of_residence","type":"5","order":150,"question_text":"Country of Residence","include_none":true,"choices":["Argentina [=argentina]","Chile [=chile]","Colombia [=colombia]","Ecuador [=ecuador]","Peru [=peru]","Uruguai [=uruguai]"]},
+{"name":"v_country","type":"6","order":200,"question_text":"Country"},
+{"name":"v_manager_name","type":"6","order":300,"question_text":"Manager Name"},
+{"name":"v_company","type":"6","order":350,"question_text":"Company"},
+{"name":"v_location","type":"6","order":400,"question_text":"Location"},
+{"name":"v_admission_date","type":"9","order":450,"question_text":"Admission Date"},
+{"name":"v_identity_document","type":"6","order":550,"question_text":"Identity Document"},
+{"name":"v_position","type":"6","order":600,"question_text":"Position"},
+{"name":"v_public","type":"6","order":650,"question_text":"Public"}
+],
+"ui_policies":[{"sys_id":"7e3693831bf78a10514cbaef4b4bcb63","short_description":"EY: Hide variables in portal","conditions":"","actions":["v_manager_name: visible=false","v_position: visible=false","v_country_of_residence: mandatory=true","v_admission_date: visible=false","v_employee_id: visible=false","v_corporate_e_mail: ","v_location: visible=false","v_public: visible=false","v_identity_document: visible=false","v_dni: visible=false","v_country: visible=false","v_company: visible=false"]},{"sys_id":"fe05d7cf1bb78a10514cbaef4b4bcba8","short_description":"EY: Show variables to resolver","conditions":"","applies_catalog":false,"actions":["v_employee_id: visible=true","v_position: visible=true","v_identity_document: visible=true","v_location: visible=true","v_country_of_residence: visible=true","v_public: visible=true","v_company: visible=true","v_manager_name: visible=true","v_dni: visible=true","v_admission_date: visible=true"]}],
+"client_scripts":[
+{"sys_id":"2e11059b8786de50ec360e530cbb3581","name":"EY: Set Operario Sindicalizado","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"10","script":"Catalog Client Script onChange que verifica se o operário é sindicalizado, consultando EYHispanic_Employee_Information via GlideAjax."},
+{"sys_id":"4ae9e4ac1b489250514cbaef4b4bcba8","name":"EY: Pre fill Employee info - Some Forms","type":"onLoad","ui_type":"1","script":"Catalog Client Script onLoad de 8 KB que pré-preenche os dados do colaborador conforme o formulário. Mantém listas de sys_ids de formulários (formsNoOther e outras) para decidir qual conjunto de campos preencher. Mesmo padrão de listas cravadas visto nos catálogos RTR e PTP."},
+{"sys_id":"53bf6d6c1bac9a90514cbaef4b4bcb59","name":"EY: ReadOnly Always Form","type":"onLoad","applies_catalog":false,"ui_type":"0","script":"Catalog Client Script onLoad que trava 'v_employee' como somente leitura."},
+{"sys_id":"648644ac1b849250514cbaef4b4bcbe2","name":"EY: For me information","type":"onChange","cat_variable":"fe5180a41b849250514cbaef4b4bcbf9","ui_type":"10","script":"Catalog Client Script onChange que ajusta obrigatoriedade e preenchimento quando a solicitação é para o próprio usuário."},
+{"sys_id":"8ae205941b6c1a90514cbaef4b4bcbbd","name":"EY: Fill Created By","type":"onLoad","ui_type":"1","script":"Catalog Client Script onLoad que preenche 'v_created_by' com o usuário logado e trava o campo."},
+{"sys_id":"a3d85bc71bf78a10514cbaef4b4bcb41","name":"EY: Fill Information for Employee","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"10","script":"Catalog Client Script onChange de 2,5 KB que preenche as informações do colaborador (id e demais campos), limpando tudo quando o valor fica vazio."},
+{"sys_id":"ba29a07f1bc09a10514cbaef4b4bcbf6","name":"EY: Hide option country of residence","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que, para um formulário específico identificado por sys_id, zera a lista de países de residência com clearOptions e recoloca apenas as opções válidas para aquele caso."}
+]
+}

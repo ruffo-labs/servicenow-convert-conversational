@@ -1,0 +1,50 @@
+{
+ "sys_id": "dad4109c1b9c691ca530426fe54bcb24",
+ "status": "conversacional",
+ "motivo": "Intenção única (cadastro/reativação/troca de celular no app) com perguntas objetivas. Variáveis de layout removidas, obrigatoriedade fixa via props e CPF validado por regex.",
+ "vars": {
+  "v_what_is_the_demand_of_the_call": {
+   "label": "O que você precisa: cadastro novo, reativação do acesso ou troca do celular cadastrado?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_report_cost_center_pep": {
+   "label": "Qual é o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto) para as corridas?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_your_cpf": {
+   "label": "Qual é o seu CPF?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "v_enter_your_phone_number_mobile": {
+   "label": "Qual é o seu número de celular (com DDD)?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_the_new_phone_number_mobile": {
+   "label": "Qual é o novo número de celular que deve ficar cadastrado no app?"
+  },
+  "v_additional_information": {
+   "label": "Quer acrescentar mais alguma informação?"
+  }
+ },
+ "remover": {
+  "v_label_if_you_have_questions": "visual",
+  "v_container_request_registration_and_reactivation": "visual"
+ },
+ "policies": {
+  "cb03bfdd1b98ad10a530426fe54bcb32": "remover"
+ },
+ "scripts": {
+  "a3d6a79d1b94ad10a530426fe54bcbfc": {
+   "converter": "regex"
+  }
+ }
+}

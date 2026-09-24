@@ -1,0 +1,29 @@
+{
+"sys_id":"a45ea79c1ba5ed90a530426fe54bcbc9",
+"name":"Bloqueio ou Desbloqueio de Pagamentos",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Solicite o bloqueio ou desbloqueio de um pagamento",
+"description":"Solicite o bloqueio ou desbloqueio de um pagamento",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"08c17b981b29ed90a530426fe54bcbc7","title":"EY VS - Bloqueio ou Desbloqueio Variable","order":250},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Bloquear ou desbloquear pagamento a fornecedor",
+"short_description":"Peça para bloquear ou liberar o pagamento de uma nota fiscal de fornecedor",
+"description":"Use para pedir ao Contas a Pagar que segure (bloqueie) ou libere (desbloqueie) o pagamento de um documento de fornecedor, por exemplo por divergência na entrega ou pendência resolvida. Você vai informar o fornecedor, a nota fiscal, o vencimento, o valor e o motivo. Não use para mudar a data de vencimento (use antecipação ou prorrogação de vencimento) nem para avisar pagamento duplicado ou incorreto.",
+"frases_exemplo":["preciso bloquear o pagamento de uma nota","segura o pagamento desse fornecedor","quero desbloquear um pagamento que está travado","liberar pagamento bloqueado do fornecedor","suspender pagamento da NF por divergência"],
+"labels":{"v_lock_or_unlock":"Você quer bloquear ou desbloquear o pagamento?","v_document_type":"Qual o tipo de documento?","v_document_number_invoice":"Qual o número da nota fiscal ou documento?","v_invoice_data":"Qual a data de emissão da nota?","v_maturity":"Qual a data de vencimento?","v_value":"Qual o valor do documento?","v_payment_date_proposal":"Para quando você propõe o pagamento?","v_reason":"Qual o motivo do bloqueio ou desbloqueio?"},
+"acoes":{"v_invoice_data":"alterar_tipo:Date"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"Variaveis Obrigatorias (set Bloqueio ou Desbloqueio)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Exceto v_payment_date_proposal, que passa a ser obrigatória só no desbloqueio."},{"nome":"EY: Variaveis Formulario Read Only (set Bloqueio ou Desbloqueio)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Máscara de Moeda (set Bloqueio ou Desbloqueio)","acao":"converter","substituicao":"Remover o script e usar Validation Regex na variável v_value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."}]
+}
+}

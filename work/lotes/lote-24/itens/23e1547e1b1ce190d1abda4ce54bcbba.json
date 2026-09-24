@@ -1,0 +1,30 @@
+{
+"sys_id":"23e1547e1b1ce190d1abda4ce54bcbba",
+"name":"Consulta de estabilidade médica (casos restritos)",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Desligamento",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Solicite aqui a análise prévia de estabilidade para casos restritos",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+"atencao":["v_collaborator: opções dinâmicas (x_nasm_hr_profile)"],
+"variaveis":[{"name":"v_text_star","type":"32","order":100},{"name":"v_cont_start","type":"19","order":200,"question_text":"Medical Stability (restricted cases)"},{"name":"v_what_company_are_the_employees_part_of","type":"5","order":300,"question_text":"What company are the employees part of?","include_none":true,"choices":["Avon [=Avon LATAM]","Natura","TBS"]},{"name":"v_collaborator","type":"8","reference":"x_nasm_hr_profile","lookup_table":"x_nasm_hr_profile","lookup_value":"user","reference_qual":"javascript:'user.company.u_brand='+current.variables.v_what_company_are_the_employees_part_of","order":400,"question_text":"Collaborator","include_none":true,"lookup_unique":true},{"name":"v_id","type":"6","order":500,"question_text":"ID Global"},{"name":"v_cpf","type":"6","order":600,"question_text":"CPF"},{"name":"v_expected_shutdown_date","type":"9","order":700,"question_text":"Expected shutdown date"},{"name":"v_localization","type":"6","order":800,"question_text":"Localization"},{"name":"v_department","type":"6","order":900,"question_text":"Department"},{"name":"v_description","type":"2","order":1000,"question_text":"Description"}],
+"ui_policies":[{"sys_id":"e0d410fa1b5ce190d1abda4ce54bcbec","short_description":"EY: Mandatory and read only fields","conditions":"v_what_company_are_the_employees_part_ofINAvon LATAM,Natura,TBS","actions":["v_description: visible=true","v_collaborator: visible=true,mandatory=true","v_cpf: visible=true,readonly=true","v_id: visible=true,readonly=true","v_department: visible=true,readonly=true","v_expected_shutdown_date: visible=true,mandatory=true","v_localization: visible=true,readonly=true"]},{"sys_id":"31f5f1421b01e554a530426fe54bcb53","short_description":"EY: Wich company","conditions":"","actions":["v_what_company_are_the_employees_part_of: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"749d7d0a1b81e554a530426fe54bcbc8","name":"EY: clear values","type":"onChange","cat_variable":"c1b314361b5ce190d1abda4ce54bcbb3","ui_type":"10","script":"Catalog Client Script onChange que limpa 'v_collaborator' e campos relacionados."},{"sys_id":"c1f61c361b9ce190d1abda4ce54bcbba","name":"EY: Fill data job","type":"onChange","cat_variable":"0764947a1b5ce190d1abda4ce54bcb07","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados do cargo do colaborador, limpando os campos quando o valor fica vazio."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Consultar estabilidade médica antes de desligar (casos restritos)",
+"short_description":"Pedir ao RH a análise prévia de estabilidade médica de um colaborador antes de um desligamento.",
+"description":"Use, como gestor ou RH, para pedir a análise prévia de estabilidade médica (por exemplo, retorno de afastamento, acidente de trabalho ou doença ocupacional) de um colaborador que você pretende desligar, nos casos restritos. Informe o colaborador e a data prevista do desligamento. Não use para pedir o desligamento em si (use 'Comunicar desligamento') nem para prévia de rescisão.",
+"frases_exemplo":["preciso verificar se o colaborador tem estabilidade antes de desligar","consulta de estabilidade médica","o funcionário voltou de afastamento, posso desligar?","análise de estabilidade para desligamento"],
+"labels":{"v_what_company_are_the_employees_part_of":"De qual empresa é o colaborador (Avon LATAM, Natura ou TBS)?","v_collaborator":"Qual colaborador você pretende desligar?","v_expected_shutdown_date":"Qual é a data prevista do desligamento?","v_description":"Há alguma informação relevante sobre a saúde ou afastamentos do colaborador?"},
+"acoes":{"v_id / v_cpf / v_localization / v_department":"derivar","v_text_star":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Fill data job","acao":"converter","substituicao":"Auto-populate (dependent question) nas variáveis derivadas."},{"nome":"EY: clear values","acao":"remover","substituicao":"Auto-populate já limpa/atualiza os derivados quando o colaborador muda."},{"nome":"EY: Wich company / EY: Mandatory and read only fields","acao":"converter","substituicao":"Mandatory e read-only direto nas variáveis; manter só a condição de visibilidade por empresa, sem script."}]
+}
+}

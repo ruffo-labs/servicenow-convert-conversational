@@ -1,0 +1,20 @@
+{
+"sys_id":"26f745881b806dd4a530426fe54bcbb2",
+"name":"Solicitação de Exclusão da Aprovação",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Controle de Jornada",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Exclusão de ajustes aprovados indevidamente no ponto eletrônico",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"nomes_ambiguos":["formatter"],
+"variaveis":[{"name":"v_company_s","type":"6","order":400,"question_text":"Company"},{"name":"v_dates","type":"9","order":500,"question_text":"Date"},{"sys_id":"547f68411bcced18a530426fe54bcba3","name":"formatter","type":"20","order":600}],
+"ui_policies":[{"sys_id":"a08335d11bc86558a530426fe54bcb93","short_description":"EY: Date","conditions":"vs_solicitation_to_whom=my_request^ORvs_solicitation_to_whom=another_employee","actions":["v_dates: visible=true,mandatory=true"]},{"sys_id":"a3e5f1301b8129d0d1abda4ce54bcbda","short_description":"EY: read only","conditions":"vs_employeeISNOTEMPTY","actions":["v_company_s: visible=true,readonly=true"]}],
+"client_scripts":[{"sys_id":"ad6d60491b8ced18a530426fe54bcba4","name":"EY: Get User Company","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando vazio."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100},{"sys_id":"e120f3701bc8ad18a530426fe54bcb16","title":"Add new contributors","order":700}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Excluir ajuste aprovado indevidamente no ponto","short_description":"Desfazer um ajuste de ponto eletrônico que foi aprovado por engano.","description":"Use quando um ajuste de marcação no ponto eletrônico (ADP) foi aprovado por engano e precisa ser excluído. Pode ser para você ou para um colaborador da sua equipe. Não use para pedir correção de marcação que faltou ou está errada (use 'Solicitar correção retroativa do ponto eletrônico') nem para dúvidas gerais de jornada.","frases_exemplo":["aprovaram um ajuste errado no meu ponto","preciso excluir uma aprovação do ponto","o gestor aprovou a marcação errada","desfazer ajuste aprovado no ADP","cancelar aprovação de ponto do dia 10"],"labels":{"v_dates":"Qual a data do ajuste que foi aprovado indevidamente?","nova_detalhe_ajuste":"Qual ajuste deve ser excluído? Informe o horário e o que estava errado."},"acoes":{"nova_detalhe_ajuste":"nova:Multi Line Text","v_company_s":"ocultar_na_conversa","set:Adicionar novo colaborador":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Get User Company","acao":"converter","substituicao":"Auto-populate de v_company_s a partir de vs_employee."},{"nome":"EY: Date","acao":"converter","substituicao":"Mandatory direto em v_dates (as duas opções de vs_solicitation_to_whom cobrem todos os casos)."},{"nome":"EY: read only","acao":"converter","substituicao":"Read-only direto na variável."}]}
+}

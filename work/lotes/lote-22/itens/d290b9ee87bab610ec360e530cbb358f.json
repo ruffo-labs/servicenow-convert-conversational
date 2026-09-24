@@ -1,0 +1,29 @@
+{
+"sys_id":"d290b9ee87bab610ec360e530cbb358f",
+"name":"Portal de Pagamento de Frete do Brasil",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"HUB de Pagamentos",
+"sc_catalogs":{"_display_value":"PTP_","__text":"bfa3add11b95e118d1abda4ce54bcbfc"},
+"short_description":"Formulário para verificar documentos de frete que ainda não foram faturados. É necessário anexar o banco de dados seguindo o padrão estabelecido para que a verificação seja feita corretamente.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+"variaveis":[{"name":"v_pendent_value","type":"6","order":200,"question_text":"Pending amount"},{"name":"v_year_related_to_pending_document","type":"6","order":300,"question_text":"Year related to the issuance of the pending document"},{"name":"v_warning_document_attach","type":"11","order":400,"question_text":"It is only permitted to attach documents issued in the same year as the field filled in above."},{"name":"v_attach_document","type":"33","order":500,"question_text":"Attach document"},{"name":"v_request_describe","type":"2","order":600,"question_text":"Describe your request in detail"}],
+"ui_policies":[{"sys_id":"c7934eaa8772f610ec360e530cbb353c","short_description":"EY: Set mandatory and read only variables","conditions":"","actions":["v_pendent_value: mandatory=true","vs_cnpj_label: readonly=true","v_request_describe: ","v_attach_document: mandatory=true","vs_carrier_code: readonly=true","vs_company_cnpj: mandatory=true","vs_carriers_headquarters_cnpj: ","v_request_describe: ","vs_company: mandatory=true","v_year_related_to_pending_document: mandatory=true","vs_requesters_email: mandatory=true","vs_carrier_name: mandatory=true","vs_requeste_name: mandatory=true","v_warning_document_attach: readonly=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"eaa639e6877eb610ec360e530cbb3585","title":"EY - Company and Carrier Info","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Verificar documentos de frete pendentes de faturamento",
+"short_description":"Transportadoras e áreas internas: peça a verificação de documentos de frete (CT-e) emitidos e ainda não faturados/pagos no Brasil",
+"description":"Use para pedir ao HUB de Pagamentos a verificação de documentos de frete emitidos por uma transportadora e que ainda não foram faturados ou pagos. É preciso informar a empresa Natura tomadora, os dados da transportadora (nome, CNPJ da matriz), o valor pendente e o ano de emissão, e anexar a planilha no padrão estabelecido, só com documentos do mesmo ano informado. Não use para pagamento de fornecedores que não sejam de frete, adiantamentos ou dúvidas sobre requisições de compra.",
+"frases_exemplo":["tenho CT-e de frete que ainda não foi pago","sou transportadora e quero verificar notas de frete pendentes","frete emitido em 2024 ainda não faturado","preciso conferir documentos de frete em aberto","valor de frete pendente com a Natura"],
+"labels":{"vs_company":"Para qual empresa Natura o frete foi prestado?","vs_carrier_name":"Qual é o nome da transportadora?","vs_carriers_headquarters_cnpj":"Qual é o CNPJ da matriz da transportadora?","v_pendent_value":"Qual é o valor total pendente?","v_year_related_to_pending_document":"Em que ano os documentos pendentes foram emitidos?","v_request_describe":"Descreva o que precisa que seja verificado.","v_attach_document":"Anexe a planilha com os documentos pendentes, no padrão do HUB."},
+"acoes":{"vs_company_cnpj":"derivar","vs_carrier_code":"derivar","v_warning_document_attach":"remover","vs_requeste_name":"derivar","vs_requesters_email":"derivar"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Set mandatory and read only variables","acao":"converter","substituicao":"Policy sem condição e onLoad: passar mandatory/read-only para os atributos das próprias variáveis e excluir a policy. Remover itens sem ação (v_request_describe duplicado, vs_carriers_headquarters_cnpj vazio) e a referência a vs_cnpj_label."}]
+}
+}

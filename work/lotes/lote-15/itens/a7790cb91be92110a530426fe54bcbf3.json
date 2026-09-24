@@ -1,0 +1,19 @@
+{
+"sys_id":"a7790cb91be92110a530426fe54bcbf3",
+"name":"Provisão de Estoque",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Estoques e Custos",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um lançamento de provisão de estoque",
+"description":"Solicite um lançamento de provisão de estoque",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"06d980f91be92110a530426fe54bcb33","title":"EY VS - Provisão de Estoque","order":200}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar provisão de estoque","short_description":"Peça o lançamento contábil de uma provisão de estoque (perdas, obsolescência, ajustes).","description":"Use para pedir à Contabilidade (RTR) o lançamento de uma provisão de estoque, como provisão para perdas, obsolescência ou ajuste de valor de estoque. Você informa o aprovador, descreve a provisão e anexa a memória de cálculo. Não use para provisão de fatura de fornecedor (use \"Solicitar provisão de fatura\"), para ajuste físico de inventário ou para estornar um lançamento já feito.","frases_exemplo":["Preciso lançar uma provisão de estoque","quero provisionar perda de estoque obsoleto","Solicitar provisão para estoque parado","lançar provisão de obsolescência do mês","como peço provisão de estoque na contabilidade?"],"labels":{"v_select_approver":"Quem vai aprovar essa provisão?","v_describe_the_information_you_need":"Descreva a provisão: tipo, valor, período e centro de custo.","v_attach_file":"Anexe a memória de cálculo ou o relatório que embasa a provisão."},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"EY: Read-Only (set Provisão de Estoque)","acao":"manter","substituicao":"Garantir que só se aplique ao registro destino (não à visão do item), senão aprovador e descrição são pulados."}]}
+}

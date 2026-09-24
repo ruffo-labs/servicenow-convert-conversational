@@ -1,0 +1,10 @@
+{
+"sys_id":"62cbed6d3be85610924d0247f4e45a0b",
+"title":"Inclusion of dependents",
+"internal_name":"inclusion_of_dependents",
+"order":550,
+"description":"",
+"variaveis":[{"name":"employee_reference","type":"8","reference":"x_nasm_hr_profile","order":1,"question_text":"Employee name","hidden":true},{"name":"v_full_name","type":"8","reference":"x_nasm_hr_beneficiary","reference_qual":"javascript: 'employee=' + current.variables.employee_reference.sys_id ","order":100,"question_text":"Full name"},{"name":"v_family_relationship","type":"6","order":200,"question_text":"Family relationship"},{"name":"v_document","type":"6","order":300,"question_text":"Identity document"},{"name":"v_date_of_birth","type":"9","order":400,"question_text":"Date of birth"}],
+"ui_policies":[{"sys_id":"7757555e3bc65e50924d0247f4e45a3f","short_description":"EY: Set ReadOnly","conditions":"","actions":["v_family_relationship: readonly=true","v_date_of_birth: readonly=true"]},{"sys_id":"b2c882613bec5610924d0247f4e45a7a","short_description":"EY: Set Mandatoy","conditions":"","actions":["v_full_name: visible=true,mandatory=true","v_document: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"695e111a3b0a5e50924d0247f4e45a38","name":"EY: Get dependent's data","type":"onChange","cat_variable":"796ca1ed3be85610924d0247f4e45a02","ui_type":"10","script":"Variante do script que busca os dados do dependente via EYHispanic_Employee_Information."},{"sys_id":"77b5dd5a3bc65e50924d0247f4e45a64","name":"EY: Set employee_reference","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."},{"sys_id":"c4c6e99e3b8a5e50924d0247f4e45a4b","name":"EY: Block same beneficiaries","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que impede beneficiários repetidos. Lê a lista de dependentes do sessionStorage e bloqueia o envio quando há duplicidade. Depende de estado guardado no navegador, não no formulário."}]
+}

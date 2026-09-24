@@ -1,0 +1,19 @@
+{
+"sys_id":"ce192c6933bc471098331c07ee5c7b3a",
+"name":"Informações ou dúvidas relacionadas à Relações Trabalhista",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Relações Trabalhistas, Sindicais,  Atualização de CCT e Novos Estabelecimentos (CNPJ)",
+"sc_catalogs":{"_display_value":"Hire to Retire (HTR)","__text":"d48274d01b167010d1abda4ce54bcb5d"},
+"short_description":"Este formulário é especifico para solicitações diversas para Relações de Trabalho/Sindicais",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+"variaveis":[{"name":"v_opened_by","type":"8","reference":"sys_user","default_value":"javascript:gs.getUserID()","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":100,"question_text":"Opened by"},{"name":"v_subcompany","type":"8","reference":"core_company","reference_qual":"u_brand=Natura^country=Brazil^EQ","reference_qual_condition":"u_brand=Natura^country=Brazil^EQ","order":200,"question_text":"Which sub-company is the service for?"},{"name":"v_type_of_request","type":"5","order":300,"question_text":"Type of request","include_none":true,"choices":["Inquiries/Questions [=inquiries_questions]","Complaints [=complaints]","Suggestions [=suggestions]"]},{"name":"v_subject_of_request","type":"5","order":400,"question_text":"Please specify the subject of your request:","include_none":true,"choices":["Union Information [=union_information]","Salary Information [=salary_information]","Others [=others]"]},{"name":"v_describe_the_request","type":"2","order":500,"question_text":"Describe the request"},{"name":"v_attach_text","type":"32","order":600}],
+"ui_policies":[{"sys_id":"2a3945e53378871098331c07ee5c7b19","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_type_of_request: mandatory=true","v_describe_the_request: mandatory=true","v_opened_by: mandatory=true","v_subject_of_request: mandatory=true"]},{"sys_id":"63d901293378871098331c07ee5c7bbe","short_description":"EY: ReadOnly Fields","conditions":"","actions":["v_opened_by: readonly=true"]}],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Tirar dúvidas sobre relações trabalhistas e sindicais","short_description":"Envie dúvidas ou pedidos gerais ao time de Relações Trabalhistas e Sindicais.","description":"Use para dúvidas e pedidos gerais ao time de Relações Trabalhistas e Sindicais (Brasil): regras de convenção coletiva, relação com sindicatos, jornada prevista em acordo, orientações trabalhistas. Não use para enviar boletos de pagamento sindical (use 'Enviar pagamento sindical para análise'), para pedir a aplicação de um acordo coletivo já assinado, nem para cadastrar novo CNPJ/estabelecimento.","frases_exemplo":["tenho uma dúvida sobre a convenção coletiva","quero falar com relações trabalhistas","o sindicato mandou um comunicado, com quem falo?","dúvida sobre acordo sindical","preciso de orientação trabalhista para minha equipe"],"labels":{"v_type_of_request":"Que tipo de solicitação você quer fazer?","v_subject_of_request":"Qual é o assunto?","v_subcompany":"Para qual empresa do grupo é o atendimento?","v_describe_the_request":"Conte com detalhes o que você precisa."},"acoes":{"v_opened_by":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory Fields / EY: ReadOnly Fields","acao":"converter","substituicao":"Mandatory e read-only direto nas variáveis."}]}
+}

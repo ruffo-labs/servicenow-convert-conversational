@@ -1,0 +1,39 @@
+{
+ "sys_id": "dad4109c1b9c691ca530426fe54bcb24",
+ "status": "conversacional",
+ "motivo": "Intenção única (cadastro, reativação ou troca de celular no app de táxi/viagens) com poucas perguntas condicionadas por um select. A policy onLoad sem condição vira mandatory direto nas variáveis, e a validação de CPF vira regex.",
+ "vars": {
+  "v_what_is_the_demand_of_the_call": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_report_cost_center_pep": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_your_cpf": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "v_enter_your_phone_number_mobile": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_label_if_you_have_questions": "visual"
+ },
+ "policies": {
+  "cb03bfdd1b98ad10a530426fe54bcb32": "remover"
+ },
+ "scripts": {
+  "a3d6a79d1b94ad10a530426fe54bcbfc": {
+   "converter": "regex"
+  }
+ }
+}

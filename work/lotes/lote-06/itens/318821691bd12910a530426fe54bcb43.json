@@ -1,0 +1,29 @@
+{
+"sys_id":"318821691bd12910a530426fe54bcb43",
+"name":"Consulta a Pagamentos Atrasados",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Solicite uma consulta de pagamento atrasado",
+"description":"Solicite uma consulta de pagamento atrasado",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"aa040a611bd92910a530426fe54bcb42","title":"EY VS - Consulta a Pagamentos Atrasados","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Consultar pagamento atrasado a fornecedor",
+"short_description":"Pergunte por que um pagamento a fornecedor não foi feito no vencimento",
+"description":"Use quando um fornecedor não recebeu um pagamento que já venceu e você quer saber o status ou o motivo do atraso. Você vai informar o fornecedor, o número da nota fiscal, o vencimento e o valor. Não use para pedir antecipação/prorrogação de vencimento, bloqueio de pagamento ou para avisar pagamento duplicado ou errado.",
+"frases_exemplo":["o fornecedor está reclamando que não recebeu","pagamento vencido e não caiu","por que a nota do fornecedor ainda não foi paga?","consultar pagamento atrasado","fornecedor cobrando nota vencida"],
+"labels":{"v_document_number_invoice":"Qual o número da nota fiscal?","v_due_date":"Qual era a data de vencimento?","v_amount":"Qual o valor da nota?"},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Consulta a Pagamentos Atrasados)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar Mandatory nas 3 variáveis."},{"nome":"EY: Variaveis Read Only (set Consulta a Pagamentos Atrasados)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Máscara de Moeda (set Consulta a Pagamentos Atrasados)","acao":"converter","substituicao":"Remover o script e usar Validation Regex na variável v_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."}]
+}
+}

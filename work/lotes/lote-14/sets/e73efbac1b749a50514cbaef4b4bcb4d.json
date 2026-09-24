@@ -1,0 +1,17 @@
+{
+"sys_id":"e73efbac1b749a50514cbaef4b4bcb4d",
+"title":"Your children's data",
+"internal_name":"your_childrens_data",
+"order":500,
+"description":"",
+"variaveis":[{"name":"employee_reference","type":"8","reference":"x_nasm_hr_profile","order":100,"question_text":"Employee Name","hidden":true},{"name":"v_child_name","type":"8","reference":"x_nasm_hr_beneficiary","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Beneficiary().getEmployeeBeneficiaries(current.variables.employee_reference);","order":200,"question_text":"Name of your child"},{"name":"v_amount_of_schooling","type":"6","reference":"x_nasm_hr_beneficiary","order":210,"question_text":"Amount of schooling"},{"name":"v_tope","type":"6","order":400,"question_text":"Tope","read_only":true}],
+"ui_policies":[{"sys_id":"526a34381b7c9a50514cbaef4b4bcb1c","short_description":"EY: Mandatory fields","conditions":"","actions":["v_amount_of_schooling: mandatory=true","v_child_name: mandatory=true"]},{"sys_id":"8241eeb01b05d6d0514cbaef4b4bcbaf","short_description":"EY: Hide tope","conditions":"","actions":["v_tope: visible=false"]}],
+"client_scripts":[
+{"sys_id":"0385aae81bc556d0514cbaef4b4bcbb4","name":"EY: Get tope to apply in amount OnChange","type":"onChange","cat_variable":"d4b254f01b389a50514cbaef4b4bcbe5","va_supported":false,"ui_type":"1","script":"Catalog Client Script onChange que calcula o teto de reembolso, lendo o colaborador do formulário pai. Repete o defeito do irmão: `g_form.clearMessages;` sem parênteses — referencia a função em vez de executá-la, então as mensagens não são limpas."},
+{"sys_id":"1fbe3cbc1b7c9a50514cbaef4b4bcb67","name":"EY: Count number of children","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que conta os dependentes lendo a lista 'dependents_list_2' do sessionStorage do navegador."},
+{"sys_id":"2317d07c1b389a50514cbaef4b4bcb11","name":"EY: Set employee","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."},
+{"sys_id":"47846ae41bc556d0514cbaef4b4bcba7","name":"EY: Get tope to apply in amount OnLoad","type":"onLoad","va_supported":false,"ui_type":"1","script":"Catalog Client Script onLoad que calcula o teto de reembolso na abertura, lendo o colaborador do formulário pai e fixando o dia em '01' na data de referência."},
+{"sys_id":"4f2998701b789a50514cbaef4b4bcbec","name":"EY: Show help text","type":"onLoad","va_supported":false,"ui_type":"1","script":"Catalog Client Script onLoad que monta o texto de ajuda combinando idioma do usuário e país lido do formulário pai — texto diferente para cada par idioma × país (PER, entre outros)."},
+{"sys_id":"62ed38bc1b7c9a50514cbaef4b4bcb83","name":"EY: Set amount regex","type":"onChange","cat_variable":"d4b254f01b389a50514cbaef4b4bcbe5","ui_type":"10","script":"Catalog Client Script onChange que valida o valor informado. Há uma regex anterior comentada logo acima, substituída pela versão em uso."}
+]
+}

@@ -1,0 +1,42 @@
+{
+ "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+ "status": "conversacional",
+ "motivo": "Intenção única (excluir ajuste de ponto aprovado indevidamente). v_dates fica obrigatório direto (as duas opções de vs_solicitation_to_whom cobrem todos os casos). v_company_s sai da conversa com auto-preenchimento a partir de vs_employee (script convertido), e nova_detalhe_ajuste coleta o detalhe do ajuste. O set 'Add new contributors' não pôde ser ocultado da conversa: o item não é dividido, então não há outro derivado para receber esse dado sem perdê-lo; ele permanece visível.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_dates": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company_s": {
+   "props": {
+    "default_value": "javascript:current.variables.vs_employee.company",
+    "hidden": true,
+    "read_only": true
+   }
+  },
+  "nova_detalhe_ajuste": {
+   "nova": {
+    "type": "2",
+    "question_text": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.",
+    "mandatory": true,
+    "order": 900
+   }
+  }
+ },
+ "remover": {
+  "547f68411bcced18a530426fe54bcba3": "visual"
+ },
+ "policies": {
+  "a08335d11bc86558a530426fe54bcb93": "remover",
+  "a3e5f1301b8129d0d1abda4ce54bcbda": "remover"
+ },
+ "scripts": {
+  "ad6d60491b8ced18a530426fe54bcba4": {
+   "converter": "auto_populate"
+  }
+ }
+}

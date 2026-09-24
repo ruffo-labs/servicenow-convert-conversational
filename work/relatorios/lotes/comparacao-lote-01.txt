@@ -1,0 +1,46 @@
+{
+ "itens": 12,
+ "sem_spec": [],
+ "com_divergencia": 6,
+ "nao_declaradas": 0,
+ "status_igual": 12,
+ "labels": 52,
+ "labels_modelo": 6
+}
+
+## Solicitação de Exclusão da Aprovação (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (excluir ajuste de ponto aprovado indevidamente). v_dates fica obrigatório direto (as duas opções de vs_solicitation_to_whom cobrem todos os casos). v_company_s sai da conversa com auto-preenchimento a partir de vs_employee (script convertido), e nova_detalhe_ajuste coleta o detalhe do ajuste. O set 'Add new contributors' não pôde ser ocultado da conversa: o item não é dividido, então não há outro derivado para receber esse dado sem perdê-lo; ele permanece visível.
+
+## Solicitação de Aplicação de Pagamentos - Outros clientes (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única de aplicar pagamento de fatura de outros clientes. requesting_person tem default_value e já é read_only, então sai da conversa (deriva). country não tem default_value nem estava oculta/hidden no original (a policy que a mostra tem condição, não é ocultação incondicional), então pela regra não pode ser tirada da conversa mesmo a 1ª análise pedindo ocultar_na_conversa: mantida como pergunta. Por isso a policy que a tornaria readonly foi removida (sem script/default que preencha o valor, mantê-la travaria a pergunta vazia e perderia o dado). As demais obrigatoriedades da policy sem condição viram prop direta nas variáveis.
+
+## Informações ou dúvidas relacionadas à Licenças e Ausências (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MAIS
+  REMOVIDA_A_MAIS: modelo remove variável de dado: contextual_search_results (visual), ai_search_assist (visual)
+  declaradas: erro_1a_analise  criterio: —
+  motivo: Formulário genérico com uma única pergunta aberta (dúvida sobre licenças/ausências). Policy e script viram props na variável; elementos visuais e widgets de busca (sem dado) são removidos.
+
+## Solicitação para tratativa de pagamentos Varejo (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MENOS, REMOVIDA_A_MAIS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: v_request_type_tbs, v_country
+  REMOVIDA_A_MAIS: modelo remove variável de dado: v_request_type ({"substituida_por":"v_request_type_tbs"})
+  declaradas: limite_formato  criterio: —
+  motivo: Fluxo único de pagamento de varejo. v_request_type e v_request_type_tbs foram unificados mantendo v_request_type_tbs (já contém as 3 opções) e substituindo v_request_type, evitando editar lista de opções (não suportado pelo formato). v_country continua sempre oculta (já era assim via policy sem condição, convertida em prop). Policies onLoad sem condição viraram props; validações de CPF/CNPJ/valor viraram regex.
+
+## Devolução do Aviso de Férias (dividir → dividido)
+  comparação: FIXAS
+  FIXAS: 1ª análise: [vs_employee=usuário logado, vs_solicitation_to_whom=my_request] [vs_solicitation_to_whom=another_employee]; modelo: [—] [—]
+  declaradas: limite_formato  criterio: —
+  motivo: Duas intenções distintas: dar ciência das próprias férias e devolver o aviso da equipe (gestor). O script bloqueado 'EY: Attach mandatory' (onSubmit sem VA, baseado em DOM) é substituído por uma variável de anexo nativa (nova_anexo_aviso_adp), resolvendo o bloqueio de conversão. vs_solicitation_to_whom e as demais variáveis do set compartilhado 'EY: Requester Data' (vs_employee, vs_id, vs_employee_status, vs_name, vs_personal_email) não podem ser fixadas, ocultadas ou relabeladas pela spec do item, pois o set é compartilhado; elas continuam perguntadas normalmente nos dois derivados, exatamente como no item original, sem perda de dado.
+
+## Treinamentos Normativos (dividir → dividido)
+  comparação: FIXAS
+  FIXAS: 1ª análise: [what_is_the_request=solicitacao_mapeamento] [what_is_the_request=solicitacao_desmapeamento] [what_is_the_request=solicitacao_relatorios]; modelo: [select_mapping_type=1, what_is_the_request=solicitacao_mapeamento] [what_is_the_request=solicitacao_desmapeamento] [what_is_the_request=solicitacao_relatorios]
+  declaradas: limite_formato  criterio: —
+  motivo: O seletor what_is_the_request separa três intenções (mapear, desmapear, relatório/certificado), cada uma com suas próprias perguntas. select_mapping_type foi fixado no modo 1 (treinamento único) no derivado de mapeamento; a unificação total pedida pela 1ª análise (lista de colaboradores em List Collector) não é possível porque enter_employee_name pertence a um variable set compartilhado, que não pode ser alterado pela spec do item.
