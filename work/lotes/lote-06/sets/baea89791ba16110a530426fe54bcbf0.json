@@ -1,0 +1,10 @@
+{
+"sys_id":"baea89791ba16110a530426fe54bcbf0",
+"title":"EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+"internal_name":"ey_vs_solicita_o_de_lan_amento_intercompany_caixa_ou_mercadoria_em_tr_nsit",
+"order":200,
+"description":"Variable Set referente ao Form Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsito",
+"variaveis":[{"name":"v_request_type","type":"5","order":100,"question_text":"Request type","include_none":true,"choices":["Cash in Transit [=cash_in_transit]","Inventory in Transit [=inventory_in_transit]","Intercompany [=intercompany]"]},{"name":"v_select_approver","type":"8","reference":"sys_user","reference_qual":"javascript: new global.FilterApproversUtils().validarRange(current.variables.v_opened_by)","order":200,"question_text":"Select Approver"},{"name":"v_launch_template","type":"33","order":300,"question_text":"Launch Template"},{"name":"v_document_repository","type":"33","order":400,"question_text":"Document Repository"},{"name":"vs_rep_templates","type":"17","order":450,"question_text":"TEMPLATES"},{"name":"vs_repository_template","type":"32","order":500}],
+"ui_policies":[{"sys_id":"6c5a20ae1be56990d1abda4ce54bcbd6","short_description":"EY: Read-Only","conditions":"","applies_catalog":false,"actions":["v_launch_template: readonly=true","v_request_type: readonly=true","v_document_repository: readonly=true","v_select_approver: readonly=true"]},{"sys_id":"c85cc57d1ba16110a530426fe54bcb92","short_description":"EY: Mandatory","conditions":"","actions":["v_launch_template: mandatory=true","v_select_approver: mandatory=true","v_document_repository: mandatory=true","v_request_type: mandatory=true"]}],
+"client_scripts":[]
+}

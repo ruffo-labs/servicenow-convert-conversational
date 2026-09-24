@@ -1,0 +1,29 @@
+{
+"sys_id":"a304ae8c1b6d2590a530426fe54bcb1b",
+"name":"Registros IFRS 16",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Ativo Fixo",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um registro de contrato IFRS 16",
+"description":"Solicite um registro de contrato IFRS 16",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"06a4a6041bad2590a530426fe54bcb3c","title":"EY VS - Registro IFRS 16","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar registro de contrato de arrendamento (IFRS 16)",
+"short_description":"Peça o registro contábil de um contrato de aluguel ou arrendamento pela norma IFRS 16",
+"description":"Use para pedir à Contabilidade o registro de um contrato de arrendamento (aluguel de imóvel, veículo ou equipamento) conforme a norma IFRS 16 (International Financial Reporting Standards 16, arrendamentos). Você vai informar o período inicial e final do contrato, descrever o pedido e anexar o contrato. Não use para pagamento do aluguel ao fornecedor.",
+"frases_exemplo":["registrar contrato de aluguel no IFRS 16","novo contrato de arrendamento para contabilizar","lançar leasing de veículos","registro IFRS 16 de imóvel alugado","contrato de locação precisa entrar no IFRS"],
+"labels":{"v_what_is_the_initial_period":"Qual a data de início do contrato?","v_what_is_the_final_period":"Qual a data de término do contrato?","v_describe_the_information_you_need":"Descreva o contrato (o que é arrendado, valor e fornecedor)"},
+"acoes":{"v_attach_file":"remover","v_informative_note":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Registro IFRS 16)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). v_attach_file sai; usar \"Mandatory attachment\" do producer."},{"nome":"EY: Read-Only (set Registro IFRS 16)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

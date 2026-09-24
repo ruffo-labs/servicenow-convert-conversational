@@ -1,0 +1,48 @@
+{
+"sys_id":"b2fc94b81b09a5d0d1abda4ce54bcb5e",
+"name":"Reclassificação e Legalização de Adiantamentos a Colaboradores – LATAM",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Reembolso e prestação de contas",
+"sc_catalogs":"Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+"short_description":"",
+"description":"Realizar Anulação, Reclassificação e Legalização de adiantamento para colaboradores de países da LATAM (Argentina, Chile, Colômbia, Peru, México)",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"atencao":["set EY: Company: Natura/TBS - Country Subcompany/vs_what_is_the_sub_company: opções dinâmicas (core_company)"],
+"variaveis":[
+{"name":"v_opened_by","type":"8","reference":"sys_user","default_value":"javascript:gs.getUserID()","order":100,"question_text":"Opened By"},
+{"name":"v_which_country","type":"5","order":300,"question_text":"Which country?","include_none":true,"choices":["Argentina [=v_argentina]","Chile [=v_chile]","Colombia [=v_colombia]","Mexico [=v_mexico]","Peru [=v_peru]"]},
+{"name":"v_what_audience_is_question","type":"5","order":400,"question_text":"What audience is in question?","include_none":true,"choices":["Administrative [=v_administrative]","Sales Force [=v_sales_force]","Retail [=v_retail]"]},
+{"name":"v_what_process_is_the_request_for","type":"5","order":500,"question_text":"What process is the request for?","include_none":true,"choices":["Aborts [=v_abort]","Legalization of Payments [=v_legalization_payments]","Reclassification [=v_reclassification]","Reintegrating of Deposits [=v_reintegrating_deposits]"]},
+{"name":"v_what_month","type":"6","example_text":"MM/AAAA","order":600,"question_text":"What's the month of the releases?"},
+{"name":"v_enter_the_total_amount_of_the_accounting","type":"6","order":700,"question_text":"Enter the total amount of the accounting"},
+{"name":"v_enter_the_total_amount_of_legalization_requested","type":"6","order":800,"question_text":"Enter the total amount of legalization requested"},
+{"name":"v_what_currency_is_used","type":"5","order":1000,"question_text":"What currency is used?","include_none":true,"choices":["Argentine Peso [=v_argentine_peso]","Chilean Peso [=v_peso_chileno]","Mexican Peso [=v_mexican_peso]","Peruvian Sol [=v_peruvian_sol]","Colombian Peso [=v_colombian_peso]","American Dollar [=v_american_dollar]","Other [=v_other]"]},
+{"name":"v_click_here_to_download_the_template","type":"32","order":1100,"question_text":"Click here to download the template that should be used in the field below"},
+{"name":"v_attach_the_report_or_detail_of_the_request","type":"33","order":1200,"question_text":"Attach the report or detail of the request"},
+{"name":"v_attach_approval","type":"33","order":1400,"question_text":"Attach approval"},
+{"name":"v_attach_the_claim_vouchers","type":"33","order":1500,"question_text":"Attach the claim vouchers"},
+{"name":"v_additional_information","type":"2","order":1600,"question_text":"Additional information"}
+],
+"ui_policies":[
+{"sys_id":"556e78811b45e9d0d1abda4ce54bcb66","short_description":"EY: Make field Visible and Mandatory IF \"What pprocess is request for?\" IS \"Reclassification\" OR \"Reintegrating of Deposists\"","conditions":"v_what_process_is_the_request_for=v_reclassification^ORv_what_process_is_the_request_for=v_reintegrating_deposits","actions":["v_attach_the_claim_vouchers: visible=true"]},
+{"sys_id":"666049891b45e9d0d1abda4ce54bcb47","short_description":"EY: Make fields Visible and Mandatory On Load","conditions":"","actions":["v_what_audience_is_question: visible=true,mandatory=true","v_what_currency_is_used: visible=true,mandatory=true","v_what_process_is_the_request_for: visible=true,mandatory=true","v_opened_by: visible=true,readonly=true","v_attach_approval: visible=true,mandatory=true","v_what_month: visible=true,mandatory=true","v_enter_the_total_amount_of_legalization_requested: visible=true,mandatory=true","v_click_here_to_download_the_template: visible=true,mandatory=true","v_which_country: visible=true,mandatory=true"]},
+{"sys_id":"e77cf0c91b05e9d0d1abda4ce54bcbba","short_description":"EY: Make field Visible and Mandatory IF \"What process is the request for ?\" IS \"Legalization of Payments\" OR \"Reclassification\" OR \"Reitegrating of Deposits\"","conditions":"v_what_process_is_the_request_for=v_legalization_payments^ORv_what_process_is_the_request_for=v_reclassification^ORv_what_process_is_the_request_for=v_reintegrating_deposits","actions":["v_attach_the_report_or_detail_of_the_request: visible=true,mandatory=true","v_enter_the_total_amount_of_the_accounting: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"751076e51b952510d1abda4ce54bcb63","name":"EY: Validate value","type":"onChange","cat_variable":"06cd5dbc1bc9e5d0d1abda4ce54bcb71","ui_type":"10","script":"Catalog Client Script onChange que valida valor monetário brasileiro em 'v_enter_the_total_amount_of_the_accounting'. Inválido: limpa e mostra 'Valor inválido'."},{"sys_id":"988591b81b49e5d0d1abda4ce54bcbee","name":"EY: Validate date 2 ","type":"onChange","cat_variable":"e68351fc1b09e5d0d1abda4ce54bcb74","ui_type":"10","script":"Catalog Client Script onChange que valida mês em MM/AAAA ou seis dígitos corridos, sobre 'v_what_month'. Inválido nos dois formatos: limpa e mostra erro."}],
+"variable_sets":[{"sys_id":"9994ae4b1bbce550d1abda4ce54bcb11","title":"EY: Company: Natura/TBS - Country Subcompany","order":200},{"sys_id":"acc8308d1bc1e9d0d1abda4ce54bcbf0","title":"Enter the number of the document to be cancelled","order":1300},{"sys_id":"cec8dff71b04251ca530426fe54bcb76","title":"EY: Document repository","order":1700}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Reclassificar ou legalizar adiantamento - LATAM",
+"short_description":"Anular, reclassificar, reintegrar depósito ou legalizar adiantamento de colaborador na LATAM.",
+"description":"Use se você trabalha na Argentina, Chile, Colômbia, Peru ou México e precisa anular um documento de adiantamento, reclassificar lançamentos, reintegrar depósitos ou legalizar pagamentos de adiantamento a colaboradores. Não use para a prestação de contas comum (use \"Prestar contas - LATAM\") e não use se você é do Brasil.",
+"frases_exemplo":["necesito anular un anticipo","reclasificar anticipo de empleado","legalizar pagos de anticipo en Colombia","reintegro de depósito de anticipo","quero anular o documento de adiantamento no México"],
+"labels":{"v_what_process_is_the_request_for":"O que você precisa: anular, reclassificar, reintegrar depósito ou legalizar pagamento?","v_which_country":"Em qual país?","v_what_audience_is_question":"De qual público é o colaborador?","vs_document_number":"Qual o número do documento a ser anulado?","vs_document_year":"De que ano é esse documento?","v_what_month":"De qual mês são os lançamentos? (MM/AAAA)","v_enter_the_total_amount_of_the_accounting":"Qual o valor total contábil?","v_enter_the_total_amount_of_legalization_requested":"Qual o valor total a legalizar?","v_what_currency_is_used":"Em qual moeda?","v_attach_the_report_or_detail_of_the_request":"Anexe o relatório ou detalhamento do pedido.","v_attach_the_claim_vouchers":"Se tiver, anexe os comprovantes.","v_attach_approval":"Anexe a aprovação.","v_additional_information":"Quer acrescentar alguma informação?"},
+"acoes":{"v_opened_by":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Make fields Visible and Mandatory On Load","acao":"converter","substituicao":"Mandatory direto nas variáveis; tirar o mandatory do rich text label."},{"nome":"EY: Make field Visible and Mandatory IF ... \"Aborts\" / \"Reclassification\" OR \"Reintegrating\" / \"Legalization...\"","acao":"manter","substituicao":"Policies sem script, compatíveis."},{"nome":"EY: Validate value","acao":"converter","substituicao":"Validation Regex numérica."},{"nome":"EY: Validate date 2","acao":"converter","substituicao":"Validation Regex ^(0[1-9]|1[0-2])/?\\d{4}$ em v_what_month."}]
+}
+}

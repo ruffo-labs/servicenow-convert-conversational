@@ -1,0 +1,29 @@
+{
+"sys_id":"7e9b82b51b19a110d1abda4ce54bcb9e",
+"name":"Informações HUB de Pagamentos sobre Requisições e Contratos",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"HUB de Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Dúvidas em Requisições criadas pelo Hub de Pagamentos ou aprovações de Requisições do grupo aprovador CSC Contratos",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"942e4af11b59a110d1abda4ce54bcb04","title":"EY VS - Solicitar Informações","order":200},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida sobre requisição ou contrato no HUB de Pagamentos",
+"short_description":"Dúvidas sobre requisições criadas pelo HUB de Pagamentos ou aprovações do grupo CSC Contratos (CW/CRW)",
+"description":"Use para perguntar ao HUB de Pagamentos sobre uma requisição que ele criou (status, pendência, correção) ou sobre a aprovação de uma requisição pelo grupo aprovador CSC Contratos, incluindo a criação de CW (contrato jurídico com perguntas de risco respondidas 'Sim' e que gera pagamento) e CRW (contrato jurídico sem valores, como parceria ou patrocínio). Não use para pedir a criação de um novo pedido de compra, folha de serviço, pagamento manual ou adiantamento: para isso existem itens próprios no HUB de Pagamentos.",
+"frases_exemplo":["qual o status da minha requisição no HUB?","minha requisição de compra está parada na aprovação do CSC Contratos","tenho uma dúvida sobre CW e CRW","por que meu contrato ainda não foi aprovado?","preciso de informação sobre uma requisição que o HUB abriu"],
+"labels":{"v_what_type_of_doubt_do_you_have":"Sua dúvida é sobre qual assunto?","v_inform_your_question":"Qual é a sua dúvida? Se tiver, informe o número da requisição.","v_hub_customer":"Você é cliente do HUB de Pagamentos?","v_additional_information":"Quer acrescentar mais alguma informação ou anexo?"},
+"acoes":{"v_label_explain_CRW_CW":"remover","v_opened_by":"derivar","v_type_of_request":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[]
+}
+}

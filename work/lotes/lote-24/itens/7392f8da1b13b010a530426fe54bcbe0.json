@@ -1,0 +1,19 @@
+{
+"sys_id":"7392f8da1b13b010a530426fe54bcbe0",
+"name":"Desligamento",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Desligamento",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Formulário para comunicação das áreas sobre os desligamentos. Necessidade de levantamento de pendências para lançamento na Rescisão de Contrato.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Desligamento. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for, além de gravar item com o sysparm_id.",
+"variaveis":[{"name":"termination_date","type":"9","order":100,"question_text":"Termination date"},{"name":"comments","type":"2","order":100,"question_text":"Comments"}],
+"ui_policies":[{"sys_id":"2efe09661b4ae110d1abda4ce54bcb49","short_description":"EY: Campos Obrigatorios","conditions":"","actions":["termination_date: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Comunicar desligamento de colaborador","short_description":"Área comunica ao RH um desligamento para levantamento de pendências e cálculo da rescisão.","description":"Use, como gestor ou área responsável, para comunicar ao RH o desligamento de um colaborador e a data de saída, para que as pendências sejam levantadas e lançadas na rescisão do contrato. Não use para transferência internacional permanente, prévia de rescisão de diretores, pagamento complementar a ex-colaborador, consulta de estabilidade médica ou dúvidas sobre desligamento: cada um tem item próprio.","frases_exemplo":["preciso comunicar o desligamento de um colaborador","vou desligar uma pessoa do meu time","informar data de desligamento","abrir desligamento no RH","o funcionário pediu demissão, onde registro?"],"labels":{"nova_employee":"Qual colaborador será desligado?","termination_date":"Qual é a data do desligamento?","comments":"Há pendências ou observações para a rescisão (equipamentos, adiantamentos, benefícios)?"},"acoes":{"nova_employee":"nova:Referência (x_nasm_hr_profile)"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Campos Obrigatorios","acao":"converter","substituicao":"Mandatory direto em termination_date; excluir a policy."}]}
+}

@@ -1,0 +1,10 @@
+{
+"sys_id":"3affe4401bc82dd4a530426fe54bcb81",
+"title":"(+) Add Collaborator",
+"internal_name":"add_collaborator",
+"order":650,
+"description":"add colab. vacation",
+"variaveis":[{"name":"v_name_addcolab","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^EQ","order":100,"question_text":"Name"},{"name":"v_id_addcolab","type":"6","order":200,"question_text":"ID Global","read_only":true},{"name":"v_company_addcolab","type":"6","order":300,"question_text":"Company","read_only":true},{"name":"v_current_date_addcolab","type":"9","default_value":"javascript:new GlideDateTime().getDisplayValue()","order":390,"question_text":"Current date"},{"name":"v_start_date_addcolab","type":"9","order":400,"question_text":"Scheduled Vacation Start Date"}],
+"ui_policies":[{"sys_id":"23724aef1b80add8a530426fe54bcb19","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_current_date_addcolab: readonly=true","v_start_date_addcolab: mandatory=true","v_company_addcolab: readonly=true","v_name_addcolab: mandatory=true","v_id_addcolab: readonly=true"]}],
+"client_scripts":[{"sys_id":"57658a6f1bc0add8a530426fe54bcb40","name":"EY: Get Company and ID","type":"onChange","cat_variable":"4970bcc01bc82dd4a530426fe54bcb05","ui_type":"10","script":"Catalog Client Script onChange que busca empresa e ID do usuário, limpando quando o valor fica vazio."},{"sys_id":"e4b0e5d61b80e598a530426fe54bcbe6","name":"EY: Block date 40 days in add colab","type":"onChange","cat_variable":"a251f0081bc82dd4a530426fe54bcba1","ui_type":"10","script":"Catalog Client Script onChange que bloqueia datas com menos de 40 dias de antecedência na inclusão de colaborador — mesma regra de prazo do irmão, aplicada a outro campo."}]
+}

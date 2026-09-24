@@ -1,0 +1,29 @@
+{
+"sys_id":"47b773db33104b1498331c07ee5c7bbc",
+"name":"Solicitação de Registro de Faturas - Outros Clientes",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":{"_display_value":"OTC Suporte à Força de Vendas e Recebíveis","__text":"90c6e4ac1bbfd9d0d1abda4ce54bcb34"},
+"short_description":"Utilize este formulário para solicitar o registro de novos lançamentos de contas a receber de outros clientes.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Registro de Faturas - Outros Clientes. Faz só o mínimo: grava x_nasm_hr_item com o sysparm_id da URL, que é o campo usado pelas triggers de flow para identificar a origem. Não define solicitante nem prioridade.",
+"variaveis":[{"name":"which_company_is_your_request_for","type":"5","order":100,"question_text":"Which company is your request for?","include_none":true,"choices":["Natura [=natura]","Avon Latam [=avon_latam]"]},{"name":"which_subsidiary_is_the_service_for","type":"8","reference":"core_company","reference_qual":"javascript: new x_nasm_rtr.EY_RTRUtils().getAllSubcompanies(current.variables.which_company_is_your_request_for, current.cat_item);","order":150,"question_text":"Which subsidiary is the service for?"},{"name":"country","type":"6","order":200,"question_text":"Country","read_only":true},{"name":"market_approver","type":"8","reference":"sys_user_grmember","reference_qual":"group=1d5c379f33504b1498331c07ee5c7b3b^EQ","reference_qual_condition":"group=1d5c379f33504b1498331c07ee5c7b3b^EQ","order":250,"question_text":"Market Approver"},{"name":"supplier_name","type":"6","order":300,"question_text":"Supplier Name"},{"name":"additional_information","type":"2","order":350,"question_text":"Additional Information"}],
+"ui_policies":[{"sys_id":"7f1728483360035498331c07ee5c7b96","short_description":"Aoop: Show field Country","conditions":"which_subsidiary_is_the_service_forISNOTEMPTY","actions":["country: visible=true,readonly=true"]},{"sys_id":"bdb6e8443360035498331c07ee5c7b17","short_description":"Aoop: Set Fields Mandatory","conditions":"","actions":["which_company_is_your_request_for: mandatory=true","supplier_name: mandatory=true","opened_by: mandatory=true","which_subsidiary_is_the_service_for: mandatory=true","market_approver: mandatory=true"]}],
+"client_scripts":[{"sys_id":"f38af98c33e0835498331c07ee5c7b75","name":"Aoop: Clear values on change","type":"onChange","cat_variable":"2889f71333504b1498331c07ee5c7be5","ui_type":"10","script":"Catalog Client Script onChange que limpa 'which_subsidiary_is_the_service_for' tanto quando o valor fica vazio quanto quando recebe qualquer valor — ou seja, limpa em todos os casos. Os dois ramos do if fazem a mesma coisa."}],
+"variable_sets":[{"sys_id":"bab48139871c47d0ec360e530cbb3575","title":"Aoop: Opened By","order":50}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Registrar fatura de outros clientes",
+"short_description":"Registro de novo lançamento de contas a receber de outros clientes",
+"description":"Use para pedir o registro de uma nova fatura ou lançamento de contas a receber de um cliente que não é da Força de Vendas (outros clientes), informando a subsidiária, o nome do cliente e o aprovador do mercado. Não use para informar pagamento de uma fatura já registrada (use \"Informar pagamento de fatura de outros clientes\").",
+"frases_exemplo":["preciso registrar uma fatura de outro cliente","lançar conta a receber de cliente corporativo","registro de fatura para cliente externo","incluir nova fatura de outros clientes no contas a receber"],
+"labels":{"which_company_is_your_request_for":"Para qual empresa é o registro?","which_subsidiary_is_the_service_for":"Qual é a subsidiária?","supplier_name":"Qual é o nome do cliente da fatura?","market_approver":"Quem é o aprovador do mercado?","additional_information":"Quer acrescentar detalhes da fatura (número, valor, vencimento)?"},
+"acoes":{"opened_by":"derivar","country":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"Aoop: Clear values on change","acao":"converter","substituicao":"Os dois ramos limpam a subsidiária; manter só a limpeza quando a empresa muda (UI Policy não resolve limpeza; manter client script simples VA Supported) ou remover, já que o qualifier impede subsidiária incompatível."},{"nome":"Aoop: Set Fields Mandatory","acao":"converter","substituicao":"Mandatory direto nas variáveis."},{"nome":"Aoop: Show field Country","acao":"manter","substituicao":"Sem script."}]
+}
+}

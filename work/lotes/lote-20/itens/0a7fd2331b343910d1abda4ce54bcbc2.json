@@ -1,0 +1,19 @@
+{
+"sys_id":"0a7fd2331b343910d1abda4ce54bcbc2",
+"name":"Emissão de Notas de Venda de Mercadoria",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Solicitação de notas de venda de materia prima",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_click_here_template","type":"32","order":300,"question_text":"Click here to download the template that should be used in the field below"}],
+"ui_policies":[{"sys_id":"030aeeb31b743910d1abda4ce54bcb92","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_click_here_template: mandatory=true","vs_which_company_do_you_want_to_ship_to: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"6e11a7481b89b910a530426fe54bcb34","title":"EY: Tax - Company want to ship","order":200},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":400}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar nota fiscal de venda de mercadoria","short_description":"Peça a emissão de nota fiscal de venda de mercadoria ou matéria-prima para outra empresa.","description":"Use para pedir ao Fiscal a emissão de nota fiscal de venda de mercadoria ou matéria-prima para um cliente ou outra empresa. Informe empresa, sub-empresa, para quem vai a nota e anexe a planilha modelo com itens, quantidades e valores. Não use para venda ou doação de resíduos (use \"Resíduos\"), para remessas (conserto, comodato, industrialização) ou outras saídas.","frases_exemplo":["Preciso emitir nota de venda de matéria-prima","nota fiscal de venda para outra empresa","vender mercadoria para fornecedor","emitir NF de venda","faturar venda de insumo"],"labels":{"vs_which_company_do_you_want_to_ship_to":"Para qual empresa vai a nota (destinatário)?","vs_attach_template":"Anexe a planilha modelo de venda preenchida."},"acoes":{"v_click_here_template":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Tirar v_click_here_template (rótulo) dos obrigatórios; mandatory direto em vs_which_company_do_you_want_to_ship_to."}]}
+}

@@ -1,0 +1,84 @@
+{
+ "sys_id": "9869b07c1bbf1114d1abda4ce54bcb13",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas: dar ciência das próprias férias e devolver o aviso da equipe (com anexo). vs_solicitation_to_whom é variável do set compartilhado 'EY: Requester Data' e o formato não permite fixá-la nem ocultá-la por derivado (seria alterar/ocultar variável de set); por isso ela permanece como pergunta normal, igual ao original, nos dois derivados. A diferenciação entre os dois fluxos é feita pelas variáveis próprias de cada um (v_aware_vacation só no individual; v_i_confirm_added_all e o anexo só na equipe). O anexo real (nova_anexo_aviso_adp) substitui o client script sem suporte a VA, resolvendo o bloqueio do diagnóstico prévio.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_vacation_start_date": {
+   "label": "Qual é a data de início das suas férias?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_aware_vacation": {
+   "label": "Você confirma que está ciente da data de início das suas férias?",
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "v_i_confirm_added_all": {
+   "label": "Você confirma que incluiu todos os colaboradores do documento anexado?",
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "v_description": {
+   "label": "Quer acrescentar alguma observação?"
+  },
+  "nova_anexo_aviso_adp": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe o aviso de férias gerado pelo ADP.",
+    "mandatory": true,
+    "order": 100
+   }
+  }
+ },
+ "remover": {
+  "label_importante": "visual",
+  "label_assistente_maia": "visual",
+  "label_kb_adp": "visual",
+  "v_cont_start_vacation": "visual",
+  "0801ca1b1bfbdd94a530426fe54bcb80": "visual",
+  "v_text_attach": {
+   "substituida_por": "nova_anexo_aviso_adp"
+  }
+ },
+ "policies": {
+  "48feb57c1bf79114a530426fe54bcb0f": "remover",
+  "eedff1701b3b9114a530426fe54bcb50": "remover",
+  "ca8082741b3b9114a530426fe54bcbdc": "remover"
+ },
+ "scripts": {
+  "5ed398651b8da914a530426fe54bcb87": {
+   "remover": {
+    "substituido_por": "nova_anexo_aviso_adp"
+   }
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_i_confirm_added_all",
+    "nova_anexo_aviso_adp"
+   ],
+   "sem_sets": [
+    "31ab31051b3f9514a530426fe54bcb02"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "sem_vars": [
+    "v_aware_vacation",
+    "v_vacation_start_date"
+   ]
+  }
+ ]
+}

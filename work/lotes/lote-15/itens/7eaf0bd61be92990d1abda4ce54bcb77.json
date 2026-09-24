@@ -1,0 +1,29 @@
+{
+"sys_id":"7eaf0bd61be92990d1abda4ce54bcb77",
+"name":"Reclassificação de Impostos",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Ativo Fixo",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite uma reclassificação de impostos",
+"description":"Solicite uma reclassificação de impostos",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[{"sys_id":"34bec6d13b02d650924d0247f4e45ac8","short_description":"EY: Hide download template 2 onLoad","conditions":"vs_which_sub_company_8=cc14b8d6db0a01104f0d5e7cf39619cd^ORvs_which_sub_company_8=7f04f4d61b0acd10237642ece54bcb1f^ORvs_which_sub_company_8=93388c3a1b417910a530426fe54bcb79^ORvs_which_sub_company_8=0f5a826a1bc64150237642ece54bcb7b^ORvs_which_sub_company_8=b2e9083e1b417910a530426fe54bcb44^ORvs_which_sub_company_8=dcb4d5121b620ad09c4797d01b4bcb6d","actions":["v_download_template_2: visible=true"]}],
+"client_scripts":[{"sys_id":"bf65cedd3b8e9650924d0247f4e45a58","name":"If sub-company is one of the","type":"onChange","cat_variable":"9de674fc3bf1de10924d0247f4e45a7e","ui_type":"10","script":"Catalog Client Script onChange. Compara a sub-empresa ('vs_which_sub_company_8') com seis sys_ids fixos para decidir qual template de download exibir: para os da lista, esconde 'v_download_template' e mostra 'v_download_template_2'; para os demais, o inverso."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"39b19fda1be92990d1abda4ce54bcba5","title":"EY VS Reclassificação de impostos","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar reclassificação contábil de impostos",
+"short_description":"Peça a reclassificação de um lançamento de imposto para a conta correta",
+"description":"Use para pedir à Contabilidade que um imposto lançado na conta ou no centro de custo errado seja reclassificado. Você vai informar a data do lançamento, descrever o ajuste e anexar o template preenchido. Não use para ajuste de lançamento de fornecedor nem para capitalização de gastos.",
+"frases_exemplo":["reclassificar imposto lançado errado","o ICMS foi para a conta errada","preciso corrigir a conta de um imposto","reclasificación fiscal","reclassificação de impostos no razão"],
+"labels":{"v_release_date":"Qual a data do lançamento a reclassificar?","describe_the_information_you_need":"Descreva a reclassificação: qual imposto, conta atual e conta correta"},
+"acoes":{"v_attach_template":"remover","v_download_template":"remover","v_download_template_2":"remover","v_information_note":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"If sub-company is one of the","acao":"remover","substituicao":"Com templates na KB não há o que alternar."},{"nome":"EY: Hide download template 2 onLoad","acao":"remover","substituicao":"Idem."},{"nome":"EY: Obrigatorios - Item view (set Reclassificação de impostos)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Remover v_report_start_date e v_report_end_date, que não existem no set."},{"nome":"EY: Somente leitura - Target record (set Reclassificação de impostos)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

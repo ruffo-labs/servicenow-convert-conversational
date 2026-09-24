@@ -1,0 +1,29 @@
+{
+"sys_id":"b57dc2c41ba12590a530426fe54bcbf3",
+"name":"Ativação de Projeto em Curso (Alta)",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Ativo Fixo",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Transferência de ativo em andamento para classe definitiva (Inicio da depreciação)",
+"description":"Transferência de ativo em andamento para classe definitiva (Inicio da depreciação)",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[{"sys_id":"e0764ee587282a90ec360e530cbb35fc","short_description":"EY: Hide download template 2 onLoad","conditions":"vs_which_sub_company_8=cc14b8d6db0a01104f0d5e7cf39619cd^ORvs_which_sub_company_8=7f04f4d61b0acd10237642ece54bcb1f^ORvs_which_sub_company_8=93388c3a1b417910a530426fe54bcb79^ORvs_which_sub_company_8=0f5a826a1bc64150237642ece54bcb7b^ORvs_which_sub_company_8=b2e9083e1b417910a530426fe54bcb44^ORvs_which_sub_company_8=dcb4d5121b620ad09c4797d01b4bcb6d","actions":["v_download_template_2: visible=true","v_download_template: visible=false"]}],
+"client_scripts":[{"sys_id":"91aaee69874e9250ec360e530cbb359b","name":"EY: Download template based subcompany","type":"onChange","cat_variable":"9de674fc3bf1de10924d0247f4e45a7e","ui_type":"1","script":"Catalog Client Script onChange. Mesma regra de template do script irmão: compara 'vs_which_sub_company_8' com seis sys_ids fixos e alterna a visibilidade entre 'v_download_template' e 'v_download_template_2'."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"dd8e82cc1ba12590a530426fe54bcb41","title":"EY VS -  Capitalização de Projeto em Curso (Alta)","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar ativação de projeto em curso (início da depreciação)",
+"short_description":"Peça a transferência de ativo em andamento para a classe definitiva, iniciando a depreciação",
+"description":"Use quando um projeto ou obra registrado como ativo em andamento (imobilizado em curso) foi concluído e precisa ser ativado na classe definitiva para começar a depreciar. Você vai informar a quantidade de ativos e anexar o template preenchido. Não use para baixa de ativo, transferência entre centros de custo ou capitalização de gastos lançados em despesa.",
+"frases_exemplo":["o projeto terminou, preciso ativar o ativo","transferir imobilizado em curso para classe definitiva","iniciar depreciação de obra concluída","ativar projeto em andamento","capitalizar projeto em curso"],
+"labels":{"v_enter_the_number_of_assets":"Quantos ativos serão ativados?","v_comments":"Descreva o projeto que precisa ser ativado"},
+"acoes":{"v_attach_file":"remover","v_download_template":"remover","v_download_template_2":"remover","v_informative_note_2":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Download template based subcompany","acao":"remover","substituicao":"Com templates na KB não há o que alternar."},{"nome":"EY: Hide download template 2 onLoad","acao":"remover","substituicao":"Idem."},{"nome":"EY: Mandatory (set Capitalização de Projeto em Curso)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Remover a entrada v_attach_email_with_approval, que não existe no set."},{"nome":"EY: Read-Only (set Capitalização de Projeto em Curso)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

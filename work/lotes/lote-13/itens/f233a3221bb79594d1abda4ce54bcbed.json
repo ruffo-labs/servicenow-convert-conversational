@@ -1,0 +1,19 @@
+{
+"sys_id":"f233a3221bb79594d1abda4ce54bcbed",
+"name":"Solicitar Estorno por Fraude - Cartão e Pix",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Solicitação de estorno por fraude nos meios de pagamento no Cartão e Pix",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"v_attach_fraud_evidence","type":"11","order":40,"question_text":"Attaching evidence about fraud identification is mandatory, use the Add Attachments option at the bottom of the page"}],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"4c55a4791bbfd154d1abda4ce54bcb1a","title":"EY: Opened by","order":10},{"sys_id":"e7c6a4311bffd154d1abda4ce54bcb54","title":"EY: Company:Natura/Avon/TBS - Collaborator - Code","order":20},{"sys_id":"8e26636e1bb79594d1abda4ce54bcb23","title":"EY: Payment method - Order","order":30},{"sys_id":"9385c79d1bb71d14a530426fe54bcb24","title":"EY: Additional information","order":900}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar estorno por fraude no cartão ou Pix","short_description":"Estorno de pagamento feito no cartão ou Pix por fraude","description":"Use quando um pedido de consultora, representante ou franqueado foi pago no cartão ou Pix de forma fraudulenta (por exemplo cartão clonado ou Pix sem reconhecimento do titular) e é preciso estornar o valor. Informe o cliente, o pedido e a forma de pagamento e anexe as evidências da fraude. Não use para pagamento em duplicidade ou título não baixado.","frases_exemplo":["pagamento com cartão clonado, preciso estornar","estorno por fraude no Pix","cliente não reconhece a compra no cartão","fraude em pedido pago no cartão","pedir estorno de pagamento fraudulento"],"labels":{},"acoes":{"v_attach_fraud_evidence":"remover"},"derivados":[],"scripts_e_policies":[]}
+}

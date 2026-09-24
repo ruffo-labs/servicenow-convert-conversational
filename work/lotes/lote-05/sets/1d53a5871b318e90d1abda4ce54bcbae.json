@@ -1,0 +1,10 @@
+{
+"sys_id":"1d53a5871b318e90d1abda4ce54bcbae",
+"title":"Value",
+"internal_name":"value",
+"order":40,
+"description":"",
+"variaveis":[{"name":"vs_controller","type":"7","order":0,"question_text":"Controller","hidden":true},{"name":"vs_total_purchase_value","type":"6","order":10,"question_text":"What is the total purchase value?"},{"name":"vs_payment_in_reais_or_foreign_currency","type":"5","order":20,"question_text":"Will payment be made in reais or foreign currency?","include_none":true,"choices":["Payment in REAL (BRL) [=real]","Payment in Foreign Currency [=foreign]"]},{"name":"vs_info_does_not_meet_the_criteria_decentralized_purchasing","type":"32","order":30}],
+"ui_policies":[{"sys_id":"2e1a78c01b0eced0a530426fe54bcb4c","short_description":"EY: If controller is true","conditions":"vs_controller=true","actions":["vs_info_does_not_meet_the_criteria_decentralized_purchasing: visible=true"]},{"sys_id":"4d57a7231bbd0ed0a530426fe54bcb4b","short_description":"EY: Mandatory fields","conditions":"","actions":["vs_total_purchase_value: mandatory=true","vs_payment_in_reais_or_foreign_currency: mandatory=true"]}],
+"client_scripts":[{"sys_id":"2b5ea8081b8aced0a530426fe54bcb24","name":"EY: Set when \"Payment currency\" change","type":"onChange","cat_variable":"4a54a98b1b318e90d1abda4ce54bcb44","ui_type":"1","script":"Catalog Client Script onChange disparado pela moeda de pagamento. Lê o valor total da compra, converte do formato brasileiro para número (remove pontos, troca vírgula por ponto) e aplica a regra de negócio conforme a moeda escolhida."},{"sys_id":"5c752bb01b8e0610d1abda4ce54bcb06","name":"EY: Set when \"Total value\" change","type":"onChange","cat_variable":"5cd3ad4b1b318e90d1abda4ce54bcb44","ui_type":"1","script":"Gêmeo do anterior, disparado pela mudança do valor total em vez da moeda. Mesma conversão e mesma regra."},{"sys_id":"e3c2f3ef1bfd0ed0a530426fe54bcb32","name":"EY: Validate value","type":"onChange","cat_variable":"5cd3ad4b1b318e90d1abda4ce54bcb44","ui_type":"1","script":"Catalog Client Script onChange que valida valor monetário brasileiro em 'vs_total_purchase_value'. Inválido: limpa o campo."}]
+}

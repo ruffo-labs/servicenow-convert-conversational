@@ -1,0 +1,19 @@
+{
+"sys_id":"0af68d3f1b7cf510a530426fe54bcb35",
+"name":"Remessa para Conserto",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Formulário para Solicitação de Emissão de Nota Fiscal de Remessa para Conserto",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_return_issue_template","type":"32","order":400,"question_text":"Return issue template"}],
+"ui_policies":[{"sys_id":"a7f9197b1b303910a530426fe54bcb0c","short_description":"EY: Mandatory items","conditions":"","actions":["v_return_issue_template: visible=true,mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"327dcec01bcd7910a530426fe54bcb24","title":"EY: Tax - Company (Supplier code)","order":300},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":600}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar nota fiscal de remessa para conserto","short_description":"Peça a nota fiscal para enviar equipamento ou material para conserto em fornecedor.","description":"Use para enviar um equipamento, peça ou material para conserto ou manutenção em fornecedor, pedindo ao Fiscal a nota de remessa para conserto. Informe empresa, sub-empresa, o fornecedor que fará o conserto e anexe a planilha modelo com os itens. Não use para troca em garantia (use \"Remessa para troca em garantia\"), devolução de compra ou retorno de comodato.","frases_exemplo":["Preciso mandar um equipamento para conserto","nota de remessa para manutenção","enviar máquina para reparo no fornecedor","remessa para conserto de peça"],"labels":{"vs_which_company_is_the_request_for":"Para qual fornecedor vai o conserto? Pode informar nome ou código.","vs_attach_template":"Anexe a planilha modelo com os itens a consertar."},"acoes":{"v_return_issue_template":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory items","acao":"converter","substituicao":"Tirar v_return_issue_template (rótulo) dos obrigatórios; manter o fornecedor obrigatório direto na variável."}]}
+}

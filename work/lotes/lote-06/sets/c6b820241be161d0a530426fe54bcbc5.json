@@ -1,0 +1,20 @@
+{
+"sys_id":"c6b820241be161d0a530426fe54bcbc5",
+"title":"EY VS - Transferência de Ativo Fixo e Dados Cadastrais",
+"internal_name":"ey_vs_transfer_ncia_de_ativo_fixo_e_dados_cadastrais",
+"order":200,
+"description":"Variable Set referente ao Form Transferência de Ativo Fixo e Dados Cadastrais",
+"variaveis":[
+{"name":"v_request_type","type":"5","order":100,"question_text":"Request Type","include_none":true,"choices":["Cost Center Change [=cost_center_change]","Fixed Asset Master Data Change [=fixed_asset_master_data_change]","Loan Transfer [=loan_transfer]"]},
+{"name":"v_label_cost_center","type":"32","order":152,"question_text":"The purpose is to change the Cost Center for depreciation and/or the Cost Center responsible for the asset."},
+{"name":"v_label_master_data","type":"32","order":154,"question_text":"The purpose is to make changes to the asset's information data in the accounting basis."},
+{"name":"v_label_loan_transfer","type":"32","order":156,"question_text":"The purpose is to carry out a physical transfer of assets between Natura and a service provider. In this operation, an invoice will be issued."},
+{"name":"v_label_branch_transfer","type":"32","order":158,"question_text":"The objective is the physical transfer of assets between branches of the same center. In this operation, an invoice will be issued."},
+{"name":"v_assets_number","type":"5","order":160,"question_text":"Enter the number of assets (according to the attached template)","include_none":true,"choices":["1 - 10 [=1_10]","11 - 20 [=11_20]","21 - 30 [=21_30]","31 - 40 [=31_40]","41 - 50 [=41_50]","51 - 60 [=51_60]","61 - 70 [=61_70]","71 - 80 [=71_80]","81 - 90 [=81_90]","91 - 100 [=91_100]"]},
+{"name":"v_invoice_issue","type":"5","order":200,"question_text":"Invoice issue?","include_none":true,"choices":["Yes [=yes]","No [=no]"]},
+{"name":"v_attach_file","type":"33","order":400,"question_text":"Attach Template"},
+{"name":"v_attach_email_with_approval","type":"33","order":500,"question_text":"Attach Lending Agreement"}
+],
+"ui_policies":[{"sys_id":"827df5881bdc1e10514cbaef4b4bcb2d","short_description":"EY: Hide attach comodato ","conditions":"v_request_type=loan_transfer","actions":["v_attach_email_with_approval: visible=true,mandatory=true"]},{"sys_id":"9ec524621be56990d1abda4ce54bcb27","short_description":"EY: Read-Only","conditions":"","applies_catalog":false,"actions":["v_invoice_issue: readonly=true","v_comments: readonly=true","v_request_type: readonly=true"]},{"sys_id":"c1cd20601b61a150d1abda4ce54bcb9a","short_description":"EY: Mandatory","conditions":"","actions":["v_assets_number: mandatory=true","v_request_type: mandatory=true","v_attach_file: mandatory=true","v_attach_email_with_approval: "]}],
+"client_scripts":[{"sys_id":"5dd275d33b405a10924d0247f4e45a33","name":"EY: Show label and temp for each request","type":"onChange","cat_variable":"21f8e4641be161d0a530426fe54bcbd4","ui_type":"10","script":"Catalog Client Script onChange sobre o tipo de solicitação. Para cada tipo ('cost_center_change', mudança de dados mestres, transferência por empréstimo, transferência entre filiais) exibe a legenda correspondente e esconde as outras três, e escolhe qual link de template mostrar conforme a sub-empresa escolhida — três sys_ids específicos recebem tratamento diferente. Algumas linhas de template estão comentadas."},{"sys_id":"c7c33d1b3b405a10924d0247f4e45a31","name":"EY: Hide all labels onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que é o par do anterior. Começa escondendo as quatro legendas e os quatro links de template, depois lê a empresa e o tipo de solicitação já preenchidos e reaplica a mesma lógica de exibição, para o formulário abrir já no estado correto."}]
+}

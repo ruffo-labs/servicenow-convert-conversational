@@ -1,0 +1,36 @@
+{
+"sys_id":"06f9c5401bace5d0d1abda4ce54bcb43",
+"name":"Solicitação de pagamentos Força de Vendas (prêmio ou comissão, bônus e campanhas)",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Suporte à força de vendas",
+"sc_catalogs":"OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+"short_description":"",
+"description":"Ajustes de prêmio ou comissão, bônus e campanhas.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_is_the_application_for_prize_or_commission","type":"5","order":300,"question_text":"Is the application for prize or commission?","include_none":true,"choices":["Commission [=v_commission]","Prize [=v_prize]"]},{"name":"v_number_of_leaders","type":"6","order":310,"question_text":"Number of leaders"},{"name":"v_number_of_employees","type":"6","order":320,"question_text":"Number of employees"},{"name":"v_enter_the_payment_type","type":"5","order":400,"question_text":"Enter the payment type","include_none":true,"choices":["Settings [=v_settings]","Bonus [=v_bonus]","Campaigns [=v_campaigns]","Reprocessing [=v_reprocessing]","Others [=v_others]"]},{"name":"v_in_which_cycle_should_the_payment_be_made","type":"9","order":700,"question_text":"On what date should the Cycle payment be made?"},{"name":"v_click_here_to_download_prize","type":"32","order":800,"question_text":"Click here to download the template that should be used in the field below"},{"name":"v_click_here_to_download_commission","type":"32","order":900,"question_text":"Click here to download the template that should be used in the field below"},{"name":"v_attach_the_template_to_the_payment_slate","type":"33","order":1000,"question_text":"Attach the template to the payment slate"},{"name":"v_additional_information","type":"2","order":1200,"question_text":"Additional information"},{"name":"v_attach_payment_approvals","type":"11","order":1350,"question_text":"Attach payment approvals"}],
+"ui_policies":[
+{"sys_id":"1c51aa041b6469d0d1abda4ce54bcb91","short_description":"EY: Make Visible and Mandatory Label Commission","conditions":"v_is_the_application_for_prize_or_commission=v_commission","actions":["v_click_here_to_download_commission: visible=true,mandatory=true"]},
+{"sys_id":"24bfb18233d7871098331c07ee5c7bb2","short_description":"EY: Hide Fields","conditions":"","actions":["vs_phone_number: visible=false,mandatory=false"]},
+{"sys_id":"27c06a041b6469d0d1abda4ce54bcb59","short_description":"EY: Make Mandatory and Visible Label of Prize ","conditions":"v_is_the_application_for_prize_or_commission=v_prize","actions":["v_click_here_to_download_prize: visible=true,mandatory=true"]},
+{"sys_id":"94450f641b68ad14a530426fe54bcbf2","short_description":"EY: Make fields Mandatory On Load","conditions":"","actions":["v_attach_payment_approvals: mandatory=true","v_attach_the_template_to_the_payment_slate: mandatory=true","v_enter_the_payment_type: mandatory=true","v_is_the_application_for_prize_or_commission: mandatory=true","v_in_which_cycle_should_the_payment_be_made: mandatory=true"]},
+{"sys_id":"b8eb52cc1be069d0d1abda4ce54bcb23","short_description":"EY: Make Mandatory and Visible Number of Employees","conditions":"v_is_the_application_for_prize_or_commission=v_prize","actions":["v_number_of_employees: visible=true,mandatory=true"]},
+{"sys_id":"c17fd2cc1b2469d0d1abda4ce54bcb84","short_description":"EY: Make Mandatory and Visible Number of Leaders","conditions":"v_is_the_application_for_prize_or_commission=v_commission","actions":["v_number_of_leaders: visible=true,mandatory=true"]}
+],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"724f41271b446dd8a530426fe54bcb28","title":"EY: Opened by - Requested for data","order":100},{"sys_id":"2c876b8b1b0ca5d8a530426fe54bcbdc","title":"EY: Company: Natura/Avon/TBS - Subcompany","order":200},{"sys_id":"cec8dff71b04251ca530426fe54bcb76","title":"EY: Document repository","order":1300}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar pagamento de prêmio ou comissão da Força de Vendas",
+"short_description":"Pagamento de prêmio, comissão, bônus ou campanha para líderes e colaboradores da Força de Vendas",
+"description":"Use para pedir o pagamento (ou ajuste de pagamento) de prêmio, comissão, bônus ou campanha da Força de Vendas em um ciclo. Você vai informar se é prêmio ou comissão, o tipo de pagamento, a data do ciclo e a quantidade de líderes ou colaboradores, e anexar a planilha no modelo padrão com as aprovações. Não use para pedir a aprovação prévia de valores de prêmios e comissões em cargas (use \"Solicitar aprovação de valores de prêmios e comissões\") nem para adiantamento de comissão.",
+"frases_exemplo":["preciso pagar a premiação da campanha do ciclo","quero solicitar pagamento de comissão das líderes","ajuste de comissão de líder que não caiu","pagamento de bônus para a força de vendas","lançar prêmio de campanha para as colaboradoras"],
+"labels":{"v_is_the_application_for_prize_or_commission":"O pagamento é de prêmio ou de comissão?","v_enter_the_payment_type":"Qual é o tipo de pagamento?","v_number_of_leaders":"Quantas líderes vão receber a comissão?","v_number_of_employees":"Quantos colaboradores vão receber o prêmio?","v_in_which_cycle_should_the_payment_be_made":"Em que data o pagamento do ciclo deve ser feito?","v_additional_information":"Quer acrescentar alguma informação?","v_attach_the_template_to_the_payment_slate":"Anexe a planilha no modelo padrão e as aprovações do pagamento."},
+"acoes":{"v_attach_the_template_to_the_payment_slate":"alterar_tipo:Anexo do chamado","v_attach_payment_approvals":"remover","v_click_here_to_download_prize":"remover","v_click_here_to_download_commission":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Make fields Mandatory On Load","acao":"converter","substituicao":"Marcar mandatory direto nas variáveis (sempre obrigatórias) e remover a policy; tirar a label v_attach_payment_approvals."},{"nome":"EY: Make Mandatory and Visible Number of Leaders / Number of Employees","acao":"manter","substituicao":"UI Policy sem script, compatível; desmarcar On load."},{"nome":"EY: Make Visible and Mandatory Label Commission / Prize","acao":"remover","substituicao":"Labels saem da conversa."},{"nome":"EY: Hide Fields (vs_phone_number)","acao":"manter","substituicao":"Esconde pergunta do set; ok."}]
+}
+}

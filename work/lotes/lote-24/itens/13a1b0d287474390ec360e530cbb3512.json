@@ -1,0 +1,19 @@
+{
+"sys_id":"13a1b0d287474390ec360e530cbb3512",
+"name":"Solicitação de Liberação de Medicamento",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"pharmacy",
+"sc_catalogs":{"_display_value":"Hire to Retire (HTR)","__text":"d48274d01b167010d1abda4ce54bcb5d"},
+"short_description":"Formulário para solicitação de liberação de medicamento, de uso exclusivo para equipe do Serviço Médico Natura.",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Liberação de Medicamento. Comentários no código explicam a intenção: vincula o sys_id do producer em current.item para disparar o Flow Designer e mapeia o usuário da sys_user a partir do perfil de RH. É um dos poucos scripts do levantamento com comentários explicativos úteis.",
+"variaveis":[{"name":"opened_by","type":"8","reference":"sys_user","default_value":"javascript: gs.getUserID();","order":100,"question_text":"Opened by","read_only":true,"map_to_field":true},{"name":"requested_for","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^user.location.country=BRA^EQ","order":200,"question_text":"Request for whom?","map_to_field":true},{"name":"id_global","type":"6","order":300,"question_text":"ID Global","read_only":true},{"name":"cpf","type":"6","order":400,"question_text":"CPF","read_only":true},{"name":"phone","type":"6","order":500,"question_text":"Phone","read_only":true},{"name":"employee_personal_email","type":"6","example_text":"nome@dominio.com","order":600,"question_text":"Employee's Personal Email"},{"name":"description","type":"2","order":700,"question_text":"Describe Your Request","map_to_field":true},{"name":"attachment_medical_prescription","type":"33","order":800,"question_text":"Attach the Medical Prescription Here"}],
+"ui_policies":[{"sys_id":"f2e14e5b87df4350ec360e530cbb35c3","short_description":"Campos obigatórios","conditions":"opened_byISNOTEMPTY","actions":["requested_for: mandatory=true","employee_personal_email: mandatory=true","attachment_medical_prescription: mandatory=true","description: mandatory=true"]},{"sys_id":"3f0cceaa338f0f9098331c07ee5c7be9","short_description":"Exibe campos de perfil somente quando colaborador for selecionado","conditions":"requested_forISNOTEMPTY","actions":["cpf: visible=true,readonly=true","id_global: visible=true,readonly=true","phone: visible=true,readonly=true"]}],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{"recomendacao":"manter_formulario","nome":"Liberar medicamento (Serviço Médico)","short_description":"Uso exclusivo da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador.","description":"Formulário da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador do Brasil, com a receita médica anexada. Colaboradores que precisam de medicamento devem procurar o Serviço Médico, não este formulário.","frases_exemplo":["Registrar liberação de medicamento para colaborador","Serviço médico: liberar remédio com receita","lançar liberação de medicamento","formulário de medicamento do ambulatório"],"labels":{},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"Exibe campos de perfil somente quando colaborador for selecionado","acao":"manter","substituicao":"Pode virar auto-populate de id_global, cpf e phone a partir de requested_for."},{"nome":"Campos obigatórios","acao":"converter","substituicao":"Mandatory direto nas variáveis (a condição opened_by ISNOTEMPTY é sempre verdadeira)."}]}
+}

@@ -1,0 +1,30 @@
+{
+"sys_id":"0892543d1b2d2110a530426fe54bcb68",
+"name":"Estorno de Lançamento Contábil",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Lançamentos Contábeis",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite o estorno de um lançamento contábil",
+"description":"Solicite o estorno de um lançamento contábil",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["6 variable sets"],
+"variaveis":[{"name":"v_attach_approval","type":"33","order":350,"question_text":"Attach Approval"}],
+"ui_policies":[{"sys_id":"49ad6f641bbd2950a530426fe54bcbed","short_description":"EY: Obrigatorio","conditions":"","actions":["v_attach_approval: mandatory=true"]},{"sys_id":"e1cea46a1b296990d1abda4ce54bcbf4","short_description":"EY: Read-Only","conditions":"","applies_catalog":false,"actions":["v_attach_approval: readonly=true"]}],
+"client_scripts":[{"sys_id":"a9f3e64e873d9210ec360e530cbb350d","name":"EY: Set multirows invisible onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad. Esconde, na abertura do formulário, as variáveis 'document_number_to_be_reversed_avon_latam' e 'document_number_to_be_reversed_natura_or_tbs' — os campos de número de documento a estornar, que só aparecem depois conforme a empresa escolhida."},{"sys_id":"df2f8c6a1be16990d1abda4ce54bcb30","name":"Show Multirow AVON LATAM OnChange","type":"onChange","cat_variable":"797e07881b29a590a530426fe54bcbde","ui_type":"10","script":"Catalog Client Script onChange sobre a empresa. Sai no carregamento. Se o valor for vazio, ou 'natura', ou 'tbs', esconde e desobriga 'document_number_to_be_reversed_avon_latam'. Se for 'Avon LATAM', exibe e torna obrigatório esse mesmo campo."},{"sys_id":"eed2d4221b256990d1abda4ce54bcb42","name":"Hide Multirow VS - AVON LATAM","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad de variable set. Esconde e desobriga 'document_number_to_be_reversed_avon_latam' na abertura, deixando o campo oculto até que outro script o revele."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":150},{"sys_id":"82e2107d1b2d2110a530426fe54bcbce","title":"EY VS - Estorno de Lançamento Contábil","order":200},{"sys_id":"3609d1021b69a110a530426fe54bcbdc","title":"Document number to be reversed - Natura or TBS","order":300},{"sys_id":"5702d5c21b29a110a530426fe54bcbae","title":"Document number to be reversed - AVON LATAM","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar estorno de lançamento contábil",
+"short_description":"Peça o estorno (reversão) de um lançamento contábil já registrado no SAP.",
+"description":"Use quando um lançamento contábil já registrado precisa ser estornado (revertido), por erro de conta, valor, centro de custo ou período. Você informa a empresa, o número do documento (e o ano ou lote, conforme a empresa), o motivo, a data do estorno e anexa a aprovação. Não use para pedir um lançamento novo ou uma reclassificação (use \"Solicitar lançamento contábil\") nem para cancelar nota fiscal.",
+"frases_exemplo":["Preciso estornar um lançamento contábil","estornar documento SAP 1900001234","lançaram na conta errada, quero reverter","reverter lançamento do mês passado","solicitar estorno de partida contábil Avon"],
+"labels":{"nova_numero_documento":"Qual o número do documento contábil a estornar? Se forem vários, separe por vírgula.","nova_ano_documento":"De que ano é esse documento?","nova_numero_lote":"Qual o número do lote (batch)?","v_request_type":"Por que o lançamento precisa ser estornado?","v_what_is_the_withdrawal_date":"Em que data o estorno deve ser lançado?","v_attach_approval":"Anexe a aprovação do estorno (e-mail ou documento do aprovador).","v_additional_information":"Quer acrescentar alguma informação?"},
+"acoes":{"nova_numero_documento":"nova:Texto de Linha Única","nova_ano_documento":"nova:Texto de Linha Única (Validation Regex ^\\d{4}$)","nova_numero_lote":"nova:Texto de Linha Única"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Set multirows invisible onLoad","acao":"remover","substituicao":"Visibilidade inicial via atributo da variável (visible=false) + UI policies já existentes."},{"nome":"Show Multirow AVON LATAM OnChange","acao":"remover","substituicao":"Coberto pela UI policy \"EY: Show VS Avon Latam Multirow\" (sem script), apontando para nova_numero_lote."},{"nome":"Hide Multirow VS - AVON LATAM","acao":"remover","substituicao":"Duplica o onLoad acima; desnecessário."},{"nome":"EY: Show Multirow VS - Natura or TBS / EY: Show VS Avon Latam Multirow","acao":"converter","substituicao":"Reapontar para nova_ano_documento e nova_numero_lote e definir o atributo direto na variável em vez de on load."},{"nome":"EY: Read-Only","acao":"converter","substituicao":"Aplicar só no registro destino (Applies on Catalog Item view = false)."}]
+}
+}

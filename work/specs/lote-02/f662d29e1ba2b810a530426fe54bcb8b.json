@@ -1,0 +1,85 @@
+{
+ "sys_id": "f662d29e1ba2b810a530426fe54bcb8b",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir reembolso mensal de creche/babá) com perguntas diretas herdadas da 1ª análise. As variáveis 'benefit_description' (widget custom) e 'benefit_description_value' (HTML) do set 'Eligibilities Informative' só exibem texto informativo e não coletam dado; como são de variable set não podem ser removidas, então uma policy do item as oculta sem condição (permitido para variável que não coleta dado). A policy de campos obrigatórios virou prop mandatory. O script de regex de valor foi convertido em validation_regex; o script que limpa 'childs_name' ao mudar variável inexistente foi removido por não ter efeito; o de checagem de duplicidade foi ajustado para VA. O script que restringe dinamicamente os meses de competência ao mês corrente exigiria regra de servidor/flow fora do alcance do formato de spec, então foi removido (a variável segue com todas as opções, sem a restrição dinâmica).",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "competency_months": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "childs_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "pay_day": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "amount_paid": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d+(,\\d{2})?$"
+   }
+  },
+  "v_receipt_types": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "please_attach_the_receipt_invoice_here": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "declare_statement_of_veracity": {
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  }
+ },
+ "remover": {
+  "fill_request": "visual",
+  "formatter2": "visual",
+  "formatter": "visual",
+  "statement_of_veracity": "visual"
+ },
+ "policies": {
+  "8e527b3f1b816dd4a530426fe54bcb6d": "remover",
+  "nova_ocultar_eligibilities_informative": {
+   "short_description": "Ocultar informativo de elegibilidade (widget/HTML) na conversa",
+   "conditions": "",
+   "actions": {
+    "benefit_description": {
+     "visible": false
+    },
+    "benefit_description_value": {
+     "visible": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "15c0d4943b232e50924d0247f4e45a81": {
+   "remover": "sem_efeito"
+  },
+  "5c46e4531bc10510d1abda4ce54bcb14": {
+   "remover": "sem_efeito"
+  },
+  "791ded6e87d76a10ec360e530cbb3580": {
+   "converter": "regex"
+  },
+  "b35a11d68797e610ec360e530cbb35f6": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ }
+}

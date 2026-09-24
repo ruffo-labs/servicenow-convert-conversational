@@ -1,0 +1,36 @@
+{
+"sys_id":"6a2fa9bc1b005650514cbaef4b4bcb85",
+"name":"Questões, dúvidas, reclamações ou sugestões relacionadas a Férias",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Férias",
+"sc_catalogs":"Catálogo hispânico, Hire to Retire (HTR)",
+"short_description":"Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+"description":"Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"atencao":["v_select_the_category: opções dinâmicas (x_nasm_hr_rules_hispanic_vacaciones_questions)"],
+"variaveis":[{"name":"FAQs","type":"32","order":0,"question_text":"Puedes usar este formulario si la temática que buscas no está disponible aqui"},{"name":"v_contact_reason","type":"5","order":750,"question_text":"Contact reason","include_none":true,"choices":["Questions/Consults [=questions]","Suggestions [=suggestions]","Complaints [=complaints]"]},{"name":"v_select_the_category","type":"5","lookup_table":"x_nasm_hr_rules_hispanic_vacaciones_questions","lookup_value":"hispanic_category","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);","order":810,"question_text":"Select the category","include_none":true,"lookup_unique":true,"choices":["Vacations [=vacations]","Vacations sales [=vacations_sales]"]},{"name":"v_detail_field","type":"2","order":850,"question_text":"Use the following field to detail your need"},{"name":"v_minimun_characters","type":"32","order":900}],
+"ui_policies":[{"sys_id":"2bc6df091b88d650514cbaef4b4bcbaa","short_description":"EY: Mandatory - v_corporate_e_mail","conditions":"","actions":["v_corporate_e_mail: mandatory=true"]},{"sys_id":"58d6db091b88d650514cbaef4b4bcb33","short_description":"EY: Mandatory - v_contact_reason","conditions":"","actions":["v_contact_reason: mandatory=true"]},{"sys_id":"8c0df0ff1b8dde10514cbaef4b4bcbad","short_description":"EY: hide v_reason_on_behalf ","conditions":"v_who_is_this_request_for=for_me","applies_catalog":false,"actions":["v_reason_on_behalf: visible=false"]},{"sys_id":"9dd7db891b88d650514cbaef4b4bcbbb","short_description":"EY: Mandatory - v_detail_field","conditions":"","actions":["v_detail_field: mandatory=true"]},{"sys_id":"b2c653491b88d650514cbaef4b4bcb6c","short_description":"EY: Mandatory - v_employee","conditions":"","actions":["v_employee: mandatory=true"]}],
+"client_scripts":[
+{"sys_id":"3e9c13051bc8d650514cbaef4b4bcbc4","name":"EY: Hide category OnLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a categoria e, DENTRO DE UM setTimeout, verifica se o país é 'ECU' para reexibi-la. O uso de setTimeout indica contorno de problema de ordem de carregamento — solução frágil, porque depende de tempo e não de evento."},
+{"sys_id":"9655f93c1b405650514cbaef4b4bcb81","name":"EY: Show error message onChange","type":"onChange","cat_variable":"816471381b405650514cbaef4b4bcbbe","ui_type":"10","script":"Par onChange do anterior: enquanto o usuário digita, exibe a legenda de mínimo de caracteres se o texto tiver entre 1 e 39 caracteres, e esconde quando atinge 40."},
+{"sys_id":"a555bd3c1b405650514cbaef4b4bcbff","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."},
+{"sys_id":"b0d9178d1b88d650514cbaef4b4bcbf0","name":"EY: Show category if Equador OnChange","type":"onChange","cat_variable":"2c405bc71bb78a10514cbaef4b4bcb0a","ui_type":"10","script":"Par onChange do anterior: exibe a categoria quando o país é 'ECU' (Equador), sem o setTimeout."},
+{"sys_id":"fa55b57c1b405650514cbaef4b4bcb74","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que BLOQUEIA o envio quando a descrição tem menos de 40 caracteres. Exibe a legenda de mínimo de caracteres e retorna false. Validação de qualidade de conteúdo, não de formato."}
+],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":50}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida ou reclamar sobre férias (América Hispânica)",
+"short_description":"Dúvidas, consultas, reclamações ou sugestões sobre férias para Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+"description":"Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre férias (saldo de dias, programação, pagamento das férias) quando o tema não estiver nas perguntas frequentes. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use se você trabalha no Brasil (use 'Tirar dúvida sobre férias (Brasil)') nem para licenças.",
+"frases_exemplo":["cuántos días de vacaciones me quedan?","duda sobre mis vacaciones","no me pagaron las vacaciones","quiero reclamar porque no me aprobaron las vacaciones","consulta sobre vacaciones en Ecuador"],
+"labels":{"v_contact_reason":"É uma dúvida, consulta, reclamação ou sugestão?","v_select_the_category":"Sobre qual assunto de férias?","v_detail_field":"Conte em detalhes o que você precisa."},
+"acoes":{"v_corporate_e_mail":"derivar","FAQs / v_minimun_characters":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Hide category OnLoad","acao":"converter","substituicao":"UI Policy sem script: v_select_the_category visível (e obrigatória, se for o caso) quando v_country = ECU. Remover o setTimeout."},{"nome":"EY: Show category if Equador OnChange","acao":"remover","substituicao":"Coberto pela mesma UI Policy."},{"nome":"EY: Mandatory - v_corporate_e_mail / v_contact_reason / v_detail_field / v_employee","acao":"converter","substituicao":"Mandatory direto nas variáveis (v_employee como override do set)."},{"nome":"EY: hide v_reason_on_behalf","acao":"manter","substituicao":"Condicional sem script."},{"nome":"EY: Show error message onSubmit","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."},{"nome":"EY: Show error message onChange / EY: Hide error message onLoad","acao":"remover","substituicao":"Legenda v_minimun_characters substituída pela mensagem da Validation Regex."}]
+}
+}

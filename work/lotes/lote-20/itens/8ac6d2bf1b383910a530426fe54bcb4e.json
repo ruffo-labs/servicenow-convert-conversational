@@ -1,0 +1,19 @@
+{
+"sys_id":"8ac6d2bf1b383910a530426fe54bcb4e",
+"name":"Retorno Comodato/Locação",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Formulário para Solicitação de Emissão de Nota Fiscal de Retornos de Comodatos e Locações",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_attach_nf_receipt_of_items","type":"33","order":400,"question_text":"Attach NF receipt of items"},{"name":"v_attached_template_return","type":"32","order":500,"question_text":"Template return"}],
+"ui_policies":[{"sys_id":"803f12bf1b783910a530426fe54bcb6c","short_description":"EY: Mandatory fields","conditions":"","actions":["v_attached_template_return: mandatory=true","v_attach_nf_receipt_of_items: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"327dcec01bcd7910a530426fe54bcb24","title":"EY: Tax - Company (Supplier code)","order":200},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":700}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar nota fiscal de retorno de comodato ou locação","short_description":"Peça a nota fiscal para devolver ao dono um equipamento recebido em comodato ou locação.","description":"Use para devolver ao proprietário um equipamento ou bem recebido em comodato (empréstimo) ou locação, pedindo ao Fiscal a nota de retorno. Informe empresa, sub-empresa, o fornecedor/proprietário, anexe a nota de recebimento do bem e a planilha modelo. Não use para devolução de compra, conserto ou troca em garantia.","frases_exemplo":["Preciso devolver um equipamento de comodato","nota de retorno de locação","fim do contrato de aluguel de máquina, devolver","retorno de bem em comodato"],"labels":{"vs_which_company_is_the_request_for":"Para qual empresa (proprietária) o bem será devolvido?","v_attach_nf_receipt_of_items":"Anexe a nota fiscal de recebimento do bem.","vs_attach_template":"Agora anexe a planilha modelo de retorno preenchida."},"acoes":{"v_attached_template_return":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Tirar o rótulo dos obrigatórios; manter v_attach_nf_receipt_of_items obrigatório direto na variável."}]}
+}

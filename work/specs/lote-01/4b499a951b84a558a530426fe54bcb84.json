@@ -1,0 +1,130 @@
+{
+ "sys_id": "4b499a951b84a558a530426fe54bcb84",
+ "status": "conversacional",
+ "motivo": "Fluxo único de pagamento de varejo. v_request_type e v_request_type_tbs foram unificados mantendo v_request_type_tbs (já contém as 3 opções) e substituindo v_request_type, evitando editar lista de opções (não suportado pelo formato). v_country continua sempre oculta (já era assim via policy sem condição, convertida em prop). Policies onLoad sem condição viraram props; validações de CPF/CNPJ/valor viraram regex.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_request_type_tbs": {
+   "label": "Que tipo de pagamento você precisa?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_collaborator_name": {
+   "label": "Qual é o nome do colaborador?"
+  },
+  "v_franchise_name": {
+   "label": "Qual é o nome da franquia?"
+  },
+  "v_cpf": {
+   "label": "Qual é o CPF dele?",
+   "props": {
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "v_cnpj": {
+   "label": "Qual é o CNPJ da franquia?",
+   "props": {
+    "validation_regex": "^(\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}|\\d{14})$"
+   }
+  },
+  "v_value": {
+   "label": "Qual é o valor (R$)?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$"
+   }
+  },
+  "v_account_type": {
+   "label": "A conta é corrente ou poupança?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_accounting": {
+   "label": "Qual é a conta contábil?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cost_center": {
+   "label": "Qual é o centro de custo?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_approval": {
+   "label": "Anexe a aprovação do responsável.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_country": {
+   "props": {
+    "hidden": true
+   }
+  }
+ },
+ "remover": {
+  "v_label_payment": "visual",
+  "formatter2": "visual",
+  "v_bank_details": "visual",
+  "formatter": "visual",
+  "v_request_type": {
+   "substituida_por": "v_request_type_tbs"
+  }
+ },
+ "policies": {
+  "40e1656a1bbd6114d1abda4ce54bcb52": "remover",
+  "986062e91b80e958a530426fe54bcb83": "remover",
+  "a84112611b8ca958a530426fe54bcb47": "remover",
+  "ac96fb033be76ad0924d0247f4e45a23": "remover",
+  "c8d0e22d1b80e958a530426fe54bcb63": "remover",
+  "c7c123a41bb1a5d0d1abda4ce54bcbdd": {
+   "conditions": "v_request_type_tbs=tbs",
+   "actions": {
+    "v_accounting": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_agency": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_digit": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_account_type": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cost_center": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_account": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_bank": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "9c0e6a211b84e958a530426fe54bcb1d": {
+   "converter": "regex"
+  },
+  "d86e8da21b9d2150d1abda4ce54bcb94": {
+   "converter": "regex"
+  },
+  "daeef53e1b54a990a530426fe54bcb28": {
+   "converter": "regex"
+  }
+ }
+}

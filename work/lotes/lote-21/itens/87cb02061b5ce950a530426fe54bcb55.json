@@ -1,0 +1,53 @@
+{
+"sys_id":"87cb02061b5ce950a530426fe54bcb55",
+"name":"Aplicação / Devolução de Medida Disciplinar",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Declarações e Documentos",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Solicitação de emissão ou devolução de declaração de medida disciplinar",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Aplicação/Devolução de Medida Disciplinar. Define requested_for como o usuário logado, grava item com o sysparm_id e marca o item como prioritário — com comentário explicando que isso vale após a revisão dos itens de catálogo.",
+"variaveis":[
+{"name":"v_opened_by","type":"8","reference":"x_nasm_hr_profile","default_value":"javascript:gs.getUserID()","order":100,"question_text":"Opened by"},
+{"name":"v_type_of_service","type":"5","order":200,"question_text":"Type of service","include_none":true,"choices":["Issuance of declaration [=issuance]","Return of declaration [=return]"]},
+{"name":"v_cont_start","type":"19","order":300,"question_text":"Applicant data"},
+{"name":"v_requester","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^EQ","order":400,"question_text":"Requester"},
+{"name":"v_id","type":"6","order":500,"question_text":"ID Global"},
+{"name":"v_area_department","type":"6","order":600,"question_text":"Area / Department"},
+{"name":"v_company","type":"6","order":700,"question_text":"Company"},
+{"name":"formatter","type":"20","order":750},
+{"name":"v_cont_start2","type":"19","order":800,"question_text":"Warning Data"},
+{"name":"v_warning_type","type":"5","order":900,"question_text":"Warning Type","include_none":true,"choices":["Written Warning [=written]","Verbal Warning [=verbal]","Suspension of 1 (one) day [=one_day]","Suspension of 3 (three) days [=three_days]"]},
+{"name":"v_name","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^EQ","order":1000,"question_text":"Contributor's Name"},
+{"name":"v_id2","type":"6","order":1100,"question_text":"ID Global"},
+{"name":"v_area_department2","type":"6","order":1200,"question_text":"Area / Department"},
+{"name":"v_company2","type":"6","order":1300,"question_text":"Company"},
+{"name":"v_reason","type":"2","order":1400,"question_text":"Reason for Warning"},
+{"name":"formatter2","type":"20","order":1500},
+{"name":"v_cont_start3","type":"19","order":1600,"question_text":"Declaration Return Data"},
+{"name":"v_who_received","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^EQ","order":1700,"question_text":"Who received a warning?"},
+{"name":"v_id3","type":"6","order":1800,"question_text":"ID Global"},
+{"name":"v_attach","type":"33","order":1900,"question_text":"Attach the return here"}
+],
+"ui_policies":[{"sys_id":"5b40b20e1b582d50a530426fe54bcbba","short_description":"EY: Mandatory fields","conditions":"","actions":["v_type_of_service: visible=true,mandatory=true","v_opened_by: readonly=true"]},{"sys_id":"c1e6f2421b1c2d50a530426fe54bcb43","short_description":"EY: Mandatory and read only if return","conditions":"v_type_of_service=return","actions":["v_attach: visible=true,mandatory=true","v_who_received: visible=true,mandatory=true","v_cont_start3: visible=true","v_id3: visible=true,readonly=true"]},{"sys_id":"fb243e421bd82d50a530426fe54bcbb5","short_description":"EY: Mandatory if Issuance","conditions":"v_type_of_service=issuance","actions":["v_company: visible=true,readonly=true","v_warning_type: visible=true,mandatory=true","v_reason: visible=true,mandatory=true","v_requester: visible=true,mandatory=true","v_id: visible=true,readonly=true","v_name: visible=true,mandatory=true","v_area_department2: visible=true,readonly=true","v_area_department: visible=true,readonly=true","v_company2: visible=true,readonly=true","v_id2: visible=true,readonly=true","v_cont_start: visible=true","v_cont_start2: visible=true"]}],
+"client_scripts":[{"sys_id":"819cbed21b94ad50d1abda4ce54bcb5a","name":"EY: Fill data job requester","type":"onChange","cat_variable":"c69172421b982d50a530426fe54bcb93","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados de cargo do solicitante, limpando quando o valor fica vazio."},{"sys_id":"8fec69421be02910a530426fe54bcbe9","name":"EY: Fill ID","type":"onChange","cat_variable":"99463a4e1bd82d50a530426fe54bcb9b","ui_type":"10","script":"Catalog Client Script onChange que preenche o ID do colaborador, limpando quando o valor fica vazio."},{"sys_id":"fe1e32da1b94ad50d1abda4ce54bcbf5","name":"EY: Fill data job contributor's","type":"onChange","cat_variable":"6453b60e1b982d50a530426fe54bcbe1","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados de cargo do contribuinte. Variante da família 'Fill data job'."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Medida disciplinar (emissão ou devolução)",
+"short_description":"Pedir a emissão de uma medida disciplinar ou devolver a medida assinada pelo colaborador.",
+"description":"Item pai substituído pelos dois derivados: emissão e devolução de medida disciplinar.",
+"frases_exemplo":["preciso aplicar uma advertência","devolver advertência assinada"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{"nome":"Solicitar emissão de medida disciplinar (advertência)","short_description":"Gestor pede ao RH a emissão de advertência ou medida disciplinar para um colaborador.","descricao":"Use quando você, como gestor, precisa que o RH emita uma medida disciplinar (advertência ou suspensão) para um colaborador da sua equipe. Informe o colaborador, o tipo de medida e o motivo. Não use para devolver a medida já assinada (use 'Devolver medida disciplinar assinada').","frases_exemplo":["preciso dar uma advertência para um colaborador","quero aplicar uma suspensão","emitir advertência por atraso","gerar medida disciplinar para alguém do meu time","como faço advertência formal?"],"fixar":"v_type_of_service = issuance (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_name","conversational_label":"Qual colaborador vai receber a medida disciplinar?"},{"ordem":2,"variavel":"v_warning_type","conversational_label":"Qual é o tipo de medida (advertência ou suspensão)?"},{"ordem":3,"variavel":"v_reason","conversational_label":"Qual é o motivo da medida? Descreva o ocorrido."},{"ordem":4,"variavel":"v_requester","conversational_label":"(derivar) default gs.getUserID() e oculto na conversa; v_id, v_area_department e v_company auto-populados"},{"ordem":5,"variavel":"v_id2 / v_area_department2 / v_company2","conversational_label":"(derivar) auto-populate a partir de v_name, read-only e ocultos na conversa"}]},
+{"nome":"Devolver medida disciplinar assinada","short_description":"Enviar ao RH a medida disciplinar assinada pelo colaborador.","descricao":"Use para devolver ao RH a advertência ou medida disciplinar já emitida e assinada pelo colaborador, anexando o documento. Não use para pedir uma nova medida.","frases_exemplo":["devolver advertência assinada","o colaborador assinou a advertência, onde envio?","anexar medida disciplinar assinada","retorno da advertência"],"fixar":"v_type_of_service = return (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_who_received","conversational_label":"Qual colaborador recebeu a medida disciplinar?"},{"ordem":2,"variavel":"v_attach","conversational_label":"Anexe a medida disciplinar assinada."},{"ordem":3,"variavel":"v_id3","conversational_label":"(derivar) auto-populate a partir de v_who_received, oculto na conversa"}]}
+],
+"scripts_e_policies":[{"nome":"EY: Mandatory if Issuance / EY: Mandatory and read only if return","acao":"remover","substituicao":"O tipo vira o próprio item; obrigatoriedade e read-only passam para atributos das variáveis em cada derivado."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"v_opened_by read-only e oculto na conversa por atributo; v_type_of_service fixo por default/hidden."},{"nome":"EY: Fill data job requester / EY: Fill ID / EY: Fill data job contributor's","acao":"converter","substituicao":"Trocar por Auto-populate (dependent question) a partir de v_requester, v_name e v_who_received (campos de x_nasm_hr_profile) e remover os scripts."}]
+}
+}

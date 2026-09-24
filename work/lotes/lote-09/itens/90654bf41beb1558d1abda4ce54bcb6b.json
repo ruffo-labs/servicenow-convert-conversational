@@ -1,0 +1,63 @@
+{
+"sys_id":"90654bf41beb1558d1abda4ce54bcb6b",
+"name":"Programa de Estágio",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Aprendizagem, Desenvolvimento e Desempenho",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Para solicitações relacionadas ao Programa de Estágio",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[
+{"name":"v_cont_start_internship_program","type":"19","order":150,"question_text":"Internship Program"},
+{"name":"v_request_type","type":"5","order":200,"question_text":"Request type","include_none":true,"choices":["Internship contract [=internship_contract]","Training information [=training_information]","Activity report [=activity_report]","Sending Communications [=sending_communications]","Information about data/indicators [=information_about_data_indicators]"]},
+{"name":"faq_text","type":"32","order":250},
+{"name":"v_option_if_type_contract","type":"5","order":300,"question_text":"Choose the desired option","include_none":true,"choices":["Amendment of contract - Mandatory and/or non-mandatory","Change of manager in the internship contract","Submission of signed internship contract","Information on internship contract","Request for extension of contract"]},
+{"name":"v_new_period_course","type":"9","order":400,"question_text":"Enter the new course completion period"},
+{"name":"v_option_if_type_report","type":"5","order":800,"question_text":"Choose the desired option","include_none":true,"choices":["Manager change in activity report","Submission of signed activity report"]},
+{"name":"v_description","type":"2","order":1200,"question_text":"Description"},
+{"name":"v_attach_your_signed_contract","type":"33","order":1300,"question_text":"Attach your signed internship contract here"},
+{"name":"v_attach_educ_institution_link","type":"33","order":1350,"question_text":"Attach here your proof of link with the educational institution"},
+{"name":"v_attach_your_signed_report_here","type":"33","order":1400,"question_text":"Attach your signed report here"}
+],
+"ui_policies":[
+{"sys_id":"4e9b6bf41b675558d1abda4ce54bcba0","short_description":"EY: Field  request type mandatory ","conditions":"","actions":["v_request_type: visible=true,mandatory=true"]},
+{"sys_id":"960e6fb41ba75558d1abda4ce54bcb02","short_description":"EY: If Internship contract","conditions":"v_request_type=internship_contract","actions":["v_option_if_type_contract: visible=true,mandatory=true"]},
+{"sys_id":"c264ff741b2b5558d1abda4ce54bcb8a","short_description":"EY: If Internship contract and request extension","conditions":"v_request_type=internship_contract^v_option_if_type_contract=Request for extension of contract","actions":["v_new_period_course: visible=true,mandatory=true","v_attach_educ_institution_link: visible=true,mandatory=true"]},
+{"sys_id":"94bafff01bab5558d1abda4ce54bcb30","short_description":"EY: If Internship contract and submission contract","conditions":"v_request_type=internship_contract^v_option_if_type_contract=Submission of signed internship contract","actions":["v_attach_your_signed_contract: visible=true,mandatory=true"]},
+{"sys_id":"c1a5b4c11beb9558d1abda4ce54bcb72","short_description":"EY: If activity is report","conditions":"v_request_type=activity_report","actions":["v_option_if_type_report: visible=true,mandatory=true"]},
+{"sys_id":"e396bc851beb9558d1abda4ce54bcbe8","short_description":"EY: If activity report and submission","conditions":"v_request_type=activity_report^v_option_if_type_report=Submission of signed activity report","actions":["v_attach_your_signed_report_here: visible=true,mandatory=true"]},
+{"sys_id":"b44978811b2f9558d1abda4ce54bcbe3","short_description":"EY: If activity report and manager change","conditions":"v_request_type=activity_report^v_option_if_type_report=Manager change in activity report","actions":["end_date: visible=true,mandatory=true","start_date: visible=true,mandatory=true","manager_email: visible=true,readonly=true","manager_id: visible=true,readonly=true","manager_name: visible=true,mandatory=true"]},
+{"sys_id":"4121cdc91baf9558d1abda4ce54bcb9f","short_description":"EY: If training information","conditions":"v_request_type=training_information","actions":["v_description: mandatory=true"]},
+{"sys_id":"c064cd891bef9558d1abda4ce54bcbfa","short_description":"EY: If intership contract and internship contract information","conditions":"v_request_type=internship_contract^v_option_if_type_contract=Information on internship contract","actions":["v_description: mandatory=true"]},
+{"sys_id":"d7954d011b23d558d1abda4ce54bcb26","short_description":"EY: If internship contract and change manager","conditions":"v_request_type=internship_contract^v_option_if_type_contract=Change of manager in the internship contract","actions":["manager_email1: visible=true,readonly=true","manager_name1: visible=true,mandatory=true","manager_id1: visible=true"]},
+{"sys_id":"7f0b0f061ba79d10d1abda4ce54bcbf0","short_description":"EY: If activity report and submission signed","conditions":"v_request_type=activity_report^v_option_if_type_report=Submission of signed activity report","actions":["end_date: visible=true","start_date: visible=true"]}
+],
+"client_scripts":[{"sys_id":"6f8130461beca510a530426fe54bcbe5","name":"EY: Clear Variables","type":"onChange","cat_variable":"aa794f301b2f1558d1abda4ce54bcbd5","ui_type":"10","script":"Catalog Client Script onChange que limpa as variáveis de opção dependentes."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100},{"sys_id":"5b30c4cd1beb5558d1abda4ce54bcb29","title":"EY: Basic data manager ","order":900},{"sys_id":"bf156c8e1ba8a510a530426fe54bcbf0","title":"EY: Basic data manager 1","order":950},{"sys_id":"f2e3f8cd1bab9558d1abda4ce54bcbeb","title":"Period","order":1100}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Programa de Estágio",
+"short_description":"Pedidos de estagiários sobre contrato, relatório de atividades e informações do programa de estágio.",
+"description":"Item agrupador substituído por 3 itens: contrato de estágio, relatório de atividades do estágio e dúvidas sobre o programa de estágio. Para jovem aprendiz, use o item do Programa Florescer.",
+"frases_exemplo":["quero prorrogar meu estágio","preciso enviar meu relatório de atividades assinado","dúvida sobre o programa de estágio"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{
+"nome":"Contrato de estágio: enviar, aditar, prorrogar ou trocar gestor",
+"short_description":"Envio do contrato de estágio assinado, aditivo, prorrogação, troca de gestor ou informações sobre o contrato.",
+"descricao":"Use se você é estagiário (ou gestor de estagiário) e precisa enviar o contrato de estágio assinado, pedir aditivo de contrato (estágio obrigatório ou não obrigatório), prorrogar o estágio, trocar o gestor que consta no contrato ou tirar dúvidas sobre o contrato. Na prorrogação, tenha em mãos o comprovante de vínculo com a instituição de ensino. Não use para relatório de atividades, que tem item próprio.",
+"frases_exemplo":["quero prorrogar meu estágio","preciso enviar meu contrato de estágio assinado","mudou meu gestor, preciso atualizar no contrato de estágio","aditivo de contrato de estágio obrigatório","dúvida sobre meu contrato de estágio"],
+"fixar":"v_request_type = internship_contract (default/hidden)",
+"perguntas":[{"ordem":1,"variavel":"v_option_if_type_contract","conversational_label":"O que você precisa no contrato: enviar o contrato assinado, fazer um aditivo, prorrogar, trocar o gestor ou tirar uma dúvida?"},{"ordem":2,"variavel":"v_new_period_course","conversational_label":"Qual é a nova data prevista de conclusão do curso?"},{"ordem":3,"variavel":"manager_name","conversational_label":"Quem é o novo gestor?"},{"ordem":4,"variavel":"v_description","conversational_label":"Conte com mais detalhes o que você precisa."},{"ordem":5,"variavel":"v_attach_educ_institution_link","conversational_label":"Envie o comprovante de vínculo com a instituição de ensino."},{"ordem":6,"variavel":"v_attach_your_signed_contract","conversational_label":"Envie o contrato de estágio assinado."}]
+},
+{"nome":"Enviar relatório de atividades do estágio","short_description":"Envio do relatório de atividades do estágio assinado ou troca do gestor que consta no relatório.","descricao":"Use para enviar o relatório de atividades do estágio assinado, referente a um período, ou para pedir a troca do gestor que aparece no relatório. Não use para assuntos do contrato de estágio (prorrogação, aditivo, envio do contrato).","frases_exemplo":["preciso enviar meu relatório de estágio assinado","entrega do relatório semestral de atividades","o gestor no meu relatório de estágio está errado","onde mando o relatório de atividades do estágio?"],"fixar":"v_request_type = activity_report (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_option_if_type_report","conversational_label":"Você quer enviar o relatório assinado ou trocar o gestor do relatório?"},{"ordem":2,"variavel":"start_date","origem":"set:Período","conversational_label":"Qual é a data de início do período do relatório?"},{"ordem":3,"variavel":"end_date","origem":"set:Período","conversational_label":"E a data de fim?"},{"ordem":4,"variavel":"manager_name","conversational_label":"Quem é o gestor correto?"},{"ordem":5,"variavel":"v_attach_your_signed_report_here","conversational_label":"Envie o relatório de atividades assinado."}]},
+{"nome":"Dúvidas sobre o programa de estágio","short_description":"Informações gerais e treinamentos do programa de estágio.","descricao":"Use para tirar dúvidas gerais sobre o programa de estágio: regras, benefícios do estagiário, calendário e treinamentos do programa. Para contrato ou relatório de atividades, use os itens específicos.","frases_exemplo":["dúvida sobre o programa de estágio","quais treinamentos o estagiário precisa fazer?","quantos dias de recesso o estagiário tem?","quero informações sobre o estágio"],"fixar":"v_request_type = training_information (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_description","conversational_label":"Qual é a sua dúvida sobre o programa de estágio?"}]}
+],
+"scripts_e_policies":[{"nome":"EY: Clear Variables","acao":"remover","substituicao":"Desnecessário com a divisão."},{"nome":"12 UI policies por combinação de v_request_type e opção","acao":"converter","substituicao":"Em cada derivado sobram 1 a 3 policies sem script sobre a opção interna. O que é sempre obrigatório passa para o atributo da variável."}]
+}
+}

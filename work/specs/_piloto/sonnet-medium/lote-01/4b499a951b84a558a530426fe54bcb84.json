@@ -1,0 +1,108 @@
+{
+ "sys_id": "4b499a951b84a558a530426fe54bcb84",
+ "status": "conversacional",
+ "motivo": "Item de pagamentos do varejo com uma intenção única. Containers/labels visuais saem, validações de CPF/CNPJ/valor viram regex, mandatórios fixos viram prop e o país (sempre oculto) vira hidden.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_request_type_tbs": {
+   "label": "Que tipo de solicitação você precisa para a franquia TBS?"
+  },
+  "v_value": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$|^\\d+(,\\d{2})?$"
+   }
+  },
+  "v_cost_center": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_accounting": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_account_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_approval": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cpf": {
+   "props": {
+    "validation_regex": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$|^\\d{11}$"
+   }
+  },
+  "v_cnpj": {
+   "props": {
+    "validation_regex": "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}$|^\\d{14}$"
+   }
+  },
+  "v_country": {
+   "props": {
+    "hidden": true
+   }
+  }
+ },
+ "remover": {
+  "v_label_payment": "visual",
+  "formatter2": "visual",
+  "v_bank_details": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "a84112611b8ca958a530426fe54bcb47": "remover",
+  "ac96fb033be76ad0924d0247f4e45a23": "remover",
+  "c7c123a41bb1a5d0d1abda4ce54bcbdd": {
+   "conditions": "v_request_type_tbs=tbs",
+   "actions": {
+    "v_accounting": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_agency": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_digit": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_account_type": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cost_center": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_account": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_bank": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "9c0e6a211b84e958a530426fe54bcb1d": {
+   "converter": "regex"
+  },
+  "d86e8da21b9d2150d1abda4ce54bcb94": {
+   "converter": "regex"
+  },
+  "daeef53e1b54a990a530426fe54bcb28": {
+   "converter": "regex"
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+"sys_id":"d9a39a1e1b2ab810d1abda4ce54bcb4b",
+"name":"Alteração de Vale Refeição - VR, Alimentação - VA",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Vale Alimentação e Vale Refeição",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Com este formulário você consegue alterar o benefício de Vale Refeição ou Alimentação.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"2 catalog client script(s) ativo(s) sem \"VA Supported\": ACN_form_on_catalog, ACN: Hide \"Remove All\" and \"X\" icons"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+"variaveis":[{"name":"info_maia","type":"32","order":50},{"name":"formatter4","type":"24","order":475},{"name":"formatter2","type":"20","order":600},{"name":"information_accuracy_responsibility","type":"7","order":1000,"question_text":"Do you declare to assume full responsibility for the accuracy of the information contained in this form?"},{"name":"formatter3","type":"12","order":1050},{"name":"payroll_deduction_awareness","type":"7","order":1100,"question_text":"I declare that I am aware that the benefit is subject to payroll deduction, as per legal provision/benefit policy."}],
+"ui_policies":[{"sys_id":"d696e50b1bc96d54d1abda4ce54bcb99","short_description":"EY: Mandatory fields","conditions":"","actions":["information_accuracy_responsibility: mandatory=true","payroll_deduction_awareness: mandatory=true"]}],
+"client_scripts":[{"sys_id":"4cd357c71be70510a530426fe54bcb27","name":"ACN: Lookup benefits - Food Voucher","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad de 2 KB que consulta os benefícios de vale-alimentação chamando o Script Include IntegraAdp_utils via GlideAjax — integração com o sistema ADP."},{"sys_id":"8c5090621b149910d1abda4ce54bcb2a","name":"ACN_form_on_catalog","type":"onLoad","va_supported":false,"ui_type":"10","script":"Catalog Client Script onLoad que detecta se está rodando no Service Portal, testando o contexto com `if (this)`. Comentário no código explica a intenção. Teste frágil: `this` costuma ser verdadeiro nos dois contextos."},{"sys_id":"ec3dcad21bd45910d1abda4ce54bcbf9","name":"ACN: Hide \"Remove All\" and \"X\" icons","type":"onChange","cat_variable":"5e6b7a9e1baeb810d1abda4ce54bcb39","va_supported":false,"ui_type":"10","script":"Catalog Client Script onChange que esconde os ícones 'Remove All' e 'X' do controle, manipulando a interface para impedir que o usuário limpe a seleção."}],
+"variable_sets":[{"sys_id":"f739b6911b1c1510d1abda4ce54bcb8f","title":"ACN: Candidate","order":40},{"sys_id":"0fbd2b391b177010d1abda4ce54bcb90","title":"My personal information","order":300},{"sys_id":"a3a27ed21baeb810d1abda4ce54bcb85","title":"Plan requests","order":800},{"sys_id":"d5a017c31be70510a530426fe54bcbb1","title":"Employee benefits","order":950}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Alterar Vale-Refeição ou Vale-Alimentação",
+"short_description":"Troque a divisão entre Vale-Refeição (VR) e Vale-Alimentação (VA) ou mude a sua opção do benefício",
+"description":"Use para alterar o seu benefício de Vale-Refeição (VR) ou Vale-Alimentação (VA): trocar de VR para VA ou o contrário, mudar a proporção entre os dois ou aderir ao benefício. O benefício tem desconto em folha conforme a política. Não use para Vale-Transporte, problemas com o cartão ou saldo (use o item do fornecedor do cartão) nem para reembolso de refeição.",
+"frases_exemplo":["quero trocar meu VR por VA","mudar meu vale-refeição para vale-alimentação","quero colocar mais valor no vale-alimentação","como altero meu benefício de alimentação?","quero aderir ao vale-refeição"],
+"labels":{"option_type":"Você quer aderir ao benefício ou alterar a sua opção atual?","desired_joining_option":"Qual opção você quer passar a ter (só VR, só VA ou dividido)?","payroll_deduction_awareness":"Você está ciente de que o benefício tem desconto em folha?","information_accuracy_responsibility":"Você confirma que as informações estão corretas?"},
+"acoes":{"payroll_deduction_awareness":"alterar_tipo:Yes/No (Include None, mandatory)","information_accuracy_responsibility":"alterar_tipo:Yes/No (Include None, mandatory)","employee":"derivar","benefit_option_date":"derivar","info_maia / update_information_link":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"ACN_form_on_catalog","acao":"remover","substituicao":"Nenhuma."},{"nome":"ACN: Hide \"Remove All\" and \"X\" icons","acao":"remover","substituicao":"UI Policy sem script com readonly=true, se precisar travar a seleção."},{"nome":"ACN: Lookup benefits - Food Voucher","acao":"manter","substituicao":"Testar na conversa; se falhar, mover para o flow."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas duas declarações. Tirar address_delivery, number_vt, city, x_state e zip_code, que vieram do item de Vale-Transporte e não existem aqui."},{"nome":"ACN: Option Type is Accession","acao":"manter","substituicao":"Compatível (mostra employee_benefits read-only)."}]
+}
+}

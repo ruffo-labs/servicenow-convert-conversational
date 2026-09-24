@@ -1,0 +1,37 @@
+{
+"sys_id":"2fbbb06a1ba79550a530426fe54bcbc8",
+"name":"MyPerformance",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Aprendizagem, Desenvolvimento e Desempenho",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Este caminho é sobre o processo MyPerformance onde o objetivo de desempenho é focado em dar clareza sobre o impacto e a contribuição de cada indivíduo para a estratégia Natura Latam.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_cont_start_myperformace","type":"19","order":300,"question_text":"MyPerformance"},{"name":"faq_text","type":"32","order":350},{"name":"v_choose_your_request","type":"5","order":400,"question_text":"Choose your request","include_none":true,"choices":["Finish Step","Talk Step","Match Step"]},{"name":"v_choose_request_type","type":"5","order":500,"question_text":"Choose request type","include_none":true,"choices":["Question about the MyPerformance process","System error","General requests about MyPerformance"]},{"name":"v_describe","type":"2","order":600,"question_text":"Describe your need in this field"},{"name":"v_attach_your_evidence","type":"33","order":700,"question_text":"Attach your evidence here"},{"name":"v_classify_the_request_type","type":"5","order":800,"question_text":"Classify the request type","include_none":true,"choices":["Other Requests","Report"]},{"name":"v_description_report","type":"2","order":900,"question_text":"Detail what information you need in this report and possible filters such as: Brands, Country, Management Level, Grade, Position and Period."},{"name":"v_description_for_other","type":"2","order":950,"question_text":"Describe your need in this field"}],
+"ui_policies":[
+{"sys_id":"04f9d5a21b23d550a530426fe54bcbbb","short_description":"EY: Mandatory field","conditions":"","actions":["v_choose_request_type: mandatory=true","v_choose_your_request: mandatory=true"]},
+{"sys_id":"b54cecce1b145a50514cbaef4b4bcb5f","short_description":"EY: Hide country in catalog item view ","conditions":"vs_country_of_the_request=","applies_catalog":false,"actions":["vs_country_of_the_request: visible=false,mandatory=false"]},
+{"sys_id":"c0c3c2a61bafd550a530426fe54bcb70","short_description":"EY: If type =General Requests about MyPerformance","conditions":"v_choose_request_type=General requests about MyPerformance","actions":["v_classify_the_request_type: visible=true,mandatory=true"]},
+{"sys_id":"8c410ae61b6fd550a530426fe54bcb65","short_description":"EY: If  error","conditions":"v_choose_request_type=System error","actions":["v_attach_your_evidence: visible=true,mandatory=true"]},
+{"sys_id":"4f54826a1bafd550a530426fe54bcb6b","short_description":"EY: If classify is report","conditions":"v_choose_request_type=General requests about MyPerformance^v_classify_the_request_type=Report","actions":["v_description_report: visible=true,mandatory=true"]},
+{"sys_id":"7031d34f1bef9190a530426fe54bcbef","short_description":"EY: Description for error or question","conditions":"v_choose_request_type=Question about the MyPerformance process^ORv_choose_request_type=System error","actions":["v_describe: visible=true,mandatory=true"]},
+{"sys_id":"52f419821be8e510a530426fe54bcbe0","short_description":"EY: If Type = General and Classify is Other","conditions":"v_choose_request_type=General requests about MyPerformance^v_classify_the_request_type=Other Requests","actions":["v_description_for_other: visible=true,mandatory=true"]}
+],
+"client_scripts":[{"sys_id":"5c1944b11bd4d650514cbaef4b4bcb12","name":"EY: Fill employee ","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados do colaborador, limpando os campos quando o valor fica vazio."},{"sys_id":"a7afbb073b3f4e10924d0247f4e45a41","name":"EY:  View fields Hispana","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que exibe os campos do fluxo hispânico conforme o colaborador em 'vs_employee'. Variante quase idêntica a outro script do mesmo lote."},{"sys_id":"ead194671b334e10514cbaef4b4bcb25","name":"EY: hide fields onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde 'vs_country_of_the_request' e 'vs_kb_text' na abertura."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100},{"sys_id":"98a054933bff4e10924d0247f4e45ad8","title":"EY: Request Hispana","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Dúvida ou problema na avaliação de desempenho (MyPerformance)",
+"short_description":"Dúvidas, erros de sistema, relatórios e outros pedidos sobre o processo de metas e avaliação de desempenho MyPerformance.",
+"description":"Use para qualquer assunto do MyPerformance, o processo de metas e avaliação de desempenho: dúvidas sobre prazos e etapas, erro no sistema ao lançar ou aprovar metas, pedido de relatório (por marca, país, nível, cargo, período) ou outros pedidos. Se for erro, tenha em mãos um print da tela. Não use para o OurTalents (comitês de talentos e plano de desenvolvimento), que tem item próprio.",
+"frases_exemplo":["não consigo cadastrar minhas metas no MyPerformance","dúvida sobre o prazo da avaliação de desempenho","preciso de um relatório das avaliações da minha área","o sistema de metas está dando erro ao aprovar","como funciona a calibração do MyPerformance?"],
+"labels":{"v_choose_your_request":"Sobre qual etapa do MyPerformance é o seu pedido?","v_choose_request_type":"O que você precisa: tirar uma dúvida, relatar um erro no sistema, pedir um relatório ou outra coisa?","v_describe":"Descreva o que você precisa. Se for relatório, diga quais informações e filtros (marca, país, nível, cargo, período).","v_attach_your_evidence":"Envie um print da tela com o erro."},
+"acoes":{"v_choose_request_type":"alterar_tipo:Selecionar Caixa com opções achatadas: Dúvida sobre o processo, Erro no sistema, Relatório, Outro pedido","v_classify_the_request_type":"remover","v_description_report":"remover","v_description_for_other":"remover","faq_text":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: If classify is report / EY: If Type = General and Classify is Other / EY: If type = General Requests about MyPerformance","acao":"remover","substituicao":"Deixam de ser necessárias com a descrição única e a select achatada."},{"nome":"EY: Description for error or question / EY: If error / EY: If question","acao":"converter","substituicao":"v_describe fica mandatory direto na variável. Sobra uma policy sem script para mostrar e exigir v_attach_your_evidence quando o tipo é 'Erro no sistema'."},{"nome":"EY: Mandatory field","acao":"converter","substituicao":"mandatory direto nas variáveis."},{"nome":"EY: Fill employee / EY: View fields Hispana / EY: hide fields onLoad","acao":"manter","substituicao":"São scripts do set de solicitante e já VA Supported. A troca por auto-populate fica na análise de variable sets."}]
+}
+}

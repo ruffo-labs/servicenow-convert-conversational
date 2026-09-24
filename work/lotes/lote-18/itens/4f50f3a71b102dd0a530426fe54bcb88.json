@@ -1,0 +1,29 @@
+{
+"sys_id":"4f50f3a71b102dd0a530426fe54bcb88",
+"name":"PPP - Perfil Profissiográfico Previdenciário",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Declarações e Documentos",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Solicitação de documento para aposentadoria",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Mandatory attachment"}]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_active_contributor","type":"1","order":200,"question_text":"Active Contributor","include_none":true},{"name":"v_cpf","type":"6","order":300,"question_text":"Enter your CPF"},{"name":"v_dismissal_date","type":"9","order":400,"question_text":"Dismissal date"},{"name":"v_which_company","type":"5","order":500,"question_text":"Company","include_none":true,"choices":["Avon [=avon]","Natura [=natura]","TBS [=tbs]"]},{"name":"v_description","type":"2","order":600,"question_text":"Description"},{"name":"v_text_if_date2000","type":"32","order":690}],
+"ui_policies":[{"sys_id":"f975776f1b502dd0a530426fe54bcb2a","short_description":"EY: Mandatory fields","conditions":"","actions":["v_which_company: visible=true,mandatory=true","v_active_contributor: visible=true,mandatory=true"]},{"sys_id":"2f66bb231b902dd0a530426fe54bcb87","short_description":"EY: If active is NO","conditions":"v_active_contributor=No","actions":["v_dismissal_date: visible=true,mandatory=true","v_cpf: visible=true,mandatory=true"]},{"sys_id":"a6ad3bef1bd02dd0a530426fe54bcbb2","short_description":"EY: date","conditions":"v_dismissal_date<javascript:gs.dateGenerate('2000-12-31','start')^v_which_company=natura","actions":["v_text_if_date2000: visible=true"]}],
+"client_scripts":[{"sys_id":"1aefa4bb1b506dd0a530426fe54bcba5","name":"EY: Mandatory attachment","type":"onSubmit","va_supported":false,"ui_type":"10","script":"Catalog Client Script onSubmit que exige anexo conforme a combinação de data de desligamento, contribuinte ativo e empresa."},{"sys_id":"1bf637e31b902dd0a530426fe54bcb81","name":"EY: CPF","type":"onChange","cat_variable":"a802776f1b102dd0a530426fe54bcb42","ui_type":"10","script":"Catalog Client Script onChange que valida CPF por formato. Repete o defeito do irmão: usa ponto sem escape na regex, que casa qualquer caractere no lugar dos separadores."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar PPP (Perfil Profissiográfico Previdenciário)",
+"short_description":"Pedir o PPP, documento usado para aposentadoria especial no INSS, para colaborador ativo ou desligado.",
+"description":"Use para pedir o PPP (Perfil Profissiográfico Previdenciário), documento que o INSS (Instituto Nacional do Seguro Social) exige para análise de aposentadoria, inclusive aposentadoria especial. Serve para colaboradores ativos e para ex-colaboradores (nesse caso informe CPF e data de desligamento e anexe os documentos pedidos). Desligamentos anteriores a 2001 na Natura podem ter regras diferentes. Não use para comunicar que você se aposentou (use 'Comunicar aposentadoria') nem para documentos de processo trabalhista.",
+"frases_exemplo":["preciso do meu PPP para me aposentar","como peço o perfil profissiográfico previdenciário?","sou ex-funcionário e preciso do PPP","o INSS pediu o PPP","documento para aposentadoria especial"],
+"labels":{"v_which_company":"Em qual empresa você trabalha ou trabalhou?","v_active_contributor":"Você ainda trabalha na empresa?","v_cpf":"Qual é o seu CPF?","v_dismissal_date":"Qual foi a data do seu desligamento?","nova_anexo_documentos":"Anexe os documentos pedidos para ex-colaboradores (por exemplo, documento de identificação).","v_description":"Quer acrescentar alguma informação ao pedido?"},
+"acoes":{"nova_anexo_documentos":"nova:Attachment","v_text_if_date2000":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory attachment","acao":"remover","substituicao":"Attachment nova_anexo_documentos + UI Policy sem script."},{"nome":"EY: CPF","acao":"converter","substituicao":"Validation Regex na variável v_cpf."},{"nome":"EY: If active is NO","acao":"converter","substituicao":"Manter como UI Policy sem script; remover ações órfãs (v_current_date, v_text_attach_the_documents) e incluir nova_anexo_documentos."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto em v_which_company e v_active_contributor."},{"nome":"EY: date","acao":"remover","substituicao":"Orientação na descrição."}]
+}
+}

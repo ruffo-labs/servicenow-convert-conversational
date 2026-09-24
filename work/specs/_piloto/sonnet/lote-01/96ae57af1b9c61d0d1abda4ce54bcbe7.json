@@ -1,0 +1,102 @@
+{
+  "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+  "status": "dividido",
+  "motivo": "Duas intenções distintas sem relação entre si: tirar dúvida sobre o cartão corporativo e avisar viagem internacional para liberação do cartão no exterior.",
+  "divergencias": [
+    {
+      "outro": "A policy ba7767671b50a1d0d1abda4ce54bcb06 tem pendencia_humana e foi mantida sem alteração, só excluída do derivado de dúvida; obrigatoriedade dos campos de viagem veio de prop, não da policy."
+    }
+  ],
+  "vars": {
+    "v_what_type_of_doubt_do_you_have": {
+      "label": "Sobre qual assunto é a sua dúvida?",
+      "props": {
+        "mandatory": true
+      }
+    },
+    "v_describe_your_question": {
+      "label": "Conte qual é a sua dúvida.",
+      "props": {
+        "mandatory": true
+      }
+    },
+    "v_which_audience_do_you_belong_to": {
+      "label": "Você é do administrativo, operacional, varejo ou força de vendas?",
+      "props": {
+        "mandatory": true
+      }
+    },
+    "v_what_is_the_destination_of_the_international_trip": {
+      "label": "Para qual país ou cidade você vai viajar?",
+      "props": {
+        "mandatory": true
+      }
+    },
+    "v_what_is_the_start_date_of_the_trip": {
+      "label": "Em que data a viagem começa?",
+      "props": {
+        "mandatory": true
+      }
+    },
+    "v_what_is_the_end_date_of_the_trip": {
+      "label": "E em que data termina?",
+      "props": {
+        "mandatory": true
+      }
+    }
+  },
+  "remover": {
+    "v_if_you_have_questions_about_the_process": "visual",
+    "v_corporate_card_information": "visual"
+  },
+  "policies": {
+    "b3e6aba31b50a1d0d1abda4ce54bcbac": "remover"
+  },
+  "scripts": {
+    "09850b361b68a990d1abda4ce54bcb91": {
+      "remover": "sem_efeito"
+    },
+    "14a1c9701bc1e5d0d1abda4ce54bcb3b": {
+      "converter": "regex"
+    }
+  },
+  "itens": [
+    {
+      "name": "Tirar dúvida sobre cartão corporativo",
+      "short_description": "Esclarecer dúvidas sobre uso, fatura, regras e políticas do cartão corporativo.",
+      "description": "Use para tirar dúvidas sobre o cartão corporativo: uso, fatura, gastos permitidos, regras e política. Não use para pedir emissão, alteração de limite, desbloqueio ou cancelamento do cartão, nem para prestar contas de despesas; esses pedidos têm itens próprios. FAQ: consulte a base de conhecimento antes de abrir.",
+      "frases_exemplo": [
+        "tenho uma dúvida sobre o cartão corporativo",
+        "posso usar o cartão da empresa para pagar combustível?",
+        "não entendi um lançamento na fatura do cartão corporativo",
+        "qual a política de uso do cartão corporativo?",
+        "dúvida cartão corp"
+      ],
+      "sem_vars": [
+        "v_which_audience_do_you_belong_to",
+        "v_what_is_the_destination_of_the_international_trip",
+        "v_what_is_the_start_date_of_the_trip",
+        "v_what_is_the_end_date_of_the_trip"
+      ],
+      "sem_policies": [
+        "ba7767671b50a1d0d1abda4ce54bcb06"
+      ]
+    },
+    {
+      "name": "Avisar viagem internacional com cartão corporativo",
+      "short_description": "Informar destino e período de viagem internacional para liberar o cartão corporativo no exterior.",
+      "description": "Use para avisar a área de cartão corporativo que você vai viajar para o exterior e vai usar o cartão, informando destino e datas. Não use para tirar dúvidas gerais sobre o cartão nem para pedir aumento de limite para a viagem (use \"Alterar limite do cartão corporativo\").",
+      "frases_exemplo": [
+        "vou viajar para o exterior e quero usar o cartão corporativo",
+        "avisar viagem internacional",
+        "preciso liberar meu cartão da empresa para uso fora do Brasil",
+        "vou para o México semana que vem a trabalho",
+        "informar viagem internacional cartão corporativo"
+      ],
+      "sem_vars": [
+        "v_what_type_of_doubt_do_you_have",
+        "v_describe_your_question"
+      ]
+    }
+  ]
+}

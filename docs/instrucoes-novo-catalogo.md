@@ -1,3 +1,5 @@
+> **Substituído** por [.claude/skills/regras-catalogo/SKILL.md](../.claude/skills/regras-catalogo/SKILL.md) (formato delta). Mantido só como histórico.
+
 # Instruções: especificação do novo catálogo (por item original)
 
 Objetivo: para cada item original, definir o **estado final** do(s) item(ns) no novo catálogo conversacional.

@@ -1,0 +1,210 @@
+{
+ "sys_id": "5c8fbbfe1b754e90d1abda4ce54bcba5",
+ "status": "dividido",
+ "motivo": "Duas intenções claras: criar requisição de compra (PR/CW) x criar/aceitar folha de serviço de um pedido já existente, como na 1ª análise. vs_type_of_request pertence ao set compartilhado 'Type of request' e não pode ser removida nem ter props alteradas por derivado; por isso ela é fixada por derivado via 'fixas' (mecanismo já usado na 1ª análise: 'default/hidden'). Pelo mesmo motivo, as demais perguntas específicas de cada fluxo que também pertencem a sets compartilhados ('Type of request': vs_type_of_contract; 'Value': vs_payment_in_reais_or_foreign_currency) não podem ser tiradas por sem_vars — permanecem nos dois derivados e são ocultadas no derivado onde não se aplicam por policy com condição real (baseada no valor fixo de vs_type_of_request), do mesmo jeito que as policies originais do próprio set já fazem para os campos de cada ramo. Os sets 'Supplier' e 'Payment' são de uso exclusivo do fluxo de PR e por isso são removidos inteiros do derivado de folha de serviço via sem_sets, sem perda de dado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_attach_supplier_email_with_commercial_proposal": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_codigo_lc116": {
+   "nova": {
+    "type": "6",
+    "question_text": "Qual é a classificação do serviço na Lei Complementar 116/2003?",
+    "mandatory": false,
+    "order": 95
+   }
+  }
+ },
+ "remover": {
+  "v_faq_about_process": "visual",
+  "v_info_exclusively_decentralized_purchases": "visual",
+  "v_term_responsibility_contracting": "visual",
+  "v_download_template": "visual"
+ },
+ "policies": {
+  "2090772b1bfd0ed0a530426fe54bcbae": "remover",
+  "0bdd2ba31bfd0ed0a530426fe54bcbea": {
+   "conditions": "vs_type_of_request=pr_creation^vs_payment_in_reais_or_foreign_currency=foreign^vs_type_of_contract!=material",
+   "actions": {
+    "vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_download_nm_2041_3_0": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_select_type_of_service": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_summary_contracted_service": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_service_provided_abroad_bring_economic_results_to_natura_brasil": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_tax_benefit_linked_service": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_supplier_bank_details": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nova_codigo_lc116": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "b718ef781b8e0610d1abda4ce54bcbf4": {
+   "conditions": "vs_controller=true",
+   "actions": {
+    "vs_type_of_request": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_start_date_service_provision": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_end_date_service_provision": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_order_line": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_purchase_order_number": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_confirm_service_provision": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_service_description": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_location_service_provision": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "b0107ff01b2ece10d1abda4ce54bcb77": {
+   "conditions": "vs_type_of_request=creation_acceptance_service_sheet^ORvs_type_of_request=",
+   "actions": {
+    "vs_type_of_contract": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_payment_in_reais_or_foreign_currency": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "7a02b7f41b2ece10d1abda4ce54bcb0e": {
+   "conditions": "vs_type_of_request=pr_creation",
+   "actions": {
+    "vs_start_date_service_provision": {
+     "visible": true,
+     "mandatory": true
+    },
+    "vs_end_date_service_provision": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_completed_template": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_controller_hide_pr": {
+   "short_description": "Oculta anexos e dados de fornecedor quando a compra não é elegível para descentralização",
+   "conditions": "vs_controller=true",
+   "actions": {
+    "v_attach_completed_template": {
+     "visible": false,
+     "mandatory": false
+    },
+    "v_attach_supplier_email_with_commercial_proposal": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_cnpj_tax_supplier_id": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_email_supplier": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_email_supplier_registration": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vs_info_email_supplier": {
+     "visible": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "e517aff81b8e0610d1abda4ce54bcb7f": {
+   "remover": {
+    "substituido_por": "b718ef781b8e0610d1abda4ce54bcbf4"
+   }
+  },
+  "b57c37151b9ac690a530426fe54bcbc4": {
+   "remover": "sem_efeito"
+  },
+  "2ff694051be20250d1abda4ce54bcb10": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "vs_type_of_request": "pr_creation"
+   }
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "vs_type_of_request": "creation_acceptance_service_sheet"
+   },
+   "sem_vars": [
+    "v_attach_completed_template",
+    "v_attach_supplier_email_with_commercial_proposal",
+    "nova_codigo_lc116"
+   ],
+   "sem_sets": [
+    "bfe6ed8f1b318e90d1abda4ce54bcb41",
+    "021e52a31b310ed0a530426fe54bcb64"
+   ],
+   "sem_policies": [
+    "0bdd2ba31bfd0ed0a530426fe54bcbea",
+    "nova_controller_hide_pr",
+    "7a02b7f41b2ece10d1abda4ce54bcb0e"
+   ]
+  }
+ ]
+}

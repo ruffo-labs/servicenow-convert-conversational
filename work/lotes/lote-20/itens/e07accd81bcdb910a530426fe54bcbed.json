@@ -1,0 +1,19 @@
+{
+"sys_id":"e07accd81bcdb910a530426fe54bcbed",
+"name":"Cadastro preço Brasil/Cadastro de preço exportação",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Solicitação de cadastro de preço",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_what_type_of_price_register","type":"5","order":400,"question_text":"What type of price register","include_none":true,"choices":["Selling suggestion [=selling_suggestion]","Full Service (Third Party) [=full_service_third_party]","PJ/Other Prices [=pj_other_prices]","Brazil x Latam [=brazil_latam]","Internationalization [=internationalization]","Third Party [=third_party]","Intercompany Price - HUB Cosmetics x Cajamar [=intercompany_price_hub]"]},{"name":"v_download_template","type":"32","order":500}],
+"ui_policies":[{"sys_id":"e67234e41b4d3d10a530426fe54bcb87","short_description":"EY: Mandatory fields","conditions":"","actions":["v_what_type_of_price_register: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"d1dac2b01b45fd10a530426fe54bcb64","title":"EY: Tax - Company (Customer code)","order":300},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":600}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar cadastro de preço (Brasil ou exportação)","short_description":"Peça o cadastro ou atualização de preço de produto para venda no Brasil ou para exportação.","description":"Use para pedir ao Fiscal o cadastro ou a atualização da tabela de preço de produtos, para venda no mercado brasileiro ou para exportação, para um cliente específico. Informe a empresa, a sub-empresa, se o preço é Brasil ou exportação, o cliente e anexe a planilha modelo de preços. Não use para pedir emissão de nota fiscal.","frases_exemplo":["Preciso cadastrar preço de exportação","cadastro de preço para cliente no Brasil","atualizar tabela de preço do cliente","incluir preço de produto novo","cadastrar preço export"],"labels":{"v_what_type_of_price_register":"O cadastro de preço é para venda no Brasil ou para exportação?","vs_which_company_is_the_request_for_customer":"Para qual cliente é o preço? Pode informar o nome ou o código.","vs_attach_template":"Anexe a planilha modelo de preços preenchida."},"acoes":{"v_download_template":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Trocar vs_which_company_is_the_request_for (não existe neste item) por vs_which_company_is_the_request_for_customer, ou marcar mandatory direto nas variáveis."}]}
+}

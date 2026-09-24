@@ -1,0 +1,29 @@
+{
+"sys_id":"2bedd8701be16950d1abda4ce54bcbc6",
+"name":"Adiantamento de Pagamento ao Fornecedor",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Solicitar um adiantamento parcial ou total ao fornecedor",
+"description":"Solicitar um adiantamento parcial ou total ao fornecedor",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"b5f328341ba56950d1abda4ce54bcb50","title":"EY VS - Variable Adiantamento Fornecedor ","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar adiantamento de pagamento a fornecedor",
+"short_description":"Pedir adiantamento parcial ou total a um fornecedor, vinculado a contrato ou pedido de compra",
+"description":"Use para pedir ao HUB de Pagamentos um adiantamento parcial ou total a um fornecedor antes da entrega ou da nota fiscal, vinculado a um contrato ou pedido de compra. Informe o fornecedor, o valor, a moeda, a data desejada, o número do contrato ou pedido, o gestor aprovador e o mês de referência para a contabilização. Não use para pagamentos manuais sem adiantamento ou ITP (use 'Solicitar pagamento manual ou ITP'), para criar pedido de compra ou folha de serviço, nem para adiantamento salarial de colaborador.",
+"frases_exemplo":["preciso adiantar um pagamento para o fornecedor","fornecedor pediu 30% antecipado","adiantamento total do contrato antes da entrega","pagar antecipado o pedido 4500012345","solicitar adiantamento em dólar para fornecedor internacional"],
+"labels":{"v_supplier":"Para qual fornecedor é o adiantamento?","v_value":"Qual é o valor do adiantamento?","v_currency":"Em qual moeda?","v_exchange":"Qual taxa de câmbio devemos considerar?","v_date_for_which_payment_is_requested":"Para qual data você precisa do pagamento?","v_contract_number":"Qual é o número do contrato?","v_purchase_order_number":"Qual é o número do pedido de compra?","v_document_number":"Qual é o número do documento KA (lançamento de adiantamento no SAP)?","v_month_provision":"Em qual mês a nota de compensação do adiantamento deve ser contabilizada?","vs_approval_manager":"Quem é o gestor que vai aprovar?","v_additional_information":"Quer acrescentar alguma informação ou anexo?"},
+"acoes":{"v_opened_by":"derivar","v_type_of_request":"ocultar_na_conversa","v_supplier_code":"derivar","v_vendor_tax_code_cnpj_cuit_ruc":"derivar"},
+"derivados":[],
+"scripts_e_policies":[]
+}
+}

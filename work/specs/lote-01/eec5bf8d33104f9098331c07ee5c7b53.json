@@ -1,0 +1,49 @@
+{
+ "sys_id": "eec5bf8d33104f9098331c07ee5c7b53",
+ "status": "conversacional",
+ "motivo": "Intenção única de aplicar pagamento de fatura de outros clientes. requesting_person tem default_value e já é read_only, então sai da conversa (deriva). country não tem default_value nem estava oculta/hidden no original (a policy que a mostra tem condição, não é ocultação incondicional), então pela regra não pode ser tirada da conversa mesmo a 1ª análise pedindo ocultar_na_conversa: mantida como pergunta. Por isso a policy que a tornaria readonly foi removida (sem script/default que preencha o valor, mantê-la travaria a pergunta vazia e perderia o dado). As demais obrigatoriedades da policy sem condição viram prop direta nas variáveis.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "requesting_person": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "which_company_your_request_for": {
+   "label": "Para qual empresa é o pedido?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_subsidiary_is_the_service_for": {
+   "label": "Qual é a subsidiária?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "country": {
+   "label": "Qual é o país da subsidiária?"
+  },
+  "invoice_number": {
+   "label": "Qual é o número da fatura paga?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "registration_number": {
+   "label": "Qual é o número de registro (CNPJ/ID fiscal) do cliente?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_information": {
+   "label": "Quer acrescentar alguma informação ou anexar o comprovante?"
+  }
+ },
+ "policies": {
+  "c5cf9791339ccf9098331c07ee5c7b41": "remover",
+  "c82fd711339ccf9098331c07ee5c7b70": "remover"
+ }
+}

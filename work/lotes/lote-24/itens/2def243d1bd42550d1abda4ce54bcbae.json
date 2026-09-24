@@ -1,0 +1,30 @@
+{
+"sys_id":"2def243d1bd42550d1abda4ce54bcbae",
+"name":"Informações ou dúvidas relacionadas à Controle de Jornada",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Controle de Jornada",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Este é um formulário genérico para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre controle de jornada.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"contextual_search_results"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"contextual_search_results"},{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"ai_search_assist"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"ai_search_assist"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+"atencao":["contextual_search_results: custom/macro/widget (type 14)","ai_search_assist: custom/macro/widget (type 14)"],
+"variaveis":[{"name":"Info","type":"32","order":50},{"name":"formatter","type":"20","order":600},{"name":"v_description_details","type":"2","order":1550,"question_text":"Describe what you need in this field"},{"name":"type_of_request","type":"5","order":1560,"question_text":"Type of Request","include_none":true,"choices":["Questions","Suggestions","Complaints"]},{"name":"select_the_topic","type":"5","order":1570,"question_text":"Select the Topic","include_none":true,"choices":["Overtime Calculation [=Cálculo de horas extras]","Night Differential [=Adicional Noturno]","Time Bank [=Banco de horas]","Schedule Change [=Alteração de escala]","Holiday Registration [=Cadastro de feriado]","Absence Deductions [=Desconto de faltas]","Time Clock [=Relógio de ponto]","Information on Time Tracking Reimbursement [=Informações sobre Reembolso de ponto]","Time Adjustment [=Ajuste de ponto]"]},{"name":"contextual_search_results","type":"14","order":1600,"question_text":"Contextual Search Results","macro":"cxs_rp_search","sp_widget":"Pesquisa contextual: Resultados em Linha"},{"name":"ai_search_assist","type":"14","order":1700,"question_text":"AI Search Assist","sp_widget":"Assistência para pesquisa com IA"}],
+"ui_policies":[{"sys_id":"4aefa43d1bd42550d1abda4ce54bcbfe","short_description":"EY: Mandatory Fields","conditions":"","actions":["select_the_topic: mandatory=true","v_description_details: mandatory=true","type_of_request: mandatory=true"]}],
+"client_scripts":[{"sys_id":"23dc04621b5ced50d1abda4ce54bcb41","name":"EY: minimum caracter","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."}],
+"variable_sets":[],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Dúvidas sobre controle de jornada e ponto",
+"short_description":"Dúvidas gerais sobre jornada de trabalho, ponto eletrônico, banco de horas e escalas que não têm serviço específico.",
+"description":"Use para dúvidas ou pedidos sobre controle de jornada que não se encaixam em outro serviço: regras de jornada, escalas, horas extras, banco de horas, intervalos. Não use para: ajustar marcações do ponto ou consultar banco de horas (faça direto no ADP), pedir correção retroativa do ponto ('Solicitar correção retroativa do ponto eletrônico'), excluir ajuste aprovado por engano ('Excluir ajuste aprovado indevidamente no ponto') ou sobreaviso ('Registrar sobreaviso').",
+"frases_exemplo":["dúvida sobre meu banco de horas","como funciona hora extra no fim de semana","qual a regra de intervalo de almoço","minha escala está errada","tenho uma dúvida sobre jornada de trabalho"],
+"labels":{"select_the_topic":"Sobre qual assunto de jornada é a sua dúvida?","type_of_request":"É uma dúvida, um problema ou uma solicitação?","v_description_details":"Descreva o que você precisa, com datas se houver."},
+"acoes":{"Info":"remover","contextual_search_results / ai_search_assist":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show kb link","acao":"remover","substituicao":"Referencia variáveis inexistentes (v_have_you_tried_searching_the_knowledge_base, link_kb)."},{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Mandatory direto em select_the_topic, type_of_request e v_description_details; remover referências a variáveis que não existem mais."},{"nome":"EY: minimum caracter (onSubmit)","acao":"converter","substituicao":"Validation Regex na variável v_description_details (ex.: mínimo de caracteres)."}]
+}
+}

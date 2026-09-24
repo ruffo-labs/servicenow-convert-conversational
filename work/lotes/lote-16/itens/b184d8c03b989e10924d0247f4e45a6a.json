@@ -1,0 +1,29 @@
+{
+"sys_id":"b184d8c03b989e10924d0247f4e45a6a",
+"name":"Solicitações de relatório",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Relatórios",
+"sc_catalogs":"Catálogo hispânico, Hire to Retire (HTR)",
+"short_description":"Utilize este formulário para solicitar relatórios de folha de pagamento, headcount, entre outros",
+"description":"Relatórios de folha de pagamento, headcount, entre outros",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"variaveis":[{"name":"v_report_type","type":"5","order":200,"question_text":"Report type","include_none":true,"choices":["Payroll [=payroll]","HeadCount [=headcount]","License [=license]","Hours [=hours]","Band report [=band]","Manager Reports [=manager]","Workflow Report for Approvals [=workflow_approval]","Other Reports [=other]"]},{"name":"v_field_detail","type":"2","order":300,"question_text":"Use this field to detail the purpose of your request and also the type of information required for the report, such as: emails, receipt date, cost center, band, etc."},{"name":"v_minimun_characters","type":"32","order":350,"question_text":"You must enter more than 40 characters in your description detail"}],
+"ui_policies":[{"sys_id":"05d3a8043b90de10924d0247f4e45af9","short_description":"EY: Mandatory Fields - Catalog view","conditions":"","actions":["v_field_detail: mandatory=true","v_report_type: mandatory=true"]},{"sys_id":"d3b609753be8d610924d0247f4e45a11","short_description":"EY: Hide target fields","conditions":"","applies_catalog":false,"actions":["v_reason_on_behalf: visible=false","v_who_is_this_request_for: visible=false"]}],
+"client_scripts":[{"sys_id":"0ebe74b93b68d610924d0247f4e45a79","name":"EY: Show error message onChange","type":"onChange","cat_variable":"3ed7544c3bd89e10924d0247f4e45afa","ui_type":"10","script":"Variante do par onChange de validação de tamanho mínimo, sobre 'v_field_detail'."},{"sys_id":"29be70b93b68d610924d0247f4e45a65","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando 'v_field_detail' tem menos de 40 caracteres."},{"sys_id":"88442c843b90de10924d0247f4e45aa3","name":"EY: Hide/Show options on report type","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","ui_type":"10","script":"Catalog Client Script onChange que reconstrói a lista de tipos de relatório: limpa o campo e remove opções como 'band' conforme o contexto."},{"sys_id":"d08a64483b54de10924d0247f4e45a7e","name":"EY: Hide/Show options - On load","type":"onLoad","ui_type":"1","script":"Versão onLoad do anterior, aplicando as mesmas remoções na abertura."},{"sys_id":"f39efc393b68d610924d0247f4e45ac2","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar relatório de RH (América Hispânica)",
+"short_description":"Peça relatórios de folha de pagamento, headcount e outros dados de RH (Argentina, Chile, Colômbia, Equador, Peru e Uruguai).",
+"description":"Use para pedir relatórios de RH como folha de pagamento, headcount, banda salarial e outros dados de colaboradores nos países hispânicos. Diga o tipo de relatório e descreva para que precisa e quais informações devem constar (e-mails, data de admissão, centro de custo, banda etc.). Não use para pedir seu recibo de salário ou certificados pessoais; colaboradores do Brasil usam 'Solicitar relatório de dados de RH (Brasil)'.",
+"frases_exemplo":["necesito un reporte de headcount","preciso de um relatório da folha","relatório de nómina da minha área","quero um reporte com centro de custo e banda dos colaboradores","pedir relatório de RH"],
+"labels":{"v_report_type":"Que tipo de relatório você precisa?","v_field_detail":"Para que você precisa do relatório e quais informações ele deve trazer?"},
+"acoes":{"v_minimun_characters":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show error message onChange / onSubmit / EY: Hide error message onLoad","acao":"converter","substituicao":"Validation Regex com mensagem na variável v_field_detail."},{"nome":"EY: Hide/Show options on report type / On load","acao":"manter","substituicao":"VA Supported; avaliar lookup select box filtrado pelo país para eliminar script."},{"nome":"EY: Mandatory Fields - Catalog view / EY: Hide target fields","acao":"converter","substituicao":"Mandatory direto nas variáveis e v_who_is_this_request_for com default 'para mim' + hidden."}]
+}
+}

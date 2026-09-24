@@ -1,0 +1,43 @@
+{
+"sys_id":"d131c8533b6b6ad0924d0247f4e45aa1",
+"name":"Beneficiamento, Sucatas e Resíduos: Envio de informações, solicitações e dúvidas de clientes",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Serviços Administrativos",
+"sc_catalogs":"OTC Serviços de Suporte Administrativo, Virtual Agent Search",
+"short_description":"Sou cliente, tenho débitos a pagar para Natura e desejo contatar o contas a receber",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"v_add_attachment"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_add_attachment"}]},
+"producer_script":"Script do Record Producer de Beneficiamento, Sucatas e Resíduos. Grava x_nasm_hr_item com o sysparm_id da URL e força tanto requested_for quanto opened_by para o usuário genérico lido da system property 'acn_guest_user'. Guarda o e-mail real do solicitante em requested_for_email. Ou seja: o chamado consta aberto pelo usuário genérico, e o contato real fica só no campo de e-mail — formulário voltado a cliente externo.",
+"atencao":["v_add_attachment: custom/macro/widget (type 14)"],
+"variaveis":[
+{"name":"company_name","type":"5","order":100,"question_text":"Company name","choices":["Natura [=natura]"]},
+{"name":"country","type":"5","order":200,"question_text":"Country","choices":["Brasil [=brasil]"]},
+{"name":"cnpj","type":"6","order":300,"question_text":"CNPJ"},
+{"name":"email","type":"6","order":400,"question_text":"E-mail"},
+{"name":"name_requester","type":"6","order":500,"question_text":"Name of the Requester"},
+{"name":"name_company","type":"6","order":600,"question_text":"Name of your company"},
+{"name":"select_category","type":"5","order":700,"question_text":"Select the category","include_none":true,"choices":["Sending information [=sending_information]","Requests and inquiries [=requests_inquiries]"]},
+{"name":"type_request","type":"5","order":800,"question_text":"Type of request","include_none":true,"choices":["Proof of payment [=comprovante_pagamento]","Change of contact information [=alteracao_dados]","Returns [=devolucoes]","Partial payments [=pagamentos_parciais]","Cancellation of notes [=cancelamemento_notas]","Open position of titles [=posicao_titulos_aberto]","Others [=outros]"]},
+{"name":"type_request_2","type":"5","order":810,"question_text":"Type of request","include_none":true,"choices":["Change of contact information [=alteracao_dados_2]","Proof of payment [=comprovante_pagamento_2]"]},
+{"name":"describe_your_email","type":"6","conversational_label":"describe_your_email","order":900,"question_text":"Describe your email"},
+{"name":"describe_your_phone","type":"6","order":1000,"question_text":"Describe your phone"},
+{"name":"describe_your_order","type":"6","order":1100,"question_text":"Describe your order in detail"},
+{"name":"legenda_notas","type":"11","order":1200,"question_text":"Report paid invoices/bills"},
+{"name":"v_add_attachment_label","type":"11","order":1250,"question_text":"Add the payment receipts and/or documents"},
+{"name":"v_add_attachment","type":"14","order":1300,"question_text":"Add the payment receipts and/or documents","sp_widget":"EY: Enable public attachment"}
+],
+"ui_policies":[
+{"sys_id":"35affad73b27ead0924d0247f4e45add","short_description":"EY: If \"Type of request\" is 'change of contact'","conditions":"type_request=alteracao_dados","actions":["describe_your_email: visible=true,mandatory=true","describe_your_phone: visible=true,mandatory=true"]},
+{"sys_id":"55b08bdb3b27ead0924d0247f4e45a49","short_description":"EY: If category is \"Solicitações e dúvidas\"","conditions":"select_category=requests_inquiries","actions":["type_request: visible=true,mandatory=true"]},
+{"sys_id":"58e0071f3b27ead0924d0247f4e45a0d","short_description":"EY: Mandatory fields","conditions":"","actions":["describe_your_order: mandatory=true","country: mandatory=true,readonly=true","company_name: mandatory=true,readonly=true","name_requester: mandatory=true","cnpj: mandatory=true","select_category: mandatory=true","name_company: mandatory=true","email: mandatory=true"]},
+{"sys_id":"a9410b5f3b27ead0924d0247f4e45aeb","short_description":"EY: if \"Type of request\" is \"Comprovante; Devoluções; Pagamentos parciais; cancelamento notas;outros\"","conditions":"type_requestINcomprovante_pagamento,devolucoes,pagamentos_parciais,cancelamemento_notas,outros","actions":["legenda_notas: visible=true"]},
+{"sys_id":"dd8003db3b27ead0924d0247f4e45a6b","short_description":"EY: If category is \"Envio de informações\"","conditions":"select_category=sending_information","actions":["type_request_2: visible=true,mandatory=true"]},
+{"sys_id":"fcff7e1b3b27ead0924d0247f4e45aba","short_description":"EY: Read only fields ","conditions":"","applies_catalog":false,"actions":["type_request_2: readonly=true","type_request: readonly=true","describe_your_phone: readonly=true","cnpj: readonly=true","name_requester: readonly=true","email: readonly=true","describe_your_order: readonly=true","country: readonly=true","describe_your_email: readonly=true","select_category: readonly=true"]}
+],
+"client_scripts":[],
+"variable_sets":[],
+"primeira_analise":{"recomendacao":"manter_formulario","nome":"Contas a receber: beneficiamento, sucatas e resíduos (clientes)","short_description":"Canal para clientes de beneficiamento, sucata e resíduos falarem com o contas a receber da Natura.","description":"Formulário para empresas clientes de beneficiamento, sucatas e resíduos que têm débitos com a Natura e precisam enviar comprovantes de pagamento, pedir segunda via, devoluções, pagamentos parciais, cancelamento de notas, alteração de dados de contato ou tirar dúvidas com o contas a receber. Não é para colaboradores.","frases_exemplo":["sou cliente de sucata e quero enviar o comprovante de pagamento","preciso falar com o contas a receber sobre resíduos","alterar contato da empresa compradora de sucata","dúvida sobre boleto de beneficiamento"],"labels":{},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"EY: Read only fields","acao":"converter","substituicao":"Revisar condição; hoje sempre ativa."}]}
+}

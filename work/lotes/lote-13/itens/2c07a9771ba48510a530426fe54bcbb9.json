@@ -1,0 +1,19 @@
+{
+"sys_id":"2c07a9771ba48510a530426fe54bcbb9",
+"name":"Declaração de vínculo ou lotação e escala de trabalho",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Declarações e Documentos",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+"variaveis":[{"name":"escolha_o_tipo_de_declaracao","type":"5","order":200,"question_text":"Choose the declaration type","include_none":true,"choices":["Bond Declaration [=declaracao_vinculo]","Declaration of capacity and work schedule [=declaracao_lotacao_escala_trabalho]"]}],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"0fbd2b391b177010d1abda4ce54bcb90","title":"My personal information","order":100}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Pedir declaração de vínculo, lotação ou escala de trabalho","short_description":"Emitir declaração de vínculo empregatício, de lotação ou de escala de trabalho.","description":"Use para pedir uma declaração que comprove seu vínculo com a empresa, seu local de lotação ou sua escala/horário de trabalho, por exemplo para faculdade, banco, aluguel ou órgão público. Não use para outros tipos de declaração (use 'Solicitar declaração') nem para documentos de processo trabalhista ou PPP.","frases_exemplo":["preciso de uma declaração de vínculo empregatício","declaração que trabalho na empresa para a faculdade","quero uma declaração com minha escala de trabalho","declaração de lotação","comprovante de que sou funcionário"],"labels":{"escolha_o_tipo_de_declaracao":"Qual declaração você precisa: de vínculo, de lotação ou de escala de trabalho?"},"acoes":{"employee":"ocultar_na_conversa"},"derivados":[],"scripts_e_policies":[]}
+}

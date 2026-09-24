@@ -1,0 +1,59 @@
+{
+"sys_id":"f662d29e1ba2b810a530426fe54bcb8b",
+"name":"Reembolso Auxílio Creche ou Babá",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Minha Família",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Utilizando esse formulário as colaboradoras elegíveis podem solicitar reembolso ao Auxílio Creche ou Babá.",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom (tipo personalizado) (type 14 / Personalizado)","onde":"benefit_description"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"benefit_description"},{"code":"tipo_nao_suportado","detail":"HTML (type 23 / HTML)","onde":"benefit_description_value"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+"atencao":["childs_name: opções dinâmicas (x_nasm_hr_beneficiary)","set Eligibilities Informative/benefit_description: custom/macro/widget (type 14)","set Eligibilities Informative/benefit_description_value: custom/macro/widget (type 23)"],
+"variaveis":[
+{"name":"fill_request","type":"19","order":200,"question_text":"Fill in your request"},
+{"name":"exceptional_dependent_newsletter","type":"32","order":350},
+{"name":"competency_months","type":"5","order":400,"question_text":"Competency months","include_none":true,"choices":["January [=1]","February [=2]","March [=3]","April [=4]","May [=5]","June [=6]","July [=7]","August [=8]","September [=9]","October [=10]","November [=11]","December [=12]"]},
+{"name":"formatter2","type":"20","order":550},
+{
+"name":"childs_name",
+"type":"8",
+"reference":"x_nasm_hr_beneficiary",
+"lookup_table":"x_nasm_hr_beneficiary",
+"lookup_value":"beneficiary_name",
+"reference_qual":"javascript:(function () {\r\n    var uid = new x_nasm_hr.ACN_ValidateUtils().getUser();\r\n\r\n    function ymd(gdt) {\r\n        return gdt.getDate().getValue();\r\n    }\r\n\r\n    var now = new GlideDateTime();\r\n\r\n    // Limite mais recente: hoje - 4 meses\r\n    var gMaxRecent = new GlideDateTime(now.getValue());\r\n    gMaxRecent.addMonthsUTC(-4);\r\n    var maxRecentDob = ymd(gMaxRecent); // criança mais nova possível\r\n\r\n    // Limite mais antigo: hoje - 2 anos, 11 meses, 29 dias\r\n    var gMaxOld = new GlideDateTime(now.getValue());\r\n    gMaxOld.addYearsUTC(-2);\r\n    gMaxOld.addMonthsUTC(-11);\r\n    gMaxOld.addDaysUTC(-29);\r\n    var maxOldDob = ymd(gMaxOld); // criança mais velha possível\r\n\r\n    var relIds = [\r\n        '4d8615921bbeb810a530426fe54bcb35',\r\n        '098615921bbeb810a530426fe54bcb59',\r\n        'cd8615921bbeb810a530426fe54bcb31',\r\n        '858615921bbeb810a530426fe54bcb5d',\r\n        'e808b1711bd68510a530426fe54bcbc4',\r\n        'd9eb31751bd68510a530426fe54bcb79',\r\n        '34c7f9711bd68510a530426fe54bcb27'\r\n    ];\r\n\r\n    return 'employee=' + uid +\r\n           '^relationshipIN' + relIds.join(',') +\r\n           '^status!=delete' +\r\n           '^date_of_birth<=' + maxRecentDob +   // não pode ser mais novo que 4 meses\r\n           '^date_of_birth>=' + maxOldDob;      // não pode ser mais velho que 2a 11m 29d\r\n})()\r\n\r\n",
+"order":600,
+"question_text":"Nome do(a) Filho(a)/Dependente",
+"include_none":true
+},
+{"name":"pay_day","type":"9","example_text":"dd/mm/aaaa","order":700,"question_text":"Pay day"},
+{"name":"amount_paid","type":"6","example_text":"100,00","order":800,"question_text":"Amount paid"},
+{"name":"v_receipt_types","type":"5","order":910,"question_text":"Receipt Types","include_none":true,"choices":["Receipt issued by educational institution (daycare) - 3122 [=daycare]","Receipt - 3115 [=simple_recipt]","Ticket + Receipt - 3122 [=ticket_receipt]","Invoice + Receipt - 3122 [=invoice_rceipt]"]},
+{"name":"formatter","type":"20","order":1150},
+{"name":"documentation_care_assistance","type":"32","order":1200,"question_text":"Keep the monthly proof of payment of the school / nanny kept, for the purpose of the audit that will be carried out annually. * It is up to update your registration data whenever your beneficiaries change.","read_only":true},
+{"name":"statement_of_veracity","type":"11","order":1300,"question_text":"Statement of Veracity"},
+{"name":"declare_statement_of_veracity","type":"7","order":1400,"question_text":"I declare to assume full responsibility for the accuracy of the information contained in this form","map_to_field":true},
+{"name":"please_attach_the_receipt_invoice_here","type":"33","order":1500,"question_text":"Please attach the receipt/invoice here."}
+],
+"ui_policies":[{"sys_id":"3ffb0d961b7eb810a530426fe54bcba2","short_description":" ACN: Make the field \"Daycare Nanny Assistance Newsletter\" visible when \"Types of Assistance / Reimbursement\" is \"Nursery\" or \"Babysitter\"","conditions":"types_of_assistance_reimbursementINnursery,babysitter","actions":["documentation_care_assistance: visible=true"],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},{"sys_id":"88ccc9961b7eb810a530426fe54bcb71","short_description":" ACN: Make the field \"Daycare Nanny Assistance Newsletter\" visible when \"Types of Assistance / Reimbursement\" is \"Exceptional\"","conditions":"types_of_assistance_reimbursement=exceptional","actions":["exceptional_dependent_newsletter: visible=true"],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},{"sys_id":"8e527b3f1b816dd4a530426fe54bcb6d","short_description":"EY: Mandatory fields","conditions":"","actions":["please_attach_the_receipt_invoice_here: mandatory=true","declare_statement_of_veracity: mandatory=true","v_receipt_types: mandatory=true","pay_day: mandatory=true","amount_paid: mandatory=true","competency_months: mandatory=true","childs_name: mandatory=true"]}],
+"client_scripts":[
+{"sys_id":"15c0d4943b232e50924d0247f4e45a81","name":"EY: Clear child field","type":"onChange","cat_variable":"139ba69e1b26b810a530426fe54bcb35","ui_type":"10","script":"Catalog Client Script onChange. Sai sem fazer nada no carregamento do formulário ou quando o novo valor está vazio. Caso contrário, limpa a variável 'childs_name' — usado para descartar o nome da criança quando a variável que dispara o script muda."},
+{"sys_id":"5c46e4531bc10510d1abda4ce54bcb14","name":"ACN: Competency Months","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que restringe a lista de meses de competência ao mês corrente e aos anteriores do mesmo ano. Lê o mês atual e, para cada caso de 1 a 12, remove via g_form.removeOption todas as opções de 'competency_months' posteriores ao mês vigente — em janeiro sobra só o mês 1, em fevereiro os meses 1 e 2, e assim por diante. É o mesmo bloco repetido doze vezes, sem chamada a outro script."},
+{"sys_id":"791ded6e87d76a10ec360e530cbb3580","name":"EY: BRL Regex","type":"onChange","cat_variable":"cc8d66121b66b810a530426fe54bcb99","ui_type":"10","script":"Catalog Client Script onChange que formata valor em reais, mantendo apenas dígitos conforme o usuário digita. Comentários em português documentam os passos."},
+{"sys_id":"b35a11d68797e610ec360e530cbb35f6","name":"EY: Check Duplicate","type":"onChange","cat_variable":"857fee031b3e7c10a530426fe54bcbe0","ui_type":"10","script":"Catalog Client Script onChange que verifica duplicidade do valor informado, com comentários explicando cada etapa."}
+],
+"variable_sets":[{"sys_id":"0fbd2b391b177010d1abda4ce54bcb90","title":"My personal information","order":100},{"sys_id":"5659d1691b000510d1abda4ce54bcb2f","title":"Eligibilities Informative","order":310}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Pedir reembolso de auxílio-creche ou babá",
+"short_description":"Solicite o reembolso mensal do auxílio-creche ou auxílio-babá dos seus filhos.",
+"description":"Use, se você é elegível ao benefício, para pedir o reembolso mensal da mensalidade da creche/escola ou do pagamento da babá do seu filho ou dependente. Informe o mês de referência, a criança, a data e o valor pago e o tipo de comprovante, e anexe o recibo ou a nota fiscal. Guarde os comprovantes, pois há auditoria anual. Faça um pedido por criança e por mês. Não use para incluir dependentes (feito no Workday) nem para dúvidas sobre valores já reembolsados na folha.",
+"frases_exemplo":["quero pedir reembolso da creche","reembolso da babá de março","como mando o recibo da escolinha?","auxílio creche do meu filho","paguei a creche, onde peço o reembolso?"],
+"labels":{"childs_name":"Para qual filho ou dependente é o reembolso?","competency_months":"A qual mês se refere o pagamento?","v_receipt_types":"O comprovante é de creche/escola ou de babá? Recibo ou nota fiscal?","pay_day":"Em que data você fez o pagamento?","amount_paid":"Qual valor você pagou (em reais)?","please_attach_the_receipt_invoice_here":"Envie o recibo ou a nota fiscal.","declare_statement_of_veracity":"Você declara que as informações são verdadeiras e assume a responsabilidade por elas?"},
+"acoes":{"declare_statement_of_veracity":"alterar_tipo:Yes/No (Include None)","benefit_description":"remover","benefit_description_value":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"ACN: Competency Months (onLoad)","acao":"converter","substituicao":"Validação de mês no flow ou regra no servidor; o bloco repetido 12 vezes some."},{"nome":"EY: BRL Regex","acao":"converter","substituicao":"Validation Regex na variável amount_paid."},{"nome":"EY: Check Duplicate","acao":"manter","substituicao":"VA Supported; conferir se a mensagem é clara na conversa. Alternativa: checagem de duplicidade no flow."},{"nome":"EY: Clear child field","acao":"remover","substituicao":"Dispara por variável que não está no item; desnecessário."},{"nome":"ACN: Make the field ... visible when Types of Assistance ... (2 policies)","acao":"remover","substituicao":"Condição em types_of_assistance_reimbursement, variável inexistente."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Mandatory direto nas variáveis; remover receipt_types e types_of_assistance_reimbursement (inexistentes)."}]
+}
+}

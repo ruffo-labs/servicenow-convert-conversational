@@ -1,0 +1,30 @@
+{
+"sys_id":"8bad8c671b152550a530426fe54bcb90",
+"name":"Solicitação de Apropriação e Diferimento",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Apropriação e Diferimento",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite uma apropriação ou um diferimento",
+"description":"Solicite uma apropriação ou um diferimento",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_download_template_appropriation_and_deferral_request_es"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_download_template_appropriation_and_deferral_request_es"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_download_template_appropriation_and_deferral_request_es"},{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_nota_informativa"},{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_download_template_appropriation_and_deferral_request_pt"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_download_template_appropriation_and_deferral_request_pt"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_download_template_appropriation_and_deferral_request_pt"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS - Solicitação de Apropriação e Diferimento/v_download_template_appropriation_and_deferral_request_es: custom/macro/widget (type 17)","set EY VS - Solicitação de Apropriação e Diferimento/v_nota_informativa: custom/macro/widget (type 17)","set EY VS - Solicitação de Apropriação e Diferimento/v_download_template_appropriation_and_deferral_request_pt: custom/macro/widget (type 17)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":150},{"sys_id":"7bbecc2f1b152550a530426fe54bcbb7","title":"EY VS - Solicitação de Apropriação e Diferimento","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar apropriação ou diferimento contábil",
+"short_description":"Peça o lançamento de uma apropriação ou de um diferimento de despesa ou receita",
+"description":"Use para pedir à Contabilidade o registro de uma apropriação (reconhecer no mês uma despesa ou receita ainda sem nota) ou de um diferimento (distribuir um valor pago ou recebido ao longo dos meses de competência). Você vai escolher o tipo, informar se há controle SOX (Sarbanes-Oxley) associado e anexar o template preenchido com a nota fiscal ou contrato. Não use para ajuste de lançamento de fornecedor, capitalização de gastos ou IFRS 16.",
+"frases_exemplo":["preciso fazer uma provisão de despesa do mês","diferir um pagamento anual ao longo dos meses","lançar apropriação de despesa sem nota","solicitar diferimento contábil","apropriar despesa de serviço do mês"],
+"labels":{"v_request_type":"É uma apropriação ou um diferimento?","does_this_request_have_sox_control_attached":"Esse pedido está ligado a algum controle SOX (Sarbanes-Oxley)?","sox_control_name":"Qual o nome do controle SOX?","v_comments":"Descreva o lançamento que precisa ser feito (valor, período e conta)"},
+"acoes":{"v_attach_template":"remover","v_document_repository":"remover","v_nota_informativa":"remover","v_download_template_appropriation_and_deferral_request_es":"remover","v_download_template_appropriation_and_deferral_request_pt":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Apropriação e Diferimento)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só v_request_type obrigatório; anexos passam para \"Mandatory attachment\" do producer."},{"nome":"EY: Read-Only (set Apropriação e Diferimento)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: If Sox Control is YES 2 (set Sox)","acao":"converter","substituicao":"Trocar readonly por mandatory quando a resposta for sim (recomendação a confirmar na análise do set Sox)."}]
+}
+}

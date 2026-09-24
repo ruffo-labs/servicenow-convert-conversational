@@ -1,0 +1,19 @@
+{
+"sys_id":"f7edb1321bb8b110d1abda4ce54bcb26",
+"name":"Nota Fiscal Complementar",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Solicitar Recebimento de Notas Fiscais Complementares",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_which_supplier_does_the_request_refer_to","type":"8","reference":"core_company","reference_qual":"u_source_systemISNOTEMPTY^vendor=false^customer=false","reference_qual_condition":"u_source_systemISNOTEMPTY^vendor=false^customer=false^EQ","order":200,"question_text":"Which supplier does the request refer to?"},{"name":"v_attach_gfa_approval","type":"33","order":300,"question_text":"Attach GFA approval"},{"name":"v_attach_supplementary_invoice","type":"33","order":400,"question_text":"Attach supplementary invoice"},{"name":"v_attach_a_spreadsheet_with_a_list_of_grades","type":"33","order":500,"question_text":"Attach a spreadsheet with a list of grades"},{"name":"v_invoice_quantity","type":"5","order":600,"question_text":"Invoice quantity","include_none":true,"choices":["1 - 40 [=one_forty]","41 - 80 [=forty one_eighty]","> 80 [=eight]"]}],
+"ui_policies":[{"sys_id":"85b0f2331b3c3910a530426fe54bcb5a","short_description":"EY: Mandatory fields","conditions":"","actions":["v_attach_supplementary_invoice: mandatory=true","v_invoice_quantity: mandatory=true","v_which_supplier_does_the_request_refer_to: mandatory=true","v_attach_a_spreadsheet_with_a_list_of_grades: mandatory=true","v_attach_gfa_approval: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100}],
+"primeira_analise":{"recomendacao":"manter_formulario","nome":"Registrar recebimento de nota fiscal complementar","short_description":"Envie ao Fiscal notas complementares de fornecedor para recebimento, com aprovação GFA.","description":"Use para pedir ao Fiscal o recebimento de nota fiscal complementar de fornecedor (complemento de preço, imposto ou quantidade). Informe o fornecedor, a quantidade de notas e anexe a aprovação GFA, a nota complementar e a planilha com a lista de notas. Não use para divergência física no recebimento nem para cancelar ou corrigir nota.","frases_exemplo":["Recebi uma nota complementar do fornecedor","lançar NF complementar de preço","nota complementar de imposto","enviar nota complementar para o fiscal"],"labels":{"v_attach_a_spreadsheet_with_a_list_of_grades":"Anexe a planilha com a lista de notas."},"acoes":{},"derivados":[],"scripts_e_policies":[]}
+}

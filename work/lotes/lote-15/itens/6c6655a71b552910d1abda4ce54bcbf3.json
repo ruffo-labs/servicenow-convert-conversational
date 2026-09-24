@@ -1,0 +1,30 @@
+{
+"sys_id":"6c6655a71b552910d1abda4ce54bcbf3",
+"name":"Capitalização de Gastos",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Ativo Fixo",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite reclassificação para o ativo fixo",
+"description":"Solicite reclassificação para o ativo fixo",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_template_capitalization_expenses"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS - Capitalização de Gastos/v_template_capitalization_expenses: custom/macro/widget (type 32)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"aba7d12f1b552910d1abda4ce54bcb3f","title":"EY VS - Capitalização de Gastos","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar capitalização de gastos no ativo fixo",
+"short_description":"Peça a reclassificação de gastos lançados em despesa para o ativo imobilizado",
+"description":"Use para pedir que gastos lançados como despesa sejam reclassificados para o ativo imobilizado (capitalizados), por exemplo melhorias ou peças que aumentam a vida útil de um bem. Você vai informar a data do lançamento, descrever o pedido e anexar o template preenchido. Não use para ativar projeto em curso nem para reclassificação de impostos.",
+"frases_exemplo":["capitalizar gasto que foi para despesa","reclassificar despesa para o ativo fixo","lançaram melhoria como despesa, precisa ir para o imobilizado","capitalização de gastos","transferir despesa para ativo"],
+"labels":{"v_release_date":"Qual a data do lançamento em despesa?","v_describe_the_information_you_need":"Descreva os gastos que precisam ser capitalizados"},
+"acoes":{"v_attach_file":"remover","v_template_capitalization_expenses":"remover","v_template_accounting_entry_avon":"remover","v_informative_note":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Capitalização de Gastos)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só v_describe_the_information_you_need; anexo vira \"Mandatory attachment\"."},{"nome":"EY: Read-Only (set Capitalização de Gastos)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

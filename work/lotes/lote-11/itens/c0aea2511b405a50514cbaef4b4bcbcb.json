@@ -1,0 +1,19 @@
+{
+"sys_id":"c0aea2511b405a50514cbaef4b4bcbcb",
+"name":"Conciliação Bancária - Entradas Cobrança",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":"Virtual Agent Search, OTC Suporte à Força de Vendas e Recebíveis",
+"short_description":"Solicite a reclassificação e compensação bancária das contas de clientes",
+"description":"Solicite a reclassificação e compensação bancária das contas de clientes",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[{"name":"compensation_type","type":"5","order":150,"question_text":"Compensation Type","choices":["Entries and Charges [=entries_charges]"]},{"name":"v_approver","type":"8","reference":"sys_user_grmember","reference_qual":"group=7f47a4a81b6d6150d1abda4ce54bcbc0^EQ","reference_qual_condition":"group=7f47a4a81b6d6150d1abda4ce54bcbc0^EQ","order":200,"question_text":"Approver"},{"name":"link_template","type":"32","order":350}],
+"ui_policies":[{"sys_id":"6bf88cad1b085a50514cbaef4b4bcbbb","short_description":"EY: Read only fields in Target Record","conditions":"","applies_catalog":false,"actions":["compensation_type: readonly=true","v_approver: readonly=true"]},{"sys_id":"7d83c4651b085a50514cbaef4b4bcb11","short_description":"EY: Mandatory fields","conditions":"","actions":["link_template: mandatory=true","v_approver: mandatory=true"]},{"sys_id":"ae92cce11b085a50514cbaef4b4bcbfb","short_description":"EY: Read only fields  Item View","conditions":"","actions":["compensation_type: mandatory=true,readonly=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Solicitar conciliação bancária de recebimentos (reclassificação e compensação)","short_description":"Reclassificação e compensação bancária de recebimentos nas contas de clientes","description":"Use quando um recebimento de cobrança entrou no banco mas não foi baixado ou foi aplicado na conta errada do cliente e precisa ser reclassificado ou compensado. Anexe a planilha no modelo padrão com os recebimentos. Não use para regularizar título pago em duplicidade no cartão ou Pix, nem para enviar comprovante de pagamento de um título específico (use \"Consulta/aplicação de pagamento\").","frases_exemplo":["preciso reclassificar um recebimento na conta do cliente","compensação bancária de entrada de cobrança","depósito entrou na conta errada, preciso conciliar","conciliação bancária de recebimentos","reclassificar crédito recebido no banco"],"labels":{"nova_anexo_planilha":"Anexe a planilha com os recebimentos a conciliar, no modelo padrão."},"acoes":{"compensation_type":"ocultar_na_conversa","v_approver":"ocultar_na_conversa","link_template":"remover","nova_anexo_planilha":"nova"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Read only fields in Target Record / Read only fields Item View","acao":"converter","substituicao":"Read-only e default direto nas variáveis; remover as policies."},{"nome":"EY: Mandatory fields","acao":"converter","substituicao":"Retirar link_template; v_approver com default dispensa mandatory."}]}
+}

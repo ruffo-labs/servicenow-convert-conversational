@@ -1,0 +1,29 @@
+{
+"sys_id":"b3004b311b11e110a530426fe54bcb64",
+"name":"Notificação de Pagamentos Incorretos e/ou Duplicados",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Notificar um pagamento incorreto ou duplicado",
+"description":"Notificar um pagamento incorreto ou duplicado",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"6671c7b51b11e110a530426fe54bcb63","title":"EY VS - Notificação de pagamentos incorretos ou duplicados","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Avisar pagamento incorreto ou duplicado a fornecedor",
+"short_description":"Informe um pagamento feito em duplicidade ou com valor errado a um fornecedor",
+"description":"Use para avisar o Contas a Pagar que um fornecedor recebeu um pagamento em duplicidade ou com valor/destinatário errado, para que seja feita a cobrança ou o estorno. Você vai informar o fornecedor, a nota fiscal, o vencimento e o valor. Não use para pagamento atrasado ou para corrigir lançamento antes do pagamento.",
+"frases_exemplo":["pagamos duas vezes o mesmo fornecedor","pagamento duplicado de nota fiscal","o fornecedor recebeu valor errado","pagaram a nota a mais","avisar pagamento incorreto"],
+"labels":{"v_tipo_de_notifica_o":"O pagamento foi duplicado ou incorreto?","v_document_number_invoice":"Qual o número da nota fiscal?","v_due_date":"Qual a data de vencimento da nota?","v_amount":"Qual o valor pago?"},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory (set Notificação)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar Mandatory nas 4 variáveis."},{"nome":"EY: Somente leitura (set Notificação)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Máscara de Moeda (set Notificação)","acao":"converter","substituicao":"Remover o script e usar Validation Regex na variável v_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."}]
+}
+}

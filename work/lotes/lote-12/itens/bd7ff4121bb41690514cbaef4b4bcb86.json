@@ -1,0 +1,82 @@
+{
+"sys_id":"bd7ff4121bb41690514cbaef4b4bcb86",
+"name":"Solicitação de modificação de Dados Pessoais",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Dados Pessoais",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Uso exclusivo público operacional: Utilize este formulário para solicitar modificações em dados pessoais",
+"description":"Uso exclusivo público operacional: Utilize este formulário para solicitar modificações em dados pessoais",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Add options onChange"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"variaveis":[
+{"name":"v_select_category","type":"5","order":200,"question_text":"Select category","include_none":true,"lookup_unique":true,"choices":["Personal data [=data]","Change bank account [=bank]","Address [=address]","Dependents [=dependents]"]},
+{"name":"v_cbu","type":"6","order":300,"question_text":"CBU","include_none":true,"lookup_unique":true},
+{"name":"v_bank_account_number","type":"6","order":400,"question_text":"Bank Account Number","include_none":true,"lookup_unique":true},
+{"name":"v_bank_account_type","type":"5","order":500,"question_text":"Bank Account Type","include_none":true,"lookup_unique":true,"choices":["Savings Account [=saving]","Current Account [=current]","Checking Account [=checking]","Others [=others]"]},
+{"name":"v_message_data","type":"32","order":600},
+{"name":"v_bank_name","type":"6","order":700,"question_text":"Bank Name"},
+{"name":"v_message_physical_bank","type":"32","order":800},
+{"name":"v_calle","type":"6","order":900,"question_text":"Calle"},
+{"name":"v_number","type":"6","order":1000,"question_text":"Nº"},
+{"name":"v_floor","type":"6","order":1100,"question_text":"Floor"},
+{"name":"v_dept","type":"6","order":1200,"question_text":"Dept"},
+{"name":"v_between_streets","type":"6","order":1300,"question_text":"Between Streets"},
+{"name":"v_neighborhood","type":"6","order":1400,"question_text":"Neighborhood"},
+{"name":"v_location_form","type":"6","order":1500,"question_text":"Location"},
+{"name":"v_party","type":"6","order":1600,"question_text":"Party"},
+{"name":"v_postal_code","type":"6","order":1700,"question_text":"Postal Code"},
+{"name":"v_phone","type":"6","order":1800,"question_text":"Phone (cell phone or landline)"},
+{"name":"v_full_address","type":"6","order":1900,"question_text":"Full address (Remember to specify the name of the building, neighborhood, floor, tower, apartment, municipality, housing department)"},
+{"name":"v_declare_checkbox","type":"7","order":2000,"question_text":"I declare under oath that the information contained in this statement is true and I take responsibility for its veracity."},
+{"name":"v_detail","type":"2","order":2100,"question_text":"Use the following field to detail your need"},
+{"name":"v_minimum_characters","type":"32","order":2200},
+{"name":"v_message_1","type":"32","order":2300},
+{"name":"v_message_2","type":"32","order":2400}
+],
+"ui_policies":[
+{"sys_id":"042c5baa1b3cd690514cbaef4b4bcb32","short_description":"EY: Show category","conditions":"v_employeeISNOTEMPTY","actions":["v_select_category: visible=true,mandatory=true"]},
+{"sys_id":"11112fe21b7cd690514cbaef4b4bcbda","short_description":"EY: Show v_bank_account_number, v_bank_account_type e v_message_2","conditions":"v_select_category=bank^v_country=COL^ORv_country=CHL^ORv_country=ECU","actions":["v_message_2: visible=true","v_bank_account_number: visible=true,mandatory=true","v_bank_account_type: visible=true,mandatory=true"]},
+{"sys_id":"26776fae1b7cd690514cbaef4b4bcbd5","short_description":"EY: Show v_declare_checkbox","conditions":"v_select_category=address","actions":["v_declare_checkbox: visible=true,mandatory=true"]},
+{"sys_id":"31ec9bea1b3cd690514cbaef4b4bcb8c","short_description":"EY: Show v_cbu e v_message_physical_bank","conditions":"v_select_category=bank^v_country=ARG","actions":["v_cbu: visible=true,mandatory=true","v_message_physical_bank: visible=true"]},
+{"sys_id":"5565abaa1b7cd690514cbaef4b4bcbb3","short_description":"EY: Show location data","conditions":"v_select_category=address^v_country=ARG","actions":["v_postal_code: visible=true,mandatory=true","v_neighborhood: visible=true","v_between_streets: visible=true,mandatory=true","v_floor: visible=true","v_calle: visible=true,mandatory=true","v_party: visible=true,mandatory=true","v_dept: visible=true","v_number: visible=true,mandatory=true","v_location_form: visible=true,mandatory=true","v_phone: visible=true,mandatory=true"]},
+{"sys_id":"8cd6676e1b7cd690514cbaef4b4bcb14","short_description":"EY: Show v_full_address","conditions":"v_select_category=address^v_country=COL^ORv_country=CHL^ORv_country=ECU","actions":["v_full_address: visible=true,mandatory=true"]},
+{"sys_id":"a2a7e3ee1b7cd690514cbaef4b4bcb2c","short_description":"EY: Show v_message_1","conditions":"v_select_category=dependents","actions":["v_message_1: visible=true"]},
+{"sys_id":"e238a3221bbcd690514cbaef4b4bcb6d","short_description":"EY: Show v_detail","conditions":"","actions":["v_detail: visible=true,mandatory=true"]},
+{"sys_id":"fd44e36a1b7cd690514cbaef4b4bcbb9","short_description":"EY: Show v_message_data e v_bank_name","conditions":"v_select_category=bank","actions":["v_bank_name: visible=true,mandatory=true","v_message_data: visible=true"]}
+],
+"client_scripts":[
+{"sys_id":"57ea1fe61b3cd690514cbaef4b4bcbfa","name":"EY: Show error message onChange","type":"onChange","cat_variable":"26a857a21b3cd690514cbaef4b4bcbdd","ui_type":"10","script":"Par onChange de validação de tamanho mínimo sobre 'v_detail'."},
+{"sys_id":"6c2e17ae1b3cd690514cbaef4b4bcbcc","name":"EY: Regex to set CBU","type":"onChange","cat_variable":"b8ca86561b345690514cbaef4b4bcb43","ui_type":"1","script":"Catalog Client Script onChange que valida o CBU (código bancário argentino) exigindo exatamente 22 dígitos. Inválido: limpa o campo."},
+{"sys_id":"7edc3baa1b301a90514cbaef4b4bcb79","name":"EY: Remove option onLoad","type":"onLoad","ui_type":"1","script":"Catalog Client Script onLoad que remove as opções 'saving', 'current' e outras do tipo de conta bancária na abertura."},
+{"sys_id":"99ea9fa61b3cd690514cbaef4b4bcb3d","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando 'v_detail' tem menos de 40 caracteres, exibindo a legenda 'v_minimum_characters'."},
+{"sys_id":"bdddb7ea1b301a90514cbaef4b4bcbe8","name":"EY: Add options onChange","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","va_supported":false,"ui_type":"1","script":"Par onChange do script de tipo de conta bancária: remove as opções e recoloca as pertinentes conforme a escolha, tratando também o ramo de valor vazio."},
+{"sys_id":"d759eb621bbcd690514cbaef4b4bcb99","name":"EY: Clear values on catagory changes","type":"onChange","cat_variable":"3f1906de1bf05690514cbaef4b4bcbf3","ui_type":"10","script":"Catalog Client Script onChange que limpa os campos dependentes quando a categoria muda."},
+{"sys_id":"deeadfa61b3cd690514cbaef4b4bcbbf","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda 'v_minimum_characters' na abertura."}
+],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Solicitar alteração de dados pessoais (América Hispânica)",
+"short_description":"Pedir a alteração de dados bancários, endereço ou dependentes no cadastro do RH (público operacional de Argentina, Chile, Colômbia e Equador).",
+"description":"Item pai substituído pelos itens derivados por tipo de alteração. Use para alterar dados cadastrais (conta bancária, endereço, dependentes) do público operacional. Não use para dúvidas sobre dados pessoais.",
+"frases_exemplo":["quiero cambiar mi cuenta bancaria","preciso atualizar meu endereço","cambiar mi domicilio","quero incluir um dependente"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{"nome":"Alterar dados bancários para pagamento de salário","short_description":"Pedir a troca da conta bancária onde você recebe o salário (público operacional de Argentina, Chile, Colômbia e Equador).","descricao":"Use para informar uma nova conta bancária para receber o salário. Na Argentina informe o CBU (22 dígitos); em Chile, Colômbia e Equador informe número e tipo de conta. Não use para dúvidas sobre pagamento ou folha (use o formulário de remuneração).","frases_exemplo":["quiero cambiar mi cuenta sueldo","cambié de banco, cómo actualizo mi CBU?","quero mudar a conta onde recebo o salário","nueva cuenta bancaria para el pago"],"fixar":"v_select_category = bank (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_bank_name","conversational_label":"Qual é o nome do banco?"},{"ordem":2,"variavel":"v_cbu","conversational_label":"Qual é o CBU da conta (22 dígitos)?"},{"ordem":3,"variavel":"v_bank_account_number","conversational_label":"Qual é o número da conta?"},{"ordem":4,"variavel":"v_bank_account_type","conversational_label":"Qual é o tipo de conta (corrente ou poupança)?"},{"ordem":5,"variavel":"v_detail","conversational_label":"Quer acrescentar algum detalhe?"}]},
+{
+"nome":"Alterar endereço no cadastro do RH",
+"short_description":"Pedir a atualização do seu endereço residencial (público operacional de Argentina, Chile, Colômbia e Equador).",
+"descricao":"Use quando você se mudou e precisa atualizar o endereço no cadastro do RH. Na Argentina o endereço é pedido por partes (rua, número, andar, bairro, localidade, CEP, telefone); nos demais países, em um único campo. Exige declarar que a informação é verdadeira.",
+"frases_exemplo":["me mudé, quiero actualizar mi domicilio","preciso trocar meu endereço","cambio de dirección","actualizar mi dirección y teléfono"],
+"fixar":"v_select_category = address (default/hidden)",
+"perguntas":[{"ordem":1,"variavel":"v_full_address","conversational_label":"Qual é o seu novo endereço completo (prédio, bairro, andar, apartamento, município)?"},{"ordem":2,"variavel":"v_calle","conversational_label":"Qual é a rua?"},{"ordem":3,"variavel":"v_number","conversational_label":"Qual é o número?"},{"ordem":4,"variavel":"v_floor","conversational_label":"Qual é o andar? (se houver)"},{"ordem":5,"variavel":"v_dept","conversational_label":"Qual é o apartamento? (se houver)"},{"ordem":6,"variavel":"v_between_streets","conversational_label":"Entre quais ruas fica?"},{"ordem":7,"variavel":"v_neighborhood","conversational_label":"Qual é o bairro?"},{"ordem":8,"variavel":"v_location_form","conversational_label":"Qual é a localidade?"},{"ordem":9,"variavel":"v_party","conversational_label":"Qual é o partido (município)?"},{"ordem":10,"variavel":"v_postal_code","conversational_label":"Qual é o código postal?"},{"ordem":11,"variavel":"v_phone","conversational_label":"Qual é o telefone de contato (celular ou fixo)?"},{"ordem":12,"variavel":"v_declare_checkbox","conversational_label":"Você declara sob juramento que as informações são verdadeiras?"}]
+},
+{"nome":"Alterar dependentes no cadastro do RH","short_description":"Pedir inclusão, exclusão ou correção de dependentes (público operacional de Argentina, Chile, Colômbia e Equador).","descricao":"Use para incluir, excluir ou corrigir dependentes no cadastro do RH. Descreva a alteração e anexe os documentos comprobatórios ao final. As orientações hoje em v_message_1 devem ir para esta descrição.","frases_exemplo":["quiero agregar a mi hijo como carga familiar","preciso incluir minha esposa como dependente","dar de baja un dependiente","corregir datos de mi hijo"],"fixar":"v_select_category = dependents (default/hidden)","perguntas":[{"ordem":1,"variavel":"v_detail","conversational_label":"Qual alteração de dependente você precisa? Informe nome e parentesco."}]}
+],
+"scripts_e_policies":[{"nome":"EY: Show category / EY: Show ... (9 policies por categoria)","acao":"remover","substituicao":"A categoria vira o próprio item. As condições por país (ARG x COL/CHL/ECU) continuam como UI Policy sem script, baseadas em v_country (derivado do perfil) dentro de cada derivado."},{"nome":"EY: Regex to set CBU","acao":"converter","substituicao":"Validation Regex ^\\d{22}$ direto em v_cbu com mensagem 'O CBU deve ter 22 dígitos'."},{"nome":"EY: Remove option onLoad / EY: Add options onChange","acao":"remover","substituicao":"Desativar as opções não usadas de v_bank_account_type; sem manipulação de opções por script."},{"nome":"EY: Clear values on catagory changes","acao":"remover","substituicao":"Sem select de categoria no derivado, não há o que limpar."},{"nome":"EY: Show error message onSubmit","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."},{"nome":"EY: Show error message onChange / EY: Hide error message onLoad","acao":"remover","substituicao":"Legenda v_minimum_characters substituída pela Validation Regex."}]
+}
+}

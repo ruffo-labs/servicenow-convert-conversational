@@ -1,0 +1,30 @@
+{
+"sys_id":"4a564f8b3bfb0e10924d0247f4e45a5e",
+"name":"Dúvidas, consultas, reclamações ou sugestões sobre Dados Pessoais",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Dados Pessoais",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+"description":"Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"atencao":["v_select_the_category_lookup: opções dinâmicas (x_nasm_hr_rules_hispanic_datos_personales_questions)"],
+"variaveis":[{"name":"FAQs","type":"32","order":0,"question_text":"You can use this form if the topic you are looking for is not available in \"FAQS Personal data BY COUNTRY\""},{"name":"v_contact_reason","type":"5","order":750,"question_text":"Contact reason","include_none":true,"choices":["Questions/Consults [=100]","Suggestions [=300]","Complaints [=400]"]},{"name":"v_select_the_category_lookup","type":"18","lookup_table":"x_nasm_hr_rules_hispanic_datos_personales_questions","lookup_value":"hispanic_category","reference_qual":"javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);","order":810,"question_text":"Select the category","include_none":true,"lookup_unique":true},{"name":"v_detail_field","type":"2","order":850,"question_text":"Use the following field to detail your need"},{"name":"v_minimun_characters","type":"32","order":900,"question_text":"You must enter more than 40 characters in your description detail","read_only":true}],
+"ui_policies":[{"sys_id":"15cff0383b009a50924d0247f4e45a4f","short_description":"EY: Mandatory - v_select_category_lookup","conditions":"","actions":["v_select_the_category_lookup: mandatory=true"]},{"sys_id":"ac5010603b00d650924d0247f4e45a94","short_description":"EY: Mandatory - v_detail_field","conditions":"","actions":["v_detail_field: mandatory=true"]},{"sys_id":"bf7d84e83bcc9650924d0247f4e45af7","short_description":"EY: Mandatory - v_contact_reason mandatory","conditions":"","actions":["v_contact_reason: mandatory=true"]}],
+"client_scripts":[{"sys_id":"2586bf903b0c9650924d0247f4e45a71","name":"EY: Show error message onChange","type":"onChange","cat_variable":"9e02a7473b334e10924d0247f4e45a13","ui_type":"10","script":"Par onChange do anterior: enquanto o usuário digita, exibe a legenda de mínimo de caracteres se o texto tiver entre 1 e 39 caracteres, e esconde quando atinge 40."},{"sys_id":"9154705f3bf38e10924d0247f4e45ae5","name":"EY: Show error message onSubmit","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que BLOQUEIA o envio quando a descrição tem menos de 40 caracteres. Exibe a legenda de mínimo de caracteres e retorna false. Validação de qualidade de conteúdo, não de formato."},{"sys_id":"b07700ac3b8c9650924d0247f4e45a07","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":50}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Tirar dúvida ou registrar reclamação sobre dados pessoais (América Hispânica)",
+"short_description":"Dúvidas, consultas, reclamações ou sugestões sobre seus dados pessoais cadastrados no RH, para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+"description":"Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre seus dados pessoais cadastrados (documento, estado civil, contatos, dependentes, dados bancários etc.), quando o tema não estiver nas perguntas frequentes de dados pessoais do seu país. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para pedir a alteração efetiva dos dados (use 'Solicitar alteração de dados pessoais') nem se você trabalha no Brasil.",
+"frases_exemplo":["tengo una duda sobre mis datos personales","quero reclamar que meu endereço está errado no sistema","consulta sobre mis datos registrados en RRHH","sugestão sobre o cadastro de dependentes","no sé cómo ver mis datos personales en Workday"],
+"labels":{"v_contact_reason":"É uma dúvida, consulta, reclamação ou sugestão?","v_select_the_category_lookup":"Sobre qual tema dos seus dados pessoais?","v_detail_field":"Conte em detalhes o que você precisa."},
+"acoes":{"v_minimun_characters":"remover","FAQs":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Mandatory - v_select_category_lookup / v_detail_field / v_contact_reason","acao":"converter","substituicao":"Três policies onLoad sem condição: marcar Mandatory direto nas variáveis e excluir as policies."},{"nome":"EY: Show error message onSubmit","acao":"converter","substituicao":"Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."},{"nome":"EY: Show error message onChange","acao":"remover","substituicao":"Legenda de mínimo de caracteres substituída pela Validation Regex."},{"nome":"EY: Hide error message onLoad","acao":"remover","substituicao":"Sem a legenda, o script perde função."}]
+}
+}

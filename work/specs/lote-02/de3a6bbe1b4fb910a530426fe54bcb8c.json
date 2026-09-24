@@ -1,0 +1,9 @@
+{
+ "sys_id": "de3a6bbe1b4fb910a530426fe54bcb8c",
+ "status": "analise_humana",
+ "criterio": "formulario_complexo",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "motivo": "A 1ª análise recomenda dividir em 4 intenções, mas o item tem ~90 UI policies interdependentes (checklist de documentos por parentesco em 10 'paths' + regras de obrigatoriedade cruzadas entre registration_option/verifica_medico/verifica_odonto), 20 client scripts (um de 9,8 KB com lógica de exibição por array hardcoded) e um widget custom (mrv_macro_widget) que efetivamente cria/edita registros de dependente com subcampos, sem equivalente OOB seguro no formato de spec. Reduzir isso a deltas declarativos arrisca perder regra de negócio (carências, elegibilidade por operadora, comprovante universitário por idade). Recomenda-se decisão humana sobre a divisão e a substituição do widget MRV antes de converter."
+}

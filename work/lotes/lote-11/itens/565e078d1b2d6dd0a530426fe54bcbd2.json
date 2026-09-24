@@ -1,0 +1,30 @@
+{
+"sys_id":"565e078d1b2d6dd0a530426fe54bcbd2",
+"name":"Ajuste de Inventário e Ajuste Ciclico",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Estoques e Custos",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um ajuste de inventário",
+"description":"Solicite um ajuste de inventário",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_template"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_template"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_template"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS - Ajuste de inventário e ajuste Ciclico/v_template: custom/macro/widget (type 17)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"babe0b011b6d6dd0a530426fe54bcbce","title":"EY VS - Ajuste de inventário e ajuste Ciclico","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar ajuste de inventário",
+"short_description":"Peça o ajuste contábil de estoque após inventário ou contagem cíclica",
+"description":"Use para pedir à área de Estoques e Custos o ajuste do saldo contábil de estoque depois de um inventário ou contagem (sobras ou faltas de material). Você vai informar a data de emissão, descrever o ajuste e anexar o template preenchido com os itens e quantidades. Não use para consulta ou relatório de Bloco K nem para baixa de ativo imobilizado.",
+"frases_exemplo":["preciso ajustar o estoque depois do inventário","ajuste de inventário da filial","diferença de contagem no estoque, precisa ajustar","ajuste cíclico de estoque","lançar sobra e falta do inventário"],
+"labels":{"v_issuance":"Qual a data de emissão do inventário?","v_describe_the_information_you_need":"Descreva o ajuste: filial, materiais e diferenças encontradas"},
+"acoes":{"v_request_type":"ocultar_na_conversa","v_branch":"remover","v_responsible":"remover","v_inventory_code":"remover","v_desc_inventory":"remover","v_quantity_counted":"remover","v_validated":"remover","v_attach_file":"remover","v_template":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Hide if Ajuste != Ciclico","acao":"remover","substituicao":"Os campos cíclicos saem do item."},{"nome":"EY: Request type Read-Only","acao":"remover","substituicao":"v_request_type fica hidden com default."},{"nome":"EY: Mandatory (set Ajuste de inventário)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Ficam v_issuance e a descrição; anexo vira \"Mandatory attachment\"."},{"nome":"EY: Read-Only (set Ajuste de inventário)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

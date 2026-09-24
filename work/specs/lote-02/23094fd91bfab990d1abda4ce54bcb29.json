@@ -1,0 +1,220 @@
+{
+ "sys_id": "23094fd91bfab990d1abda4ce54bcb29",
+ "status": "dividido",
+ "motivo": "Item agrupador com 4 intenções (aderir, alterar, cancelar, recusar) controladas por v_select_option, que passa a ser valor fixo por derivado. O único bloqueador (script onLoad sem VA Supported, o pop-up de orientações) é removido; seu conteúdo de orientação vira texto na description do item. As várias checkboxes de ciência/compromisso são unificadas em uma única variável de aceite de termo, e os dois anexos de cartão viram um único anexo, sem perda de dado.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_benefit_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_aceite_termo": {
+   "nova": {
+    "type": "1",
+    "question_text": "Você leu e aceita o termo de responsabilidade do benefício (link na descrição)?",
+    "mandatory": true,
+    "order": 900
+   }
+  },
+  "nova_anexo_cartao_transporte": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a foto do(s) seu(s) cartão(ões) de transporte.",
+    "mandatory": false,
+    "order": 850
+   }
+  }
+ },
+ "remover": {
+  "link": "texto_movido_descricao",
+  "v_label_fill_request": "visual",
+  "v_label_subscribing": "visual",
+  "v_label_transport_subscribing": "visual",
+  "v_label_transport_line_update": "visual",
+  "v_label_cancel_transport_voucher": "visual",
+  "v_label_cancel_charter": "visual",
+  "v_label_cancel_transport_voucher_and_charter": "visual",
+  "legenda_linha_onibus": "visual",
+  "legenda_vt": "visual",
+  "v_label_transport_infos": "visual",
+  "v_label_chartered": "visual",
+  "responsability_terms": "texto_movido_descricao",
+  "termos_de_responsabilidade": "texto_movido_descricao",
+  "v_checkbox_transport_voucher_1": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_transport_voucher_2": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_transport_voucher_3": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "checkbox_vt_responsability": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_chartered_1": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_chartered_2": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_chartered_responsability": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_chartered_4": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "v_checkbox_responsability": {
+   "substituida_por": "nova_aceite_termo"
+  },
+  "attach_your_transport_card_photo_here": {
+   "substituida_por": "nova_anexo_cartao_transporte"
+  },
+  "if_you_have_more_than_one_transport_card_attach_it_here": {
+   "substituida_por": "nova_anexo_cartao_transporte"
+  }
+ },
+ "policies": {
+  "14a1cafd1bbe75d0a530426fe54bcbff": "remover",
+  "218b17a71bc40610a530426fe54bcb9d": "remover",
+  "2c0c89f51bf675d0a530426fe54bcb19": "remover",
+  "487f32931b327510a530426fe54bcb43": "remover",
+  "4ab00e3d1bbe75d0a530426fe54bcbc6": "remover",
+  "606f20751b3675d0a530426fe54bcb28": "remover",
+  "64800f931b327510a530426fe54bcbda": "remover",
+  "782d32df1bfe3510a530426fe54bcbd5": "remover",
+  "9a5c9be71bc40610a530426fe54bcb7e": "remover",
+  "a8e18afd1bbe75d0a530426fe54bcbd9": "remover",
+  "b09bd1c83b2a5e10924d0247f4e45af3": {
+   "conditions": "v_benefit_typeINtransport_voucher,transport_voucher_chartered",
+   "actions": {
+    "v_already_have_a_vt_card": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "e2404a791bbe75d0a530426fe54bcba7": "remover",
+  "e34b9aaa3bff2610924d0247f4e45a90": "remover",
+  "f0410e3d1bbe75d0a530426fe54bcb6a": "remover",
+  "f612c6311bfe75d0a530426fe54bcb73": "remover",
+  "fb8dfd843b269e10924d0247f4e45a35": {
+   "conditions": "v_already_have_a_vt_card=Yes",
+   "actions": {
+    "nova_anexo_cartao_transporte": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "fd1f7a531b327510a530426fe54bcb06": "remover"
+ },
+ "scripts": {
+  "03448e751bfe75d0a530426fe54bcb12": {
+   "remover": "sem_efeito"
+  },
+  "282f67ed87a61a10ec360e530cbb3500": {
+   "remover": "sem_efeito"
+  },
+  "3d9d57ab1bc40610a530426fe54bcbbd": {
+   "remover": {
+    "substituido_por": "nova_aceite_termo"
+   }
+  },
+  "506ac0f58750b610ec360e530cbb35fc": {
+   "remover": "sem_efeito"
+  },
+  "5c1973571bb67510a530426fe54bcbaa": {
+   "remover": "sem_efeito"
+  },
+  "b94da44187e0b250ec360e530cbb35ae": {
+   "remover": "sem_efeito"
+  },
+  "e2ae48141b5ff150d1abda4ce54bcb87": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_select_option": "membership"
+   }
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_select_option": "amendment"
+   },
+   "vars": {
+    "nova_aceite_termo": {
+     "nova": {
+      "type": "1",
+      "question_text": "Você confirma que as informações estão corretas e aceita o termo de responsabilidade?",
+      "mandatory": true,
+      "order": 900
+     }
+    }
+   }
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_select_option": "cancellation"
+   },
+   "sem_vars": [
+    "v_already_have_a_vt_card",
+    "nova_anexo_cartao_transporte"
+   ],
+   "sem_sets": [
+    "350894e51b76f990d1abda4ce54bcb15"
+   ],
+   "sem_policies": [
+    "b09bd1c83b2a5e10924d0247f4e45af3",
+    "fb8dfd843b269e10924d0247f4e45a35"
+   ],
+   "vars": {
+    "nova_aceite_termo": {
+     "nova": {
+      "type": "1",
+      "question_text": "Você está ciente de que os benefícios cancelados deixam de valer e confirma o cancelamento?",
+      "mandatory": true,
+      "order": 900
+     }
+    }
+   }
+  },
+  {
+   "de_1a": 3,
+   "fixas": {
+    "v_select_option": "new_employee_do_not_join"
+   },
+   "sem_vars": [
+    "v_benefit_type",
+    "v_already_have_a_vt_card",
+    "nova_anexo_cartao_transporte"
+   ],
+   "sem_sets": [
+    "350894e51b76f990d1abda4ce54bcb15"
+   ],
+   "sem_policies": [
+    "b09bd1c83b2a5e10924d0247f4e45af3",
+    "fb8dfd843b269e10924d0247f4e45a35"
+   ],
+   "vars": {
+    "nova_aceite_termo": {
+     "nova": {
+      "type": "1",
+      "question_text": "Você confirma que não quer receber vale-transporte nem usar o fretado?",
+      "mandatory": true,
+      "order": 900
+     }
+    }
+   }
+  }
+ ]
+}

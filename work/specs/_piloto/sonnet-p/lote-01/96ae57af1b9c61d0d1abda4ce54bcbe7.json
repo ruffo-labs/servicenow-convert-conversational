@@ -1,0 +1,58 @@
+{
+ "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas (tirar dúvida sobre o cartão vs. avisar viagem internacional) com perguntas diferentes, seguindo a 1ª análise. A policy que trata da viagem tem condição em variável ausente (pendência humana) e foi mantida como está.",
+ "vars": {
+  "v_what_type_of_doubt_do_you_have": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_describe_your_question": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_the_destination_of_the_international_trip": {
+   "props": {
+    "validation_regex": "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$"
+   }
+  }
+ },
+ "remover": {
+  "v_if_you_have_questions_about_the_process": "visual",
+  "v_corporate_card_information": "visual"
+ },
+ "policies": {
+  "b3e6aba31b50a1d0d1abda4ce54bcbac": "remover"
+ },
+ "scripts": {
+  "09850b361b68a990d1abda4ce54bcb91": {
+   "remover": "sem_efeito"
+  },
+  "14a1c9701bc1e5d0d1abda4ce54bcb3b": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_which_audience_do_you_belong_to",
+    "v_what_is_the_destination_of_the_international_trip",
+    "v_what_is_the_start_date_of_the_trip",
+    "v_what_is_the_end_date_of_the_trip"
+   ],
+   "sem_policies": [
+    "ba7767671b50a1d0d1abda4ce54bcb06"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "sem_vars": [
+    "v_what_type_of_doubt_do_you_have",
+    "v_describe_your_question"
+   ]
+  }
+ ]
+}

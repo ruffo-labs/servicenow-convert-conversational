@@ -1,0 +1,29 @@
+{
+"sys_id":"9f456ded1b3c2d14a530426fe54bcbc1",
+"name":"Programa Florescer",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Aprendizagem, Desenvolvimento e Desempenho",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Para solicitações relacionadas ao Programa de Jovens Aprendizes",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_request_type","type":"5","order":200,"question_text":"Request type","include_none":true,"choices":["Information about the Jovem Aprendiz [=information_jovem_aprendiz]","Request change of manager/tutor [=manager_tutor_change]","Information about events/trainings [=information_events_trainings]","Sending Communications [=sending_communications]","Information about data/indicators [=information_about_data_indicators]"]},{"name":"faq_text","type":"32","order":250},{"name":"v_select_manager_name","type":"8","reference":"x_nasm_hr_profile","reference_qual":"user.active=true^ORuser.locked_out=true^EQ","reference_qual_condition":"user.active=true^ORuser.locked_out=true^EQ","order":300,"question_text":"Select manager name"},{"name":"v_manager_id","type":"6","order":400,"question_text":"Manager ID"},{"name":"v_manager_email","type":"6","order":500,"question_text":"Manager email"},{"name":"v_request_date","type":"9","order":600,"question_text":"Request date"},{"name":"v_description","type":"2","order":1000,"question_text":"Description"}],
+"ui_policies":[{"sys_id":"007fa1211b306d14a530426fe54bcbed","short_description":"EY: Mandatory type","conditions":"","actions":["v_request_type: mandatory=true"]},{"sys_id":"984c6da11bfc2d14a530426fe54bcb5d","short_description":"EY: Description","conditions":"v_request_typeINinformation_jovem_aprendiz,information_events_trainings","actions":["v_description: visible=true,mandatory=true"]},{"sys_id":"a95be5ad1bbc2d14a530426fe54bcb5a","short_description":"EY: Change of manager/tutor","conditions":"v_request_type=manager_tutor_change","actions":["v_manager_email: visible=true,readonly=true","v_manager_id: visible=true,readonly=true","v_select_manager_name: visible=true,mandatory=true","v_request_date: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"c95439a91b706d14a530426fe54bcb85","name":"EY: Fill manager info","type":"onChange","cat_variable":"c67869ad1b7c2d14a530426fe54bcbe8","ui_type":"10","script":"Catalog Client Script onChange que preenche os dados do gestor, limpando o ID quando o valor fica vazio."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Programa Jovem Aprendiz (Florescer): dúvidas e troca de gestor",
+"short_description":"Dúvidas sobre o programa de jovem aprendiz Florescer, eventos e treinamentos, ou troca de gestor/tutor do aprendiz.",
+"description":"Use se você é jovem aprendiz do Programa Florescer ou gestor/tutor de um aprendiz, para tirar dúvidas sobre o programa, sobre eventos e treinamentos, ou para pedir a troca do gestor ou tutor responsável. Não use para o programa de estágio, que tem itens próprios.",
+"frases_exemplo":["dúvida sobre o programa jovem aprendiz","preciso trocar o tutor do aprendiz","quando é o próximo treinamento do Florescer?","mudou o gestor do jovem aprendiz da minha área","informações sobre o programa de aprendizes"],
+"labels":{"v_request_type":"O que você precisa: informação sobre o programa jovem aprendiz, informação sobre eventos e treinamentos, ou trocar o gestor/tutor?","v_select_manager_name":"Quem vai ser o novo gestor ou tutor?","v_request_date":"A partir de que data a troca deve valer?","v_description":"Qual é a sua dúvida?"},
+"acoes":{"v_manager_id":"derivar","v_manager_email":"derivar","faq_text":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Fill manager info","acao":"converter","substituicao":"Auto-populate (Dependent question = v_select_manager_name) em v_manager_id e v_manager_email."},{"nome":"EY: Mandatory type","acao":"converter","substituicao":"mandatory direto em v_request_type."},{"nome":"EY: Description / EY: Change of manager/tutor","acao":"manter","substituicao":"Policies sem script, VA Supported."}]
+}
+}

@@ -1,0 +1,77 @@
+{
+"sys_id":"b65a340d1b2f9558d1abda4ce54bcbc7",
+"name":"Solicitação de retorno do colaborador",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Licenças e Ausências",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Comunicar retorno ao trabalho de colaborador afastado",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[
+{"name":"v_return_maternity_inss","type":"5","order":120,"question_text":"Is it a return from maternity leave or INSS leave?","include_none":true,"choices":["Returning from maternity leave [=return_maternity]","INSS leave [=inss_leave]"]},
+{"name":"employee_return_request","type":"19","order":140,"question_text":"Employee return request"},
+{"name":"v_sector","type":"6","order":200,"question_text":"Sector"},
+{"name":"v_shift","type":"5","order":300,"question_text":"Shift","include_none":true,"choices":["1º [=shift_1]","2º [=shift_2]","3º [=shift_3]","ADM [=adm]"]},
+{"name":"v_administrative_allowance","type":"1","order":400,"question_text":"Administrative allowance?","include_none":true},
+{"name":"v_administrative_allowance_start_date","type":"9","order":500,"question_text":"Administrative allowance start date"},
+{"name":"v_end_date_of_administrative_allowance","type":"9","order":600,"question_text":"End date of administrative allowance"},
+{"name":"v_alta_beneficio_analise","type":"1","order":650,"question_text":"Early discharge or benefit under review?","include_none":true},
+{"name":"v_date_of_last_day_of_inss_benefit","type":"9","order":700,"question_text":"Date of last day of INSS benefit"},
+{"name":"v_date_of_first_visit_to_the_health_space","type":"9","order":800,"question_text":"Date of first visit to the health space"},
+{"name":"v_date_of_return_to_work_aso_doctor","type":"9","order":900,"question_text":"Date of return to work/ASO (doctor)"},
+{"name":"v_requested_medical_report_or_complementary_exam","type":"1","order":950,"question_text":"Requested medical report or complementary exam?","include_none":true},
+{"name":"v_attach_return_exam","type":"33","order":1100,"question_text":"Attach return exam"},
+{"name":"v_attach_return_exam_two","type":"33","order":1150,"question_text":"Attach return exam"},
+{"name":"v_attach_the_inss_decision_notice","type":"33","order":1200,"question_text":"Attach the INSS decision notice"},
+{"name":"v_description","type":"2","order":1300,"question_text":"Description"}
+],
+"ui_policies":[
+{"sys_id":"d1b00d091baf9558d1abda4ce54bcb0f","short_description":"EY: Mandatory fields","conditions":"","actions":["v_return_maternity_inss: mandatory=true"]},
+{"sys_id":"c9a254081bcab550a530426fe54bcb73","short_description":"EY: If \"Afastamento INSS\"","conditions":"v_return_maternity_inss=inss_leave","actions":["v_requested_medical_report_or_complementary_exam: visible=true,mandatory=true","v_sector: visible=true,mandatory=true","v_date_of_first_visit_to_the_health_space: visible=true,mandatory=true","v_alta_beneficio_analise: visible=true,mandatory=true","employee_return_request: visible=true,mandatory=true","v_administrative_allowance: visible=true,mandatory=true","vs_solicitation_to_whom: visible=true,mandatory=true","v_description: visible=true,mandatory=true","v_attach_return_exam_two: visible=true,mandatory=true","v_date_of_return_to_work_aso_doctor: visible=true,mandatory=true","v_attach_the_inss_decision_notice: visible=true,mandatory=true","v_shift: visible=true,mandatory=true"]},
+{"sys_id":"98b190841bcab550a530426fe54bcb90","short_description":"EY: If \" Retorno Licença maternidade\"","conditions":"v_return_maternity_inss=return_maternity","actions":["v_attach_return_exam: visible=true,mandatory=true"]},
+{"sys_id":"4112c98d1baf9558d1abda4ce54bcb09","short_description":"EY: Show date fields if adm allowance","conditions":"v_administrative_allowance=Yes^v_return_maternity_inss=inss_leave","actions":["v_administrative_allowance_start_date: visible=true,mandatory=true","v_end_date_of_administrative_allowance: visible=true,mandatory=true"]},
+{"sys_id":"70d858c41b0eb550a530426fe54bcbfc","short_description":"EY: If \"Alta antecipada ou benefício em análise\" is \"Yes\"","conditions":"v_alta_beneficio_analise=Yes^v_return_maternity_inss=inss_leave","actions":["v_attach_the_inss_decision_notice: mandatory=false","v_date_of_last_day_of_inss_benefit: "]},
+{"sys_id":"5ec9d8081b0eb550a530426fe54bcb74","short_description":"EY: If \"Alta antecipada ou benefício em análise\" is \"No\"","conditions":"v_alta_beneficio_analise=No^v_return_maternity_inss=inss_leave","actions":["v_date_of_last_day_of_inss_benefit: visible=true,mandatory=true","v_attach_the_inss_decision_notice: mandatory=true"]}
+],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"dividir",
+"nome":"Comunicar retorno ao trabalho",
+"short_description":"Comunique o retorno de colaborador afastado.",
+"description":"Item de origem desativado após a divisão; ver itens derivados.",
+"frases_exemplo":["colaboradora voltou da licença maternidade","funcionário teve alta do INSS e vai voltar"],
+"labels":{},
+"acoes":{},
+"derivados":[
+{"nome":"Comunicar retorno de licença-maternidade","short_description":"Informe a volta ao trabalho de uma colaboradora após a licença-maternidade.","descricao":"Use para comunicar que você ou uma colaboradora da sua equipe está voltando da licença-maternidade. Basta indicar a colaboradora e anexar o exame médico de retorno (ASO, Atestado de Saúde Ocupacional). Não use para retorno de afastamento pelo INSS por doença ou acidente (use 'Comunicar retorno de afastamento do INSS').","frases_exemplo":["estou voltando da licença maternidade","a colaboradora retorna da licença maternidade segunda","como informo o retorno da licença maternidade?","mandar o ASO de retorno da licença"],"fixar":"v_return_maternity_inss = return_maternity (default/hidden)","perguntas":[{"ordem":1,"variavel":"vs_employee","conversational_label":"Quem está retornando?"},{"ordem":2,"variavel":"v_attach_return_exam","conversational_label":"Envie o exame médico de retorno (ASO)."},{"ordem":3,"variavel":"v_description","conversational_label":"Quer acrescentar alguma observação? (opcional)"}]},
+{
+"nome":"Comunicar retorno de afastamento do INSS",
+"short_description":"Informe a volta ao trabalho de colaborador que estava afastado pelo INSS.",
+"descricao":"Use para comunicar o retorno de colaborador que estava afastado pelo INSS (Instituto Nacional do Seguro Social) por doença ou acidente. Tenha em mãos: turno, se haverá abono administrativo e o período, a data do último dia do benefício (ou se é alta antecipada/benefício em análise), a data da primeira ida ao espaço de saúde, a data do ASO (Atestado de Saúde Ocupacional) de retorno, o exame de retorno e o comunicado de decisão do INSS. Não use para retorno de licença-maternidade.",
+"frases_exemplo":["funcionário teve alta do INSS e volta semana que vem","comunicar retorno de afastamento INSS","colaborador voltou do auxílio-doença","recebi alta do INSS, o que faço?","retorno de afastado com abono administrativo"],
+"fixar":"v_return_maternity_inss = inss_leave (default/hidden)",
+"perguntas":[
+{"ordem":1,"variavel":"vs_employee","conversational_label":"Quem está retornando do afastamento?"},
+{"ordem":2,"variavel":"v_date_of_return_to_work_aso_doctor","conversational_label":"Qual a data de retorno indicada no ASO?"},
+{"ordem":3,"variavel":"v_shift","conversational_label":"Em qual turno a pessoa vai trabalhar?"},
+{"ordem":4,"variavel":"v_alta_beneficio_analise","conversational_label":"É alta antecipada ou o benefício ainda está em análise no INSS?"},
+{"ordem":5,"variavel":"v_date_of_last_day_of_inss_benefit","conversational_label":"Qual o último dia do benefício do INSS?"},
+{"ordem":6,"variavel":"v_date_of_first_visit_to_the_health_space","conversational_label":"Em que data foi a primeira ida ao espaço de saúde?"},
+{"ordem":7,"variavel":"v_administrative_allowance","conversational_label":"Haverá abono administrativo?"},
+{"ordem":8,"variavel":"v_administrative_allowance_start_date","conversational_label":"Qual a data de início do abono?"},
+{"ordem":9,"variavel":"v_end_date_of_administrative_allowance","conversational_label":"E a data de fim do abono?"},
+{"ordem":10,"variavel":"v_requested_medical_report_or_complementary_exam","conversational_label":"O médico pediu laudo ou exame complementar?"},
+{"ordem":11,"variavel":"v_attach_return_exam_two","conversational_label":"Envie o exame de retorno (ASO)."},
+{"ordem":12,"variavel":"v_attach_the_inss_decision_notice","conversational_label":"Envie o comunicado de decisão do INSS."},
+{"ordem":13,"variavel":"v_description","conversational_label":"Quer acrescentar alguma observação?"}
+]
+}
+],
+"scripts_e_policies":[{"nome":"EY: If \"Afastamento INSS\" / EY: If \" Retorno Licença maternidade\"","acao":"remover","substituicao":"A divisão elimina as policies de ramo; atributos mandatory direto nas variáveis de cada item."},{"nome":"EY: Show date fields if adm allowance / policies de v_alta_beneficio_analise","acao":"manter","substituicao":"No-code, VA Supported; simplificar retirando a condição v_return_maternity_inss."},{"nome":"EY: Mandatory fields","acao":"remover","substituicao":"v_return_maternity_inss vira valor fixo em cada derivado."}]
+}
+}

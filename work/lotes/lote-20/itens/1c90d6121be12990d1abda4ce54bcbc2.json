@@ -1,0 +1,30 @@
+{
+"sys_id":"1c90d6121be12990d1abda4ce54bcbc2",
+"name":"Lançamento Contábil Avon",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Lançamentos Contábeis",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Reclasificaciones contables",
+"description":"Reclasificaciones contables",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"tipo_nao_suportado","detail":"Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)","onde":"v_template_avon"},{"code":"macro","detail":"variavel usa UI Macro, que nao renderiza em conversa","onde":"v_template_avon"},{"code":"widget","detail":"variavel usa widget de portal, que nao renderiza em conversa","onde":"v_template_avon"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"atencao":["set EY VS Lançamento Contabil AVON/v_template_avon: custom/macro/widget (type 17)"],
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[{"sys_id":"5e285ecb1b696d90d1abda4ce54bcb26","name":"EY: Campo company - Tirar natura/tbs","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad. Remove as opções 'tbs' e 'natura' da lista 'vs_which_company', restringindo a escolha de empresa às demais opções neste formulário."}],
+"variable_sets":[{"sys_id":"cf3da7791bf83910d1abda4ce54bcb99","title":"EY VS - Empresas Avon - Lançamento Contábil Avon","order":100},{"sys_id":"a782884b1bf986d0a530426fe54bcb7f","title":"EY VS - Sox","order":125},{"sys_id":"7c366e921b652990d1abda4ce54bcbab","title":"EY VS Lançamento Contabil AVON","order":150},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":10000}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar lançamento contábil Avon",
+"short_description":"Peça um lançamento ou reclassificação contábil manual para empresas Avon (Brasil e LATAM).",
+"description":"Use para pedir à Contabilidade (RTR) um lançamento contábil manual ou uma reclassificação contábil (reclasificación contable) nas empresas Avon, Brasil ou América Latina. Você informa a empresa e a sub-empresa, anexa a planilha modelo de lançamento Avon preenchida e o documento de suporte. O modelo está no artigo de KB. Não use para Natura ou The Body Shop (use \"Solicitar lançamento contábil (Natura e TBS)\"), para intercompany, provisões ou estornos.",
+"frases_exemplo":["Preciso de um lançamento contábil na Avon","reclasificación contable Avon Perú","necesito un asiento contable manual","reclassificar conta Avon Brasil","subir template de lançamento Avon"],
+"labels":{"v_attach_template_file":"Anexe a planilha modelo de lançamento Avon preenchida.","v_attach_template_file2":"Agora anexe o documento de suporte do lançamento.","v_additional_information":"Quer acrescentar alguma informação?"},
+"acoes":{"v_template_avon":"remover","vs_attachment_information_avon":"ocultar_na_conversa","vs_approver_avon":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Campo company - Tirar natura/tbs","acao":"converter","substituicao":"O set \"EY VS - Empresas Avon - Lançamento Contábil Avon\" é exclusivo; remover as opções natura/tbs das choices do próprio set e apagar o script."},{"nome":"EY - Mandatory on CatItem View","acao":"converter","substituicao":"Retirar vs_approver_avon (hidden) da lista de obrigatórios."}]
+}
+}

@@ -17,8 +17,8 @@ const index = JSON.parse(fs.readFileSync(path.join(digDir, 'index.json'), 'utf8'
 const LAYOUT = new Set(['11', '12', '19', '20', '24', '32']);
 for (const i of itens) {
   if (i.recomendacao !== 'avaliar_desativacao') continue;
-  const dg = JSON.parse(fs.readFileSync(path.join(digDir, 'items', `${i.sys_id}.json`), 'utf8'));
-  const perguntas = dg.variaveis.filter((q) => !LAYOUT.has(q.type_code)).length + dg.variable_sets.reduce((n, s) => n + s.perguntas.length, 0);
+  const dg = JSON.parse(fs.readFileSync(path.join(digDir, 'pacotes', `${i.sys_id}.json`), 'utf8'));
+  const perguntas = [dg, ...dg.variable_sets].reduce((n, s) => n + s.variaveis.filter((q) => !LAYOUT.has(q.type)).length, 0);
   if (perguntas === 0 && !(dg.volume && dg.volume.total)) {
     i.recomendacao = 'substituir_por_link_kb';
     i.observacoes = [i.observacoes, 'Reclassificado: item-atalho sem perguntas (volume zero é esperado, pois não gera caso). Publicar como artigo de KB ou tópico de VA com o link, para o Now Assist responder à intenção.'].filter(Boolean).join(' ');

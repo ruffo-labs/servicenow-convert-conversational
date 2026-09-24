@@ -1,0 +1,29 @@
+{
+"sys_id":"a72f275f1b693990d1abda4ce54bcbcc",
+"name":"Reparcelamento de título",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Tratativa de pedidos e pagamento de vendas",
+"sc_catalogs":{"_display_value":"OTC Suporte à Força de Vendas e Recebíveis","__text":"90c6e4ac1bbfd9d0d1abda4ce54bcb34"},
+"short_description":"",
+"description":"Formulário específico para realizar o reparcelamento de títulos de faturamento incorreto.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"00fa0b3f1bc8a51cd1abda4ce54bcb0f","title":"EY: Company  - Avon/Natura and Sub Company","order":100},{"sys_id":"36c4ff5b1ba93990d1abda4ce54bcba9","title":"EY VS: Repayment of title","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar reparcelamento de título por faturamento incorreto",
+"short_description":"Reparcelamento de título (individual ou em lote) com faturamento incorreto",
+"description":"Use para pedir o reparcelamento de um título ou de um lote de títulos de consultoras ou representantes que foram faturados incorretamente. No pedido individual, informe o título, o vencimento e em quantas parcelas; no lote, anexe a planilha no modelo. Não use para só prorrogar vencimento (use \"Solicitar prorrogação de vencimento de títulos\").",
+"frases_exemplo":["preciso reparcelar um título faturado errado","reparcelamento de boleto da consultora","quero dividir o título em mais parcelas","reparcelar títulos em lote","faturamento incorreto, precisa reparcelar"],
+"labels":{"vs_order_individual_or_batch":"É um título só ou um lote de títulos?","v_search_cpf_cnpj":"Qual é o CPF/CNPJ, código ou nome da consultora ou representante?","vs_number_bond":"Qual é o número do título a reparcelar?","vs_maturity_bond":"Qual é o vencimento atual?","vs_many_parcels":"Em quantas parcelas?","vs_describe_the_reason_for_your_request":"Qual é o motivo do reparcelamento?","vs_select_the_approver":"Quem vai aprovar o reparcelamento?","vs_annex_credit_approval":"Anexe a planilha preenchida com os títulos."},
+"acoes":{"vs_data_search":"remover","v_search_cpf_cnpj":"alterar_tipo:Reference","vs_consultant_name_new":"remover","vs_representative_code":"remover","vs_representative_email_new":"remover","vs_describe_reason_request":"remover","vs_annex_credit_approval":"alterar_tipo:Anexo do chamado"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Show Fields for Individual Order / Batch Order","acao":"manter","substituicao":"UI Policies sem script; ajustar para a variável de motivo única."},{"nome":"EY: Show Fields Code/CPF/Email/Name Search","acao":"remover","substituicao":"Busca unificada."},{"nome":"EY: Mandatory Fields Catalog Item View","acao":"converter","substituicao":"Mandatory direto nas variáveis."}]
+}
+}

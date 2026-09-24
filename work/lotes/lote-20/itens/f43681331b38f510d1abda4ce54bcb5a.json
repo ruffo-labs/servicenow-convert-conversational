@@ -1,0 +1,29 @@
+{
+"sys_id":"f43681331b38f510d1abda4ce54bcb5a",
+"name":"Cancelar ou Corrigir Nota Fiscal",
+"tipo":"record_producer",
+"table_name":"x_nasm_tax_case",
+"category":"Fiscal",
+"sc_catalogs":{"_display_value":"TAX","__text":"f38b713e1b78b110d1abda4ce54bcb44"},
+"short_description":"",
+"description":"Solicitação de Cancelamento ou Correção de Nota Fiscal de saída",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+"variaveis":[{"name":"v_which_invoice_number_do_you_want_to_cancel_or_correct","type":"6","order":200,"question_text":"Which invoice number do you want to cancel or correct?"},{"name":"v_attach_outgoing_invoice","type":"33","order":300,"question_text":"Attach outgoing invoice"},{"name":"v_click_here_to_download_the_template","type":"32","order":400,"question_text":"Click here to download the template that must be used in the field below"}],
+"ui_policies":[{"sys_id":"7660213f1bf8f510d1abda4ce54bcb9f","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_click_here_to_download_the_template: mandatory=true","v_which_invoice_number_do_you_want_to_cancel_or_correct: mandatory=true","v_attach_outgoing_invoice: mandatory=true"]}],
+"client_scripts":[{"sys_id":"dfe739bf1bbcf510d1abda4ce54bcb04","name":"EY: Regex Validation 9-1;3","type":"onChange","cat_variable":"a0ae813f1b38f510d1abda4ce54bcb7c","ui_type":"10","script":"Mesma validação de número de nota (9 dígitos, hífen, 1 a 3 dígitos), aqui sobre 'v_which_invoice_number_do_you_want_to_cancel_or_correct'. Limpa e mostra erro com exemplos quando não casa."}],
+"variable_sets":[{"sys_id":"77c5dffa1bb0f110d1abda4ce54bcbb8","title":"EY: Tax - Company Avon/Natura - Subcompany","order":100},{"sys_id":"b3b65b7e1bb0f110d1abda4ce54bcb1b","title":"EY: Tax - Attachments","order":500}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Cancelar ou corrigir nota fiscal de saída",
+"short_description":"Peça o cancelamento ou a carta de correção de uma nota fiscal de saída já emitida.",
+"description":"Use quando uma nota fiscal de saída já emitida precisa ser cancelada ou corrigida (carta de correção eletrônica). Informe a empresa, a sub-empresa, o número da nota, se é cancelamento ou correção, e anexe a nota e a planilha modelo com o que deve mudar. Não use para devolução de mercadoria (use \"Emissão de nota fiscal de devolução\") nem para nota complementar.",
+"frases_exemplo":["Preciso cancelar uma nota fiscal","emitir carta de correção da NF 000123456-1","a nota saiu com erro, quero corrigir","cancelar NF de saída","CC-e para nota emitida errada"],
+"labels":{"nova_acao_nf":"Você quer cancelar ou corrigir a nota?","v_which_invoice_number_do_you_want_to_cancel_or_correct":"Qual o número da nota? (formato 000000000-000)","v_attach_outgoing_invoice":"Anexe a nota fiscal de saída.","vs_attach_template":"Agora anexe a planilha modelo com o motivo e o que precisa mudar."},
+"acoes":{"nova_acao_nf":"nova:Selecionar Caixa (Cancelar / Corrigir)","v_click_here_to_download_the_template":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Regex Validation 9-1;3","acao":"converter","substituicao":"Validation Regex OOB na variável v_which_invoice_number_do_you_want_to_cancel_or_correct (^\\d{9}-\\d{1,3}$) com mensagem \"Informe no formato 000000000-000\"; remover o client script."},{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Remover o rótulo v_click_here_to_download_the_template da lista e marcar mandatory direto nas variáveis."}]
+}
+}

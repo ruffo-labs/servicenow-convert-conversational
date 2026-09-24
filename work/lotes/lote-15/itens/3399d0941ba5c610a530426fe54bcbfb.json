@@ -1,0 +1,19 @@
+{
+"sys_id":"3399d0941ba5c610a530426fe54bcbfb",
+"name":"Informações ou dúvidas relacionadas a movimentação de pessoal e estrutura",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Gestão de Pessoas e Estrutura",
+"sc_catalogs":"Hire to Retire (HTR), Virtual Agent Search",
+"short_description":"Este é um formulário para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre Informações ou Dúvidas relacionadas a movimentação de pessoal e estrutura",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+"variaveis":[{"name":"when_use_this_form","type":"32","order":100,"question_text":"\"Quando usar este formulário:\r\n- Quando você acredita que este é um serviço que a CSC (Centro de Serviços Compartilhados) fornece.\r\n- Quando não encontra o serviço que procura no Catálogo de Serviços.\r\n- Quando não encontra o serviço que procura na Base de Conhecimentos.\""},{"name":"v_description_details","type":"2","order":200,"question_text":"Use the field below to detail your request"}],
+"ui_policies":[{"sys_id":"585f99901b250a10a530426fe54bcb91","short_description":"Mandatory fields","conditions":"","actions":["v_description_details: visible=true,mandatory=true"]}],
+"client_scripts":[{"sys_id":"99df51141b250a10a530426fe54bcb44","name":"EY: Minimum caracter ","type":"onSubmit","ui_type":"10","script":"Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."}],
+"variable_sets":[],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Tirar dúvida sobre movimentação de pessoal e estrutura","short_description":"Dúvidas sobre transferência, promoção, mudança de cargo, gestor ou estrutura sem formulário específico.","description":"Use para tirar dúvidas sobre movimentação de pessoal e estrutura organizacional (transferência, promoção, mudança de cargo, troca de gestor, centro de custo, estrutura de equipe) quando não houver um formulário específico nem resposta na base de conhecimento. Não use para pedir a criação de cargo nem admissão ou movimentação internacional, que têm itens próprios. Disponível para colaboradores do Brasil.","frases_exemplo":["dúvida sobre transferência de área","como funciona a promoção de um colaborador?","quero saber sobre mudança de gestor","pergunta sobre estrutura da minha equipe","não achei o formulário de movimentação"],"labels":{"v_description_details":"Qual é a sua dúvida sobre movimentação de pessoal ou estrutura?"},"acoes":{"when_use_this_form":"remover"},"derivados":[],"scripts_e_policies":[{"nome":"EY: Minimum caracter","acao":"converter","substituicao":"Validation Regex em v_description_details."},{"nome":"Mandatory fields","acao":"converter","substituicao":"Mandatory direto na variável."}]}
+}

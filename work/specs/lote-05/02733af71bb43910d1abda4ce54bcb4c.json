@@ -1,0 +1,96 @@
+{
+ "sys_id": "02733af71bb43910d1abda4ce54bcb4c",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir emissão de NF de remessa para industrialização). O bloqueio era o widget custom de anexo (v_attachment, type 14): existe equivalente OOB (anexo type 33), então convertemos para nova_anexo em vez de manter formulário. Os regex de validação (telefone, e-mail, CPF/CNPJ, número da nota) e a policy de obrigatoriedade sem condição viram props/validation_regex nas variáveis.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_name": {
+   "label": "Qual é o seu nome?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cpf_cnpj": {
+   "label": "Qual é o seu CPF ou CNPJ?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2})$"
+   }
+  },
+  "v_email": {
+   "label": "Qual é o seu e-mail de contato?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+   }
+  },
+  "v_phone": {
+   "label": "Qual é o seu telefone de contato?",
+   "props": {
+    "validation_regex": "^(55)?[1-9]{2}\\d{8,9}$"
+   }
+  },
+  "v_which_company_is_your_request_for": {
+   "label": "Para qual empresa é a solicitação?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_which_sub_company_is_the_request_from": {
+   "label": "Qual é a subempresa da sua solicitação?",
+   "props": {
+    "type": "8"
+   }
+  },
+  "v_which_invoice_number_do_you_want_to_join": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9}-\\d{1,3}$"
+   }
+  },
+  "v_which_company_do_you_want_to_ship_to": {
+   "label": "Para qual empresa é o envio da mercadoria?",
+   "props": {
+    "mandatory": true,
+    "type": "8"
+   }
+  },
+  "nova_anexo": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a planilha ou o PDF da nota fiscal",
+    "mandatory": true,
+    "order": 1100
+   }
+  }
+ },
+ "remover": {
+  "v_attach_pdf": "visual",
+  "v_attachment": {
+   "substituida_por": "nova_anexo"
+  },
+  "v_attachment_confirmation": "visual",
+  "v_yes": {
+   "substituida_por": "nova_anexo"
+  }
+ },
+ "policies": {
+  "82c57afb1bb43910d1abda4ce54bcbc9": "remover"
+ },
+ "scripts": {
+  "39b9813e1bcd3910d1abda4ce54bcba3": {
+   "converter": "regex"
+  },
+  "6716363f1bb43910d1abda4ce54bcbfb": {
+   "converter": "regex"
+  },
+  "77f84dfa1bcd3910d1abda4ce54bcbd2": {
+   "converter": "regex"
+  },
+  "b696c5b61bcd3910d1abda4ce54bcbaf": {
+   "converter": "regex"
+  }
+ }
+}

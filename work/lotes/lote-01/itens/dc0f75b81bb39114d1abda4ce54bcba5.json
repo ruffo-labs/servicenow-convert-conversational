@@ -1,0 +1,37 @@
+{
+"sys_id":"dc0f75b81bb39114d1abda4ce54bcba5",
+"name":"Relatar erros ou ajustes no acesso ADP",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Suporte de acesso ao sistema ADP",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Utilize este formulário apenas para registrar erros ou ajustes de acesso no sistema ADP",
+"description":".",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de erros/ajustes no acesso ADP. Grava item com o sysparm_id e delega a definição do solicitante a x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+"variaveis":[{"name":"v_company","type":"6","order":120,"question_text":"Company","hidden":true},{"name":"v_adp_access_maintenance","type":"19","order":250,"question_text":"Report errors or adjustments to ADP access"},{"name":"v_select_the_desired_support","type":"5","order":300,"question_text":"Select the desired support:","include_none":true,"choices":["Access error (federation) [=access_error]","Inclusion of cost center (process assistant) [=inclusion_cost_center]","Timesheet justification list [=timesheet_justification_list]","ADP access maintenance [=adp_access_maintenance]"]},{"name":"v_csc_will_be_able_to_support_with","type":"32","order":400},{"name":"v_phone_natura_tbs","type":"32","order":500},{"name":"v_phone_avon","type":"32","order":600},{"name":"v_attach_here_the_evidence_with_your_adp_system_error","type":"33","order":700,"question_text":"Attach here a screenshot of the error screen or management approval email for cost center inclusion."},{"name":"v_comments","type":"2","order":800,"question_text":"Describe your request in detail."}],
+"ui_policies":[
+{"sys_id":"411a48e91bbb9d14d1abda4ce54bcb7e","short_description":"EY: When asked \"Select the desired support\" for any","conditions":"v_select_the_desired_supportINaccess_error,inclusion_cost_center,timesheet_justification_list,adp_access_maintenance","actions":["v_attach_here_the_evidence_with_your_adp_system_error: visible=true,mandatory=true"]},
+{"sys_id":"8c12199d1b806558a530426fe54bcbc5","short_description":"EY: Select the desired support","conditions":"vs_solicitation_to_whom=my_request^ORvs_solicitation_to_whom=another_employee","actions":["v_select_the_desired_support: visible=true,mandatory=true"]},
+{"sys_id":"9bd260f71bf399d4d1abda4ce54bcb8f","short_description":"EY: When the employee is Avon","conditions":"v_companyLIKEAvon^v_is_your_problem_exclusively_in_accessing_the_adp_system=No","actions":["v_phone_avon: visible=true"],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},
+{"sys_id":"9c5744ad1b7b9d14d1abda4ce54bcbb6","short_description":"EY: When \"your problem is in ADP\" is Avon","conditions":"v_companyLIKEAvon","actions":[]},
+{"sys_id":"da0a64153bbe2210924d0247f4e45a88","short_description":"EY - Comments - Read Only","conditions":"","applies_catalog":false,"actions":["v_comments: readonly=true"]},
+{"sys_id":"dc55c0a51b7b9d14d1abda4ce54bcbeb","short_description":"EY: When \"your problem is in ADP\" for Natura, TBS and Aesop","conditions":"v_companyLIKENatura^ORv_companyLIKEAesop^v_is_your_problem_exclusively_in_accessing_the_adp_system=No^NQv_companyLIKETBS^ORv_companyLIKEThe Body Shop^v_is_your_problem_exclusively_in_accessing_the_adp_system=No","actions":["v_csc_will_be_able_to_support_with: visible=true,mandatory=false"],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"},
+{"sys_id":"e5ab84b31bb3d5d4a530426fe54bcbde","short_description":"EY: When the employee is Natura or TBS","conditions":"v_companyLIKENatura^ORv_companyLIKETbs^ORv_companyLIKEthebodyshop^v_is_your_problem_exclusively_in_accessing_the_adp_system=No","actions":["v_phone_natura_tbs: visible=true"],"pendencia_humana":"condição usa variável ausente; mantenha a policy como está"}
+],
+"client_scripts":[{"sys_id":"32541d401b846dd4a530426fe54bcb24","name":"EY: Get User Company","type":"onChange","cat_variable":"3bae284f1bafdd50a530426fe54bcbbe","ui_type":"10","script":"Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando o valor fica vazio."}],
+"variable_sets":[{"sys_id":"a0ace4471bafdd50a530426fe54bcbd2","title":"EY: Requester Data","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Relatar erro ou pedir ajuste de acesso no ADP",
+"short_description":"Erros de acesso, inclusão de centro de custo e ajustes de perfil no sistema ADP",
+"description":"Use para relatar erro ao acessar ou usar o sistema ADP (ponto e folha) ou pedir ajuste de acesso: erro de login ou tela, inclusão de centro de custo para gestor, lista de justificativas de ponto e manutenção de perfil de acesso. Tenha em mãos um print do erro ou o e-mail de aprovação do gestor. Para dúvidas de ponto ou de pagamento que não sejam de acesso, use os itens de Controle de Jornada ou Folha.",
+"frases_exemplo":["não consigo entrar no ADP","o ADP está dando erro na tela","preciso incluir um centro de custo no meu acesso do ADP","meu perfil no ADP está errado","não aparece a lista de justificativas do ponto no ADP"],
+"labels":{"v_select_the_desired_support":"Que tipo de ajuda você precisa no ADP?","v_comments":"Descreva o problema ou o ajuste que você precisa.","v_attach_here_the_evidence_with_your_adp_system_error":"Anexe um print do erro ou o e-mail de aprovação do gestor."},
+"acoes":{"v_company":"derivar","v_csc_will_be_able_to_support_with / v_phone_natura_tbs / v_phone_avon":"ocultar_na_conversa"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY - Comments - Read Only","acao":"remover","substituicao":"Ou limitar à visão do atendente. Na visão do catálogo, v_comments deve ser editável e obrigatória."},{"nome":"EY: Get User Company","acao":"converter","substituicao":"Auto-populate de v_company a partir de vs_employee.company."},{"nome":"EY: When the employee is Avon / Natura or TBS / When 'your problem is in ADP' ...","acao":"remover","substituicao":"Dependem de v_is_your_problem_exclusively_in_accessing_the_adp_system, que não existe. Os telefones vão para a descrição."},{"nome":"EY: When asked 'Select the desired support' for any","acao":"manter","substituicao":"Compatível: anexo obrigatório para os tipos listados."},{"nome":"EY: Select the desired support","acao":"converter","substituicao":"Deixar v_select_the_desired_support visível e obrigatória direto na variável, sem depender do set."}]
+}
+}

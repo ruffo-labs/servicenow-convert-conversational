@@ -1,0 +1,29 @@
+{
+"sys_id":"886b94a81be56150d1abda4ce54bcb80",
+"name":"Conciliação Bancária - Saídas e Entradas de Fornecedores",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"Virtual Agent Search, PTP_",
+"short_description":"Solicite a reclassificação e compensação bancária das contas de fornecedores",
+"description":"Solicite a reclassificação e compensação bancária das contas de fornecedores",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[{"name":"link_template","type":"32","order":1050}],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"1c0d5ca81b296150d1abda4ce54bcb2c","title":"VS - Conciliação bancaria","order":200},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":1000}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar conciliação bancária de fornecedor (entradas e saídas)",
+"short_description":"Peça a compensação ou reclassificação de entradas e saídas bancárias na conta do fornecedor",
+"description":"Use para pedir à Tesouraria/Contas a Pagar que concilie um movimento bancário com a conta do fornecedor: compensar uma saída (pagamento debitado no banco) ou uma entrada (devolução/crédito recebido do fornecedor) e reclassificar o lançamento. Você vai escolher o tipo de compensação, o movimento e o aprovador. Não use para ajustar o lançamento da nota fiscal (use ajuste de lançamento de fornecedor) nem para avisar pagamento duplicado.",
+"frases_exemplo":["preciso compensar uma saída bancária do fornecedor","conciliar pagamento que saiu do banco com a conta do fornecedor","fornecedor devolveu dinheiro, precisa compensar a entrada","reclassificar movimento bancário de fornecedor","baixa de partida em aberto do fornecedor no banco"],
+"labels":{"v_compensation_type":"A compensação é de uma entrada ou de uma saída bancária?","v_compensation_bank_entries":"Qual o tipo de entrada bancária a compensar?","v_compensa_o_sa_das_banc_rias":"Qual o tipo de saída bancária a compensar?","v_approver":"Quem é o gestor que vai aprovar?"},
+"acoes":{"link_template":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Treating bank input and output field (set Conciliação bancaria)","acao":"remover","substituicao":"As duas UI policies condicionais já mostram o campo certo conforme v_compensation_type."},{"nome":"if select compensation_bank_entries... (2 policies)","acao":"manter","substituicao":"UI policies sem script, VA Supported; desmarcar \"On load\". Conferir o valor \"bank _outgoing_compensation\" (tem espaço no choice value)."},{"nome":"EY: Obrigatorio (set Conciliação bancaria)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar v_approver e v_compensation_type como Mandatory na variável."},{"nome":"EY: Somente leitura / case-task (set Conciliação bancaria)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]
+}
+}

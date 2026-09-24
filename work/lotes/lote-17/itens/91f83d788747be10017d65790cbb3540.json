@@ -1,0 +1,19 @@
+{
+"sys_id":"91f83d788747be10017d65790cbb3540",
+"name":"Solicitação de Alteração de Custo Padrão (Materiais Produtivos)",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Estoques e Custos",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicitar alteração do custo de Materiais Produtivos",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[{"name":"v_applicant_area","type":"6","order":200,"question_text":"Applicant's area"},{"name":"v_type_of_change","type":"5","order":300,"question_text":"Type of change","include_none":true,"choices":["Internal Production [=internal_production]","Third-Party Production [=thirdparty_production]"]},{"name":"v_select_the_marketing_approver","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":400,"question_text":"Select the Marketing approver according to the material category"},{"name":"v_select_the_innovation_finance_approver","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":500,"question_text":"Select the Innovation Finance approver according to the material category"},{"name":"v_select_the_engineering_approver","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":600,"question_text":"Select the Engineering approver according to the material category"},{"name":"v_important_warning_label","type":"11","order":700,"question_text":"Important: only up to 10 materials can be sent for modification per request"}],
+"ui_policies":[{"sys_id":"6557aec987c33a50ec360e530cbb358e","short_description":"EY: Set Mandatory fields","conditions":"","actions":["v_type_of_change: mandatory=true","v_select_the_marketing_approver: mandatory=true","request_for_who: mandatory=true","v_applicant_area: mandatory=true","employee: mandatory=true","v_select_the_engineering_approver: visible=false","v_select_the_innovation_finance_approver: mandatory=true"]},{"sys_id":"8079aa8587073a50ec360e530cbb35ea","short_description":"EY: Set visibility of engineer based on v_Type_of_change","conditions":"v_type_of_change=internal_production","actions":["v_select_the_engineering_approver: visible=true,mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"55e3c9e887837a10017d65790cbb35d4","title":"EY: Requester Info","order":100},{"sys_id":"40d87ef087c33250017d65790cbb35ca","title":"Enter here the data of the materials to be changed","order":800}],
+"primeira_analise":{"recomendacao":"manter_formulario","nome":"Solicitar alteração de custo padrão de material produtivo","short_description":"Peça a alteração do custo padrão de até 10 materiais produtivos por solicitação.","description":"Use para pedir à Contabilidade de Custos a mudança do custo padrão de materiais produtivos (matéria-prima, embalagem, produção interna). Você informa os materiais (até 10 por pedido), o custo atual, o novo custo e o motivo, e indica os aprovadores de Marketing, Finanças de Inovação e, se for produção interna, Engenharia. Não use para provisão de estoque nem para lançamentos contábeis avulsos.","frases_exemplo":["Preciso alterar o custo padrão de um material","mudar custo standard de matéria-prima","atualizar custo padrão de embalagem","solicitar revisão de custo de material produtivo"],"labels":{"v_applicant_area":"De qual área você é?"},"acoes":{"v_important_warning_label":"remover"},"derivados":[],"scripts_e_policies":[]}
+}

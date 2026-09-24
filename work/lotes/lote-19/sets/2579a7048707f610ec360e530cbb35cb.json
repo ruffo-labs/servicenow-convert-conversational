@@ -1,0 +1,10 @@
+{
+"sys_id":"2579a7048707f610ec360e530cbb35cb",
+"title":"EY: Basic collaborator Info",
+"internal_name":"ey_basic_collaborator_info",
+"order":100,
+"description":"for who, Select Colaborator, name, Global ID, Email, public",
+"variaveis":[{"name":"vs_for_who","type":"5","order":100,"question_text":"Request for whom?","include_none":true,"choices":["For me [=for_me]","For another collaborator [=another_user]"]},{"name":"vs_select_the_collaborator","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":200,"question_text":"Select the collaborator"},{"name":"vs_select_collaborators_name","type":"8","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":250,"question_text":"Collaborator's Name"},{"name":"vs_collaborator_name","type":"6","reference":"sys_user","reference_qual":"active=true^EQ","reference_qual_condition":"active=true^EQ","order":300,"question_text":"Collaborator's name"},{"name":"vs_collaborato_global_id","type":"6","order":400,"question_text":"Collaborator's Global ID"},{"name":"vs_collaborator_e_mail","type":"6","order":500,"question_text":"Corporate Email"},{"name":"vs_public","type":"6","order":600,"question_text":"Public"}],
+"ui_policies":[{"sys_id":"69cb2c7f334f369098331c07ee5c7b8a","short_description":"EY: Set Collaborators Name Visible off","conditions":"","actions":["vs_select_collaborators_name: visible=false"]}],
+"client_scripts":[{"sys_id":"a9cb04dc87c33a10ec360e530cbb3555","name":"EY: Populate collaboratos name","type":"onChange","cat_variable":"956aa38c8707f610ec360e530cbb35fa","ui_type":"10","script":"Catalog Client Script onChange que preenche dados do colaborador. Chama o Script Include EY_HTRUtils, método getEmployeeGlobalIdAndPublic, via GlideAjax, e usa o retorno para preencher ID global e público. Duplicata de outro script do mesmo conjunto."}]
+}

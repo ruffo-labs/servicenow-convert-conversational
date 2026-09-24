@@ -1,0 +1,29 @@
+{
+"sys_id":"7b483bfd1b912510a530426fe54bcb12",
+"name":"Criação de Nota de Débito",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Solicite a criação de nota de débito ao fornecedor",
+"description":"Solicite a criação de nota de débito ao fornecedor",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[{"sys_id":"831ba9f31b592d50a530426fe54bcb11","short_description":"Variaveis Obrigatorias ","conditions":"","actions":["v_due_date: mandatory=true","v_credit_amount: mandatory=true","v_additional_information: mandatory=true","v_cost_center: mandatory=true","v_account_account: mandatory=true","v_document_number_invoice: mandatory=true","v_amount: mandatory=true","v_reason_for_credit: mandatory=true"]}],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"a276c5e51b99e510a530426fe54bcbb0","title":"EY VS - Fornecedores","order":200},{"sys_id":"57a1b70a1bdd6910d1abda4ce54bcbaf","title":"EY VS - Criação de Nota de Débito","order":300},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":400}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar nota de débito para fornecedor",
+"short_description":"Peça a emissão de uma nota de débito contra um fornecedor",
+"description":"Use para pedir ao Contas a Pagar a emissão de uma nota de débito para cobrar ou descontar um valor de um fornecedor (por exemplo, multa contratual, devolução ou diferença de preço). Você vai informar o fornecedor, o motivo, a nota fiscal de referência, os valores, o centro de custo e a conta contábil. Não use para corrigir o lançamento da nota (use ajuste de lançamento).",
+"frases_exemplo":["preciso emitir uma nota de débito para o fornecedor","cobrar multa do fornecedor com nota de débito","descontar diferença de preço do fornecedor","criar ND para fornecedor","nota de débito por devolução de mercadoria"],
+"labels":{"v_reason_for_credit":"Qual o motivo da nota de débito?","v_document_number_invoice":"Qual o número da nota fiscal de referência?","v_due_date":"Qual a data de vencimento?","v_amount":"Qual o valor da nota fiscal de referência?","v_credit_amount":"Qual o valor a debitar do fornecedor?","v_cost_center":"Qual o centro de custo?","v_account_account":"Qual a conta contábil?"},
+"acoes":{},
+"derivados":[],
+"scripts_e_policies":[{"nome":"Variaveis Obrigatorias","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). A entrada v_attachment não é variável do item: trocar pela opção \"Mandatory attachment\" do record producer, e o anexo é pedido ao final da conversa."},{"nome":"EY: Read Only Variables","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."},{"nome":"EY: Máscara de Moeda (v_amount e v_credit_amount, set Criação de Nota de Débito)","acao":"converter","substituicao":"Remover o script e usar Validation Regex na variável v_amount e v_credit_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."}]
+}
+}

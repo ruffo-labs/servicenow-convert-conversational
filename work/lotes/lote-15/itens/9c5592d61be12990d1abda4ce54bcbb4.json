@@ -1,0 +1,29 @@
+{
+"sys_id":"9c5592d61be12990d1abda4ce54bcbb4",
+"name":"Relatorios e consultas em geral",
+"tipo":"record_producer",
+"table_name":"x_nasm_rtr_case",
+"category":"Relatórios e Consultas Contábeis",
+"sc_catalogs":{"_display_value":"RTR","__text":"6169c5f31b15a110d1abda4ce54bcbec"},
+"short_description":"Solicite um relatório ou efetue uma consulta",
+"description":"Solicite um relatório ou efetue uma consulta",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Remove options information type"}]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[{"name":"v_controle","type":"6","order":60,"question_text":"Is your request for which company?","include_none":true,"choices":["Natura [=natura]","TBS [=tbs]","Avon LATAM [=avon_latam]"]}],
+"ui_policies":[{"sys_id":"3cc638dd1bad4610d1abda4ce54bcb6f","short_description":"EY: Hide Fields","conditions":"","actions":["v_controle: visible=false,mandatory=false,readonly=false"]}],
+"client_scripts":[{"sys_id":"9ff0fab21b6d4a50a530426fe54bcb47","name":"EY: Preencher variável controle ","type":"onChange","cat_variable":"797e07881b29a590a530426fe54bcbde","ui_type":"10","script":"Catalog Client Script onChange. Grava na variável de controle 'v_controle' o valor da empresa ('vs_which_company') quando o novo valor é 'Avon LATAM', e a string 'true' em qualquer outro caso. Serve de apoio para outras regras do formulário."},{"sys_id":"db9d507987b95610ec360e530cbb35d2","name":"EY: Remove options information type","type":"onChange","cat_variable":"9de674fc3bf1de10924d0247f4e45a7e","va_supported":false,"ui_type":"1","script":"Catalog Client Script onChange sobre o tipo de informação. Sempre começa removendo as opções 'cost', 'fixed_asset' e 'others' de 'vs_information_type' — inclusive no caso de valor vazio, quando sai logo em seguida. Depois lê o display value da sub-empresa e o idioma do usuário (g_lang), monta os rótulos em inglês, espanhol ou português, e recoloca as opções conforme a sub-empresa contenha os códigos 347, 305, 315, 331 ou 332. Efeito prático: a lista de tipos de informação muda conforme a sub-empresa e aparece no idioma do usuário."}],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"7ec5d61a1be12990d1abda4ce54bcb1b","title":"EY VS - Relatorios e consultas em geral","order":200}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar relatório ou consulta contábil",
+"short_description":"Peça um relatório contábil ou tire uma dúvida sobre saldos, custos, ativo fixo e lançamentos.",
+"description":"Use para pedir à Contabilidade (RTR) um relatório (razão, balancete, saldo de contas, custos, ativo fixo) ou para fazer uma consulta sobre lançamentos e saldos contábeis. Informe o assunto, o período e descreva o que precisa. Não use para pedir um lançamento, estorno ou provisão; para esses há itens próprios.",
+"frases_exemplo":["Preciso de um relatório contábil","me manda o razão da conta de despesas de junho","consulta de saldo de conta contábil","relatório de ativo fixo da unidade","tenho uma dúvida sobre um lançamento"],
+"labels":{"vs_request_type":"Você precisa de um relatório ou quer fazer uma consulta?","vs_information_type":"Sobre qual assunto: custos, ativo fixo, contas contábeis ou outro?","vs_report_start_date":"A partir de que data?","vs_report_end_date":"Até que data?","vs_description":"Descreva a informação que você precisa."},
+"acoes":{"v_controle":"derivar"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Remove options information type","acao":"remover","substituicao":"Choices estáticas traduzidas (ou Lookup Select Box com qualifier)."},{"nome":"EY: Preencher variável controle","acao":"converter","substituicao":"Se v_controle continuar necessário, calcular no flow/producer script a partir de vs_which_company."},{"nome":"EY - ReadOnly on Target Record (set Relatórios)","acao":"manter","substituicao":"Confirmar que não vale na visão do item."}]
+}
+}

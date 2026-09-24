@@ -1,0 +1,38 @@
+{
+"sys_id":"dad4109c1b9c691ca530426fe54bcb24",
+"name":"Solicitar cadastro e reativação de app de Táxi e Viagens Corporativas",
+"tipo":"record_producer",
+"table_name":"x_nasm_finance_case",
+"category":"Viagens Corporativas e Táxi",
+"sc_catalogs":"OTC Serviços de Suporte Administrativo, Virtual Agent Search",
+"short_description":"",
+"description":"Chamado para solicitar cadastro ou reativação em aplicativo de Táxi e Viagens Corporativas.",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de cadastro/reativação de app de Táxi e Viagens Corporativas. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils para definir o solicitante pelo variable set padrão e elevar a prioridade para 2 se o usuário for VIP.",
+"variaveis":[
+{"name":"v_label_if_you_have_questions","type":"32","order":50,"question_text":"If you have questions about the process, click here to consult the FAQ available in the knowledge base"},
+{"name":"v_container_request_registration_and_reactivation","type":"19","order":150,"question_text":"Request registration and reactivation of Taxi and Corporative Travel app"},
+{"name":"v_what_is_the_demand_of_the_call","type":"5","order":300,"question_text":"What is the demand of the call?","include_none":true,"choices":["Phone Change Registered in taxi app [=v_phone_change]","Request Taxi App Registration [=v_request_taxi_app]","Request Registration in the Travel System [=v_request_travel_system]","Request Reactivation in the Corpotive Taxi Application [=v_request_Reactivation_corpotive_application]","Request Reactivation in the Travel System [=v_request_reactivation_travel_system]"]},
+{"name":"v_report_cost_center_pep","type":"6","order":400,"question_text":"Report Cost Center or PEP"},
+{"name":"v_enter_your_cpf","type":"6","example_text":"000.000.000-00","order":500,"question_text":"Enter your CPF"},
+{"name":"v_enter_your_phone_number_mobile","type":"6","example_text":"(11) 91234-1234 or (11) 1234-1234","order":600,"question_text":"Enter your phone number (mobile)"},
+{"name":"v_enter_the_new_phone_number_mobile","type":"6","example_text":"(11) 91234-1234 or (11) 1234-1234","order":650,"question_text":"Enter the new phone number (mobile)"},
+{"name":"v_additional_information","type":"2","order":700,"question_text":"Additional information"}
+],
+"ui_policies":[{"sys_id":"0740b79d1b58ad10a530426fe54bcba6","short_description":"EY: If selected Phone Change Registered in Whats is the demand ","conditions":"v_what_is_the_demand_of_the_call=v_phone_change","actions":["v_enter_the_new_phone_number_mobile: visible=true,mandatory=true"]},{"sys_id":"cb03bfdd1b98ad10a530426fe54bcb32","short_description":"EY: Mandatory Fields","conditions":"","actions":["v_enter_your_cpf: mandatory=true","v_enter_your_phone_number_mobile: mandatory=true","v_what_is_the_demand_of_the_call: mandatory=true","v_report_cost_center_pep: mandatory=true"]}],
+"client_scripts":[{"sys_id":"a3d6a79d1b94ad10a530426fe54bcbfc","name":"EY: CPF Validation","type":"onChange","cat_variable":"2d9f1b201b142110a530426fe54bcb6e","ui_type":"10","script":"Catalog Client Script onChange que valida CPF por formato em 'v_enter_your_cpf' (000.000.000-00 ou 11 dígitos corridos). Inválido: limpa e mostra erro. Não confere dígitos verificadores."}],
+"variable_sets":[{"sys_id":"724f41271b446dd8a530426fe54bcb28","title":"EY: Opened by - Requested for data","order":100},{"sys_id":"ff18ed571b2c61d0d1abda4ce54bcbe3","title":"EY: Company: Natura/Avon/TBS/Aesop - Subcompany","order":200},{"sys_id":"cec8dff71b04251ca530426fe54bcb76","title":"EY: Document repository","order":800}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Cadastrar ou reativar acesso ao app de táxi e viagens corporativas",
+"short_description":"Cadastro, reativação ou troca do celular cadastrado no aplicativo corporativo de táxi e viagens.",
+"description":"Use quando precisar ser cadastrado no aplicativo corporativo de táxi e viagens, reativar um acesso bloqueado ou inativo, ou trocar o número de celular cadastrado no app. Vão ser pedidos o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto), o CPF e o celular. Não use para enviar orçamento de viagens nem para pedir suplementação de verba: para isso existe outro item.",
+"frases_exemplo":["preciso de cadastro no app de táxi da empresa","meu acesso ao app de viagens corporativas foi bloqueado","quero reativar minha conta do táxi corporativo","troquei de celular e preciso atualizar o número no app de táxi","não consigo pedir táxi pelo app da empresa, acho que meu cadastro expirou"],
+"labels":{"v_what_is_the_demand_of_the_call":"O que você precisa: cadastro novo, reativação do acesso ou troca do celular cadastrado?","v_report_cost_center_pep":"Qual é o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto) para as corridas?","v_enter_your_cpf":"Qual é o seu CPF?","v_enter_your_phone_number_mobile":"Qual é o seu número de celular (com DDD)?","v_enter_the_new_phone_number_mobile":"Qual é o novo número de celular que deve ficar cadastrado no app?","v_additional_information":"Quer acrescentar mais alguma informação?"},
+"acoes":{"v_label_if_you_have_questions":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: CPF Validation","acao":"converter","substituicao":"Validation Regex na variável v_enter_your_cpf, com o padrão ^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$."},{"nome":"EY: Mandatory Fields","acao":"converter","substituicao":"Marcar mandatory=true direto em v_what_is_the_demand_of_the_call, v_report_cost_center_pep, v_enter_your_cpf e v_enter_your_phone_number_mobile, e remover a policy onLoad."},{"nome":"EY: If selected Phone Change Registered in Whats is the demand","acao":"manter","substituicao":"Policy sem script e VA Supported, que mostra o novo celular só na troca de número."}]
+}
+}

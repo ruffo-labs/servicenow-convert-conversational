@@ -1,0 +1,19 @@
+{
+"sys_id":"cd7437fd1b592510d1abda4ce54bcb89",
+"name":"Envio de Informações para Contas a Pagar",
+"tipo":"record_producer",
+"table_name":"x_nasm_ptp_case",
+"category":"Pagamentos",
+"sc_catalogs":"PTP_, Virtual Agent Search",
+"short_description":"Envio de informações para contas a pagar",
+"description":"Envio de informações para contas a pagar",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+"variaveis":[],
+"ui_policies":[],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"65c549651b99e510a530426fe54bcb58","title":"EY VS - Empresas Natura ","order":100},{"sys_id":"25806b821bd56910d1abda4ce54bcb22","title":"EY VS - Envio de Informações para o Contas à Pagar","order":200},{"sys_id":"e8c645691b99e510a530426fe54bcb60","title":"EY VS - Informaçoes/anexo","order":300}],
+"primeira_analise":{"recomendacao":"conversacional_com_ajustes","nome":"Enviar informação ou documento ao Contas a Pagar","short_description":"Envie ao Contas a Pagar uma informação ou documento que não se encaixa em outro pedido","description":"Use para mandar ao time de Contas a Pagar uma informação ou documento avulso que eles precisam (por exemplo, dados bancários atualizados de um fornecedor para conferência, relatório pedido pelo time ou resposta a uma pendência). Não use para pedir pagamento, ajuste de lançamento, bloqueio, antecipação ou consulta de pagamento atrasado: esses pedidos têm itens próprios.","frases_exemplo":["preciso mandar um documento para o contas a pagar","o contas a pagar pediu uma informação, onde envio?","enviar relatório para o time de pagamentos","responder pendência do contas a pagar","mandar arquivo para o CAP"],"labels":{"v_report_information":"Sobre o que é a informação que você quer enviar?"},"acoes":{},"derivados":[],"scripts_e_policies":[{"nome":"EY: Mandatory (set Envio de Informações)","acao":"converter","substituicao":"Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar v_report_information como Mandatory na variável."},{"nome":"EY: Somente leitura (set Envio de Informações)","acao":"manter","substituicao":"Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."}]}
+}

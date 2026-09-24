@@ -1,0 +1,53 @@
+{
+"sys_id":"d1d9642487477e10ec360e530cbb358f",
+"name":"Indicadores",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Serviços de Ações de Aprendizagem",
+"sc_catalogs":"Virtual Agent Search, Hire to Retire (HTR)",
+"short_description":"Este caminho é para solicitar serviços relacionados ao ajuste ou inclusão dos dados que usamos nos indicadores",
+"description":"",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"com_ressalvas","bloqueadores":[]},
+"producer_script":"Script do Record Producer de Logística de Ações de Aprendizagem. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for.",
+"variaveis":[
+{"name":"v_learning_category","type":"5","order":200,"question_text":"Learning Category","include_none":true,"choices":["Core [=core]","HUB [=hub]","Cells [=cells]","Portas de Entrada [=porta_de_entrada]"]},
+{"name":"v_hub_selection","type":"5","order":300,"question_text":"Select the HUB","include_none":true,"choices":["Culture and Regeneration [=essence_culture_regeneration]","Operational Excellence [=operational_excellence]","Customer Focus [=customer_focus]","Talent Management and Compliance [=management_compliance]","Regenerative Innovation [=regenerative_innovation]","Multi Platform [=multi_platform]","Technology and Data [=technology_data]"]},
+{"name":"v_name_cell","type":"6","order":400,"question_text":"Cell name"},
+{"name":"v_mandatory_action","type":"5","order":500,"question_text":"Mandatory action?","include_none":true,"choices":["Yes [=yes]","No [=no]"]},
+{"name":"v_what_is_the_request","type":"5","order":600,"question_text":"What is the request?","include_none":true,"choices":["Existing data adjustments [=existing_djustments]","Data entry [=data_entry]"]},
+{"name":"v_ajust_existing_data_attachment","type":"33","order":700,"question_text":"Attachment for data ajustment"},
+{"name":"v_training_name","type":"6","order":800,"question_text":"Training name"},
+{"name":"v_attachment_of_eligible_called_hc","type":"33","order":900,"question_text":"Attachment of Eligible/Called HC"},
+{"name":"v_attachment_of_registered_hc","type":"33","order":1000,"question_text":"Attachment of Registered HC"},
+{"name":"v_hc_attendance_attachment","type":"33","order":1100,"question_text":"HC Attendance Attachment"},
+{"name":"v_reaction_assessment_attachment","type":"33","order":1200,"question_text":"Reaction Assessment Attachment"},
+{"name":"v_the_application_format","type":"5","order":1300,"question_text":"The application format","include_none":true,"choices":["Online [=online]","In-person [=inperson]"]},
+{"name":"v_hours_per_class","type":"6","order":1400,"question_text":"Workload per class"},
+{"name":"v_extra_comments","type":"2","order":1500,"question_text":"Use this field for any extra comments"}
+],
+"ui_policies":[
+{"sys_id":"9c9ea4ac870b7e10ec360e530cbb3575","short_description":"EY - Fix Variable set Visibility","conditions":"","actions":["vs_collaborator_name: visible=false,mandatory=false","vs_collaborator_e_mail: visible=false,mandatory=false","vs_for_who: mandatory=true","vs_select_the_collaborator: visible=false,mandatory=false","vs_select_collaborators_name: ","vs_public: visible=false,mandatory=false","vs_collaborato_global_id: visible=false,mandatory=false"]},
+{"sys_id":"1ffa5db733cb769098331c07ee5c7b43","short_description":"EY - Check if \"for whom\" is \"for me\"","conditions":"vs_for_who=for_me^ORvs_for_who=","actions":["vs_select_the_collaborator: visible=false","vs_select_collaborators_name: visible=false"]},
+{"sys_id":"2763b5288787fe10ec360e530cbb35a3","short_description":"EY: Check if Category is Cells","conditions":"v_learning_category=cells","actions":["v_name_cell: visible=true"]},
+{"sys_id":"dd72b9608787fe10ec360e530cbb35d7","short_description":"EY: Check if solicitation is data entry","conditions":"v_what_is_the_request=data_entry","actions":["v_hc_attendance_attachment: visible=true","v_the_application_format: visible=true,mandatory=true","v_reaction_assessment_attachment: visible=true","v_attachment_of_registered_hc: visible=true","v_attachment_of_eligible_called_hc: visible=true"]},
+{"sys_id":"e8c1a9688743fe10ec360e530cbb356a","short_description":"EY -  Set RP variables","conditions":"","actions":["v_reaction_assessment_attachment: visible=false","v_ajust_existing_data_attachment: visible=false","v_attachment_of_eligible_called_hc: visible=false","v_mandatory_action: mandatory=true","v_the_application_format: visible=false","v_learning_category: mandatory=true","v_extra_comments: mandatory=false","v_hc_attendance_attachment: visible=false","v_name_cell: visible=false","v_hub_selection: visible=false","v_what_is_the_request: mandatory=true","v_hours_per_class: mandatory=true","v_training_name: mandatory=true","v_attachment_of_registered_hc: visible=false"]},
+{"sys_id":"278c21ec87c3fe10ec360e530cbb35c3","short_description":"EY: Check colaborator field","conditions":"vs_for_who=another_user","actions":["vs_select_the_collaborator: visible=false","vs_select_collaborators_name: mandatory=true"]},
+{"sys_id":"14e0b9608747fe10ec360e530cbb35e5","short_description":"EY: Category fields handle HUB","conditions":"v_learning_category=hub","actions":["v_hub_selection: visible=true,mandatory=true"]},
+{"sys_id":"40f179ac8747fe10ec360e530cbb3549","short_description":"EY: Check if  the solicitation is Data ajustment","conditions":"v_what_is_the_request=existing_djustments","actions":["v_ajust_existing_data_attachment: visible=true,mandatory=true"]}
+],
+"client_scripts":[],
+"variable_sets":[{"sys_id":"2579a7048707f610ec360e530cbb35cb","title":"EY: Basic collaborator Info","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Ajustar ou incluir dados nos indicadores de treinamento",
+"short_description":"Peça ajuste ou inclusão de dados de ações de aprendizagem (treinamentos) usados nos indicadores.",
+"description":"Use para pedir ao time de Aprendizagem a correção de dados já lançados ou a inclusão de dados de um treinamento (convocados, inscritos, presença, avaliação de reação) nos indicadores de aprendizagem. Informe a categoria da ação, o treinamento, o formato e a carga horária, e anexe as listas no final. Não use para se inscrever em treinamentos nem para logística de turmas.",
+"frases_exemplo":["preciso corrigir os dados de um treinamento no indicador","incluir lista de presença do treinamento","o indicador de aprendizagem está errado","lançar dados de treinamento nos indicadores","ajustar horas de treinamento da turma"],
+"labels":{"v_what_is_the_request":"Você quer ajustar dados já existentes ou incluir dados novos?","v_learning_category":"Qual é a categoria da ação de aprendizagem?","v_hub_selection":"Qual é o HUB?","v_name_cell":"Qual é o nome da célula?","v_training_name":"Qual é o nome do treinamento?","v_mandatory_action":"É uma ação obrigatória?","v_the_application_format":"Qual foi o formato do treinamento (presencial, online etc.)?","v_hours_per_class":"Qual é a carga horária por turma?","v_extra_comments":"Quer acrescentar algum comentário?"},
+"acoes":{"vs_for_who":"derivar","v_ajust_existing_data_attachment":"remover","v_attachment_of_eligible_called_hc":"remover","v_attachment_of_registered_hc":"remover","v_hc_attendance_attachment":"remover","v_reaction_assessment_attachment":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY -  Set RP variables / EY - Fix Variable set Visibility","acao":"converter","substituicao":"Hidden/mandatory direto nas variáveis; tirar as ações sobre os anexos removidos."},{"nome":"EY: Check if solicitation is data entry / EY: Check if the solicitation is Data ajustment","acao":"converter","substituicao":"Manter só a ação sobre v_the_application_format; anexos vão para o final."},{"nome":"EY: Category fields handle HUB / EY: Check if Category is Cells","acao":"manter","substituicao":"UI policies sem script."}]
+}
+}

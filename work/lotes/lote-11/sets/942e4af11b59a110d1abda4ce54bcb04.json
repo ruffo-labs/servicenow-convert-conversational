@@ -1,0 +1,10 @@
+{
+"sys_id":"942e4af11b59a110d1abda4ce54bcb04",
+"title":"EY VS - Solicitar Informações",
+"internal_name":"ey_vs_solicitar_informa_es",
+"order":200,
+"description":"Variable Set referente ao Form Solicitar Informações",
+"variaveis":[{"name":"v_hub_customer","type":"1","order":50,"question_text":"Are you a Hub Customer?","include_none":true},{"name":"v_what_type_of_doubt_do_you_have","type":"5","reference":"x_nasm_ptp_what_type_of_doubt_do_you_have","order":150,"question_text":"What kind of question do you have?","include_none":true,"choices":["CW creation [=cw_creation]","CRW creation [=crw_creation]"]},{"name":"v_label_explain_CRW_CW","type":"32","order":170,"question_text":"Criação de CW - Contrato jurídico que possui pergunta de risco respondidas como \"Sim\" e que necessitam de algum tipo de pagamentoCriação de CRW - Contrato jurídico que possui perguntas de risco respondidas como \"Não\" e não tem características de valores, ou seja, não há possibilidade de gerar algum tipo de pagamento, ex.: (parceria para divulgação da marca; patrocínio; etc.)"},{"name":"v_inform_your_question","type":"2","order":200,"question_text":"Inform your question"}],
+"ui_policies":[{"sys_id":"2928eb421bd96910d1abda4ce54bcb5f","short_description":"EY: Mandatory","conditions":"","actions":["v_inform_your_question: mandatory=true","v_hub_customer: mandatory=true"]},{"sys_id":"543010791b2d2110a530426fe54bcb7f","short_description":"EY: Read Only Variables","conditions":"","applies_catalog":false,"actions":["v_inform_your_question: readonly=true","v_hub_customer: readonly=true","v_what_type_of_doubt_do_you_have: readonly=true"]},{"sys_id":"a45b4ce01b12fd90d1abda4ce54bcb23","short_description":"EY: Show option when yes","conditions":"v_hub_customer=Yes","actions":["v_label_explain_CRW_CW: visible=true","v_what_type_of_doubt_do_you_have: visible=true,mandatory=true"]}],
+"client_scripts":[]
+}

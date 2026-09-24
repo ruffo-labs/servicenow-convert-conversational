@@ -1,0 +1,29 @@
+{
+"sys_id":"8dc994c41b1cda10514cbaef4b4bcb44",
+"name":"Solicitação de acesso aos sistemas de RH",
+"tipo":"record_producer",
+"table_name":"x_nasm_hr_case",
+"category":"Acessos a Sistemas de RH",
+"sc_catalogs":"Hire to Retire (HTR), Catálogo hispânico",
+"short_description":"Use este formulário para fazer uma solicitação de acesso aos sistemas de RH",
+"description":"Use este formulário para fazer uma solicitação de acesso aos sistemas de RH",
+"make_item_non_conversational":"false",
+"turn_off_nowassist_conversation":"false",
+"diagnostico_previo":{"veredito":"bloqueado","bloqueadores":[{"code":"client_script_sem_va","detail":"1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Condition for v_choose_the_option"}]},
+"producer_script":"Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+"variaveis":[{"name":"v_faq","type":"32","order":50},{"name":"v_choose_the_option","type":"5","order":300,"question_text":"Choose the option you need here","include_none":true,"choices":["System for viewing payment receipts [=receipt_viewing]","Assignment of COL code in SAP [=assignment_col_code_sap]","Assignment of AR (Cadastro) code in SAP [=assignment_ar_code_sap]","Assignment of CL Code in SAP [=assignment_cl_code_sap]","Assignment of E1 Code [=assignment_e1_code]","Access to self-management platform (Payment receipts, labor certifications, etc) [=access_self_management_platform]","System for displaying contractual documents (contract, attachments, etc) [=system_for_displaying_contractual]"]},{"name":"v_field_detail","type":"2","order":400,"question_text":"Please use the field below to detail your need"},{"name":"v_minimun_characters","type":"32","order":500,"question_text":"Please use the field below to detail your need"}],
+"ui_policies":[{"sys_id":"1136b5c81b9c1e10514cbaef4b4bcb11","short_description":"EY: Mandatory v_field_detail","conditions":"","actions":["v_field_detail: mandatory=true"]}],
+"client_scripts":[{"sys_id":"168d24893b1c9650924d0247f4e45a2c","name":"EY: Condition for v_choose_the_option","type":"onChange","cat_variable":"103c87b21b7f0a10514cbaef4b4bcb1b","va_supported":false,"ui_type":"10","script":"Catalog Client Script onChange de 4,4 KB que controla a visibilidade e as opções de 'v_choose_the_option' conforme o contexto, escondendo o campo nos casos vazio e 'None'."},{"sys_id":"1af405c13b90d650924d0247f4e45ade","name":"EY: Hide options v_choose_the_option","type":"onLoad","ui_type":"1","script":"Catalog Client Script onLoad que esconde 'v_choose_the_option' na abertura."},{"sys_id":"6861f5c01b9c1e10514cbaef4b4bcb31","name":"EY: Hide error message onLoad","type":"onLoad","ui_type":"10","script":"Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."},{"sys_id":"69e035801b9c1e10514cbaef4b4bcb4e","name":"EY: Show error message onSubmit","type":"onSubmit","cat_variable":"675821c01b5c1e10514cbaef4b4bcb34","ui_type":"10","script":"Catalog Client Script onSubmit que bloqueia o envio quando 'v_field_detail' tem menos de 40 caracteres."},{"sys_id":"f7ffa9001b9c1e10514cbaef4b4bcb50","name":"EY: Show error message onChange","type":"onChange","cat_variable":"675821c01b5c1e10514cbaef4b4bcb34","ui_type":"10","script":"Par onChange da validação de 40 caracteres sobre 'v_field_detail'."}],
+"variable_sets":[{"sys_id":"c7f8837e1b3f0a10514cbaef4b4bcb2b","title":"EY: Hispana Personal Information","order":100}],
+"primeira_analise":{
+"recomendacao":"conversacional_com_ajustes",
+"nome":"Solicitar acesso a sistema de RH",
+"short_description":"Pedido de liberação de acesso a um sistema de Recursos Humanos (RH).",
+"description":"Use quando você (ou alguém da sua equipe) precisar de acesso a um sistema de Recursos Humanos (RH), por exemplo para consultar ou lançar informações de colaboradores. Informe qual sistema e o que você precisa fazer nele. Não use para dúvidas sobre folha de pagamento, benefícios ou dados pessoais: esses assuntos têm itens próprios.",
+"frases_exemplo":["preciso de acesso ao sistema de RH","quero liberar acesso ao Workday para um colaborador novo","não tenho perfil no sistema de recursos humanos","necesito acceso a los sistemas de RRHH","como peço acesso ao sistema de RH para minha equipe?"],
+"labels":{"v_choose_the_option":"A qual sistema de RH você precisa de acesso?","v_field_detail":"Conte o que você precisa fazer no sistema e qual perfil de acesso é necessário."},
+"acoes":{"v_faq":"remover","v_minimun_characters":"remover"},
+"derivados":[],
+"scripts_e_policies":[{"nome":"EY: Condition for v_choose_the_option","acao":"converter","substituicao":"Dependência de choices ou UI Policy sem script, ou marcar VA Supported depois de revisar o código."},{"nome":"EY: Hide options v_choose_the_option","acao":"remover","substituicao":"Controlar a visibilidade inicial pelo atributo da variável ou por UI Policy sem script."},{"nome":"EY: Hide error message onLoad","acao":"remover","substituicao":"Deixa de ser necessário quando v_minimun_characters sai."},{"nome":"EY: Show error message onSubmit","acao":"converter","substituicao":"Validation Regex de no mínimo 40 caracteres em v_field_detail."},{"nome":"EY: Show error message onChange","acao":"converter","substituicao":"Mesma Validation Regex (remover)."},{"nome":"EY: Mandatory v_field_detail","acao":"converter","substituicao":"Marcar mandatory direto na variável."}]
+}
+}
