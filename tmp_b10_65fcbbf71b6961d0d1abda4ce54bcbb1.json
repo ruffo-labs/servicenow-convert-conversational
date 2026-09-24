@@ -1,0 +1,161 @@
+{
+ "sys_id": "65fcbbf71b6961d0d1abda4ce54bcbb1",
+ "nome_atual": "Sindicato",
+ "tabela": "x_nasm_hr_case",
+ "volume_12m": 77,
+ "recomendacao": "conversacional_com_ajustes",
+ "prioridade": "baixa",
+ "esforco": "baixo",
+ "prontidao_atual": 35,
+ "justificativa": "Item simples (contato, categoria, subcategoria, descrição e anexo) e só está bloqueado pelos três widgets Custom. Tirando esses widgets, trocando o anexo por Attachment OOB e escrevendo labels em pt-BR, fica um fluxo de 7 a 8 perguntas bem adequado à conversa.",
+ "nome_sugerido": "Solicitações de sindicatos",
+ "short_description_sugerida": "Pedidos de sindicatos sobre pagamentos, contribuições e assuntos sindicais",
+ "descricao_sugerida": "Use se você representa um sindicato e precisa falar com o RH da empresa sobre pagamentos e repasses de contribuição sindical, listas de associados, acordos e convenções coletivas ou outros assuntos sindicais. Colaboradores com dúvidas sobre desconto sindical no próprio holerite devem usar os itens de folha de pagamento.",
+ "frases_exemplo": [
+  "sou do sindicato e quero consultar o repasse da contribuição",
+  "o pagamento da mensalidade sindical não caiu",
+  "preciso enviar a convenção coletiva para o RH",
+  "solicitação sindical"
+ ],
+ "bloqueadores": [
+  {
+   "onde": "contextual_search_results",
+   "problema": "Custom com UI Macro e widget.",
+   "acao": "Remover."
+  },
+  {
+   "onde": "ai_search_assist",
+   "problema": "Custom com widget.",
+   "acao": "Remover."
+  },
+  {
+   "onde": "vs_add_attachment",
+   "problema": "Custom com widget de anexo público.",
+   "acao": "Trocar por variável Attachment OOB (nova_anexo), obrigatória por UI Policy sem script nas subcategorias de pagamento que exigem comprovante."
+  }
+ ],
+ "perguntas": [
+  {
+   "ordem": 1,
+   "variavel": "v_category",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "O pedido é sobre pagamentos ou sobre outro assunto sindical?"
+  },
+  {
+   "ordem": 2,
+   "variavel": "v_subcategory_payments",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual é o assunto do pagamento?"
+  },
+  {
+   "ordem": 3,
+   "variavel": "v_subcategory_syndicate",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual é o assunto sindical?"
+  },
+  {
+   "ordem": 4,
+   "variavel": "v_describe",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Descreva o seu pedido com detalhes."
+  },
+  {
+   "ordem": 5,
+   "variavel": "v_company",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual sindicato ou entidade você representa?"
+  },
+  {
+   "ordem": 6,
+   "variavel": "v_name",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual é o seu nome?"
+  },
+  {
+   "ordem": 7,
+   "variavel": "v_email",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual e-mail podemos usar para responder?"
+  },
+  {
+   "ordem": 8,
+   "variavel": "v_phone",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual é o seu telefone com DDD?"
+  },
+  {
+   "ordem": 9,
+   "variavel": "nova_anexo",
+   "origem": "item",
+   "acao": "nova",
+   "tipo_sugerido": "Attachment",
+   "conversational_label": "Anexe o comprovante ou documento, se tiver.",
+   "obs": "Substitui vs_add_attachment."
+  },
+  {
+   "ordem": 10,
+   "variavel": "v_has_attachment",
+   "origem": "item",
+   "acao": "remover",
+   "obs": "Yes/No oculta sem Include None; só apoiava o script de anexo."
+  },
+  {
+   "ordem": 11,
+   "variavel": "contextual_search_results",
+   "origem": "item",
+   "acao": "remover"
+  },
+  {
+   "ordem": 12,
+   "variavel": "ai_search_assist",
+   "origem": "item",
+   "acao": "remover"
+  },
+  {
+   "ordem": 13,
+   "variavel": "vs_add_attachment",
+   "origem": "item",
+   "acao": "remover",
+   "obs": "Troca por nova_anexo."
+  }
+ ],
+ "scripts_e_policies": [
+  {
+   "nome": "EY: Validate email / EY: Validate Phone",
+   "acao": "converter",
+   "substituicao": "Validation Regex na variável."
+  },
+  {
+   "nome": "EY: Attach mandatory if payments",
+   "acao": "converter",
+   "substituicao": "UI Policy sem script: nova_anexo mandatory=true nas subcategorias de pagamento que exigem comprovante."
+  },
+  {
+   "nome": "EY: Mandatory fields",
+   "acao": "converter",
+   "substituicao": "Mandatory direto nas variáveis; tirar a ação sobre v_has_attachment."
+  },
+  {
+   "nome": "EY: If payments / EY: If syndicate",
+   "acao": "manter",
+   "substituicao": "UI Policy sem script, compatível; desmarcar On load."
+  }
+ ],
+ "configuracoes": {
+  "make_item_non_conversational": false,
+  "turn_off_nowassist_conversation": false,
+  "outras": [
+   "Item Public com guest user: a conversa depende de VA disponível para usuário não autenticado."
+  ]
+ },
+ "itens_derivados": [],
+ "observacoes": "Conferir o label de v_company: para sindicato, 'Company' deve significar a entidade sindical. Se for a empresa do grupo, perguntar 'Para qual empresa do grupo é o pedido?'."
+}

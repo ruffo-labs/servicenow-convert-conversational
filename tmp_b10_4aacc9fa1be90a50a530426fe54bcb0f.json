@@ -1,0 +1,169 @@
+{
+ "sys_id": "4aacc9fa1be90a50a530426fe54bcb0f",
+ "nome_atual": "Solicitação de 2ª via de crachá",
+ "tabela": "x_nasm_hr_case",
+ "volume_12m": 275,
+ "recomendacao": "conversacional_com_ajustes",
+ "prioridade": "media",
+ "esforco": "medio",
+ "prontidao_atual": 45,
+ "justificativa": "A intenção é única e clara, sem bloqueadores. O que atrapalha: 28 perguntas (acima do limite de 20 para conversa inline), porque o set de dados pessoais pede 10 dados que dá pra tirar do perfil; três checkboxes de aceite de desconto (um por tipo de crachá); um checkbox 'não encontrei a localidade' que controla o endereço; e comentário obrigatório. Derivando os dados pessoais e simplificando localidade e aceite, a conversa fica com umas 8 perguntas.",
+ "nome_sugerido": "Solicitar 2ª via de crachá",
+ "short_description_sugerida": "Peça uma nova via do seu crachá em caso de perda, roubo ou dano",
+ "descricao_sugerida": "Use para pedir a segunda via do crachá de identificação (cartão impresso, smart card ou os dois) em caso de perda, roubo, furto, dano ou desgaste. A 2ª via tem desconto em folha, que pode ser dispensado se houver boletim de ocorrência de roubo ou furto. Você vai precisar de uma foto 3x4. Para o primeiro crachá de colaborador novo, não use este item.",
+ "frases_exemplo": [
+  "perdi meu crachá",
+  "preciso de uma segunda via do crachá",
+  "roubaram minha carteira com o crachá",
+  "meu crachá quebrou, como peço outro?",
+  "quero um novo smart card"
+ ],
+ "bloqueadores": [
+  {
+   "onde": "attach_3x4_photo / anexo_BO",
+   "problema": "Attachment exige tratamento à parte na conversa.",
+   "acao": "Manter como Attachment OOB, perguntando no fim. Levar as orientações da foto (photo_instructions) para o conversational label ou para a descrição."
+  }
+ ],
+ "perguntas": [
+  {
+   "ordem": 1,
+   "variavel": "reason_for_requesting_a_2nd_copy_of_the_badge",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "O que aconteceu com o seu crachá?"
+  },
+  {
+   "ordem": 2,
+   "variavel": "made_a_police_report",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Você fez boletim de ocorrência?",
+   "obs": "O label atual 'Attach a police report' não é uma pergunta de sim/não."
+  },
+  {
+   "ordem": 3,
+   "variavel": "anexo_BO",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Anexe o boletim de ocorrência. Ele pode dispensar o desconto."
+  },
+  {
+   "ordem": 4,
+   "variavel": "request_type",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Qual crachá você precisa: cartão impresso, smart card ou os dois?"
+  },
+  {
+   "ordem": 5,
+   "variavel": "aceite_for_discount_4_65",
+   "origem": "item",
+   "acao": "alterar_tipo",
+   "tipo_sugerido": "Yes/No (Include None, mandatory)",
+   "conversational_label": "Você concorda com o desconto de R$ 4,65 na folha pela 2ª via?"
+  },
+  {
+   "ordem": 6,
+   "variavel": "aceite_for_salary_discount_17_75",
+   "origem": "item",
+   "acao": "alterar_tipo",
+   "tipo_sugerido": "Yes/No (Include None, mandatory)",
+   "conversational_label": "Você concorda com o desconto de R$ 17,75 na folha pela 2ª via?"
+  },
+  {
+   "ordem": 7,
+   "variavel": "aceite_for_discount_22_40",
+   "origem": "item",
+   "acao": "alterar_tipo",
+   "tipo_sugerido": "Yes/No (Include None, mandatory)",
+   "conversational_label": "Você concorda com o desconto de R$ 22,40 na folha pela 2ª via?"
+  },
+  {
+   "ordem": 8,
+   "variavel": "location_sent_badge",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Para qual unidade devemos enviar o crachá?",
+   "obs": "Incluir a opção 'Outro endereço' na lista."
+  },
+  {
+   "ordem": 9,
+   "variavel": "i_didnt_find_the_desired_location",
+   "origem": "item",
+   "acao": "remover",
+   "obs": "Substituir pela opção 'Outro endereço' em location_sent_badge; a policy de endereço passa a olhar essa opção."
+  },
+  {
+   "ordem": 10,
+   "variavel": "zip_code",
+   "origem": "set:EY: Address to sent the badge",
+   "acao": "manter",
+   "conversational_label": "Qual é o CEP do endereço de entrega?",
+   "obs": "Só quando location_sent_badge = Outro endereço. Os demais campos do set (logradouro, número, complemento, bairro, cidade, UF) seguem na mesma condição, com labels em pergunta."
+  },
+  {
+   "ordem": 11,
+   "variavel": "attach_3x4_photo",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Anexe uma foto 3x4 recente, com o rosto visível e fundo claro."
+  },
+  {
+   "ordem": 12,
+   "variavel": "use_this_field_to_add_comments",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Quer acrescentar algum comentário?",
+   "obs": "Tirar a obrigatoriedade."
+  },
+  {
+   "ordem": 13,
+   "variavel": "employee_name / id_global / position_title / company / workplace / cpf / rg / date_of_birth / address / telephone",
+   "origem": "set:EY: Personal Informations Crachá",
+   "acao": "derivar",
+   "obs": "Auto-populate a partir do perfil do colaborador (x_nasm_hr_profile / sys_user) e read-only, para a conversa pular. Específico deste item porque o set só é usado aqui."
+  },
+  {
+   "ordem": 14,
+   "variavel": "photo_instructions / text_solicitar_cordao / police_report_will_analyzed",
+   "origem": "item",
+   "acao": "ocultar_na_conversa",
+   "obs": "Labels informativos. O texto vai para a descrição e para os conversational labels."
+  }
+ ],
+ "scripts_e_policies": [
+  {
+   "nome": "EY: Clear location if user dont find any",
+   "acao": "remover",
+   "substituicao": "Sem o checkbox não é mais preciso."
+  },
+  {
+   "nome": "Show or hidden the address datas / When the 'I didn't find the location' field is true...",
+   "acao": "converter",
+   "substituicao": "Uma UI Policy sem script: location_sent_badge = outro_endereco → set de endereço visível e obrigatório."
+  },
+  {
+   "nome": "Mandatory Fields",
+   "acao": "converter",
+   "substituicao": "Mandatory direto nas variáveis; use_this_field_to_add_comments opcional."
+  },
+  {
+   "nome": "When the chosen option is cartao_impresso / smart_card / smart_card_e_cartao_impresso",
+   "acao": "manter",
+   "substituicao": "UI Policy sem script, compatível; desmarcar On load."
+  },
+  {
+   "nome": "Handling the display of the police report field / attachment field",
+   "acao": "manter",
+   "substituicao": "Compatível."
+  }
+ ],
+ "configuracoes": {
+  "make_item_non_conversational": false,
+  "turn_off_nowassist_conversation": false,
+  "outras": []
+ },
+ "itens_derivados": [],
+ "observacoes": "text_solicitar_cordao sugere que o cordão também é pedido aqui. Se for uma opção de request_type, incluir 'cordão' nas frases de exemplo. Os valores de desconto nos labels vão precisar de manutenção quando mudarem; outra opção é um único Yes/No com label genérico ('Você concorda com o desconto em folha informado na descrição?') e a tabela de valores na descrição."
+}

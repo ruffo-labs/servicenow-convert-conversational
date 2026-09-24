@@ -1,0 +1,105 @@
+{
+ "sys_id": "dc0f75b81bb39114d1abda4ce54bcba5",
+ "nome_atual": "Relatar erros ou ajustes no acesso ADP",
+ "tabela": "x_nasm_hr_case",
+ "volume_12m": 359,
+ "recomendacao": "conversacional_com_ajustes",
+ "prioridade": "media",
+ "esforco": "baixo",
+ "prontidao_atual": 50,
+ "justificativa": "Item enxuto (tipo de suporte, evidência anexa e descrição) sem bloqueadores. Mas tem um defeito que quebra a conversa: a policy 'EY - Comments - Read Only' deixa v_comments sempre read-only, então o VA pula a descrição do problema. As policies de telefone dependem de uma variável que não existe (v_is_your_problem_exclusively_in_accessing_the_adp_system), e a descrição atual é só um ponto.",
+ "nome_sugerido": "Relatar erro ou pedir ajuste de acesso no ADP",
+ "short_description_sugerida": "Erros de acesso, inclusão de centro de custo e ajustes de perfil no sistema ADP",
+ "descricao_sugerida": "Use para relatar erro ao acessar ou usar o sistema ADP (ponto e folha) ou pedir ajuste de acesso: erro de login ou tela, inclusão de centro de custo para gestor, lista de justificativas de ponto e manutenção de perfil de acesso. Tenha em mãos um print do erro ou o e-mail de aprovação do gestor. Para dúvidas de ponto ou de pagamento que não sejam de acesso, use os itens de Controle de Jornada ou Folha.",
+ "frases_exemplo": [
+  "não consigo entrar no ADP",
+  "o ADP está dando erro na tela",
+  "preciso incluir um centro de custo no meu acesso do ADP",
+  "meu perfil no ADP está errado",
+  "não aparece a lista de justificativas do ponto no ADP"
+ ],
+ "bloqueadores": [
+  {
+   "onde": "policy EY - Comments - Read Only",
+   "problema": "v_comments fica read-only sempre; pergunta read-only é pulada na conversa e o caso chega sem descrição.",
+   "acao": "Restringir a policy à visão do atendente (Applies on Requested Item/Target Record, desmarcando Catalog Item view) ou removê-la."
+  },
+  {
+   "onde": "v_attach_here_the_evidence_with_your_adp_system_error",
+   "problema": "Attachment exige tratamento à parte na conversa.",
+   "acao": "Manter Attachment OOB no fim da conversa com label curto."
+  }
+ ],
+ "perguntas": [
+  {
+   "ordem": 1,
+   "variavel": "v_select_the_desired_support",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Que tipo de ajuda você precisa no ADP?"
+  },
+  {
+   "ordem": 2,
+   "variavel": "v_comments",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Descreva o problema ou o ajuste que você precisa.",
+   "obs": "Tirar o read-only da policy."
+  },
+  {
+   "ordem": 3,
+   "variavel": "v_attach_here_the_evidence_with_your_adp_system_error",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Anexe um print do erro ou o e-mail de aprovação do gestor."
+  },
+  {
+   "ordem": 4,
+   "variavel": "v_company",
+   "origem": "item",
+   "acao": "derivar",
+   "obs": "Hoje é preenchida por client script (Get User Company). Trocar por auto-populate a partir de vs_employee (dot-walk para company)."
+  },
+  {
+   "ordem": 5,
+   "variavel": "v_csc_will_be_able_to_support_with / v_phone_natura_tbs / v_phone_avon",
+   "origem": "item",
+   "acao": "ocultar_na_conversa",
+   "obs": "Rich Text com telefones do Centro de Serviços Compartilhados (CSC). Levar para a descrição ou KB, já que só a URL chega à conversa."
+  }
+ ],
+ "scripts_e_policies": [
+  {
+   "nome": "EY - Comments - Read Only",
+   "acao": "remover",
+   "substituicao": "Ou limitar à visão do atendente. Na visão do catálogo, v_comments deve ser editável e obrigatória."
+  },
+  {
+   "nome": "EY: Get User Company",
+   "acao": "converter",
+   "substituicao": "Auto-populate de v_company a partir de vs_employee.company."
+  },
+  {
+   "nome": "EY: When the employee is Avon / Natura or TBS / When 'your problem is in ADP' ...",
+   "acao": "remover",
+   "substituicao": "Dependem de v_is_your_problem_exclusively_in_accessing_the_adp_system, que não existe. Os telefones vão para a descrição."
+  },
+  {
+   "nome": "EY: When asked 'Select the desired support' for any",
+   "acao": "manter",
+   "substituicao": "Compatível: anexo obrigatório para os tipos listados."
+  },
+  {
+   "nome": "EY: Select the desired support",
+   "acao": "converter",
+   "substituicao": "Deixar v_select_the_desired_support visível e obrigatória direto na variável, sem depender do set."
+  }
+ ],
+ "configuracoes": {
+  "make_item_non_conversational": false,
+  "turn_off_nowassist_conversation": false,
+  "outras": []
+ },
+ "itens_derivados": [],
+ "observacoes": "O set 'EY: Requester Data' (para quem, status, colaborador, ID, e-mail pessoal) segue a recomendação geral. Há uma policy vazia ('When your problem is in ADP is Avon', sem ações) que pode ser apagada."
+}

@@ -1,0 +1,94 @@
+{
+ "sys_id": "247c37d53be81610924d0247f4e45af9",
+ "nome_atual": "Serviço de transporte para ir ao trabalho",
+ "tabela": "x_nasm_hr_case",
+ "volume_12m": 78,
+ "recomendacao": "conversacional_com_ajustes",
+ "prioridade": "baixa",
+ "esforco": "medio",
+ "prontidao_atual": 45,
+ "justificativa": "Intenção única e poucas perguntas próprias (categoria, detalhe e declaração), mas a lista de categorias é montada por um client script de 3,8 KB com ui_type mobile/portal, que remove e recoloca opções conforme o perfil. Na conversa isso é frágil. A declaração é um checkbox solto e o FAQ está em Rich Text. Com as opções controladas sem script e a declaração como Yes/No, vira uma conversa curta.",
+ "nome_sugerido": "Solicitar transporte para o trabalho",
+ "short_description_sugerida": "Pedidos de transporte corporativo, como Cabify ou traslado, para ir ao trabalho",
+ "descricao_sugerida": "Use para pedir ou tirar dúvidas sobre o transporte para ir e voltar do trabalho oferecido pela empresa nos países hispânicos: corridas por aplicativo corporativo (Cabify), traslado ou fretado. O custo da viagem é debitado do seu centro de custo. Não use para viagens a negócios nem para reembolso de despesas.",
+ "frases_exemplo": [
+  "preciso de Cabify para ir ao trabalho",
+  "quero usar o traslado da empresa",
+  "como peço transporte para chegar na fábrica?",
+  "necesito transporte para ir a trabajar"
+ ],
+ "bloqueadores": [
+  {
+   "onde": "client script EY: Conditions for the Category Field",
+   "problema": "Script de 3,8 KB que manipula opções da Select Box com removeOption/addOption conforme o perfil; ui_type 1, então não roda em todos os canais.",
+   "acao": "Trocar por opções estáticas com a lógica no servidor: filtrar as opções com Choice Qualifier (Lookup Select Box sobre question_choice com qualificador por país e perfil) ou criar user criteria por categoria em itens separados, se a regra for por país."
+  }
+ ],
+ "perguntas": [
+  {
+   "ordem": 1,
+   "variavel": "category",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Que tipo de transporte você precisa?"
+  },
+  {
+   "ordem": 2,
+   "variavel": "detail_request",
+   "origem": "item",
+   "acao": "manter",
+   "conversational_label": "Conte os detalhes: trajeto, dias e horários."
+  },
+  {
+   "ordem": 3,
+   "variavel": "checkbox_declaracao",
+   "origem": "item",
+   "acao": "alterar_tipo",
+   "tipo_sugerido": "Yes/No (Include None, mandatory)",
+   "conversational_label": "Você está ciente e concorda que o custo das viagens será do seu centro de custo?"
+  },
+  {
+   "ordem": 4,
+   "variavel": "FAQs",
+   "origem": "item",
+   "acao": "ocultar_na_conversa",
+   "obs": "Rich Text de FAQ (Argentina). Publicar em KB e citar na descrição."
+  }
+ ],
+ "scripts_e_policies": [
+  {
+   "nome": "EY: Conditions for the Category Field",
+   "acao": "converter",
+   "substituicao": "Choice Qualifier ou Lookup Select Box com qualificador simples, ou opções estáticas mais a validação no flow."
+  },
+  {
+   "nome": "EY: Show category",
+   "acao": "converter",
+   "substituicao": "Deixar category sempre visível e obrigatória direto na variável; v_employee já é preenchido por padrão."
+  },
+  {
+   "nome": "EY: Visibility checkbox",
+   "acao": "manter",
+   "substituicao": "UI Policy sem script, compatível (país Argentina/Chile e category = cabify)."
+  },
+  {
+   "nome": "EY: Country is Argentina",
+   "acao": "remover",
+   "substituicao": "O FAQ sai do formulário."
+  },
+  {
+   "nome": "EY: Hide unfilled fields / EY: Hide fields > for me",
+   "acao": "manter",
+   "substituicao": "Pertencem ao set; tratar na análise geral do set Hispana Personal Information."
+  }
+ ],
+ "configuracoes": {
+  "make_item_non_conversational": false,
+  "turn_off_nowassist_conversation": false,
+  "outras": [
+   "Traduzir nome, descrição e labels para espanhol (Catálogo hispânico)."
+  ]
+ },
+ "itens_derivados": [],
+ "observacoes": "O set 'EY: Hispana Personal Information' tem 16 perguntas e define a maior parte do tamanho da conversa; a recomendação geral é derivar tudo do perfil. O producer_script descrito no digest fala em 'apólice de seguro', mas é o script padrão hispânico (getUserRequestedFor) com atribuição dupla sem efeito."
+}
