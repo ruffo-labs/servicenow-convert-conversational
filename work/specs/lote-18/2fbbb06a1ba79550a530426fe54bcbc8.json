@@ -1,0 +1,40 @@
+{
+ "sys_id": "2fbbb06a1ba79550a530426fe54bcbc8",
+ "status": "conversacional",
+ "motivo": "Fluxo único sobre dúvidas, erros e pedidos do MyPerformance. A 1ª análise pede achatar v_choose_request_type e v_classify_the_request_type numa lista única e substituir v_description_report/v_description_for_other pela v_describe, mas o formato não permite editar as opções de uma variável existente nem criar substituta sem risco aos campos reais usados no processo. Mantivemos a estrutura original de 3 opções com sub-seleção (limite_formato), convertendo só a policy incondicional de obrigatoriedade em props e removendo os elementos visuais (contêiner e FAQ).",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_choose_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_choose_request_type": {
+   "label": "Você quer tirar uma dúvida, relatar um erro no sistema ou fazer um pedido geral sobre o MyPerformance?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_classify_the_request_type": {
+   "label": "É um pedido de relatório ou outro tipo de solicitação sobre o MyPerformance?"
+  },
+  "v_describe": {
+   "label": "Descreva sua dúvida ou o erro que você encontrou no MyPerformance."
+  },
+  "v_description_report": {
+   "label": "Quais informações e filtros você precisa no relatório? (ex.: marca, país, nível, cargo, período)"
+  },
+  "v_description_for_other": {
+   "label": "Descreva o que você precisa."
+  }
+ },
+ "remover": {
+  "faq_text": "visual",
+  "v_cont_start_myperformace": "visual"
+ },
+ "policies": {
+  "04f9d5a21b23d550a530426fe54bcbbb": "remover"
+ }
+}

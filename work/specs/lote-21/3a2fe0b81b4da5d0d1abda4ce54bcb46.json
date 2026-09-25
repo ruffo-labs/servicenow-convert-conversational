@@ -1,0 +1,116 @@
+{
+ "sys_id": "3a2fe0b81b4da5d0d1abda4ce54bcb46",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir reintegração de ex-colaborador). Textos de apresentação (containers/labels) saem ou viram descrição; o widget de anexo vira anexo nativo; validações por client script viram regex nas variáveis; a policy incondicional vira props.",
+ "divergencias": [
+  "limite_formato",
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_name": {
+   "props": {
+    "type": "8",
+    "mandatory": true
+   }
+  },
+  "v_cpf": {
+   "label": "Qual é o CPF do ex-colaborador?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+   }
+  },
+  "v_phone": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\+?55)?\\s?\\(?\\d{2}\\)?\\s?9?\\d{4}-?\\d{4}$"
+   }
+  },
+  "v_email": {
+   "props": {
+    "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+   }
+  },
+  "v_type_of_reinstatement": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_has_attachment": {
+   "props": {
+    "hidden": true,
+    "read_only": true,
+    "default_value": "No"
+   }
+  },
+  "nova_anexo": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a decisão judicial em anexo.",
+    "mandatory": false,
+    "order": 1300
+   }
+  }
+ },
+ "remover": {
+  "v_cont_start": "visual",
+  "v_administrative_reinstatement": "texto_movido_descricao",
+  "v_attach_the_court_case": "texto_movido_descricao",
+  "v_text_attach": "visual",
+  "v_annex_to_the_court_case": {
+   "substituida_por": "nova_anexo"
+  }
+ },
+ "policies": {
+  "bf71bc341b8da5d0d1abda4ce54bcb03": "remover",
+  "be384d341b45e5d0d1abda4ce54bcb5e": {
+   "conditions": "v_type_of_reinstatement=adm",
+   "actions": {
+    "v_reason_pregnancy": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "54ac38b41b41e5d0d1abda4ce54bcb76": {
+   "conditions": "v_type_of_reinstatement=jud",
+   "actions": {
+    "v_open_cat": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_period": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_process_number": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nova_anexo": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "362730421b5ea550a530426fe54bcbe8": {
+   "converter": "regex"
+  },
+  "58b6e63f1b912510d1abda4ce54bcbb6": {
+   "converter": "regex"
+  },
+  "6deaeae91bd62550a530426fe54bcb6b": {
+   "converter": "regex"
+  },
+  "d87649b81b05e5d0d1abda4ce54bcbe2": {
+   "converter": "policy:54ac38b41b41e5d0d1abda4ce54bcb76"
+  },
+  "f5b730701b01e5d0d1abda4ce54bcbb3": {
+   "remover": {
+    "substituido_por": "v_phone"
+   }
+  }
+ }
+}

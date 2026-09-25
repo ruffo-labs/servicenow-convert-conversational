@@ -1,0 +1,146 @@
+{
+ "sys_id": "15b5791d1bc0e558d1abda4ce54bcb48",
+ "status": "dividido",
+ "motivo": "O select box separa claramente 4 intenções (admissão com movimentação internacional, admissão no exterior, expatriação e repatriação), cada uma com perguntas próprias e objetivas (colaborador/nome, ID Global, data de início no Brasil, anexo do modelo). Dividir por intenção remove os textos/templates apenas visuais e simplifica as policies condicionadas ao tipo, sem perder nenhum dado coletado. v_id fica somente leitura em todos os derivados (as duas policies redundantes viram uma prop única).",
+ "divergencias": [
+  "divisao_diferente"
+ ],
+ "vars": {
+  "v_id": {
+   "label": "Qual é o ID Global do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_name": {
+   "label": "Qual é o nome completo da pessoa?"
+  },
+  "v_name_other": {
+   "label": "Quem é o colaborador desta solicitação?"
+  },
+  "v_start_date_in_brazil": {
+   "label": "Qual é a data de início no Brasil?"
+  },
+  "v_attach_the_completed_template_here": {
+   "label": "Envie o modelo preenchido em anexo.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_description": {
+   "label": "Descreva a solicitação com mais detalhes."
+  }
+ },
+ "remover": {
+  "v_text_start": "visual",
+  "v_text_templates": "visual",
+  "v_template_international": "visual",
+  "v_template_expatriation": "visual",
+  "v_template_abroad": "visual"
+ },
+ "policies": {
+  "173924a91b05e914a530426fe54bcb98": "remover",
+  "517e14b8874eda10ec360e530cbb3501": "remover",
+  "8a91ce951bc4e558d1abda4ce54bcb59": "remover",
+  "c24839991b04e558d1abda4ce54bcb32": "remover",
+  "7c2fbd591b84e558d1abda4ce54bcb9e": "remover",
+  "e76f35d91b84e558d1abda4ce54bcb94": "remover",
+  "eceff15d1b84e558d1abda4ce54bcb7c": "remover",
+  "b28518b8870eda10ec360e530cbb3597": "remover"
+ },
+ "scripts": {
+  "8a1832d0878e5a10ec360e530cbb3580": {
+   "converter": "auto_populate"
+  },
+  "8b4854bc870eda10ec360e530cbb3507": {
+   "remover": {
+    "substituido_por": "v_attach_the_completed_template_here"
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Solicitar Admissão com Movimentação Internacional",
+   "short_description": "Admissão de colaborador com movimentação internacional.",
+   "description": "Use para solicitar a admissão de um colaborador que envolve movimentação internacional. Informe o colaborador e anexe o modelo preenchido.",
+   "frases_exemplo": [
+    "movimentação internacional de colaborador",
+    "admitir funcionário com movimentação internacional",
+    "transferir colaborador para outro país"
+   ],
+   "fixas": {
+    "v_select_your_option": "v_admission_international_movement"
+   },
+   "sem_vars": [
+    "v_name",
+    "v_start_date_in_brazil"
+   ],
+   "sem_policies": [
+    "221e831887029a10ec360e530cbb352d",
+    "2bdf0bd887029a10ec360e530cbb35f7"
+   ]
+  },
+  {
+   "name": "Solicitar Admissão no Exterior (Estados Unidos e França)",
+   "short_description": "Admissão de colaborador nos Estados Unidos ou na França.",
+   "description": "Use para solicitar a admissão de um colaborador no exterior, nos Estados Unidos ou na França. Informe o nome da pessoa e anexe o modelo preenchido.",
+   "frases_exemplo": [
+    "admissão nos Estados Unidos",
+    "contratar alguém na França",
+    "admissão no exterior"
+   ],
+   "fixas": {
+    "v_select_your_option": "v_admission _abroad"
+   },
+   "sem_vars": [
+    "v_name_other",
+    "v_start_date_in_brazil"
+   ],
+   "sem_policies": [
+    "faddcfd487029a10ec360e530cbb3542",
+    "2bdf0bd887029a10ec360e530cbb35f7"
+   ]
+  },
+  {
+   "name": "Solicitar Expatriação de Colaborador",
+   "short_description": "Expatriação de colaborador para atuar no exterior.",
+   "description": "Use para solicitar a expatriação de um colaborador. Informe o colaborador e anexe o modelo preenchido.",
+   "frases_exemplo": [
+    "preciso expatriar um colaborador",
+    "expatriação de funcionário",
+    "enviar colaborador para trabalhar no exterior"
+   ],
+   "fixas": {
+    "v_select_your_option": "v_expatriation"
+   },
+   "sem_vars": [
+    "v_name",
+    "v_start_date_in_brazil"
+   ],
+   "sem_policies": [
+    "221e831887029a10ec360e530cbb352d",
+    "2bdf0bd887029a10ec360e530cbb35f7"
+   ]
+  },
+  {
+   "name": "Solicitar Repatriação de Colaborador",
+   "short_description": "Repatriação de colaborador expatriado de volta ao Brasil.",
+   "description": "Use para solicitar a repatriação de um colaborador que está no exterior de volta ao Brasil. Informe o colaborador e a data de início no Brasil.",
+   "frases_exemplo": [
+    "repatriação de colaborador para o Brasil",
+    "trazer colaborador de volta ao Brasil",
+    "repatriar funcionário"
+   ],
+   "fixas": {
+    "v_select_your_option": "v_repatriation"
+   },
+   "sem_vars": [
+    "v_name",
+    "v_attach_the_completed_template_here"
+   ],
+   "sem_policies": [
+    "221e831887029a10ec360e530cbb352d"
+   ]
+  }
+ ]
+}

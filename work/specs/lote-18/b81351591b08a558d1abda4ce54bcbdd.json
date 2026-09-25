@@ -1,0 +1,92 @@
+{
+ "sys_id": "b81351591b08a558d1abda4ce54bcbdd",
+ "status": "conversacional",
+ "motivo": "Item com três intenções relacionadas ao FGTS, mas a única com perguntas próprias (correção de dados) cabe numa única conversa unindo os 5 checkboxes num list collector; a opção de extrato só levava a um link informativo (texto movido para a description) e a policy quebrada associada foi removida.",
+ "vars": {
+  "v_attach_pis": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_dados_corrigir": {
+   "nova": {
+    "type": "21",
+    "question_text": "Quais dados precisam ser corrigidos: nome, data de nascimento, nome da mãe, PIS ou carteira de trabalho?",
+    "mandatory": false,
+    "order": 450,
+    "choices": [
+     {
+      "text": "Nome",
+      "value": "nome"
+     },
+     {
+      "text": "Data de nascimento",
+      "value": "data_nascimento"
+     },
+     {
+      "text": "Nome da mãe",
+      "value": "nome_mae"
+     },
+     {
+      "text": "PIS",
+      "value": "pis"
+     },
+     {
+      "text": "Carteira de trabalho (CTPS)",
+      "value": "ctps"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "v_text_checkbox": "sem_uso_conversa",
+  "v_name_fgts": {
+   "substituida_por": "nova_dados_corrigir"
+  },
+  "v_date_of_birth_fgts": {
+   "substituida_por": "nova_dados_corrigir"
+  },
+  "v_mother_name_fgts": {
+   "substituida_por": "nova_dados_corrigir"
+  },
+  "v_pis_fgts": {
+   "substituida_por": "nova_dados_corrigir"
+  },
+  "v_ctps_fgts": {
+   "substituida_por": "nova_dados_corrigir"
+  },
+  "v_text_fgts": "texto_movido_descricao"
+ },
+ "policies": {
+  "5499dd191b88a558d1abda4ce54bcb7c": "remover",
+  "aaa3a95d1b4ca558d1abda4ce54bcb77": "remover",
+  "07c9dd191b88a558d1abda4ce54bcb84": {
+   "conditions": "v_what_is_your_request=v_data_rectification",
+   "actions": {
+    "nova_dados_corrigir": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_updated": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "6863add91b4ca558d1abda4ce54bcb99": {
+   "conditions": "v_what_is_your_request=v_account_merger",
+   "actions": {
+    "v_attach_fgts": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ }
+}

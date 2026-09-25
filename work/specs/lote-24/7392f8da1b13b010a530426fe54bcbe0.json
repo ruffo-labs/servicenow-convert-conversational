@@ -1,0 +1,28 @@
+{
+ "sys_id": "7392f8da1b13b010a530426fe54bcbe0",
+ "status": "conversacional",
+ "motivo": "Intenção única: comunicar desligamento com data e pendências. A policy só fixa obrigatoriedade de termination_date, virando prop. O script lê a variável 'employee' via contexto (não presente na conversa), então criamos nova_employee como referência para o colaborador ser identificado dentro do fluxo conversacional.",
+ "vars": {
+  "termination_date": {
+   "label": "Qual é a data do desligamento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "comments": {
+   "label": "Há pendências ou observações para a rescisão (equipamentos, adiantamentos, benefícios)?"
+  },
+  "nova_employee": {
+   "nova": {
+    "type": "8",
+    "question_text": "Qual colaborador será desligado?",
+    "mandatory": true,
+    "order": 90,
+    "reference": "x_nasm_hr_profile"
+   }
+  }
+ },
+ "policies": {
+  "2efe09661b4ae110d1abda4ce54bcb49": "remover"
+ }
+}

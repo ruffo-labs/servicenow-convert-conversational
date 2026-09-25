@@ -1,0 +1,40 @@
+{
+ "sys_id": "17bab25687b95210ec360e530cbb3527",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida/reclamação/sugestão sobre a frota) com três perguntas. A policy de obrigatoriedade vira prop nas variáveis, v_faqs sai (não coleta dado) e os dois client scripts de validação de v_details viram validation_regex; o de FAQ fica sem efeito.",
+ "vars": {
+  "v_contact_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_category": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_details": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^.{10,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_faqs": "sem_uso_conversa"
+ },
+ "policies": {
+  "18e18f1287f95210ec360e530cbb3599": "remover"
+ },
+ "scripts": {
+  "266fbe1e87b95210ec360e530cbb353e": {
+   "converter": "regex"
+  },
+  "5cd0c3de87b95210ec360e530cbb356e": {
+   "remover": "sem_efeito"
+  },
+  "d5fe9dd83bc25e10924d0247f4e45ac5": {
+   "remover": "sem_efeito"
+  }
+ }
+}

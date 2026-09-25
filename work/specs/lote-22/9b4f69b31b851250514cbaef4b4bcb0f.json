@@ -1,0 +1,84 @@
+{
+ "sys_id": "9b4f69b31b851250514cbaef4b4bcb0f",
+ "status": "conversacional",
+ "motivo": "Intenção única (cadastro de novo CNPJ/estabelecimento) com perguntas diretas, sem condicionais reais. As duas UI policies sem condição viraram prop nas variáveis; a de somente-leitura foi removida por travar a coleta de dados. O script que preenchia e bloqueava 'Opened By' virou default_value + not_available_conversation, e o de regex virou validação na variável de inscrição estadual. Os três anexos (cartão CNPJ, comprovante de inscrição estadual, acordo coletivo) foram unidos em um único anexo novo, pois removê-los sem substituto perderia dado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_opened_by": {
+   "props": {
+    "default_value": "javascript:gs.getUserID()",
+    "read_only": true,
+    "not_available_conversation": true
+   }
+  },
+  "v_which_sub_company_is_the_service_for": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cnpj": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_state_registration": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cost_center": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cost_center_number": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_category_union": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cnpj_union_of_the_category": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_anexo_documentos": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie o cartão CNPJ, o comprovante de inscrição estadual e o acordo coletivo.",
+    "mandatory": true,
+    "order": 1200
+   }
+  }
+ },
+ "remover": {
+  "v_label_fill_request": "visual",
+  "v_cnpj_card": {
+   "substituida_por": "nova_anexo_documentos"
+  },
+  "v_state_registration_attachment": {
+   "substituida_por": "nova_anexo_documentos"
+  },
+  "v_collective_agreement": {
+   "substituida_por": "nova_anexo_documentos"
+  }
+ },
+ "policies": {
+  "770202bf1b091250514cbaef4b4bcb51": "remover",
+  "01e24e7f1b091250514cbaef4b4bcba6": "remover"
+ },
+ "scripts": {
+  "82a371ff1b851250514cbaef4b4bcb9f": {
+   "converter": "default"
+  },
+  "df72d4781bd59650514cbaef4b4bcb3a": {
+   "converter": "regex"
+  }
+ }
+}

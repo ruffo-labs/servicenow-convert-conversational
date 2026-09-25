@@ -1,0 +1,74 @@
+{
+ "sys_id": "b452011087fc0f90ec360e530cbb356e",
+ "status": "conversacional",
+ "motivo": "Intenção única (enviar pagamento sindical para análise), com perguntas diretas. A UI policy onLoad sem condição vira props diretos nas variáveis. O script de 'others' vira UI policy condicional. O script de CNPJ vira validation_regex. O script de vencimento fica ajustado para VA Supported, pois não há regra clara para converter em regex. Mantivemos v_attachment (anexo do documento) porque a própria descrição do item pede para anexar o boleto/notificação e não há variável substituta: removê-la violaria zero-perda.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_opened_by": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_subcompany": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_type_of_union_payment": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_union_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_union_cnpj": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}-\\d{2}|\\d{14})$"
+   }
+  },
+  "v_due_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attachment": {
+   "label": "Envie o boleto, notificação ou cobrança do sindicato",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "6595ecec33f8831098331c07ee5c7b2c": "remover",
+  "nova_describe_others": {
+   "short_description": "Mostrar descrição quando tipo de pagamento é 'Outros'",
+   "conditions": "v_type_of_union_payment=others",
+   "actions": {
+    "v_describe_your_request": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "0e84e42833f8831098331c07ee5c7b1f"
+  }
+ },
+ "scripts": {
+  "0e84e42833f8831098331c07ee5c7b1f": {
+   "converter": "policy:nova_describe_others"
+  },
+  "120f11fa33f0cb5098331c07ee5c7bd0": {
+   "converter": "regex"
+  },
+  "dc3e5ca433b8831098331c07ee5c7b6e": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ }
+}

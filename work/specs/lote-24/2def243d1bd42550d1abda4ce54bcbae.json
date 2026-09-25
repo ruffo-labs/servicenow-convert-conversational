@@ -1,0 +1,36 @@
+{
+ "sys_id": "2def243d1bd42550d1abda4ce54bcbae",
+ "status": "conversacional",
+ "motivo": "Formulário genérico de dúvidas sobre controle de jornada, com 3 perguntas úteis (assunto, tipo, descrição). Removidos label decorativo e widgets de busca (não renderizam em conversa e só exibem resultado). Policy de obrigatoriedade sem condição e script de tamanho mínimo viram props na variável de descrição.",
+ "vars": {
+  "select_the_topic": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "type_of_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_description_details": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^.{10,}$"
+   }
+  }
+ },
+ "remover": {
+  "Info": "visual",
+  "contextual_search_results": "visual",
+  "ai_search_assist": "visual"
+ },
+ "policies": {
+  "4aefa43d1bd42550d1abda4ce54bcbfe": "remover"
+ },
+ "scripts": {
+  "23dc04621b5ced50d1abda4ce54bcb41": {
+   "converter": "regex"
+  }
+ }
+}

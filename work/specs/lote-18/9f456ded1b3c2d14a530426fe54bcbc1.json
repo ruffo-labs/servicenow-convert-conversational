@@ -1,0 +1,48 @@
+{
+ "sys_id": "9f456ded1b3c2d14a530426fe54bcbc1",
+ "status": "conversacional",
+ "motivo": "Item de dúvidas do Programa Jovem Aprendiz (Florescer) e troca de gestor/tutor, com uma única árvore de perguntas condicionadas ao tipo de solicitação. Segue a 1ª análise: mandatory vira prop, IDs/e-mail do gestor são derivados por auto-populate a partir do gestor selecionado, e o rótulo informativo é removido.",
+ "vars": {
+  "v_request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_manager_id": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_select_manager_name.employee_id"
+   }
+  },
+  "v_manager_email": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_select_manager_name.email"
+   }
+  }
+ },
+ "remover": {
+  "faq_text": "visual"
+ },
+ "policies": {
+  "007fa1211b306d14a530426fe54bcbed": "remover",
+  "a95be5ad1bbc2d14a530426fe54bcb5a": {
+   "conditions": "v_request_type=manager_tutor_change",
+   "actions": {
+    "v_select_manager_name": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_request_date": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "c95439a91b706d14a530426fe54bcb85": {
+   "converter": "auto_populate"
+  }
+ }
+}

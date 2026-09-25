@@ -1,0 +1,53 @@
+{
+ "sys_id": "d290b9ee87bab610ec360e530cbb358f",
+ "status": "conversacional",
+ "motivo": "Formulário curto para verificar documentos de frete pendentes. A policy sem condição vira props nas variáveis do item e continua existindo (sem condição) só para fixar mandatory/read-only nas variáveis do variable set compartilhado, que não pode ser alterado pela spec do item. O label informativo do item sai da conversa. A 1ª análise pede para derivar vs_company_cnpj, vs_carrier_code, vs_requeste_name e vs_requesters_email (variáveis de set), mas o formato não permite default_value/hidden em variável de set, então elas continuam sendo perguntadas.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_pendent_value": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_year_related_to_pending_document": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_document": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_warning_document_attach": "visual"
+ },
+ "policies": {
+  "c7934eaa8772f610ec360e530cbb353c": {
+   "conditions": "",
+   "actions": {
+    "vs_company": {
+     "mandatory": true
+    },
+    "vs_company_cnpj": {
+     "mandatory": true
+    },
+    "vs_carrier_name": {
+     "mandatory": true
+    },
+    "vs_carrier_code": {
+     "readonly": true
+    },
+    "vs_requeste_name": {
+     "mandatory": true
+    },
+    "vs_requesters_email": {
+     "mandatory": true
+    }
+   }
+  }
+ }
+}

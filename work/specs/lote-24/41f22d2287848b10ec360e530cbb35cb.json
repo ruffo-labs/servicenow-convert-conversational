@@ -1,0 +1,38 @@
+{
+ "sys_id": "41f22d2287848b10ec360e530cbb35cb",
+ "status": "conversacional",
+ "motivo": "Intenção única (informar e-mail de comprovante de retenção). Os dois client scripts viram Validation Regex nas variáveis e a policy que só marca mandatory/readonly vira prop; o rich text informativo sai.",
+ "vars": {
+  "question_enter_cuit": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{11}$"
+   }
+  },
+  "question_enter_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "question_email": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,}(;[\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,})*$"
+   }
+  }
+ },
+ "remover": {
+  "question_important_info": "visual"
+ },
+ "policies": {
+  "48405ae68780cb10ec360e530cbb3534": "remover"
+ },
+ "scripts": {
+  "0f9e526e87c4cb10ec360e530cbb35f4": {
+   "converter": "regex"
+  },
+  "bb522e628748cb10ec360e530cbb350e": {
+   "converter": "regex"
+  }
+ }
+}

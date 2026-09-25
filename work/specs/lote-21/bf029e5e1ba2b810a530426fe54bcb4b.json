@@ -1,0 +1,53 @@
+{
+ "sys_id": "bf029e5e1ba2b810a530426fe54bcb4b",
+ "status": "conversacional",
+ "motivo": "Item de intenção única (pedir VT extra), com um desvio simples por 'para quem é o pedido'. Convertido o anexo obrigatório (script onSubmit) em UI policy sobre a nova variável de anexo, e removidas as variáveis puramente visuais. As variáveis dos variable sets 'Personal information - VT Extra' e 'Transportation tickets' são compartilhadas e não são alteradas por esta spec de item; seus labels e tipos ficam a cargo da spec dos próprios sets.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "request_reason": {
+   "label": "Qual é o motivo do vale-transporte extra?"
+  },
+  "comments": {
+   "label": "Quer deixar alguma observação?"
+  },
+  "declare_statement_veracity": {
+   "label": "Você confirma que as informações estão corretas e assume a responsabilidade por elas?",
+   "props": {
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "nova_anexo_dados_colaborador": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a planilha com os dados do colaborador (modelo no link da descrição).",
+    "mandatory": false,
+    "order": 150
+   }
+  }
+ },
+ "remover": {
+  "attach_template_employee_information": {
+   "substituida_por": "nova_anexo_dados_colaborador"
+  },
+  "text_commitment_term": "visual"
+ },
+ "policies": {
+  "6f36a9a11b9ff010d1abda4ce54bcb5a": {
+   "conditions": "solicitation_whom=another_employee",
+   "actions": {
+    "nova_anexo_dados_colaborador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "4c1f90ce1bd77010d1abda4ce54bcbd5": {
+   "converter": "policy:6f36a9a11b9ff010d1abda4ce54bcb5a"
+  }
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "sys_id": "64e980ff1bc37c10a530426fe54bcbf3",
+ "status": "conversacional",
+ "motivo": "Intenção única (cadastrar/alterar pensão) com perguntas objetivas. A policy só fixa obrigatoriedade, virando prop; attach_letter era só um rótulo (não coleta dado) e é substituído por um anexo real.",
+ "vars": {
+  "name_pensioner": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "pensioner_cpf": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "bank": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "agency": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "account": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "bank_account_digit": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "pensioner_phone": {
+   "props": {
+    "validation_regex": "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
+   }
+  },
+  "nova_oficio_judicial": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie o ofício judicial ou o acordo da pensão.",
+    "mandatory": false,
+    "order": 1300
+   }
+  }
+ },
+ "remover": {
+  "attach_letter": "visual"
+ },
+ "policies": {
+  "1659c98f1bc16d54d1abda4ce54bcb86": "remover"
+ },
+ "scripts": {
+  "be69a73f1b1ff010a530426fe54bcbb9": {
+   "converter": "regex"
+  }
+ }
+}

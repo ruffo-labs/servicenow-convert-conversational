@@ -1,0 +1,25 @@
+{
+ "sys_id": "6c6655a71b552910d1abda4ce54bcbf3",
+ "status": "conversacional",
+ "motivo": "Item sem variáveis, policies ou scripts próprios; todos os dados vêm de variable sets compartilhados, que a spec do item não pode alterar. Os três elementos visuais (rich text/macro do template, tipo 32, sem dado) são ocultados por uma nova policy do item, resolvendo o bloqueio de renderização da macro. A obrigatoriedade de anexo e descrição já é garantida pela policy própria do set, que continua ativa sem necessidade de ação aqui.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "policies": {
+  "nova_ocultar_template_capitalizacao": {
+   "short_description": "Oculta elementos visuais do template (rich text e macro) que não coletam dado",
+   "conditions": "v_release_dateISNOTEMPTY^ORv_release_dateISEMPTY",
+   "actions": {
+    "v_informative_note": {
+     "visible": false
+    },
+    "v_template_capitalization_expenses": {
+     "visible": false
+    },
+    "v_template_accounting_entry_avon": {
+     "visible": false
+    }
+   }
+  }
+ }
+}

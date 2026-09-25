@@ -1,0 +1,80 @@
+{
+ "sys_id": "b3f428323b801610924d0247f4e45aa2",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir/cancelar adiantamento) com poucas perguntas reais. v_amount e v_advance_payment já eram ocultados por policy onLoad sem condição no original, então viram hidden fixo (com reexibição condicional de v_advance_payment); os rich text labels que só explicavam % ou confirmação de cancelamento são removidos por não coletarem dado, junto com os scripts/policies que só agiam sobre eles. O script que remove a opção de cancelamento por país mexe em opções de forma dinâmica (DOM) e não em visibilidade simples, então fica para ajuste técnico em vez de virar policy.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_type_of_request": {
+   "label": "Você quer pedir um adiantamento ou cancelar um adiantamento recorrente?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_amount": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_advance_payment": {
+   "label": "Você quer que o adiantamento seja pago todo mês?",
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_detail_field": {
+   "label": "Quer acrescentar algum detalhe sobre o pedido?"
+  }
+ },
+ "remover": {
+  "v_request_50": "sem_uso_conversa",
+  "v_request_20": "sem_uso_conversa",
+  "v_cancel_advance_payment": "sem_uso_conversa",
+  "v_once_advance_payment": "sem_uso_conversa"
+ },
+ "policies": {
+  "30358a831b485610514cbaef4b4bcb2c": "remover",
+  "631fbcbe3b041610924d0247f4e45a6b": "remover",
+  "95d0decb1b885610514cbaef4b4bcb6f": "remover",
+  "a64a02cf1b485610514cbaef4b4bcb4e": "remover",
+  "ac68a6571b48d610514cbaef4b4bcbc0": "remover",
+  "cd255e071bc85610514cbaef4b4bcbdc": "remover",
+  "d825de071bc85610514cbaef4b4bcbac": "remover",
+  "e34a4e8f1b485610514cbaef4b4bcbdc": "remover",
+  "nova_advance_payment_mensal": {
+   "short_description": "Mostrar pergunta de pagamento mensal ao pedir adiantamento",
+   "conditions": "v_type_of_request=request_advance_payment",
+   "actions": {
+    "v_advance_payment": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "ed01d20f1b885610514cbaef4b4bcbf3"
+  }
+ },
+ "scripts": {
+  "4eaa0ecf1b485610514cbaef4b4bcb32": {
+   "remover": "sem_efeito"
+  },
+  "5ce312c31bc85610514cbaef4b4bcb2b": {
+   "remover": "sem_efeito"
+  },
+  "74d736db1b88d610514cbaef4b4bcb78": {
+   "remover": "sem_efeito"
+  },
+  "9a8546c31b485610514cbaef4b4bcb97": {
+   "remover": "sem_efeito"
+  },
+  "7da9f0b63b041610924d0247f4e45a42": {
+   "ajustar": [
+    "remover_dom",
+    "ui_type_all"
+   ]
+  },
+  "ed01d20f1b885610514cbaef4b4bcbf3": {
+   "converter": "policy:nova_advance_payment_mensal"
+  }
+ }
+}

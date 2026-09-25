@@ -1,0 +1,106 @@
+{
+ "sys_id": "6a574af087cff250ec360e530cbb356c",
+ "status": "dividido",
+ "motivo": "O item mistura duas intenções (cadastrar curso/conteúdo e tirar dúvida) definidas por 'what_is_the_request'. Cada valor vira um derivado, com a variável fixada. As UI policies sem condição real (Mandatory Fields, Cadastro de conteúdo, Dúvidas) viram prop direto na variável; as condicionais (Nome da célula, Selecione o HUB, Inscrição Massiva, Criar Campanha) continuam, só saindo do derivado de dúvidas por não terem lá as variáveis que controlam.",
+ "vars": {
+  "training_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "training_objective": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "categoria_de_aprendizagem": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "responsible_for_content": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "data_horario_inicio": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "enter_the_link_to_the_content_to_be_loaded": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "do_you_wish_to_perform_a_bulk_enrollment": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "anexo_conteudo_carregado_lista_presenca": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "acao_obrigatoria": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_information": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "3a51f81d8723f610ec360e530cbb3543": "remover",
+  "6ec3feb087437650ec360e530cbb35e0": "remover",
+  "4d333ab087437650ec360e530cbb3592": "remover"
+ },
+ "scripts": {
+  "d575febc87437650ec360e530cbb359d": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "what_is_the_request": "cadastro_conteudo_workday_learning"
+   },
+   "sem_vars": [
+    "additional_information"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "what_is_the_request": "duvidas_workday_learning"
+   },
+   "sem_vars": [
+    "training_name",
+    "training_objective",
+    "categoria_de_aprendizagem",
+    "seleciona_o_hub",
+    "nome_da_celula",
+    "acao_obrigatoria",
+    "responsible_for_content",
+    "data_horario_inicio",
+    "enter_the_link_to_the_content_to_be_loaded",
+    "insert_link_Customer_satisfaction_survey_form",
+    "do_you_wish_to_perform_a_bulk_enrollment",
+    "link_eligibles_database_collaborator_id",
+    "download_the_form_compaing_here",
+    "anexo_conteudo_carregado_lista_presenca"
+   ],
+   "sem_policies": [
+    "39647e3887437650ec360e530cbb3557",
+    "f5447ab487437650ec360e530cbb351f",
+    "a204a8f533f6431098331c07ee5c7b22",
+    "a31624f933f6431098331c07ee5c7bdd"
+   ]
+  }
+ ]
+}

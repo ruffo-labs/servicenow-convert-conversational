@@ -1,0 +1,49 @@
+{
+ "sys_id": "71b073b033084b9498331c07ee5c7b88",
+ "status": "conversacional",
+ "motivo": "Intenção única (análise de pedido de franqueado, com reembolso/estorno). A policy onLoad 'EY: Mandatory' vira prop nas variáveis do item; a ação sobre request_for_who (variável do set 'EY: Requester Info') não pode virar prop porque é variável de set, então a policy é mantida só com essa ação. A policy condicional 'EY: Reembolso' continua igual.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "nome_do_franqueado": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "codigo_do_franqueado": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "numero_do_pedido": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "tipo_de_solicitacao": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "detalhamento_da_solicitacao": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "anexo_solicitacao": "visual"
+ },
+ "policies": {
+  "36e958c133848b9498331c07ee5c7bb0": {
+   "conditions": "",
+   "actions": {
+    "request_for_who": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ }
+}

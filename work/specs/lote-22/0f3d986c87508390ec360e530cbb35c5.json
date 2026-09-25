@@ -1,0 +1,74 @@
+{
+ "sys_id": "0f3d986c87508390ec360e530cbb35c5",
+ "status": "conversacional",
+ "motivo": "Fluxo único de dúvida/solicitação sobre celebrações e eventos, com bifurcação simples de campos por UI policy (para mim / para colega). Variável visual removida, obrigatoriedades sem condição viram props, e employee_name_for_me fica fora da conversa por já ter valor padrão do usuário logado. O client script que adiciona uma opção de idioma não pode virar choice fixa no formato de spec (só variável nova aceita lista de opções); em vez disso ele é ajustado para suportar VA, preservando a funcionalidade.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "who_is_this_request_for": {
+   "label": "O pedido é para você ou para outro colega?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "employee_name_for_me": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "employee_name_to_other_colleague": {
+   "label": "Qual o nome do colega?"
+  },
+  "type_of_request": {
+   "label": "É uma dúvida, um pedido de informação ou outro tipo de solicitação?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "select_the_celebration_event_below": {
+   "label": "Sobre qual celebração ou evento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "please_describe_the_celebration_event": {
+   "label": "Qual é o evento?"
+  },
+  "use_field_below_to_provide": {
+   "label": "Conte os detalhes do que você precisa.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "more_info_text_item": "sem_uso_conversa"
+ },
+ "policies": {
+  "60fcb928871cc390ec360e530cbb357a": "remover",
+  "74aaa06087948390ec360e530cbb3506": "remover",
+  "918ba4a487948390ec360e530cbb358a": "remover"
+ },
+ "scripts": {
+  "2b01d86533ad83d098331c07ee5c7b0f": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ },
+ "itens": [
+  {
+   "name": "Dúvidas sobre celebrações e eventos para colaboradores",
+   "short_description": "Informações e dúvidas sobre celebrações e eventos da jornada do colaborador (Dia dos Pais e Mães, datas comemorativas, eventos internos).",
+   "description": "Use para tirar dúvidas ou pedir informações sobre celebrações e eventos da empresa ligados à jornada do colaborador, como Dia das Mães e dos Pais, datas comemorativas e eventos internos. Pode ser para você ou para um colega. Não use para benefícios, folha de pagamento ou férias.",
+   "frases_exemplo": [
+    "quando vai ser a comemoração do dia das mães",
+    "não recebi o presente do dia dos pais",
+    "dúvida sobre evento de fim de ano",
+    "quero informação sobre a celebração de tempo de casa",
+    "meu colega não foi convidado para o evento"
+   ]
+  }
+ ]
+}

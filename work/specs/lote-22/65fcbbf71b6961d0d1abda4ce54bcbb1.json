@@ -1,0 +1,84 @@
+{
+ "sys_id": "65fcbbf71b6961d0d1abda4ce54bcbb1",
+ "status": "conversacional",
+ "motivo": "Formulário de contato do sindicato com o RH, uma única intenção com poucas perguntas condicionais por categoria. Os widgets de pesquisa contextual só exibem resultado (removidos) e o widget de anexo vira variável nova de anexo nativa; o script de anexo obrigatório virou UI policy condicionada às subcategorias de pagamento que exigem comprovante (boleto e saque).",
+ "vars": {
+  "v_email": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+   }
+  },
+  "v_phone": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9,18}$"
+   }
+  },
+  "v_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_category": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_describe": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_has_attachment": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "nova_anexo": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe o comprovante ou documento, se tiver.",
+    "mandatory": false,
+    "order": 1300
+   }
+  }
+ },
+ "remover": {
+  "v_cont_start": "visual",
+  "contextual_search_results": "visual",
+  "ai_search_assist": "visual",
+  "vs_add_attachment": {
+   "substituida_por": "nova_anexo"
+  }
+ },
+ "policies": {
+  "2000004c1b7961d0d1abda4ce54bcbfb": "remover",
+  "nova_anexo_mandatory": {
+   "short_description": "Anexo obrigatório para comprovante de pagamento",
+   "conditions": "v_subcategory_paymentsINbank,withdrawls",
+   "actions": {
+    "nova_anexo": {
+     "mandatory": true
+    }
+   },
+   "origem": "cb0144cc1b7961d0d1abda4ce54bcba8"
+  }
+ },
+ "scripts": {
+  "0f9132b61b79e910a530426fe54bcb87": {
+   "converter": "regex"
+  },
+  "57417e761b79e910a530426fe54bcb2a": {
+   "converter": "regex"
+  },
+  "cb0144cc1b7961d0d1abda4ce54bcba8": {
+   "converter": "policy:nova_anexo_mandatory"
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "sys_id": "59a2d0171bef9190d1abda4ce54bcb98",
+ "status": "conversacional",
+ "motivo": "Intenção única (documentos para processo trabalhista, auditoria ou fiscalização) com ramificações por tipo de processo. Os 10 checkboxes de tipos de documento viram uma única lista (nova_documentos, List Collector), preservando cada dado. v_sub_company mantém a referência dinâmica a core_company, sem virar lista fixa.",
+ "vars": {
+  "v_claimant_s_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_the_type_of_process": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_documentos": {
+   "nova": {
+    "type": "21",
+    "question_text": "Quais documentos você precisa?",
+    "mandatory": false,
+    "order": 706,
+    "choices": [
+     {
+      "text": "Aviso prévio",
+      "value": "aviso_previo"
+     },
+     {
+      "text": "Contrato de trabalho e aditivos",
+      "value": "contrato_trabalho"
+     },
+     {
+      "text": "Cartões de ponto",
+      "value": "cartoes_ponto"
+     },
+     {
+      "text": "Descrição de cargo",
+      "value": "descricao_cargo"
+     },
+     {
+      "text": "FGTS, extrato analítico e pagamentos na rescisão",
+      "value": "fgts_extrato_pagamentos"
+     },
+     {
+      "text": "Ficha de registro completa",
+      "value": "ficha_registro"
+     },
+     {
+      "text": "Fichas de entrega de EPI (inclusive por biometria) e CA",
+      "value": "fichas_epi_ca"
+     },
+     {
+      "text": "Holerites",
+      "value": "holerites"
+     },
+     {
+      "text": "PPP",
+      "value": "ppp"
+     },
+     {
+      "text": "TRCT e comprovante de pagamento",
+      "value": "trct_comprovante"
+     },
+     {
+      "text": "Outros",
+      "value": "outros"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "v_div_variables_labor": "visual",
+  "v_text_checkbox": "visual",
+  "v_early_warning": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_employment_contract_and_any_additions": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_timecards": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_job_description": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_fgts_and_analytical_extract_and_payments_upon_termination": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_complete_registration_form": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_payslips": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_ppp": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_trct_and_proof_of_payment": {
+   "substituida_por": "nova_documentos"
+  },
+  "v_others": {
+   "substituida_por": "nova_documentos"
+  }
+ },
+ "policies": {
+  "1ddd63981b33d9d0a530426fe54bcb85": "remover",
+  "f6f3cf071b7ce950a530426fe54bcb82": {
+   "conditions": "v_enter_the_type_of_process=1",
+   "actions": {
+    "v_date_of_admission": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_dismissal_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nova_documentos": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "35b54b8f1b7ce950a530426fe54bcb55": {
+   "conditions": "v_enter_the_type_of_process=1^nova_documentosLIKEoutros",
+   "actions": {
+    "v_inform_the_document": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ }
+}

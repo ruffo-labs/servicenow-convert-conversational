@@ -1,0 +1,168 @@
+{
+ "sys_id": "73bfff2d1b37d154d1abda4ce54bcb1d",
+ "status": "dividido",
+ "motivo": "v_request_type separa duas intenções (pedir vaga vs. desistir), cada uma com perguntas próprias. Seguindo a 1ª análise, os campos de data de nascimento/previsão de parto foram unificados em v_childs_date_of_birth e a mandatoriedade condicionada por v_request_type virou prop direta em cada derivado.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_shift": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_nursery_unit": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_phone": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_complete_address": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_private_email": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_corporate_email": {
+   "label": "Qual é o seu e-mail corporativo?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_name_of_the_person_in_charge": {
+   "label": "Quem é o(a) colaborador(a) responsável pela criança?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "has_the_child_been_born": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "are_you_registered_with_wd": {
+   "label": "Você já está registrado(a) no WorkDay?"
+  },
+  "v_childs_date_of_birth": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_prediction_of_start_to_nursery": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_name_of_the_person_in_charge_waiver": {
+   "label": "Quem é o(a) colaborador(a) responsável pela criança?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_childs_name_waiver": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_vacancy_request_or_withdrawal": "visual",
+  "v_eligibility_for": "visual",
+  "v_label_wk": "visual",
+  "probable_date_of_birth": {
+   "substituida_por": "v_childs_date_of_birth"
+  }
+ },
+ "policies": {
+  "021088c41b694610a530426fe54bcb37": "remover",
+  "0d91bd991b886558a530426fe54bcbbe": "remover",
+  "6c55b0581b69c610a530426fe54bcb37": "remover",
+  "73842f491b698e10a530426fe54bcba9": "remover",
+  "aab884c81ba94610a530426fe54bcb83": "remover",
+  "f1c640901b25c610a530426fe54bcb7d": "remover",
+  "64be648f1bb71d94d1abda4ce54bcbbc": "remover",
+  "c49a70cf1b7b1d94d1abda4ce54bcb7f": "remover",
+  "e1cf36b81bed7950d1abda4ce54bcbda": {
+   "conditions": "has_the_child_been_born=no^v_request_type=vacancy_request",
+   "actions": {
+    "v_child_s_name": {
+     "visible": false,
+     "mandatory": false
+    },
+    "are_you_registered_with_wd": {
+     "visible": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "541538551b543590a530426fe54bcb33": {
+   "converter": "auto_populate"
+  },
+  "99e007bc1bed7950d1abda4ce54bcbde": {
+   "remover": {
+    "substituido_por": "e1cf36b81bed7950d1abda4ce54bcbda"
+   }
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_request_type": "vacancy_request"
+   },
+   "sem_vars": [
+    "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date",
+    "v_name_of_the_person_in_charge_waiver",
+    "v_childs_name_waiver"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_request_type": "vacancy_waiver"
+   },
+   "sem_vars": [
+    "v_nursery_unit",
+    "v_shift",
+    "has_the_child_been_born",
+    "v_name_of_the_person_in_charge",
+    "v_phone",
+    "v_corporate_email",
+    "v_prediction_of_start_to_nursery",
+    "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave",
+    "v_attach_holidays_to_maternity_leave",
+    "v_complete_address",
+    "v_private_email",
+    "are_you_registered_with_wd",
+    "v_child_s_name",
+    "v_childs_date_of_birth"
+   ],
+   "sem_policies": [
+    "05ce180b1b11c614d1abda4ce54bcbd5",
+    "6ae95fc51b298e10a530426fe54bcb8b",
+    "3bdc28471bb71d94d1abda4ce54bcb77",
+    "b45303b01b21b950d1abda4ce54bcbee",
+    "e1cf36b81bed7950d1abda4ce54bcbda"
+   ]
+  }
+ ]
+}

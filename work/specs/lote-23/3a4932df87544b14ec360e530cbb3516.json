@@ -1,0 +1,61 @@
+{
+ "sys_id": "3a4932df87544b14ec360e530cbb3516",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir prévia de rescisão) com perguntas sequenciais. A UI policy onLoad só fixava mandatory/readonly, virou prop; o script que preenche a data de admissão virou auto-preenchimento. Global ID, nome e data de admissão não têm default_value nem já eram ocultos no original, então não podem ser totalmente derivados: continuam como perguntas, agora read-only.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "select_collaborator": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "global_id": {
+   "label": "Qual é o Global ID do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "name": {
+   "label": "Qual é o nome completo do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "date_admission": {
+   "label": "Qual é a data de admissão do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "reason_requesting_preliminary_approval": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "expected_shutdown_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "termination_fee": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_payment": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "4044486f875c8b14ec360e530cbb35c6": "remover"
+ },
+ "scripts": {
+  "814bd72b87144f14ec360e530cbb356b": {
+   "converter": "auto_populate"
+  }
+ }
+}

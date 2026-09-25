@@ -1,0 +1,64 @@
+{
+ "sys_id": "4f50f3a71b102dd0a530426fe54bcb88",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir o PPP) com poucas perguntas, que variam conforme o colaborador ainda estar ativo ou não. Obrigatoriedades incondicionais viram props; a condicional (ex-colaborador) continua como UI policy sem script, agora também exigindo o anexo. O aviso sobre desligamentos antigos na Natura vai para a description.",
+ "vars": {
+  "v_which_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_active_contributor": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cpf": {
+   "props": {
+    "validation_regex": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"
+   }
+  },
+  "nova_anexo_documentos": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe os documentos pedidos para ex-colaboradores (por exemplo, documento de identificação).",
+    "mandatory": false,
+    "order": 650
+   }
+  }
+ },
+ "remover": {
+  "v_text_if_date2000": "texto_movido_descricao"
+ },
+ "policies": {
+  "f975776f1b502dd0a530426fe54bcb2a": "remover",
+  "2f66bb231b902dd0a530426fe54bcb87": {
+   "conditions": "v_active_contributor=No",
+   "actions": {
+    "v_dismissal_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_cpf": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nova_anexo_documentos": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "a6ad3bef1bd02dd0a530426fe54bcbb2": "remover"
+ },
+ "scripts": {
+  "1aefa4bb1b506dd0a530426fe54bcba5": {
+   "remover": {
+    "substituido_por": "2f66bb231b902dd0a530426fe54bcb87"
+   }
+  },
+  "1bf637e31b902dd0a530426fe54bcb81": {
+   "converter": "regex"
+  }
+ }
+}

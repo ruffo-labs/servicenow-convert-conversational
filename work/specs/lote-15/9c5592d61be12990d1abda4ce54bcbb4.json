@@ -1,0 +1,30 @@
+{
+ "sys_id": "9c5592d61be12990d1abda4ce54bcbb4",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir relatório ou fazer consulta contábil), com formulário simples cujos textos e labels vêm da 1ª análise. v_controle já era ocultada sem condição no original: vira prop hidden, e a policy que só fixava isso é removida. O script que a preenche vira auto_populate. O script que filtra as opções de vs_information_type por sub-empresa e idioma é lógica de negócio dinâmica, não uma lista fixa; em vez de removê-lo, ajustamos para VA supported e todos os tipos de UI, mantendo a variável e o label genérico já previsto.",
+ "divergencias": [
+  "regra_negocio"
+ ],
+ "vars": {
+  "v_controle": {
+   "props": {
+    "hidden": true,
+    "mandatory": false
+   }
+  }
+ },
+ "policies": {
+  "3cc638dd1bad4610d1abda4ce54bcb6f": "remover"
+ },
+ "scripts": {
+  "9ff0fab21b6d4a50a530426fe54bcb47": {
+   "converter": "auto_populate"
+  },
+  "db9d507987b95610ec360e530cbb35d2": {
+   "ajustar": [
+    "va_supported",
+    "ui_type_all"
+   ]
+  }
+ }
+}

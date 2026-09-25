@@ -1,0 +1,65 @@
+{
+ "sys_id": "55d956d71b3711d4a530426fe54bcb29",
+ "status": "conversacional",
+ "motivo": "Intenção única (adiantamento ou complemento previdenciário) com ramificações claras por tipo de solicitação e por já haver perícia agendada, tudo resolvido com props e UI policies sem código. O texto instrutivo de anexo vira uma variável de anexo real, dois textos informativos viram parte da descrição, e o client script frágil de anexo obrigatório é substituído pela UI policy que já cumpre a mesma regra.",
+ "vars": {
+  "v_request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_carta_concessao_inss": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a carta de concessão e o comunicado de decisão do INSS.",
+    "mandatory": false,
+    "order": 1500
+   }
+  }
+ },
+ "remover": {
+  "36e4e6131b3b11d4a530426fe54bcbf8": "visual",
+  "eef9aa1b1b7b11d4a530426fe54bcb34": "visual",
+  "v_text_attach": {
+   "substituida_por": "nova_carta_concessao_inss"
+  },
+  "v_formulario_adiantamento_salario_afastamento": "texto_movido_descricao",
+  "v_observation_expertise_this_month": "texto_movido_descricao"
+ },
+ "policies": {
+  "7b2ef0841bcc2dd4a530426fe54bcb37": "remover",
+  "1ae250f31b37d5d4a530426fe54bcba3": {
+   "conditions": "v_request_type=Pension Supplement",
+   "actions": {
+    "nova_carta_concessao_inss": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "f57b0c731bb3d5d4a530426fe54bcb22": {
+   "conditions": "v_request_type=Social Security Advance^v_was_the_medical_examination_scheduled_at_the_inss=Yes",
+   "actions": {
+    "v_what_is_the_date_of_the_medical_examination": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_the_proof_of_scheduling_the_expertise": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_the_completed_social_security_advance_form": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "b11ee7881b38a114d1abda4ce54bcba1": {
+   "remover": {
+    "substituido_por": "1ae250f31b37d5d4a530426fe54bcba3"
+   }
+  }
+ }
+}

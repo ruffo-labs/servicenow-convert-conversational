@@ -1,0 +1,70 @@
+{
+ "sys_id": "58c52cfc3b7c5290924d0247f4e45a3d",
+ "status": "conversacional",
+ "motivo": "Intenção única (troca coletiva de escala) com perguntas objetivas. As policies sem condição viram props diretas; os três checkboxes de turno viram um list collector único (nova_turnos). Policies do variable set (readonly/ocultar) permanecem como estão, por instrução da 1ª análise de tratá-las na análise do set.",
+ "vars": {
+  "v_filial": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_day_will_be_off": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_day_will_be_worked": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "fleg_ciente": {
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "nova_turnos": {
+   "nova": {
+    "type": "21",
+    "question_text": "Quais turnos participam da troca?",
+    "mandatory": true,
+    "order": 600,
+    "choices": [
+     {
+      "text": "1º turno",
+      "value": "primeiro_turno"
+     },
+     {
+      "text": "2º turno",
+      "value": "segundo_turno"
+     },
+     {
+      "text": "3º turno",
+      "value": "terceiro_turno"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "personal_information": "visual",
+  "container_start": "visual",
+  "eligible_shifts_for_collective_schedule_change": "visual",
+  "primeiro_turno": {
+   "substituida_por": "nova_turnos"
+  },
+  "segundo_turno": {
+   "substituida_por": "nova_turnos"
+  },
+  "terceiro_turno": {
+   "substituida_por": "nova_turnos"
+  },
+  "formatter": "visual",
+  "v_text": "texto_movido_descricao"
+ },
+ "policies": {
+  "f47c2ccd3bb01690924d0247f4e45a38": "remover"
+ }
+}

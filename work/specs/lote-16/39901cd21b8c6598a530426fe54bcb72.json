@@ -1,0 +1,55 @@
+{
+ "sys_id": "39901cd21b8c6598a530426fe54bcb72",
+ "status": "conversacional",
+ "motivo": "Pedido único de reembolso de nota de crédito, com poucas perguntas objetivas. Policy onLoad sem condição vira prop; scripts de validação de moeda viram regex; labels informativos sem coleta de dado são removidos.",
+ "vars": {
+  "v_credit_repaid": {
+   "label": "Qual nota de crédito deve ser reembolsada?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_refund_amount": {
+   "label": "Quanto deve ser reembolsado?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d+(\\.\\d{3})*,\\d{2}$"
+   }
+  },
+  "v_order_number": {
+   "label": "Qual é o número do pedido?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_total_value": {
+   "label": "Qual é o valor total do pedido?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d+(\\.\\d{3})*,\\d{2}$"
+   }
+  },
+  "v_describe_request": {
+   "label": "Conte o motivo do reembolso.",
+   "props": {
+    "mandatory": true,
+    "type": "2"
+   }
+  }
+ },
+ "remover": {
+  "v_refunds_info": "texto_movido_descricao",
+  "v_attach_info": "visual"
+ },
+ "policies": {
+  "83b43c9e1bc4a598a530426fe54bcb3c": "remover"
+ },
+ "scripts": {
+  "83a1404a1b552510a530426fe54bcb31": {
+   "converter": "regex"
+  },
+  "a672c40a1b552510a530426fe54bcb7d": {
+   "converter": "regex"
+  }
+ }
+}

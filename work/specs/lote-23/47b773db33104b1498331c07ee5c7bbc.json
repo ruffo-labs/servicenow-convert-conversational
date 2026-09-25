@@ -1,0 +1,57 @@
+{
+ "sys_id": "47b773db33104b1498331c07ee5c7bbc",
+ "status": "conversacional",
+ "motivo": "Intenção única (registrar fatura de outro cliente) com poucas perguntas interdependentes. A policy de obrigatoriedade sem condição vira prop nas variáveis do item; opened_by é variável de set e não pode ser alterada pela spec do item, então mantém-se como no original (já tem default_value, então já é preenchida automaticamente sem necessidade de pergunta explícita) e sua obrigatoriedade continua via policy. country é revelada por uma policy com condição real (subsidiária preenchida); como não tem default_value nem fica oculta incondicionalmente no original, mantemos a pergunta em vez de escondê-la de vez.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "which_company_is_your_request_for": {
+   "label": "Para qual empresa é o registro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_subsidiary_is_the_service_for": {
+   "label": "Qual é a subsidiária?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "country": {
+   "label": "Qual é o país da subsidiária?"
+  },
+  "supplier_name": {
+   "label": "Qual é o nome do cliente da fatura?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "market_approver": {
+   "label": "Quem é o aprovador do mercado?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_information": {
+   "label": "Quer acrescentar detalhes da fatura (número, valor, vencimento)?"
+  }
+ },
+ "policies": {
+  "bdb6e8443360035498331c07ee5c7b17": {
+   "conditions": "",
+   "actions": {
+    "opened_by": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "f38af98c33e0835498331c07ee5c7b75": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ }
+}

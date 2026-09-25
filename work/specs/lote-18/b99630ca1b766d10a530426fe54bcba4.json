@@ -1,0 +1,44 @@
+{
+ "sys_id": "b99630ca1b766d10a530426fe54bcba4",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida, reclamação ou sugestão sobre benefícios) com poucas perguntas relevantes. Elementos visuais (rich text labels e widgets de busca custom) são removidos, obrigatoriedade vira prop e a validação de tamanho mínimo vira regex. A lista de benefícios é mantida completa, pois a filtragem de opções por idioma/país feita hoje via script não é replicável no formato de spec.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "beneficios": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_description_details": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "Info": "visual",
+  "v_text_vale_ref_alim": "texto_movido_descricao",
+  "contextual_search_results": "visual",
+  "ai_search_assist": "visual"
+ },
+ "policies": {
+  "3669bc821bb66d10a530426fe54bcbe7": "remover",
+  "d999dc1e3b047610924d0247f4e45a9d": "remover"
+ },
+ "scripts": {
+  "c24a3c461bb66d10a530426fe54bcb27": {
+   "converter": "regex"
+  },
+  "cb7640ad33a983d098331c07ee5c7b5d": {
+   "remover": "sem_efeito"
+  }
+ }
+}

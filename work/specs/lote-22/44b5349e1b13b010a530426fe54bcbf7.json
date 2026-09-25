@@ -1,0 +1,37 @@
+{
+ "sys_id": "44b5349e1b13b010a530426fe54bcbf7",
+ "status": "conversacional",
+ "motivo": "Intenção única (pagamento complementar de rescisão) com poucas perguntas. Elementos visuais removidos; policy que escondia o motivo 'Outros' foi invertida para mostrar/exigir a descrição só nesse caso, e a obrigatoriedade fixa de release_type virou prop.",
+ "vars": {
+  "release_type": {
+   "label": "Qual é o tipo de verba a pagar?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "payment_description": {
+   "label": "Descreva o pagamento."
+  },
+  "comments_termination_2": {
+   "label": "Qual é a justificativa para o pagamento complementar?"
+  }
+ },
+ "remover": {
+  "request_here": "visual",
+  "formatter": "visual",
+  "info": "visual",
+  "termination_template": "visual"
+ },
+ "policies": {
+  "7eb285521b93b010a530426fe54bcbe1": {
+   "conditions": "release_type=Outros",
+   "actions": {
+    "payment_description": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "c00ecedb1bcded94a530426fe54bcbc9": "remover"
+ }
+}

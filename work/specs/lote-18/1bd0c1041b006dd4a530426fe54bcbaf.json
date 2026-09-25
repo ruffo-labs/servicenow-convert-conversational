@@ -1,0 +1,51 @@
+{
+ "sys_id": "1bd0c1041b006dd4a530426fe54bcbaf",
+ "status": "conversacional",
+ "motivo": "Intenção única (corrigir ponto retroativo) com poucas perguntas abertas. A policy sem condição virou mandatory direto nas variáveis, e o script que buscava a empresa do colaborador virou auto-populate. v_company foi mantido visível (com label) porque não há default_value confiável para ocultá-lo sem perder dado; o set '(+)Add Contributor' também foi mantido integralmente, com sua política original, pois é o único derivado e não há como retirá-lo sem perda de dado, mesmo a 1ª análise sugerindo ocultar ambos.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_company": {
+   "label": "Qual é a empresa do colaborador?"
+  },
+  "v_date_of_divergence": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_entry_time": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_departure_time": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_justification": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "anexo_email": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "0fea1dc41b086dd4a530426fe54bcbd2": "remover"
+ },
+ "scripts": {
+  "bdd795841bc46dd4a530426fe54bcb3b": {
+   "converter": "auto_populate"
+  }
+ }
+}

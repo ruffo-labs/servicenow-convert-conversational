@@ -1,0 +1,45 @@
+{
+ "sys_id": "85bfd7981b701a50514cbaef4b4bcb0b",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedidos sobre despesas) com perguntas diretas. Obrigatoriedade e a validação de mínimo de 40 caracteres viram props/regex nas variáveis do próprio item. As variáveis do set (v_who_is_this_request_for, v_reason_on_behalf, v_employee) são compartilhadas e não são alteradas pela spec do item: a policy que já as escondia sem condição é mantida como no original.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "who_is_this_request_for": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "type_of_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "detail": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_min_characters": "visual"
+ },
+ "policies": {
+  "d8c3243c1bb89a50514cbaef4b4bcbeb": "remover"
+ },
+ "scripts": {
+  "278128b41bb89a50514cbaef4b4bcbb2": {
+   "remover": "sem_efeito"
+  },
+  "4ba120f41bb89a50514cbaef4b4bcba8": {
+   "converter": "regex"
+  },
+  "e5c1a4f41bb89a50514cbaef4b4bcbc8": {
+   "remover": {
+    "substituido_por": "detail"
+   }
+  }
+ }
+}

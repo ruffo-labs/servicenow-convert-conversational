@@ -30,5 +30,5 @@ Pré-requisitos: Node 20+ e o Claude Code (`claude`) logado. Os lotes já estão
 4. Para o time de ServiceNow: `node scripts/variaveis-alteradas.js work/specs/lote-*` → `work/relatorios/variaveis-alteradas.csv`.
 5. Saída final: `node scripts/build-novo-catalogo.js work/specs input/catalog-map.json output/novo-catalogo.json`.
 
-Divisão atual: lotes 01–15 rodados na máquina do Pedro; **lotes 16–25 ficam para rodar aqui**. Não rode lotes de
-outra faixa sem combinar (o custo seria pago duas vezes).
+Divisão atual: lotes 01–06 prontos (nesta branch); **lotes 07–14 com o chefe da equipe**; lotes 15–25 na máquina do
+Pedro. Não rode lotes de outra faixa sem combinar (o custo seria pago duas vezes).

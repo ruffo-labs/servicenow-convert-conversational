@@ -1,0 +1,51 @@
+{
+ "sys_id": "18ac98eb3bb30250924d0247f4e45ac5",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida/consulta/reclamação/sugestão sobre licenças). Obrigatoriedades sem condição viram prop. A 1ª análise pedia ocultar a subcategoria por atributo até existir opção, mas isso é feito hoje por script (não por hidden/not_available_conversation no pacote nem por policy sem condição), então não dá para converter em prop sem perder dado; os scripts de ocultar/revelar a subcategoria continuam como no original. A validação de mínimo de caracteres vira regex, substituindo as legendas de aviso; textos só visuais saem da conversa.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "reason_for_contact": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_detail_field": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "visual",
+  "v_minimun_characters": "sem_uso_conversa"
+ },
+ "policies": {
+  "514c6b703bd85650924d0247f4e45afc": "remover",
+  "83f7a0e81b489250514cbaef4b4bcbde": {
+   "conditions": "",
+   "actions": {
+    "v_corporate_e_mail": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "6691f0fc1b441650514cbaef4b4bcbe2": {
+   "converter": "regex"
+  },
+  "ab82b0701b841650514cbaef4b4bcb50": {
+   "remover": {
+    "substituido_por": "v_detail_field"
+   }
+  },
+  "ba423cb01b841650514cbaef4b4bcb47": {
+   "remover": {
+    "substituido_por": "v_detail_field"
+   }
+  }
+ }
+}

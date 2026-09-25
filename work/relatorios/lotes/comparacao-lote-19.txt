@@ -1,0 +1,39 @@
+{
+ "itens": 12,
+ "sem_spec": [],
+ "com_divergencia": 5,
+ "nao_declaradas": 0,
+ "status_igual": 12,
+ "labels": 45,
+ "labels_modelo": 2
+}
+
+## Outras solicitações de licença (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (registrar outra licença) com poucas perguntas. Regras de obrigatoriedade sem condição viram props, o mínimo de 40 caracteres vira validation_regex, e o anexo fica visível na conversa (só a obrigatoriedade é condicionada por uma variável interna calculada por script, substituindo o client script de anexo obrigatório).
+
+## Solicitação de Outros Reembolsos de Saúde (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (pedir reembolso de saúde). As duas mensagens de exibição saem por não coletarem dado. O filtro de tipos de reembolso por país (2 client scripts) e a lista dinâmica de anos dependiam de tabela/lógica que não temos como reproduzir na spec, então mantive a lista fixa de tipos e troquei o ano por texto com validação, em vez da tabela de lookup e das choices fixas sugeridas. A data completa (v_month_year) passa a ser calculada automaticamente a partir de mês/ano via default_value, o que permite tirá-la da conversa sem perder o dado. Acrescentei o anexo do comprovante, como recomendado.
+
+## Pedidos relacionados Despesas (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (pedidos sobre despesas) com perguntas diretas. Obrigatoriedade e a validação de mínimo de 40 caracteres viram props/regex nas variáveis do próprio item. As variáveis do set (v_who_is_this_request_for, v_reason_on_behalf, v_employee) são compartilhadas e não são alteradas pela spec do item: a policy que já as escondia sem condição é mantida como no original.
+
+## Solicitação de Baixa de Titulo e Abertura de Débito (dividir → dividido)
+  comparação: FIXAS
+  FIXAS: 1ª análise: [request_type=title_write_off] [request_type=debit_opening]; modelo: [—] [—]
+  declaradas: limite_formato  criterio: —
+  motivo: Duas intenções distintas (baixa de título e abertura de débito), com perguntas próprias, conforme a 1ª análise. request_type, vs_opened_by e vs_additional_information pertencem ao variable set compartilhado, então a spec do item não pode fixá-los, ocultá-los nem dar-lhes label: permanecem perguntados em ambos os derivados como no original. request_type serve de condição real para uma policy nova que oculta o motivo da baixa (vs_describe_request) quando a resposta é abertura de débito. Pelo mesmo motivo não é possível filtrar a opção 'Avon Latam' da lista de empresas do set; o script correspondente só manipulava o DOM e foi ajustado. Templates viraram texto nas descrições dos itens; a policy de somente-leitura do aprovador tem applies_catalog=false (não roda na conversa) e foi removida, pois o usuário escolhe entre os membros ativos do grupo aprovador.
+
+## Indicadores (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MENOS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: v_ajust_existing_data_attachment, v_attachment_of_eligible_called_hc, v_attachment_of_registered_hc, v_hc_attendance_attachment, v_reaction_assessment_attachment
+  declaradas: erro_1a_analise, limite_formato  criterio: —
+  motivo: Intenção única (ajustar/incluir dados de ações de aprendizagem nos indicadores). As policies incondicionais (onLoad) que só fixavam mandatory/hidden viram props diretas nas variáveis do item; as policies condicionais reais (categoria, hub, tipo de solicitação) continuam. Os 5 anexos eram ocultados por padrão por uma policy sem condição no original e só apareciam condicionalmente por tipo de solicitação; sem variável equivalente para substituí-los, ficam como not_available_conversation (permitido, pois o original já os tirava por policy incondicional), e as ações condicionais sobre eles foram removidas.

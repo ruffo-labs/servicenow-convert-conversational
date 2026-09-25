@@ -1,0 +1,90 @@
+{
+ "sys_id": "2a4bc3a71b283110a530426fe54bcbd4",
+ "status": "dividido",
+ "motivo": "Duas intenções (incluir e retirar membro) com perguntas diferentes. v_type vira valor fixo em cada derivado.",
+ "vars": {
+  "v_tower": {
+   "label": "De qual torre é o grupo de atendimento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "group": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_justify_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "manager": {
+   "label": "Quem é o gestor do grupo?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_user": {
+   "props": {
+    "default_value": "javascript:gs.getUserID()"
+   }
+  }
+ },
+ "policies": {
+  "300944b31b207110a530426fe54bcb3c": "remover",
+  "3a5108371bec3110a530426fe54bcbd7": "remover",
+  "f52088731bec3110a530426fe54bcb45": "remover",
+  "fe83d4f31b607110a530426fe54bcb05": "remover",
+  "88e088731bec3110a530426fe54bcb1a": {
+   "conditions": "v_requests_for_whom=someone",
+   "actions": {
+    "v_user": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "559234c41bb83110a530426fe54bcb3a": {
+   "converter": "default"
+  },
+  "6824847b1bec3110a530426fe54bcbac": {
+   "remover": "sem_efeito"
+  },
+  "6933003b1bec3110a530426fe54bcbbf": {
+   "remover": "sem_efeito"
+  },
+  "c942c4771bec3110a530426fe54bcb9b": {
+   "converter": "policy:88e088731bec3110a530426fe54bcb1a"
+  },
+  "d18444bb1bec3110a530426fe54bcbd0": {
+   "converter": "auto_populate"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_type": "add"
+   },
+   "sem_vars": [
+    "v_group_members"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_type": "remove"
+   },
+   "sem_vars": [
+    "v_requests_for_whom",
+    "v_user"
+   ],
+   "sem_policies": [
+    "88e088731bec3110a530426fe54bcb1a"
+   ]
+  }
+ ]
+}

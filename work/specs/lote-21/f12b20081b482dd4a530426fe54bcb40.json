@@ -1,0 +1,82 @@
+{
+ "sys_id": "f12b20081b482dd4a530426fe54bcb40",
+ "status": "conversacional",
+ "motivo": "Um único pedido com duas variantes (para mim / para a equipe) resolvidas por um select. Dados de identificação do solicitante (funcionário, ID, empresa, data atual) passam a ser derivados via default_value e ficam ocultos; o anexo da aprovação do gestor vira variável de anexo nativa com policy tornando-o obrigatório para 'my_request', substituindo o script onSubmit sem VA Support que era o bloqueador do item.",
+ "vars": {
+  "v_solicitation_to_whom": {
+   "props": {
+    "mandatory": true,
+    "include_none": false
+   }
+  },
+  "v_employee": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:gs.getUserID()"
+   }
+  },
+  "v_id": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_employee.number"
+   }
+  },
+  "v_company": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_employee.company"
+   }
+  },
+  "v_current_date": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "nova_aprovacao_gestor": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie o anexo com a aprovação do seu gestor.",
+    "mandatory": false,
+    "order": 700
+   }
+  }
+ },
+ "remover": {
+  "v_attach_vacation": "visual"
+ },
+ "policies": {
+  "49a21bbf1b452dd4a530426fe54bcb5e": {
+   "conditions": "v_solicitation_to_whom=my_request",
+   "actions": {
+    "v_vacation_start_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nova_aprovacao_gestor": {
+     "mandatory": true
+    }
+   }
+  },
+  "aaccafbf1b016dd4a530426fe54bcbd7": {
+   "conditions": "v_solicitation_to_whom=my_request^ORv_solicitation_to_whom=my_team",
+   "actions": {
+    "nova_aprovacao_gestor": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "0ad817fb1b092dd4a530426fe54bcbf5": {
+   "converter": "default"
+  },
+  "4af5ef731b8d2dd4a530426fe54bcbb4": {
+   "remover": {
+    "substituido_por": "49a21bbf1b452dd4a530426fe54bcb5e"
+   }
+  },
+  "7063d22e1be46590d1abda4ce54bcb72": {
+   "converter": "auto_populate"
+  }
+ }
+}

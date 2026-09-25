@@ -1,0 +1,86 @@
+{
+ "sys_id": "23e1547e1b1ce190d1abda4ce54bcbba",
+ "status": "conversacional",
+ "motivo": "Intenção única (consultar estabilidade antes de desligar um colaborador). Os scripts viram auto-populate/props diretas e as duas policies de mandatory/readonly são substituídas por props, restando só a policy de visibilidade por empresa.",
+ "vars": {
+  "v_what_company_are_the_employees_part_of": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_collaborator": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_expected_shutdown_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_id": {
+   "label": "Qual é o ID Global do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_cpf": {
+   "label": "Qual é o CPF do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_localization": {
+   "label": "Qual é a localização do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_department": {
+   "label": "Qual é o departamento do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  }
+ },
+ "remover": {
+  "v_text_star": "visual"
+ },
+ "policies": {
+  "31f5f1421b01e554a530426fe54bcb53": "remover",
+  "e0d410fa1b5ce190d1abda4ce54bcbec": {
+   "conditions": "v_what_company_are_the_employees_part_ofINAvon LATAM,Natura,TBS",
+   "actions": {
+    "v_description": {
+     "visible": true
+    },
+    "v_collaborator": {
+     "visible": true
+    },
+    "v_cpf": {
+     "visible": true
+    },
+    "v_id": {
+     "visible": true
+    },
+    "v_department": {
+     "visible": true
+    },
+    "v_expected_shutdown_date": {
+     "visible": true
+    },
+    "v_localization": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "c1f61c361b9ce190d1abda4ce54bcbba": {
+   "converter": "auto_populate"
+  },
+  "749d7d0a1b81e554a530426fe54bcbc8": {
+   "remover": "sem_efeito"
+  }
+ }
+}

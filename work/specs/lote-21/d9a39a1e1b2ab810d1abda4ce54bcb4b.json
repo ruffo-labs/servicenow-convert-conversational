@@ -1,0 +1,41 @@
+{
+ "sys_id": "d9a39a1e1b2ab810d1abda4ce54bcb4b",
+ "status": "conversacional",
+ "motivo": "Intenção única (alterar VR/VA). Elementos visuais (labels/containers/break) removidos; as duas declarações binárias viram Yes/No obrigatório via prop; a UI policy onLoad sem condição que só fixava mandatory virou prop e foi removida; os dois client scripts sem 'VA Supported' (detecção de portal e manipulação de ícones de lista) não têm efeito na conversa e foram removidos. O script de lookup de benefícios (ADP) foi mantido para teste. 'employee' e 'benefit_option_date' são variáveis de variable set com valor padrão que a 1ª análise pede para ocultar/derivar; o formato não permite alterar variável de set, então elas permanecem na conversa como no original.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "information_accuracy_responsibility": {
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "payroll_deduction_awareness": {
+   "props": {
+    "mandatory": true,
+    "type": "1",
+    "include_none": true
+   }
+  }
+ },
+ "remover": {
+  "info_maia": "visual",
+  "formatter4": "visual",
+  "formatter2": "visual",
+  "formatter3": "visual"
+ },
+ "policies": {
+  "d696e50b1bc96d54d1abda4ce54bcb99": "remover"
+ },
+ "scripts": {
+  "8c5090621b149910d1abda4ce54bcb2a": {
+   "remover": "sem_efeito"
+  },
+  "ec3dcad21bd45910d1abda4ce54bcbf9": {
+   "remover": "sem_efeito"
+  }
+ }
+}

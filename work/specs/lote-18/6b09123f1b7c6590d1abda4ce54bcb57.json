@@ -1,0 +1,103 @@
+{
+ "sys_id": "6b09123f1b7c6590d1abda4ce54bcb57",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir relatório de RH) com ramos tratados por UI policies condicionais. As checkboxes 'selecionar todas' e os scripts de limpeza associados saem da conversa (vazio = todas as empresas/subempresas), o que resolve o bloqueio de client scripts sem VA Supported. O e-mail passa a ser auto-preenchido a partir do colaborador selecionado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_email": {
+   "label": "Qual é o seu e-mail para contato?"
+  },
+  "v_report_type": {
+   "label": "Que tipo de relatório você precisa?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_solicitation_about": {
+   "label": "Sobre o que é a solicitação?"
+  },
+  "v_what_need_data": {
+   "label": "Para que você vai usar esses dados?"
+  },
+  "v_what_data": {
+   "label": "Quais dados o relatório deve trazer?"
+  },
+  "v_company": {
+   "label": "De quais empresas (marcas) você precisa dos dados?"
+  },
+  "v_select_all_companies": {
+   "props": {
+    "not_available_conversation": true,
+    "default_value": "false"
+   }
+  },
+  "v_sub_company": {
+   "label": "Quer filtrar por alguma subempresa? Se não, considero todas."
+  },
+  "v_select_all_companies2": {
+   "props": {
+    "not_available_conversation": true,
+    "default_value": "false"
+   }
+  },
+  "v_region": {
+   "label": "De quais regiões?"
+  },
+  "v_data_sensitive": {
+   "label": "O relatório inclui dados sensíveis (como saúde, salário ou documentos)?"
+  },
+  "anexo_aprovacao": {
+   "label": "Envie o anexo com a aprovação do gestor."
+  },
+  "v_details": {
+   "label": "Quer dar mais algum detalhe?"
+  }
+ },
+ "policies": {
+  "7ba1a6b71b30a590d1abda4ce54bcba2": "remover",
+  "45d5a2771b70a590d1abda4ce54bcbe2": {
+   "conditions": "v_report_type=colab_active_off^ORv_report_type=employees_leave^ORv_report_type=dependets^ORv_report_type=journey_control",
+   "actions": {
+    "v_what_data": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_what_need_data": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_company": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_sub_company": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_region": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "34bae2ec1bad8a10a530426fe54bcbf4": {
+   "remover": "sem_efeito"
+  },
+  "4fd2149e1bed0650a530426fe54bcb3c": {
+   "remover": "sem_efeito"
+  },
+  "c83ca2e01bed8a10a530426fe54bcb43": {
+   "remover": "sem_efeito"
+  },
+  "d2a5dc161b214650a530426fe54bcbf1": {
+   "remover": "sem_efeito"
+  },
+  "ddba5ef31bbc6590d1abda4ce54bcb2b": {
+   "converter": "auto_populate"
+  }
+ }
+}

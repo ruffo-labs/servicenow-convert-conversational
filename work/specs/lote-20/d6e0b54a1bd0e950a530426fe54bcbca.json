@@ -1,0 +1,124 @@
+{
+ "sys_id": "d6e0b54a1bd0e950a530426fe54bcbca",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas: pagar boleto/taxa sindical avulsa e solicitar autorização sindical para domingos/feriados (esta última mantida não conversacional por depender de uma grade de datas/colaboradores). Campo espelho de loja (hidden) e legenda visual foram removidos/convertidos em props; regex de validação virou prop na variável.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_name_establishment_store": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_number_of_employees": {
+   "props": {
+    "validation_regex": "^[0-9]+$"
+   }
+  }
+ },
+ "remover": {
+  "legenda_attention": "visual"
+ },
+ "policies": {
+  "8bce4d1a1b242d10a530426fe54bcb06": "remover",
+  "ec72559887769a50ec360e530cbb35bb": "remover",
+  "f329710a1b94e950a530426fe54bcbe2": "remover"
+ },
+ "scripts": {
+  "8e48f11b872ad250ec360e530cbb350d": {
+   "converter": "regex"
+  },
+  "af401dd487769a50ec360e530cbb35a0": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_type_of_payment": "union_ticket"
+   },
+   "sem_vars": [
+    "v_name_establishment_store_v2",
+    "how_many_holidays_would_you_like_to_request",
+    "how_many_sundays_would_you_like_to_request",
+    "v_number_of_employees"
+   ],
+   "sem_sets": [
+    "d52bb384873a5a50ec360e530cbb35db",
+    "39f57d061b54e950a530426fe54bcb24"
+   ],
+   "sem_policies": [
+    "9d99394a1b94e950a530426fe54bcb3b",
+    "114a318e1b94e950a530426fe54bcb32",
+    "e55bf9c21bd4e950a530426fe54bcb0e"
+   ],
+   "vars": {
+    "v_company": {
+     "label": "Para qual empresa do grupo é o pagamento (Natura, Avon, The Body Shop, Aesop)?",
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_type_of_union_payment": {
+     "label": "Que tipo de taxa sindical é?"
+    },
+    "v_due_date": {
+     "label": "Qual a data de vencimento?"
+    },
+    "v_description": {
+     "label": "Alguma observação? (opcional)"
+    },
+    "nova_boleto": {
+     "nova": {
+      "type": "33",
+      "question_text": "Envie o boleto.",
+      "mandatory": true,
+      "order": 1050
+     }
+    }
+   }
+  },
+  {
+   "de_1a": 1,
+   "sem_vars": [
+    "v_type_of_union_payment",
+    "v_due_date",
+    "v_description"
+   ],
+   "sem_policies": [
+    "737cbd4a1bd4e950a530426fe54bcb02"
+   ],
+   "vars": {
+    "v_type_of_payment": {
+     "label": "É para domingos ou feriados?",
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_company": {
+     "label": "Para qual empresa?",
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_name_establishment_store_v2": {
+     "label": "Qual loja ou estabelecimento?"
+    },
+    "how_many_holidays_would_you_like_to_request": {
+     "label": "Quantos feriados?"
+    },
+    "how_many_sundays_would_you_like_to_request": {
+     "label": "Quantos domingos?"
+    },
+    "v_number_of_employees": {
+     "label": "Quantos colaboradores vão trabalhar?"
+    }
+   },
+   "flags": {
+    "make_item_non_conversational": true
+   }
+  }
+ ]
+}

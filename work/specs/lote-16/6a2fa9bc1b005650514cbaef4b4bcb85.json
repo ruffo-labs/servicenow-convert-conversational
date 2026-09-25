@@ -1,0 +1,60 @@
+{
+ "sys_id": "6a2fa9bc1b005650514cbaef4b4bcb85",
+ "status": "conversacional",
+ "motivo": "Fluxo único de dúvida/reclamação/sugestão sobre férias (hispânico). Mensagens de erro em texto viram validation regex, e os scripts que escondiam/mostravam a categoria por país viram uma única UI policy condicional (visível e obrigatória quando v_country=ECU).",
+ "vars": {
+  "v_contact_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_detail_field": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "visual",
+  "v_minimun_characters": "visual"
+ },
+ "policies": {
+  "58d6db091b88d650514cbaef4b4bcb33": "remover",
+  "9dd7db891b88d650514cbaef4b4bcbbb": "remover",
+  "nova_show_category_ecu": {
+   "short_description": "Mostrar categoria para Equador",
+   "conditions": "v_country=ECU",
+   "actions": {
+    "v_select_the_category": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "3e9c13051bc8d650514cbaef4b4bcbc4"
+  }
+ },
+ "scripts": {
+  "3e9c13051bc8d650514cbaef4b4bcbc4": {
+   "converter": "policy:nova_show_category_ecu"
+  },
+  "9655f93c1b405650514cbaef4b4bcb81": {
+   "remover": {
+    "substituido_por": "v_detail_field"
+   }
+  },
+  "a555bd3c1b405650514cbaef4b4bcbff": {
+   "remover": {
+    "substituido_por": "v_detail_field"
+   }
+  },
+  "b0d9178d1b88d650514cbaef4b4bcbf0": {
+   "remover": {
+    "substituido_por": "nova_show_category_ecu"
+   }
+  },
+  "fa55b57c1b405650514cbaef4b4bcb74": {
+   "converter": "regex"
+  }
+ }
+}

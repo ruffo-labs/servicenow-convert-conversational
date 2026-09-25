@@ -1,0 +1,52 @@
+{
+ "sys_id": "c421e34087cfb610ec360e530cbb3581",
+ "status": "conversacional",
+ "motivo": "Intenção única de esclarecer dúvidas sobre veículo corporativo, com perguntas objetivas. As propriedades das variáveis do próprio item viram props diretas; as ações sobre variáveis do variable set (compartilhado) permanecem na policy, sem condição, pois não podem virar props no item. O client script que preenche o colaborador é mantido como auto_populate.",
+ "vars": {
+  "v_request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_select_option": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_detail_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "13c53b88878bf610ec360e530cbb351b": {
+   "conditions": "",
+   "actions": {
+    "vs_for_who": {
+     "mandatory": true
+    },
+    "vs_select_the_collaborator": {
+     "mandatory": true
+    },
+    "vs_collaborator_name": {
+     "readonly": true
+    },
+    "vs_collaborato_global_id": {
+     "readonly": true
+    },
+    "vs_collaborator_e_mail": {
+     "readonly": true
+    },
+    "vs_public": {
+     "readonly": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "cd783f04870ff610ec360e530cbb35fe": {
+   "converter": "auto_populate"
+  }
+ }
+}

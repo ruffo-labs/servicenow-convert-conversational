@@ -1,0 +1,30 @@
+{
+ "sys_id": "7eaf0bd61be92990d1abda4ce54bcb77",
+ "status": "conversacional",
+ "motivo": "Intenção única de pedir a reclassificação de um lançamento de imposto (data, descrição e anexo do template, todos do variable set do item, já obrigatórios por policy própria do set). Os textos de download de template e a nota informativa são labels do set (tipo 32, sem coleta de dado); como não posso editar/remover variável de set, uso a própria policy do item para escondê-los sempre, e o client script que alternava os dois templates perde efeito. Mantive v_attach_template: é anexo (dado real) sem substituto, então removê-lo perderia dado — diverge da 1ª análise.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "policies": {
+  "34bec6d13b02d650924d0247f4e45ac8": {
+   "conditions": "",
+   "actions": {
+    "v_download_template": {
+     "visible": false
+    },
+    "v_download_template_2": {
+     "visible": false
+    },
+    "v_information_note": {
+     "visible": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "bf65cedd3b8e9650924d0247f4e45a58": {
+   "remover": "sem_efeito"
+  }
+ }
+}

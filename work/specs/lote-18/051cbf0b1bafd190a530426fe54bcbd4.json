@@ -1,0 +1,43 @@
+{
+ "sys_id": "051cbf0b1bafd190a530426fe54bcbd4",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida, erro, relatório ou outro pedido sobre o comitê OurTalents). A 1ª análise propunha achatar as opções de v_choose_request_type com as de v_classify_request_type numa lista única e eliminar v_classify_request_type e as descrições específicas de relatório/outro; o formato da spec não permite unir listas de escolha nem remover variável de dado sem substituta do mesmo tipo. Mantive as duas perguntas de escolha em cascata e unifiquei apenas os dois campos de descrição (mesmo tipo) no campo genérico de descrição.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_choose_request_type": {
+   "label": "O que você precisa: tirar uma dúvida sobre o processo, relatar um erro no sistema ou fazer outro tipo de pedido?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_classify_request_type": {
+   "label": "Sua solicitação é um relatório ou outro tipo de pedido?"
+  }
+ },
+ "remover": {
+  "v_cont_start_ourtalents": "visual",
+  "faq_text": "visual",
+  "v_description_for_report": {
+   "substituida_por": "v_describe_your_need"
+  },
+  "v_description_for_other": {
+   "substituida_por": "v_describe_your_need"
+  }
+ },
+ "policies": {
+  "d30384db1b231590a530426fe54bcb34": "remover",
+  "4c9680bf1bfb59d4d1abda4ce54bcbc7": {
+   "conditions": "v_choose_request_type=Question about the OurTalents process^ORv_choose_request_type=System error^ORv_classify_request_typeISNOTEMPTY",
+   "actions": {
+    "v_describe_your_need": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8564dd671b235990d1abda4ce54bcbbb": "remover",
+  "452691ef1b235990d1abda4ce54bcb5b": "remover"
+ }
+}

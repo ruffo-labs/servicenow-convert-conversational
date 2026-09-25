@@ -1,0 +1,53 @@
+{
+ "sys_id": "1b4c8d151b5da118d1abda4ce54bcb4b",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir acesso ao GED), com ramificação por espelhar usuário modelo ou informar tipo de acesso/ilha, controlada pelas policies condicionais existentes. Nome, e-mail e telefone do solicitante passam a ser preenchidos automaticamente do perfil do usuário logado, cumprindo a recomendação de 'derivar' da 1ª análise. Número de registro (placa), e-mail do colega a espelhar e a troca de tipo de name_user_mirrored para Referência não têm suporte no formato da spec (sem valor-padrão de negócio confiável nem prop de tabela de referência), então continuam como perguntas.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "email": {
+   "props": {
+    "hidden": true,
+    "mandatory": true,
+    "default_value": "javascript:gs.getUser().getEmail()"
+   }
+  },
+  "phone_number": {
+   "props": {
+    "hidden": true,
+    "mandatory": true,
+    "default_value": "javascript:gs.getUser().getRecord().getValue('phone')"
+   }
+  },
+  "full_name": {
+   "props": {
+    "hidden": true,
+    "mandatory": true,
+    "default_value": "javascript:gs.getUser().getFullName()"
+   }
+  },
+  "registration_number": {
+   "label": "Qual é o seu número de registro (placa)?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "model_users_mirror": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "email_user_mirrored": {
+   "label": "Qual é o e-mail desse colega?"
+  },
+  "attachment_approval": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "92d16d191b55e118d1abda4ce54bcb49": "remover"
+ }
+}

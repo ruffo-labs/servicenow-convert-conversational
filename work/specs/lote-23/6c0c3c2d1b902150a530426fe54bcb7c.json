@@ -1,0 +1,38 @@
+{
+ "sys_id": "6c0c3c2d1b902150a530426fe54bcb7c",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvidas sobre folha de pagamento) com uma pergunta aberta e duas classificações. As duas UI policies sem condição viram mandatory direto nas variáveis. Variáveis visuais (rich text/container) e os widgets custom de busca (type 14), que só exibem, são removidos. O script onSubmit de tamanho mínimo vira validation_regex.",
+ "vars": {
+  "tipo_de_solicitacao": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "select_the_topic": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_description_details": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{20,}$"
+   }
+  }
+ },
+ "remover": {
+  "Info": "visual",
+  "formatter": "visual",
+  "contextual_search_results": "visual",
+  "ai_search_assist": "visual"
+ },
+ "policies": {
+  "0a38140a87269a10ec360e530cbb35b4": "remover",
+  "dd0cb46d1b902150a530426fe54bcb4a": "remover"
+ },
+ "scripts": {
+  "3542446e1b58ed50d1abda4ce54bcb16": {
+   "converter": "regex"
+  }
+ }
+}

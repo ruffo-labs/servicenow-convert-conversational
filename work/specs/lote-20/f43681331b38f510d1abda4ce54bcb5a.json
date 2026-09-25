@@ -1,0 +1,49 @@
+{
+ "sys_id": "f43681331b38f510d1abda4ce54bcb5a",
+ "status": "conversacional",
+ "motivo": "Intenção única (cancelar ou corrigir nota fiscal de saída) com poucas perguntas. Adicionada nova_acao_nf para distinguir cancelamento de correção, conforme 1ª análise. A policy onLoad sem condição do item que só fixava mandatory vira props diretas; o client script de regex vira validation_regex; o rótulo de instrução de download do template é removido e sua ideia já está coberta pela nova description. Variáveis e policies dos variable sets não são alteradas pela spec do item.",
+ "vars": {
+  "v_which_invoice_number_do_you_want_to_cancel_or_correct": {
+   "label": "Qual o número da nota? (formato 000000000-000)",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9}-\\d{1,3}$"
+   }
+  },
+  "v_attach_outgoing_invoice": {
+   "label": "Anexe a nota fiscal de saída.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_acao_nf": {
+   "nova": {
+    "type": "5",
+    "question_text": "Você quer cancelar ou corrigir a nota?",
+    "mandatory": true,
+    "order": 150,
+    "choices": [
+     {
+      "text": "Cancelar",
+      "value": "cancel"
+     },
+     {
+      "text": "Corrigir",
+      "value": "correct"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "v_click_here_to_download_the_template": "texto_movido_descricao"
+ },
+ "policies": {
+  "7660213f1bf8f510d1abda4ce54bcb9f": "remover"
+ },
+ "scripts": {
+  "dfe739bf1bbcf510d1abda4ce54bcb04": {
+   "converter": "regex"
+  }
+ }
+}

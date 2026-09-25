@@ -1,0 +1,89 @@
+{
+ "sys_id": "d1d9642487477e10ec360e530cbb358f",
+ "status": "conversacional",
+ "motivo": "Intenção única (ajustar/incluir dados de ações de aprendizagem nos indicadores). As policies incondicionais (onLoad) que só fixavam mandatory/hidden viram props diretas nas variáveis do item; as policies condicionais reais (categoria, hub, tipo de solicitação) continuam. Os 5 anexos eram ocultados por padrão por uma policy sem condição no original e só apareciam condicionalmente por tipo de solicitação; sem variável equivalente para substituí-los, ficam como not_available_conversation (permitido, pois o original já os tirava por policy incondicional), e as ações condicionais sobre eles foram removidas.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_learning_category": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_hub_selection": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_name_cell": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_mandatory_action": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_the_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_ajust_existing_data_attachment": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "v_training_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attachment_of_eligible_called_hc": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "v_attachment_of_registered_hc": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "v_hc_attendance_attachment": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "v_reaction_assessment_attachment": {
+   "props": {
+    "not_available_conversation": true
+   }
+  },
+  "v_the_application_format": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_hours_per_class": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "e8c1a9688743fe10ec360e530cbb356a": "remover",
+  "40f179ac8747fe10ec360e530cbb3549": "remover",
+  "dd72b9608787fe10ec360e530cbb35d7": {
+   "conditions": "v_what_is_the_request=data_entry",
+   "actions": {
+    "v_the_application_format": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ }
+}

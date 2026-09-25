@@ -1,0 +1,105 @@
+{
+ "sys_id": "7153436d1b046d58d1abda4ce54bcb54",
+ "status": "conversacional",
+ "motivo": "Intenção única: desligar colaborador para transferência internacional permanente. Os campos de dados do cargo (v_id, v_admission_date, v_employment_type, v_job_profile, v_company, v_supervisory, v_location, v_manager, v_id_manager) são só leitura e preenchidos por script ao escolher o colaborador; a 1ª análise pede para derivá-los/ocultá-los, mas nenhum tem default_value nem já era oculto no original, então continuam na conversa como somente leitura (limite_formato). v_reason_for_dismissal já tem default_value, então pode ser ocultado conforme a 1ª análise.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_name": {
+   "label": "Qual colaborador será transferido e desligado no Brasil?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_termination_date": {
+   "label": "Qual é a data de desligamento no Brasil?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_yes_no": {
+   "label": "A vaga será reposta?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_description": {
+   "label": "Para qual país e empresa ele vai? Quer acrescentar algo?"
+  },
+  "v_reason_for_dismissal": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_id": {
+   "label": "Qual é o ID Global do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_admission_date": {
+   "label": "Qual foi a data de admissão do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_employment_type": {
+   "label": "Qual é o tipo de contrato do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_job_profile": {
+   "label": "Qual é o cargo (job profile) do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_company": {
+   "label": "Qual é a empresa do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_supervisory": {
+   "label": "Qual é a organização supervisora do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_location": {
+   "label": "Qual é a localização do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_manager": {
+   "label": "Quem é o gestor (head) do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_id_manager": {
+   "label": "Qual é o ID Global do gestor?",
+   "props": {
+    "read_only": true
+   }
+  }
+ },
+ "remover": {
+  "v_text_start": "visual",
+  "v_text_resolv": "visual"
+ },
+ "policies": {
+  "1f3cc32d1bc46d58d1abda4ce54bcb92": "remover"
+ },
+ "scripts": {
+  "a56a66a21bac6590d1abda4ce54bcbab": {
+   "remover": "sem_efeito"
+  },
+  "e7b049e71b006dd8a530426fe54bcbbc": {
+   "converter": "auto_populate"
+  }
+ }
+}

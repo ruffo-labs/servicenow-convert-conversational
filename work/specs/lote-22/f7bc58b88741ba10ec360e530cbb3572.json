@@ -1,0 +1,65 @@
+{
+ "sys_id": "f7bc58b88741ba10ec360e530cbb3572",
+ "status": "conversacional",
+ "motivo": "Intenção única (incluir/excluir fornecedor da exceção do Payment Run). which_brand_is_impacted usa reference_qual dinâmico (depende de outra pergunta), então não é possível transformá-la em Select Box com opções fixas no formato da spec (choices só é suportado em variável nova); ela é mantida como está, apenas marcada obrigatória, e as duas policies de subsídiárias (que usam LIKE em sys_id de opção) continuam originais sem alteração. Quem pede e o funcionário selecionado passam a ser derivados (valor padrão), sem pergunta. Obrigatoriedade movida das policies onLoad sem condição para prop das variáveis.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "who_is_your_request_for": {
+   "props": {
+    "hidden": true,
+    "default_value": "1"
+   }
+  },
+  "select_the_employee": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:gs.getUserID()"
+   }
+  },
+  "which_brand_is_impacted": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "type_of_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "suppliers_cnpj": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "suppliers_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "suppliers_code": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "describe_the_justification_for_the_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "attach_approval": {
+   "label": "Envie o documento de aprovação da solicitação.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "attach_approval_label": "visual"
+ },
+ "policies": {
+  "5ad6940d87493e10ec360e530cbb35ff": "remover",
+  "fd57588d87493e10ec360e530cbb3506": "remover"
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "sys_id": "4a564f8b3bfb0e10924d0247f4e45a5e",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida/consulta/reclamação/sugestão sobre dados pessoais) com poucas perguntas. As 3 policies onLoad sem condição viram props de obrigatoriedade; o bloqueio de mínimo de caracteres do onSubmit vira validation_regex, dispensando os scripts de legenda.",
+ "vars": {
+  "v_contact_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_select_the_category_lookup": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_detail_field": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "sem_uso_conversa",
+  "v_minimun_characters": "sem_uso_conversa"
+ },
+ "policies": {
+  "15cff0383b009a50924d0247f4e45a4f": "remover",
+  "ac5010603b00d650924d0247f4e45a94": "remover",
+  "bf7d84e83bcc9650924d0247f4e45af7": "remover"
+ },
+ "scripts": {
+  "2586bf903b0c9650924d0247f4e45a71": {
+   "remover": {
+    "substituido_por": "v_detail_field"
+   }
+  },
+  "9154705f3bf38e10924d0247f4e45ae5": {
+   "converter": "regex"
+  },
+  "b07700ac3b8c9650924d0247f4e45a07": {
+   "remover": "sem_efeito"
+  }
+ }
+}

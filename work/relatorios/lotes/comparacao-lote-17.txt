@@ -1,0 +1,34 @@
+{
+ "itens": 10,
+ "sem_spec": [],
+ "com_divergencia": 4,
+ "nao_declaradas": 0,
+ "status_igual": 10,
+ "labels": 82,
+ "labels_modelo": 5
+}
+
+## Solicitação ou Desistência de Vaga no Berçário (dividir → dividido)
+  comparação: REMOVIDA_A_MENOS, REMOVIDA_A_MAIS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: v_request_type
+  REMOVIDA_A_MAIS: modelo remove variável de dado: probable_date_of_birth ({"substituida_por":"v_childs_date_of_birth"})
+  declaradas: erro_1a_analise  criterio: —
+  motivo: v_request_type separa duas intenções (pedir vaga vs. desistir), cada uma com perguntas próprias. Seguindo a 1ª análise, os campos de data de nascimento/previsão de parto foram unificados em v_childs_date_of_birth e a mandatoriedade condicionada por v_request_type virou prop direta em cada derivado.
+
+## Atendimento a Franquias (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (análise de pedido de franqueado, com reembolso/estorno). A policy onLoad 'EY: Mandatory' vira prop nas variáveis do item; a ação sobre request_for_who (variável do set 'EY: Requester Info') não pode virar prop porque é variável de set, então a policy é mantida só com essa ação. A policy condicional 'EY: Reembolso' continua igual.
+
+## Acompanhamento de Beneficio (Cartão de Vale Transporte) (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MENOS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: v_region
+  declaradas: erro_1a_analise  criterio: —
+  motivo: Intenção única de acompanhar a entrega do cartão de benefício (vale-transporte). Campos com valor automático (funcionário, ID global, empresa) saem da conversa por já terem default_value; os labels informativos (2ª via/bloqueio e link do formulário de adesão) viram texto da description; uma nova pergunta evita reperguntar o endereço já cadastrado antes de coletar o endereço completo.
+
+## Lançamento de Atestados (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MENOS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: loop_control
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (enviar atestado) com perguntas objetivas. A UI policy onLoad que só fixava mandatory vira prop nas variáveis; textos puramente visuais saem; scripts de telefone e do limite de 15 dias viram regex/lógica de flow; o script sem VA Supported (EY:OnLoadRules) é removido, resolvendo o bloqueio do diagnóstico. loop_control fica oculto (já era hidden) porque o script 'EY: Check certificate_start_date', mantido, ainda depende dele para evitar disparo em cascata, e o formato não permite editar a lógica interna do script para remover essa dependência.

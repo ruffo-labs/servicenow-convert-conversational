@@ -1,0 +1,47 @@
+{
+ "sys_id": "d3f7ba031b099a10514cbaef4b4bcb26",
+ "status": "conversacional",
+ "motivo": "Intenção única (incluir, alterar ou cancelar beneficiário da Psicologia Viva) com perguntas simples. As policies sem condição viram props; o regex de CPF vai para validation_regex; rótulos decorativos são removidos.",
+ "vars": {
+  "v_request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_full_name_no_abbreviations": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_beneficiary_cpf": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}$"
+   }
+  },
+  "v_date_of_birth": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_beneficiary_email": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_additional_information": {}
+ },
+ "remover": {
+  "v_help_text": "visual",
+  "v_more_informations_label": "visual",
+  "v_label_fill_request": "visual"
+ },
+ "policies": {
+  "4bd7a7c71bcd9a10514cbaef4b4bcb60": "remover"
+ },
+ "scripts": {
+  "a0b1a30f1b8d9a10514cbaef4b4bcb29": {
+   "converter": "regex"
+  }
+ }
+}

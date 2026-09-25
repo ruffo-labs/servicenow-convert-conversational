@@ -1,0 +1,38 @@
+{
+ "sys_id": "247c37d53be81610924d0247f4e45af9",
+ "status": "conversacional",
+ "motivo": "Intenção única de pedir transporte corporativo (Cabify/traslado). category e checkbox_declaracao passam a ser controlados por props em vez de policy condicionada a v_employee; FAQs (rich text, sem dado) sai da conversa e o script de filtro de categoria é removido, mantendo as duas opções estáticas já existentes na variável.",
+ "vars": {
+  "category": {
+   "label": "Que tipo de transporte você precisa?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "detail_request": {
+   "label": "Conte os detalhes: trajeto, dias e horários."
+  },
+  "checkbox_declaracao": {
+   "label": "Você está ciente e concorda que o custo das viagens será do seu centro de custo?",
+   "props": {
+    "type": "1",
+    "include_none": true,
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "sem_uso_conversa"
+ },
+ "policies": {
+  "23add12d3b685610924d0247f4e45af4": "remover",
+  "f928dc293bec1610924d0247f4e45a21": "remover"
+ },
+ "scripts": {
+  "a6a73af81b09d6d0514cbaef4b4bcb35": {
+   "remover": {
+    "substituido_por": "category"
+   }
+  }
+ }
+}

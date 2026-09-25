@@ -1,0 +1,60 @@
+{
+ "sys_id": "56bb98421b709290514cbaef4b4bcb82",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir reembolso de saúde). As duas mensagens de exibição saem por não coletarem dado. O filtro de tipos de reembolso por país (2 client scripts) e a lista dinâmica de anos dependiam de tabela/lógica que não temos como reproduzir na spec, então mantive a lista fixa de tipos e troquei o ano por texto com validação, em vez da tabela de lookup e das choices fixas sugeridas. A data completa (v_month_year) passa a ser calculada automaticamente a partir de mês/ano via default_value, o que permite tirá-la da conversa sem perder o dado. Acrescentei o anexo do comprovante, como recomendado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_year": {
+   "props": {
+    "type": "6",
+    "validation_regex": "^[0-9]{4}$"
+   }
+  },
+  "v_month_year": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_month + '/' + current.variables.v_year"
+   }
+  },
+  "nova_anexo_comprovante": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe o comprovante de pagamento.",
+    "mandatory": true,
+    "order": 800
+   }
+  }
+ },
+ "remover": {
+  "v_message_refund": "visual",
+  "v_message_attach": "visual"
+ },
+ "policies": {
+  "2123a8821b349290514cbaef4b4bcbe4": {
+   "conditions": "v_employeeISNOTEMPTY",
+   "actions": {
+    "v_type_of_refund": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8af8f8c21bf89290514cbaef4b4bcbb9": "remover"
+ },
+ "scripts": {
+  "32e245ca1b7c9290514cbaef4b4bcb3f": {
+   "remover": "sem_efeito"
+  },
+  "a143cd0e1b7c9290514cbaef4b4bcb49": {
+   "remover": "sem_efeito"
+  },
+  "4dbe748a1b3c9290514cbaef4b4bcbde": {
+   "converter": "regex"
+  },
+  "b5d001061b7c9290514cbaef4b4bcb37": {
+   "converter": "default"
+  }
+ }
+}

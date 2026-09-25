@@ -1,0 +1,39 @@
+{
+ "sys_id": "2d6ceef71b743910d1abda4ce54bcbfd",
+ "status": "conversacional",
+ "motivo": "Intenção única de solicitar nota fiscal de devolução ao fornecedor, com perguntas sobre empresa, sub-empresa, empresa de destino, número da nota e anexo do modelo. Obrigatoriedade e regex viraram prop; download_template (rótulo rich text) sai da conversa. A regra que oculta a empresa de destino quando a sub-empresa é 7900 foi recriada como policy nova no item (agindo sobre variável do set, o que é permitido), pois o client script original pertence ao variable set compartilhado e não pode ser removido/convertido a partir do item; os labels de variáveis de set não são definidos pela spec do item.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_which_invoice_number_do_you_want_to_return": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9}-\\d{1,3}$"
+   }
+  },
+  "v_download_template": {
+   "props": {
+    "not_available_conversation": true
+   }
+  }
+ },
+ "policies": {
+  "66e172771bb43910d1abda4ce54bcb66": "remover",
+  "nova_ocultar_ship_to_subempresa_7900": {
+   "short_description": "Ocultar empresa de destino quando sub-empresa for 7900",
+   "conditions": "vs_which_sub_company_is_the_request_from=7900",
+   "actions": {
+    "vs_which_company_do_you_want_to_ship_to": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "ab323e771bb43910d1abda4ce54bcb98": {
+   "converter": "regex"
+  }
+ }
+}

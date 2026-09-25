@@ -1,0 +1,67 @@
+{
+ "sys_id": "31ca83d11b3b1d14a530426fe54bcbbb",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas (baixa de título e abertura de débito), com perguntas próprias, conforme a 1ª análise. request_type, vs_opened_by e vs_additional_information pertencem ao variable set compartilhado, então a spec do item não pode fixá-los, ocultá-los nem dar-lhes label: permanecem perguntados em ambos os derivados como no original. request_type serve de condição real para uma policy nova que oculta o motivo da baixa (vs_describe_request) quando a resposta é abertura de débito. Pelo mesmo motivo não é possível filtrar a opção 'Avon Latam' da lista de empresas do set; o script correspondente só manipulava o DOM e foi ajustado. Templates viraram texto nas descrições dos itens; a policy de somente-leitura do aprovador tem applies_catalog=false (não roda na conversa) e foi removida, pois o usuário escolhe entre os membros ativos do grupo aprovador.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_attach_spreadsheet": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_select_the_approver": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_template": "texto_movido_descricao",
+  "v_template_multa": "texto_movido_descricao",
+  "v_template_debito": "texto_movido_descricao"
+ },
+ "policies": {
+  "6c0ecfd51b7b1d14a530426fe54bcbe0": "remover",
+  "affa50933b0a9690924d0247f4e45a32": "remover",
+  "bca2e19d878e1250ec360e530cbb351f": "remover",
+  "be4c5cd73b0a9690924d0247f4e45aee": "remover",
+  "ca9c105b3b0a9690924d0247f4e45a4d": "remover",
+  "nova_hide_describe_for_debit": {
+   "short_description": "Oculta motivo da baixa quando é abertura de débito",
+   "conditions": "request_type=debit_opening",
+   "actions": {
+    "vs_describe_request": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "f2a154973b469690924d0247f4e45ab6": {
+   "remover": "sem_efeito"
+  },
+  "f5eec4933b469690924d0247f4e45a7f": {
+   "ajustar": [
+    "remover_dom"
+   ]
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_category",
+    "v_motivo"
+   ],
+   "sem_policies": [
+    "f8f6545f3b869690924d0247f4e45aa3"
+   ]
+  },
+  {
+   "de_1a": 1
+  }
+ ]
+}

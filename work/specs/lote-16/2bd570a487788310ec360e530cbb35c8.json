@@ -1,0 +1,178 @@
+{
+ "sys_id": "2bd570a487788310ec360e530cbb35c8",
+ "status": "dividido",
+ "motivo": "Três intenções distintas (2ª via, desbloqueio, alteração de limite) definidas por question_request_type, que vira valor fixo em cada derivado. O client script sem VA Support ([Fill fields according to ZIP]) é convertido para auto_populate; os campos que ele e o script de perfil preenchem automaticamente continuam na conversa como somente leitura (não há default_value nem ocultação original que permita retirá-los), removendo o bloqueio sem perder dado.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "question_request_who": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "question_collaborator_name": {
+   "label": "Qual é o nome do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_id_global": {
+   "label": "Qual é o ID global do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_email": {
+   "label": "Qual é o e-mail corporativo do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_public": {
+   "label": "Qual é o público do colaborador?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_street": {
+   "label": "Qual é a rua do endereço de entrega?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_neighborhood": {
+   "label": "Qual é o bairro do endereço de entrega?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_city": {
+   "label": "Qual é a cidade do endereço de entrega?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "question_state": {
+   "label": "Qual é o estado do endereço de entrega?",
+   "props": {
+    "read_only": true
+   }
+  }
+ },
+ "remover": {
+  "question_info_address": "visual",
+  "question_permanent_template": "texto_movido_descricao",
+  "question_oneoff_template": "texto_movido_descricao"
+ },
+ "policies": {
+  "2c0d046187b80710ec360e530cbb353a": "remover",
+  "33041ca5873c0710ec360e530cbb353f": "remover",
+  "43e844e187380710ec360e530cbb352f": "remover",
+  "5a0888ad87f40710ec360e530cbb3575": "remover",
+  "700c9ee887f80710ec360e530cbb35a1": "remover",
+  "7fd55a2087f80710ec360e530cbb35c4": "remover",
+  "d65490a5873c0710ec360e530cbb35ce": "remover"
+ },
+ "scripts": {
+  "3c7cc671333ccb1098331c07ee5c7be1": {
+   "converter": "default"
+  },
+  "ade1e5e987b48710ec360e530cbb353c": {
+   "converter": "auto_populate"
+  },
+  "c91d570233f0435098331c07ee5c7b49": {
+   "converter": "auto_populate"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "question_request_type": "duplicate"
+   },
+   "vars": {
+    "question_collaborator": {
+     "props": {
+      "default_value": "javascript:gs.getUserID()"
+     }
+    }
+   },
+   "sem_vars": [
+    "question_card_number",
+    "question_individual_group",
+    "question_change_type",
+    "question_new_limit",
+    "question_value_supplementation",
+    "question_month_change",
+    "question_request_reason",
+    "question_attach_collaborators",
+    "question_attach_manager",
+    "question_attach_finance"
+   ],
+   "sem_policies": [
+    "07abd46187fc0710ec360e530cbb350d",
+    "596c1c6587fc0710ec360e530cbb35fd",
+    "9c2b1ce587bc0710ec360e530cbb35b9"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "question_request_type": "unlock"
+   },
+   "vars": {
+    "question_collaborator": {
+     "props": {
+      "default_value": "javascript:gs.getUserID()"
+     }
+    }
+   },
+   "sem_vars": [
+    "question_reissuing_reason",
+    "question_zip_code",
+    "question_number",
+    "question_complement",
+    "question_street",
+    "question_neighborhood",
+    "question_city",
+    "question_state",
+    "question_individual_group",
+    "question_change_type",
+    "question_new_limit",
+    "question_value_supplementation",
+    "question_month_change",
+    "question_request_reason",
+    "question_attach_collaborators",
+    "question_attach_manager",
+    "question_attach_finance"
+   ],
+   "sem_policies": [
+    "07abd46187fc0710ec360e530cbb350d",
+    "596c1c6587fc0710ec360e530cbb35fd",
+    "9c2b1ce587bc0710ec360e530cbb35b9"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "question_request_type": "limit_change"
+   },
+   "sem_vars": [
+    "question_request_who",
+    "question_reissuing_reason",
+    "question_zip_code",
+    "question_number",
+    "question_complement",
+    "question_street",
+    "question_neighborhood",
+    "question_city",
+    "question_state",
+    "question_card_number"
+   ],
+   "sem_policies": [
+    "0420d1a587fc4710ec360e530cbb351e"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+{
+ "sys_id": "8dc994c41b1cda10514cbaef4b4bcb44",
+ "status": "conversacional",
+ "motivo": "Intenção única: pedir acesso a um sistema de RH, informando qual sistema e detalhando a necessidade. As variáveis de apresentação (v_faq, v_minimun_characters) saem da conversa, a obrigatoriedade e o mínimo de caracteres de v_field_detail viram propriedades da variável, e a exibição condicional de v_choose_the_option (antes feita por client script sem VA Supported, o bloqueador do item) vira uma UI policy simples com condição em v_employee.",
+ "vars": {
+  "v_choose_the_option": {
+   "label": "A qual sistema de RH você precisa de acesso?"
+  },
+  "v_field_detail": {
+   "label": "Conte o que você precisa fazer no sistema e qual perfil de acesso é necessário.",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_faq": "visual",
+  "v_minimun_characters": "visual"
+ },
+ "policies": {
+  "1136b5c81b9c1e10514cbaef4b4bcb11": "remover",
+  "nova_exibir_sistema_rh": {
+   "short_description": "Exibir a escolha do sistema de RH após identificar o colaborador",
+   "conditions": "v_employeeISNOTEMPTY",
+   "actions": {
+    "v_choose_the_option": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "168d24893b1c9650924d0247f4e45a2c"
+  }
+ },
+ "scripts": {
+  "168d24893b1c9650924d0247f4e45a2c": {
+   "converter": "policy:nova_exibir_sistema_rh"
+  },
+  "1af405c13b90d650924d0247f4e45ade": {
+   "remover": {
+    "substituido_por": "nova_exibir_sistema_rh"
+   }
+  },
+  "6861f5c01b9c1e10514cbaef4b4bcb31": {
+   "remover": "sem_efeito"
+  },
+  "69e035801b9c1e10514cbaef4b4bcb4e": {
+   "converter": "regex"
+  },
+  "f7ffa9001b9c1e10514cbaef4b4bcb50": {
+   "remover": {
+    "substituido_por": "v_field_detail"
+   }
+  }
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "sys_id": "af68d93f1b78f510d1abda4ce54bcb33",
+ "status": "conversacional",
+ "motivo": "Intenção única: registrar recebimento de mercadoria com divergência entre físico e fiscal. A UI policy sem condição vira mandatory direto nas variáveis e é removida; o client script de regex vira validation_regex; o rich text de instrução (tipo 32, não coleta dado) é removido por ser só apresentação. Variáveis dos variable sets não são alteradas pela spec do item.",
+ "vars": {
+  "v_what_invoice_number_do_you_want_to_receive": {
+   "label": "Qual o número da nota recebida? (formato 000000000-000)",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9}-\\d{1,3}$"
+   }
+  },
+  "v_which_supplier": {
+   "label": "Qual é o fornecedor?",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_click_here_to_download_the_template": "visual"
+ },
+ "policies": {
+  "1a4e46731b703910d1abda4ce54bcbee": "remover"
+ },
+ "scripts": {
+  "d55f8e371b703910d1abda4ce54bcb78": {
+   "converter": "regex"
+  }
+ }
+}

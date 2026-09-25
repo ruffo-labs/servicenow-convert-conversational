@@ -1,0 +1,54 @@
+{
+ "sys_id": "822a4a181b1f3010d1abda4ce54bcbe7",
+ "status": "conversacional",
+ "motivo": "Intenção única (enviar atestado) com perguntas objetivas. A UI policy onLoad que só fixava mandatory vira prop nas variáveis; textos puramente visuais saem; scripts de telefone e do limite de 15 dias viram regex/lógica de flow; o script sem VA Supported (EY:OnLoadRules) é removido, resolvendo o bloqueio do diagnóstico. loop_control fica oculto (já era hidden) porque o script 'EY: Check certificate_start_date', mantido, ainda depende dele para evitar disparo em cascata, e o formato não permite editar a lógica interna do script para remover essa dependência.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "certificate_start_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "certificate_days": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[0-9]+$"
+   }
+  },
+  "v_attachment": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "contact_phone_number": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\(\\d{2}\\)\\s\\d{4,5}-\\d{4}$"
+   }
+  }
+ },
+ "remover": {
+  "attach_the_certificate": "visual"
+ },
+ "policies": {
+  "d03c529b1b0521d4a530426fe54bcb10": "remover"
+ },
+ "scripts": {
+  "4b283b481b6b3410a530426fe54bcbda": {
+   "remover": {
+    "substituido_por": "contact_phone_number"
+   }
+  },
+  "bda36d5e1b9bb010d1abda4ce54bcb47": {
+   "converter": "auto_populate"
+  },
+  "dfb7145d334ff21098331c07ee5c7b2b": {
+   "converter": "regex"
+  },
+  "e70a98bb87b47210017d65790cbb3592": {
+   "remover": "sem_efeito"
+  }
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "itens": 12,
+ "sem_spec": [],
+ "com_divergencia": 6,
+ "nao_declaradas": 0,
+ "status_igual": 12,
+ "labels": 24,
+ "labels_modelo": 0
+}
+
+## Lançamento Contábil Avon (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (lançamento/reclassificação contábil Avon). A 1ª análise pede remover o widget custom v_template_avon (type 17, bloqueado em conversa) e ajustar o obrigatório de vs_approver_avon, mas ambas as variáveis pertencem ao variable set compartilhado 'EY VS Lançamento Contabil AVON', que a spec do item não pode alterar. Mantidas como no original (zero perda); o time de ServiceNow deve avaliar o ajuste desse set separadamente.
+
+## Solicitação de Pagamento Sindical (taxas e boletos) (dividir → dividido)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Duas intenções distintas: pagar boleto/taxa sindical avulsa e solicitar autorização sindical para domingos/feriados (esta última mantida não conversacional por depender de uma grade de datas/colaboradores). Campo espelho de loja (hidden) e legenda visual foram removidos/convertidos em props; regex de validação virou prop na variável.
+
+## Nota Fiscal Outras Saídas (conversacional_com_ajustes → conversacional)
+  comparação: REMOVIDA_A_MENOS
+  REMOVIDA_A_MENOS: 1ª análise remove e o modelo mantém: what_is_the_tax_operation_comercial
+  declaradas: regra_negocio, limite_formato  criterio: —
+  motivo: Item de intenção única (nota fiscal de outras saídas) com poucas perguntas condicionais por tipo de operação. Elementos visuais (texto de conformidade legal e links de download de modelo) não coletam dado e foram removidos; a ciência da conformidade legal passa a ser uma pergunta objetiva de Sim/Não.
+
+## Resíduos (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única (solicitar nota fiscal de saída de resíduos) com poucas perguntas trazidas pelos variable sets de empresa, cliente e anexo. A única variável própria do item é um rótulo de rich text (tipo 32, não coleta dado), removida da conversa junto com a policy que só a tornava obrigatória. A 1ª análise sugere labels para variáveis de set (empresa/sub-empresa/cliente/anexo), mas o formato não permite alterar variável de set pela spec do item; esses labels devem ser tratados na spec do próprio set.
+
+## Emissão de Notas Fiscais de Devolução (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: limite_formato  criterio: —
+  motivo: Intenção única de solicitar nota fiscal de devolução ao fornecedor, com perguntas sobre empresa, sub-empresa, empresa de destino, número da nota e anexo do modelo. Obrigatoriedade e regex viraram prop; download_template (rótulo rich text) sai da conversa. A regra que oculta a empresa de destino quando a sub-empresa é 7900 foi recriada como policy nova no item (agindo sobre variável do set, o que é permitido), pois o client script original pertence ao variable set compartilhado e não pode ser removido/convertido a partir do item; os labels de variáveis de set não são definidos pela spec do item.
+
+## Emissão de Notas de Venda de Mercadoria (conversacional_com_ajustes → conversacional)
+  comparação: —
+  
+  declaradas: erro_1a_analise  criterio: —
+  motivo: Intenção única (emitir nota de venda) com poucas perguntas objetivas: empresa, sub-empresa, destinatário e anexo do modelo. v_click_here_template é rótulo de texto rico (não coleta dado) e é removido; a obrigatoriedade de vs_which_company_do_you_want_to_ship_to já é garantida pela própria UI policy do variable set, então a policy do item fica redundante. Variáveis dos variable sets não são alteradas pela spec do item.

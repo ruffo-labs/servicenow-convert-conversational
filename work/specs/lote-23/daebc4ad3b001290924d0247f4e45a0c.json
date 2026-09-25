@@ -1,0 +1,74 @@
+{
+ "sys_id": "daebc4ad3b001290924d0247f4e45a0c",
+ "status": "conversacional",
+ "motivo": "Intenção única (pagar boleto de aluguel/condomínio/consumo de loja) com perguntas lineares. Nome do solicitante passa a ser derivado do usuário logado, centro de custo ganha validação numérica, e textos informativos sem dado saem da conversa ou vão para a description.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_requesters_name": {
+   "label": "Quem está solicitando este pagamento?",
+   "props": {
+    "default_value": "javascript:gs.getUserID()",
+    "read_only": true,
+    "mandatory": true
+   }
+  },
+  "v_which_company_is_you_request_for": {
+   "label": "O pagamento é de qual empresa?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_store_name": {
+   "label": "De qual loja é o boleto?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_store_cnpj": {
+   "label": "Qual é o CNPJ da loja?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cost_center": {
+   "label": "Qual é o centro de custo da loja?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d+$"
+   }
+  },
+  "v_bill_expiration_date": {
+   "label": "Qual é a data de vencimento do boleto?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_bill": {
+   "label": "Anexe o boleto, por favor.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_label_others_store": "texto_movido_descricao",
+  "v_others_cnpj": "visual",
+  "v_allowed_format": "texto_movido_descricao"
+ },
+ "policies": {
+  "828294213b041290924d0247f4e45acf": "remover"
+ },
+ "scripts": {
+  "48b314a53b041290924d0247f4e45a0e": {
+   "converter": "auto_populate"
+  },
+  "8f8a05363b841610924d0247f4e45a10": {
+   "converter": "regex"
+  },
+  "c9f2d4a13b041290924d0247f4e45a7b": {
+   "converter": "default"
+  }
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "sys_id": "4aacc9fa1be90a50a530426fe54bcb0f",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir 2ª via do crachá): obrigatoriedade e regras de desconto viram props/policies condicionais. Dados pessoais e de endereço são variáveis de variable sets compartilhados; a spec do item não os altera (permanecem como no set). Mantivemos o checkbox 'não encontrei a localização' e seu efeito via policy, pois o formato não permite transformar essa lógica numa opção 'outro' da lista de localização como sugeria a 1ª análise.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "reason_for_requesting_a_2nd_copy_of_the_badge": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "attach_3x4_photo": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "location_sent_badge": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "aceite_for_salary_discount_17_75": {
+   "props": {
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "aceite_for_discount_4_65": {
+   "props": {
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "aceite_for_discount_22_40": {
+   "props": {
+    "type": "1",
+    "include_none": true
+   }
+  },
+  "i_didnt_find_the_desired_location": {
+   "label": "Você não encontrou a unidade desejada na lista?",
+   "props": {
+    "type": "1",
+    "include_none": true
+   }
+  }
+ },
+ "remover": {
+  "text_solicitar_cordao": "visual",
+  "photo_instructions": "visual",
+  "police_report_will_analyzed": "visual"
+ },
+ "policies": {
+  "282ea27a1b2d4a50a530426fe54bcbee": "remover",
+  "724db7c71b210e50a530426fe54bcbc0": {
+   "conditions": "i_didnt_find_the_desired_location=true",
+   "actions": {
+    "location_sent_badge": {
+     "visible": false,
+     "mandatory": false,
+     "readonly": true,
+     "clear": true
+    }
+   }
+  },
+  "b190b6be1b2d4a50a530426fe54bcb43": {
+   "conditions": "made_a_police_report=Yes",
+   "actions": {
+    "anexo_BO": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "72a27ab61b6d4a50a530426fe54bcb75": {
+   "converter": "policy:724db7c71b210e50a530426fe54bcbc0"
+  }
+ }
+}

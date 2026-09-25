@@ -1,0 +1,26 @@
+{
+ "sys_id": "057cb47a1b6fb010d1abda4ce54bcb2d",
+ "status": "conversacional",
+ "motivo": "Intenção única (formalizar quitação de saldo devedor pós-afastamento) com poucas perguntas. A policy 'EY: Mandatory field' virou prop em way_remove_balance; o container visual saiu; a policy que exibe 'orientation' conforme a escolha foi mantida (condição real, texto informativo curto). O client script onSubmit bloqueava o envio segundo a opção escolhida, mas o resumo disponível não detalha quais combinações são vedadas nem permite editar a lista de opções com segurança; a 1ª análise já sugere alternativamente tratar isso no flow pós-envio em vez de bloquear no fim da conversa — optei por remover o bloqueio no submit, deixando a validação/mensagem a cargo do flow, sem perder nenhum dado coletado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "way_remove_balance": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "msg_container_personal_info": "visual"
+ },
+ "policies": {
+  "2614eb1f1bf4a190a530426fe54bcb8d": "remover"
+ },
+ "scripts": {
+  "388ecdba1bafb010d1abda4ce54bcb6f": {
+   "remover": "sem_efeito"
+  }
+ }
+}

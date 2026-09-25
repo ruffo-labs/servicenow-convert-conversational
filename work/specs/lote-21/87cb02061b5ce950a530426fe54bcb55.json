@@ -1,0 +1,141 @@
+{
+ "sys_id": "87cb02061b5ce950a530426fe54bcb55",
+ "status": "dividido",
+ "motivo": "Duas intenções claras — emitir medida disciplinar e devolver a medida assinada — cada uma com perguntas próprias; v_type_of_service vira valor fixo por derivado. v_opened_by e v_requester ficam ocultos com valor padrão do usuário logado. Os scripts que auto-preenchiam ID/área/empresa do solicitante e do colaborador não podem ser reproduzidos sem ocultar dado sem justificativa (não há default_value nem ocultação no original), então essas variáveis viram perguntas diretas e obrigatórias, e os scripts saem sem efeito.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_opened_by": {
+   "props": {
+    "hidden": true,
+    "read_only": true
+   }
+  },
+  "v_requester": {
+   "props": {
+    "default_value": "javascript:gs.getUserID()",
+    "hidden": true
+   }
+  },
+  "v_id": {
+   "label": "Qual é o ID Global do solicitante?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_area_department": {
+   "label": "Qual é a área/departamento do solicitante?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company": {
+   "label": "Qual é a empresa do solicitante?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_warning_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_id2": {
+   "label": "Qual é o ID Global do colaborador?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_area_department2": {
+   "label": "Qual é a área/departamento do colaborador?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_company2": {
+   "label": "Qual é a empresa do colaborador?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_who_received": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_id3": {
+   "label": "Qual é o ID Global do colaborador que recebeu a medida?",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "5b40b20e1b582d50a530426fe54bcbba": "remover",
+  "c1e6f2421b1c2d50a530426fe54bcb43": "remover",
+  "fb243e421bd82d50a530426fe54bcbb5": "remover"
+ },
+ "scripts": {
+  "819cbed21b94ad50d1abda4ce54bcb5a": {
+   "remover": "sem_efeito"
+  },
+  "8fec69421be02910a530426fe54bcbe9": {
+   "remover": "sem_efeito"
+  },
+  "fe1e32da1b94ad50d1abda4ce54bcbf5": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_type_of_service": "issuance"
+   },
+   "sem_vars": [
+    "v_who_received",
+    "v_attach",
+    "v_cont_start3",
+    "v_id3"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_type_of_service": "return"
+   },
+   "sem_vars": [
+    "v_cont_start",
+    "v_requester",
+    "v_id",
+    "v_area_department",
+    "v_company",
+    "formatter",
+    "v_cont_start2",
+    "v_warning_type",
+    "v_name",
+    "v_id2",
+    "v_area_department2",
+    "v_company2",
+    "v_reason",
+    "formatter2"
+   ]
+  }
+ ]
+}

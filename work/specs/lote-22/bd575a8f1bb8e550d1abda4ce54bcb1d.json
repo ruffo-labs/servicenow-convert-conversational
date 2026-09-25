@@ -1,0 +1,54 @@
+{
+ "sys_id": "bd575a8f1bb8e550d1abda4ce54bcb1d",
+ "status": "conversacional",
+ "motivo": "Uma única intenção (prestação de contas LATAM) com perguntas diretas; a policy onLoad sem condição vira mandatory/hidden direto nas variáveis, e o script de validação vira regex.",
+ "vars": {
+  "v_opened_by": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_what_kind_of_accountability": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_how_many_accountability_write_downs_are_being_requested": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_is_the_total_amount_being_held_accountable": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d+([.,]\\d{1,2})?$"
+   }
+  },
+  "v_what_currency_is_used": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_the_template": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_approval": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_attach_the_support_documents_for_accountability_below": "visual"
+ },
+ "policies": {
+  "5e70bbdb1b7c6d50d1abda4ce54bcbca": "remover"
+ },
+ "scripts": {
+  "5799d4221bdded10d1abda4ce54bcb1a": {
+   "converter": "regex"
+  }
+ }
+}

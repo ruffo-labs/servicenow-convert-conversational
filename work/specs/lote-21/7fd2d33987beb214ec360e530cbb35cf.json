@@ -1,0 +1,108 @@
+{
+ "sys_id": "7fd2d33987beb214ec360e530cbb35cf",
+ "status": "conversacional",
+ "motivo": "A 1ª análise diz 'manter_formulario', mas o próprio conteúdo dela (nome, textos, frases de exemplo e conversões de script já definidas) e o diagnóstico prévio sem bloqueadores indicam que era para ser conversacional; trato o campo de recomendação como erro. É uma única intenção (pagamento via SPR) com perguntas diretas; a policy incondicional de obrigatoriedade vira prop nas variáveis do item e continua só para as duas variáveis de set que ela afeta.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_emission_date": {
+   "label": "Qual é a data de emissão?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_accounting_only": {
+   "label": "É apenas para contabilização?"
+  },
+  "v_supplier": {
+   "label": "Qual é o fornecedor?"
+  },
+  "v_supplier_number": {
+   "label": "Qual é o número do fornecedor?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_payment_amount": {
+   "label": "Qual é o valor do pagamento?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[0-9]+([.,][0-9]{1,2})?$"
+   }
+  },
+  "v_currency": {
+   "label": "Qual é a moeda do pagamento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_payday": {
+   "label": "Qual é a data de pagamento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_spr_number": {
+   "label": "Qual é o número da SPR?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_additional_details": {
+   "label": "Você quer adicionar algum detalhe?"
+  },
+  "v_approval_attachment": {
+   "label": "Envie o anexo de aprovação.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_here_spr_form": {
+   "label": "Anexe aqui o formulário Global SPR preenchido.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_support_documentation": {
+   "label": "Você quer anexar alguma documentação de suporte?"
+  }
+ },
+ "remover": {
+  "v_info_about_spr": "texto_movido_descricao",
+  "v_form_template": "texto_movido_descricao"
+ },
+ "policies": {
+  "78ad581287be3210ec360e530cbb3537": {
+   "conditions": "",
+   "actions": {
+    "vs_requesters_name": {
+     "readonly": true
+    },
+    "vs_which_company": {
+     "mandatory": true
+    },
+    "vs_which_sub_company": {
+     "mandatory": true
+    },
+    "vs_for_who": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "10dd605687367210ec360e530cbb351e": {
+   "converter": "auto_populate"
+  },
+  "6376945287fa3210ec360e530cbb3532": {
+   "converter": "regex"
+  },
+  "7370a91a87b6b210ec360e530cbb3587": {
+   "converter": "auto_populate"
+  },
+  "c52b119e87b2b210ec360e530cbb35f4": {
+   "converter": "auto_populate"
+  }
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "sys_id": "0c6f995a1b679150a530426fe54bcba6",
+ "status": "conversacional",
+ "motivo": "Intenção única de acompanhar a entrega do cartão de benefício (vale-transporte). Campos com valor automático (funcionário, ID global, empresa) saem da conversa por já terem default_value; os labels informativos (2ª via/bloqueio e link do formulário de adesão) viram texto da description; uma nova pergunta evita reperguntar o endereço já cadastrado antes de coletar o endereço completo.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_type_of_benefit": {
+   "label": "De qual cartão de benefício você está falando?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_the_option": {
+   "label": "O que você precisa sobre o cartão?"
+  },
+  "v_has_the_benefit_claimed": {
+   "label": "Você já pediu a adesão ao vale-transporte?"
+  },
+  "v_where_do_you_want_to_receive_your_card": {
+   "label": "Onde você quer receber o cartão: no seu endereço ou no seu local de trabalho?"
+  },
+  "v_zip_code": {
+   "label": "Qual é o CEP do endereço de entrega?"
+  },
+  "v_street": {
+   "label": "Qual é a rua?"
+  },
+  "v_number": {
+   "label": "Qual é o número?"
+  },
+  "v_complement": {
+   "label": "Tem complemento (apartamento, bloco)?"
+  },
+  "v_neighborhood": {
+   "label": "Qual é o bairro?"
+  },
+  "v_city": {
+   "label": "Qual é a cidade?"
+  },
+  "v_region": {
+   "label": "Qual é o estado (UF) do endereço de entrega?"
+  },
+  "v_workplace": {
+   "label": "Você trabalha em unidade/escritório ou em loja?"
+  },
+  "v_choose_the_location": {
+   "label": "Em qual unidade você quer retirar o cartão?"
+  },
+  "v_departament": {
+   "label": "Qual é o seu departamento?"
+  },
+  "v_responsible": {
+   "label": "Quem pode receber o cartão por você na unidade?"
+  },
+  "v_store": {
+   "label": "Em qual loja você trabalha?"
+  },
+  "v_other_store": {
+   "label": "Se a sua loja não apareceu na lista, qual é o nome dela?"
+  },
+  "employee_s_name": {
+   "props": {
+    "read_only": true,
+    "not_available_conversation": true
+   }
+  },
+  "v_id": {
+   "props": {
+    "read_only": true,
+    "not_available_conversation": true
+   }
+  },
+  "v_company": {
+   "props": {
+    "read_only": true,
+    "not_available_conversation": true
+   }
+  },
+  "nova_confirmar_endereco_cadastrado": {
+   "nova": {
+    "type": "1",
+    "question_text": "Podemos entregar no endereço que está no seu cadastro?",
+    "mandatory": false,
+    "include_none": true,
+    "order": 750
+   }
+  }
+ },
+ "remover": {
+  "div_variables_benefit": "visual",
+  "v_container_acompanhamento_de_beneficio": "visual",
+  "formatter2": "visual",
+  "formatter": "visual",
+  "v_2_copy_label": "texto_movido_descricao",
+  "v_hyperlink_transport_voucher_label": "texto_movido_descricao"
+ },
+ "policies": {
+  "b2ff0af61b235d50a530426fe54bcb98": "remover",
+  "f4eb5dfe1bafd950a530426fe54bcb30": "remover",
+  "dffd027e1bef1d50a530426fe54bcb45": "remover",
+  "f65502361b6f1d50a530426fe54bcba0": {
+   "conditions": "v_where_do_you_want_to_receive_your_card=1^v_type_of_benefit=1^ORv_type_of_benefit=2^ORv_type_of_benefit=3^nova_confirmar_endereco_cadastrado=No",
+   "actions": {
+    "v_street": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_complement": {
+     "visible": true
+    },
+    "v_city": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_region": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_neighborhood": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_zip_code": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_number": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_confirmar_endereco_policy": {
+   "short_description": "Perguntar se pode entregar no endereço cadastrado",
+   "conditions": "v_where_do_you_want_to_receive_your_card=1",
+   "actions": {
+    "nova_confirmar_endereco_cadastrado": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "324561571b282190a530426fe54bcb74": {
+   "remover": "sem_efeito"
+  },
+  "4daf11971ba42190a530426fe54bcbf1": {
+   "remover": "sem_efeito"
+  },
+  "50a4e1931b282190a530426fe54bcb3f": {
+   "remover": "sem_efeito"
+  },
+  "8aa2a9171be42190a530426fe54bcb11": {
+   "remover": "sem_efeito"
+  },
+  "8ad3a15f1be42190a530426fe54bcb2b": {
+   "remover": "sem_efeito"
+  },
+  "e78525971b282190a530426fe54bcb93": {
+   "remover": "sem_efeito"
+  }
+ }
+}

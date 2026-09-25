@@ -1,0 +1,50 @@
+{
+ "sys_id": "bc3db2bb1bf43910d1abda4ce54bcb55",
+ "status": "conversacional",
+ "motivo": "Item de intenção única (nota fiscal de outras saídas) com poucas perguntas condicionais por tipo de operação. Elementos visuais (texto de conformidade legal e links de download de modelo) não coletam dado e foram removidos; a ciência da conformidade legal passa a ser uma pergunta objetiva de Sim/Não.",
+ "divergencias": [
+  "regra_negocio",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_what_is_the_tax_operation": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_ciencia_conformidade": {
+   "nova": {
+    "type": "5",
+    "question_text": "Você confirma que a operação segue as regras de conformidade legal descritas no artigo?",
+    "mandatory": true,
+    "include_none": true,
+    "order": 450,
+    "choices": [
+     {
+      "text": "Sim",
+      "value": "yes"
+     },
+     {
+      "text": "Não",
+      "value": "no"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "legal_conformity_text": "sem_uso_conversa",
+  "v_click_here_to_download_the_template": "visual",
+  "v_click_here_to_download_the_template_events": "visual",
+  "v_click_here_to_download_the_template_not_event": "visual"
+ },
+ "policies": {
+  "4f360c881b4d3910d1abda4ce54bcb12": "remover",
+  "534ba3c83378875098331c07ee5c7bcc": "remover"
+ },
+ "scripts": {
+  "8c6c68d833300b5098331c07ee5c7b19": {
+   "remover": "sem_efeito"
+  }
+ }
+}
