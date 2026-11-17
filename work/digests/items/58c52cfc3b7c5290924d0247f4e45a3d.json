@@ -1,0 +1,173 @@
+{
+ "sys_id": "58c52cfc3b7c5290924d0247f4e45a3d",
+ "name": "Solicitar troca de escala coletiva",
+ "sys_name": "Request collective roster change",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Controle de Jornada",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Utilize esse formulário para solicitações de troca de feriado por dia trabalhado.",
+ "description": "Utilize esse formulário para solicitações de troca de feriado por dia trabalhado.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "17",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_filial: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @personal_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de troca de escala coletiva. Lê o perfil de RH mas define requested_for como o usuário logado — mesma inconsistência do script de Rescisão Complementar.",
+ "variaveis": [
+  {
+   "name": "personal_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Personal Information"
+  },
+  {
+   "name": "v_filial",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Affiliate",
+   "reference": "x_nasm_hr_filiais_change_list",
+   "lookup": "x_nasm_hr_filiais_change_list",
+   "ref_qual": "javascript: new x_nasm_hr.EY_HTRUtils().getFilialForSubCompany(current.variables.vs_which_sub_company)",
+   "include_none": true
+  },
+  {
+   "name": "which_day_will_be_off",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Which day will be off"
+  },
+  {
+   "name": "which_day_will_be_worked",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Which day will be worked"
+  },
+  {
+   "name": "container_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "",
+   "choices": [
+    "2st round [=segundo_turno]",
+    "1st round [=primeiro_turno]",
+    "3st round [=terceiro_turno]"
+   ]
+  },
+  {
+   "name": "eligible_shifts_for_collective_schedule_change",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Eligible shifts for collective schedule change:"
+  },
+  {
+   "name": "primeiro_turno",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "1st round"
+  },
+  {
+   "name": "segundo_turno",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "2st round"
+  },
+  {
+   "name": "terceiro_turno",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "3st round"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "fleg_ciente",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that collective scale changes will be carried out upon approval from union relations and must be requested with 5 business days in advance."
+  },
+  {
+   "name": "v_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "For your request to be analyzed, it is mandatory to attach the e-mail of the union relations \"agreement\" with the rules of the change of the collective scale."
+  },
+  {
+   "name": "v_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "If necessary, please detail your request"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "64da79341ba5fd50a530426fe54bcb7e",
+   "name": "EY VS - Empresas Natura/Avon",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read only fields ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_opened_by: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields VS",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "fleg_ciente: mandatory=true",
+    "which_day_will_be_worked: mandatory=true",
+    "eligible_shifts_for_collective_schedule_change: mandatory=true",
+    "v_detail: mandatory=true",
+    "which_day_will_be_off: mandatory=true",
+    "v_filial: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

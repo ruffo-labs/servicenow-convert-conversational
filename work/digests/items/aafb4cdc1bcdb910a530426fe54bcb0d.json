@@ -1,0 +1,205 @@
+{
+ "sys_id": "aafb4cdc1bcdb910a530426fe54bcb0d",
+ "name": "Solicitação de documentos",
+ "sys_name": "Documents Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Solicitação de documentos e notas fiscais",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "14",
+   "bloqueadores": "2",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attachment"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_spreadsheet: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_invoice: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer para Informe de Rendimentos, com tratamento de usuário externo. Lê três system properties que guardam sys_ids de usuários 'convidado'/externo e compara com current.opened_by. Se o solicitante for um desses, força tanto requested_for quanto opened_by para o usuário externo padrão e NÃO aplica as regras de VIP. Caso contrário mantém o usuário real e chama x_nasm_hr.EY_ProducerUtils para definir o solicitante pelo variable set e elevar prioridade se for VIP. Em ambos os casos grava x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact phone"
+  },
+  {
+   "name": "v_which_company_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon [=AVON Latam]",
+    "Natura"
+   ]
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request from?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.\tv_which_company_is_your_request_for"
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which sub-company is the request from?"
+  },
+  {
+   "name": "v_what_document_do_you_need",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What document do you need"
+  },
+  {
+   "name": "v_which_period",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which period"
+  },
+  {
+   "name": "v_attach_spreadsheet",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach spreadsheet with list of documents/notes"
+  },
+  {
+   "name": "v_attach_invoice",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach spreadsheet with list of documents/notes",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_attachment_confirmation",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Was a spreadsheet with a list of documents/notes attached in the field above?"
+  },
+  {
+   "name": "v_yes",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Yes"
+  },
+  {
+   "name": "v_total_amount_of_documents_invoices",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Inform the total amount of documents/invoices and select the correct range in the field",
+   "include_none": true,
+   "choices": [
+    "1 - 40 [=1-40]",
+    "> 40 [=>40]"
+   ]
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_period: mandatory=true",
+    "v_what_document_do_you_need: mandatory=true",
+    "v_which_company_is_your_request_for: mandatory=true",
+    "v_total_amount_of_documents_invoices: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide external fields",
+   "when": "IO:v_nameISEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_phone: visible=false",
+    "v_name: visible=false",
+    "v_yes: visible=false",
+    "v_attach_invoice: visible=false",
+    "v_which_sub_company_is_the_request_from_text: visible=false",
+    "v_email: visible=false",
+    "v_attachment_confirmation: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide internal fields",
+   "when": "IO:v_nameISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_invoice: visible=false",
+    "v_which_sub_company_is_the_request_from: visible=false",
+    "v_attach_spreadsheet: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear subcompany",
+   "type": "onChange",
+   "on": "c5e22b561b01f510a530426fe54bcb8f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_which_sub_company_is_the_request_from' quando o campo que o dispara muda. Variante praticamente idêntica a outro script do mesmo conjunto."
+  },
+  {
+   "name": "EY: Public fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que separa o formulário entre usuário logado e 'guest'. Logado: esconde nome, e-mail e telefone, exige a sub-empresa, esconde os campos de anexo de nota e exige o anexo de planilha. Deslogado: exige a identificação manual."
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "sys_id": "eaa639e6877eb610ec360e530cbb3585",
+ "title": "EY - Company and Carrier Info",
+ "internal_name": "ey_company_and_carrier_info",
+ "description": "Collecting data from the carrier and the company, like CNPJ and name",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Portal de Pagamento de Frete do Brasil"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Company",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura [=natura]"
+   ]
+  },
+  {
+   "name": "vs_company_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company's CNPJ"
+  },
+  {
+   "name": "vs_cnpj_label",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "**Insira neste campo o CNPJ Avon ou Natura de acordo com a localidade do serviço prestado**"
+  },
+  {
+   "name": "vs_carriers_headquarters_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ of the carrier's headquarters"
+  },
+  {
+   "name": "vs_carrier_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Carrier's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^customer=false^EQ"
+  },
+  {
+   "name": "vs_carrier_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Carrier's Code",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=true^EQ"
+  },
+  {
+   "name": "vs_requeste_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Requeste's name"
+  },
+  {
+   "name": "vs_requesters_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Requester's E-mail"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "EY: CNPJ Formatter - Transport",
+   "type": "onChange",
+   "on": "f799bdea87beb610ec360e530cbb35c2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata o CNPJ do transporte enquanto o usuário digita: remove tudo que não é número, corta em 14 dígitos e aplica a máscara progressivamente. Corrige em vez de rejeitar."
+  },
+  {
+   "name": "EY: CNPJ formatter",
+   "type": "onChange",
+   "on": "5de7b9a287beb610ec360e530cbb35d0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata CNPJ progressivamente durante a digitação (remove não-números, corta em 14, aplica máscara). Gêmeo do formatador de transporte."
+  },
+  {
+   "name": "EY: fill carriers name",
+   "type": "onChange",
+   "on": "dc1bf92687feb610ec360e530cbb359d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o código da transportadora. Chama o Script Include EY_PTPUtils, método getCarrierCode, via GlideAjax, passando o sys_id da transportadora, e preenche o campo com o retorno."
+  }
+ ]
+}

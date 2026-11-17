@@ -1,0 +1,87 @@
+{
+ "sys_id": "e3f03a161b66b810a530426fe54bcb49",
+ "title": "Transportation tickets",
+ "internal_name": "bono_de_transporte_adicional",
+ "description": "Adicinar nova linha/dia",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Vale Transporte Extra"
+ ],
+ "variaveis": [
+  {
+   "name": "additional_request_start_date",
+   "type": "Data/Hora",
+   "type_code": "10",
+   "label": "Start date",
+   "example": "dd/mm/aaaa"
+  },
+  {
+   "name": "end_date_of_additional_request",
+   "type": "Data/Hora",
+   "type_code": "10",
+   "label": "End date",
+   "example": "dd/mm/aaaa"
+  },
+  {
+   "name": "transport_city",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Transport city",
+   "lookup": "x_nasm_hr_rates",
+   "ref_qual": "type=VT",
+   "include_none": true
+  },
+  {
+   "name": "line_name",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Line Name",
+   "lookup": "x_nasm_hr_rates",
+   "ref_qual": "javascript: 'type=VT^city='+current.variables.transport_city+'^NQline_name=Outros'",
+   "include_none": true
+  },
+  {
+   "name": "others",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter below the city and line you want"
+  },
+  {
+   "name": "quantity_one_way_day",
+   "type": "Escala Numérica",
+   "type_code": "4",
+   "label": "Quantity one way/day"
+  },
+  {
+   "name": "quantity_return_day",
+   "type": "Escala Numérica",
+   "type_code": "4",
+   "label": "Quantity Return/Day"
+  },
+  {
+   "name": "unit_value",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Unit value (R$)",
+   "example": "100,00",
+   "lookup": "x_nasm_hr_rates",
+   "ref_qual": "javascript: 'type=VT^line_name='+current.variables.line_name",
+   "include_none": true
+  },
+  {
+   "name": "city_and_line",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform unit value below"
+  },
+  {
+   "name": "already_have_vt_card",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Already have VT card?",
+   "include_none": true
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

@@ -1,0 +1,69 @@
+{
+ "sys_id": "e120f3701bc8ad18a530426fe54bcb16",
+ "title": "Add new contributors",
+ "internal_name": "v_add_new_contributors",
+ "description": ".",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Exclusão da Aprovação"
+ ],
+ "variaveis": [
+  {
+   "name": "v_employee_s_full_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Collaborator's full name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Date add employee",
+   "when": "IO:v_employee_s_full_nameISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_date: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_id: visible=true,readonly=true",
+    "v_company: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get data job",
+   "type": "onChange",
+   "on": "e2813fb81bc8ad18a530426fe54bcb41",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados de cargo, limpando quando o valor fica vazio."
+  }
+ ]
+}

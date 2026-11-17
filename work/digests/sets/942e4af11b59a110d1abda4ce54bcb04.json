@@ -1,0 +1,77 @@
+{
+ "sys_id": "942e4af11b59a110d1abda4ce54bcb04",
+ "title": "EY VS - Solicitar Informações",
+ "internal_name": "ey_vs_solicitar_informa_es",
+ "description": "Variable Set referente ao Form Solicitar Informações",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Informações HUB de Pagamentos sobre Requisições e Contratos"
+ ],
+ "variaveis": [
+  {
+   "name": "v_hub_customer",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Are you a Hub Customer?",
+   "include_none": true
+  },
+  {
+   "name": "v_what_type_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What kind of question do you have?",
+   "reference": "x_nasm_ptp_what_type_of_doubt_do_you_have",
+   "include_none": true,
+   "choices": [
+    "CW creation [=cw_creation]",
+    "CRW creation [=crw_creation]"
+   ]
+  },
+  {
+   "name": "v_label_explain_CRW_CW",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Criação de CW - Contrato jurídico que possui pergunta de risco respondidas como \"Sim\" e que necessitam de algum tipo de pagamentoCriação de CRW - Contrato jurídico que possui perguntas de risco respondidas como \"Não\" e não tem características de valores, ou seja, não há possibilidade de gerar algum tipo de pagamento, ex.: (parceria para divulgação da marca; patrocínio; etc.)"
+  },
+  {
+   "name": "v_inform_your_question",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Inform your question"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_your_question: mandatory=true",
+    "v_hub_customer: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_your_question: readonly=true",
+    "v_hub_customer: readonly=true",
+    "v_what_type_of_doubt_do_you_have: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show option when yes",
+   "when": "IO:v_hub_customer=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_explain_CRW_CW: visible=true",
+    "v_what_type_of_doubt_do_you_have: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

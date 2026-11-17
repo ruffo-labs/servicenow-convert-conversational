@@ -1,0 +1,170 @@
+{
+ "sys_id": "290911003b501250924d0247f4e45a0e",
+ "name": "Outras solicitações de licença",
+ "sys_name": "Request for Other Leave",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Outras Licenças",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Utilize este formulário para solicitar licenças diferentes de maternidade e paternidade",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "21",
+   "variaveis_ativas": "24",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "21"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_documentation: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_leave: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment_info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 21 de 21 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 21 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_leave",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "What leave do you want to report?",
+   "lookup": "x_nasm_hr_rules_hispanic_otras_licencias_solicitud",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true
+  },
+  {
+   "name": "v_leave_start_date_requester",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform Leave Start Date"
+  },
+  {
+   "name": "v_leave_end_date_requester",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform Leave End Date"
+  },
+  {
+   "name": "v_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need:"
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "You must enter more than 40 characters in your description detail"
+  },
+  {
+   "name": "v_attach_documentation",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the necessary documentation to make your request"
+  },
+  {
+   "name": "v_attachment_info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: View category ",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields - Catalog item view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_details: mandatory=true",
+    "v_leave_start_date_requester: mandatory=true",
+    "v_leave_end_date_requester: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'v_details' tem menos de 40 caracteres."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "2e68e1cc3bd01250924d0247f4e45a9e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange do anterior, exibindo a legenda de mínimo enquanto o texto está entre 1 e 39 caracteres."
+  },
+  {
+   "name": "EY: Mandatory Attachment",
+   "type": "onChange",
+   "on": "5daa21043b141250924d0247f4e45af8",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Variante do anterior, com a mesma regra de anexo obrigatório baseada no retorno '1' do Script Include de categorias."
+  },
+  {
+   "name": "EY: Hide error message onLoad + attach",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres e o campo de anexo de documentação na abertura."
+  }
+ ]
+}

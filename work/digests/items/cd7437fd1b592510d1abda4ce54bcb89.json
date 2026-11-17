@@ -1,0 +1,82 @@
+{
+ "sys_id": "cd7437fd1b592510d1abda4ce54bcb89",
+ "name": "Envio de Informações para Contas a Pagar",
+ "sys_name": "Sending Information to Accounts Payable",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Envio de informações para contas a pagar",
+ "description": "Envio de informações para contas a pagar",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "16",
+   "variaveis_ativas": "16",
+   "bloqueadores": "0",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "16"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 16 de 16 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "25806b821bd56910d1abda4ce54bcb22",
+   "name": "EY VS - Envio de Informações para o Contas à Pagar",
+   "order": "200",
+   "perguntas": [
+    "v_report_information (Texto de Linha Única): Report Information"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

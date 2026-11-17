@@ -1,0 +1,192 @@
+{
+ "sys_id": "bc3db2bb1bf43910d1abda4ce54bcb55",
+ "name": "Nota Fiscal Outras Saídas",
+ "sys_name": "FORM0000582",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Solicitar emissão de notas fiscais para Testes, Transferência, Eventos, Armazenagem e Outras Saídas não Especificadas em Outras Tags",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "12",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_click_here_to_download_the_template_events: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_click_here_to_download_the_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_click_here_to_download_the_template_not_event: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legal_conformity_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_company_is_the_request_for_customer: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_what_is_the_tax_operation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the tax operation?",
+   "include_none": true,
+   "choices": [
+    "Test [=v_test]",
+    "RPE Event / NF Exchange [=v_rpe_nf]",
+    "Storage [=v_storage]",
+    "Transfer, Use and Consumption [=v_transfer_use_consumption]",
+    "Other Unspecified Output [=v_other_outputs]"
+   ]
+  },
+  {
+   "name": "what_is_the_tax_operation_comercial",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the tax operation?",
+   "hidden": true,
+   "include_none": true,
+   "choices": [
+    "Events outside the establishment [=events]",
+    "Transfer [=transfer]",
+    "Other Outputs [=other_outputs]"
+   ]
+  },
+  {
+   "name": "legal_conformity_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_what_is_the_test_operation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the test operation?",
+   "include_none": true,
+   "choices": [
+    "Full Service [=v_full_service]",
+    "Sensory [=v_sensory]",
+    "Innovation [=v_innovation]",
+    "Route [=v_route]"
+   ]
+  },
+  {
+   "name": "v_what_are_the_other_exits",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "What are the other exits?"
+  },
+  {
+   "name": "v_click_here_to_download_the_template_events",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_click_here_to_download_the_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the template that should be used in the field below"
+  },
+  {
+   "name": "v_click_here_to_download_the_template_not_event",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "77c5dffa1bb0f110d1abda4ce54bcbb8",
+   "name": "EY: Tax - Company Avon/Natura - Subcompany",
+   "order": "100",
+   "perguntas": [
+    "vs_which_company_is_your_request (Selecionar Caixa): Which company is your request for?",
+    "vs_which_sub_company_is_the_request_from (Referência): Which sub-company is the request from?"
+   ]
+  },
+  {
+   "sys_id": "d1dac2b01b45fd10a530426fe54bcb64",
+   "name": "EY: Tax - Company (Customer code)",
+   "order": "300",
+   "perguntas": [
+    "vs_which_company_is_the_request_for_customer (Referência): Which company is the request for? (Customer code)"
+   ]
+  },
+  {
+   "sys_id": "b3b65b7e1bb0f110d1abda4ce54bcb1b",
+   "name": "EY: Tax - Attachments",
+   "order": "800",
+   "perguntas": [
+    "vs_attach_template (Anexo): Attach template"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_tax_operation: mandatory=true",
+    "v_click_here_to_download_the_template: "
+   ]
+  },
+  {
+   "name": "EY: Hide Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legal_conformity_text: visible=false",
+    "v_click_here_to_download_the_template: visible=false",
+    "v_click_here_to_download_the_template_not_event: visible=false",
+    "v_click_here_to_download_the_template_events: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Output Mandatory and Visible",
+   "when": "IO:v_what_is_the_tax_operation=v_other_outputs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_are_the_other_exits: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Test Operation Visible and Mandatory",
+   "when": "IO:v_what_is_the_tax_operation=v_test^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_test_operation: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Tax Operation",
+   "type": "onChange",
+   "on": "a36044c43338835098331c07ee5c7bee",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que controla textos e links de template conforme a combinação de item, sub-empresa e tipo de operação fiscal. Compara o sys_id do formulário com valores fixos no código e, batendo com a sub-empresa e a operação comercial, exibe o texto de conformidade legal e os links de download de template adequados (evento ou não-evento). Regras cravadas por sys_id no script."
+  }
+ ]
+}

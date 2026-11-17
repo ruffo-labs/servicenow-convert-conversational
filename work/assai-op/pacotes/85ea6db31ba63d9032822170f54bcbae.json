@@ -1,0 +1,943 @@
+{
+ "sys_id": "85ea6db31ba63d9032822170f54bcbae",
+ "name": "Manutenção de quadro - Escritórios Regionais",
+ "category": "Quadro de Pessoal (RH Ponta)",
+ "short_description": "Regionais - Manutenção de quadro",
+ "description": "Regionais - Manuten&ccedil;&atilde;o de quadro",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados da vaga",
+   "perguntas": [
+    "employee_name_vs",
+    "cr_description_vs",
+    "reason_vs",
+    "employee_id_vs",
+    "function_vs",
+    "establishment_vs",
+    "cr_vs",
+    "function_code_vs"
+   ]
+  },
+  {
+   "title": "Anexo Manutencao",
+   "perguntas": [
+    "aux_widget_manutencao",
+    "Attachments_manutencao"
+   ]
+  },
+  {
+   "title": "Aprovadores Regionais",
+   "perguntas": [
+    "vs_commercial_director_or_marketing",
+    "vp_comercial_operation",
+    "regional_manager_rh",
+    "vs_regional_operations_director",
+    "vs_director_regional_manager",
+    "vs_area_manager"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Aumento de Quadro - Escritórios Regionais",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [
+    "cr_new",
+    "establishment_new",
+    "location_current",
+    "function_code_new",
+    "c_digo_da_posi_o_hr",
+    "regional_new",
+    "function_new",
+    "quantity_new",
+    "function_current",
+    "location_new",
+    "frame_reduction",
+    "cr_description_new"
+   ],
+   "passa_a_obrigatoria": [
+    "location",
+    "cr",
+    "function_code",
+    "function",
+    "quantity",
+    "manager_registration",
+    "c_digo_da_posi_o"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Centro de Resultado",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - O colaborador pertencia a mesma vaga fechada? ",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Data do desligamento",
+     "quando": "mass_layoff=yes^rh_user_id_requesterISEMPTY"
+    },
+    {
+     "policy": "ALP - Inserir requisição de Movimentação?",
+     "quando": "was_the_same_closed_vacancy=no"
+    },
+    {
+     "policy": "ALP - Regional (ReadOnly)",
+     "quando": "location=cf1004801bfc1990c2706280f54bcb91^ORlocation=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation=370858171b1fa050eca40dcbe54bcbf5^NQlocationISNOTEMPTY^regionalISEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimento (ReadOnly)",
+     "quando": "location=cf1004801bfc1990c2706280f54bcb91^ORlocation=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation=370858171b1fa050eca40dcbe54bcbf5^NQlocationISNOTEMPTY^establishmentISEMPTY"
+    },
+    {
+     "policy": "ALP - Diretor comercial ou Marketing",
+     "quando": "IO:c4f466cc1bb6b1d0347221bbe54bcb3c=commercial_and_marketing"
+    },
+    {
+     "policy": "ALP - Função (Role)",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Matrícula do colaborador desligado",
+     "quando": "mass_layoff=yes"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Fechamento de vaga - Escritórios Regionais",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [
+    "cr_new",
+    "establishment_new",
+    "was_the_same_closed_vacancy",
+    "location_current",
+    "function_role",
+    "fired_user_registration",
+    "dimiss_date",
+    "function_code_new",
+    "c_digo_da_posi_o_hr",
+    "regional_new",
+    "function_new",
+    "quantity_new",
+    "function_current",
+    "movement_request",
+    "result_center",
+    "location_new",
+    "cr_description_new",
+    "c_digo_da_posi_o"
+   ],
+   "passa_a_obrigatoria": [
+    "location",
+    "cr",
+    "function_code",
+    "function",
+    "frame_reduction",
+    "quantity",
+    "manager_registration"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Regional (ReadOnly)",
+     "quando": "location=cf1004801bfc1990c2706280f54bcb91^ORlocation=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation=370858171b1fa050eca40dcbe54bcbf5^NQlocationISNOTEMPTY^regionalISEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimento (ReadOnly)",
+     "quando": "location=cf1004801bfc1990c2706280f54bcb91^ORlocation=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation=370858171b1fa050eca40dcbe54bcbf5^NQlocationISNOTEMPTY^establishmentISEMPTY"
+    },
+    {
+     "policy": "ALP - Diretor comercial ou Marketing",
+     "quando": "IO:c4f466cc1bb6b1d0347221bbe54bcb3c=commercial_and_marketing"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de posição transitória - Escritórios Regionais",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [
+    "cr_new",
+    "establishment_new",
+    "location",
+    "cr",
+    "location_current",
+    "function_code_new",
+    "c_digo_da_posi_o_hr",
+    "manager_position",
+    "regional_new",
+    "function_code",
+    "function_new",
+    "quantity_new",
+    "function",
+    "function_current",
+    "manager_departament",
+    "manager_name",
+    "location_new",
+    "cr_description",
+    "frame_reduction",
+    "quantity",
+    "establishment",
+    "manager_company",
+    "manager_registration",
+    "cr_description_new",
+    "c_digo_da_posi_o",
+    "regional"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Centro de Resultado",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - O colaborador pertencia a mesma vaga fechada? ",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Data do desligamento",
+     "quando": "mass_layoff=yes^rh_user_id_requesterISEMPTY"
+    },
+    {
+     "policy": "ALP - Inserir requisição de Movimentação?",
+     "quando": "was_the_same_closed_vacancy=no"
+    },
+    {
+     "policy": "ALP - Função (Role)",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Matrícula do colaborador desligado",
+     "quando": "mass_layoff=yes"
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Transformação de Posição (com custo) - Escritórios Regionais",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [
+    "location",
+    "cr",
+    "function_code",
+    "function",
+    "cr_description",
+    "frame_reduction",
+    "quantity",
+    "establishment",
+    "regional"
+   ],
+   "passa_a_obrigatoria": [
+    "cr_new",
+    "location_current",
+    "function_code_new",
+    "c_digo_da_posi_o_hr",
+    "function_new",
+    "quantity_new",
+    "function_current",
+    "location_new",
+    "manager_registration",
+    "c_digo_da_posi_o"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Centro de Resultado",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Regional (Nova) (ReadOnly)",
+     "quando": "location_new=cf1004801bfc1990c2706280f54bcb91^ORlocation_new=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_new=370858171b1fa050eca40dcbe54bcbf5^NQlocation_newISNOTEMPTY^regional_newISEMPTY"
+    },
+    {
+     "policy": "ALP - O colaborador pertencia a mesma vaga fechada? ",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Data do desligamento",
+     "quando": "mass_layoff=yes^rh_user_id_requesterISEMPTY"
+    },
+    {
+     "policy": "ALP - Inserir requisição de Movimentação?",
+     "quando": "was_the_same_closed_vacancy=no"
+    },
+    {
+     "policy": "ALP - Estabelecimento (Nova) (ReadOnly)",
+     "quando": "location_new=cf1004801bfc1990c2706280f54bcb91^ORlocation_new=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_new=370858171b1fa050eca40dcbe54bcbf5^NQlocation_newISNOTEMPTY^establishment_newISEMPTY"
+    },
+    {
+     "policy": "CSA - Estabelecimento Atual (ReadOnly)",
+     "quando": "location_current=cf1004801bfc1990c2706280f54bcb91^ORlocation_current=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_current=370858171b1fa050eca40dcbe54bcbf5^NQlocation_currentISNOTEMPTY^establishment_currentISEMPTY"
+    },
+    {
+     "policy": "ALP - Diretor comercial ou Marketing",
+     "quando": "IO:c4f466cc1bb6b1d0347221bbe54bcb3c=commercial_and_marketing"
+    },
+    {
+     "policy": "ALP - A transformação da vaga está acima de 90% da faixa?",
+     "quando": "IO:c4f466cc1bb6b1d0347221bbe54bcb3c=operations_and_other_areas"
+    },
+    {
+     "policy": "CSA - Regional Atual (ReadOnly)",
+     "quando": "location_current=cf1004801bfc1990c2706280f54bcb91^ORlocation_current=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_current=370858171b1fa050eca40dcbe54bcbf5^NQlocation_currentISNOTEMPTY^regional_currentISEMPTY"
+    },
+    {
+     "policy": "ALP - Função (Role)",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Matrícula do colaborador desligado",
+     "quando": "mass_layoff=yes"
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Transformação de Posição (sem custo) - Escritórios Regionais",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [
+    "location",
+    "cr",
+    "function_code",
+    "function",
+    "cr_description",
+    "frame_reduction",
+    "quantity",
+    "establishment",
+    "regional"
+   ],
+   "passa_a_obrigatoria": [
+    "cr_new",
+    "location_current",
+    "function_code_new",
+    "c_digo_da_posi_o_hr",
+    "function_new",
+    "quantity_new",
+    "function_current",
+    "location_new",
+    "manager_registration",
+    "c_digo_da_posi_o"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Centro de Resultado",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Regional (Nova) (ReadOnly)",
+     "quando": "location_new=cf1004801bfc1990c2706280f54bcb91^ORlocation_new=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_new=370858171b1fa050eca40dcbe54bcbf5^NQlocation_newISNOTEMPTY^regional_newISEMPTY"
+    },
+    {
+     "policy": "ALP - O colaborador pertencia a mesma vaga fechada? ",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Data do desligamento",
+     "quando": "mass_layoff=yes^rh_user_id_requesterISEMPTY"
+    },
+    {
+     "policy": "ALP - Inserir requisição de Movimentação?",
+     "quando": "was_the_same_closed_vacancy=no"
+    },
+    {
+     "policy": "ALP - Estabelecimento (Nova) (ReadOnly)",
+     "quando": "location_new=cf1004801bfc1990c2706280f54bcb91^ORlocation_new=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_new=370858171b1fa050eca40dcbe54bcbf5^NQlocation_newISNOTEMPTY^establishment_newISEMPTY"
+    },
+    {
+     "policy": "CSA - Estabelecimento Atual (ReadOnly)",
+     "quando": "location_current=cf1004801bfc1990c2706280f54bcb91^ORlocation_current=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_current=370858171b1fa050eca40dcbe54bcbf5^NQlocation_currentISNOTEMPTY^establishment_currentISEMPTY"
+    },
+    {
+     "policy": "ALP - Diretor comercial ou Marketing",
+     "quando": "IO:c4f466cc1bb6b1d0347221bbe54bcb3c=commercial_and_marketing"
+    },
+    {
+     "policy": "CSA - Regional Atual (ReadOnly)",
+     "quando": "location_current=cf1004801bfc1990c2706280f54bcb91^ORlocation_current=f9c8509b1b1fa050eca40dcbe54bcb8d^ORlocation_current=370858171b1fa050eca40dcbe54bcbf5^NQlocation_currentISNOTEMPTY^regional_currentISEMPTY"
+    },
+    {
+     "policy": "ALP - Função (Role)",
+     "quando": "mass_layoff=yes"
+    },
+    {
+     "policy": "ALP - Matrícula do colaborador desligado",
+     "quando": "mass_layoff=yes"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "cr_new",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do CR da nova vaga",
+   "reference": "cmn_department",
+   "choices": []
+  },
+  {
+   "name": "establishment_new",
+   "type": "Texto de Linha Única",
+   "question_text": "Estabelecimento da nova vaga",
+   "choices": []
+  },
+  {
+   "name": "quantity_current",
+   "type": "Selecionar Caixa",
+   "question_text": "Quantidade de vagas atual",
+   "choices": [
+    "3",
+    "6",
+    "29",
+    "13",
+    "27",
+    "7",
+    "22",
+    "23",
+    "25",
+    "20",
+    "12",
+    "10",
+    "2",
+    "17",
+    "9"
+   ]
+  },
+  {
+   "name": "was_the_same_closed_vacancy",
+   "type": "Selecionar Caixa",
+   "question_text": "O colaborador pertencia a mesma vaga fechada?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "location",
+   "type": "Referência",
+   "question_text": "Localidade da vaga",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "cr",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do CR da vaga",
+   "reference": "cmn_department",
+   "choices": []
+  },
+  {
+   "name": "location_current",
+   "type": "Referência",
+   "question_text": "Localidade da vaga atual",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "function_role",
+   "type": "Texto de Linha Única",
+   "question_text": "Função",
+   "choices": []
+  },
+  {
+   "name": "fired_user_registration",
+   "type": "Referência",
+   "question_text": "Matrícula do colaborador desligado",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "dimiss_date",
+   "type": "Data",
+   "question_text": "Data do desligamento",
+   "choices": []
+  },
+  {
+   "name": "function_code_new",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da função da nova vaga",
+   "choices": []
+  },
+  {
+   "name": "c_digo_da_posi_o_hr",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da Posição",
+   "choices": []
+  },
+  {
+   "name": "cr_description_current",
+   "type": "Texto de Linha Única",
+   "question_text": "Departamento da vaga atual (descrição do CR)",
+   "choices": []
+  },
+  {
+   "name": "manager_position",
+   "type": "Texto de Linha Única",
+   "question_text": "Função do Gestor",
+   "choices": []
+  },
+  {
+   "name": "regional_new",
+   "type": "Referência",
+   "question_text": "Regional da nova vaga",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "function_code",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da função da vaga",
+   "choices": []
+  },
+  {
+   "name": "function_new",
+   "type": "Selecionar Caixa",
+   "question_text": "Função da nova vaga",
+   "default": "--None--",
+   "choices": [
+    "GERENTE TI SR",
+    "ANALISTA CTRL GEST COMERCIAL SR",
+    "COORDENADOR CTR E GEST ESTOQUES PL",
+    "ANALISTA CTRL E GESTAO ESTOQUES JR",
+    "ANALISTA CTRL E GESTAO ESTOQUES PL",
+    "ANALISTA CREDITO JR",
+    "GERENTE SEG TRABALHO PL",
+    "ANALISTA CADASTRO JR",
+    "GERENTE COMERCIAL SR",
+    "GERENTE PLANEJ REPORTING PL",
+    "ANALISTA COMPRAS TECNICAS PL",
+    "GERENTE PROJETOS SR",
+    "GERENTE EXPANSAO SR",
+    "COORDENADOR CADEIA SUPRIMENTOS PL",
+    "COORDENADOR BRANDING"
+   ]
+  },
+  {
+   "name": "quantity_new",
+   "type": "Selecionar Caixa",
+   "question_text": "Nova quantidade",
+   "choices": [
+    "29",
+    "3",
+    "1",
+    "9",
+    "7",
+    "5",
+    "11",
+    "19",
+    "27",
+    "17",
+    "25",
+    "15",
+    "23",
+    "13",
+    "21"
+   ]
+  },
+  {
+   "name": "function",
+   "type": "Selecionar Caixa",
+   "question_text": "Função da vaga",
+   "default": "--None--",
+   "choices": [
+    "ASSISTENTE ADMINISTRATIVO I (DETERM",
+    "ANALISTA TRIBUTARIO SR",
+    "COORDENADOR COMPRAS INDIRETAS SR",
+    "COORDENADOR CONTROLES INTERNOS JR",
+    "GERENTE ADM OPERACOES JR",
+    "GERENTE CONTABILIDADE SR",
+    "GERENTE FORMACAO TECNICA JR",
+    "COPEIRO",
+    "ANALISTA DIGITAL PL",
+    "ANALISTA RH JR (DETERM)",
+    "ANALISTA RH SR (DETERM)",
+    "ANALISTA SUPORTE SR",
+    "COORDENADOR CONTABIL JR",
+    "COORDENADOR CTRL GEST COMERCIAL PL",
+    "ANALISTA INFRAESTRUTURA SR"
+   ]
+  },
+  {
+   "name": "mass_layoff",
+   "type": "Selecionar Caixa",
+   "question_text": "Haverá demissão para expurgo do TO?",
+   "choices": [
+    "Não",
+    "Sim"
+   ]
+  },
+  {
+   "name": "function_current",
+   "type": "Selecionar Caixa",
+   "question_text": "Função da vaga atual",
+   "default": "--None--",
+   "choices": [
+    "CHEFE SECAO I (RH VOLANTE)",
+    "ANALISTA SUSTENTABILIDADE PL",
+    "COORDENADOR TRANSPORTES PL",
+    "ANALISTA CONTAS A RECEBER SR",
+    "ANALISTA EXPANSAO SR",
+    "COORDENADOR MARKETING SR",
+    "GERENTE ADM OPERACOES SR",
+    "TECNICO SEGURANCA TRABALHO I",
+    "AUDITOR PL",
+    "COORDENADOR ADM IMOBILIARIA PL",
+    "ANALISTA COMPLIANCE PL",
+    "COORDENADOR JURIDICO",
+    "COORDENADOR CONTAS A PAGAR SR",
+    "ANALISTA CONTAS A RECEBER PL",
+    "MEDICO TRABALHO (DETERM)"
+   ]
+  },
+  {
+   "name": "movement_request",
+   "type": "Texto de Linha Única",
+   "question_text": "Inserir requisição de Movimentação?",
+   "choices": []
+  },
+  {
+   "name": "result_center",
+   "type": "Texto de Linha Única",
+   "question_text": "Centro de Resultado",
+   "choices": []
+  },
+  {
+   "name": "manager_departament",
+   "type": "Texto de Linha Única",
+   "question_text": "Departamento do Gestor",
+   "choices": []
+  },
+  {
+   "name": "manager_name",
+   "type": "Referência",
+   "question_text": "Nome do Gestor",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "establishment_current",
+   "type": "Texto de Linha Única",
+   "question_text": "Estabelecimento da vaga atual",
+   "choices": []
+  },
+  {
+   "name": "location_new",
+   "type": "Referência",
+   "question_text": "Localidade da nova vaga",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "cr_description",
+   "type": "Texto de Linha Única",
+   "question_text": "Departamento da vaga (descrição do CR)",
+   "choices": []
+  },
+  {
+   "name": "regional_current",
+   "type": "Referência",
+   "question_text": "Regional da vaga atual",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "frame_reduction",
+   "type": "Selecionar Caixa",
+   "question_text": "Trata-se de Redução de quadro?",
+   "choices": [
+    "Não",
+    "Sim"
+   ]
+  },
+  {
+   "name": "quantity",
+   "type": "Selecionar Caixa",
+   "question_text": "Quantidade de vagas",
+   "choices": [
+    "15",
+    "29",
+    "13",
+    "27",
+    "9",
+    "1",
+    "4",
+    "7",
+    "2",
+    "11",
+    "16",
+    "25",
+    "20",
+    "23",
+    "18"
+   ]
+  },
+  {
+   "name": "establishment",
+   "type": "Texto de Linha Única",
+   "question_text": "Estabelecimento da vaga",
+   "choices": []
+  },
+  {
+   "name": "function_code_current",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da função da vaga atual",
+   "choices": []
+  },
+  {
+   "name": "manager_company",
+   "type": "Texto de Linha Única",
+   "question_text": "Empresa do Gestor",
+   "choices": []
+  },
+  {
+   "name": "cr_current",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do CR da vaga atual",
+   "reference": "cmn_department",
+   "choices": []
+  },
+  {
+   "name": "manager_registration",
+   "type": "Texto de Linha Única",
+   "question_text": "Matricula do Gestor",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "cr_description_new",
+   "type": "Texto de Linha Única",
+   "question_text": "Departamento da nova vaga (descrição do CR)",
+   "choices": []
+  },
+  {
+   "name": "c_digo_da_posi_o",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da Posição",
+   "choices": []
+  },
+  {
+   "name": "regional",
+   "type": "Referência",
+   "question_text": "Regional da vaga",
+   "reference": "core_company",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "094d76001bfab1d0347221bbe54bcb25",
+   "name": "ALP - CR (Nova)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do cr_new, limpa dígitos, formata como 'XXXX-XXX' e chama x_asat_csc.NameDepartamentPersistence.getNameDepartamentPersistence via GlideAjax com o código. O retorno (JSON com name) preenche cr_description_new e regrava cr_new formatado. Se vier vazio, limpa ambos e mostra 'Não existe cr informado na base' com dica do formato."
+  },
+  {
+   "sys_id": "0a9c78191b1f461032822170f54bcb4c",
+   "name": "CSA - Local (Atual)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de location_current, limpa establishment_current e regional_current e lê a localidade por getReference; se o nome contém 'MATRIZ', sai; senão preenche establishment_current com u_establishment e regional_current com u_sub_region."
+  },
+  {
+   "sys_id": "0bcdf2401bfab1d0347221bbe54bcba7",
+   "name": "ALP - Função (Nova)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do código da função (function_code_new), esconde a mensagem do campo e valida o código contra uma lista fixa de ~500 códigos numéricos embutida no script. Se o código está na lista, grava o código em function_new; se não, limpa function_new e function_code_new e mostra 'Codigo N não encontrado'. A lista vale para essa variante do script (há outras variantes com listas diferentes)."
+  },
+  {
+   "sys_id": "3b7ebec01bfab1d0347221bbe54bcb7f",
+   "name": "ALP - Valida data de desligamento",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da data de desligamento (dimiss_date), calcula a diferença absoluta em dias até hoje; se passar de 30 dias, limpa o campo e mostra 'Desligamento fora do prazo para expurgo!'; senão esconde o erro."
+  },
+  {
+   "sys_id": "41d99e461ba38e1007caeca12b4bcbb0",
+   "name": "CSA - CR Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do CR atual (cr_current), formata o código como XXXX-XXX e chama x_asat_csc.NameDepartamentPersistence.getNameDepartamentPersistence via GlideAjax. Se vier nome, grava em cr_description_current e regrava cr_current formatado; senão limpa ambos e mostra 'Não existe cr informado na base'."
+  },
+  {
+   "sys_id": "4e0339143b6b2a10b28dd047f4e45af7",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "65dab6021ba78e1007caeca12b4bcb3b",
+   "name": "ALP - Função",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do código da função (function_code), valida contra lista fixa de ~500 códigos embutida. Válido grava o código em function; inválido limpa os dois campos e mostra 'Codigo N não encontrado'."
+  },
+  {
+   "sys_id": "6ddc7e8c1bbab1d0347221bbe54bcbb6",
+   "name": " ALP - Matricula do colaborador desligad",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável de matrícula do colaborador desligado (fired_user_registration), sai cedo se estiver carregando ou vazio. Chama o Script Include CSAAjax, método getUserRoleName, via GlideAjax, passando a matrícula. Com resposta, grava o retorno na variável function_role (cargo do colaborador)."
+  },
+  {
+   "sys_id": "7e1ef2c01bfab1d0347221bbe54bcb31",
+   "name": "ALP - Local (Nova)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de location_new, limpa establishment_new e regional_new e lê a localidade por getReference. Se o nome contém 'MATRIZ', para sem preencher. Senão preenche establishment_new com u_establishment e regional_new com u_sub_region da localidade, quando existirem. Há blocos comentados de obrigatoriedade."
+  },
+  {
+   "sys_id": "824efe801bfab1d0347221bbe54bcbbb",
+   "name": "ALP - Matricula do gestor",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da matrícula do gestor, chama UserAjax.getUserDataMatricula via GlideAjax com a matrícula e o sys_id do item. O JSON retornado preenche manager_name (sys_id), manager_position (título), manager_company e manager_departament."
+  },
+  {
+   "sys_id": "8903fd143b6b2a10b28dd047f4e45a58",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "b44b249d1b9b461032822170f54bcb72",
+   "name": "CSA - Label variaveis Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, conforme a oferta, troca rótulos das variáveis de localização e vaga: para 'Transformação de vaga (com/sem custo)' usa 'da vaga atual' (Localidade, Estabelecimento, Número do CR, Departamento, Regional, Função, Código da função, Quantidade); para 'Aumento de quadro' e 'Fechamento de vaga' usa 'da vaga'."
+  },
+  {
+   "sys_id": "b5fd3e801bfab1d0347221bbe54bcbae",
+   "name": "ALP - Local",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da localidade (location), limpa establishment e regional e lê a localidade por getReference. Se o nome contém 'MATRIZ', sai. Senão preenche establishment com u_establishment e regional com u_sub_region, quando existirem."
+  },
+  {
+   "sys_id": "c26dbecc1bbab1d0347221bbe54bcbca",
+   "name": "CSA - Função Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de código de função, para function_code_current / function_current, com lista fixa embutida (~500 códigos)."
+  },
+  {
+   "sys_id": "cb48fc511b1f461032822170f54bcbd1",
+   "name": "CSA - GetNameRole",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do código da função, chama x_asat_csc.NameDepartamentPersistence.getNameRolePersistence via GlideAjax. Se vier nome, grava em function; senão limpa function e mostra erro 'Não existe cr informado na base' (mensagem reaproveitada do script de CR)."
+  },
+  {
+   "sys_id": "d322499b87589a500ac543370cbb3516",
+   "name": "CSA - CR NAME",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad, se o short_description for uma das ofertas 'Manutenção de quadro - Escritórios Regionais' (transformação de vaga com/sem custo, fechamento, aumento), relê e completa os nomes de CR: para cr_description_new e cr_description chama x_asat_csc.NameDepartamentPersistence.getNameDepartamentPersistence e grava o nome retornado (mantendo o código em cr_new / cr); e, se cr tiver 32 caracteres (sys_id), chama x_asat_csc.CrNamePersistence.getCrNamePersistence e grava o retorno (nome e código) em cr_description e cr."
+  },
+  {
+   "sys_id": "e75bb90c87200b14182a0d440cbb3537",
+   "name": "ALP - Instance g_form",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, guarda a referência g_form em this.get_form para outros scripts do formulário."
+  },
+  {
+   "sys_id": "f16ebec01bfab1d0347221bbe54bcb83",
+   "name": "ALP - Valida centro de resultado",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do centro de resultado, exige o formato XXXX-XXX (8 caracteres, com um hífen); se não bater, limpa result_center e mostra erro no campo; se bater, esconde o erro."
+  },
+  {
+   "sys_id": "fe0d36cc1bbab1d0347221bbe54bcb16",
+   "name": "ALP - CR",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma consulta de CR via x_asat_csc.NameDepartamentPersistence.getNameDepartamentPersistence, aplicada às variáveis cr e cr_description: formata o CR, busca o nome e preenche a descrição; se não existir, limpa e avisa."
+  }
+ ]
+}

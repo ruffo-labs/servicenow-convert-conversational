@@ -1,0 +1,99 @@
+{
+ "sys_id": "c67133c73b01b610b28dd047f4e45aea",
+ "status": "dividido",
+ "motivo": "A divergência no valor pede motivo, mês, filho e afastamento; o reembolso por falta injustificada não pede esses dados, e só a divergência pede número do chamado.",
+ "vars": {
+  "reason_for_request": {
+   "label": "Qual é o motivo da sua solicitação?"
+  },
+  "Month_loan_was_granted": {
+   "label": "De qual mês é o crédito do vale-compras?"
+  },
+  "v_ticket_number": {
+   "label": "Qual é o número do chamado relacionado?"
+  },
+  "name": {
+   "label": "Qual é o nome completo e a idade do seu filho (menor de 5 anos)?"
+  },
+  "was_there_separation": {
+   "label": "Você teve afastamento?"
+  }
+ },
+ "remover": {
+  "observation": "visual",
+  "container_start": "visual",
+  "formatter": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "022b541b3b85b610b28dd047f4e45aaf": "remover",
+  "656b181b3b85b610b28dd047f4e45af6": "remover",
+  "a244c1b33bdc4710b28dd047f4e45acf": "remover",
+  "db61085b3b81b610b28dd047f4e45abe": "remover",
+  "ed9a9c973b85b610b28dd047f4e45a6b": "remover",
+  "f92794a63b193e50b28dd047f4e45a4f": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no valor do vale-compras mamãe",
+   "short_description": "Informar divergência no valor recebido do vale-compras mamãe",
+   "description": "Use quando o valor recebido do vale-compras mamãe estiver diferente do esperado. Atende a oferta Divergência no valor recebido do vale-compras mamãe, tratada pelo RH - Vale-Compras Mamãe. Você informa o motivo, o mês do crédito, o filho e se houve afastamento.",
+   "frases_exemplo": [
+    "O valor do meu vale-compras mamãe veio errado",
+    "Recebi menos no vale-compras mamãe",
+    "Quero contestar o valor do vale-compras mamãe",
+    "Tem divergência no crédito do vale mamãe deste mês",
+    "Divergência no valor recebido do vale-compras mamãe"
+   ],
+   "sem_vars": [
+    "v_ticket_number"
+   ],
+   "vars": {
+    "reason_for_request": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "Month_loan_was_granted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "was_there_separation": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reembolso do vale-compras mamãe por falta injustificada",
+   "short_description": "Solicitar reembolso do vale-compras mamãe por falta injustificada",
+   "description": "Use para pedir reembolso do vale-compras mamãe descontado por falta injustificada. Atende a oferta Solicitação de reembolso de vale-compras mamãe (falta injustificada), tratada pelo RH - Vale-Compras Mamãe. Você informa o motivo e o número do chamado relacionado.",
+   "frases_exemplo": [
+    "Descontaram meu vale-compras mamãe por falta injustificada",
+    "Quero reembolso do vale mamãe por causa de uma falta",
+    "Preciso pedir reembolso do vale-compras mamãe",
+    "A falta foi corrigida e quero o vale de volta",
+    "Reembolso de vale-compras mamãe por falta injustificada"
+   ],
+   "sem_vars": [
+    "Month_loan_was_granted",
+    "name",
+    "was_there_separation"
+   ]
+  }
+ ],
+ "scripts": {
+  "93fe06333bcdba10b28dd047f4e45a7a": {
+   "remover": {
+    "outro": "só limpa campos conforme a oferta; coberto pelos derivados"
+   }
+  }
+ }
+}

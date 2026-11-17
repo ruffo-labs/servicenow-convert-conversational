@@ -1,0 +1,115 @@
+{
+ "sys_id": "aae132aa1b87281032822170f54bcbc8",
+ "name": "Afastamento",
+ "category": "Jornada de Trabalho",
+ "short_description": "Afastamento",
+ "description": "Afastamento",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Jornada de Trabalho",
+    "item": "Afastamento"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de retorno de afastamento devido a detenção",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Gestão de Afastados 2"
+    },
+    {
+     "name": "Solicitação de afastamento devido a detenção",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Licenças"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "support_group": [
+     "RH - Licenças",
+     "RH - Gestão de Afastados 2"
+    ]
+   },
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Afastamento por detenção",
+     "description": "Use quando um colaborador foi detido e precisa ser afastado. Corresponde à oferta Solicitação de afastamento devido a detenção, atendida pelo RH - Licenças."
+    },
+    {
+     "name": "Retorno de afastamento por detenção",
+     "description": "Use quando o colaborador afastado por detenção vai voltar ao trabalho. Corresponde à oferta Solicitação de retorno de afastamento devido a detenção, atendida pelo RH - Gestão de Afastados 2."
+    }
+   ]
+  }
+ ],
+ "perguntas": [],
+ "client_scripts": [
+  {
+   "sys_id": "186c65903b2b2a10b28dd047f4e45a20",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "4f5ca5903b2b2a10b28dd047f4e45a66",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

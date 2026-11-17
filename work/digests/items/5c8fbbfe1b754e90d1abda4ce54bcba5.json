@@ -1,0 +1,299 @@
+{
+ "sys_id": "5c8fbbfe1b754e90d1abda4ce54bcba5",
+ "name": "Solicitação de compras descentralizadas",
+ "sys_name": "Request for decentralized purchases",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": "Virtual Agent Search, PTP_",
+ "short_description": "Esse formulário é exclusivo para compras descentralizadas até R$ 125.000,00 ou $ 25.000,00 (dólares) para pagamentos em moedas estrangeira, para criação de PR, CW e Folha e aceite de Serviço.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "60",
+   "variaveis_ativas": "67",
+   "bloqueadores": "0",
+   "avisos": "15",
+   "perguntas_sem_conversational_label": "60"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_info_exclusively_decentralized_purchases: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq_about_process: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_supplier_email_with_commercial_proposal: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_term_responsibility_contracting: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_completed_template: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @vs_info_email_supplier: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @vs_info_does_not_meet_the_criteria_decentralized_purchasing: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @vs_download_nm_2041_3_0: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_location_service_provision: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_in_the_name_of: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 60 de 60 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 60 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 16 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de compras descentralizadas. Grava x_nasm_hr_item com o sysparm_id da URL, copia o tipo de solicitação para o campo 'decentralized_purchases' e resolve o solicitante indo ao x_nasm_hr_profile indicado pela variável 'vs_in_the_name_of' para pegar o campo 'user'.",
+ "variaveis": [
+  {
+   "name": "v_faq_about_process",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_info_exclusively_decentralized_purchases",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_term_responsibility_contracting",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_completed_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the completed template here"
+  },
+  {
+   "name": "v_attach_supplier_email_with_commercial_proposal",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the supplier's email with commercial proposal here"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "8c795dc71bfd4e90d1abda4ce54bcb26",
+   "name": "Initial Data",
+   "order": "30",
+   "perguntas": [
+    "vs_in_the_name_of (Referência): In the name of",
+    "vs_which_company_request_for (Selecionar Caixa): The request is for which company?",
+    "vs_sub_company (Referência): Sub-company?",
+    "vs_select_physical_center (Selecionar Caixa): Select the physical center",
+    "vs_area_will_call_opened (Selecionar Caixa): For which area will the call be opened?",
+    "vs_add_area_name (Texto de Linha Única): Add area name"
+   ]
+  },
+  {
+   "sys_id": "1d53a5871b318e90d1abda4ce54bcbae",
+   "name": "Value",
+   "order": "40",
+   "perguntas": [
+    "vs_controller (Caixa de seleção, hidden): Controller",
+    "vs_total_purchase_value (Texto de Linha Única): What is the total purchase value?",
+    "vs_payment_in_reais_or_foreign_currency (Selecionar Caixa): Will payment be made in reais or foreign currency?",
+    "vs_info_does_not_meet_the_criteria_decentralized_purchasing (Rótulo de Rich Text): "
+   ]
+  },
+  {
+   "sys_id": "bfe6ed8f1b318e90d1abda4ce54bcb41",
+   "name": "Fornecedor",
+   "order": "50",
+   "perguntas": [
+    "vs_cnpj_tax_supplier_id (Texto de Linha Única): CNPJ/TAX Supplier ID:",
+    "vs_email_supplier (Texto de Linha Única): Email to contact the supplier",
+    "vs_info_email_supplier (Rótulo de Rich Text): ",
+    "vs_email_supplier_registration (Texto de Linha Única): Email for supplier registration"
+   ]
+  },
+  {
+   "sys_id": "815231471bb18e90d1abda4ce54bcb1b",
+   "name": "Type of request",
+   "order": "60",
+   "perguntas": [
+    "vs_type_of_request (Selecionar Caixa): What is the type of request?",
+    "vs_type_of_contract (Selecionar Caixa): Type of contractation",
+    "vs_purchase_order_number (Texto de Linha Única): Purchase order number",
+    "vs_order_line (Texto de Linha Única): Order line",
+    "vs_location_service_provision (Referência): Location of service provision",
+    "vs_service_description (Texto de Várias Linhas): Service description",
+    "vs_confirm_service_provision (Sim/Não): Can we confirm service provision?",
+    "vs_start_date_service_provision (Data): Start date of service provision",
+    "vs_end_date_service_provision (Data): End date of service provision"
+   ]
+  },
+  {
+   "sys_id": "021e52a31b310ed0a530426fe54bcb64",
+   "name": "Payment",
+   "order": "70",
+   "perguntas": [
+    "vs_select_type_of_service (Selecionar Caixa): Select the type of service",
+    "vs_service_electricity (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_construction (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_transport (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_educational (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_legal (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_maintenance (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_business (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_policy (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_research (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_carbon (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_financial (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_postal (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_sewage (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_royalties (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_professional (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_publishing (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_it (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_health (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_provision (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_contributions (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_recreational (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_personal (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_intermediation (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_real_state (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_telecomm (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_lease (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_agro (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_cargo (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_service_passenger (Selecionar Caixa): Select the classification of the contract service according to complementary law 116/2003",
+    "vs_summary_contracted_service (Texto de Várias Linhas): Summary of the contracted service",
+    "vs_tax_benefit_linked_service (Selecionar Caixa): What is the Tax Benefit linked to the service?",
+    "vs_service_provided_abroad_bring_economic_results_to_natura_brasil (Sim/Não): Will this service provided abroad bring economic results to Natura Brasil?",
+    "vs_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br (Texto de Várias Linhas): Explain why the results of the service provided will not have economic results for Natura BR",
+    "vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier (Selecionar Caixa): The taxes levied on this contract will be paid by: Natura or Supplier?",
+    "vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts (Sim/Não): Will values ​​exceed those stipulated in standard NM-2041.3.0 contracts?",
+    "vs_download_nm_2041_3_0 (Rótulo de Rich Text): ",
+    "vs_supplier_bank_details (Texto de Várias Linhas): Supplier's bank details"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If the \"What is the type of request?\" is \"PR Creation\" and \"Payment will be made in reais or foreign currency?\" is \"Payment in foreign currency\"",
+   "when": "IO:vs_type_of_request=pr_creation^IO:vs_payment_in_reais_or_foreign_currency=foreign^IO:vs_type_of_contract!=material^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts: visible=true,mandatory=true",
+    "vs_download_nm_2041_3_0: visible=true,mandatory=true",
+    "vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier: visible=true,mandatory=true",
+    "vs_select_type_of_service: visible=true,mandatory=true",
+    "vs_summary_contracted_service: visible=true,mandatory=true",
+    "vs_service_provided_abroad_bring_economic_results_to_natura_brasil: visible=true,mandatory=true",
+    "vs_tax_benefit_linked_service: visible=true,mandatory=true",
+    "vs_supplier_bank_details: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_supplier_email_with_commercial_proposal: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields on PR Creation",
+   "when": "IO:vs_type_of_request=pr_creation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_order_line: visible=false",
+    "vs_purchase_order_number: visible=false",
+    "vs_start_date_service_provision: visible=false",
+    "vs_location_service_provision: visible=false",
+    "vs_end_date_service_provision: visible=false",
+    "vs_confirm_service_provision: visible=false",
+    "vs_service_description: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields on PR creation",
+   "when": "IO:vs_type_of_request=pr_creation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_start_date_service_provision: visible=true,mandatory=true",
+    "v_term_responsibility_contracting: visible=true,mandatory=true",
+    "v_attach_the_supplier_term_here: visible=true,mandatory=true",
+    "vs_end_date_service_provision: visible=true,mandatory=true",
+    "v_download_template: visible=true,mandatory=true",
+    "v_attach_completed_template: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields on Creation and Acceptance of Service Sheet or None",
+   "when": "IO:vs_type_of_request=creation_acceptance_service_sheet^ORIO:vs_type_of_request=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_term_responsibility_contracting: visible=false,mandatory=false",
+    "v_attach_completed_template: visible=false,mandatory=false",
+    "v_attach_the_supplier_term_here: visible=false,mandatory=false",
+    "v_download_template: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: If controller is true",
+   "when": "IO:vs_controller=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_type_of_request: visible=false,mandatory=false",
+    "vs_end_date_service_provision: visible=false,mandatory=false",
+    "vs_info_supplier_not_registered: visible=false",
+    "vs_order_line: visible=false,mandatory=false",
+    "v_term_responsibility_contracting: visible=false",
+    "v_attach_completed_template: visible=false,mandatory=false",
+    "vs_confirm_service_provision: visible=false,mandatory=false",
+    "vs_purchase_order_number: visible=false,mandatory=false",
+    "v_attach_the_supplier_term_here: visible=false,mandatory=false",
+    "vs_email_supplier: visible=false,mandatory=false",
+    "vs_service_description: visible=false,mandatory=false",
+    "v_download_template: visible=false",
+    "vs_start_date_service_provision: visible=false,mandatory=false",
+    "vs_cnpj_tax_supplier_id: visible=false,mandatory=false",
+    "vs_location_service_provision: visible=false,mandatory=false",
+    "vs_email_supplier_registration: visible=false,mandatory=false",
+    "v_attach_supplier_email_with_commercial_proposal: visible=false,mandatory=false",
+    "vs_info_email_supplier: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear value when Creation and Accept",
+   "type": "onChange",
+   "on": "2d23f5871bb18e90d1abda4ce54bcbed",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa os anexos de termo do fornecedor e template preenchido quando o tipo de solicitação é 'creation_acceptance_service_sheet'."
+  },
+  {
+   "name": "EY: Clear Fields when Currency Changes",
+   "type": "onChange",
+   "on": "4a54a98b1b318e90d1abda4ce54bcb44",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que zera o bloco de serviços quando a moeda muda: prestação de serviço, carbono, financeiro, passageiro e demais tipos de serviço."
+  },
+  {
+   "name": "EY: Block submit if value great than",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que BLOQUEIA o envio. Lê a variável de controle 'vs_controller' e, se estiver como 'true', exibe 'Não é possível criar a solicitação' e retorna false. O nome do script sugere um teto de valor, mas a decisão já vem pronta na variável de controle — a regra de valor é calculada em outro lugar."
+  }
+ ]
+}

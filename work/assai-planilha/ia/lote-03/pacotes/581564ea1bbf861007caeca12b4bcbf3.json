@@ -1,0 +1,384 @@
+{
+ "sys_id": "581564ea1bbf861007caeca12b4bcbf3",
+ "name": "Movimentação de Pessoal - CDs",
+ "category": "Movimentação de Pessoal",
+ "short_description": "Movimentação de Pessoal - CDs",
+ "description": "Movimenta&ccedil;&atilde;o de Pessoal - CDs",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Colaborador impactado 1",
+   "perguntas": [
+    "vs_employee_name_1",
+    "vs_employee_id_1",
+    "vs_employee_cpf_1",
+    "vs_will_there_be_a_salary_change",
+    "vs_employee_lg_position_code_1",
+    "vs_employee_cr_1",
+    "vs_employee_department_1",
+    "vs_current_salary_employee_1",
+    "vs_employee_establishment_1",
+    "vs_employee_role_1",
+    "vs_proposed_salary_employee_1",
+    "vs_employee_localization_1"
+   ]
+  },
+  {
+   "title": "Colaborador impactado 2",
+   "perguntas": [
+    "vs_employee_name_2",
+    "vs_current_salary_employee_2",
+    "vs_employee_cpf_2",
+    "vs_employee_id_2",
+    "vs_proposed_salary_employee_2",
+    "vs_will_there_be_a_salary_change_2",
+    "vs_employee_department_2",
+    "vs_employee_localization_2",
+    "vs_employee_lg_position_code_2",
+    "vs_employee_cr_2",
+    "vs_employee_role_2",
+    "vs_employee_establishment_2"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Remuneração e Estrutura",
+    "item": "CD - Movimentação de Pessoal"
+   },
+   "ofertas": [
+    {
+     "name": "CD - Movimentação de Pessoal - Solicitação de movimentação casada - CD",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "v_movement_reference_date"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente de Operações Logística - Limpar Campo",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Operações Logística colaborador 1 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Operações Logística colaborador 2",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente do CD - Limpar Campo",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Operações Logística colaborador 2 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente de Atendimento RH Divisional - Limpar Campo",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente de Atendimento RH Divisional",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Atendimento RH Divisional colaborador 1 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Atendimento RH Divisional colaborador 2",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente do CD colaborador 2",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente do CD colaborador 2 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente de Operações Logística",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente do CD colaborador 1",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos iguais - Gerente do CD",
+     "quando": "vs_employee_localization_1SAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Atendimento RH Divisional colaborador 1",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente do CD colaborador 1 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Operações Logística colaborador 1",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Estabelecimentos diferentes - Gerente de Atendimento RH Divisional colaborador 2 - Limpar Campo",
+     "quando": "vs_employee_localization_1NSAMEASvs_employee_localization_2^vs_will_there_be_a_salary_change=Yes^ORvs_will_there_be_a_salary_change_2=Yes^vs_employee_localization_1ISNOTEMPTY^vs_employee_localization_2ISNOTEMPTY"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Movimentação casada de pessoal em CD",
+     "description": "Use para pedir a movimentação casada de pessoal em Centros de Distribuição (oferta \"CD - Movimentação de Pessoal - Solicitação de movimentação casada - CD\"). Informe a data de referência e os gerentes envolvidos quando necessário. O atendimento é do RH - Remuneração, com SLA de 24h."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_divisional_hr_service_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional colaborador 2",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional do colaborador 2?"
+  },
+  {
+   "name": "v_divisional_hr_service_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional colaborador 1",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional do colaborador 1?"
+  },
+  {
+   "name": "v_logistics_operations_manager",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Logística",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações logística?"
+  },
+  {
+   "name": "v_cd_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente do CD colaborador 1",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente do CD do colaborador 1?"
+  },
+  {
+   "name": "v_movement_reference_date",
+   "type": "Data",
+   "question_text": "Data de referência da movimentação",
+   "choices": [],
+   "label_atual": "Qual é a data de referência da movimentação?"
+  },
+  {
+   "name": "v_divisional_hr_service_manager",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional?"
+  },
+  {
+   "name": "estaacima_de_90_da_faixa_fora_da_politica",
+   "type": "Sim/Não",
+   "question_text": "Movimentação está fora da política?",
+   "choices": [],
+   "label_atual": "A movimentação está fora da política?"
+  },
+  {
+   "name": "v_cd_manager",
+   "type": "Referência",
+   "question_text": "Gerente do CD",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente do CD?"
+  },
+  {
+   "name": "v_cd_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente do CD colaborador 2",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente do CD do colaborador 2?"
+  },
+  {
+   "name": "v_logistics_operations_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Logística colaborador 2",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações logística do colaborador 2?"
+  },
+  {
+   "name": "v_logistics_operations_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Logística colaborador 1",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações logística do colaborador 1?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "02ee08a387c15e10182a0d440cbb353b",
+   "name": "ALP - Change Variable Name",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, chama GlideAjax ao Script Include x_asat_csc.CSAAjax, método getOffering, com sysparm_cd_or_loja='cd'. Compara o retorno (sys_id da oferta) com o service_offering atual: se for igual, muda o rótulo de aprovador_1 para 'Aprovador'; senão, 'Aprovador 1'. Versão para Centros de Distribuição."
+  },
+  {
+   "sys_id": "0fe6ae621bb30a1007caeca12b4bcbe3",
+   "name": "Aprovador 4",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_4, esconde as mensagens; se aprovador_3 estiver vazio, limpa aprovador_4 a 6 e mostra 'Necessário aprovador 3' em aprovador_4."
+  },
+  {
+   "sys_id": "3907ae621bb30a1007caeca12b4bcbab",
+   "name": "Aprovador 5",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_5, esconde as mensagens; se aprovador_4 estiver vazio, limpa aprovador_5 e 6 e mostra 'Necessário aprovador 4' em aprovador_5."
+  },
+  {
+   "sys_id": "4b862eee1b730a1007caeca12b4bcb9e",
+   "name": "Aprovador 2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_2, esconde as mensagens dos aprovadores; se aprovador_1 estiver vazio, limpa aprovador_2 a 6 e mostra 'Necessário aprovador 1' em aprovador_2."
+  },
+  {
+   "sys_id": "6f0ee1fe1b374a1007caeca12b4bcb3a",
+   "name": "Field Validation",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Verifica a cadeia de aprovadores 2 a 6: se um aprovador posterior está preenchido com o anterior vazio, mostra 'Não pode ter aprovador anterior vazio ao posterior' e bloqueia o envio."
+  },
+  {
+   "sys_id": "724a7fc93bc7b250b28dd047f4e45a7e",
+   "name": "CSA - Clean Grupo Aprovador",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa a variável approver_group."
+  },
+  {
+   "sys_id": "762722a21bb30a1007caeca12b4bcbf3",
+   "name": "Aprovador 6",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_6, esconde as mensagens; se aprovador_5 estiver vazio, limpa aprovador_6 e mostra 'Necessário aprovador 5' em aprovador_6."
+  },
+  {
+   "sys_id": "9782b1d03b6b2a10b28dd047f4e45aec",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "b9e76ae21bb30a1007caeca12b4bcb94",
+   "name": "Aprovador 1",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_1, esconde as mensagens de aprovador_2 a aprovador_6 e limpa os valores de aprovador_2 a aprovador_6 (alterar o primeiro aprovador zera a cadeia seguinte)."
+  },
+  {
+   "sys_id": "baf6d66e1bffc61007caeca12b4bcbe5",
+   "name": "Aprovador 3",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_3, esconde as mensagens; se aprovador_2 estiver vazio, limpa aprovador_3 a 6 e mostra 'Necessário aprovador 2' em aprovador_3."
+  },
+  {
+   "sys_id": "c0b5294d87a40b10182a0d440cbb35ad",
+   "name": "ALP - Ocultar Informacoes do Impactado",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da oferta, chama x_asat_csc.GetPropertyAjax.getPropertys via GlideAjax para ler a propriedade x_asat_csc.service_offering.sys_id.solicitacao_movimentacao_casada_cd. Se a oferta escolhida for igual ao retorno, oculta, desobriga e limpa os campos de informação do colaborador impactado; senão, exibe e exige esses campos. Versão para Centros de Distribuição."
+  },
+  {
+   "sys_id": "c592b1d03b6b2a10b28dd047f4e45afe",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "d2cacda21b77c61007caeca12b4bcb1d",
+   "name": "Variable Clean",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se impacto_financeiro for 'No', limpa estaacima_de_90_da_faixa_fora_da_politica, aprovador_1 a aprovador_6 e approver_group."
+  }
+ ]
+}

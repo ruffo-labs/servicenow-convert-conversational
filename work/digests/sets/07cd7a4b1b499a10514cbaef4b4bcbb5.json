@@ -1,0 +1,128 @@
+{
+ "sys_id": "07cd7a4b1b499a10514cbaef4b4bcbb5",
+ "title": "User Informations - Variable Set",
+ "internal_name": "user_informations_variable_set",
+ "description": "Variable Set criado para aglutinar as informações de Email do colaborador, ID do colaborador, Empresa, Sub-empresa, Departamento, Posição, CPF do colaborador, Cidade e UF de um usuário logado",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Conexa (Psicologia Viva) - Inclusão, Alteração ou Cancelamento de Beneficiário / Rede de afeto"
+ ],
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_employee_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee email"
+  },
+  {
+   "name": "v_employee_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee ID"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_sub_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Sub-company"
+  },
+  {
+   "name": "v_department",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Department"
+  },
+  {
+   "name": "v_position",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position"
+  },
+  {
+   "name": "v_employee_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee's CPF"
+  },
+  {
+   "name": "v_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "v_uf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "UF"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_sub_company: readonly=true",
+    "v_company: readonly=true",
+    "v_employee_email: readonly=true",
+    "v_position: readonly=true",
+    "v_opened_by: readonly=true",
+    "v_city: readonly=true",
+    "v_department: readonly=true",
+    "v_employee_id: readonly=true",
+    "v_uf: readonly=true",
+    "v_employee_cpf: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Set Invisible Fields in Form Vision",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company: visible=false",
+    "v_employee_id: visible=false",
+    "v_uf: visible=false",
+    "v_employee_cpf: visible=false",
+    "v_department: visible=false",
+    "v_sub_company: visible=false",
+    "v_employee_email: visible=false",
+    "v_position: visible=false",
+    "v_city: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Filling in user information",
+   "type": "onChange",
+   "on": "e208434b1bc99a10514cbaef4b4bcb19",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche as informações do solicitante a partir do sys_id selecionado."
+  },
+  {
+   "name": "EY: Filling the Opened By",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche 'v_opened_by' com o usuário logado e trava o campo."
+  }
+ ]
+}

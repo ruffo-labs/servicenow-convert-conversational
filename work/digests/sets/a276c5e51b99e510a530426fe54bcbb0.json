@@ -1,0 +1,73 @@
+{
+ "sys_id": "a276c5e51b99e510a530426fe54bcbb0",
+ "title": "EY VS - Fornecedores",
+ "internal_name": "ey_vs_fornecedores",
+ "description": "Variable set destinada a variaveis padrão fornecedores",
+ "usado_por": 8,
+ "itens_exemplo": [
+  "Consulta de Fornecedores",
+  "Adiantamento de Pagamento ao Fornecedor",
+  "Consulta a Pagamentos Atrasados",
+  "Criação de Nota de Débito",
+  "Ajuste de Lançamento de Fornecedor ",
+  "Bloqueio ou Desbloqueio de Pagamentos",
+  "Solicitação de Antecipação de Vencimento e Postergação",
+  "Notificação de Pagamentos Incorretos e/ou Duplicados"
+ ],
+ "variaveis": [
+  {
+   "name": "v_supplier",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Supplier",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^customer=false"
+  },
+  {
+   "name": "v_supplier_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier Code"
+  },
+  {
+   "name": "v_vendor_tax_code_cnpj_cuit_ruc",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Vendor Tax Code (CNPJ/CUIT/RUC)"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Obrigatório",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_supplier: mandatory=true",
+    "v_vendor_tax_code_cnpj_cuit_ruc: mandatory=true",
+    "v_supplier_code: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Somente leitura",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_supplier_code: readonly=true",
+    "v_vendor_tax_code_cnpj_cuit_ruc: readonly=true",
+    "v_supplier: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Código fiscal e fornecedor",
+   "type": "onChange",
+   "on": "126516a91bdd2910a530426fe54bcb9a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca código fiscal e dados do fornecedor. Chama o Script Include EY_PTPUtils via GlideAjax e preenche os campos com o retorno."
+  }
+ ]
+}

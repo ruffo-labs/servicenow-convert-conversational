@@ -1,0 +1,61 @@
+{
+ "sys_id": "35cb53801b29a910d1abda4ce54bcb9a",
+ "title": "Award payment summary ",
+ "internal_name": "award_payment_summary_4",
+ "description": "Resumo do pagamento de prêmio",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitar aprovações para prêmios e comissões"
+ ],
+ "variaveis": [
+  {
+   "name": "v_type_award_4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type",
+   "include_none": true,
+   "choices": [
+    "Adjustment - Other GN [=adjustment_other_gn]",
+    "Adjustment - Other GV [=adjustment_other_gv]",
+    "Adjustment - Other Supervisors [=adjustment_other_supervisors]",
+    "Manual Payment - Other GN [=manual_payment_other_gn]",
+    "Manual Payment - Other GV [=manual_payment_other_gv]",
+    "Manual Payment - Other Supervisors [=manual_payment_other_supervisors]",
+    "Award Value – GN [=award_value_gn]",
+    "Award Value – GV [=award_value_gv]",
+    "Award Value - Supervisors [=award_value_supervisors]",
+    "Reprocessing Value [=reprocessing_value]",
+    "Total Block [=total_block]",
+    "Total Block Without Adjustment [=total_block_without_adjustment]"
+   ]
+  },
+  {
+   "name": "v_value_award_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Award",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_value_award_4: visible=true,mandatory=true",
+    "v_type_award_4: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Value currency",
+   "type": "onChange",
+   "on": "fceb9fc01b29a910d1abda4ce54bcbfb",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma validação de moeda (formato sem separador de milhar, negativo permitido) aplicada a 'v_value_award_4'."
+  }
+ ]
+}

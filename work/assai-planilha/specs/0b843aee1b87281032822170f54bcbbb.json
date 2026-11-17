@@ -1,0 +1,120 @@
+{
+ "sys_id": "0b843aee1b87281032822170f54bcbbb",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 3 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitar reagendamento de homologação; ALP - Solicitar correção de Dados no TRCT; ALP - Solicitação de pagamento de rescisão complementar para ex-colaborador.",
+ "vars": {
+  "rh_center_result_cost": {
+   "label": "Centro de Resultado (Centro de custo)"
+  },
+  "rh_rescheduling_reason": {
+   "label": "Motivo do reagendamento"
+  },
+  "rh_colaborador_foi_homologado": {
+   "label": "Colaborador foi homologado?"
+  },
+  "rh_date_termination": {
+   "label": "Data de desligamento"
+  },
+  "rh_worked_more_less_1_year_company": {
+   "label": "Ex-colaborador trabalhou por mais ou menos de 1 ano na empresa?"
+  },
+  "rh_request_reason": {
+   "label": "Motivo da Solicitação"
+  },
+  "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+   "label": "Existe diferença de dissídio a ser paga?"
+  }
+ },
+ "remover": {
+  "rh_observation_ratify_process": "visual",
+  "rh_n2_call_answered_redline": "oferta_inativa",
+  "rh_account_bank": "oferta_inativa",
+  "rh_bank": "oferta_inativa",
+  "rh_observation": "visual",
+  "rh_observation_trct": "visual",
+  "rh_address_complete_update": "oferta_inativa",
+  "rh_observation_attachments": "visual",
+  "rh_agency": "oferta_inativa",
+  "rh_observation_trct_1": "visual"
+ },
+ "policies": {
+  "06bb2bfe1b0f2050eca40dcbe54bcbe7": "remover",
+  "20943eee1b87281032822170f54bcba1": "remover",
+  "60943eee1b87281032822170f54bcb98": "remover",
+  "6c943eee1b87281032822170f54bcba9": {
+   "conditions": "service_offering=a6d123941b47649032822170f54bcb62",
+   "actions": {
+    "rh_request_reason": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "91feab3a1b4f2050eca40dcbe54bcb58": {
+   "conditions": "service_offering=72d123941b47649032822170f54bcb6f",
+   "actions": {
+    "rh_colaborador_foi_homologado": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "ac943eee1b87281032822170f54bcba6": "remover",
+  "ea75343e1bc7681032822170f54bcb59": "remover",
+  "ec943eee1b87281032822170f54bcba3": {
+   "conditions": "service_offering=b1d1af541b47649032822170f54bcb3f",
+   "actions": {
+    "rh_rescheduling_reason": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Homologação (Rescisão - problema)",
+   "short_description": "Homologação",
+   "description": "Homologação",
+   "frases_exemplo": [
+    "Solicitar correção de Dados no TRCT",
+    "Homologação não foi agendada no sindicato",
+    "Solicitação de pagamento de rescisão complementar para ex-colaborador"
+   ],
+   "sem_vars": [
+    "rh_rescheduling_reason",
+    "rh_date_termination"
+   ],
+   "sem_policies": [
+    "75c1ded31bcb2450eca40dcbe54bcbd1",
+    "ec943eee1b87281032822170f54bcba3"
+   ]
+  },
+  {
+   "name": "Homologação (Rescisão - servico)",
+   "short_description": "Homologação",
+   "description": "Homologação",
+   "frases_exemplo": [
+    "Solicitar reagendamento de homologação",
+    "Solicitação de kit de homologação de ex-colaborador não localizado no ADP"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_colaborador_foi_homologado",
+    "rh_worked_more_less_1_year_company",
+    "rh_request_reason",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "sem_policies": [
+    "60943eee1b87281032822170f54bcb9e",
+    "6c943eee1b87281032822170f54bcba9",
+    "91feab3a1b4f2050eca40dcbe54bcb58",
+    "a0943eee1b87281032822170f54bcb9b"
+   ]
+  }
+ ]
+}

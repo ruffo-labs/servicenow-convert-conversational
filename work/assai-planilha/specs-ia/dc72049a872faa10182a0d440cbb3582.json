@@ -1,0 +1,133 @@
+{
+ "sys_id": "dc72049a872faa10182a0d440cbb3582",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Autoatendimento > Preciso de um serviço de RH (2 itens, 1 oferta cada) e Preciso reportar um problema (1 item, 2 ofertas). 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): Show opções - Solicitação de demonstrativo de pagamento; Show - VS - Anexo Opcional.",
+ "vars": {
+  "informe_mes_divergencia": {
+   "label": "Em qual mês houve a divergência?"
+  },
+  "mes_nao_recebimento": {
+   "label": "De qual mês é o pagamento não recebido?"
+  },
+  "demonstrativo_divergencia": {
+   "label": "Envie o demonstrativo de pagamento com a divergência."
+  },
+  "mes_ano_referencia": {
+   "label": "De qual mês e ano você quer o demonstrativo?"
+  }
+ },
+ "policies": {
+  "nova_g0_1": {
+   "short_description": "Show - VS - Anexo Opcional",
+   "conditions": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026",
+   "actions": {
+    "vs_anexo_opcional": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g1_1": {
+   "short_description": "Show - VS - Anexo Opcional",
+   "conditions": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026",
+   "actions": {
+    "vs_anexo_opcional": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Folha de Pagamento",
+   "short_description": "Pedir o demonstrativo de pagamento (contracheque) de um mês.",
+   "description": "Use para solicitar o demonstrativo de pagamento (contracheque) de um mês específico (oferta Solicitação de demonstrativo de pagamento). Informe o mês e o ano de referência. Atendimento do RH - Cópia de Documentos, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso do meu contracheque de março",
+    "Como consigo meu demonstrativo de pagamento?",
+    "Quero uma cópia do holerite do mês passado",
+    "Me manda o demonstrativo de pagamento de maio",
+    "Preciso do comprovante do meu salário"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "vars": {
+    "mes_ano_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "26f0ff60874d4790182a0d440cbb35da",
+    "3b58041a876faa10182a0d440cbb3585",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "76f8e02a87157210182a0d440cbb355d",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf",
+    "e0a6b324878d4790182a0d440cbb359f",
+    "efb8805a876faa10182a0d440cbb3509"
+   ]
+  },
+  {
+   "name": "Pagamento Mensal (solicitação)",
+   "short_description": "Pedir o demonstrativo do pagamento mensal.",
+   "description": "Use para solicitar o demonstrativo do pagamento mensal de um mês de referência (oferta Solicitação de demonstrativo de pagamento). Informe o mês e o ano. Atendimento do RH - Cópia de Documentos, SLA de 24h.",
+   "frases_exemplo": [
+    "Quero o demonstrativo do meu pagamento mensal",
+    "Preciso do holerite de um mês específico",
+    "Como peço o contracheque de janeiro?",
+    "Me envia o comprovante de pagamento do mês",
+    "Preciso de uma cópia do meu demonstrativo"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "vars": {
+    "mes_ano_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "26f0ff60874d4790182a0d440cbb35da",
+    "3b58041a876faa10182a0d440cbb3585",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "76f8e02a87157210182a0d440cbb355d",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf",
+    "e0a6b324878d4790182a0d440cbb359f",
+    "efb8805a876faa10182a0d440cbb3509"
+   ]
+  },
+  {
+   "name": "Pagamento Mensal (problema)",
+   "short_description": "Reportar divergência ou não recebimento do pagamento mensal.",
+   "description": "Use para reportar problema no pagamento mensal: valor diferente do esperado (oferta Divergência no pagamento mensal) ou pagamento que não caiu na conta (oferta Não recebimento do pagamento mensal). Informe o mês e, no caso de divergência, anexe o demonstrativo. Atendimento do RH - Atendimento Matriz ou RH - Pagamento Mensal.",
+   "frases_exemplo": [
+    "Meu salário veio com valor errado",
+    "Meu pagamento não caiu na conta este mês",
+    "O valor do meu pagamento está diferente do contracheque",
+    "Não recebi meu salário de setembro",
+    "Quero reportar divergência no meu pagamento"
+   ],
+   "sem_vars": [
+    "mes_ano_referencia"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf"
+   ]
+  }
+ ]
+}

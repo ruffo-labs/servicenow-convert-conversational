@@ -1,0 +1,77 @@
+{
+ "sys_id": "8d4c66653b1be210b28dd047f4e45a3b",
+ "status": "dividido",
+ "motivo": "A divergência pede o demonstrativo de pagamento e o mês da divergência; o não recebimento pede só o mês em que o adiantamento não foi pago.",
+ "vars": {
+  "mes_nao_recebimento": {
+   "label": "Em qual mês você não recebeu o adiantamento?"
+  },
+  "demonstrativo_de_pagamento_com_a_divergencia": {
+   "label": "Envie o demonstrativo de pagamento em que aparece a divergência."
+  },
+  "informe_o_mes": {
+   "label": "Em qual mês ocorreu a divergência?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "adiantamento_salarial": "visual"
+ },
+ "policies": {
+  "27330f253bdbe210b28dd047f4e45a38": "remover",
+  "78c998ae87917210182a0d440cbb3555": "remover",
+  "aef13a253b5be210b28dd047f4e45a9a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no valor do adiantamento salarial",
+   "short_description": "Informar divergência no adiantamento salarial recebido",
+   "description": "Use quando recebeu o adiantamento salarial, mas o valor veio diferente do esperado. Corresponde à oferta Divergência no adiantamento salarial. Você informa o mês da divergência e anexa o demonstrativo de pagamento em que ela aparece.",
+   "frases_exemplo": [
+    "O adiantamento veio com valor errado",
+    "Meu adiantamento salarial caiu menor do que devia",
+    "Quero contestar o valor do adiantamento",
+    "Tem divergência no meu adiantamento deste mês",
+    "O desconto no adiantamento está estranho"
+   ],
+   "sem_vars": [
+    "mes_nao_recebimento"
+   ],
+   "vars": {
+    "demonstrativo_de_pagamento_com_a_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "informe_o_mes": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Não recebi o adiantamento salarial",
+   "short_description": "Informar o não recebimento do adiantamento salarial",
+   "description": "Use quando o adiantamento salarial não foi depositado na sua conta. Corresponde à oferta Não recebimento do adiantamento salarial. Você informa o mês em que não recebeu.",
+   "frases_exemplo": [
+    "O adiantamento não caiu na minha conta",
+    "Não recebi meu adiantamento salarial",
+    "Cadê o adiantamento deste mês?",
+    "Meu adiantamento não foi pago",
+    "Preciso avisar que o adiantamento não chegou"
+   ],
+   "sem_vars": [
+    "demonstrativo_de_pagamento_com_a_divergencia",
+    "informe_o_mes"
+   ],
+   "vars": {
+    "mes_nao_recebimento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

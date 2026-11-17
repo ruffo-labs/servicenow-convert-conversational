@@ -1,0 +1,158 @@
+{
+ "sys_id": "b452011087fc0f90ec360e530cbb356e",
+ "name": "Solicitações de Pagamentos Sindicais",
+ "sys_name": "Requests for Union Payments",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relações Trabalhistas, Sindicais,  Atualização de CCT e Novos Estabelecimentos (CNPJ)",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Este formulário é especifico para envio de análises de pagamentos sindicais",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "9",
+   "variaveis_ativas": "9",
+   "bloqueadores": "1",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "9"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": EY: CNPJ Validation, Ey: Due Date"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @v_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 9 de 9 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_subcompany",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "u_brand=Natura^country=Brazil^EQ"
+  },
+  {
+   "name": "v_type_of_union_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Union Payment",
+   "include_none": true,
+   "choices": [
+    "Single Fee [=single_fee]",
+    "Operational Charge [=operational_charge]",
+    "FIS - Social Investment Fund [=fis]",
+    "Strengthening Category [=strengthening_category]",
+    "Employer's welfare [=employers_welfare]",
+    "Employers' Confederation [=employers_confederation]",
+    "Employer Negotiation [=employer_negotiation]",
+    "Urban Employer's Union [=urban_employers_union]",
+    "Bank Hour Rate [=bank_hour_rate]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_describe_your_request",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe your request",
+   "hidden": true
+  },
+  {
+   "name": "v_union_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Union name"
+  },
+  {
+   "name": "v_union_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Union CNPJ"
+  },
+  {
+   "name": "v_due_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Due Date"
+  },
+  {
+   "name": "v_observation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Observation"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the document (payment slip, notification, etc.)"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Ey: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_union_name: mandatory=true",
+    "v_attachment: mandatory=true",
+    "v_type_of_union_payment: mandatory=true",
+    "v_opened_by: mandatory=true,readonly=true",
+    "v_subcompany: mandatory=true",
+    "v_due_date: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: If 'v_type_of_union_pay' is 'others'",
+   "type": "onChange",
+   "on": "29fdcd1087f04f90ec360e530cbb35b1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe o campo complementar quando o tipo de pagamento ao sindicato é 'others'."
+  },
+  {
+   "name": "EY: CNPJ Validation",
+   "type": "onChange",
+   "on": "1def415087344f90ec360e530cbb3512",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CNPJ montando mensagem de erro específica conforme o problema encontrado — mais informativo que os validadores que só limpam o campo."
+  },
+  {
+   "name": "Ey: Due Date",
+   "type": "onChange",
+   "on": "1b9f442433f4831098331c07ee5c7b65",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de vencimento contra as regras do formulário."
+  }
+ ]
+}

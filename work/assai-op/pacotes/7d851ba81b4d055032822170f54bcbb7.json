@@ -1,0 +1,805 @@
+{
+ "sys_id": "7d851ba81b4d055032822170f54bcbb7",
+ "name": "Temporários - Conecta",
+ "category": "Remuneração e Estrutura",
+ "short_description": "Solicitação de abertura e fechamento de vaga temporário",
+ "description": "Solicita&ccedil;&atilde;o de abertura e fechamento de vaga tempor&aacute;rio",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Agencia",
+   "perguntas": [
+    "vs_agency_set"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Dados do temporário",
+   "perguntas": [
+    "name_temporary_set",
+    "birthdate_temporary_set",
+    "rg_temporary_set",
+    "end_date_contract_temporary_set",
+    "init_date_contract_temporary_set",
+    "cpf_temporary_set"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Aumento de Demanda",
+     "grupo_suporte": "RH - Temporários"
+    }
+   ],
+   "sai_do_formulario": [
+    "profile_description",
+    "hiring_agency_field",
+    "hiring_temporary_position",
+    "position_for_hiring",
+    "new_hire_be_necessary",
+    "date_of_leave",
+    "date_of_shutdown",
+    "temporary_cpf",
+    "hiring_salary",
+    "hiring_temporary_session",
+    "reason_for_withdrawal_of_the_impacted",
+    "work_time",
+    "hiring_section",
+    "reason_for_shutdown",
+    "corporate_cellphone",
+    "contract_duration_in_days"
+   ],
+   "passa_a_obrigatoria": [
+    "temporary_contracting_salary",
+    "referral_contact_phone",
+    "contract_start_date",
+    "name_of_temporary",
+    "contract_time",
+    "temporary_cpf_2",
+    "establishment_N",
+    "result_center",
+    "date_end_of_contract",
+    "referral_full_name",
+    "store_n",
+    "function"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Motivo da solicitação de temporário",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Nome Temporário cadastrado no nº da Autorização informada",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Quais exames são necessários para a contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Necessário envio de uniforme",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - N da Autorização da vaga",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Cobertura de Afastamento",
+     "grupo_suporte": "RH - Temporários"
+    }
+   ],
+   "sai_do_formulario": [
+    "hiring_agency_field",
+    "position_for_hiring",
+    "new_hire_be_necessary",
+    "date_of_shutdown",
+    "temporary_cpf",
+    "hiring_salary",
+    "function",
+    "hiring_section",
+    "reason_for_shutdown",
+    "contract_duration_in_days"
+   ],
+   "passa_a_obrigatoria": [
+    "temporary_contracting_salary",
+    "referral_contact_phone",
+    "contract_time",
+    "hiring_temporary_position",
+    "date_of_leave",
+    "referral_full_name",
+    "store_n",
+    "hiring_temporary_session",
+    "reason_for_withdrawal_of_the_impacted",
+    "corporate_cellphone"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nº Estabelecimento",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Motivo da solicitação de temporário",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Nome Temporário cadastrado no nº da Autorização informada",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Quais exames são necessários para a contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Descrição do Perfil (Vaga)",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Necessário envio de uniforme",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Horário de Trabalho",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - N da Autorização da vaga",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Centro Resultado",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Cobertura de Férias (Refeitório)",
+     "grupo_suporte": "RH - Temporários"
+    }
+   ],
+   "sai_do_formulario": [
+    "hiring_agency_field",
+    "position_for_hiring",
+    "new_hire_be_necessary",
+    "date_of_leave",
+    "date_of_shutdown",
+    "temporary_cpf",
+    "hiring_salary",
+    "reason_for_withdrawal_of_the_impacted",
+    "hiring_section",
+    "reason_for_shutdown",
+    "contract_duration_in_days"
+   ],
+   "passa_a_obrigatoria": [
+    "temporary_contracting_salary",
+    "referral_contact_phone",
+    "contract_time",
+    "hiring_temporary_position",
+    "establishment_N",
+    "result_center",
+    "referral_full_name",
+    "store_n",
+    "function",
+    "hiring_temporary_session",
+    "corporate_cellphone"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Motivo da solicitação de temporário",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Nome Temporário cadastrado no nº da Autorização informada",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Quais exames são necessários para a contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Descrição do Perfil (Vaga)",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Necessário envio de uniforme",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Horário de Trabalho",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - N da Autorização da vaga",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Reativação - Temporários",
+     "sla": "SLA - GESTÃO DE GENTE - 80H",
+     "grupo_suporte": "RH - Temporários"
+    }
+   ],
+   "sai_do_formulario": [
+    "temporary_contracting_salary",
+    "referral_contact_phone",
+    "hiring_agency_field",
+    "contract_start_date",
+    "name_of_temporary",
+    "contract_time",
+    "hiring_temporary_position",
+    "temporary_cpf_2",
+    "sla_exception",
+    "date_of_leave",
+    "date_end_of_contract",
+    "date_of_shutdown",
+    "referral_full_name",
+    "function",
+    "hiring_temporary_session",
+    "reason_for_withdrawal_of_the_impacted",
+    "reason_for_shutdown",
+    "corporate_cellphone"
+   ],
+   "passa_a_obrigatoria": [
+    "establishment_N",
+    "new_hire_be_necessary",
+    "authorization_no_of_the_temporary_vacancy_registered_at_conecta",
+    "temporary_cpf",
+    "temporary_name_registered_in_the_authorization_n",
+    "reason_for_requesting_temporary"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nº da Loja",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Seção para contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Agencia SET - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Quais exames são necessários para a contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Descrição do Perfil (Vaga)",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Cargo para contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Necessário envio de uniforme",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Horário de Trabalho",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Centro Resultado",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Agencia - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Salário de contratação",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Tempo de contrato ( em dias )",
+     "quando": "new_hire_be_necessary=yes"
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Solicitação de desligamento de temporário",
+     "sla": "SLA - GESTÃO DE GENTE - 24H"
+    }
+   ],
+   "sai_do_formulario": [
+    "temporary_contracting_salary",
+    "profile_description",
+    "referral_contact_phone",
+    "exams_needed_hiring",
+    "contract_time",
+    "hiring_temporary_position",
+    "position_for_hiring",
+    "sla_exception",
+    "new_hire_be_necessary",
+    "date_of_leave",
+    "date_end_of_contract",
+    "temporary_cpf",
+    "hiring_salary",
+    "referral_full_name",
+    "function",
+    "hiring_temporary_session",
+    "reason_for_withdrawal_of_the_impacted",
+    "work_time",
+    "hiring_section",
+    "required_send_uniform",
+    "corporate_cellphone",
+    "contract_duration_in_days"
+   ],
+   "passa_a_obrigatoria": [
+    "hiring_agency_field",
+    "contract_start_date",
+    "name_of_temporary",
+    "temporary_cpf_2",
+    "date_of_shutdown",
+    "reason_for_shutdown"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nº da Loja",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Nº Estabelecimento",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Motivo da solicitação de temporário",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Agencia SET - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Nome Temporário cadastrado no nº da Autorização informada",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - N da Autorização da vaga",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Centro Resultado",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Agencia - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    }
+   ]
+  },
+  {
+   "k": 5,
+   "ofertas": [
+    {
+     "name": "Solicitação de renovação de contratação de temporário",
+     "sla": "SLA - GESTÃO DE GENTE - 24H"
+    }
+   ],
+   "sai_do_formulario": [
+    "temporary_contracting_salary",
+    "profile_description",
+    "referral_contact_phone",
+    "exams_needed_hiring",
+    "contract_time",
+    "hiring_temporary_position",
+    "position_for_hiring",
+    "sla_exception",
+    "new_hire_be_necessary",
+    "date_of_leave",
+    "date_of_shutdown",
+    "temporary_cpf",
+    "hiring_salary",
+    "referral_full_name",
+    "function",
+    "hiring_temporary_session",
+    "reason_for_withdrawal_of_the_impacted",
+    "work_time",
+    "hiring_section",
+    "required_send_uniform",
+    "reason_for_shutdown",
+    "corporate_cellphone",
+    "contract_duration_in_days"
+   ],
+   "passa_a_obrigatoria": [
+    "hiring_agency_field",
+    "contract_start_date",
+    "name_of_temporary",
+    "temporary_cpf_2",
+    "date_end_of_contract"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nº da Loja",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Nº Estabelecimento",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Motivo da solicitação de temporário",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Agencia SET - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    },
+    {
+     "policy": "ALP - Nome Temporário cadastrado no nº da Autorização informada",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - N da Autorização da vaga",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Centro Resultado",
+     "quando": "authorization_no_of_the_temporary_vacancy_registered_at_conectaINincrease_in_demand,leave_coverage,covid _vacancy"
+    },
+    {
+     "policy": "ALP - Agencia - Variable Set",
+     "quando": "new_hire_be_necessary=yes"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "temporary_contracting_salary",
+   "type": "Texto de Linha Única",
+   "question_text": "Salário de contratação do temporário",
+   "choices": []
+  },
+  {
+   "name": "profile_description",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição do Perfil (Vaga)",
+   "choices": []
+  },
+  {
+   "name": "referral_contact_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone de contato da indicação",
+   "choices": []
+  },
+  {
+   "name": "exams_needed_hiring",
+   "type": "Texto de Linha Única",
+   "question_text": "Quais exames são necessários para a contratação?",
+   "choices": []
+  },
+  {
+   "name": "hiring_agency_field",
+   "type": "Referência",
+   "question_text": "Agência de contratação",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "contract_start_date",
+   "type": "Data",
+   "question_text": "Data de início do contrato",
+   "choices": []
+  },
+  {
+   "name": "name_of_temporary",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do temporário",
+   "choices": []
+  },
+  {
+   "name": "contract_time",
+   "type": "Texto de Linha Única",
+   "question_text": "Tempo de Contrato (em dias)",
+   "choices": []
+  },
+  {
+   "name": "hiring_temporary_position",
+   "type": "Texto de Linha Única",
+   "question_text": "Cargo para contratação do temporário",
+   "choices": []
+  },
+  {
+   "name": "position_for_hiring",
+   "type": "Texto de Linha Única",
+   "question_text": "Cargo para contratação",
+   "choices": []
+  },
+  {
+   "name": "temporary_cpf_2",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do Temporário",
+   "choices": []
+  },
+  {
+   "name": "sla_exception",
+   "type": "Caixa de seleção",
+   "question_text": "SLA de exceção",
+   "choices": []
+  },
+  {
+   "name": "establishment_N",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº Estabelecimento",
+   "choices": []
+  },
+  {
+   "name": "result_center",
+   "type": "Texto de Linha Única",
+   "question_text": "Centro Resultado",
+   "choices": []
+  },
+  {
+   "name": "new_hire_be_necessary",
+   "type": "Selecionar Caixa",
+   "question_text": "Será necessário nova contratação?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "authorization_no_of_the_temporary_vacancy_registered_at_conecta",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da Autorização da vaga Temporária cadastrada no Conecta",
+   "choices": []
+  },
+  {
+   "name": "date_of_leave",
+   "type": "Data",
+   "question_text": "Data de Afastamento",
+   "choices": []
+  },
+  {
+   "name": "date_end_of_contract",
+   "type": "Data",
+   "question_text": "Data fim do contrato",
+   "choices": []
+  },
+  {
+   "name": "date_of_shutdown",
+   "type": "Data",
+   "question_text": "Data do desligamento",
+   "choices": []
+  },
+  {
+   "name": "temporary_cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do Temporário",
+   "choices": []
+  },
+  {
+   "name": "hiring_salary",
+   "type": "Texto de Linha Única",
+   "question_text": "Salário de contratação",
+   "choices": []
+  },
+  {
+   "name": "referral_full_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo da indicação",
+   "choices": []
+  },
+  {
+   "name": "temporary_name_registered_in_the_authorization_n",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome Temporário cadastrado no nº da Autorização informada",
+   "choices": []
+  },
+  {
+   "name": "store_n",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da Loja",
+   "choices": []
+  },
+  {
+   "name": "function",
+   "type": "Texto de Linha Única",
+   "question_text": "Função",
+   "choices": []
+  },
+  {
+   "name": "hiring_temporary_session",
+   "type": "Texto de Linha Única",
+   "question_text": "Seção para contratação do temporário",
+   "choices": []
+  },
+  {
+   "name": "reason_for_withdrawal_of_the_impacted",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do Afastamento do Impactado",
+   "choices": [
+    "Acidente de Trabalho",
+    "Auxílio-Doença",
+    "Licença Maternidade",
+    "Férias"
+   ]
+  },
+  {
+   "name": "temporary_function",
+   "type": "Texto de Linha Única",
+   "question_text": "Função do Temporário",
+   "choices": []
+  },
+  {
+   "name": "work_time",
+   "type": "Texto de Linha Única",
+   "question_text": "Horário de Trabalho",
+   "choices": []
+  },
+  {
+   "name": "reason_for_requesting_temporary",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação de temporário",
+   "choices": [
+    "Cobertura de afastamento",
+    "Aumento de demanda",
+    "Licença remunerada - Covid",
+    "Sazonalidade",
+    "Cobertura Férias"
+   ]
+  },
+  {
+   "name": "hiring_section",
+   "type": "Texto de Linha Única",
+   "question_text": "Seção para contratação",
+   "choices": []
+  },
+  {
+   "name": "required_send_uniform",
+   "type": "Sim/Não",
+   "question_text": "Necessário envio de uniforme?",
+   "choices": []
+  },
+  {
+   "name": "reason_for_shutdown",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Motivo do desligamento",
+   "choices": []
+  },
+  {
+   "name": "corporate_cellphone",
+   "type": "Texto de Linha Única",
+   "question_text": "Celular Corporativo (Chefe/Encarregado RH)",
+   "choices": []
+  },
+  {
+   "name": "contract_duration_in_days",
+   "type": "Texto de Linha Única",
+   "question_text": "Tempo de contrato (em dias)",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "2dc881561bfe8910347221bbe54bcb24",
+   "name": "ALP - Campos da visão portal",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange (visão portal), lê o service_offering por getReference e, conforme o nome da oferta, mostra/oculta e torna obrigatórios ou não os campos do temporário (nome, CPF, RG, data de nascimento, início e fim de contrato). Para 'Aumento de Demanda', 'Cobertura de Afastamento' e 'Cobertura de Férias (Refeitório)' oculta e desobriga os campos; para 'Solicitação de desligamento de temporário' mostra e exige um subconjunto; para 'renovação de contratação de temporário' mostra e exige também date_end_of_contract."
+  },
+  {
+   "sys_id": "46428fa61b4e491032822170f54bcb80",
+   "name": "ALP - Set Regional Manager",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se a oferta for 'Cobertura de Férias (Refeitório)', grava um sys_id fixo de usuário (gerente regional) em regional_manager e vs_regional_manager."
+  },
+  {
+   "sys_id": "64d11e1d1bf4e150347221bbe54bcb1a",
+   "name": "ALP - Resolved Conecta",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad (visão resolvedora), após 500 ms lê o service_offering por getReference e, conforme o nome (Aumento de Demanda, Cobertura de Afastamento, Cobertura de Férias (Refeitório)), exibe e ajusta leitura/obrigatoriedade dos campos do temporário (nome, RG, CPF, datas etc.), usando o campo state do chamado."
+  },
+  {
+   "sys_id": "7bcedac81b338d50347221bbe54bcb1f",
+   "name": "ALP - Cellphone mask",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do celular corporativo (corporate_cellphone), aceita o valor se já está no formato (DD) 9XXXX-XXXX. Senão, exige somente números (tamanho 10 ou 11); se inválido, limpa o campo e mostra mensagem orientando o formato. Se válido, formata como (DD) XXXX-XXXX (10 dígitos) ou (DD) XXXXX-XXXX (11 dígitos) e grava de volta."
+  },
+  {
+   "sys_id": "b90992511b494990eca40dcbe54bcb4f",
+   "name": "ALP - Clearfields",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se o valor mudou em relação ao anterior (e não é 'service_offering'), limpa uma longa lista de variáveis do pedido de temporário (what_is_the_request, reason_for_requesting_temporary, temporary_function, store_n, regional_manager, manager, result_center, function, date_of_leave, store_manager, work_time, corporate_cellphone, profile_description, vs_regional_manager etc., entre outras da lista)."
+  },
+  {
+   "sys_id": "ded6dff51b36811032822170f54bcb94",
+   "name": "ALP - Campos visão resolvedora",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad (visão resolvedora), lê o service_offering por getReference e ajusta os campos do temporário conforme o nome da oferta. Para 'Aumento de Demanda', 'Cobertura de Afastamento' e 'Cobertura de Férias (Refeitório)' desobriga, oculta e desabilita a exibição de nome, CPF, início e fim de contrato; para 'renovação de contratação de temporário' deixa date_end_of_contract visível e somente leitura. Uma função auxiliar trata obrigatoriedade/leitura dos campos segundo o campo state (1 e 2)."
+  },
+  {
+   "sys_id": "df6092ea1b728d10347221bbe54bcb83",
+   "name": "ALP - Máscara de CPF 2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma máscara e validação de CPF, para temporary_cpf_2."
+  },
+  {
+   "sys_id": "e3bf0e6a1b728d10347221bbe54bcb5b",
+   "name": "ALP - Máscara de CPF",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do CPF do temporário (temporary_cpf), exige só números (senão erro 'Digite apenas números!' e limpa). Com 11 dígitos, aplica a máscara 000.000.000-00; senão erro 'Digite o CPF corretamente!' e limpa o campo."
+  }
+ ]
+}

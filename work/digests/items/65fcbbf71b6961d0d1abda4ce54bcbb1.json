@@ -1,0 +1,230 @@
+{
+ "sys_id": "65fcbbf71b6961d0d1abda4ce54bcbb1",
+ "name": "Sindicato",
+ "sys_name": "Syndicate",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços Externos",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Serviços para Solicitações Sindicais",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "13",
+   "bloqueadores": "7",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   }
+  ],
+  "avisos": [
+   "sim_nao_sem_include_none @v_has_attachment: Sim/Nao sem \"Include None\" marcado",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Ex-Colaboradores ou Colaboradores Afastados. Grava current.item com o sysparm_id e força requested_for e opened_by para o usuário genérico da system property 'acn_guest_user'. Padrão de atendimento a quem não tem mais acesso à plataforma.",
+ "variaveis": [
+  {
+   "name": "v_cont_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request Data:"
+  },
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Payments [=payments]",
+    "Syndicate [=sindicate]"
+   ]
+  },
+  {
+   "name": "v_subcategory_payments",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Bank Slips [=bank]",
+    "Withdrawals [=withdrawls]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_subcategory_syndicate",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Business Contribution [=contrib]",
+    "List of Associates [=list]"
+   ]
+  },
+  {
+   "name": "v_describe",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request here"
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Contextual Search Results",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  },
+  {
+   "name": "v_has_attachment",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Has attachment",
+   "default": "No"
+  },
+  {
+   "name": "vs_add_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Add attachment",
+   "widget": "EY: Enable public attachment"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_email: mandatory=true",
+    "v_company: mandatory=true",
+    "v_name: mandatory=true",
+    "v_category: mandatory=true",
+    "v_describe: mandatory=true",
+    "v_phone: mandatory=true",
+    "v_has_attachment: visible=false"
+   ]
+  },
+  {
+   "name": "EY: If payments",
+   "when": "IO:v_category=payments^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_payments: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If syndicate",
+   "when": "IO:v_category=sindicate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_syndicate: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate email",
+   "type": "onChange",
+   "on": "2badf73b1b6961d0d1abda4ce54bcb39",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail por regex padrão. Inválido: limpa o campo e mostra erro."
+  },
+  {
+   "name": "EY: Validate Phone",
+   "type": "onChange",
+   "on": "59cdb37b1b6961d0d1abda4ce54bcb9c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone aceitando de 9 a 18 dígitos, sem máscara. Mais permissivo que os validadores de telefone dos outros catálogos."
+  },
+  {
+   "name": "EY: Attach mandatory if payments",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo para certas subcategorias de pagamento."
+  }
+ ]
+}

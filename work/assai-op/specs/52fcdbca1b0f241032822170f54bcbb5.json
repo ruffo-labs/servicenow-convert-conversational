@@ -1,0 +1,362 @@
+{
+ "sys_id": "52fcdbca1b0f241032822170f54bcbb5",
+ "status": "dividido",
+ "motivo": "Cada oferta atualiza um aspecto do afastamento e pede dados diferentes: decisão do INSS (espécie do benefício e data da perícia), agendamento de perícia (data/hora e requerimento), AVT (último dia trabalhado e retorno), correção de cadastro (dias e data correta); recurso judicial e aposentadoria por invalidez usam só os dados básicos.",
+ "vars": {
+  "rh_away_days": {
+   "label": "Quantos dias de afastamento são?"
+  },
+  "rh_last_job_date": {
+   "label": "Qual foi o último dia trabalhado?"
+  },
+  "rh_date_time_expertise": {
+   "label": "Quando é a perícia (data e horário)?"
+  },
+  "rh_info_job_return": {
+   "label": "Se o colaborador é de ponto livre, ele voltou ao trabalho?"
+  },
+  "rh_center_cost_impacted": {
+   "label": "Qual é o centro de custo do colaborador?"
+  },
+  "rh_number_request_expertise": {
+   "label": "Qual é o número do requerimento da perícia?"
+  },
+  "rh_date_expertise_medical": {
+   "label": "Em que data foi realizada a perícia?"
+  },
+  "rh_date_correct_move_away": {
+   "label": "Qual é a data correta do afastamento?"
+  },
+  "rh_store_name": {
+   "label": "Em qual loja o colaborador trabalha?"
+  },
+  "rh_benefit_number": {
+   "label": "Qual é o número do benefício?"
+  },
+  "rh_phone_number": {
+   "label": "Qual é o telefone atualizado do colaborador, com DDD?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_observation_2": "visual",
+  "rh_observation_4": "visual",
+  "rh_observation_6": "visual",
+  "rh_observation_1": "visual",
+  "rh_observation_3": "visual",
+  "rh_observation_5": "visual",
+  "rh_observation": "visual",
+  "rh_container_init": "visual"
+ },
+ "policies": {
+  "050d530e1b0f241032822170f54bcb1d": "remover",
+  "090d530e1b0f241032822170f54bcb11": "remover",
+  "0a9c1d5b1b832450eca40dcbe54bcb5f": "remover",
+  "450d530e1b0f241032822170f54bcb1a": "remover",
+  "4d7cd91b1b832450eca40dcbe54bcbf1": "remover",
+  "850d530e1b0f241032822170f54bcb17": "remover",
+  "8dcc159b1b832450eca40dcbe54bcb40": "remover",
+  "9784ad071bfd861432822170f54bcb43": "remover",
+  "b1f2dfbe1ba20254347221bbe54bcb82": "remover",
+  "c50d530e1b0f241032822170f54bcb14": "remover",
+  "e6b5959b1b432450eca40dcbe54bcb70": "remover"
+ },
+ "itens": [
+  {
+   "name": "Comunicar decisão do INSS sobre afastamento",
+   "short_description": "Enviar a decisão do INSS sobre o afastamento",
+   "description": "Use para enviar a comunicação da decisão do INSS sobre o afastamento de um colaborador. Corresponde à oferta Envio de comunicação de decisão do INSS, atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "Chegou a decisão do INSS do colaborador",
+    "Quero enviar o resultado da perícia do INSS",
+    "O INSS negou o benefício, como informo?",
+    "Preciso comunicar a decisão do INSS",
+    "Enviar carta do INSS de um afastado"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise",
+    "rh_date_correct_move_away"
+   ],
+   "vars": {
+    "especie_do_beneficio_e_b91": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_expertise_medical": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Enviar agendamento de perícia",
+   "short_description": "Enviar dados do agendamento da perícia do INSS",
+   "description": "Use para informar a data, o horário e o requerimento da perícia agendada de um colaborador afastado. Corresponde à oferta Envio de dados de agendamento perícia, atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "O colaborador marcou perícia no INSS",
+    "Preciso enviar a data da perícia",
+    "Quero informar o agendamento da perícia",
+    "Perícia marcada para um afastado, como aviso?",
+    "Enviar número do requerimento da perícia"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_info_job_return",
+    "rh_date_expertise_medical",
+    "rh_date_correct_move_away"
+   ],
+   "vars": {
+    "rh_date_time_expertise": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_number_request_expertise": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Enviar documento de recurso ou processo judicial",
+   "short_description": "Enviar documento de recurso ou processo judicial de afastamento",
+   "description": "Use para enviar documentos de recurso ou de processo judicial ligados ao afastamento de um colaborador. Corresponde à oferta Envio de documento de recurso/processo judicial, atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "Tenho um documento de processo judicial do afastado",
+    "Quero enviar um recurso do INSS",
+    "Como envio documento de recurso?",
+    "Chegou intimação de um colaborador afastado",
+    "Enviar papel do processo judicial do afastamento"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise",
+    "rh_date_expertise_medical",
+    "rh_date_correct_move_away",
+    "rh_benefit_number"
+   ],
+   "vars": {
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar aposentadoria por invalidez",
+   "short_description": "Pedir aposentadoria por invalidez de colaborador afastado",
+   "description": "Use quando um colaborador afastado teve aposentadoria por invalidez concedida ou precisa ser encaminhado para ela. Corresponde à oferta Solicitação de aposentadoria por invalidez, atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "Colaborador se aposentou por invalidez",
+    "Preciso registrar aposentadoria por invalidez",
+    "Como peço a aposentadoria por invalidez?",
+    "O INSS aposentou um afastado por invalidez",
+    "Abrir pedido de aposentadoria por invalidez"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise",
+    "rh_date_expertise_medical",
+    "rh_date_correct_move_away",
+    "rh_benefit_number"
+   ],
+   "vars": {
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Aviso de volta ao trabalho (AVT)",
+   "short_description": "Solicitar o aviso de volta ao trabalho (AVT)",
+   "description": "Use para solicitar o AVT quando o colaborador vai voltar ao trabalho após o afastamento. Corresponde à oferta Solicitação de aviso de volta ao trabalho (AVT), atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "Preciso do AVT do colaborador",
+    "O afastado vai voltar a trabalhar",
+    "Como peço o aviso de volta ao trabalho?",
+    "Colaborador teve alta e volta amanhã",
+    "Emitir AVT"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "especie_do_beneficio_e_b91",
+    "rh_date_time_expertise",
+    "rh_number_request_expertise",
+    "rh_date_correct_move_away"
+   ],
+   "vars": {
+    "rh_last_job_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_info_job_return": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_expertise_medical": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Corrigir cadastro de afastamento",
+   "short_description": "Corrigir dados do cadastro de afastamento",
+   "description": "Use para corrigir dias de afastamento ou a data de início registrados errado no cadastro. Corresponde à oferta Solicitação de correção de cadastro de afastamento, atendida pelo RH - Gestão de Afastados 2.",
+   "frases_exemplo": [
+    "A data do afastamento está errada",
+    "Preciso corrigir os dias de afastamento",
+    "O cadastro do afastado tem erro",
+    "Corrigir cadastro de afastamento",
+    "Lancei a data errada do afastamento"
+   ],
+   "sem_vars": [
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise"
+   ],
+   "vars": {
+    "rh_away_days": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_expertise_medical": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_correct_move_away": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

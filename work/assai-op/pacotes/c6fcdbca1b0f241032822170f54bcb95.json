@@ -1,0 +1,171 @@
+{
+ "sys_id": "c6fcdbca1b0f241032822170f54bcb95",
+ "name": "Acidente do trabalho",
+ "category": "Segurança do Trabalho",
+ "short_description": "Acidente do trabalho",
+ "description": "Acidente do trabalho",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Comunicar Acidente de Trabalho (CAT)",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Segurança"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_hit_part",
+    "rh_team_security_name",
+    "rh_date_time",
+    "rh_store_number",
+    "rh_manager_direct",
+    "rh_store_name",
+    "rh_crm_number",
+    "rh_phone_number",
+    "rh_where",
+    "rh_material_incident",
+    "rh_occurrence_description"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_hit_part",
+   "type": "Texto de Linha Única",
+   "question_text": "Parte do corpo atingida",
+   "choices": []
+  },
+  {
+   "name": "rh_team_security_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome de quem foi informado da equipe da segurança do trabalho",
+   "choices": []
+  },
+  {
+   "name": "rh_date_time",
+   "type": "Data/Hora",
+   "question_text": "Data e horário da ocorrência",
+   "choices": []
+  },
+  {
+   "name": "rh_store_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da Loja (somente o número)",
+   "choices": []
+  },
+  {
+   "name": "rh_manager_direct",
+   "type": "Texto de Linha Única",
+   "question_text": "Gestor imediato que foi informado",
+   "choices": []
+  },
+  {
+   "name": "rh_store_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da Loja (somente letra)",
+   "choices": []
+  },
+  {
+   "name": "rh_crm_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do CRM médico",
+   "choices": []
+  },
+  {
+   "name": "rh_phone_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do impactado (número que consiga falar com colaborador(a))",
+   "choices": []
+  },
+  {
+   "name": "rh_where",
+   "type": "Texto de Linha Única",
+   "question_text": "Onde ocorreu",
+   "choices": []
+  },
+  {
+   "name": "rh_material_incident",
+   "type": "Texto de Linha Única",
+   "question_text": "Agente ou material que ocasionou a ocorrência (se foi máquina, piso, atropelamento etc.)",
+   "choices": []
+  },
+  {
+   "name": "rh_occurrence_description",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição do Ocorrido (detalhar os fatos \"contar a história\")",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "150c2a7d1bb7ec1032822170f54bcb8d",
+   "name": "ALP - OnChange validate Phone Number",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_number."
+  },
+  {
+   "sys_id": "1b20bdd83b2b2a10b28dd047f4e45acd",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "b030f9d83b2b2a10b28dd047f4e45a98",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

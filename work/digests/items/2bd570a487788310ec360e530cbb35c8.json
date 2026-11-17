@@ -1,0 +1,402 @@
+{
+ "sys_id": "2bd570a487788310ec360e530cbb35c8",
+ "name": "CARTÃO COMBUSTÍVEL -  2º VIA, DESBLOQUEIO E ALTERAÇÃO DE LIMITE",
+ "sys_name": "FUEL CARD - DUPLICATE, UNLOCKING AND LIMIT CHANGE",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Frota",
+ "catalogs": "OTC Serviços de Suporte Administrativo, Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Chamado para solicitar segunda via do cartão combustível, desbloqueio de novo cartão e alteração de limite.",
+ "description": "Chamado para solicitar segunda via do cartão combustível, desbloqueio de novo cartão e alteração de limite.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "25",
+   "variaveis_ativas": "28",
+   "bloqueadores": "1",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "25"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": [AOOP][Fill fields according to ZIP]"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @question_attach_finance: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @question_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @question_permanent_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @question_oneoff_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @question_attach_collaborators: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @question_attach_manager: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @question_info_address: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 25 de 25 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 25 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer do cartão combustível (2ª via, desbloqueio e alteração de limite). Grava current.item com o sysparm_id da URL, define requested_by como o usuário logado e requested_for a partir da variável 'question_collaborator'. Define também o grupo de atendimento lendo o sys_id do grupo NCSC Frotas de uma system property, em vez de deixá-lo cravado no script.",
+ "variaveis": [
+  {
+   "name": "question_request_who",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Who is this request for?",
+   "include_none": true,
+   "choices": [
+    "Myself [=myself]",
+    "Someone else [=someone]"
+   ]
+  },
+  {
+   "name": "question_collaborator",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the collaborator",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "question_collaborator_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator name"
+  },
+  {
+   "name": "question_id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Global ID"
+  },
+  {
+   "name": "question_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Corporate Email"
+  },
+  {
+   "name": "question_public",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Public"
+  },
+  {
+   "name": "question_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Duplicate Copy [=duplicate]",
+    "Unlock [=unlock]",
+    "Limit change [=limit_change]"
+   ]
+  },
+  {
+   "name": "question_reissuing_reason",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please state the reason for reissuing the card",
+   "include_none": true,
+   "choices": [
+    "Reading error [=reading_error]",
+    "Loss [=loss]",
+    "Theft [=theft]"
+   ]
+  },
+  {
+   "name": "question_info_address",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Please provide the address for delivery of the new card."
+  },
+  {
+   "name": "question_zip_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ZIP code"
+  },
+  {
+   "name": "question_street",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Street"
+  },
+  {
+   "name": "question_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number"
+  },
+  {
+   "name": "question_complement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complement"
+  },
+  {
+   "name": "question_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "question_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "question_state",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "State"
+  },
+  {
+   "name": "question_card_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please provide the fuel card number you received"
+  },
+  {
+   "name": "question_individual_group",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will the change be made for an individual employee or for a group of employees?",
+   "include_none": true,
+   "choices": [
+    "Group of collaborators [=group]",
+    "Individual collaborator [=individual]"
+   ]
+  },
+  {
+   "name": "question_change_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of change needs to be made",
+   "include_none": true,
+   "choices": [
+    "Permanent change [=permanent]",
+    "One-off addition [=one_off]"
+   ]
+  },
+  {
+   "name": "question_new_limit",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value of the new limit requested"
+  },
+  {
+   "name": "question_value_supplementation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value for Supplementation"
+  },
+  {
+   "name": "question_month_change",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Month for change",
+   "include_none": true,
+   "choices": [
+    "January [=jan]",
+    "February [=feb]",
+    "March [=mar]",
+    "April [=apr]",
+    "May [=may]",
+    "June [=jun]",
+    "July [=jul]",
+    "August [=aug]",
+    "September [=sep]",
+    "October [=oct]",
+    "November [=nov]",
+    "December [=dec]"
+   ]
+  },
+  {
+   "name": "question_permanent_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Access the final change template here for completion"
+  },
+  {
+   "name": "question_oneoff_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Access the one-off change template here to fill out"
+  },
+  {
+   "name": "question_attach_collaborators",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the file with the list of collaborators here"
+  },
+  {
+   "name": "question_attach_manager",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Manager's approval here"
+  },
+  {
+   "name": "question_attach_finance",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Finance approval here"
+  },
+  {
+   "name": "question_request_reason",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please state the reason for requesting a change to the limit"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "[AOOP][Show fields when Request is for Someone else]",
+   "when": "IO:question_request_who=someone^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_collaborator: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields for Individual collaborator and One-off addition]",
+   "when": "IO:question_individual_group!=individual^IO:question_change_type!=one_off^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_month_change: visible=false,mandatory=false,clear",
+    "question_value_supplementation: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when change Type is PERMANENT CHANGE]",
+   "when": "IO:question_change_type=permanent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_permanent_template: visible=true"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when change Type is ONE OFF]",
+   "when": "IO:question_change_type=one_off^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_oneoff_template: visible=true"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when request Type is LIMIT CHANGE]",
+   "when": "IO:question_request_type!=limit_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_request_reason: visible=false,mandatory=false,clear",
+    "question_individual_group: visible=false,mandatory=false,clear",
+    "question_attach_manager: visible=false,mandatory=false,clear",
+    "question_attach_finance: visible=false,mandatory=false,clear",
+    "question_change_type: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields for Group of collaborators]",
+   "when": "IO:question_individual_group!=group^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_attach_collaborators: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when request Type is UNLOCK]",
+   "when": "IO:question_request_type!=unlock^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_card_number: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when request Type is DUPLICATE]",
+   "when": "IO:question_request_type!=duplicate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_state: visible=false,readonly=false,clear",
+    "question_complement: visible=false,clear",
+    "question_number: visible=false,mandatory=false,clear",
+    "question_city: visible=false,readonly=false,clear",
+    "question_neighborhood: visible=false,readonly=false,clear",
+    "question_reissuing_reason: visible=false,mandatory=false,clear",
+    "question_street: visible=false,readonly=false,clear",
+    "question_info_address: visible=false,readonly=false,clear",
+    "question_zip_code: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Default Form Behavior]",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_public: readonly=true",
+    "question_request_who: mandatory=true",
+    "question_request_type: mandatory=true",
+    "question_collaborator_name: readonly=true",
+    "question_id_global: readonly=true",
+    "question_email: readonly=true"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields for Individual collaborator and Permanent change]",
+   "when": "IO:question_individual_group!=individual^IO:question_change_type!=permanent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_new_limit: visible=false,mandatory=false,clear"
+   ]
+  },
+  {
+   "name": "[AOOP][Show Fields when GROUP OF COLLABORATORS]",
+   "when": "IO:question_individual_group!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "[AOOP][Fill Collaborator when Myself]",
+   "type": "onChange",
+   "on": "2818fca087b88310ec360e530cbb350d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trata a escolha 'para mim'. Se o valor for 'myself' e o colaborador selecionado não for o usuário logado, força 'question_collaborator' para o próprio usuário. Se o valor ficar vazio ou for 'someone', libera o campo para escolha manual."
+  },
+  {
+   "name": "[AOOP][Fill fields according to ZIP]",
+   "type": "onChange",
+   "on": "dfc0152c87b0c310ec360e530cbb3574",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o endereço a partir do CEP. Trava rua, bairro, cidade e estado como somente leitura por uma função auxiliar, normaliza o CEP digitado e busca os dados do endereço para preencher os campos automaticamente."
+  },
+  {
+   "name": "[AOOP][Get Public from Collaborator]",
+   "type": "onChange",
+   "on": "318a346087f88310ec360e530cbb3529",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o público do colaborador. Chama o Script Include x_nasm_hr.AoopGetUserInfo, método getHrProfile, via GlideAjax, passando o usuário; o retorno vem em JSON e, quando o perfil é encontrado ('found'), preenche 'question_public' com o valor retornado."
+  }
+ ]
+}

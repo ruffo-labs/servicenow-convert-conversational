@@ -1,0 +1,611 @@
+{
+ "sys_id": "9cf1b94a1b8fe01032822170f54bcb30",
+ "status": "dividido",
+ "motivo": "Cada tipo de declaração pede campos próprios: INSS pede dados de desligamento e empresas, estágio pede dados da faculdade, financiamento pede banco e empresas, instituição de ensino pede nome da instituição e motivo do ADP.",
+ "vars": {
+  "rh_financing_bank": {
+   "label": "Por qual banco será o financiamento?"
+  },
+  "rh_coordinator_name": {
+   "label": "Qual é o nome do coordenador do curso?"
+  },
+  "rh_phone_number": {
+   "label": "Qual é o seu telefone de contato, com DDD?"
+  },
+  "rh_branch": {
+   "label": "Em qual filial você quer receber o documento?"
+  },
+  "rh_store_cost_center": {
+   "label": "Qual é o centro de custo da loja?"
+  },
+  "rh_director_name": {
+   "label": "Qual é o nome do reitor ou diretor?"
+  },
+  "rh_ra": {
+   "label": "Qual é o seu RA (registro acadêmico)?"
+  },
+  "rh_branch_cost_center": {
+   "label": "Qual é o centro de custo da filial?"
+  },
+  "rh_email_for_document": {
+   "label": "Para qual e-mail devemos enviar o documento?"
+  },
+  "rh_institution_name": {
+   "label": "Qual é o nome da instituição de ensino?"
+  },
+  "rh_semester": {
+   "label": "Em qual semestre você está?"
+  },
+  "rh_course_name": {
+   "label": "Qual é o nome do curso?"
+  },
+  "rh_cost_center": {
+   "label": "Qual é o centro de custo do colaborador impactado?"
+  },
+  "rh_responsible_name": {
+   "label": "Quem é o responsável por receber o documento?"
+  },
+  "rh_disconnected_collaborator": {
+   "label": "O colaborador está desligado?"
+  },
+  "rh_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "rh_college_name": {
+   "label": "Qual é o nome da faculdade?"
+  },
+  "rh_shift": {
+   "label": "Em qual turno você estuda?"
+  },
+  "rh_impacted_companies": {
+   "label": "Em quais empresas do grupo o colaborador trabalhou?"
+  },
+  "rh_disconnected_before_1999": {
+   "label": "O ex-colaborador foi desligado antes de 1999?"
+  },
+  "rh_inform_name_company": {
+   "label": "Quais são os nomes das empresas em que ele trabalhou?"
+  },
+  "rh_document_adp_reason": {
+   "label": "Por que você não conseguiu gerar o documento pelo ADP?"
+  }
+ },
+ "remover": {
+  "rh_observation_before_1999": "visual",
+  "rh_information": "oferta_inativa",
+  "rh_observation_rdt": "visual",
+  "rh_observation_complementary_attach": "visual",
+  "rh_bank_account": "oferta_inativa",
+  "rh_rescission_date": "oferta_inativa",
+  "rh_observation_ctps": "visual",
+  "rh_observation_rg_inss": "visual"
+ },
+ "policies": {
+  "074a314e1bcfe01032822170f54bcb03": "remover",
+  "0779baaa1bc7281032822170f54bcbc1": "remover",
+  "0b4afd0e1bcfe01032822170f54bcbf7": "remover",
+  "2f3403621b4b281032822170f54bcb88": "remover",
+  "324afd0e1bcfe01032822170f54bcbe0": "remover",
+  "3e4afd0e1bcfe01032822170f54bcbeb": "remover",
+  "474a314e1bcfe01032822170f54bcb00": "remover",
+  "4b4afd0e1bcfe01032822170f54bcbf4": "remover",
+  "4d7ee0a21b1fa81032822170f54bcb6b": "remover",
+  "6214aaa21b47281032822170f54bcb83": "remover",
+  "724afd0e1bcfe01032822170f54bcbdd": "remover",
+  "7e4afd0e1bcfe01032822170f54bcbe8": "remover",
+  "874afd0e1bcfe01032822170f54bcbfd": "remover",
+  "9e19be2a1bc7281032822170f54bcb9a": "remover",
+  "b24afd0e1bcfe01032822170f54bcbd7": "remover",
+  "b24afd0e1bcfe01032822170f54bcbda": "remover",
+  "ba4afd0e1bcfe01032822170f54bcbf1": "remover",
+  "be4afd0e1bcfe01032822170f54bcbe5": "remover",
+  "c34a314e1bcfe01032822170f54bcb06": "remover",
+  "c74afd0e1bcfe01032822170f54bcbfa": "remover",
+  "e3f44f0b1bd3605032822170f54bcbdf": "remover",
+  "fa4afd0e1bcfe01032822170f54bcbee": "remover",
+  "fe4afd0e1bcfe01032822170f54bcbe2": "remover",
+  "nova_g0_3": {
+   "short_description": "ALP - Telefone de contato (com DDD)",
+   "conditions": "rh_disconnected_collaborator=yes",
+   "actions": {
+    "rh_phone_number": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Declaração para INSS (aposentadoria)",
+   "short_description": "Declaração de comprovação de vínculo para aposentadoria no INSS.",
+   "description": "Use para pedir a declaração de comprovação de vínculo para o INSS, necessária à aposentadoria. Atende colaboradores ativos e ex-colaboradores, inclusive desligados antes de 1999. Corresponde à oferta \"Solicitação de declaração de comprovação de vínculo para INSS (aposentadoria)\".",
+   "frases_exemplo": [
+    "Preciso de declaração de vínculo para me aposentar",
+    "Como peço a declaração do INSS pra aposentadoria?",
+    "Preciso comprovar vínculo para o INSS",
+    "Ex-colaborador precisa de declaração para aposentadoria"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_branch": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_branch_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_responsible_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_disconnected_collaborator": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_impacted_companies": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_disconnected_before_1999": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_inform_name_company": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Declaração de desconto do teto do INSS",
+   "short_description": "Declaração de desconto de contribuição do teto máximo do INSS.",
+   "description": "Use quando precisar da declaração de desconto de contribuição do teto máximo do INSS, para um mês de referência. Corresponde à oferta \"Solicitação de declaração de desconto de contribuição do teto máximo do INSS\".",
+   "frases_exemplo": [
+    "Preciso da declaração de desconto do teto do INSS",
+    "Quero comprovar que contribuí o teto do INSS",
+    "Como peço declaração de contribuição máxima do INSS?",
+    "Declaração de INSS de um mês específico"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração de estágio",
+   "short_description": "Declaração de estágio com dados da faculdade e do curso.",
+   "description": "Use para solicitar a declaração de estágio. Informe dados do curso e da faculdade, como coordenador, reitor ou diretor, RA, semestre e turno. Corresponde à oferta \"Solicitação de declaração de estágio\".",
+   "frases_exemplo": [
+    "Preciso de declaração de estágio",
+    "A faculdade pediu uma declaração de estágio",
+    "Como peço comprovante de estágio?",
+    "Declaração de estagiário para a universidade",
+    "Quero declaração de estágio com meu RA"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_branch_cost_center",
+    "rh_email_for_document",
+    "rh_institution_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_coordinator_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_director_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_ra": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_semester": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_course_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_college_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_shift": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração de horário de trabalho",
+   "short_description": "Declaração de horário de trabalho.",
+   "description": "Use para pedir a declaração de horário de trabalho, informando a filial, o centro de custo e o motivo pelo qual não foi possível gerar o documento no ADP. Corresponde à oferta \"Solicitação de declaração de horário\".",
+   "frases_exemplo": [
+    "Preciso de declaração do meu horário de trabalho",
+    "Como peço declaração de horário?",
+    "Preciso comprovar meu horário na empresa",
+    "Não consegui gerar a declaração de horário no ADP"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company"
+   ],
+   "vars": {
+    "rh_branch": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_document_adp_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração de trabalho ou de vínculo",
+   "short_description": "Declaração de trabalho ou de vínculo para colaborador ativo.",
+   "description": "Use para pedir declaração de trabalho para colaborador ativo ou declaração de vínculo. Atende as ofertas \"Solicitação de declaração de trabalho para colaborador ativo\" e \"Solicitação de declaração de vínculo\", com e-mail para envio e motivo da solicitação.",
+   "frases_exemplo": [
+    "Preciso de declaração de que trabalho na empresa",
+    "Quero uma declaração de vínculo",
+    "Como peço comprovante de vínculo empregatício?",
+    "Preciso de declaração de trabalho para o banco",
+    "Declaração para comprovar que sou colaborador"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company"
+   ],
+   "vars": {
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_document_adp_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração de transferência de filial",
+   "short_description": "Declaração de transferência de filial.",
+   "description": "Use para solicitar a declaração de transferência de filial. Informe o e-mail para envio e o centro de custo do impactado. Corresponde à oferta \"Solicitação de declaração de transferência de filial\".",
+   "frases_exemplo": [
+    "Preciso de declaração de transferência de filial",
+    "Fui transferido de loja e preciso do documento",
+    "Como peço declaração de transferência?",
+    "Declaração de mudança de filial"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração para financiamento de imóvel",
+   "short_description": "Declaração para financiamento de imóvel junto ao banco.",
+   "description": "Use para pedir a declaração para financiamento de imóvel. Informe o banco do financiamento, o centro de custo da loja e as empresas em que o impactado trabalhou. Corresponde à oferta \"Solicitação de declaração para financiamento de imóvel\".",
+   "frases_exemplo": [
+    "Preciso de declaração para financiar minha casa",
+    "O banco pediu declaração para financiamento de imóvel",
+    "Como peço declaração para financiamento?",
+    "Declaração para financiamento imobiliário"
+   ],
+   "sem_vars": [
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_financing_bank": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_impacted_companies": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "Declaração para instituição de ensino",
+   "short_description": "Declaração para apresentar em escola ou faculdade.",
+   "description": "Use para solicitar a declaração para instituição de ensino, informando o nome da instituição, o e-mail para envio e o motivo de não ter gerado o documento no ADP. Corresponde à oferta \"Solicitação de declaração para instituição de ensino\".",
+   "frases_exemplo": [
+    "Preciso de declaração para a faculdade",
+    "A escola pediu um comprovante de trabalho",
+    "Declaração para matrícula do meu filho",
+    "Como peço declaração para instituição de ensino?"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_disconnected_collaborator",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company"
+   ],
+   "vars": {
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_institution_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_document_adp_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  },
+  {
+   "name": "PPP (Perfil Profissiográfico Previdenciário)",
+   "short_description": "Solicitação de PPP, para colaborador ativo ou desligado.",
+   "description": "Use para solicitar o PPP (Perfil Profissiográfico Previdenciário), informando se o colaborador está desligado. O pedido é atendido pelo RH - Segurança, pela oferta \"Solicitação de PPP (Perfil Profissiográfico Previdenciário)\".",
+   "frases_exemplo": [
+    "Preciso do meu PPP",
+    "Como solicito o Perfil Profissiográfico Previdenciário?",
+    "Ex-colaborador quer o PPP",
+    "Preciso do PPP para aposentadoria",
+    "Pedido de PPP"
+   ],
+   "sem_vars": [
+    "rh_financing_bank",
+    "rh_coordinator_name",
+    "rh_phone_number",
+    "rh_branch",
+    "rh_store_cost_center",
+    "rh_director_name",
+    "rh_ra",
+    "rh_branch_cost_center",
+    "rh_email_for_document",
+    "rh_institution_name",
+    "rh_semester",
+    "rh_course_name",
+    "rh_cost_center",
+    "rh_responsible_name",
+    "rh_reference_month",
+    "rh_college_name",
+    "rh_shift",
+    "rh_impacted_companies",
+    "rh_disconnected_before_1999",
+    "rh_inform_name_company",
+    "rh_document_adp_reason"
+   ],
+   "vars": {
+    "rh_disconnected_collaborator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_3"
+   ]
+  }
+ ]
+}

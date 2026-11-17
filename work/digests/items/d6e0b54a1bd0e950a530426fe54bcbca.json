@@ -1,0 +1,258 @@
+{
+ "sys_id": "d6e0b54a1bd0e950a530426fe54bcbca",
+ "name": "Solicitação de Pagamento Sindical (taxas e boletos)",
+ "sys_name": "Union Payment Request (fees and slips)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Pagamento de boletos sindicais",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "15",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_name_establishment_store_v2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @legenda_attention: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_full_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 9 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_type_of_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of payment",
+   "include_none": true,
+   "choices": [
+    "Union Ticket [=union_ticket]",
+    "Sunday Worked [=sunday_worked]",
+    "Holiday Rate [=holyday]"
+   ]
+  },
+  {
+   "name": "v_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Company",
+   "reference": "core_company",
+   "ref_qual": "u_brandLIKENatura^ORu_brandLIKEAvon^ORu_brandLIKETBS^ORu_brandLIKEAesop^EQ"
+  },
+  {
+   "name": "v_name_establishment_store_v2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name of the Establishment / Store",
+   "reference": "cmn_location",
+   "ref_qual": "javascript:'company='+current.variables.v_company"
+  },
+  {
+   "name": "v_name_establishment_store",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name of the Establishment / Store"
+  },
+  {
+   "name": "how_many_holidays_would_you_like_to_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "How many holidays would you like to request?",
+   "include_none": true,
+   "choices": [
+    "4",
+    "5",
+    "2",
+    "3",
+    "1"
+   ]
+  },
+  {
+   "name": "how_many_sundays_would_you_like_to_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "How many Sundays would you like to request?",
+   "include_none": true,
+   "choices": [
+    "3 [=v_3]",
+    "1 [=v_1]",
+    "5 [=v_5]",
+    "2 [=v_2]",
+    "4 [=v_4]"
+   ]
+  },
+  {
+   "name": "v_number_of_employees",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of employees"
+  },
+  {
+   "name": "legenda_attention",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_type_of_union_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Union Payment",
+   "include_none": true,
+   "choices": [
+    "Assistance Contribution [=assistance]",
+    "Union Contribution [=union]",
+    "Business Contribution [=business]",
+    "Confederative Contribution [=confederative]",
+    "Union Dues [=union_dues]",
+    "Others [=other]"
+   ]
+  },
+  {
+   "name": "v_due_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Due date"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "d52bb384873a5a50ec360e530cbb35db",
+   "name": "Selecione a data e o nome do colaborador",
+   "order": "900",
+   "perguntas": [
+    "vs_data (Data): Date",
+    "vs_full_name (Referência): Full name",
+    "vs_employee_number (Texto de Linha Única): Employee number",
+    "vs_cpf (Texto de Linha Única): CPF"
+   ]
+  },
+  {
+   "sys_id": "39f57d061b54e950a530426fe54bcb24",
+   "name": "(+)Adicionar Datas",
+   "order": "900",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory if Holiday",
+   "when": "IO:v_type_of_payment=holyday^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_more_holiday_dates: visible=true,mandatory=true",
+    "v_holiday_date: visible=true,mandatory=true",
+    "how_many_holidays_would_you_like_to_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory if Sunday or Holiday and more date is Yes",
+   "when": "IO:v_type_of_payment=holyday^IO:v_more_holiday_dates=Yes^NQIO:v_type_of_payment=sunday_worked^IO:v_more_sunday=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_add_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory if Union",
+   "when": "IO:v_type_of_payment=union_ticket^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_due_date: visible=true",
+    "v_type_of_union_payment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field more colab",
+   "when": "IO:v_type_of_payment=sunday_worked^ORIO:v_type_of_payment=holyday^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_attention: visible=true",
+    "agregar_fechas: visible=true",
+    "selecione_a_data_e_o_nome_do_colaborador: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory if Sunday and Holiday",
+   "when": "IO:v_type_of_payment=sunday_worked^ORIO:v_type_of_payment=holyday^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_number_of_employees: visible=true,mandatory=true",
+    "v_name_establishment_store_v2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory if Sunday worked",
+   "when": "IO:v_type_of_payment=sunday_worked^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "how_many_sundays_would_you_like_to_request: visible=true,mandatory=true",
+    "v_more_sunday: visible=true,mandatory=true",
+    "v_date_of_sunday_worked: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide 'Name of the Establishment / Store' Single Line text",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name_establishment_store: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company: visible=true,mandatory=true",
+    "v_type_of_payment: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY:  Validate regex",
+   "type": "onChange",
+   "on": "c8853d021b54e950a530426fe54bcba5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o campo por regex numérica."
+  },
+  {
+   "name": "EY: Replicate value",
+   "type": "onChange",
+   "on": "b865419487369a50ec360e530cbb3546",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que replica o valor de um campo em outro — copia o nome da loja para o campo espelho."
+  }
+ ]
+}

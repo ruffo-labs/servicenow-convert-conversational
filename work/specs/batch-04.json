@@ -1,0 +1,2077 @@
+[
+  {
+    "sys_id": "de3a6bbe1b4fb910a530426fe54bcb8c",
+    "name": "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica",
+    "status": "analise_humana",
+    "motivo": "Formulário de 142 perguntas, 90 UI policies, 21 client scripts (um onSubmit sem VA Supported que valida checkboxes de termos), widgets Custom (mrv_macro_widget de dependentes, benefit_description*) e 14 variable sets, incluindo 10 'Seção N' com anexos por dependente. A divisão sugerida por registration_option (1 Adesão, 2 Inclusão de dependente, 3 Exclusão de dependente) exige decidir antes como coletar dependentes sem o widget multi-row, como validar termos e documentos por dependente (flow em vez de client script) e onde calcular a elegibilidade exibida hoje por HTML. Sem essas decisões, a conversão não é segura; manter o original até o redesenho.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "c93db36a1bbfd194a530426fe54bcb02",
+    "name": "Atendimento Saúde",
+    "status": "dividido",
+    "motivo": "O select v_what_is_the_subject_of_your_request (valores confirmados pelas choices) junta 11 assuntos com perguntas disjuntas e 29 perguntas no total. Divide-se em 6 itens pelos assuntos que geram trabalho (1, 3, 7, 8, 9, 11) e 1 item de dúvidas (2, 4, 5, 6, 10) que mantém o assunto como pergunta. Os labels informativos vão para as descrições; como a Select Box continua com as 11 opções no item de dúvidas, avaliar esconder as opções 1, 3, 7, 8, 9 e 11 nele.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_benefits",
+        "motivo": "Container Start (layout)."
+      },
+      {
+        "name": "v_label_you_can_request_reimbursements",
+        "motivo": "Label informativo; orientação (pedir reembolso pelo app/site Bradesco Saúde, processo 100% digital, central 24h) movida para a descrição de 'Reembolso do plano de saúde'."
+      },
+      {
+        "name": "v_download_reembolso",
+        "motivo": "Rich Text informativo (download do checklist de reembolso); orientação movida para a descrição de 'Reembolso do plano de saúde'."
+      },
+      {
+        "name": "v_label_procedure_authorizations",
+        "motivo": "Label informativo; prazos de autorização (7 dias úteis exames complexos, 21 cirurgias) movidos para a descrição de 'Autorização de procedimento no plano de saúde'."
+      },
+      {
+        "name": "v_label_medial_dental_card",
+        "motivo": "Label informativo; orientação da carteirinha digital movida para a descrição de 'Dúvidas sobre o plano de saúde e odontológico'."
+      },
+      {
+        "name": "v_label_register_download",
+        "motivo": "Rich Text informativo; regras de inscrição do Programa Gestante movidas para a descrição de 'Inscrição no Programa Gestante'."
+      },
+      {
+        "name": "v_download_termo_anuencia",
+        "motivo": "Rich Text informativo (download do termo de anuência); orientação movida para a descrição de 'Inscrição no Programa Gestante'."
+      },
+      {
+        "name": "v_label_employees_band",
+        "motivo": "Label informativo; regra de check-up (banda G ou acima, Einstein e Fleury) movida para a descrição de 'Dúvidas sobre o plano de saúde e odontológico'."
+      },
+      {
+        "name": "v_label_request_prior",
+        "motivo": "Label informativo; orientação de prévia de reembolso (pedido médico, orçamento com TUSS, até 5 dias úteis) movida para a descrição de 'Prévia de reembolso do plano de saúde'."
+      },
+      {
+        "name": "v_label_copayment_drawing",
+        "motivo": "Label informativo; tabela de coparticipação movida para a descrição de 'Dúvidas sobre o plano de saúde e odontológico'."
+      },
+      {
+        "name": "v_label_sending_information",
+        "motivo": "Label informativo; prazo de 72 horas úteis da carta movido para a descrição de 'Solicitar carta do plano de saúde para viagem internacional'."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar carta do plano de saúde para viagem internacional",
+        "short_description": "Carta da operadora comprovando a cobertura do plano de saúde para viagem ao exterior.",
+        "description": "Use para pedir a carta do plano de saúde para viagem internacional (comprovante de cobertura para visto ou embarque), em espanhol, inglês ou português. A carta é emitida em até 72 horas úteis após o envio das informações. Não use para seguro-viagem corporativo.",
+        "frases_exemplo": [
+          "preciso da carta do plano para viajar",
+          "vou pra Europa e o consulado pediu carta do convênio",
+          "carta de viagem do plano de saúde em inglês",
+          "comprovante do plano para visto"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "3"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_full_name",
+            "order": 3400,
+            "conversational_label": "Para quem é a carta? Pode ser você ou um dependente.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_cpf",
+            "order": 3500,
+            "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do viajante?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_email",
+            "order": 3600,
+            "conversational_label": "Qual e-mail para receber a carta?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_telephone",
+            "order": 3700,
+            "conversational_label": "Qual telefone com DDD para contato?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_destination_country",
+            "order": 3800,
+            "conversational_label": "Para qual país você vai viajar?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_shipment_date",
+            "order": 3900,
+            "conversational_label": "Qual a data de ida?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "return_date",
+            "order": 3950,
+            "conversational_label": "E a data de volta?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_full_home_address",
+            "order": 4000,
+            "conversational_label": "Qual o endereço residencial completo?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_incase_companion",
+            "order": 4100,
+            "conversational_label": "Algum acompanhante vai junto? Se sim, informe nome completo e CPF."
+          },
+          {
+            "name": "v_inform_the_desired_language_in_the_letter",
+            "order": 4200,
+            "conversational_label": "Em qual idioma você precisa da carta: espanhol, inglês ou português?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "01957bf01b042158d1abda4ce54bcb78",
+            "name": "EY: End Date cannot be before Start Date",
+            "ajuste": "Nenhum: já é VA Supported (onChange de return_date)."
+          },
+          {
+            "sys_id": "1d0c28b71b7799d4d1abda4ce54bcb3c",
+            "name": "EY: Fill CPF Field",
+            "ajuste": "Nenhum: já é VA Supported (preenche v_cpf a partir de v_full_name)."
+          },
+          {
+            "sys_id": "e443a0c71bf35994a530426fe54bcbe4",
+            "name": "EY: fill field email",
+            "ajuste": "Nenhum: já é VA Supported (preenche v_email a partir de v_full_name)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY:Data of Travel Letter If Subject is  Travel Letter",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; visible/mandatory direto nas variáveis do item."
+          },
+          {
+            "origem": "EY: Subject Mandatory",
+            "tipo": "ui_policy",
+            "como": "Assunto fixado (3) em variaveis_fixas."
+          }
+        ]
+      },
+      {
+        "name": "Autorização de procedimento no plano de saúde",
+        "short_description": "Acompanhar ou contestar a autorização de exame complexo ou cirurgia pela operadora.",
+        "description": "Use quando a operadora ainda não liberou ou negou um exame complexo ou cirurgia. A autorização é pedida pelo prestador direto à operadora e o prazo conta a partir do recebimento por ela: exames complexos, 7 dias úteis; cirurgias, 21 dias úteis. Não use para reembolso.",
+        "frases_exemplo": [
+          "o plano não autorizou minha cirurgia",
+          "minha ressonância está pendente de liberação",
+          "autorização do convênio está demorando",
+          "negaram meu exame"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "1"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_procedure_name",
+            "order": 800,
+            "conversational_label": "Qual procedimento ou exame precisa de autorização?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_request_date",
+            "order": 900,
+            "conversational_label": "Em que data o pedido foi enviado à operadora?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_procedure_date",
+            "order": 1000,
+            "conversational_label": "Para quando o procedimento está marcado?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "V_provider",
+            "order": 1100,
+            "conversational_label": "Qual o hospital, clínica ou médico que vai fazer?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Conte o que aconteceu com a autorização."
+          },
+          {
+            "name": "v_attachment",
+            "order": 4400,
+            "conversational_label": "Quer anexar o pedido médico ou a negativa?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: If Subject is Procedure Authorizations",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; visible/mandatory direto nas variáveis; label de prazos vai para a descrição."
+          },
+          {
+            "origem": "EY: Make description Visible",
+            "tipo": "ui_policy",
+            "como": "v_description visível por padrão neste item (assunto 1 estava na condição)."
+          }
+        ]
+      },
+      {
+        "name": "Reembolso do plano de saúde",
+        "short_description": "Problemas ou pedido de reembolso de consultas, exames e terapias do plano de saúde.",
+        "description": "Use para pedir ou reclamar de reembolso do plano médico (consulta, exame, cirurgia, internação, psicoterapia, fonoaudiologia, fisioterapia, terapia ocupacional, acupuntura, RPG e nutrição). Em geral o reembolso é pedido direto no app ou site da Bradesco Saúde, em processo 100% digital, sem documentação original; a central 24h é (11) 4004-2700. Use este item quando não conseguir por lá ou houver divergência, anexando os comprovantes. Para saber o valor antes do procedimento, use 'Prévia de reembolso do plano de saúde'.",
+        "frases_exemplo": [
+          "meu reembolso da psicóloga não caiu",
+          "reembolso da consulta foi negado",
+          "quero pedir reembolso do exame",
+          "o valor do reembolso veio errado"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "11"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Descreva o atendimento (tipo, data e valor) e o problema com o reembolso.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_attachment",
+            "order": 4400,
+            "conversational_label": "Anexe o recibo ou a nota fiscal e o pedido médico.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY:  If Subject is Refund Request",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; v_attachment mandatory direto; labels de orientação vão para a descrição."
+          },
+          {
+            "origem": "EY: Make description Mandatory",
+            "tipo": "ui_policy",
+            "como": "v_description mandatory direto (assunto 11 estava na condição)."
+          }
+        ]
+      },
+      {
+        "name": "Prévia de reembolso do plano de saúde",
+        "short_description": "Saber quanto o plano vai reembolsar antes de fazer um procedimento.",
+        "description": "Use para pedir a prévia (cálculo antecipado) do valor de reembolso de um procedimento. Normalmente ela é pedida no site ou app da Bradesco Seguros (Serviços > Calcular Valor de Reembolso), com o pedido médico e o orçamento do prestador carimbado e assinado, com nome do paciente, códigos TUSS e valores unitários de cada membro da equipe. Para parto, informe separadamente os honorários de cesárea e parto normal e se é gestação única ou múltipla. O cálculo leva até 5 dias úteis e não é feito enquanto houver autorização pendente.",
+        "frases_exemplo": [
+          "quero saber quanto vou receber de reembolso",
+          "prévia de reembolso de cirurgia",
+          "cálculo do reembolso do parto",
+          "quanto o plano devolve dessa consulta"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "9"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Qual procedimento você quer que tenha a prévia calculada?"
+          },
+          {
+            "name": "v_attachment",
+            "order": 4400,
+            "conversational_label": "Anexe o pedido médico e o orçamento do prestador."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Description , Attachment and Label If Subject is Refund Preview",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; v_attachment visível por padrão; label vai para a descrição."
+          },
+          {
+            "origem": "EY: Make description Visible",
+            "tipo": "ui_policy",
+            "como": "v_description visível por padrão neste item."
+          }
+        ]
+      },
+      {
+        "name": "Inscrição no Programa Gestante",
+        "short_description": "Inscrever-se ou tirar dúvidas sobre o programa de acompanhamento de gestantes do plano de saúde.",
+        "description": "Use para se inscrever no Programa Gestante do plano de saúde ou tirar dúvidas sobre ele. Para a inscrição, baixe o formulário da sua operadora (links no e-mail) e anexe junto com o termo de anuência e um relatório médico atualizado com idade gestacional (em semanas) e data provável do parto; cartão pré-natal e laudos de exame não substituem o relatório. A inscrição é concluída em até 3 dias após o recebimento da documentação completa e dá isenção de coparticipação em consultas ginecológicas e exames pré-natais (não retroativa).",
+        "frases_exemplo": [
+          "estou grávida e quero entrar no programa gestante",
+          "inscrição programa gestante",
+          "dúvida sobre o programa de gestante do plano",
+          "minha esposa está grávida, tem algum programa?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "8"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_type_of_care2",
+            "order": 2100,
+            "conversational_label": "Você quer se inscrever ou tirar uma dúvida sobre o programa?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_attach_the_term_of_consent_and_the_medical_report",
+            "order": 2200,
+            "conversational_label": "Anexe o termo de anuência e o relatório médico."
+          },
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Qual é a sua dúvida?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "0822d2d31b7f91d4d1abda4ce54bcb5e",
+            "short_description": "Inscrição: anexar termo de anuência e relatório médico",
+            "on_load": true,
+            "conditions": "v_type_of_care2=2",
+            "actions": [
+              {
+                "variable": "v_attach_the_term_of_consent_and_the_medical_report",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "0f51d8841b970e10d1abda4ce54bcbbf",
+            "short_description": "Dúvida: descrever a dúvida",
+            "on_load": true,
+            "conditions": "v_type_of_care2=1",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Label Register and Type of Care2 Visible if Maternity Program enrollment",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; v_type_of_care2 mandatory direto; labels vão para a descrição."
+          },
+          {
+            "origem": "EY: Make description Mandatory",
+            "tipo": "ui_policy",
+            "como": "Mandatory de v_type_of_care2=1 unido à policy 'Dúvida: descrever a dúvida'."
+          },
+          {
+            "origem": "EY: Type of care is Doubts ",
+            "tipo": "ui_policy",
+            "como": "Removida: não tinha ações."
+          }
+        ]
+      },
+      {
+        "name": "Manter filho universitário no plano de saúde",
+        "short_description": "Extensão do plano para dependente que atingiu a idade limite e está na faculdade.",
+        "description": "Use quando seu filho atingiu a idade limite do plano de saúde e continua estudando, para mantê-lo como dependente. É preciso anexar o comprovante de matrícula da faculdade. Não use para incluir um dependente novo.",
+        "frases_exemplo": [
+          "meu filho fez 21 anos e está na faculdade",
+          "extensão do plano para filho universitário",
+          "como manter meu filho no convênio depois da maioridade",
+          "maioridade de dependente no plano"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "value": "7"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_attach_university_proof",
+            "order": 2800,
+            "conversational_label": "Anexe o comprovante de matrícula da faculdade.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Qual o nome do seu filho e o curso que ele faz?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Attachment proof and Description If Subject is Plan extension for older children",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; v_attach_university_proof mandatory direto."
+          },
+          {
+            "origem": "EY: Make description Visible",
+            "tipo": "ui_policy",
+            "como": "v_description visível por padrão neste item."
+          }
+        ]
+      },
+      {
+        "name": "Dúvidas sobre o plano de saúde e odontológico",
+        "short_description": "Rede credenciada, carteirinha, coparticipação, check-up e outras dúvidas do plano de saúde e odontológico.",
+        "description": "Use para dúvidas gerais sobre o plano médico ou odontológico: rede credenciada (especialidade ou procedimento com pedido médico), carteirinha (é digital, no app da operadora, com acesso às dos dependentes), coparticipação (consultas, exames simples e terapias 25%, pronto-socorro 30%, cobrada em folha em até 3 meses; extrato no app da operadora), check-up executivo (banda G ou acima, anual no Einstein ou Fleury) e outros temas sem item específico. Para carta de viagem, autorização de procedimento, reembolso, prévia de reembolso, Programa Gestante ou filho universitário, use os itens próprios. Para aderir, incluir ou excluir dependentes, use o item de adesão ao plano.",
+        "frases_exemplo": [
+          "qual hospital atende meu plano",
+          "como pego minha carteirinha do convênio",
+          "quanto pago de coparticipação",
+          "tenho direito a check-up?",
+          "dúvida sobre o plano odontológico"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_what_is_the_subject_of_your_request",
+            "order": 300,
+            "conversational_label": "Sua dúvida é sobre rede credenciada, carteirinha, coparticipação, check-up ou outro assunto do plano?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_type_of_care",
+            "order": 1600,
+            "conversational_label": "Você procura atendimento por especialidade médica ou para um procedimento com pedido médico?"
+          },
+          {
+            "name": "v_region",
+            "order": 1800,
+            "conversational_label": "Em qual cidade ou região você procura atendimento?"
+          },
+          {
+            "name": "v_description",
+            "order": 4300,
+            "conversational_label": "Descreva sua dúvida."
+          },
+          {
+            "name": "v_attachment",
+            "order": 4400,
+            "conversational_label": "Quer anexar algum documento?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "1d792b381b002158d1abda4ce54bcb0f",
+            "short_description": "EY: VS Requester Data Mandatory",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_solicitation_to_whom",
+                "mandatory": "true",
+                "visible": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c59f9f8b1b3f1d94a530426fe54bcbe6",
+            "short_description": "Rede credenciada: perguntar tipo de atendimento",
+            "on_load": true,
+            "conditions": "v_what_is_the_subject_of_your_request=2",
+            "actions": [
+              {
+                "variable": "v_type_of_care",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "4328b1931bb791d4d1abda4ce54bcb12",
+            "short_description": "Rede credenciada: perguntar região",
+            "on_load": true,
+            "conditions": "v_type_of_care=1^ORv_type_of_care=2^v_what_is_the_subject_of_your_request=2",
+            "actions": [
+              {
+                "variable": "v_region",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "4d4abd9b1bb791d4d1abda4ce54bcba0",
+            "short_description": "Procedimento com pedido médico: anexo obrigatório",
+            "on_load": true,
+            "conditions": "v_type_of_care=2^v_what_is_the_subject_of_your_request=2",
+            "actions": [
+              {
+                "variable": "v_attachment",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "0f51d8841b970e10d1abda4ce54bcbbf",
+            "short_description": "Mostrar descrição",
+            "on_load": true,
+            "conditions": "v_what_is_the_subject_of_your_request=4^ORv_what_is_the_subject_of_your_request=5^ORv_what_is_the_subject_of_your_request=6^ORv_what_is_the_subject_of_your_request=10^ORv_type_of_care=1",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "fa2250081b970e10d1abda4ce54bcb2b",
+            "short_description": "Check-up ou dúvidas gerais: descrição obrigatória",
+            "on_load": true,
+            "conditions": "v_what_is_the_subject_of_your_request=5^ORv_what_is_the_subject_of_your_request=6",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "ignore",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "1247961f1bbf91d4d1abda4ce54bcb76",
+            "short_description": "Dúvidas gerais: permitir anexo",
+            "on_load": true,
+            "conditions": "v_what_is_the_subject_of_your_request=6",
+            "actions": [
+              {
+                "variable": "v_attachment",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Subject Mandatory",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em v_what_is_the_subject_of_your_request."
+          },
+          {
+            "origem": "EY: Drawing  Visible If Subject is Co-participation",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava label; tabela de coparticipação vai para a descrição."
+          },
+          {
+            "origem": "EY: Description and Label  If Subject is Checkup",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava label; regra de check-up vai para a descrição."
+          },
+          {
+            "origem": "EY: If Subject is  Card number request",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava label; orientação da carteirinha vai para a descrição."
+          },
+          {
+            "origem": "EY: Description Visible if Medical Speciality ",
+            "tipo": "ui_policy",
+            "como": "Removida: não tinha ações (a condição já está em 'Mostrar descrição')."
+          },
+          {
+            "origem": "EY: Make description Visible / EY: Make description Mandatory",
+            "tipo": "ui_policy",
+            "como": "Condições reduzidas aos assuntos deste item (2, 4, 5, 6, 10); IN reescrito como OR."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "28bf7cb5879847d0ec360e530cbb35db",
+    "name": "Registro de Atendimento (CSC Partner/Balcão)",
+    "status": "analise_humana",
+    "motivo": "Formulário interno dos atendentes do CSC Partner e do balcão (não é pedido do colaborador), com 41 perguntas, reference qualifiers dinâmicos em cascata (macro torre > torre > gestor, categoria > subcategoria) e grupos de checkboxes. A recomendação é mantê-lo como formulário (make_item_non_conversational = true); a pessoa responsável precisa confirmar que ele não deve aparecer na conversa do Virtual Agent.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "b3f428323b801610924d0247f4e45aa2",
+    "name": "Solicitações de pagamento antecipado",
+    "status": "conversacional",
+    "motivo": "Com as choices vistas, v_type_of_request tem só 2 opções (pedir ou cancelar) e o fluxo real é de 2 a 3 perguntas, por isso não precisa dividir. As policies onLoad de ocultar viram atributo, os show/hide por script viram policy e os Rich Text (regras 50%/20%, mensal, cancelamento) vão para a descrição. v_amount continua fora da conversa (read-only, sem origem de valor clara: confirmar).",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_request_50",
+        "motivo": "Rich Text Label informativo (regra de adiantamento de 50%); texto vai para a descrição do item."
+      },
+      {
+        "name": "v_request_20",
+        "motivo": "Rich Text Label informativo (regra de adiantamento de 20%); texto vai para a descrição do item."
+      },
+      {
+        "name": "v_cancel_advance_payment",
+        "motivo": "Rich Text Label informativo sobre cancelamento; texto vai para a descrição do item."
+      },
+      {
+        "name": "v_once_advance_payment",
+        "motivo": "Rich Text Label informativo sobre adiantamento único; texto vai para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar ou cancelar adiantamento salarial (Chile)",
+        "short_description": "Pedir adiantamento de salário (anticipo), definir se será mensal ou cancelar um adiantamento, no Chile.",
+        "description": "Use para pedir adiantamento de salário (anticipo), escolhendo se ele será pago todo mês, ou para cancelar um adiantamento que você já recebe. Disponível para colaboradores do Chile. As regras de percentual (50% ou 20% do salário) e de pagamento mensal ou único estão no material de apoio do RH. Não use para empréstimos, reembolso de despesas ou dúvidas de folha de pagamento.",
+        "frases_exemplo": [
+          "quero um adiantamento do salário",
+          "necesito un anticipo de sueldo",
+          "quero cancelar meu adiantamento mensal",
+          "pedir anticipo todos os meses",
+          "cancelar anticipo"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_type_of_request",
+            "order": 700,
+            "conversational_label": "Você quer pedir um adiantamento ou cancelar um adiantamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_amount",
+            "order": 750,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_advance_payment",
+            "order": 850,
+            "conversational_label": "Você quer que o adiantamento seja pago todo mês?",
+            "overrides": {
+              "hidden": true
+            }
+          },
+          {
+            "name": "v_detail_field",
+            "order": 950,
+            "conversational_label": "Quer acrescentar algum detalhe sobre o pedido?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "ac68a6571b48d610514cbaef4b4bcbc0",
+            "short_description": "Pedido de adiantamento: mostrar valor (somente leitura)",
+            "on_load": true,
+            "conditions": "v_type_of_request=request_advance_payment",
+            "actions": [
+              {
+                "variable": "v_amount",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "short_description": "Pedido de adiantamento: perguntar se é mensal",
+            "on_load": true,
+            "conditions": "v_type_of_request=request_advance_payment",
+            "actions": [
+              {
+                "variable": "v_advance_payment",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "5401fc763bc01610924d0247f4e45ad4",
+            "short_description": "EY: Show v_employee",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_employee",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "bc7ff4fe3b041610924d0247f4e45a60",
+            "short_description": "EY: Mandatory v_corporate_email",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_corporate_e_mail",
+                "visible": "ignore",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "5ef864f63b801610924d0247f4e45a3c",
+            "short_description": "EY: Hide v_public",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_public",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "83f86cb63b801610924d0247f4e45a22",
+            "short_description": "EY: Hide v_reason_on_behalf",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_reason_on_behalf",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "abf82c363b801610924d0247f4e45a4e",
+            "short_description": "EY: Hide v_who_is_this_request_for",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_who_is_this_request_for",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "7da9f0b63b041610924d0247f4e45a42",
+            "name": "EY: Remove Cancel Option of Type Request",
+            "ajuste": "Revisar: o item só está disponível para o Chile. Se a opção de cancelar não vale para o Chile, remover a choice e desativar o script; se vale, desativar o script. Enquanto existir, retirar o setTimeout."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Hide v_amount OnLoad",
+            "tipo": "ui_policy",
+            "como": "hidden direto em v_amount."
+          },
+          {
+            "origem": "EY: Hide v_advance_payment OnLoad",
+            "tipo": "ui_policy",
+            "como": "hidden direto em v_advance_payment."
+          },
+          {
+            "origem": "EY: Mandatory v_type_of_request",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em v_type_of_request."
+          },
+          {
+            "origem": "EY: Hide v_request_50 / v_request_20 / v_once_ advance_payment / v_cancel_ advance_payment OnLoad",
+            "tipo": "ui_policy",
+            "como": "Removidas: os Rich Text saíram do item."
+          },
+          {
+            "origem": "EY: Hide v_minimun_characters OnLoad",
+            "tipo": "ui_policy",
+            "como": "Removida: variável inativa."
+          },
+          {
+            "origem": "EY: Show v_advance_payment",
+            "tipo": "client_script",
+            "como": "UI policy 'Pedido de adiantamento: perguntar se é mensal'."
+          },
+          {
+            "origem": "EY: Show v_amount according request",
+            "tipo": "client_script",
+            "como": "Unido à policy 'EY: Read Only v_amount' (visível e somente leitura no pedido)."
+          },
+          {
+            "origem": "EY: Hide target variables on Load",
+            "tipo": "client_script",
+            "como": "Substituído pelos atributos hidden e pelas policies condicionais."
+          },
+          {
+            "origem": "EY: Show v_request_50 or v_request_20 / EY: Show v_advance_payment description",
+            "tipo": "client_script",
+            "como": "Removidos: só alternavam Rich Text, que saíram do item."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "73bfff2d1b37d154d1abda4ce54bcb1d",
+    "name": "Solicitação ou Desistência de Vaga no Berçário",
+    "status": "dividido",
+    "motivo": "v_request_type separa duas intenções com perguntas disjuntas (pedir vaga e desistir), então vira 2 itens. No pedido, a data de nascimento ou data provável do parto passa a ser uma pergunta única obrigatória. As 3 policies de validação de data não têm ações (dependem de script) e foram retiradas: validar no flow que o início fica entre 4 meses e 1 ano de idade e que as datas não são retroativas.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_vacancy_request_or_withdrawal",
+        "motivo": "Container Start (layout)."
+      },
+      {
+        "name": "v_eligibility_for",
+        "motivo": "Rich Text Label com regras de elegibilidade; texto vai para a descrição de 'Solicitar vaga no berçário'."
+      },
+      {
+        "name": "v_label_wk",
+        "motivo": "Rich Text Label com orientação de cadastro do dependente no Workday; texto vai para a descrição de 'Solicitar vaga no berçário'."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar vaga no berçário",
+        "short_description": "Pedir vaga para seu filho no berçário das unidades NASP ou Cajamar.",
+        "description": "Use para pedir vaga no berçário da empresa (unidades NASP e Cajamar, 1º turno ou administrativo) para seu filho já nascido ou que vai nascer. O início no berçário deve ser entre 4 meses e 1 ano de idade da criança e a data não pode ser retroativa. Se a criança já nasceu, ela precisa estar cadastrada como dependente no Workday. Não use para desistir de uma vaga.",
+        "frases_exemplo": [
+          "quero vaga no berçário pro meu bebê",
+          "como coloco meu filho no berçário da empresa",
+          "vaga no berçário de Cajamar",
+          "estou grávida e quero reservar o berçário",
+          "berçário NASP"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_request_type",
+            "value": "vacancy_request"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_nursery_unit",
+            "order": 300,
+            "conversational_label": "Em qual unidade você quer a vaga: NASP ou Cajamar?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_shift",
+            "order": 400,
+            "conversational_label": "Em qual turno: 1º turno ou administrativo?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_phone",
+            "order": 500,
+            "conversational_label": "Qual seu telefone com DDD?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_complete_address",
+            "order": 600,
+            "conversational_label": "Qual seu endereço completo?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_private_email",
+            "order": 700,
+            "conversational_label": "Qual seu e-mail pessoal?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_corporate_email",
+            "order": 800,
+            "conversational_label": "Qual seu e-mail corporativo?",
+            "overrides": {
+              "mandatory": true,
+              "default_value": "javascript:gs.getUser().getEmail();"
+            }
+          },
+          {
+            "name": "v_name_of_the_person_in_charge",
+            "order": 900,
+            "conversational_label": "Qual o nome do responsável pela criança?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "has_the_child_been_born",
+            "order": 950,
+            "conversational_label": "A criança já nasceu?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "are_you_registered_with_wd",
+            "order": 975,
+            "conversational_label": "A criança já está cadastrada como seu dependente no Workday?"
+          },
+          {
+            "name": "v_child_s_name",
+            "order": 1000,
+            "conversational_label": "Qual o nome da criança?"
+          },
+          {
+            "name": "probable_date_of_birth",
+            "order": 1050,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_childs_date_of_birth",
+            "order": 1100,
+            "conversational_label": "Qual a data de nascimento da criança ou a data provável do parto?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_prediction_of_start_to_nursery",
+            "order": 1300,
+            "conversational_label": "Quando você prevê que a criança comece no berçário?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave",
+            "order": 1400,
+            "conversational_label": "Você pretende emendar férias depois da licença-maternidade?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_attach_holidays_to_maternity_leave",
+            "order": 1500,
+            "conversational_label": "Anexe a programação de férias."
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [
+          {
+            "origem_sys_id": "b45303b01b21b950d1abda4ce54bcbee",
+            "short_description": "Criança já nasceu: cadastro no Workday e nome da criança",
+            "on_load": true,
+            "conditions": "has_the_child_been_born=yes",
+            "actions": [
+              {
+                "variable": "are_you_registered_with_wd",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_child_s_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "05ce180b1b11c614d1abda4ce54bcbd5",
+            "short_description": "Cadastrada no Workday: data de nascimento somente leitura",
+            "on_load": false,
+            "conditions": "are_you_registered_with_wd=yes",
+            "actions": [
+              {
+                "variable": "v_childs_date_of_birth",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "3bdc28471bb71d94d1abda4ce54bcb77",
+            "short_description": "Emendar férias = Sim: anexar programação de férias",
+            "on_load": true,
+            "conditions": "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave=Yes",
+            "actions": [
+              {
+                "variable": "v_attach_holidays_to_maternity_leave",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "541538551b543590a530426fe54bcb33",
+            "name": "ACN Fill Add beneficiary data",
+            "ajuste": "Nenhum: já é VA Supported (preenche os dados a partir de v_child_s_name)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: When it is \"Job Request\"",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; mandatory direto nas variáveis do pedido. v_eligibility_for saiu (Rich Text)."
+          },
+          {
+            "origem": "EY: Vacancy Request or Withdrawal",
+            "tipo": "ui_policy",
+            "como": "v_request_type fixado em variaveis_fixas."
+          },
+          {
+            "origem": "EY: When to show the Data de nascimento da criança field / EY: Hide the v_childs_date_of_birth or probable_date_of_birth in the resolver vision / EY: Hidden the data fields",
+            "tipo": "ui_policy",
+            "como": "v_childs_date_of_birth sempre visível e obrigatória (nascimento ou data provável do parto); probable_date_of_birth oculta e fora da conversa."
+          },
+          {
+            "origem": "Hide child filtes ",
+            "tipo": "ui_policy",
+            "como": "Coberta pelo reverse-if-false de 'Criança já nasceu'; v_label_wk saiu (Rich Text)."
+          },
+          {
+            "origem": "EY: Validate _prediction_of_start_to_nursery to not be retroactive / EY: Validate probable date of birth to not be retroactive / EY: Validate the  v_prediction_of_start_to_nursery field",
+            "tipo": "ui_policy",
+            "como": "Removidas: sem ações (validação por script). Regras citadas na descrição; validar no flow."
+          },
+          {
+            "origem": "EY: Hide filde",
+            "tipo": "client_script",
+            "como": "Substituído pelo reverse-if-false da policy 'Criança já nasceu' (e corrige o bug de setDisplay('false'))."
+          }
+        ]
+      },
+      {
+        "name": "Desistir da vaga no berçário",
+        "short_description": "Abrir mão da vaga do seu filho no berçário da empresa.",
+        "description": "Use para desistir da vaga do seu filho no berçário (NASP ou Cajamar) a partir de hoje. Ao desistir, uma nova vaga no futuro dependerá de disponibilidade. Não use para pedir vaga.",
+        "frases_exemplo": [
+          "quero desistir da vaga do berçário",
+          "meu filho vai sair do berçário",
+          "cancelar vaga no berçário",
+          "não vou mais usar o berçário"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_request_type",
+            "value": "vacancy_waiver"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_name_of_the_person_in_charge_waiver",
+            "order": 1700,
+            "conversational_label": "Qual o nome do responsável pela criança?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_childs_name_waiver",
+            "order": 1800,
+            "conversational_label": "De qual criança é a vaga?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date",
+            "order": 1900,
+            "conversational_label": "Você confirma que desiste da vaga a partir de hoje, ciente de que uma nova vaga dependerá de disponibilidade?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: when: vacancy waiver",
+            "tipo": "ui_policy",
+            "como": "Condição do ramo some; visible/mandatory direto nas três variáveis."
+          },
+          {
+            "origem": "EY: Vacancy Request or Withdrawal",
+            "tipo": "ui_policy",
+            "como": "v_request_type fixado em variaveis_fixas."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "0f3d986c87508390ec360e530cbb35c5",
+    "name": "Celebrações e Eventos da Jornada da pessoa Colaboradora",
+    "status": "conversacional",
+    "motivo": "Item simples (7 perguntas). Mandatory fixo passa para as variáveis, as policies condicionais continuam e o único bloqueador é o client script EY: Add Option, que injeta a opção 'Celebrações de Pais e Mães' por idioma e deve virar choice fixa.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "more_info_text_item",
+        "motivo": "Rich Text Label informativo (já oculto por policy); o texto relevante vai para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Dúvidas, sugestões ou reclamações sobre celebrações e eventos",
+        "short_description": "Dúvidas, sugestões ou reclamações sobre celebrações e eventos da jornada do colaborador (Dia das Crianças, festa da família, fim de ano).",
+        "description": "Use para tirar dúvidas, dar sugestões ou registrar reclamações sobre as celebrações e eventos da empresa ligados à jornada do colaborador: Dia das Crianças, Encontro de Gestantes, Formatura do Berçário, Festa da Família, Celebrações de Fim de Ano, Semana do Bem-estar, Celebração de Pais e Mães e outros eventos internos. Pode ser para você ou para um colega. Não use para benefícios, folha de pagamento ou férias.",
+        "frases_exemplo": [
+          "quando vai ser a festa de fim de ano",
+          "não recebi o presente do dia das crianças",
+          "tenho uma sugestão para a semana do bem-estar",
+          "quero reclamar da festa da família",
+          "dúvida sobre o encontro de gestantes"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "who_is_this_request_for",
+            "order": 100,
+            "conversational_label": "O pedido é para você ou para outro colega?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "employee_name_for_me",
+            "order": 110,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "employee_name_to_other_colleague",
+            "order": 120,
+            "conversational_label": "Qual o nome do colega?"
+          },
+          {
+            "name": "type_of_request",
+            "order": 200,
+            "conversational_label": "É uma dúvida, uma sugestão ou uma reclamação?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "select_the_celebration_event_below",
+            "order": 300,
+            "conversational_label": "Sobre qual celebração ou evento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "please_describe_the_celebration_event",
+            "order": 400,
+            "conversational_label": "Qual é o evento?"
+          },
+          {
+            "name": "use_field_below_to_provide",
+            "order": 500,
+            "conversational_label": "Conte os detalhes do que você precisa.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [
+          {
+            "origem_sys_id": "918ba4a487948390ec360e530cbb358a",
+            "short_description": "Pedido para mim: mostrar colaborador (somente leitura)",
+            "on_load": true,
+            "conditions": "who_is_this_request_for=for_me",
+            "actions": [
+              {
+                "variable": "employee_name_for_me",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "f89ea06c87948390ec360e530cbb35b2",
+            "short_description": "Pedido para outro colega: nome do colega obrigatório",
+            "on_load": true,
+            "conditions": "who_is_this_request_for=to_another_colleague",
+            "actions": [
+              {
+                "variable": "employee_name_to_other_colleague",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "b09fa42c87d48390ec360e530cbb356f",
+            "short_description": "Evento 'Outro': descrever o evento",
+            "on_load": true,
+            "conditions": "select_the_celebration_event_below=other",
+            "actions": [
+              {
+                "variable": "please_describe_the_celebration_event",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "2b01d86533ad83d098331c07ee5c7b0f",
+            "name": "EY: Add Option",
+            "ajuste": "Cadastrar 'Celebrações de Pais e Mães' como choice fixa de select_the_celebration_event_below (mesmo value usado pelo script) e então desativar o script; ele não é VA Supported e altera opções via g_form."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "Aoop: Set some fields mandatory",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em who_is_this_request_for, type_of_request, select_the_celebration_event_below e use_field_below_to_provide."
+          },
+          {
+            "origem": "Aoop: Hide some fields at resolver view",
+            "tipo": "ui_policy",
+            "como": "Removida: só escondia more_info_text_item, que saiu do item."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "f6e9b18a3b609a10924d0247f4e45a1b",
+    "name": "Solicitações relacionadas a Certificados e Documentos",
+    "status": "conversacional",
+    "motivo": "Item do catálogo hispânico com só 4 perguntas próprias e sem bloqueador. Mandatory fixo vai para as variáveis, as policies condicionais continuam e o client script (VA Supported) do set é mantido.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "name": "Solicitar certificado ou declaração de trabalho",
+        "short_description": "Pedir certificado de trabalho, contrato, declaração de renda ou outros documentos do RH (países hispânicos).",
+        "description": "Use para pedir ao RH certificados e documentos como certificado de trabalho, cópia de contrato, declaração de renda ou de vínculo, inclusive com certificação ou legalização (Argentina, Chile, Colômbia e Uruguai). Disponível para Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para recibos de pagamento (liquidación) ou dúvidas de folha.",
+        "frases_exemplo": [
+          "necesito un certificado laboral",
+          "preciso de uma declaração de que trabalho na empresa",
+          "quiero una copia de mi contrato",
+          "certificado de renta para o banco",
+          "preciso do certificado legalizado"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "choose_the_document_you_need",
+            "order": 200,
+            "conversational_label": "Qual documento você precisa?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "description_information",
+            "order": 300,
+            "conversational_label": "Que informações devem constar no documento? (por exemplo, destinatário, salário, cargo)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "document_certified",
+            "order": 400,
+            "conversational_label": "Você precisa que o documento seja certificado ou legalizado?"
+          },
+          {
+            "name": "indicate_legalized",
+            "order": 500,
+            "conversational_label": "Em qual órgão ou instituição ele deve ser certificado ou legalizado?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "e8c81b463b28da10924d0247f4e45ae6",
+            "short_description": "Argentina, Chile, Colômbia ou Uruguai: perguntar certificação/legalização",
+            "on_load": true,
+            "conditions": "v_country_of_residence=argentina^ORv_country_of_residence=chile^ORv_country_of_residence=colombia^ORv_country_of_residence=uruguai",
+            "actions": [
+              {
+                "variable": "document_certified",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "b37c9f463b68da10924d0247f4e45a08",
+            "short_description": "Documento certificado/legalizado = Sim: informar instituição",
+            "on_load": true,
+            "conditions": "document_certified=Yes",
+            "actions": [
+              {
+                "variable": "indicate_legalized",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "06b0af023ba8da10924d0247f4e45a8b",
+            "name": "EY: Condition Who is this request for?",
+            "ajuste": "Nenhum: já é VA Supported (onChange de variável do set EY: Hispana Personal Information com consulta ao servidor)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em choose_the_document_you_need e description_information."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "f03c49981b567010d1abda4ce54bcbc4",
+    "name": "Consultar / Alterar Documentos",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que só redireciona ao Workday, sem volume em 12 meses e duplicado por 'Consultar ou alterar documentos pessoais' e 'Consultar ou alterar dados pessoais'. Decidir se desativa e substitui por artigo de KB/tópico da VA com o link do Workday, ou consolida os itens de dados pessoais num só.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "515c89981b567010d1abda4ce54bcb67",
+    "name": "Consultar ou alterar dados de carreira",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona ao Workday (escolaridade, idiomas, experiências – OurTalents), sem volume em 12 meses. O conteúdo é instrução, não pedido: decidir se vira artigo de KB/tópico da VA com link ou se é desativado.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "4481229e1bd8c110a530426fe54bcb96",
+    "name": "Consultar ou alterar dados pessoais",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona ao Workday, sem volume em 12 meses e sobreposto a outros quatro itens de dados pessoais (documentos, contatos de emergência, endereço/telefone/e-mail). Decidir se consolida todos num único atalho/KB ou desativa.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "7b9dd65a1bd8c110a530426fe54bcb16",
+    "name": "Consultar ou alterar documentos pessoais",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas e sem descrição que redireciona ao perfil no Workday, sem volume em 12 meses e duplicata direta de 'Consultar / Alterar Documentos'. Decidir qual dos dois fica (ou nenhum, trocando por KB com link).",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "64cb4d581b567010d1abda4ce54bcb1a",
+    "name": "Consultar/ Alterar Contatos de emergência",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona ao Workday, sem volume em 12 meses, com short description e descrição idênticas às de outros atalhos de dados pessoais (confunde o LLM). Decidir se desativa, consolida ou reescreve a descrição como atalho específico de contatos de emergência.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "7cdb01981b567010d1abda4ce54bcb73",
+    "name": "Consultar/ Alterar Endereço, telefone e email",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona ao Workday, sem volume em 12 meses e com descrição idêntica à de outros itens de dados pessoais. Decidir se desativa, consolida ou reescreve a descrição como atalho de endereço, telefone e e-mail.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "879c8d981b567010d1abda4ce54bcbbe",
+    "name": "Abrir uma requisição de vaga",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona ao Workday para o gestor abrir vaga, sem volume em 12 meses. Decidir se vira artigo de KB/tópico da VA com link ou se é desativado.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "2def243d1bd42550d1abda4ce54bcbae",
+    "name": "Informações ou dúvidas relacionadas à Controle de Jornada",
+    "status": "conversacional",
+    "motivo": "Item genérico de 3 perguntas. Os bloqueadores são só os widgets de busca contextual/AI Search (apresentação), que saem; mandatory vai para as variáveis e a policy de KB, que aponta para variáveis inativas, é descartada.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "Info",
+        "motivo": "Rich Text Label informativo; o texto relevante vai para a descrição do item."
+      },
+      {
+        "name": "formatter",
+        "motivo": "Container End (layout)."
+      },
+      {
+        "name": "contextual_search_results",
+        "motivo": "Widget/macro de apresentação (resultados de busca contextual); não coleta dado e não renderiza na conversa."
+      },
+      {
+        "name": "ai_search_assist",
+        "motivo": "Widget de apresentação (AI Search Assist); não coleta dado e não renderiza na conversa."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Dúvidas sobre controle de jornada e ponto",
+        "short_description": "Dúvidas, sugestões ou reclamações sobre jornada, ponto eletrônico, banco de horas e escalas que não têm serviço específico.",
+        "description": "Use para dúvidas, sugestões ou reclamações sobre controle de jornada que não se encaixam em outro serviço: cálculo de horas extras, adicional noturno, banco de horas, alteração de escala, cadastro de feriado, desconto de faltas, relógio de ponto, informações sobre reembolso de ponto e ajuste de ponto. Não use para: ajustar marcações do período aberto ou consultar banco de horas (faça direto no ADP), pedir correção retroativa do ponto ('Solicitar correção retroativa do ponto eletrônico'), excluir ajuste aprovado por engano ('Excluir ajuste aprovado indevidamente no ponto') ou sobreaviso ('Registrar sobreaviso').",
+        "frases_exemplo": [
+          "dúvida sobre meu banco de horas",
+          "como é calculada a hora extra",
+          "meu adicional noturno veio errado",
+          "minha escala está errada",
+          "descontaram uma falta que eu não tive"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "select_the_topic",
+            "order": 100,
+            "conversational_label": "Sobre qual assunto de jornada é a sua solicitação?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "type_of_request",
+            "order": 200,
+            "conversational_label": "É uma dúvida, uma sugestão ou uma reclamação?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_description_details",
+            "order": 300,
+            "conversational_label": "Descreva o que você precisa, com datas se houver.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "23dc04621b5ced50d1abda4ce54bcb41",
+            "name": "EY: minimum caracter",
+            "ajuste": "Já é VA Supported. Se possível, trocar por Validation Regex em v_description_details com o mesmo mínimo de caracteres do script e desativá-lo."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory Fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em select_the_topic, type_of_request e v_description_details; as demais ações apontavam para variáveis inativas."
+          },
+          {
+            "origem": "EY: Show kb link",
+            "tipo": "ui_policy",
+            "como": "Removida: condição e ação usam variáveis inativas (v_have_you_tried_searching_the_knowledge_base, link_kb)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "34c6524f1b3d8510d1abda4ce54bcbb0",
+    "name": "Ponto eletrônico / Banco de horas – ADP",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem perguntas que redireciona à plataforma ADP (ajuste de ponto, banco de horas, justificativa de ausência), sem volume em 12 meses. Decidir se vira artigo de KB/tópico da VA com link para o ADP ou se é desativado; os itens de controle de jornada do lote já citam o ADP na descrição.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "66ac57671b98e9d0a530426fe54bcbcd",
+    "name": "Sobre Aviso",
+    "status": "conversacional",
+    "motivo": "Item curto: duas perguntas de anexo e a empresa preenchida por client script (VA Supported). A policy onLoad fixa vira atributo nas variáveis e o Rich Text com o modelo vai para a descrição.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_template",
+        "motivo": "Rich Text Label com o link da planilha modelo; o link/orientação vai para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Registrar sobreaviso",
+        "short_description": "Enviar as horas de sobreaviso (plantão à distância) com a aprovação do gestor.",
+        "description": "Use para enviar ao RH o registro de horas de sobreaviso (quando você fica à disposição da empresa fora do expediente, em plantão à distância), com a planilha modelo de sobreaviso preenchida e o e-mail de aprovação do seu gestor. Não use para horas extras comuns, correção de ponto ou dúvidas gerais de jornada.",
+        "frases_exemplo": [
+          "preciso lançar meu sobreaviso",
+          "fiquei de plantão no fim de semana",
+          "como envio as horas de sobreaviso",
+          "registrar sobre aviso do mês"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_company",
+            "order": 200,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_attach_template",
+            "order": 400,
+            "conversational_label": "Anexe a planilha de sobreaviso preenchida.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_attach",
+            "order": 600,
+            "conversational_label": "Agora anexe o e-mail de aprovação do seu gestor.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "359267231b1ce9d0a530426fe54bcb57",
+            "name": "EY: Get company",
+            "ajuste": "Nenhum: já é VA Supported (preenche v_company a partir de vs_employee, que referencia x_nasm_hr_profile)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "v_company read-only (e fora da conversa); v_attach e v_attach_template mandatory direto na variável."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+    "name": "Solicitação de Exclusão da Aprovação",
+    "status": "conversacional",
+    "motivo": "Intenção clara e poucas perguntas. As policies viram atributos (as duas opções de vs_solicitation_to_whom cobrem todos os casos de v_dates), a empresa continua via client script VA Supported e entra uma pergunta opcional para identificar o ajuste.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "formatter",
+        "motivo": "Container End (layout)."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Excluir ajuste aprovado indevidamente no ponto",
+        "short_description": "Desfazer um ajuste de ponto eletrônico que foi aprovado por engano.",
+        "description": "Use quando um ajuste de marcação no ponto eletrônico (ADP) foi aprovado por engano e precisa ser excluído. Pode ser para você ou para outro colaborador. Não use para pedir correção de marcação que faltou ou está errada (use 'Solicitar correção retroativa do ponto eletrônico') nem para dúvidas gerais de jornada.",
+        "frases_exemplo": [
+          "aprovaram um ajuste errado no meu ponto",
+          "preciso excluir uma aprovação do ponto",
+          "o gestor aprovou a marcação errada",
+          "desfazer ajuste aprovado no ADP",
+          "cancelar aprovação de ponto do dia 10"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_company_s",
+            "order": 400,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_dates",
+            "order": 500,
+            "conversational_label": "Qual a data do ajuste que foi aprovado indevidamente?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "nova_detalhe_ajuste",
+            "order": 550,
+            "conversational_label": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.",
+            "nova": {
+              "type": "2",
+              "question_text": "Detalhes do ajuste a excluir (horário e o que estava errado)",
+              "mandatory": false
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "e120f3701bc8ad18a530426fe54bcb16",
+            "name": "Adicionar novo colaborador",
+            "order": 700
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "ad6d60491b8ced18a530426fe54bcba4",
+            "name": "EY: Get User Company",
+            "ajuste": "Nenhum: já é VA Supported (preenche v_company_s a partir de vs_employee)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Date",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em v_dates (a condição cobria as duas opções de vs_solicitation_to_whom)."
+          },
+          {
+            "origem": "EY: read only",
+            "tipo": "ui_policy",
+            "como": "Read-only direto em v_company_s, fora da conversa (valor vem do client script)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "1bd0c1041b006dd4a530426fe54bcbaf",
+    "name": "Solicitação de Reembolso do Ponto Eletrônico",
+    "status": "conversacional",
+    "motivo": "Intenção clara e alto volume. A policy onLoad de mandatory vira atributo, os horários ganham Validation Regex HH:MM e a empresa continua via client script VA Supported. O set '(+)Adicionar Colaborador' segue referenciado (seus campos são opcionais).",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "name": "Solicitar correção retroativa do ponto eletrônico",
+        "short_description": "Corrigir marcação de ponto de dias anteriores (entrada/saída) com o de acordo do gestor.",
+        "description": "Use para pedir a correção (reembolso/devolução) de marcações de ponto eletrônico de dias passados que não podem mais ser ajustadas direto no ADP, por erro do sistema, falta de aprovação do gestor ou falta de ajuste do colaborador. Informe a data, os horários reais de entrada e saída e a justificativa (atestado, esquecimento do crachá, home office, serviço externo etc.). É obrigatório anexar o e-mail de 'de acordo' do seu gestor. Não use para ajustes do período aberto (faça no ADP), para excluir ajuste aprovado por engano ('Excluir ajuste aprovado indevidamente no ponto') nem para reembolso de despesas.",
+        "frases_exemplo": [
+          "esqueci de bater o ponto semana passada",
+          "preciso corrigir meu ponto do mês passado",
+          "o relógio de ponto não registrou minha entrada",
+          "ajuste retroativo de ponto",
+          "meu gestor não aprovou o ajuste a tempo"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_company",
+            "order": 170,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_date_of_divergence",
+            "order": 200,
+            "conversational_label": "Qual o dia da marcação que precisa ser corrigida?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_entry_time",
+            "order": 300,
+            "conversational_label": "Qual foi o horário real de entrada (HH:MM)?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            }
+          },
+          {
+            "name": "v_departure_time",
+            "order": 400,
+            "conversational_label": "E o horário real de saída (HH:MM)?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            }
+          },
+          {
+            "name": "v_justification",
+            "order": 450,
+            "conversational_label": "Qual a justificativa da marcação? (ex.: atestado médico, esquecimento do crachá, home office, serviço externo)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_reason",
+            "order": 500,
+            "conversational_label": "Por que não foi ajustado no ADP: erro do sistema, falta de aprovação do gestor ou falta de ajuste do colaborador?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "anexo_email",
+            "order": 750,
+            "conversational_label": "Anexe o e-mail de 'de acordo' do seu gestor.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "6cdbb7341bccad18a530426fe54bcb4a",
+            "name": "(+)Adicionar Colaborador",
+            "order": 700
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "bdd795841bc46dd4a530426fe54bcb3b",
+            "name": "EY: Get user company",
+            "ajuste": "Nenhum: já é VA Supported (preenche v_company a partir de vs_employee)."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Fields Mandatory ",
+            "tipo": "ui_policy",
+            "como": "Mandatory direto em anexo_email, v_entry_time, v_departure_time, v_reason, v_date_of_divergence e v_justification."
+          }
+        ]
+      }
+    ]
+  }
+]

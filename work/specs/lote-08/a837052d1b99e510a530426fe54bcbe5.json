@@ -1,0 +1,312 @@
+{
+ "sys_id": "a837052d1b99e510a530426fe54bcbe5",
+ "status": "dividido",
+ "motivo": "Segue a divisão da 1ª análise em 3 intenções. Os blocos numerados de até 5 notas viram uma única variável de texto livre (nova_lista_notas, definida no topo e com texto próprio por derivado) e o anexo custom vira nova_anexo (tipo 33), presente só no derivado de lançamento/divergência. Como o formato não permite restringir as opções de uma variável existente por derivado, v_type_of_query mantém as 5 escolhas originais nos 2 derivados que a usam. A policy 'EY: Read Only Variables' só afeta a visão de formulário do atendente (não a conversa) e referenciava vários campos numerados que deixaram de existir; foi removida sem prop equivalente, pois readonly não tem efeito útil em pergunta-resposta de chat. v_buying_company_id, v_vendor_s_registration_code, additional_information_2 e v_produtivo_improdutivo_servicos (para os derivados 2 e 3, onde a 1ª análise não trouxe pergunta) ganharam label próprio para não perder dado.",
+ "divergencias": [
+  "limite_formato",
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_buying_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_buying_company_country": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_buying_company_id": {
+   "label": "Qual é o código de identificação da empresa compradora (Buying Company ID)?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_your_fiscal_id": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_your_e_mail": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[A-Za-z0-9][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+   }
+  },
+  "v_requestor_s_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_vendor_s_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_vendor_s_registration_code": {
+   "label": "Qual é o código de registro da sua empresa como fornecedor?"
+  },
+  "v_type_of_query": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "additional_information_2": {
+   "label": "Quer descrever mais algum detalhe sobre sua solicitação?"
+  },
+  "v_produtivo_improdutivo_servicos": {
+   "label": "Você fornece produtos diretos (insumos, produto acabado) ou indiretos e serviços?"
+  },
+  "nova_lista_notas": {
+   "nova": {
+    "type": "2",
+    "question_text": "Informe o número e o valor de cada nota fiscal (até 5, uma por linha).",
+    "mandatory": true,
+    "order": 600
+   }
+  },
+  "nova_anexo": {
+   "nova": {
+    "type": "33",
+    "question_text": "Quer anexar a nota ou algum documento?",
+    "mandatory": false,
+    "order": 3500
+   }
+  }
+ },
+ "remover": {
+  "v_how_many_records_do_you_want_to_insert": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_status": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_diverg": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_numero_da_fatura_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_nvoice_amount_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_2": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_3": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_4": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_request_number_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_document_number_invoice_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_invoice_amount_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_amount_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_payment_receipt_date_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "v_purchase_order_number_5": {
+   "substituida_por": "nova_lista_notas"
+  },
+  "vs_add_attachment": {
+   "substituida_por": "nova_anexo"
+  }
+ },
+ "policies": {
+  "01fe221a1b49b510a530426fe54bcbfa": "remover",
+  "112376de1b49b510a530426fe54bcb98": "remover",
+  "12974afb1b156d50a530426fe54bcbd9": "remover",
+  "141a06c13b8c1e50924d0247f4e45a30": "remover",
+  "2192b2de1b49b510a530426fe54bcb57": "remover",
+  "268ab6721b752514d1abda4ce54bcb7a": "remover",
+  "2db232de1b49b510a530426fe54bcb67": "remover",
+  "3296a0a41ba161d0a530426fe54bcb2f": "remover",
+  "3f53f6121b89b510a530426fe54bcb88": "remover",
+  "43c715641b8e6d14d1abda4ce54bcb5d": "remover",
+  "4932f29e1b49b510a530426fe54bcb91": "remover",
+  "51f719641b8e6d14d1abda4ce54bcb71": "remover",
+  "5dcb960a1b9f8e10d1abda4ce54bcbd2": "remover",
+  "5f3e2e561b49b510a530426fe54bcba7": "remover",
+  "74833a121b89b510a530426fe54bcbb7": "remover",
+  "76b3f6121b89b510a530426fe54bcb92": "remover",
+  "8891325e1b49b510a530426fe54bcb46": "remover",
+  "8f3711241b8e6d14d1abda4ce54bcbe0": "remover",
+  "90717a1e1b49b510a530426fe54bcb1f": "remover",
+  "93f03eda1b49b510a530426fe54bcb8f": "remover",
+  "95ec960a1b9f8e10d1abda4ce54bcbeb": "remover",
+  "a16e164e1b9f8e10d1abda4ce54bcbc6": "remover",
+  "ae0eaa961b49b510a530426fe54bcb3e": "remover",
+  "c95c5e4a1b9f8e10d1abda4ce54bcbdc": "remover",
+  "d19d120e1b9f8e10d1abda4ce54bcb1e": "remover",
+  "d362be9e1b49b510a530426fe54bcb40": "remover",
+  "d451be1e1b49b510a530426fe54bcb97": "remover",
+  "d9148ef61bb8b110d1abda4ce54bcb1c": "remover",
+  "e75e6ad61b49b510a530426fe54bcba4": "remover",
+  "f6340ef61bb8b110d1abda4ce54bcb85": "remover",
+  "nova_visible_corrigir": {
+   "short_description": "Mostrar o que corrigir quando é divergência",
+   "conditions": "v_type_of_query=divergence_releases",
+   "actions": {
+    "v_what_needs_to_be_fixed": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_show_prod_col": {
+   "short_description": "Mostrar tipo de fornecedor para a Colômbia",
+   "conditions": "v_buying_company_country=col",
+   "actions": {
+    "v_produtivo_improdutivo_servicos": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "6b600ef21bb8b110d1abda4ce54bcba3"
+  }
+ },
+ "scripts": {
+  "1d4815a41b8e6d14d1abda4ce54bcb7c": {
+   "remover": "sem_efeito"
+  },
+  "3c8b921587107210017d65790cbb35e1": {
+   "remover": {
+    "substituido_por": "3bc9de5d87dc3210017d65790cbb3584"
+   }
+  },
+  "561d1ed187107210017d65790cbb3516": {
+   "remover": {
+    "substituido_por": "3bc9de5d87dc3210017d65790cbb3584"
+   }
+  },
+  "6b600ef21bb8b110d1abda4ce54bcba3": {
+   "converter": "policy:nova_show_prod_col"
+  },
+  "bae09afa1bf8b110d1abda4ce54bcbde": {
+   "remover": "sem_efeito"
+  },
+  "c0c4ca7a1bb8b110d1abda4ce54bcb65": {
+   "remover": "sem_efeito"
+  },
+  "c8b819a41b8e6d14d1abda4ce54bcbd8": {
+   "remover": {
+    "substituido_por": "nova_lista_notas"
+   }
+  },
+  "cf2f212a1bcdf510a530426fe54bcbb1": {
+   "remover": "sem_efeito"
+  },
+  "f8ac4e781b8aed14d1abda4ce54bcbeb": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "v_what_needs_to_be_fixed",
+    "nova_anexo"
+   ],
+   "sem_policies": [
+    "nova_visible_corrigir"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_type_of_query": "request_composition_of_payment"
+   },
+   "vars": {
+    "nova_lista_notas": {
+     "nova": {
+      "type": "2",
+      "question_text": "Informe o valor e a data de cada pagamento recebido (até 5, um por linha).",
+      "mandatory": true,
+      "order": 600
+     }
+    }
+   },
+   "sem_vars": [
+    "v_what_needs_to_be_fixed",
+    "nova_anexo"
+   ],
+   "sem_policies": [
+    "nova_visible_corrigir"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "vars": {
+    "nova_lista_notas": {
+     "nova": {
+      "type": "2",
+      "question_text": "Informe o número de cada nota fiscal e o pedido de compra (até 5, uma por linha).",
+      "mandatory": true,
+      "order": 600
+     }
+    }
+   }
+  }
+ ]
+}

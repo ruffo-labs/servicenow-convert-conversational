@@ -1,0 +1,64 @@
+{
+ "sys_id": "6de79cf73387369098331c07ee5c7b68",
+ "status": "conversacional",
+ "motivo": "Intenção única: registrar reembolso de pré-pedido cancelado ao cliente final com poucos dados. vs_client_name e vs_client_cpf são do set compartilhado, então a obrigatoriedade delas continua via policy; as demais variáveis do item viram prop direta.",
+ "vars": {
+  "v_natura_code": {
+   "label": "Qual o seu código Natura?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_occurrence_number": {
+   "label": "Qual o número da ocorrência do pedido cancelado?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_refund_amount": {
+   "label": "Qual o valor a ser devolvido?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_reason_for_the_refund": {
+   "label": "Qual o motivo do reembolso?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_any_evidence": {
+   "label": "Anexe o comprovante de pagamento ou outra evidência.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "831998ff3387369098331c07ee5c7b9f": {
+   "conditions": "",
+   "actions": {
+    "vs_client_name": {
+     "mandatory": true
+    },
+    "vs_client_cpf": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Pedir reembolso de pré-pedido cancelado para cliente final",
+   "short_description": "Devolver ao cliente final o valor pago num pré-pedido que foi cancelado.",
+   "description": "Use quando um cliente final pagou um pré-pedido e o pedido foi cancelado, e é preciso devolver o valor a ele. Informe o código Natura, os dados do cliente, o valor, o número da ocorrência e anexe o comprovante. Não use para reembolso de despesas de colaborador ou de força de vendas (use \"Solicitar reembolso de despesas\").",
+   "frases_exemplo": [
+    "cliente pagou o pré-pedido e o pedido foi cancelado",
+    "preciso devolver o dinheiro de uma cliente",
+    "reembolso para cliente final",
+    "estorno de pré-pedido cancelado",
+    "minha cliente quer o dinheiro de volta do pedido cancelado"
+   ]
+  }
+ ]
+}

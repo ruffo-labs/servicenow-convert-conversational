@@ -1,0 +1,56 @@
+{
+ "sys_id": "e2aece7187f88b10ec360e530cbb35e7",
+ "title": "Request data",
+ "internal_name": "v_request_data",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitar Estudos de Aplicações/Regras de Convenção Coletiva de Trabalho (CCTs)"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_study_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Study Type",
+   "include_none": true,
+   "choices": [
+    "Union [=union]",
+    "Other Studies (e.g., Public, Shift...) [=other_studies]"
+   ]
+  },
+  {
+   "name": "vs_union_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Union Name"
+  },
+  {
+   "name": "vs_describe_your_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show field",
+   "when": "IO:vs_study_typeINunion,other_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_describe_your_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If 'Union'",
+   "when": "IO:vs_study_type=union^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_union_name: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,250 @@
+{
+ "sys_id": "233dc65a87a93e94ec360e530cbb3521",
+ "name": "Lista de Presença em Treinamentos",
+ "sys_name": "Training Attendance List",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Para registro de presenças durante Treinamentos de Aprendizagem e Normativos",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "15",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "15"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @question_training_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @training_location: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @question_explanation_label: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @question_workload: Duration",
+   "reference_qualifier @training_date: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @mrvs_collaborator_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @mrvs_collaborator_id: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 15 de 15 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Lista de Presença em Treinamentos. Grava item com o sysparm_id e define requested_for e opened_by a partir da variável 'question_opened_by' — o formulário permite registrar presença em nome de outra pessoa.",
+ "variaveis": [
+  {
+   "name": "container_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "question_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "formatter",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "question_collaborator_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator ID",
+   "reference": "sys_user"
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "question_collaborator_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator Email",
+   "reference": "sys_user"
+  },
+  {
+   "name": "question_training_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Training Type",
+   "lookup": "x_nasm_hr_training_type",
+   "include_none": true,
+   "choices": [
+    "Regulatory Training [=regulatory_training]",
+    "Learning Training [=functional_training]"
+   ]
+  },
+  {
+   "name": "question_explanation_label",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Regulatory training: Training that is mandatory by law, required by the Regulatory Standards (NRs) of the Ministry of Labor\r\nFunctional training: Training related to the Natura Learning Ecosystem"
+  },
+  {
+   "name": "question_training_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Training Name",
+   "reference": "x_nasm_hr_training_type",
+   "ref_qual": "javascript:\"active=true^training_type=\" + current.variables.question_training_type;"
+  },
+  {
+   "name": "training_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Training Date",
+   "reference": "x_nasm_hr_training_type",
+   "ref_qual": "javascript:\"active=true^training_type=\" + current.variables.question_training_type;"
+  },
+  {
+   "name": "training_location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training Location",
+   "reference": "x_nasm_hr_training_type",
+   "ref_qual": "javascript:\"active=true^training_type=\" + current.variables.question_training_type;"
+  },
+  {
+   "name": "question_training_time",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What was the time of day of the training received?",
+   "include_none": true,
+   "choices": [
+    "Morning [=question_choice_morning]",
+    "Afternoon [=question_choice_afternoon]",
+    "Full day [=question_choice_fullday]"
+   ]
+  },
+  {
+   "name": "question_time_label",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Consider any training lasting more than 6 hours as full day"
+  },
+  {
+   "name": "question_user_director",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Board of Directors",
+   "reference": "sys_user"
+  },
+  {
+   "name": "question_area_vp",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Area VP",
+   "reference": "sys_user"
+  },
+  {
+   "name": "question_user_public",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Public"
+  },
+  {
+   "name": "question_user_title",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Job Title"
+  },
+  {
+   "name": "question_workload",
+   "type": "Duração",
+   "type_code": "29",
+   "label": "Workload"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "bc14ea5e87e57e94ec360e530cbb354a",
+   "name": "Selecione os colaboradores presentes no treinamento",
+   "order": "900",
+   "perguntas": [
+    "mrvs_collaborator_name (Referência): Employee (Search by ID, Name, or Email)",
+    "mrvs_collaborator_id (Texto de Linha Única): Collaborator ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "[AOOP][Hidden Fields]",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_user_director: visible=false",
+    "question_user_public: visible=false",
+    "question_area_vp: visible=false",
+    "question_user_title: visible=false",
+    "question_workload: visible=false"
+   ]
+  },
+  {
+   "name": "[AOOP][Default Behavior of Fields]",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_training_type: mandatory=true",
+    "question_user_public: ",
+    "question_opened_by: readonly=true",
+    "question_collaborator_id: readonly=true",
+    "question_training_name: mandatory=true",
+    "question_area_vp: ",
+    "question_collaborator_email: readonly=true",
+    "question_user_director: "
+   ]
+  },
+  {
+   "name": "[AOOP][Show fields when Training Type = Functional]",
+   "when": "IO:question_training_type=functional_training^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_training_time: visible=true,mandatory=true",
+    "question_time_label: visible=true",
+    "question_training_name: "
+   ]
+  },
+  {
+   "name": "[AOOP][Show fields when Training Type = Regulatory]",
+   "when": "IO:question_training_type=regulatory_training^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "training_date: visible=true,mandatory=true",
+    "training_location: visible=true,mandatory=true",
+    "question_training_name: ",
+    "mrvs_collaborators_present: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "[AOOP] Clear Values when Type Changes",
+   "type": "onChange",
+   "on": "c7ac9a9687e17e94ec360e530cbb35f7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os campos de horário de treinamento quando o tipo muda."
+  }
+ ]
+}

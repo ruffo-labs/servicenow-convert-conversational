@@ -1,0 +1,126 @@
+{
+ "sys_id": "c421e34087cfb610ec360e530cbb3581",
+ "name": "Informações ou dúvidas relacionadas à frota",
+ "sys_name": "Informations or doubts related to the fleet",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Frota",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo, Hire to Retire (HTR)",
+ "short_description": "Solicitação para esclarecer dúvidas sobre os processos de veículos corporativos, como multas, manutenção, devolução de veículos, elegibilidade, upgrades e descontos na folha de pagamento.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @vs_collaborator_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_select_collaborators_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_select_the_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Reclamation [=reclamation]",
+    "Consult [=consult]",
+    "Suggestion [=suggestion]"
+   ]
+  },
+  {
+   "name": "v_select_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select an option:",
+   "include_none": true,
+   "choices": [
+    "Cartão combustível [=fuel_card]",
+    "Payroll Deduction [=payroll_deduction]",
+    "expenses",
+    "Vehicle return [=vehicle_return]",
+    "Eligibility [=eligibility]",
+    "Vehicle Maintenance [=vehicle_maintenance]",
+    "Penalties [=penalties]",
+    "Troca de veículos [=vehicle_swap]",
+    "Sell vehicles [=sell_vehicles]"
+   ]
+  },
+  {
+   "name": "v_detail_your_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "2579a7048707f610ec360e530cbb35cb",
+   "name": "EY: Informação Básica do colaborador",
+   "order": "100",
+   "perguntas": [
+    "vs_for_who (Selecionar Caixa): Request for whom?",
+    "vs_select_the_collaborator (Referência): Select the collaborator",
+    "vs_select_collaborators_name (Referência): Collaborator's Name",
+    "vs_collaborator_name (Texto de Linha Única): Collaborator's name",
+    "vs_collaborato_global_id (Texto de Linha Única): Collaborator's Global ID",
+    "vs_collaborator_e_mail (Texto de Linha Única): Corporate Email",
+    "vs_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set Variables properties",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_for_who: mandatory=true",
+    "v_select_option: mandatory=true",
+    "v_detail_your_request: mandatory=true",
+    "vs_public: readonly=true",
+    "vs_select_the_collaborator: mandatory=true",
+    "v_request_type: mandatory=true",
+    "vs_collaborator_e_mail: readonly=true",
+    "vs_collaborato_global_id: readonly=true",
+    "vs_collaborator_name: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: check if \"for who\" is None or For me",
+   "when": "IO:vs_for_who=^ORIO:vs_for_who=for_me^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_the_collaborator: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Check for_who variable and fill form",
+   "type": "onChange",
+   "on": "d3a9e7c48707f610ec360e530cbb358c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, ao escolher 'for_me', preenche 'vs_select_the_collaborator' com o sys_id do usuário logado."
+  }
+ ]
+}

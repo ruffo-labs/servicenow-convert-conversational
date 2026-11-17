@@ -1,0 +1,139 @@
+{
+ "sys_id": "33f3cde33bc53a10b28dd047f4e45a1d",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "new_email": {
+   "label": "Novo endereço de e-mail do(a) colaborador(a)"
+  },
+  "reason_for_request": {
+   "label": "Motivo da solicitação"
+  },
+  "reference_month": {
+   "label": "Mês de referência"
+  },
+  "evidence_of_the_error": {
+   "label": "Evidência do erro"
+  },
+  "policyholder_or_dependent": {
+   "label": "Titular ou dependente?"
+  },
+  "which_operator": {
+   "label": "Qual operadora?"
+  },
+  "payment_statement": {
+   "label": "Demonstrativo de pagamento"
+  },
+  "carrier_evidence": {
+   "label": "Evidência da operadora"
+  },
+  "dependent_name": {
+   "label": "Nome do(a) dependente"
+  }
+ },
+ "remover": {
+  "observation": "visual",
+  "attention": "visual",
+  "observation_1": "visual",
+  "container_start": "visual",
+  "formatter": "visual",
+  "observation_2": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "73aaeb773bc9fa10b28dd047f4e45ac1": {
+   "conditions": "service_offering=c6774deb3bc53a10b28dd047f4e45a7a^which_operator=10",
+   "actions": {
+    "description": {
+     "mandatory": false
+    }
+   }
+  },
+  "80876bbf3b89fa10b28dd047f4e45a4e": "remover",
+  "c50627bb3b89fa10b28dd047f4e45ac9": "remover",
+  "e7882fff3b89fa10b28dd047f4e45a1c": {
+   "conditions": "service_offering=cce6c52b3bc53a10b28dd047f4e45a34",
+   "actions": {
+    "reason_for_request": {
+     "visible": true,
+     "mandatory": true
+    },
+    "evidence_of_the_error": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_1": {
+   "short_description": "APL - Solicitação de atualização do e-mail cadastrado na academia -totalpass",
+   "conditions": "which_operator=10",
+   "actions": {
+    "description": {
+     "mandatory": false
+    }
+   }
+  },
+  "nova_g0_2": {
+   "short_description": "APL - Solicitação de atualização do e-mail cadastrado na academia - Wellhub (Gympass)",
+   "conditions": "which_operator=20",
+   "actions": {
+    "new_email": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Academia (Autoatendimento - Gestão de Gente - servico)",
+   "short_description": "Academia",
+   "description": "Academia",
+   "frases_exemplo": [
+    "Solicitação de atualização do e-mail cadastrado na academia"
+   ],
+   "sem_vars": [
+    "reason_for_request",
+    "reference_month",
+    "evidence_of_the_error",
+    "policyholder_or_dependent",
+    "payment_statement",
+    "carrier_evidence",
+    "dependent_name"
+   ],
+   "vars": {
+    "which_operator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1c080dc03b553e10b28dd047f4e45ac8",
+    "73aaeb773bc9fa10b28dd047f4e45ac1",
+    "7a8a2b373bc9fa10b28dd047f4e45a56",
+    "99c86bff3b89fa10b28dd047f4e45aef",
+    "d41a27373bc9fa10b28dd047f4e45a5b",
+    "e7882fff3b89fa10b28dd047f4e45a1c",
+    "f2656fbb3b89fa10b28dd047f4e45a1a"
+   ]
+  },
+  {
+   "name": "Academia (Autoatendimento - Gestão de Gente - problema)",
+   "short_description": "Academia",
+   "description": "Academia",
+   "frases_exemplo": [
+    "Divergência nos valores descontados de academia",
+    "Problemas ao utilizar academia"
+   ],
+   "sem_vars": [
+    "new_email"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "7a8a2b373bc9fa10b28dd047f4e45a56"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,224 @@
+{
+ "sys_id": "19b853dc3b1fea10b28dd047f4e45a4b",
+ "name": "Crachá (Autoatendimento)",
+ "category": "Autoatendimento - Gestão de Gente",
+ "short_description": "Crachá",
+ "description": "Crach&aacute;",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de 2ª via de crachá - Crachá",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Crachá N2"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_data_nascimento",
+    "v_anexar_foto_2",
+    "v_apelido_social",
+    "v_anexar_foto_3",
+    "v_nome_social",
+    "v_motivo_solicitacao",
+    "v_autodeclaracao",
+    "v_cpf_prestador",
+    "v_nome_prestador"
+   ],
+   "passa_a_obrigatoria": [
+    "v_motivo_da_solicitacao",
+    "v_deseja_alterar_foto"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Alterar foto (Sim)",
+     "quando": "v_deseja_alterar_foto=Yes"
+    },
+    {
+     "policy": "CSA - Alterar foto (Sim) (Resolvedora)",
+     "quando": "v_deseja_alterar_foto=Yes"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de crachá - Nome social - Crachá",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Crachá"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_motivo_da_solicitacao",
+    "v_deseja_alterar_foto",
+    "v_anexar_foto_3",
+    "v_anexar_foto",
+    "v_cpf_prestador",
+    "v_nome_prestador"
+   ],
+   "passa_a_obrigatoria": [
+    "v_motivo_solicitacao"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Nome Social",
+     "quando": "v_motivo_solicitacao=2"
+    },
+    {
+     "policy": "CSA - Apelido Social",
+     "quando": "v_motivo_solicitacao=1"
+    },
+    {
+     "policy": "CSA - Solicitação Nome Social (Campos padrão)",
+     "quando": "v_motivo_solicitacao!="
+    },
+    {
+     "policy": "CSA - Solicitação Nome Social (Campos padrão) (Resolvedora)",
+     "quando": "v_motivo_solicitacao!="
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de crachá - Prestador de serviço - Crachá",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Crachá"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_motivo_da_solicitacao",
+    "v_data_nascimento",
+    "v_anexar_foto_2",
+    "v_apelido_social",
+    "v_deseja_alterar_foto",
+    "v_nome_social",
+    "v_motivo_solicitacao",
+    "v_autodeclaracao",
+    "v_anexar_foto"
+   ],
+   "passa_a_obrigatoria": [
+    "v_anexar_foto_3",
+    "v_cpf_prestador",
+    "v_nome_prestador"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_motivo_da_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Perda de crachá",
+    "Crachá está danificado"
+   ]
+  },
+  {
+   "name": "v_data_nascimento",
+   "type": "Data",
+   "question_text": "Data de nascimento",
+   "choices": []
+  },
+  {
+   "name": "v_anexar_foto_2",
+   "type": "Anexo",
+   "question_text": "Anexar foto",
+   "choices": []
+  },
+  {
+   "name": "v_apelido_social",
+   "type": "Texto de Linha Única",
+   "question_text": "Apelido Social",
+   "choices": []
+  },
+  {
+   "name": "v_deseja_alterar_foto",
+   "type": "Sim/Não",
+   "question_text": "Deseja alterar a foto?",
+   "choices": []
+  },
+  {
+   "name": "v_anexar_foto_3",
+   "type": "Anexo",
+   "question_text": "Anexar foto",
+   "choices": []
+  },
+  {
+   "name": "v_nome_social",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome Social",
+   "choices": []
+  },
+  {
+   "name": "v_motivo_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Apelido social",
+    "Nome social (LGBTQIA+)"
+   ]
+  },
+  {
+   "name": "v_autodeclaracao",
+   "type": "Selecionar Caixa",
+   "question_text": "Autodeclaração",
+   "choices": [
+    "Travesti",
+    "Mulher trans",
+    "Pessoa não-binária",
+    "Homem trans"
+   ]
+  },
+  {
+   "name": "v_anexar_foto",
+   "type": "Anexo",
+   "question_text": "Anexar nova foto",
+   "choices": []
+  },
+  {
+   "name": "v_cpf_prestador",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do prestador de serviço",
+   "choices": []
+  },
+  {
+   "name": "v_nome_prestador",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo do prestador de serviço",
+   "choices": []
+  }
+ ],
+ "client_scripts": []
+}

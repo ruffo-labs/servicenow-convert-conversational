@@ -1,0 +1,592 @@
+[
+  {
+    "sys_id": "bff27500330dcb9098331c07ee5c7b60",
+    "nome_atual": "Criação de Pedido de Compra ou Folha de Serviço",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 28,
+    "recomendacao": "manter_formulario",
+    "prioridade": "media",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Item novo (28 casos, todos nos últimos 90 dias) com 90 perguntas, 97 variáveis, 57 UI policies encadeadas por área/tipo de solicitação/tipo de compra/tipo de contrato e cerca de 40 client scripts de limpeza, autofill de contrato master, validação de códigos (MAT, CONC, RAT) e datas. Tem 11 anexos condicionais, 10 checkboxes de risco jurídico e reference qualifiers scriptados (PTPUtils). Parece ser o sucessor Coupa do item db9c46e7 (rank 6); a conversa ficaria longa e frágil, então o melhor agora é manter como formulário, bem descrito, e aplicar a divisão proposta para o db9c46e7 quando este substituir o legado.",
+    "nome_sugerido": "Solicitar pedido de compra no Coupa ou folha de serviço",
+    "short_description_sugerida": "Abrir pedido de compra (Coupa ou Linx), regularização ou criação e aceite de folha de serviço, com fornecedor, contrato e classificação contábil",
+    "descricao_sugerida": "Use para pedir ao HUB de Pagamentos a criação de um pedido de compra no Coupa ou no Linx (varejo), a regularização/alteração de um pedido ou a criação e o aceite de uma folha de serviço sobre um pedido SAP já existente. O formulário pede o fornecedor, o tipo de compra (catalogada, centralizada, descentralizada, transgressora, não negociável), o tipo de contrato, a classificação contábil (centro de custo, PEP, conta contábil), riscos jurídicos do contrato e anexos de aprovação (CAD, diretoria, proposta comercial). Não use para compras descentralizadas até R$ 125 mil com template próprio (use 'Solicitação de compras descentralizadas'), para adiantamento a fornecedor (use 'Adiantamento de Pagamento ao Fornecedor'), para pagamento manual/ITP ou para tirar dúvidas sobre uma requisição já aberta (use 'Informações HUB de Pagamentos sobre Requisições e Contratos').",
+    "frases_exemplo": [
+      "preciso abrir um pedido de compra no Coupa",
+      "quero criar uma PO para um fornecedor novo",
+      "como faço pedido Linx para a loja",
+      "preciso gerar a folha de serviço do pedido 4500001234",
+      "abrir requisição de compra com contrato master",
+      "regularizar um pedido de compra que já foi feito"
+    ],
+    "bloqueadores": [
+      { "onde": "formulário inteiro", "problema": "90 perguntas, acima do limite de renderização inline (20); a VA abriria em janela.", "acao": "Manter como formulário (non-conversational) até a divisão por intenção." },
+      { "onde": "client scripts (≈40)", "problema": "Limpeza em cascata, autofill de u_master_contract por área/contrato/fornecedor, reconstrução de opções de u_type_request por área e onSubmit de testemunhas: lógica que não se reproduz bem em conversa.", "acao": "Trocar validações de formato (MAT/CONC/RAT, pedido SAP de 10 dígitos, dígitos em ativo fixo e nº de funcionários) por Validation Regex; mover autofill de contrato master para o flow/servidor; remover o script 'Autofill Code LC116 - Validate Currency' (100% comentado)." },
+      { "onde": "u_risk_* (10 checkboxes)", "problema": "Checkboxes soltos não são agrupados na conversa.", "acao": "Se for converter no futuro, trocar por uma List Collector/Multiple Choice 'Quais riscos se aplicam?' ou por Yes/No com Include None." },
+      { "onde": "anexos (u_attach_*, u_cad_approval_email)", "problema": "11 variáveis Attachment condicionais.", "acao": "Consolidar em um anexo único no final, com orientação na descrição de quais documentos enviar." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "Autofill Code LC116 - Validate Currency", "acao": "remover", "substituicao": "Script inteiramente comentado, sem efeito." },
+      { "nome": "Validate code MAT / Validate code CONC / Validate code RAT / Validate SAP order number / Validate Fixed asset number / Validate Contractor employees number", "acao": "converter", "substituicao": "Validation Regex na própria variável (ex.: ^MAT\\d{5}$, ^CONC\\d{5}$, ^RAT\\d{5}$, ^\\d{10}$, ^\\d+$)." },
+      { "nome": "Hide Master Contract OnLoad", "acao": "converter", "substituicao": "Deixar u_master_contract com visible=false por atributo da variável, sem script onLoad." },
+      { "nome": "Mandatory field (UI policy sempre)", "acao": "converter", "substituicao": "Marcar mandatory direto nas variáveis." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Manter nome/descrição ricos para o LLM achar o item e oferecer o link do formulário.",
+        "Definir com o HUB se este item substitui o db9c46e71bdd2910d1abda4ce54bcb0e; se sim, desativar o legado e aplicar aqui a divisão por intenção (pedido de compra / criação de folha / aceite de folha)."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Sobreposição forte com db9c46e71bdd2910d1abda4ce54bcb0e (mesma intenção, versão Ariba/legado) e parcial com 5c8fbbfe1b754e90d1abda4ce54bcba5 (compras descentralizadas). Os ramos 'creation_acceptance_service' (só u_sap_order + justificativa) e 'create_linx_order' (template + anexo) são enxutos e seriam os primeiros candidatos a virar itens conversacionais próprios quando o legado for desligado."
+  },
+  {
+    "sys_id": "7e9b82b51b19a110d1abda4ce54bcb9e",
+    "nome_atual": "Informações HUB de Pagamentos sobre Requisições e Contratos",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 345,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Item de dúvida simples, sem variáveis próprias: tudo vem de três variable sets (empresa, tipo de dúvida, informações adicionais). Não há bloqueadores; o que atrapalha é a descrição vazia, labels em inglês, o rótulo rich text com a explicação CW/CRW (não chega ao LLM) e o solicitante perguntado quando pode ser derivado. Com descrição de negócio e labels, vira um bom item conversacional.",
+    "nome_sugerido": "Tirar dúvida sobre requisição ou contrato no HUB de Pagamentos",
+    "short_description_sugerida": "Dúvidas sobre requisições criadas pelo HUB de Pagamentos ou aprovações do grupo CSC Contratos (CW/CRW)",
+    "descricao_sugerida": "Use para perguntar ao HUB de Pagamentos sobre uma requisição que ele criou (status, pendência, correção) ou sobre a aprovação de uma requisição pelo grupo aprovador CSC Contratos, incluindo a criação de CW (contrato jurídico com perguntas de risco respondidas 'Sim' e que gera pagamento) e CRW (contrato jurídico sem valores, como parceria ou patrocínio). Não use para pedir a criação de um novo pedido de compra, folha de serviço, pagamento manual ou adiantamento: para isso existem itens próprios no HUB de Pagamentos.",
+    "frases_exemplo": [
+      "qual o status da minha requisição no HUB?",
+      "minha requisição de compra está parada na aprovação do CSC Contratos",
+      "tenho uma dúvida sobre CW e CRW",
+      "por que meu contrato ainda não foi aprovado?",
+      "preciso de informação sobre uma requisição que o HUB abriu"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_what_type_of_doubt_do_you_have", "origem": "set:EY VS - Solicitar Informações", "acao": "manter", "conversational_label": "Sua dúvida é sobre qual assunto?", "obs": "Pergunta central; colocar antes dos dados de empresa. Revisar as opções para refletirem 'requisição criada pelo HUB', 'aprovação CSC Contratos', 'criação de CW', 'criação de CRW'." },
+      { "ordem": 2, "variavel": "v_inform_your_question", "origem": "set:EY VS - Solicitar Informações", "acao": "manter", "conversational_label": "Qual é a sua dúvida? Se tiver, informe o número da requisição.", "obs": "Slot filling costuma preencher pela primeira frase do usuário." },
+      { "ordem": 3, "variavel": "v_hub_customer", "origem": "set:EY VS - Solicitar Informações", "acao": "manter", "conversational_label": "Você é cliente do HUB de Pagamentos?", "obs": "Yes/No: marcar Include None." },
+      { "ordem": 4, "variavel": "v_label_explain_CRW_CW", "origem": "set:EY VS - Solicitar Informações", "acao": "remover", "obs": "Rich text informativo; o texto de CW/CRW foi levado para a descrição do item." },
+      { "ordem": 5, "variavel": "v_opened_by", "origem": "set:EY VS - Empresas Natura ", "acao": "derivar", "obs": "Default javascript:gs.getUserID() e read-only, para não ser perguntado." },
+      { "ordem": 6, "variavel": "v_type_of_request", "origem": "set:EY VS - Empresas Natura ", "acao": "ocultar_na_conversa", "obs": "Neste item o tipo é fixo (solicitar informação): default value e hidden." },
+      { "ordem": 7, "variavel": "v_additional_information", "origem": "set:EY VS - Informaçoes/anexo", "acao": "manter", "conversational_label": "Quer acrescentar mais alguma informação ou anexo?", "obs": "Opcional; fica por último." }
+    ],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher description (hoje vazia).",
+        "As 8 variantes vs_which_sub_company_* com reference qualifier dinâmico e as policies onLoad do set 'EY VS - Empresas Natura' são tratadas na análise dos sets."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Deixar claro na descrição que é item de dúvida, para o LLM não confundir com os itens de criação de pedido/folha (db9c46e7, bff27500, 5c8fbbfe) do mesmo lote."
+  },
+  {
+    "sys_id": "d290b9ee87bab610ec360e530cbb358f",
+    "nome_atual": "Portal de Pagamento de Frete do Brasil",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 69,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Poucas perguntas (11) e nenhum bloqueador, mas o nome não diz o que o usuário quer (é verificação de documentos de frete não faturados), há um rótulo de aviso que não chega ao LLM, um anexo obrigatório e dados do solicitante que podem ser derivados. Público inclui transportadoras (Public), então a descrição precisa ser autoexplicativa.",
+    "nome_sugerido": "Verificar documentos de frete pendentes de faturamento",
+    "short_description_sugerida": "Transportadoras e áreas internas: peça a verificação de documentos de frete (CT-e) emitidos e ainda não faturados/pagos no Brasil",
+    "descricao_sugerida": "Use para pedir ao HUB de Pagamentos a verificação de documentos de frete emitidos por uma transportadora e que ainda não foram faturados ou pagos. É preciso informar a empresa Natura tomadora, os dados da transportadora (nome, CNPJ da matriz), o valor pendente e o ano de emissão, e anexar a planilha no padrão estabelecido, só com documentos do mesmo ano informado. Não use para pagamento de fornecedores que não sejam de frete, adiantamentos ou dúvidas sobre requisições de compra.",
+    "frases_exemplo": [
+      "tenho CT-e de frete que ainda não foi pago",
+      "sou transportadora e quero verificar notas de frete pendentes",
+      "frete emitido em 2024 ainda não faturado",
+      "preciso conferir documentos de frete em aberto",
+      "valor de frete pendente com a Natura"
+    ],
+    "bloqueadores": [
+      { "onde": "v_attach_document", "problema": "Anexo obrigatório (planilha no padrão).", "acao": "Manter como Attachment OOB pedido no final da conversa; citar o padrão/link do template na descrição." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "vs_company", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "manter", "conversational_label": "Para qual empresa Natura o frete foi prestado?", "obs": "" },
+      { "ordem": 2, "variavel": "vs_company_cnpj", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "derivar", "obs": "Se a lista de empresas for fixa, preencher o CNPJ pela escolha de vs_company (default/lookup) em vez de perguntar." },
+      { "ordem": 3, "variavel": "vs_carrier_name", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "manter", "conversational_label": "Qual é o nome da transportadora?", "obs": "Reference com qualifier dinâmico: validar em conversa." },
+      { "ordem": 4, "variavel": "vs_carriers_headquarters_cnpj", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "manter", "conversational_label": "Qual é o CNPJ da matriz da transportadora?", "obs": "Adicionar Validation Regex de CNPJ." },
+      { "ordem": 5, "variavel": "vs_carrier_code", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "derivar", "obs": "Read-only, preenchido a partir da transportadora; não é perguntado." },
+      { "ordem": 6, "variavel": "v_pendent_value", "origem": "item", "acao": "manter", "conversational_label": "Qual é o valor total pendente?", "obs": "Validation Regex de valor (ex.: 9999,99)." },
+      { "ordem": 7, "variavel": "v_year_related_to_pending_document", "origem": "item", "acao": "manter", "conversational_label": "Em que ano os documentos pendentes foram emitidos?", "obs": "Validation Regex ^\\d{4}$. A regra 'só documentos do mesmo ano' vai na descrição." },
+      { "ordem": 8, "variavel": "v_warning_document_attach", "origem": "item", "acao": "remover", "obs": "Rótulo informativo; texto movido para a descrição." },
+      { "ordem": 9, "variavel": "v_request_describe", "origem": "item", "acao": "manter", "conversational_label": "Descreva o que precisa que seja verificado.", "obs": "" },
+      { "ordem": 10, "variavel": "v_attach_document", "origem": "item", "acao": "manter", "conversational_label": "Anexe a planilha com os documentos pendentes, no padrão do HUB.", "obs": "Último passo." },
+      { "ordem": 11, "variavel": "vs_requeste_name", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "derivar", "obs": "Default com o nome do usuário logado (editável só no formulário)." },
+      { "ordem": 12, "variavel": "vs_requesters_email", "origem": "set:EY - Informações da Empresa e da Transportadora", "acao": "derivar", "obs": "Default com o e-mail do usuário logado." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Set mandatory and read only variables", "acao": "converter", "substituicao": "Policy sem condição e onLoad: passar mandatory/read-only para os atributos das próprias variáveis e excluir a policy. Remover itens sem ação (v_request_describe duplicado, vs_carriers_headquarters_cnpj vazio) e a referência a vs_cnpj_label." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher description (hoje vazia).",
+        "Como o item é Public, confirmar se transportadoras externas usam o VA; se não, a conversa serve só ao público interno."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O producer script diz 'Pré-edição e Reembolso - Cliente Final' mas só grava x_nasm_hr_item: nome do script está desatualizado, sem impacto na conversa."
+  },
+  {
+    "sys_id": "5c8fbbfe1b754e90d1abda4ce54bcba5",
+    "nome_atual": "Solicitação de compras descentralizadas",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 1627,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 30,
+    "justificativa": "Alto volume (1.627) e duas intenções distintas escolhidas em vs_type_of_request: criar requisição de compra (PR/CW, com template e anexos) e criar/aceitar folha de serviço (pedido, linha, datas, confirmação). Hoje são 60 perguntas, 30 delas select boxes de classificação da LC 116/2003 (uma por tipo de serviço) exibidas por script, além de um bloqueio de envio por vs_controller. Separando as intenções e consolidando as 30 classificações em uma referência, cada item cai para menos de 20 perguntas.",
+    "nome_sugerido": "Compras descentralizadas (até R$ 125 mil)",
+    "short_description_sugerida": "Compras descentralizadas até R$ 125.000,00 ou US$ 25.000,00: criação de requisição (PR/CW) ou criação e aceite de folha de serviço",
+    "descricao_sugerida": "Compras descentralizadas feitas pela própria área, com valor total até R$ 125.000,00 (ou US$ 25.000,00 em moeda estrangeira), no Brasil. Acima desse valor a compra é centralizada e deve seguir o pedido de compra padrão.",
+    "frases_exemplo": [
+      "compra descentralizada",
+      "preciso fazer uma compra de até 125 mil"
+    ],
+    "bloqueadores": [
+      { "onde": "vs_service_* (30 select boxes do set Payment)", "problema": "30 perguntas com o mesmo label, mostradas/ocultadas por script conforme vs_select_type_of_service e limpas na troca de moeda.", "acao": "Substituir por uma única Reference à tabela de códigos LC116 (x_nasm_ptp_lc116, já usada no item bff27500) com reference qualifier simples pelo tipo de serviço, ou manter só vs_select_type_of_service + nova_codigo_lc116." },
+      { "onde": "EY: Block submit if value great than (onSubmit) + vs_controller", "problema": "Bloqueio de envio baseado em variável oculta calculada em outro lugar; na conversa o usuário só descobre no final.", "acao": "Validar o teto logo após vs_total_purchase_value (policy sem script mostrando mensagem e escondendo o restante) e dizer o limite na descrição; manter o onSubmit como proteção só no formulário." },
+      { "onde": "v_attach_completed_template, v_attach_supplier_email_with_commercial_proposal", "problema": "Dois anexos obrigatórios no ramo PR.", "acao": "Pedir no final da conversa como Attachment OOB, com o link do template na descrição do item derivado." },
+      { "onde": "Rich text labels (v_faq_about_process, v_info_exclusively_decentralized_purchases, v_term_responsibility_contracting, v_download_template, vs_info_*, vs_download_nm_2041_3_0)", "problema": "Mídia/instrução não chega ao LLM; alguns estão marcados mandatory por policy.", "acao": "Levar o conteúdo para a descrição/KB e tirar mandatory dos rótulos." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Block submit if value great than", "acao": "converter", "substituicao": "Mensagem e bloqueio logo após o valor (UI policy sem script) + limite explícito na descrição." },
+      { "nome": "EY: Clear Fields when Currency Changes", "acao": "remover", "substituicao": "Desnecessário com um único campo de classificação LC116." },
+      { "nome": "EY: Clear value when Creation and Accept", "acao": "remover", "substituicao": "Com a divisão, os anexos de PR não existem no item de folha de serviço." },
+      { "nome": "EY: Hide fields on PR Creation / EY: Mandatory fields on PR creation / EY: Hide fields on Creation and Acceptance of Service Sheet or None", "acao": "remover", "substituicao": "Viram a composição fixa de cada item derivado." },
+      { "nome": "EY: If the \"What is the type of request?\" is \"PR Creation\" and ... foreign currency", "acao": "manter", "substituicao": "Fica no item derivado de PR, condicionada só à moeda estrangeira e ao tipo de contratação diferente de material." },
+      { "nome": "EY: Mandatory field", "acao": "converter", "substituicao": "Mandatory direto na variável v_attach_supplier_email_with_commercial_proposal (item de PR)." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Após criar os derivados, desativar o item pai ou deixá-lo non-conversational como fallback.",
+        "Producer script copia o tipo de solicitação para 'decentralized_purchases': em cada derivado fixar vs_type_of_request por default para manter o mapeamento e os flows (PR creation / Creation and Acceptance of Service Sheet).",
+        "vs_in_the_name_of é usado pelo producer script para resolver o solicitante: preencher por default com o perfil do usuário logado."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar requisição de compra descentralizada (PR ou CW)",
+        "short_description": "Criar requisição de compra (PR) ou contrato (CW) para compra descentralizada até R$ 125 mil / US$ 25 mil",
+        "descricao": "Use quando sua área vai contratar um serviço ou comprar um material por conta própria, com valor total até R$ 125.000,00 (ou US$ 25.000,00 em moeda estrangeira), e precisa que o HUB crie a requisição de compra (PR) ou o contrato (CW). Tenha em mãos o CNPJ/Tax ID do fornecedor, o valor, o template de compra preenchido e o e-mail do fornecedor com a proposta comercial. Não use para valores acima do limite (compra centralizada, use o pedido de compra padrão) nem para gerar ou aceitar folha de serviço de um pedido já existente.",
+        "frases_exemplo": [
+          "preciso criar uma PR de compra descentralizada",
+          "quero contratar um fornecedor de até 50 mil reais",
+          "abrir CW para serviço de consultoria pequeno",
+          "compra descentralizada em dólar",
+          "preciso de requisição de compra para um evento da minha área"
+        ],
+        "fixar": "vs_type_of_request = pr_creation (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "vs_which_company_request_for", "conversational_label": "A compra é para qual empresa?" },
+          { "ordem": 2, "variavel": "vs_sub_company", "conversational_label": "Para qual subempresa?" },
+          { "ordem": 3, "variavel": "vs_select_physical_center", "conversational_label": "Qual é o centro físico?" },
+          { "ordem": 4, "variavel": "vs_area_will_call_opened", "conversational_label": "Qual área está fazendo a compra?" },
+          { "ordem": 5, "variavel": "vs_total_purchase_value", "conversational_label": "Qual é o valor total da compra?" },
+          { "ordem": 6, "variavel": "vs_payment_in_reais_or_foreign_currency", "conversational_label": "O pagamento será em reais ou em moeda estrangeira?" },
+          { "ordem": 7, "variavel": "vs_type_of_contract", "conversational_label": "É compra de material ou contratação de serviço?" },
+          { "ordem": 8, "variavel": "vs_cnpj_tax_supplier_id", "conversational_label": "Qual é o CNPJ (ou Tax ID) do fornecedor?" },
+          { "ordem": 9, "variavel": "vs_email_supplier", "conversational_label": "Qual é o e-mail de contato do fornecedor?" },
+          { "ordem": 10, "variavel": "vs_email_supplier_registration", "conversational_label": "Qual e-mail devemos usar para o cadastro do fornecedor?" },
+          { "ordem": 11, "variavel": "vs_start_date_service_provision", "conversational_label": "Quando começa a prestação do serviço?" },
+          { "ordem": 12, "variavel": "vs_end_date_service_provision", "conversational_label": "Quando termina a prestação do serviço?" },
+          { "ordem": 13, "variavel": "vs_select_type_of_service", "conversational_label": "(só moeda estrangeira) Qual é o tipo de serviço contratado?" },
+          { "ordem": 14, "variavel": "nova_codigo_lc116", "conversational_label": "(só moeda estrangeira) Qual é a classificação do serviço na Lei Complementar 116/2003?" },
+          { "ordem": 15, "variavel": "vs_summary_contracted_service", "conversational_label": "(só moeda estrangeira) Resuma o serviço contratado." },
+          { "ordem": 16, "variavel": "vs_tax_benefit_linked_service", "conversational_label": "(só moeda estrangeira) Qual benefício fiscal está ligado ao serviço?" },
+          { "ordem": 17, "variavel": "vs_service_provided_abroad_bring_economic_results_to_natura_brasil", "conversational_label": "(só moeda estrangeira) O serviço prestado no exterior trará resultado econômico para a Natura Brasil? Se não, explique por quê." },
+          { "ordem": 18, "variavel": "vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier", "conversational_label": "(só moeda estrangeira) Os impostos do contrato serão pagos pela Natura ou pelo fornecedor?" },
+          { "ordem": 19, "variavel": "vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts", "conversational_label": "(só moeda estrangeira) Os valores vão ultrapassar os limites da norma NM-2041.3.0?" },
+          { "ordem": 20, "variavel": "vs_supplier_bank_details", "conversational_label": "(só moeda estrangeira) Quais são os dados bancários do fornecedor?" },
+          { "ordem": 21, "variavel": "v_attach_completed_template", "conversational_label": "Anexe o template de compra preenchido." },
+          { "ordem": 22, "variavel": "v_attach_supplier_email_with_commercial_proposal", "conversational_label": "Anexe o e-mail do fornecedor com a proposta comercial." }
+        ]
+      },
+      {
+        "nome": "Solicitar criação e aceite de folha de serviço (compra descentralizada)",
+        "short_description": "Criar e aceitar folha de serviço de um pedido de compra descentralizada já emitido",
+        "descricao": "Use quando o pedido de compra descentralizada já existe e o serviço foi prestado: o HUB cria e aceita a folha de serviço para liberar o pagamento ao fornecedor. Informe o número e a linha do pedido, o local e o período da prestação e confirme se o serviço foi entregue. Não use para abrir uma nova requisição de compra (PR/CW) nem para folhas de serviço de pedidos centralizados (use o item de pedido de compra e folha de serviço padrão).",
+        "frases_exemplo": [
+          "preciso aceitar a folha de serviço do pedido 4500012345",
+          "o fornecedor já prestou o serviço, como libero o pagamento?",
+          "criar folha de serviço de compra descentralizada",
+          "dar aceite no serviço prestado",
+          "gerar FS do pedido para pagar o fornecedor"
+        ],
+        "fixar": "vs_type_of_request = creation_acceptance_service_sheet (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "vs_purchase_order_number", "conversational_label": "Qual é o número do pedido de compra?" },
+          { "ordem": 2, "variavel": "vs_order_line", "conversational_label": "Qual é a linha do pedido?" },
+          { "ordem": 3, "variavel": "vs_which_company_request_for", "conversational_label": "O pedido é de qual empresa?" },
+          { "ordem": 4, "variavel": "vs_sub_company", "conversational_label": "De qual subempresa?" },
+          { "ordem": 5, "variavel": "vs_area_will_call_opened", "conversational_label": "Qual área está solicitando?" },
+          { "ordem": 6, "variavel": "vs_total_purchase_value", "conversational_label": "Qual é o valor da folha de serviço?" },
+          { "ordem": 7, "variavel": "vs_location_service_provision", "conversational_label": "Em que local o serviço foi prestado?" },
+          { "ordem": 8, "variavel": "vs_service_description", "conversational_label": "Descreva o serviço prestado." },
+          { "ordem": 9, "variavel": "vs_start_date_service_provision", "conversational_label": "Quando o serviço começou?" },
+          { "ordem": 10, "variavel": "vs_end_date_service_provision", "conversational_label": "Quando o serviço terminou?" },
+          { "ordem": 11, "variavel": "vs_confirm_service_provision", "conversational_label": "Você confirma que o serviço foi prestado?" }
+        ]
+      }
+    ],
+    "observacoes": "vs_controller é uma checkbox oculta que, quando true, esconde quase o formulário todo (policy 'EY: If controller is true'); entender onde ela é calculada antes de migrar. vs_in_the_name_of (Reference com qualifier dinâmico) deve vir preenchido com o usuário logado. Os sets 'Value', 'Fornecedor', 'Type of request' e 'Payment' parecem exclusivos deste item, por isso as recomendações específicas acima. Sobreposição de intenção com db9c46e7 e bff27500: a descrição de cada derivado cita o limite de R$ 125 mil para separar."
+  },
+  {
+    "sys_id": "c15bef711bdde110a530426fe54bcbc0",
+    "nome_atual": "Solicitar criação de pagamento manual e ITP",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 768,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "Volume alto (768) e intenção única, mas 25 perguntas (acima de 20) e vários campos que são só espelho do beneficiário ou do aprovador (CNPJ, código SAP, e-mail) via lookup com reference qualifier scriptado. Há policies 'Resolver View' marcando campos como read-only sempre, o que faria a conversa pular perguntas, e atributos de referência a fx_currency colados por engano em variáveis de texto/data. Limpando derivados e policies, fica bem abaixo de 20 perguntas.",
+    "nome_sugerido": "Solicitar pagamento manual ou ITP (taxas e juros)",
+    "short_description_sugerida": "Pedir ao HUB um pagamento manual a um beneficiário ou um ITP de taxas e juros, nacional ou internacional",
+    "descricao_sugerida": "Use para pedir ao HUB de Pagamentos um pagamento manual, fora do fluxo de pedido de compra, ou um ITP (pagamento de taxas, juros e encargos), para beneficiário nacional ou internacional, inclusive pagamentos demandados pelo Jurídico. Informe o beneficiário, o valor, a moeda, a data de pagamento, a descrição e se o valor será rateado entre centros de custo (nesse caso, anexe o template de rateio). Não use para adiantamento a fornecedor, pagamento de aluguel e condomínio das lojas, pagamentos com pedido de compra ou folha de serviço.",
+    "frases_exemplo": [
+      "preciso fazer um pagamento manual para um fornecedor",
+      "pagar juros e multa de um boleto atrasado",
+      "abrir ITP de taxas",
+      "o jurídico pediu um pagamento de acordo",
+      "pagamento internacional sem pedido de compra",
+      "pagamento manual rateado entre centros de custo"
+    ],
+    "bloqueadores": [
+      { "onde": "UI policies 'EY: Read Only Fields - Resolver View' e '... for payment category/apportionment - Resolver View'", "problema": "Sem condição de visão, deixam read-only campos como v_amount_to_be_paid, v_coin, v_pay_day, v_beneficiary_name; perguntas read-only são puladas na conversa.", "acao": "Garantir 'Applies on Catalog Item view' desmarcado (só Target Record/Resolver), ou migrar para a view do caso." },
+      { "onde": "EY: Mandatory Fields for apportionment = No - Catalog Item View", "problema": "Marca v_ledger_account e v_cost_center_or_pep como mandatory e também readonly=true na visão do item: o usuário não consegue preencher e a conversa pula.", "acao": "Remover readonly=true dessa policy (deixar só visible/mandatory)." },
+      { "onde": "v_attach_template_apportionments", "problema": "Anexo obrigatório quando há rateio.", "acao": "Pedir no final da conversa; link do template na descrição (v_download_template sai)." },
+      { "onde": "EY: Máscara de Valor - v_amount_to_be_paid", "problema": "Formatação de moeda por script onChange (manipula o valor digitado).", "acao": "Trocar por Validation Regex (ex.: ^\\d{1,3}(\\.\\d{3})*,\\d{2}$) com exemplo no label." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_payment_category", "origem": "item", "acao": "manter", "conversational_label": "O pagamento é nacional ou internacional?", "obs": "" },
+      { "ordem": 2, "variavel": "v_demanded_by_legal_team", "origem": "item", "acao": "manter", "conversational_label": "Esse pagamento foi pedido pelo Jurídico?", "obs": "" },
+      { "ordem": 3, "variavel": "v_beneficiary_name", "origem": "item", "acao": "manter", "conversational_label": "Quem é o beneficiário do pagamento?", "obs": "Reference a core_company." },
+      { "ordem": 4, "variavel": "v_beneficiary_cnpj_or_cpf", "origem": "item", "acao": "derivar", "obs": "Lookup espelho do beneficiário, já read-only: trocar por auto-populate (dot-walk v_beneficiary_name.u_cnpj) e não perguntar." },
+      { "ordem": 5, "variavel": "v_sap_code_ref", "origem": "item", "acao": "derivar", "obs": "Mesmo caso: auto-populate de v_beneficiary_name.u_vendor_id." },
+      { "ordem": 6, "variavel": "v_amount_to_be_paid", "origem": "item", "acao": "manter", "conversational_label": "Qual é o valor a pagar?", "obs": "Remover include_none indevido; Validation Regex de valor." },
+      { "ordem": 7, "variavel": "v_coin", "origem": "item", "acao": "manter", "conversational_label": "Em qual moeda?", "obs": "Default BRL quando v_payment_category = nacional." },
+      { "ordem": 8, "variavel": "v_pay_day", "origem": "item", "acao": "manter", "conversational_label": "Para qual data é o pagamento?", "obs": "Remover atributos de referência fx_currency colados na variável Date." },
+      { "ordem": 9, "variavel": "v_payment_description", "origem": "item", "acao": "manter", "conversational_label": "Descreva o que está sendo pago.", "obs": "Remover reference qualifier de fx_currency colado na variável de texto." },
+      { "ordem": 10, "variavel": "v_is_an_apportionment", "origem": "item", "acao": "manter", "conversational_label": "O valor será rateado entre mais de um centro de custo?", "obs": "" },
+      { "ordem": 11, "variavel": "v_ledger_account", "origem": "item", "acao": "manter", "conversational_label": "Qual é a conta contábil?", "obs": "Só quando não houver rateio; tirar readonly na visão do item." },
+      { "ordem": 12, "variavel": "v_cost_center_or_pep", "origem": "item", "acao": "manter", "conversational_label": "Qual é o centro de custo ou PEP (elemento de projeto)?", "obs": "Só quando não houver rateio." },
+      { "ordem": 13, "variavel": "v_attach_template_apportionments", "origem": "item", "acao": "manter", "conversational_label": "Anexe o template de rateio preenchido.", "obs": "Só com rateio; último passo." },
+      { "ordem": 14, "variavel": "v_download_template", "origem": "item", "acao": "remover", "obs": "Rich text com link; levar o link para a descrição." },
+      { "ordem": 15, "variavel": "v_payment_approver_name", "origem": "item", "acao": "manter", "conversational_label": "Quem vai aprovar o pagamento?", "obs": "Só internacional." },
+      { "ordem": 16, "variavel": "v_payment_approver_email", "origem": "item", "acao": "derivar", "obs": "Auto-populate de v_payment_approver_name.email; não perguntar." },
+      { "ordem": 17, "variavel": "v_select_the_approver", "origem": "item", "acao": "manter", "conversational_label": "Quem é o aprovador (gerente ou acima)?", "obs": "Só para as duas subempresas da policy 'EY: Select the approver'. Avaliar unificar com v_payment_approver_name." },
+      { "ordem": 18, "variavel": "v_additional_information", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar alguma informação?", "obs": "Opcional; remover lookup/ref_qual de sys_user colado na variável de texto." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Máscara de Valor - v_amount_to_be_pa", "acao": "remover", "substituicao": "Validation Regex na variável." },
+      { "nome": "EY: Mandatory Fields - Catalog Item View", "acao": "converter", "substituicao": "Mandatory direto nas variáveis (policy sem condição, onLoad)." },
+      { "nome": "EY: Read Only Fields - Catalog Item View", "acao": "converter", "substituicao": "v_sap_code_ref vira auto-populate read-only por atributo." },
+      { "nome": "EY: Mandatory Fields for payment category = NATIONAL - Catalog Item View / EY: Read Only Fields for payment category = NATIONAL - Resolver View", "acao": "remover", "substituicao": "CNPJ/CPF passa a ser derivado do beneficiário." },
+      { "nome": "EY: Mandatory Fields for apportionment = No - Catalog Item View", "acao": "manter", "substituicao": "Retirar readonly=true de v_ledger_account e v_cost_center_or_pep." },
+      { "nome": "Policies '... - Resolver View'", "acao": "manter", "substituicao": "Restringir à visão do caso (desmarcar Applies on Catalog Item view)." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Flow 'Desativado EY: Request manual payment creation' ainda associado: limpar.",
+        "Perguntas do set 'EY: Company: NTCO - Subcompany' (vs_subcategory2, vs_which_sub_company_2 etc.) tratadas na análise do set."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Nacional x internacional muda só 2-3 perguntas, então não vale dividir. Diferenciar na descrição do 'Adiantamento de Pagamento ao Fornecedor' (2bedd870) e do 'Aluguel e Condomínio Varejo' (daebc4ad)."
+  },
+  {
+    "sys_id": "db9c46e71bdd2910d1abda4ce54bcb0e",
+    "nome_atual": "Solicitar Criação de Pedido de Compra, Folha de Serviço e Aceite de Folha de Serviço",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 8597,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 20,
+    "justificativa": "Rank 6 em volume (8.597) e três intenções num único select (v_type_of_request): criação de pedido de compra (Ariba/Coupa/Linx, com template e anexo), criação de folha de serviço e aceite de folha de serviço. São 65 perguntas, 31 UI policies de visão, 14 client scripts (inclusive o motor de 8,4 KB que mostra uma de 30 classificações LC116 e scripts que reconstroem opções por empresa/área). Os ramos de folha de serviço são curtos e ótimos para conversa; o ramo de pedido de compra pode ser conversacional com o anexo no fim.",
+    "nome_sugerido": "Pedido de compra e folha de serviço (HUB de Pagamentos)",
+    "short_description_sugerida": "Criação de pedido de compra (Ariba/Coupa/Linx), criação de folha de serviço e aceite de folha de serviço",
+    "descricao_sugerida": "Item agrupador substituído por três itens específicos: criar pedido de compra, criar folha de serviço e aceitar folha de serviço.",
+    "frases_exemplo": [
+      "pedido de compra",
+      "folha de serviço"
+    ],
+    "bloqueadores": [
+      { "onde": "v_service_* (30 select boxes) + 'EY: Dynamic Service Classification', 'EY: Hide Fields OnLoad', 'EY: Clear Fields when Currency Changes'", "problema": "30 perguntas de mesmo label controladas por scripts grandes de show/hide.", "acao": "Consolidar em v_type_of_service + nova_codigo_lc116 (Reference a x_nasm_ptp_lc116 filtrada pelo tipo) e remover os três scripts." },
+      { "onde": "EY: Type of purchase - Company / EY: Remove type of request Options / EY: Remove Tipo de Solicitaçãol", "problema": "Opções de select reconstruídas por script (clearOptions/addOption) conforme empresa e área; a conversa pode oferecer opções erradas.", "acao": "Com a divisão, v_type_of_request some; para pr_type_of_purchase usar Lookup Select Box em tabela de tipos por empresa, ou opções com dependência (dependent_on) em vez de script." },
+      { "onde": "pr_attach / diretoria_venda_attach", "problema": "Anexo obrigatório do formulário de pedido.", "acao": "Um único anexo no final da conversa do item de pedido de compra; links dos templates (pr_template_*) na descrição/KB." },
+      { "onde": "11 rich text labels pr_template_* / v_faq / v_link / v_download_nm_2041_3_0", "problema": "Templates e links por empresa/tipo de compra não chegam ao LLM.", "acao": "Publicar os templates num artigo de KB e citar na descrição do item de pedido." },
+      { "onde": "UI policies 'Read-Only ... - Resolver View' e 'EY: Read-Only Case - Generic/Other Fields'", "problema": "Sem condição de visão, marcam read-only perguntas como called_area, vs_which_company, v_type_of_request e todas as de tributação: a conversa as pularia.", "acao": "Restringir à visão do caso (desmarcar Applies on Catalog Item view)." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Dynamic Service Classification / EY: Hide Fields OnLoad / EY: Hide Fields OnLoad Case / EY: Clear Fields when Currency Changes", "acao": "remover", "substituicao": "Campo único de classificação LC116 (Reference) visível por UI policy sem script quando moeda = estrangeira." },
+      { "nome": "EY: Máscara de Valor - accept_value / EY: Máscara de Valor - creation_value", "acao": "converter", "substituicao": "Validation Regex de valor (formato 9999,99)." },
+      { "nome": "EY: Validate supplier email", "acao": "converter", "substituicao": "Validation Regex de e-mail OOB na variável e_mail_do_fornecedor." },
+      { "nome": "EY: Clear field on change company (2x) / EY: Clear field Hiring Types", "acao": "remover", "substituicao": "Desnecessários nos itens derivados, que perguntam em ordem fixa." },
+      { "nome": "EY: If Type of request is 'Ariba'", "acao": "converter", "substituicao": "UI policy sem script: pedido Ariba → vs_which_sub_company visível e obrigatório." },
+      { "nome": "Policies 'Mandatory FIelds - PR Creation - Natura - <tipo>' (7) que só mostram o template", "acao": "remover", "substituicao": "Templates vão para KB/descrição." },
+      { "nome": "EY: Make visible and mandatory de 'Centro Natura' field", "acao": "remover", "substituicao": "Referencia centro_natura, que não existe entre as variáveis ativas; limpar." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Após publicar os três derivados, deixar o pai non-conversational (ou desativar) para não competir na busca do LLM.",
+        "Cada derivado fixa v_type_of_request por default/hidden para manter os flows 'Request Creation of Purchase Order, Service Sheet and Service Sheet Acceptance' (há 5 versões associadas; manter só a vigente).",
+        "Alinhar com o item bff27500330dcb9098331c07ee5c7b60 (versão Coupa, 28 casos): se ele substituir este, aplicar a mesma divisão lá."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar criação de pedido de compra (Ariba, Coupa ou Linx)",
+        "short_description": "Pedir ao HUB a criação de pedido de compra centralizado, transgressor, catalogado, subcontratação ou pedido Linx do varejo",
+        "descricao": "Use quando precisa que o HUB de Pagamentos crie um pedido de compra (PR) no Ariba/Coupa ou um pedido Linx (lojas de varejo). Tenha em mãos o formulário/template do tipo de compra preenchido (centralizada, descentralizada, transgressora, catalogada, subcontratação, permitida pela norma, Zout ou Avon), que será anexado no final. Pagamentos em moeda estrangeira pedem também a classificação tributária do serviço. Não use para compras descentralizadas até R$ 125 mil pelo fluxo próprio, para gerar ou aceitar folha de serviço de um pedido existente, nem para tirar dúvida sobre requisição já aberta.",
+        "frases_exemplo": [
+          "preciso criar um pedido de compra",
+          "abrir PR no Ariba para um fornecedor",
+          "pedido Linx para a loja",
+          "criar pedido de compra transgressor",
+          "preciso de PO para serviço pago em dólar",
+          "compra centralizada, como peço o pedido?"
+        ],
+        "fixar": "v_type_of_request = pr_creation (default/hidden); pedido Linx vira opção de pr_type_of_purchase ou v_type_of_request = pedido_linx quando called_area = varejo",
+        "perguntas": [
+          { "ordem": 1, "variavel": "vs_which_company", "conversational_label": "O pedido é para qual empresa?" },
+          { "ordem": 2, "variavel": "vs_which_sub_company", "conversational_label": "Para qual subempresa?" },
+          { "ordem": 3, "variavel": "called_area", "conversational_label": "Qual área está pedindo a compra?" },
+          { "ordem": 4, "variavel": "pr_type_of_purchase", "conversational_label": "Qual é o tipo de compra (centralizada, descentralizada, transgressora, catalogada, subcontratação...)?" },
+          { "ordem": 5, "variavel": "v_hiring_types", "conversational_label": "(Natura centralizada) Qual é o tipo de contratação?" },
+          { "ordem": 6, "variavel": "e_mail_do_fornecedor", "conversational_label": "Qual é o e-mail do fornecedor?" },
+          { "ordem": 7, "variavel": "v_will_payment_be_made_in_reais_or_foreign_currency", "conversational_label": "O pagamento será em moeda local ou estrangeira?" },
+          { "ordem": 8, "variavel": "v_type_of_service", "conversational_label": "(moeda estrangeira) Qual é o tipo de serviço?" },
+          { "ordem": 9, "variavel": "nova_codigo_lc116", "conversational_label": "(moeda estrangeira) Qual é a classificação do serviço na Lei Complementar 116/2003?" },
+          { "ordem": 10, "variavel": "summary_of_the_contracted_service", "conversational_label": "(moeda estrangeira) Resuma o serviço contratado." },
+          { "ordem": 11, "variavel": "what_is_the_tax_benefit_linked_to_the_service", "conversational_label": "(moeda estrangeira) Qual benefício fiscal está ligado ao serviço?" },
+          { "ordem": 12, "variavel": "v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil", "conversational_label": "(moeda estrangeira) O serviço trará resultado econômico para a Natura Brasil?" },
+          { "ordem": 13, "variavel": "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br", "conversational_label": "(se não) Por que o serviço não trará resultado econômico para a Natura Brasil?" },
+          { "ordem": 14, "variavel": "v_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier", "conversational_label": "(moeda estrangeira) Os impostos serão pagos pela Natura ou pelo fornecedor?" },
+          { "ordem": 15, "variavel": "v_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts", "conversational_label": "(moeda estrangeira) Os valores vão ultrapassar os limites da norma NM-2041.3.0?" },
+          { "ordem": 16, "variavel": "v_suppliers_bank_details", "conversational_label": "(moeda estrangeira) Quais são os dados bancários do fornecedor?" },
+          { "ordem": 17, "variavel": "pr_attach", "conversational_label": "Anexe o formulário do pedido preenchido." }
+        ]
+      },
+      {
+        "nome": "Solicitar criação de folha de serviço",
+        "short_description": "Pedir ao HUB a criação da folha de serviço de um pedido de compra já emitido",
+        "descricao": "Use quando o pedido de compra já existe e é preciso criar a folha de serviço para registrar o serviço prestado e seguir com o pagamento. Informe o fornecedor, o número e a linha do pedido, o valor, a descrição e o local da prestação, e confirme se o serviço foi prestado. Não use para criar um novo pedido de compra nem para apenas dar aceite em uma folha de serviço que já foi criada.",
+        "frases_exemplo": [
+          "preciso criar a folha de serviço do pedido 4500098765",
+          "gerar FS para o fornecedor receber",
+          "o serviço foi prestado, precisa lançar a folha",
+          "criar folha de serviço no SAP",
+          "registrar serviço prestado no pedido"
+        ],
+        "fixar": "v_type_of_request = service_sheet_creation (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "creation_order", "conversational_label": "Qual é o número do pedido de compra?" },
+          { "ordem": 2, "variavel": "creation_order_line", "conversational_label": "Qual é a linha do pedido?" },
+          { "ordem": 3, "variavel": "creation_provider_name", "conversational_label": "Qual é o fornecedor?" },
+          { "ordem": 4, "variavel": "creation_provider_sap_code", "conversational_label": "(derivar do fornecedor, não perguntar)" },
+          { "ordem": 5, "variavel": "creation_provider_cnpj", "conversational_label": "(derivar do fornecedor, não perguntar)" },
+          { "ordem": 6, "variavel": "creation_value", "conversational_label": "Qual é o valor da folha de serviço?" },
+          { "ordem": 7, "variavel": "creation_service_description", "conversational_label": "Descreva o serviço prestado." },
+          { "ordem": 8, "variavel": "sheet_service_delivery_location", "conversational_label": "Em que local (cidade) o serviço foi prestado?" },
+          { "ordem": 9, "variavel": "creation_confirmation", "conversational_label": "Você confirma que o serviço foi prestado?" },
+          { "ordem": 10, "variavel": "e_mail_do_fornecedor", "conversational_label": "Qual é o e-mail do fornecedor para envio da folha?" },
+          { "ordem": 11, "variavel": "creation_additional_information", "conversational_label": "Quer acrescentar alguma informação?" }
+        ]
+      },
+      {
+        "nome": "Solicitar aceite de folha de serviço",
+        "short_description": "Pedir ao HUB o aceite de uma folha de serviço já criada para liberar o pagamento",
+        "descricao": "Use quando a folha de serviço já foi criada e falta o aceite para liberar o pagamento ao fornecedor. Informe o número do pedido de compra, o número da folha de serviço, o valor e o local da prestação. Não use para criar a folha de serviço (use 'Solicitar criação de folha de serviço') nem para abrir pedido de compra.",
+        "frases_exemplo": [
+          "preciso dar aceite na folha de serviço",
+          "aceitar FS 1000123456 do pedido 4500011111",
+          "a folha de serviço está pendente de aceite",
+          "liberar pagamento do fornecedor com aceite da folha",
+          "aprovar folha de serviço"
+        ],
+        "fixar": "v_type_of_request = service_sheet_acceptance (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "accept_purchase_order", "conversational_label": "Qual é o número do pedido de compra?" },
+          { "ordem": 2, "variavel": "accept_service_sheet", "conversational_label": "Qual é o número da folha de serviço?" },
+          { "ordem": 3, "variavel": "accept_value", "conversational_label": "Qual é o valor da folha de serviço?" },
+          { "ordem": 4, "variavel": "sheet_service_delivery_location", "conversational_label": "Em que local (cidade) o serviço foi prestado?" },
+          { "ordem": 5, "variavel": "e_mail_do_fornecedor", "conversational_label": "Qual é o e-mail do fornecedor?" }
+        ]
+      }
+    ],
+    "observacoes": "O ramo 'Diretoria de Vendas & Jornada Brasil' (called_area = diretoria_vendas_jornada_brasil) só pede um anexo (diretoria_venda_attach); pode ficar como condição no item de pedido de compra. Várias variáveis de texto (creation_order, accept_value etc.) carregam lookup/ref_qual de core_company copiados por engano: limpar. O script 'EY: Remove type of request Options' mostra que a opção 'Service Sheet Acceptance' foi comentada; confirmar com o HUB se o aceite ainda é pedido separado antes de criar o terceiro derivado (se não for, juntar criação e aceite num só item). Sobreposição com 5c8fbbfe (compras descentralizadas) e bff27500 (versão Coupa)."
+  },
+  {
+    "sys_id": "daebc4ad3b001290924d0247f4e45a0c",
+    "nome_atual": "Solicitar pagamento de Aluguel e Condomínio Varejo",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 583,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Intenção única e clara, 7 perguntas, volume bom (583). Os problemas são pontuais: o solicitante é preenchido por script onLoad, uma policy sem condição deixa v_store_name read-only (a conversa pularia a loja), três rich text labels marcados como obrigatórios, CNPJ buscado por script com sys_id fixo e um script que apaga o centro de custo sem avisar.",
+    "nome_sugerido": "Pagar aluguel, condomínio ou conta de consumo de loja",
+    "short_description_sugerida": "Enviar boleto de aluguel, condomínio ou conta de consumo (água, luz) das lojas de varejo para pagamento",
+    "descricao_sugerida": "Use para enviar ao HUB de Pagamentos o boleto de aluguel, condomínio ou conta de consumo (água, luz, gás) de uma loja de varejo para pagamento. Informe a empresa, a loja (se não encontrar, escolha 'Outros'), o CNPJ da loja, o centro de custo e o vencimento, e anexe o boleto em PDF. Não use para aluguel de escritórios ou imóveis corporativos, pagamento manual a fornecedores (use 'Solicitar pagamento manual ou ITP') ou adiantamento a fornecedor.",
+    "frases_exemplo": [
+      "preciso pagar o aluguel da loja",
+      "boleto de condomínio da loja do shopping vence sexta",
+      "enviar conta de luz da loja para pagamento",
+      "pagar condomínio da loja 123",
+      "tenho um boleto de aluguel do varejo"
+    ],
+    "bloqueadores": [
+      { "onde": "UI policy 'EY: Readonly Variables Resolver'", "problema": "Sem condição e aplicada no carregamento: deixa v_store_name read-only e a conversa pula a pergunta da loja.", "acao": "Restringir à visão do caso (desmarcar Applies on Catalog Item view)." },
+      { "onde": "v_attach_bill", "problema": "Anexo obrigatório.", "acao": "Pedir o boleto no final da conversa (Attachment OOB); formatos aceitos na descrição." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_requesters_name", "origem": "item", "acao": "derivar", "obs": "Default javascript:gs.getUserID() + read-only por atributo; remover o script onLoad." },
+      { "ordem": 2, "variavel": "v_which_company_is_you_request_for", "origem": "item", "acao": "manter", "conversational_label": "O pagamento é de qual empresa?", "obs": "" },
+      { "ordem": 3, "variavel": "v_store_name", "origem": "item", "acao": "manter", "conversational_label": "De qual loja é o boleto?", "obs": "Se não achar, 'Outros' (texto do rótulo v_label_others_store vai para a descrição)." },
+      { "ordem": 4, "variavel": "v_store_cnpj", "origem": "item", "acao": "manter", "conversational_label": "Qual é o CNPJ da loja?", "obs": "Auto-populate a partir de v_store_name (dot-walk no CNPJ da tabela x_nasm_ptp_store_name_rent) e perguntar só quando loja = Outros. Validation Regex de CNPJ." },
+      { "ordem": 5, "variavel": "v_cost_center", "origem": "item", "acao": "manter", "conversational_label": "Qual é o centro de custo da loja?", "obs": "Validation Regex ^\\d+$ com mensagem; idealmente auto-populate a partir da loja." },
+      { "ordem": 6, "variavel": "v_bill_expiration_date", "origem": "item", "acao": "manter", "conversational_label": "Qual é a data de vencimento do boleto?", "obs": "" },
+      { "ordem": 7, "variavel": "v_attach_bill", "origem": "item", "acao": "manter", "conversational_label": "Anexe o boleto, por favor.", "obs": "Último passo." },
+      { "ordem": 8, "variavel": "v_label_others_store", "origem": "item", "acao": "remover", "obs": "Instrução vai para a descrição." },
+      { "ordem": 9, "variavel": "v_others_cnpj", "origem": "item", "acao": "remover", "obs": "Rich text vazio e marcado como obrigatório." },
+      { "ordem": 10, "variavel": "v_allowed_format", "origem": "item", "acao": "remover", "obs": "Formatos aceitos vão para a descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Fill Form Information", "acao": "remover", "substituicao": "Default value gs.getUserID() e read-only na variável v_requesters_name." },
+      { "nome": "EY: Get Store CNPJ", "acao": "converter", "substituicao": "Auto-populate de v_store_cnpj pela referência v_store_name; regra por sys_id fixo vira UI policy sem script (loja = Outros → CNPJ editável e obrigatório)." },
+      { "nome": "EY: onChange only number CC", "acao": "converter", "substituicao": "Validation Regex ^\\d+$ com mensagem de erro." },
+      { "nome": "EY: Mandatory Fields", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; tirar mandatory dos rótulos v_others_cnpj e v_allowed_format." },
+      { "nome": "EY: Readonly Variables Resolver", "acao": "manter", "substituicao": "Só na visão do caso." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Nome atual tem tabulações no final: limpar."]
+    },
+    "itens_derivados": [],
+    "observacoes": "Separar claramente de 'Solicitar pagamento manual ou ITP' (c15bef71) na descrição."
+  },
+  {
+    "sys_id": "1b4c8d151b5da118d1abda4ce54bcb4b",
+    "nome_atual": "Solicitação de acesso ao portal GED",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 50,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 45,
+    "justificativa": "Pedido de acesso simples, 10 perguntas e volume baixo (50). Quatro perguntas são dados do próprio usuário (matrícula, e-mail, telefone, nome) que dá para auto-preencher, e a policy 'Read Only Fields in Target View' sem condição deixaria essas e outras perguntas read-only na conversa. GED não está por extenso e o nome/descrição não dizem para que serve o portal.",
+    "nome_sugerido": "Solicitar acesso ao portal GED (Gestão Eletrônica de Documentos)",
+    "short_description_sugerida": "Pedir acesso ao portal GED de Gestão Eletrônica de Documentos, espelhando um usuário modelo ou escolhendo tipo de acesso e ilha",
+    "descricao_sugerida": "Use para pedir acesso ao portal GED (Gestão Eletrônica de Documentos) usado pelo HUB de Pagamentos. Você pode copiar o perfil de um usuário modelo (informando nome e e-mail dele) ou indicar o tipo de acesso e a ilha de trabalho. É necessário anexar o e-mail do seu gestor aprovando o acesso. Não use para acesso a outros sistemas (SAP, Coupa, Ariba) nem para dúvidas sobre documentos ou pagamentos.",
+    "frases_exemplo": [
+      "preciso de acesso ao GED",
+      "quero acesso ao portal de gestão eletrônica de documentos",
+      "liberar GED igual ao do meu colega",
+      "não tenho acesso ao portal GED",
+      "acesso ao GED para a ilha de fornecedores"
+    ],
+    "bloqueadores": [
+      { "onde": "UI policy 'EY: Read Only Fields in Target View' (e as duas 'Read Only/Visible ... Target view')", "problema": "Sem restrição de visão, deixam read-only full_name, email, registration_number, model_users_mirror etc.; a conversa pula essas perguntas.", "acao": "Desmarcar Applies on Catalog Item view (só visão do caso)." },
+      { "onde": "attachment_approval", "problema": "Anexo obrigatório com cópia do e-mail do gestor.", "acao": "Pedir no final da conversa; avaliar trocar por aprovação do gestor no flow 'EY: Request for access to the GED portal' e remover o anexo." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "model_users_mirror", "origem": "item", "acao": "manter", "conversational_label": "Você quer o mesmo acesso de um colega (usuário modelo)?", "obs": "Include None já marcado." },
+      { "ordem": 2, "variavel": "name_user_mirrored", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Reference (sys_user)", "conversational_label": "Qual colega devemos usar como modelo?", "obs": "Só se espelhar = sim." },
+      { "ordem": 3, "variavel": "email_user_mirrored", "origem": "item", "acao": "derivar", "obs": "Auto-populate do e-mail do usuário escolhido em name_user_mirrored." },
+      { "ordem": 4, "variavel": "type_of_access", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de acesso você precisa?", "obs": "Só se espelhar = não." },
+      { "ordem": 5, "variavel": "inclua_as_ilhas_necessarias", "origem": "item", "acao": "manter", "conversational_label": "Para qual ilha de trabalho é o acesso?", "obs": "Só se espelhar = não. A policy cita 'requested_island', que não existe: limpar." },
+      { "ordem": 6, "variavel": "attachment_approval", "origem": "item", "acao": "manter", "conversational_label": "Anexe o e-mail do seu gestor aprovando o acesso.", "obs": "Último passo (ou remover se a aprovação for para o flow)." },
+      { "ordem": 7, "variavel": "full_name", "origem": "item", "acao": "derivar", "obs": "Default com o nome do usuário logado." },
+      { "ordem": 8, "variavel": "email", "origem": "item", "acao": "derivar", "obs": "Default com o e-mail do usuário logado." },
+      { "ordem": 9, "variavel": "registration_number", "origem": "item", "acao": "derivar", "obs": "Default com a matrícula (employee_number) do usuário logado." },
+      { "ordem": 10, "variavel": "phone_number", "origem": "item", "acao": "derivar", "obs": "Default com o telefone do cadastro; se vazio, perguntar 'Qual é o seu telefone de contato?'." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory Fields in Service Portal", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "EY: Mandatory Fields in Service Portal - Model User Mirror = Yes / = No", "acao": "manter", "substituicao": "Policies sem script, compatíveis; remover a ação sobre requested_island." },
+      { "nome": "EY: Read Only Fields in Target View / Read Only/Visible Fields in Target view (Yes/No)", "acao": "manter", "substituicao": "Só na visão do caso." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Se o item também for usado para pedir acesso em nome de terceiros, criar nova_requested_for (Reference sys_user, default usuário logado) e derivar os dados a partir dela."]
+    },
+    "itens_derivados": [],
+    "observacoes": "Categoria 'Outros Serviços'. Producer script com nome desatualizado ('Pré-edição e Reembolso'), sem impacto."
+  },
+  {
+    "sys_id": "2bedd8701be16950d1abda4ce54bcbc6",
+    "nome_atual": "Adiantamento de Pagamento ao Fornecedor",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 799,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Volume alto (799) e intenção única. Todas as 27 perguntas vêm de sets, o que passa do limite de 20; mas o solicitante, o tipo de solicitação e os dados cadastrais do fornecedor (código e CNPJ/CUIT/RUC) podem ser derivados, e as 8 variantes de subempresa aparecem uma por vez. O set 'EY VS - Variable Adiantamento Fornecedor' é específico deste item e precisa de labels em pt-BR, ordem lógica e câmbio condicionado à moeda.",
+    "nome_sugerido": "Solicitar adiantamento de pagamento a fornecedor",
+    "short_description_sugerida": "Pedir adiantamento parcial ou total a um fornecedor, vinculado a contrato ou pedido de compra",
+    "descricao_sugerida": "Use para pedir ao HUB de Pagamentos um adiantamento parcial ou total a um fornecedor antes da entrega ou da nota fiscal, vinculado a um contrato ou pedido de compra. Informe o fornecedor, o valor, a moeda, a data desejada, o número do contrato ou pedido, o gestor aprovador e o mês de referência para a contabilização. Não use para pagamentos manuais sem adiantamento ou ITP (use 'Solicitar pagamento manual ou ITP'), para criar pedido de compra ou folha de serviço, nem para adiantamento salarial de colaborador.",
+    "frases_exemplo": [
+      "preciso adiantar um pagamento para o fornecedor",
+      "fornecedor pediu 30% antecipado",
+      "adiantamento total do contrato antes da entrega",
+      "pagar antecipado o pedido 4500012345",
+      "solicitar adiantamento em dólar para fornecedor internacional"
+    ],
+    "bloqueadores": [
+      { "onde": "total de perguntas (27)", "problema": "Acima de 20: a VA abriria em janela.", "acao": "Derivar v_opened_by, v_type_of_request, v_supplier_code e v_vendor_tax_code_cnpj_cuit_ruc; condicionar v_exchange à moeda estrangeira. A conversa fica com cerca de 15 perguntas." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_opened_by", "origem": "set:EY VS - Empresas Natura ", "acao": "derivar", "obs": "Default gs.getUserID(), read-only." },
+      { "ordem": 2, "variavel": "v_type_of_request", "origem": "set:EY VS - Empresas Natura ", "acao": "ocultar_na_conversa", "obs": "Fixo para adiantamento: default value e hidden neste item." },
+      { "ordem": 3, "variavel": "v_supplier", "origem": "set:EY VS - Fornecedores", "acao": "manter", "conversational_label": "Para qual fornecedor é o adiantamento?", "obs": "Reference com qualifier dinâmico: validar em conversa." },
+      { "ordem": 4, "variavel": "v_supplier_code", "origem": "set:EY VS - Fornecedores", "acao": "derivar", "obs": "Auto-populate a partir de v_supplier." },
+      { "ordem": 5, "variavel": "v_vendor_tax_code_cnpj_cuit_ruc", "origem": "set:EY VS - Fornecedores", "acao": "derivar", "obs": "Auto-populate a partir de v_supplier." },
+      { "ordem": 6, "variavel": "v_value", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Qual é o valor do adiantamento?", "obs": "Validation Regex de valor." },
+      { "ordem": 7, "variavel": "v_currency", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Em qual moeda?", "obs": "Default BRL." },
+      { "ordem": 8, "variavel": "v_exchange", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Qual taxa de câmbio devemos considerar?", "obs": "Só quando v_currency diferente de BRL (UI policy sem script)." },
+      { "ordem": 9, "variavel": "v_date_for_which_payment_is_requested", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Para qual data você precisa do pagamento?", "obs": "" },
+      { "ordem": 10, "variavel": "v_contract_number", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Qual é o número do contrato?", "obs": "" },
+      { "ordem": 11, "variavel": "v_purchase_order_number", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Qual é o número do pedido de compra?", "obs": "Validation Regex de 10 dígitos, se for pedido SAP." },
+      { "ordem": 12, "variavel": "v_document_number", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Qual é o número do documento KA (lançamento de adiantamento no SAP)?", "obs": "Se o usuário normalmente não sabe, tornar opcional." },
+      { "ordem": 13, "variavel": "v_month_provision", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Em qual mês a nota de compensação do adiantamento deve ser contabilizada?", "obs": "Label atual é longo demais; considerar tipo Select Box de meses ou Date." },
+      { "ordem": 14, "variavel": "vs_approval_manager", "origem": "set:EY VS - Variable Adiantamento Fornecedor ", "acao": "manter", "conversational_label": "Quem é o gestor que vai aprovar?", "obs": "Reference com qualifier dinâmico: validar em conversa." },
+      { "ordem": 15, "variavel": "v_additional_information", "origem": "set:EY VS - Informaçoes/anexo", "acao": "manter", "conversational_label": "Quer acrescentar alguma informação ou anexo?", "obs": "Opcional, por último." }
+    ],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Descrição hoje igual à short description: substituir pela descrição de negócio.",
+        "Perguntas de empresa/subempresa/área do set 'EY VS - Empresas Natura' e suas 10 policies onLoad ficam para a análise do set."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Categoria 'Pagamentos' (os irmãos estão em 'HUB de Pagamentos'); avaliar alinhar a categoria. Diferenciar de c15bef71 (pagamento manual/ITP) na descrição."
+  }
+]

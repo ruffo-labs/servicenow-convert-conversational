@@ -1,0 +1,75 @@
+{
+ "sys_id": "f7707f453b2f7610b28dd047f4e45ae0",
+ "status": "conversacional",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "tema_do_protocolo": {
+   "label": "Tema do protocolo"
+  },
+  "ocorrencia": {
+   "label": "Ocorrência"
+  },
+  "tipo_de_deficiencia": {
+   "label": "Tipo de deficiência"
+  },
+  "service_offering": {
+   "label": "O que você deseja?"
+  }
+ },
+ "remover": {
+  "obs_detalhadamente": "visual",
+  "start": "visual",
+  "formatter2": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "16ca749287677650182a0d440cbb3554": "remover",
+  "30feec5287a37650182a0d440cbb3599": "remover",
+  "7e3ee01287a37650182a0d440cbb3568": "remover",
+  "9d7e6c1287a37650182a0d440cbb35fe": "remover",
+  "c49fa85687a37650182a0d440cbb352b": "remover",
+  "852fec5287a37650182a0d440cbb355b": "remover",
+  "nova_g0_2": {
+   "short_description": "CSA - Ocorrência",
+   "conditions": "tema_do_protocolo!=",
+   "actions": {
+    "ocorrencia": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_3": {
+   "short_description": "CSA - Descrição",
+   "conditions": "ocorrencia!=",
+   "actions": {
+    "rh_description": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Diversidade e Inclusão",
+   "short_description": "Diversidade e Inclusão",
+   "description": "Diversidade e Inclus o",
+   "frases_exemplo": [
+    "Protocolo de atendimento para Pessoa com Deficiência - Diversidade e Inclusão"
+   ],
+   "vars": {
+    "tema_do_protocolo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "tipo_de_deficiencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

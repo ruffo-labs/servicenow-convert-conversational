@@ -1,0 +1,298 @@
+{
+ "sys_id": "1c15094f1bc3e81032822170f54bcb37",
+ "status": "dividido",
+ "motivo": "Cada oferta de Vale-refeição pede dados diferentes: motivo e afastamento (2ª via recusada), mês de referência (divergências), detalhamento (não recebimento de crédito) ou dados da utilização desconhecida (suspeita de fraude). O cartão não recebido não pede campo extra. Pendências: Scripts 'ALP - RH Default Validation User Change/Load' chamam UI Script x_asat_csc.RhDefaultValidation (lógica não visível): omitidos, humano deve checar o que validam. Script de telefone convertido para regex assumindo só validação/máscara; confirmar.",
+ "vars": {
+  "rh_reason_ticket": {
+   "label": "Qual foi o motivo informado pela central de atendimento?"
+  },
+  "motivo": {
+   "label": "Qual é o motivo da sua solicitação?"
+  },
+  "rh_recent_leave": {
+   "label": "Você teve algum afastamento recente?"
+  },
+  "rh_unknown_use_price": {
+   "label": "Qual foi o valor da compra que você desconhece?"
+  },
+  "rh_details_divergence": {
+   "label": "Descreva o que aconteceu e qual foi a diferença."
+  },
+  "rh_receiving_date": {
+   "label": "Em que data você recebeu o cartão?"
+  },
+  "rh_second_request": {
+   "label": "Você já pediu a 2ª via do cartão?"
+  },
+  "rh_unknown_use_date": {
+   "label": "Em que data ocorreu a compra que você desconhece?"
+  },
+  "rh_phone_contact": {
+   "label": "Qual é o seu telefone para contato?"
+  },
+  "rh_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "rh_occurrence": {
+   "label": "Houve cancelamento ou alteração de férias, ou afastamento?"
+  }
+ },
+ "policies": {
+  "01dbcec71b87a050eca40dcbe54bcbd1": "remover",
+  "34c1298b1b03a050eca40dcbe54bcbc7": "remover",
+  "75350d8f1bc3e81032822170f54bcbb1": "remover",
+  "992257178703e210182a0d440cbb35bd": "remover",
+  "b5350d8f1bc3e81032822170f54bcba8": "remover",
+  "b5350d8f1bc3e81032822170f54bcbae": "remover"
+ },
+ "itens": [
+  {
+   "name": "Cartão de VR: 2ª via recusada pela central de atendimento",
+   "short_description": "Contestar a recusa da 2ª via do cartão de Vale-refeição.",
+   "description": "Use quando a central de atendimento recusou o seu pedido de 2ª via do cartão de Vale-refeição e você quer que o RH reavalie. Corresponde à oferta 'Central de atendimento recusou a solicitação de 2ª via do cartão de VR'. Informe o motivo que a central deu e se houve afastamento recente.",
+   "frases_exemplo": [
+    "A central negou minha segunda via do cartão de VR",
+    "Pediram pra eu abrir chamado porque recusaram a 2ª via do vale-refeição",
+    "Meu cartão de VR foi bloqueado e não aceitaram emitir outro",
+    "Quero contestar a recusa da segunda via do cartão refeição",
+    "Preciso de ajuda, a central não quis refazer meu cartão de VR"
+   ],
+   "sem_vars": [
+    "motivo",
+    "rh_unknown_use_price",
+    "rh_details_divergence",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact",
+    "rh_reference_month",
+    "rh_occurrence"
+   ],
+   "vars": {
+    "rh_reason_ticket": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_recent_leave": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Divergência no valor de desconto do Vale-refeição",
+   "short_description": "Informar desconto de VR diferente do esperado.",
+   "description": "Use quando o valor descontado do seu Vale-refeição em folha está diferente do esperado. Corresponde à oferta 'Divergência no valor de desconto do Vale refeição'. Informe o mês de referência do desconto.",
+   "frases_exemplo": [
+    "Descontaram VR a mais no meu holerite",
+    "O desconto do vale-refeição veio errado",
+    "Acho que o valor descontado do meu VR está incorreto",
+    "Tem um desconto de vale refeição que não entendi",
+    "Quero questionar o desconto do VR no contracheque"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "motivo",
+    "rh_recent_leave",
+    "rh_unknown_use_price",
+    "rh_details_divergence",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact",
+    "rh_occurrence"
+   ],
+   "vars": {
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Divergência no VR por cancelamento ou alteração de férias",
+   "short_description": "Informar valor de VR errado após mudança nas férias.",
+   "description": "Use quando o valor recebido de VR ficou diferente porque suas férias foram canceladas ou alteradas. Corresponde à oferta 'Divergência no valor recebido de VR devido ao cancelamento/alteração das férias'. Informe o mês de referência.",
+   "frases_exemplo": [
+    "Cancelei minhas férias e o VR veio errado",
+    "Mudaram minhas férias e o vale-refeição não bateu",
+    "O valor do VR está errado depois da alteração das férias",
+    "Meu VR veio diferente por causa das férias",
+    "Alterei as férias e o crédito do VR veio com valor estranho"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "motivo",
+    "rh_recent_leave",
+    "rh_unknown_use_price",
+    "rh_details_divergence",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact",
+    "rh_occurrence"
+   ],
+   "vars": {
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Divergência no valor recebido do Vale-refeição",
+   "short_description": "Informar crédito de VR com valor diferente do devido.",
+   "description": "Use quando o valor creditado no seu Vale-refeição está diferente do que você deveria receber. Corresponde à oferta 'Divergência no valor recebido do Vale refeição'. Informe o motivo, o mês de referência e se teve cancelamento, alteração de férias ou afastamento.",
+   "frases_exemplo": [
+    "O VR que caiu veio menor que o certo",
+    "Recebi valor errado de vale-refeição",
+    "O crédito do meu cartão refeição não bate com o esperado",
+    "Meu VR veio com diferença este mês",
+    "Quero reclamar do valor que recebi de VR"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "rh_recent_leave",
+    "rh_unknown_use_price",
+    "rh_details_divergence",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact"
+   ],
+   "vars": {
+    "motivo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_occurrence": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Não recebimento do cartão de Vale-refeição",
+   "short_description": "Informar que o cartão de VR não chegou.",
+   "description": "Use quando você ainda não recebeu o cartão físico do Vale-refeição. Corresponde à oferta 'Não recebimento do cartão Vale refeição'. Não exige informações adicionais além dos seus dados.",
+   "frases_exemplo": [
+    "Meu cartão de VR não chegou",
+    "Ainda não recebi o cartão do vale-refeição",
+    "Entrei na empresa e não veio meu cartão refeição",
+    "Cadê meu cartão de VR?",
+    "Preciso do cartão do vale-refeição, não recebi"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "motivo",
+    "rh_recent_leave",
+    "rh_unknown_use_price",
+    "rh_details_divergence",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact",
+    "rh_reference_month",
+    "rh_occurrence"
+   ]
+  },
+  {
+   "name": "Não recebimento do crédito no cartão de Vale-refeição",
+   "short_description": "Informar que o crédito de VR não caiu no cartão.",
+   "description": "Use quando o crédito do Vale-refeição não apareceu no seu cartão. Corresponde à oferta 'Não recebimento do crédito do cartão de Vale refeição'. Informe o mês de referência e detalhe o que aconteceu.",
+   "frases_exemplo": [
+    "O VR não caiu no meu cartão",
+    "Não recebi o crédito do vale-refeição este mês",
+    "Meu cartão refeição está sem saldo, o crédito não entrou",
+    "O benefício de VR não foi depositado",
+    "Faltou o crédito do VR no cartão"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "motivo",
+    "rh_recent_leave",
+    "rh_unknown_use_price",
+    "rh_receiving_date",
+    "rh_second_request",
+    "rh_unknown_use_date",
+    "rh_phone_contact",
+    "rh_occurrence"
+   ],
+   "vars": {
+    "rh_details_divergence": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Análise de uso do cartão de VR: suspeita de fraude",
+   "short_description": "Pedir análise de uso desconhecido do cartão de VR.",
+   "description": "Use quando você desconhece uma utilização do seu cartão de Vale-refeição e suspeita de fraude. Corresponde à oferta 'Solicitação de análise de utilização do cartão vale refeição - susp. de fraude'. Informe valor e data da compra, quando recebeu o cartão, se pediu 2ª via e um telefone de contato.",
+   "frases_exemplo": [
+    "Tem compra no meu cartão de VR que eu não fiz",
+    "Acho que clonaram meu cartão refeição",
+    "Quero que analisem um gasto estranho no vale-refeição",
+    "Meu cartão de VR teve uso que eu desconheço",
+    "Suspeito de fraude no cartão do vale-refeição"
+   ],
+   "sem_vars": [
+    "rh_reason_ticket",
+    "motivo",
+    "rh_recent_leave",
+    "rh_details_divergence",
+    "rh_reference_month",
+    "rh_occurrence"
+   ],
+   "vars": {
+    "rh_unknown_use_price": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_receiving_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_second_request": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_unknown_use_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_contact": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ],
+ "scripts": {
+  "515db6391bfbec1032822170f54bcba3": {
+   "converter": "regex"
+  }
+ }
+}

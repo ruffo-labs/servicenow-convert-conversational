@@ -1,0 +1,319 @@
+{
+ "sys_id": "dc3fe5771b00651cd1abda4ce54bcbba",
+ "status": "dividido",
+ "motivo": "Item roteador único que junta 4 demandas (dúvida de táxi, dúvida de viagem, relatório de uso, troca de aprovador) por uma pergunta de múltipla escolha, com a troca de aprovador aninhada dentro da dúvida de viagem. Como restringir as opções dessa pergunta por derivado não é suportado pelo formato, fixamos o valor da demanda em cada derivado (em vez de reduzir a lista de escolhas), desdobrando relatório e dúvida em táxi/viagem, e mantendo a troca de aprovador como atalho dedicado — reproduzindo a divisão em 3 grupos da 1ª análise sem perder nenhuma combinação original.",
+ "divergencias": [
+  "divisao_diferente",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_what_type_of_doubt_do_you_have_tx": {
+   "label": "Sobre qual assunto é a dúvida?"
+  },
+  "v_what_type_of_doubt_do_you_have": {
+   "label": "Sobre qual assunto é a dúvida?"
+  },
+  "v_describe_your_question": {
+   "label": "Qual é a sua dúvida?"
+  },
+  "v_inform_the_cost_center_or_pep": {
+   "label": "Qual é o centro de custo ou PEP?"
+  },
+  "v_inform_the_new_owner_approver_of_the_cost_center_or_pep": {
+   "label": "Quem será o novo responsável ou aprovador?"
+  },
+  "v_do_you_want_information_by_cost_center_pep_or_employee": {
+   "label": "Você quer o relatório por centro de custo, por PEP ou por colaborador?"
+  },
+  "v_enter_the_cost_center_number": {
+   "label": "Qual é o número do centro de custo?"
+  },
+  "v_enter_the_pep_number": {
+   "label": "Qual é o número do PEP?"
+  },
+  "v_name_of_the_employee_who_wants_the_report": {
+   "label": "De qual colaborador?"
+  },
+  "v_enrollment_employee_report": {
+   "label": "Qual é a matrícula do colaborador?"
+  },
+  "v_inform_requested_period_start_date": {
+   "label": "A partir de que data?"
+  },
+  "v_inform_requested_period_end_date": {
+   "label": "Até que data?"
+  }
+ },
+ "remover": {
+  "v_if_you_have_questions_about_the_process": "visual",
+  "v_taxi_and_corporate_travel_information": "visual"
+ },
+ "policies": {
+  "ef82323b1b04a51cd1abda4ce54bcb26": "remover",
+  "9033f63b1b04a51cd1abda4ce54bcb43": "remover",
+  "d270b2bf1bc0a51cd1abda4ce54bcb6e": "remover",
+  "fa09debb1b0c651cd1abda4ce54bcb5a": "remover",
+  "5454f2331b44a51cd1abda4ce54bcbe2": "remover"
+ },
+ "scripts": {
+  "0d531ffa1b2ca990d1abda4ce54bcb68": {
+   "remover": "sem_efeito"
+  },
+  "1487977e1b6ca990d1abda4ce54bcbfd": {
+   "remover": "sem_efeito"
+  },
+  "cae8d3b21baca990d1abda4ce54bcb07": {
+   "remover": "sem_efeito"
+  },
+  "e682eb261b6ce150a530426fe54bcbbc": {
+   "remover": "sem_efeito"
+  },
+  "f202dbb61b2ca990d1abda4ce54bcb6b": {
+   "remover": "sem_efeito"
+  },
+  "a29c423f1b08651cd1abda4ce54bcbc8": {
+   "converter": "auto_populate"
+  }
+ },
+ "itens": [
+  {
+   "name": "Relatório de uso de táxi corporativo",
+   "short_description": "Relatório de uso de táxi corporativo por centro de custo, PEP ou colaborador",
+   "description": "Peça um relatório de uso de táxi corporativo por centro de custo, PEP (elemento de projeto) ou colaborador, em um período. Antes de abrir o chamado, confira se o relatório já está disponível no autoatendimento.",
+   "frases_exemplo": [
+    "preciso do relatório de táxi do meu centro de custo",
+    "quanto meu time gastou com táxi no último trimestre?",
+    "uso de táxi de um colaborador em março",
+    "relatório de táxi por PEP"
+   ],
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "resquest_taxi_usage_reports"
+   },
+   "vars": {
+    "v_click_here_to_access_taxi_and_corporate": {
+     "props": {
+      "hidden": false
+     }
+    },
+    "v_is_the_desired_report_available": {
+     "props": {
+      "hidden": true,
+      "default_value": "No"
+     }
+    },
+    "v_do_you_want_information_by_cost_center_pep_or_employee": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_inform_requested_period_start_date": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_inform_requested_period_end_date": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    }
+   },
+   "sem_vars": [
+    "v_what_type_of_doubt_do_you_have_tx",
+    "v_what_type_of_doubt_do_you_have",
+    "v_to_contact_the_travel_agency",
+    "v_inform_the_cost_center_or_pep",
+    "v_inform_the_new_owner_approver_of_the_cost_center_or_pep",
+    "v_attention_to_proceed_with_the_request_to_change",
+    "v_describe_your_question"
+   ],
+   "sem_policies": [
+    "9127a2141bec2914a530426fe54bcbc7",
+    "bc7e5ef31b8c651cd1abda4ce54bcbbe"
+   ]
+  },
+  {
+   "name": "Relatório de uso de viagens corporativas",
+   "short_description": "Relatório de uso de viagens corporativas por centro de custo, PEP ou colaborador",
+   "description": "Peça um relatório de uso de viagens corporativas por centro de custo, PEP (elemento de projeto) ou colaborador, em um período. Antes de abrir o chamado, confira se o relatório já está disponível no autoatendimento.",
+   "frases_exemplo": [
+    "relatório de viagens corporativas do meu centro de custo",
+    "quanto gastamos com viagens no último trimestre?",
+    "extrato de viagens por PEP",
+    "uso de viagens corporativas de um colaborador"
+   ],
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "request_trip_usage_reports"
+   },
+   "vars": {
+    "v_click_here_to_access_taxi_and_corporate": {
+     "props": {
+      "hidden": false
+     }
+    },
+    "v_is_the_desired_report_available": {
+     "props": {
+      "hidden": true,
+      "default_value": "No"
+     }
+    },
+    "v_do_you_want_information_by_cost_center_pep_or_employee": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_inform_requested_period_start_date": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_inform_requested_period_end_date": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    }
+   },
+   "sem_vars": [
+    "v_what_type_of_doubt_do_you_have_tx",
+    "v_what_type_of_doubt_do_you_have",
+    "v_to_contact_the_travel_agency",
+    "v_inform_the_cost_center_or_pep",
+    "v_inform_the_new_owner_approver_of_the_cost_center_or_pep",
+    "v_attention_to_proceed_with_the_request_to_change",
+    "v_describe_your_question"
+   ],
+   "sem_policies": [
+    "9127a2141bec2914a530426fe54bcbc7",
+    "bc7e5ef31b8c651cd1abda4ce54bcbbe"
+   ]
+  },
+  {
+   "name": "Tirar dúvidas sobre táxi corporativo",
+   "short_description": "Dúvidas sobre o processo de táxi corporativo",
+   "description": "Use para tirar dúvidas sobre como funciona o táxi corporativo (cadastro, uso, cobrança, acesso ao app). Não use para pedir relatório de uso nem para trocar o aprovador de centro de custo ou PEP.",
+   "frases_exemplo": [
+    "tenho uma dúvida sobre táxi corporativo",
+    "como funciona o app de táxi da empresa?",
+    "como faço para usar o táxi corporativo?",
+    "dúvida sobre cobrança de táxi corporativo"
+   ],
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "answer_questions_about_the_corporate_taxi_process"
+   },
+   "vars": {
+    "v_what_type_of_doubt_do_you_have_tx": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_describe_your_question": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    }
+   },
+   "sem_vars": [
+    "v_click_here_to_access_taxi_and_corporate",
+    "v_is_the_desired_report_available",
+    "v_do_you_want_information_by_cost_center_pep_or_employee",
+    "v_enter_the_cost_center_number",
+    "v_enter_the_pep_number",
+    "v_name_of_the_employee_who_wants_the_report",
+    "v_enrollment_employee_report",
+    "v_inform_requested_period_start_date",
+    "v_inform_requested_period_end_date",
+    "v_what_type_of_doubt_do_you_have",
+    "v_to_contact_the_travel_agency",
+    "v_inform_the_cost_center_or_pep",
+    "v_inform_the_new_owner_approver_of_the_cost_center_or_pep",
+    "v_attention_to_proceed_with_the_request_to_change"
+   ],
+   "sem_policies": [
+    "0a1576331b44a51cd1abda4ce54bcb3c",
+    "0e65b2371b44a51cd1abda4ce54bcb83",
+    "95b53a771b44a51cd1abda4ce54bcb5c",
+    "bc7e5ef31b8c651cd1abda4ce54bcbbe",
+    "9127a2141bec2914a530426fe54bcbc7"
+   ]
+  },
+  {
+   "name": "Tirar dúvidas sobre viagens corporativas",
+   "short_description": "Dúvidas sobre o processo de viagens corporativas",
+   "description": "Use para tirar dúvidas sobre como funcionam as viagens corporativas (política, aprovação, sistema, convidados, cobrança). Para contato direto com a agência de viagens, veja a descrição. Não use para pedir relatório de uso nem para trocar o aprovador de centro de custo ou PEP.",
+   "frases_exemplo": [
+    "tenho uma dúvida sobre viagens corporativas",
+    "como funciona a política de viagens?",
+    "como solicito viagem para um convidado?",
+    "qual o status de aprovação da minha viagem?",
+    "como acesso o sistema de viagens?"
+   ],
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "answer_questions_about_the_corporate_travel_process"
+   },
+   "vars": {
+    "v_what_type_of_doubt_do_you_have": {
+     "props": {
+      "hidden": false,
+      "mandatory": true
+     }
+    },
+    "v_to_contact_the_travel_agency": {
+     "props": {
+      "hidden": false
+     }
+    }
+   },
+   "sem_vars": [
+    "v_click_here_to_access_taxi_and_corporate",
+    "v_is_the_desired_report_available",
+    "v_do_you_want_information_by_cost_center_pep_or_employee",
+    "v_enter_the_cost_center_number",
+    "v_enter_the_pep_number",
+    "v_name_of_the_employee_who_wants_the_report",
+    "v_enrollment_employee_report",
+    "v_inform_requested_period_start_date",
+    "v_inform_requested_period_end_date",
+    "v_what_type_of_doubt_do_you_have_tx"
+   ],
+   "sem_policies": [
+    "0a1576331b44a51cd1abda4ce54bcb3c",
+    "0e65b2371b44a51cd1abda4ce54bcb83",
+    "95b53a771b44a51cd1abda4ce54bcb5c"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "answer_questions_about_the_corporate_travel_process",
+    "v_what_type_of_doubt_do_you_have": "change_cost_center_or_pep_owner"
+   },
+   "sem_vars": [
+    "v_click_here_to_access_taxi_and_corporate",
+    "v_is_the_desired_report_available",
+    "v_do_you_want_information_by_cost_center_pep_or_employee",
+    "v_enter_the_cost_center_number",
+    "v_enter_the_pep_number",
+    "v_name_of_the_employee_who_wants_the_report",
+    "v_enrollment_employee_report",
+    "v_inform_requested_period_start_date",
+    "v_inform_requested_period_end_date",
+    "v_what_type_of_doubt_do_you_have_tx",
+    "v_describe_your_question",
+    "v_to_contact_the_travel_agency"
+   ],
+   "sem_policies": [
+    "0a1576331b44a51cd1abda4ce54bcb3c",
+    "0e65b2371b44a51cd1abda4ce54bcb83",
+    "95b53a771b44a51cd1abda4ce54bcb5c",
+    "9127a2141bec2914a530426fe54bcbc7"
+   ]
+  }
+ ]
+}

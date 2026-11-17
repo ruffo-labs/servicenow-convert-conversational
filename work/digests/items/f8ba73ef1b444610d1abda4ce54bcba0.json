@@ -1,0 +1,1666 @@
+{
+ "sys_id": "f8ba73ef1b444610d1abda4ce54bcba0",
+ "name": "Seguro de Vida Complementar",
+ "sys_name": "Complementary Life Insurance ",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Seguro de Vida",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para adesão, não adesão ou para cancelamento do seguro de vida complementar.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "113",
+   "variaveis_ativas": "170",
+   "bloqueadores": "5",
+   "avisos": "22",
+   "perguntas_sem_conversational_label": "113"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "popup_info_for"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "popup_info_for"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "show_signature"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "show_signature"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "3 catalog client script(s) ativo(s) sem \"VA Supported\": EY: HTR_VerifyE-signature, Aoop Check is eligible to enrollment, Aoop: Validate Percentage"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @answer_1_employee: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @personal_health_declaration_phd: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_container_employee: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @table_life_insurance_purchased: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @policyholder_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @personal_health_statement: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_insurance_coverage: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @answer_1_partner: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_container_partner: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @sulamerica_ensurance_title: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_beneficiary_sum: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_simulator_discount: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_beneficiary_ies_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_proponent_declaration: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_beneficiary_addmore: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sim_nao_sem_include_none @has_signature_created: Sim/Nao sem \"Include None\" marcado",
+   "reference_qualifier @partner_reference: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @employee_cpf: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 113 de 113 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 113 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 54 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "screen_height",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Screen Height",
+   "hidden": true
+  },
+  {
+   "name": "popup_info_for",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Popup Info for Enrolment",
+   "widget": "Complementary Life Insurance Popup "
+  },
+  {
+   "name": "show_popup_on_submit",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Show Popup onSubmit",
+   "hidden": true
+  },
+  {
+   "name": "sulamerica_ensurance_title",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Request",
+   "include_none": true,
+   "choices": [
+    "Enrollment in supplementary life insurance [=enroll_supplementary_life_insurance]",
+    "Non-enrollment in supplementary life insurance [=not_enroll_supplementary_life_insurance]",
+    "Cancellation of supplementary life insurance [=cancel_supplementary_life_insurance]"
+   ]
+  },
+  {
+   "name": "personal_health_statement",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "awareness_non_enrollment",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware of the non-enrollment in supplementary life insurance, and in case of a future choice, I will need to submit an enrollment request."
+  },
+  {
+   "name": "personal_health_declaration_phd",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "container_employee",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "label_container_employee",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "formatter26",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "label_container_partner",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "formatter27",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_1",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_1_employee",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "answer_kg_1_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Weight(kg)"
+  },
+  {
+   "name": "answer_m_1_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Height(m)"
+  },
+  {
+   "name": "formatter29",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_1_partner",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "answer_kg_1_partner",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Weight(kg)"
+  },
+  {
+   "name": "answer_m_1_partner",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Height(m)"
+  },
+  {
+   "name": "formatter28",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_2",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_2_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "2. Have you been or are you currently away from your professional activities? If yes, indicate the reason and period.",
+   "include_none": true
+  },
+  {
+   "name": "reason_2_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "period_2_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Period"
+  },
+  {
+   "name": "formatter3",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_2_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "2. Have you been or are you currently away from your professional activities? If yes, indicate the reason and period.",
+   "include_none": true
+  },
+  {
+   "name": "reason_2_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "period_2_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Period"
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_3",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_3_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "3. In the last 5 years, have you needed to be hospitalized for the treatment of an illness or to undergo surgery? If yes, tell us the reason and the number of days hospitalized.",
+   "include_none": true
+  },
+  {
+   "name": "reason_3_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "n_of_days_3_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Nº of days hospitalized:"
+  },
+  {
+   "name": "formatter4",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_3_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "3. In the last 5 years, have you needed to be hospitalized for the treatment of an illness or to undergo surgery? If yes, tell us the reason and the number of days hospitalized.",
+   "include_none": true
+  },
+  {
+   "name": "reason_3_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "n_of_days_3_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Nº of days hospitalized:"
+  },
+  {
+   "name": "formatter25",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_4",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_4_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "4. Do you have a visual impairment such as myopia (> 6 diopters), astigmatism (> 3 diopters), retinal detachment, keratoconus, cataracts, or any other visual disease, do you present any degree of hearing loss or any other physical disability in limbs, organs, or sequelae related to an illness or accident?",
+   "include_none": true
+  },
+  {
+   "name": "reason_4_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter5",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_4_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "4. Do you have a visual impairment such as myopia (> 6 diopters), astigmatism (> 3 diopters), retinal detachment, keratoconus, cataracts, or any other visual disease, do you present any degree of hearing loss or any other physical disability in limbs, organs, or sequelae related to an illness or accident?",
+   "include_none": true
+  },
+  {
+   "name": "reason_4_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter24",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_5",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_5_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "5. Do you have or have you had Hypertension, Cardiovascular Diseases, Endocrine and Metabolic Diseases (e.g., Diabetes Mellitus, Cholesterol, Triglycerides), Blood Diseases, Neurological Diseases, Psychiatric Diseases, Kidney Diseases, Liver Diseases, Digestive System Diseases, Respiratory System Diseases, Chronic Diseases (e.g., Rheumatism, Spine, Muscular, Joint, Hernia, Bones), or other unmenti…",
+   "include_none": true
+  },
+  {
+   "name": "reason_5_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "List other diseases here:"
+  },
+  {
+   "name": "formatter6",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_5_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "5. Do you have or have you had Hypertension, Cardiovascular Diseases, Endocrine and Metabolic Diseases (e.g., Diabetes Mellitus, Cholesterol, Triglycerides), Blood Diseases, Neurological Diseases, Psychiatric Diseases, Kidney Diseases, Liver Diseases, Digestive System Diseases, Respiratory System Diseases, Chronic Diseases (e.g., Rheumatism, Spine, Muscular, Joint, Hernia, Bones), or other unmenti…",
+   "include_none": true
+  },
+  {
+   "name": "reason_5_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "List other diseases here:"
+  },
+  {
+   "name": "formatter23",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_6",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_6_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "6. Have you ever been diagnosed with any type of cancer, cyst, nodule, or tumor? If yes, provide details indicating test results, dates, and treatments.",
+   "include_none": true
+  },
+  {
+   "name": "reason_6_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter7",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_6_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "6. Have you ever been diagnosed with any type of cancer, cyst, nodule, or tumor? If yes, provide details indicating test results, dates, and treatments.",
+   "include_none": true
+  },
+  {
+   "name": "reason_6_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter22",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_7",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_7_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "7. Do you use medications daily or habitually? If yes, please inform which medication, how many times a day, and the dosage used.",
+   "include_none": true
+  },
+  {
+   "name": "reason_7_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter8",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_7_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "7. Do you use medications daily or habitually? If yes, please inform which medication, how many times a day, and the dosage used.",
+   "include_none": true
+  },
+  {
+   "name": "reason_7_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter21",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_8",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_8_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "8. Have you been tested for syphilis, toxoplasmosis, or other sexually transmitted or infectious diseases? If yes, specify the date, result, and reason for taking the test.",
+   "include_none": true
+  },
+  {
+   "name": "reason_8_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter9",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_8_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "8. Have you been tested for syphilis, toxoplasmosis, or other sexually transmitted or infectious diseases? If yes, specify the date, result, and reason for taking the test.",
+   "include_none": true
+  },
+  {
+   "name": "reason_8_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter20",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_9",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_9_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "9. In the last 12 months, have you undergone tests, examinations for discovery, or any specialized treatment for any type of disease? For example, tomography, MRI, stress test, ultrasound, endoscopy, physical therapy, etc.?",
+   "include_none": true
+  },
+  {
+   "name": "reason_9_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter10",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_9_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "9. In the last 12 months, have you undergone tests, examinations for discovery, or any specialized treatment for any type of disease? For example, tomography, MRI, stress test, ultrasound, endoscopy, physical therapy, etc.?",
+   "include_none": true
+  },
+  {
+   "name": "reason_9_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter19",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_10",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_10_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "10. Do you smoke cigarettes or any other tobacco derivatives, use drugs, narcotics, toxic substances, or alcoholic beverages? If yes, inform the substance, quantity, and whether you have undergone any treatment for addiction. Regarding alcohol, please inform how many doses/glasses of wine/bottles of beer or other types of drinks you consume per week.",
+   "include_none": true
+  },
+  {
+   "name": "reason_10_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter11",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_10_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "10. Do you smoke cigarettes or any other tobacco derivatives, use drugs, narcotics, toxic substances, or alcoholic beverages? If yes, inform the substance, quantity, and whether you have undergone any treatment for addiction. Regarding alcohol, please inform how many doses/glasses of wine/bottles of beer or other types of drinks you consume per week.",
+   "include_none": true
+  },
+  {
+   "name": "reason_10_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter18",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_11",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_11_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "11. Do you regularly practice any sport at a competitive level (amateur or professional) or considered high-risk, such as: motorcycling, skiing/snowboarding, jet skiing, auto racing, boxing, wrestling, martial arts, ballooning, hang gliding, free flying, parachuting, equestrianism, scuba diving, rodeo, mountaineering, etc.?",
+   "include_none": true
+  },
+  {
+   "name": "reason_11_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter12",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_11_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "11. Do you regularly practice any sport at a competitive level (amateur or professional) or considered high-risk, such as: motorcycling, skiing/snowboarding, jet skiing, auto racing, boxing, wrestling, martial arts, ballooning, hang gliding, free flying, parachuting, equestrianism, scuba diving, rodeo, mountaineering, etc.?",
+   "include_none": true
+  },
+  {
+   "name": "reason_11_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter17",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_12",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_12_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "12. Have you received or are you currently receiving any insurance compensation or pension due to illness, accident, or disability? If yes, please clarify.",
+   "include_none": true
+  },
+  {
+   "name": "reason_12_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter13",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_12_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "12. Have you received or are you currently receiving any insurance compensation or pension due to illness, accident, or disability? If yes, please clarify.",
+   "include_none": true
+  },
+  {
+   "name": "reason_12_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter16",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_question_13",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "answer_13_employee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "13. Do you have any other Life, Critical Illness, Disability, or Personal Accident insurance policy in progress or in force with this or another Insurer? If yes, please inform the Insurer's name, coverages, effective dates, and insured amounts.",
+   "include_none": true
+  },
+  {
+   "name": "reason_13_employee",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter14",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "answer_13_partner",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "13. Do you have any other Life, Critical Illness, Disability, or Personal Accident insurance policy in progress or in force with this or another Insurer? If yes, please inform the Insurer's name, coverages, effective dates, and insured amounts.",
+   "include_none": true
+  },
+  {
+   "name": "reason_13_partner",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  },
+  {
+   "name": "formatter15",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "awareness_cancel_enrollment",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware of the cancellation of supplementary life insurance, and in the event of a future choice, I will need to submit an enrollment request."
+  },
+  {
+   "name": "label_insurance_coverage",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "table_life_insurance_purchased",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "label_simulator_discount",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "enter_your_gross_salary_below",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter your gross salary below:"
+  },
+  {
+   "name": "total_monthly_discount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total monthly discount"
+  },
+  {
+   "name": "authorize_make_monthly_deduction",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I authorize the Stipulator to make a monthly deduction from my salary relating to my part in the payment of the insurance premium(s), contained in this membership proposal in accordance with the contract."
+  },
+  {
+   "name": "label_beneficiary_ies_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "do_you_want_to_add_beneficiaries",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to add beneficiaries?",
+   "include_none": true
+  },
+  {
+   "name": "label_beneficiary_sum",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "label_beneficiary_addmore",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "payment_and_compensation_declaration",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "O pagamento da indenização por morte ou invalidez total implica o cancelamento do contrato do segurado principal, bem como dos segurados dependentes para toda e qualquer cobertura contratada. Declaro que tive prévio conhecimento da íntegra das condições gerais e que na falta de indicação de beneficiário a indenização será paga conforme legislação em vigor. Este seguro é por prazo determinado, tend…"
+  },
+  {
+   "name": "label_proponent_declaration",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "declaration_preponent_check",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Declaro para os devidos fins e efeitos que as informações prestadas nesta proposta são verdadeiras e completas, estando ciente que, de acordo com o artigo 766 do Código Civil Brasileiro, se o segurado, por si ou por seu representante, fizer declarações inexatas ou omitir circunstâncias que possam influir na aceitação da proposta ou na taxa do prêmio, perderá o direito à garantia, além de ficar obr…"
+  },
+  {
+   "name": "local",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Local",
+   "read_only": true,
+   "reference": "x_nasm_hr_employee_address"
+  },
+  {
+   "name": "date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date",
+   "read_only": true,
+   "default": " javascript:new GlideDate().getDisplayValue();"
+  },
+  {
+   "name": "policyholder_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Policyholder Information"
+  },
+  {
+   "name": "name_policyholder",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name (Business Name)",
+   "default": "javascript:new x_nasm_hr.ComplementaryInsuranceUtils().defaultValuesFieldPDF(\"name_policyholder\");"
+  },
+  {
+   "name": "cnpj_policyholder",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ",
+   "default": "javascript: new x_nasm_hr.ComplementaryInsuranceUtils().defaultValuesFieldPDF(\"cnpj_policyholder\");"
+  },
+  {
+   "name": "sub_contractor_plan",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Plan",
+   "hidden": true
+  },
+  {
+   "name": "sub_contractor_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name (Business Name)",
+   "hidden": true
+  },
+  {
+   "name": "sub_contractor_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ",
+   "hidden": true
+  },
+  {
+   "name": "sub_contractor_police",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Police",
+   "default": "javascript:new x_nasm_hr.ComplementaryInsuranceUtils().defaultValuesFieldPDF(\"apolice\");"
+  },
+  {
+   "name": "sub_contractor_group",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Group",
+   "hidden": true
+  },
+  {
+   "name": "show_signature",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Show Signature",
+   "widget": "EY:Show_Signature"
+  },
+  {
+   "name": "signature_consent",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I agree that this constitutes my electronic signature and has the same legal impact as signing a printed version of this document.",
+   "mandatory": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "5154847b1b844610d1abda4ce54bcb01",
+   "name": "My Personal Informations - Only Name in Catalog View",
+   "order": "100",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "nationality (Texto de Linha Única, ro): Nationality",
+    "email (Texto de Linha Única, ro): Email",
+    "employee_cpf (Texto de Linha Única, ro): CPF",
+    "sex (Texto de Linha Única, ro): Sex",
+    "country_of_birth (Texto de Linha Única, ro): Country of birth",
+    "date_of_birth (Texto de Linha Única, ro): Date of birth",
+    "position (Texto de Linha Única, ro): Position",
+    "position_details (Texto de Linha Única): Position Details",
+    "employee_start (Data, ro): Employee Start",
+    "average_monthly_income (Texto de Linha Única): Average monthly income",
+    "id_global (Texto de Linha Única, ro): ID Global",
+    "mobile_phone (Texto de Linha Única, ro): Mobile Phone",
+    "home_address (Texto de Linha Única, ro): Home Address",
+    "home_address_n (Texto de Linha Única, ro): Home Address Nº",
+    "complementary_residential_address (Texto de Linha Única, ro): Complementary Residential Address",
+    "residential_address_neighborhood (Texto de Linha Única, ro): Residential Address Neighborhood",
+    "residential_address_city (Texto de Linha Única, ro): Residential Address City",
+    "residential_address_uf (Texto de Linha Única, ro): Residential Address UF",
+    "residential_address_cep (Texto de Linha Única, ro): Residential Address CEP"
+   ]
+  },
+  {
+   "sys_id": "d636e76487080b94ec360e530cbb359f",
+   "name": "Dados do Conjuge ou Parceiro",
+   "order": "310",
+   "perguntas": [
+    "partner_reference (Referência, hidden): Partner Reference",
+    "partner_cpf (Texto de Linha Única): CPF:",
+    "partner_name (Texto de Linha Única, ro): Name",
+    "partner_gender (Texto de Linha Única): Gender",
+    "partner_date_of_birth (Data): Date of birth",
+    "partner_position (Texto de Linha Única): Position",
+    "spouse_s_average_monthly_income (Texto de Linha Única): Spouse's average monthly income",
+    "partner_nationality (Texto de Linha Única): Nationality"
+   ]
+  },
+  {
+   "sys_id": "e6376db21b23f010d1abda4ce54bcbd0",
+   "name": "Dados do(s) beneficiário(s) (inclua até o limite de quatro beneficiários)",
+   "order": "2300",
+   "perguntas": [
+    "full_name (Texto de Linha Única): Full name",
+    "cpf (Texto de Linha Única): CPF",
+    "birth_date (Data): Birth Date",
+    "affinity (Texto de Linha Única): Affinity",
+    "participation (Texto de Linha Única): Participation"
+   ]
+  },
+  {
+   "sys_id": "51ec0bed1bdb5154d1abda4ce54bcbb3",
+   "name": "Tem Assinatura",
+   "order": "5090",
+   "perguntas": [
+    "has_signature_created (Sim/Não, hidden, default): A assinatura foi criada?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Aoop: Show Answers Partner Q - 3",
+   "when": "IO:answer_3_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_3_partner: visible=true,mandatory=true",
+    "n_of_days_3_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Type of Request = \"Non-enrollment in supplementary life insurance\"",
+   "when": "IO:type_of_request=not_enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "awareness_non_enrollment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Resolver View - \"Do you want to add beneficiaries?\" = NO",
+   "when": "IO:do_you_want_to_add_beneficiaries=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "label_beneficiary_no: visible=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Questions dps related to conjuge when there is a conjuge available ",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^IO:partner_referenceISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "answer_5_partner: visible=true,mandatory=true",
+    "answer_1_partner: visible=true",
+    "answer_kg_1_partner: visible=true,mandatory=true",
+    "answer_6_partner: visible=true,mandatory=true",
+    "spouse_or_partner_information: visible=true",
+    "answer_4_partner: visible=true,mandatory=true",
+    "answer_12_partner: visible=true,mandatory=true",
+    "answer_11_partner: visible=true,mandatory=true",
+    "answer_10_partner: visible=true,mandatory=true",
+    "answer_3_partner: visible=true,mandatory=true",
+    "label_container_partner: visible=true",
+    "answer_13_partner: visible=true,mandatory=true",
+    "answer_2_partner: visible=true,mandatory=true",
+    "answer_8_partner: visible=true,mandatory=true",
+    "answer_m_1_partner: visible=true,mandatory=true",
+    "answer_7_partner: visible=true,mandatory=true",
+    "answer_9_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 11",
+   "when": "IO:answer_11_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_11_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 5",
+   "when": "IO:answer_5_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_5_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 9",
+   "when": "IO:answer_9_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_9_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: By default hide popup",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "popup_info_for: visible=false"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 11",
+   "when": "IO:answer_11_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_11_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 6",
+   "when": "IO:answer_6_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_6_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: \"Reason for retirement\" = Invalidity",
+   "when": "IO:reason_for_retirement=invalidity^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "cause_of_invalidity_retirement: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 5",
+   "when": "IO:answer_5_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_5_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Hide some fields at catalog view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "partner_date_of_birth: visible=false",
+    "date: visible=false",
+    "name_policyholder: visible=false",
+    "sub_contractor_police: visible=false",
+    "partner_nationality: visible=false",
+    "cnpj_policyholder: visible=false",
+    "policyholder_information: visible=false",
+    "partner_gender: visible=false",
+    "local: visible=false",
+    "partner_cpf: visible=false"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 8",
+   "when": "IO:answer_8_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_8_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 6",
+   "when": "IO:answer_6_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_6_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 10",
+   "when": "IO:answer_10_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_10_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Resolver View - Type of Request = \"Enrollment in supplementary life insurance\" ",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "date: visible=true",
+    "cnpj_policyholder: visible=true,readonly=true",
+    "policyholder_information: visible=true",
+    "personal_health_statement: visible=true,readonly=true",
+    "local: visible=true",
+    "spouse_or_partner_information: visible=true",
+    "sub_contractor_police: visible=true,readonly=true",
+    "name_policyholder: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 9",
+   "when": "IO:answer_9_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_9_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Foreigner = YES and resides in Brazil =NO",
+   "when": "IO:are_you_a_resident_of_brazil=No^IO:are_you_a_foreigner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "include_number_and_nature_of_the_identification_document: visible=true,mandatory=true",
+    "issuing_body: visible=true,mandatory=true",
+    "label_use_passport: visible=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 4",
+   "when": "IO:answer_4_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_4_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 13",
+   "when": "IO:answer_13_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_13_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: \"Are you a retired person?\" = YES",
+   "when": "IO:are_you_a_retired_person=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_for_retirement: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show some datas related partner on resolver view.",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^IO:partner_referenceISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "partner_date_of_birth: visible=true",
+    "partner_gender: visible=true",
+    "partner_nationality: visible=true,readonly=true",
+    "spouse_s_average_monthly_income: visible=true,readonly=true",
+    "partner_position: visible=true,readonly=true",
+    "partner_date_of_birth: visible=true,readonly=true",
+    "partner_cpf: visible=true,readonly=true",
+    "partner_name: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY:  Resolver View - \"Do you want to add beneficiaries?\" = YES",
+   "when": "IO:do_you_want_to_add_beneficiaries=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "beneficiary_data: visible=true,readonly=true",
+    "label_beneficiary_yes: visible=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 7",
+   "when": "IO:answer_7_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_7_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 2",
+   "when": "IO:answer_2_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "period_2_employee: visible=true,mandatory=true",
+    "reason_2_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 12",
+   "when": "IO:answer_12_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_12_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 8",
+   "when": "IO:answer_8_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_8_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 7",
+   "when": "IO:answer_7_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_7_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 2",
+   "when": "IO:answer_2_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "period_2_partner: visible=true,mandatory=true",
+    "reason_2_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:  Resolver View - \"Are you a retired person?\" = YES",
+   "when": "IO:are_you_a_retired_person=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_for_retirement: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 13",
+   "when": "IO:answer_13_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_13_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: \"Do you want to add beneficiaries?\" = NO",
+   "when": "IO:do_you_want_to_add_beneficiaries=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "label_beneficiary_no: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Type of Request = \"Enrollment in supplementary life insurance\"",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "label_payroll_discount: visible=true",
+    "are_you_a_foreigner: visible=true,mandatory=true",
+    "position: visible=true",
+    "label_i_am_aware_and_agree: visible=true",
+    "answer_5_employee: visible=true,mandatory=true",
+    "select_the_corresponding_option: visible=true",
+    "label_proponent_declaration: visible=true",
+    "position_details: visible=true,mandatory=true",
+    "declaration_preponent_check: visible=true,mandatory=true",
+    "answer_kg_1_employee: visible=true,mandatory=true",
+    "answer_11_employee: visible=true,mandatory=true",
+    "answer_4_employee: visible=true,mandatory=true",
+    "answer_m_1_employee: visible=true,mandatory=true",
+    "answer_6_employee: visible=true,mandatory=true",
+    "label_protocol_clock: visible=true",
+    "answer_13_employee: visible=true,mandatory=true",
+    "average_monthly_income: visible=true,mandatory=true",
+    "label_terms_contractual_conditions: visible=true",
+    "answer_1_employee: visible=true",
+    "total_monthly_discount: visible=true",
+    "nationality: visible=true",
+    "answer_10_employee: visible=true,mandatory=true",
+    "table_life_insurance_purchased: visible=true",
+    "payment_and_compensation_declaration: visible=true,mandatory=true",
+    "answer_3_employee: visible=true,mandatory=true",
+    "label_insurance_coverage: visible=true",
+    "do_you_want_to_add_beneficiaries: visible=true,mandatory=true",
+    "personal_health_statement: visible=true",
+    "answer_2_employee: visible=true,mandatory=true",
+    "are_you_a_retired_person: visible=true,mandatory=true",
+    "answer_9_employee: visible=true,mandatory=true",
+    "politically_exposed_person: visible=true,mandatory=true",
+    "answer_12_employee: visible=true,mandatory=true",
+    "label_container_employee: visible=true",
+    "purchased_life_insurance: visible=true",
+    "answer_8_employee: visible=true,mandatory=true",
+    "enter_your_gross_salary_below: visible=true",
+    "label_beneficiary_ies_information: visible=true",
+    "answer_7_employee: visible=true,mandatory=true",
+    "personal_health_declaration_phd: visible=true",
+    "authorize_make_monthly_deduction: visible=true,mandatory=true",
+    "label_politically_exposed: visible=true",
+    "are_you_a_resident_of_brazil: visible=true,mandatory=true",
+    "label_simulator_discount: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Type of Request = \"Cancelation of supplementary life insurance\"",
+   "when": "IO:type_of_request=cancel_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "awareness_cancel_enrollment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 10",
+   "when": "IO:answer_10_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_10_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 12",
+   "when": "IO:answer_12_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_12_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Resolver View - \"Reason for retirement\" = Invalidity",
+   "when": "IO:reason_for_retirement=invalidity^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "cause_of_invalidity_retirement: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Spounser fields if dosent have a spounser Catalog View when there is a conjuge available ",
+   "when": "IO:partner_referenceISNOTEMPTY^IO:type_of_request=enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "partner_position: visible=true,mandatory=true",
+    "spouse_s_average_monthly_income: visible=true,mandatory=true",
+    "partner_name: visible=true",
+    "partner_nationality: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Employee Q - 3",
+   "when": "IO:answer_3_employee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "n_of_days_3_employee: visible=true,mandatory=true",
+    "reason_3_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:  Resolver View -Type of Request = \"Cancelation of supplementary life insurance\"",
+   "when": "IO:type_of_request=cancel_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "awareness_cancel_enrollment: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: \"Do you want to add beneficiaries?\" = YES",
+   "when": "IO:do_you_want_to_add_beneficiaries=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "label_beneficiary_sum: visible=true",
+    "beneficiary_data: visible=true,mandatory=true",
+    "label_beneficiary_addmore: visible=true",
+    "label_beneficiary_yes: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:  Resolver View - Read Only Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_of_request: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Resolver View - Type of Request = \"Enrollment in supplementary life insurance\" + With PHS",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_question_9: visible=true,readonly=true",
+    "v_question_2: visible=true,readonly=true",
+    "v_question_14: visible=true,readonly=true",
+    "v_question_13: visible=true,readonly=true",
+    "v_question_3: visible=true,readonly=true",
+    "v_question_8: visible=true,readonly=true",
+    "v_question_11: visible=true,readonly=true",
+    "v_question_12: visible=true,readonly=true",
+    "v_question_6: visible=true,readonly=true",
+    "v_question_10: visible=true,readonly=true",
+    "v_question_4: visible=true,readonly=true",
+    "v_question_7: visible=true,readonly=true",
+    "label_title: visible=true",
+    "v_question_1: visible=true,readonly=true",
+    "v_question_5: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Foreigner = YES and resides in Brazil =YES",
+   "when": "IO:are_you_a_resident_of_brazil=Yes^IO:are_you_a_foreigner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "Aoop:  Resolver View -Type of Request = \"Cancelation of supplementary life insurance or Non-enrollment in supplementary life insurance\"",
+   "when": "IO:type_of_requestINnot_enroll_supplementary_life_insurance,cancel_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "payment_and_compensation_declaration: visible=false",
+    "container_question_12: visible=false",
+    "container_question_10: visible=false",
+    "container_question_9: visible=false",
+    "container_question_6: visible=false",
+    "label_beneficiary_sum: visible=false",
+    "container_question_8: visible=false",
+    "container_question_11: visible=false",
+    "label_simulator_discount: visible=false",
+    "personal_health_declaration_phd: visible=false",
+    "enter_your_gross_salary_below: visible=false",
+    "position_details: visible=false",
+    "container_question_4: visible=false",
+    "average_monthly_income: visible=false",
+    "declaration_preponent_check: visible=false",
+    "container_question_13: visible=false",
+    "container_question_5: visible=false",
+    "total_monthly_discount: visible=false",
+    "container_question_1: visible=false",
+    "container_question_2: visible=false",
+    "container_question_3: visible=false",
+    "container_employee: visible=false",
+    "label_beneficiary_addmore: visible=false",
+    "container_question_7: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Foreigner = NO and resides in Brazil =YES/NO",
+   "when": "IO:are_you_a_resident_of_brazil=Yes^ORIO:are_you_a_resident_of_brazil=No^IO:are_you_a_foreigner=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Resolver View - Type of Request = \"Non-enrollment in supplementary life insurance\"",
+   "when": "IO:type_of_request=not_enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "awareness_non_enrollment: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Answers Partner Q - 4",
+   "when": "IO:answer_4_partner=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_4_partner: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Resolver View - Type of Request = \"Enrollment in supplementary life insurance\"",
+   "when": "IO:type_of_request=enroll_supplementary_life_insurance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    ": visible=true,readonly=true",
+    "label_insurance_coverage: visible=true",
+    "label_protocol_clock: visible=true",
+    "purchased_life_insurance: visible=true",
+    "label_payroll_discount: visible=true",
+    "politically_exposed_person: visible=true,readonly=true",
+    "are_you_a_resident_of_brazil: visible=true,readonly=true",
+    "table_life_insurance_purchased: visible=true",
+    "label_proponent_declaration: visible=true",
+    "select_the_corresponding_option: visible=true,readonly=true",
+    "issuing_body: visible=true,readonly=true",
+    "are_you_a_retired_person: visible=true,readonly=true",
+    "label_politically_exposed: visible=true",
+    "include_number_and_nature_of_the_identification_document: visible=true,readonly=true",
+    "label_i_am_aware_and_agree: visible=true",
+    "are_you_a_foreigner: visible=true,readonly=true",
+    "label_beneficiary_ies_information: visible=true",
+    "do_you_want_to_add_beneficiaries: visible=true,readonly=true",
+    "authorize_make_monthly_deduction: visible=true,readonly=true",
+    "label_terms_contractual_conditions: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get screen height for PDF",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que grava a altura da janela em 'screen_height' para dimensionar a geração de PDF. Duplicata de outro script do mesmo catálogo."
+  },
+  {
+   "name": "EY: HTR_VerifyE-signature",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que verifica a assinatura eletrônica, condicionado ao tipo de solicitação e a uma flag em g_scratchpad."
+  },
+  {
+   "name": "EY: Add \"Employee city\" in Local",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche o local do usuário quando ainda está vazio, a partir do colaborador — evita sobrescrever valor já informado."
+  },
+  {
+   "name": "EY:Participation Percentage Requiriment",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o percentual de participação dos beneficiários, fazendo parse do JSON do multi-row quando há beneficiários a adicionar."
+  },
+  {
+   "name": "EY: Lookup benefit new life insurance ",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que consulta o benefício de seguro de vida via IntegraAdp_utils (ADP) com GlideAjax."
+  },
+  {
+   "name": "Aoop Check is eligible to enrollment",
+   "type": "onChange",
+   "on": "787d3ba31b844610d1abda4ce54bcb50",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que verifica a elegibilidade para adesão e usa g_scratchpad.showPopup para sinalizar a outros scripts se o popup deve aparecer — comunicação entre scripts via scratchpad."
+  },
+  {
+   "name": "Aoop: onChange Simulator discount",
+   "type": "onChange",
+   "on": "9e1ba91087848394ec360e530cbb351d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que simula o desconto. Só recalcula quando o valor realmente mudou (compara com oldValue), evitando trabalho desnecessário."
+  }
+ ]
+}

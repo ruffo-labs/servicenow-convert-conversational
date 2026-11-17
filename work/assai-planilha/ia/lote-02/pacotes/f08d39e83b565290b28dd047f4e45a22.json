@@ -1,0 +1,111 @@
+{
+ "sys_id": "f08d39e83b565290b28dd047f4e45a22",
+ "name": "Atestado Médico (Gestor/RH Ponta)",
+ "category": "Medicina do Trabalho",
+ "short_description": "Veracidade de atestado médico",
+ "description": "Veracidade de atestado m&eacute;dico",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Medicina do trabalho",
+    "item": "Atestado Médico"
+   },
+   "ofertas": [
+    {
+     "name": "Verificação da veracidade de atestado médico",
+     "sla": "SLA - GESTÃO DE GENTE - 400H",
+     "grupo_suporte": "RH - Saúde e Medicina Atestados"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "reason_truthfulness",
+    "medical_certificate"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Verificar veracidade de atestado médico",
+     "description": "Use para pedir a verificação da veracidade de um atestado médico (oferta Verificação da veracidade de atestado médico). Informe o motivo e anexe o atestado."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "reason_truthfulness",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação de veracidade?",
+   "choices": [],
+   "label_atual": "Qual é o motivo da verificação de veracidade?"
+  },
+  {
+   "name": "medical_certificate",
+   "type": "Anexo",
+   "question_text": "Atestado Médico",
+   "choices": [],
+   "label_atual": "Envie o atestado médico."
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "6b8e6dd43b2b2a10b28dd047f4e45a0b",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "a28e6dd43b2b2a10b28dd047f4e45ac5",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

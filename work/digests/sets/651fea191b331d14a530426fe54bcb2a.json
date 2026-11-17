@@ -1,0 +1,60 @@
+{
+ "sys_id": "651fea191b331d14a530426fe54bcb2a",
+ "title": "EY: Opened by - Company:Avon/Natura - Describe",
+ "internal_name": "ey_opened_by_company_avon_natura_describe",
+ "description": "Opened by - Company:Avon/Natura - Describe",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Prorrogação de título"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "read_only": true,
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon Latam",
+    "Natura"
+   ]
+  },
+  {
+   "name": "vs_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_which_company + '^nameNOT LIKE331'"
+  },
+  {
+   "name": "vs_describe_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the request"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true",
+    "vs_sub_company: mandatory=true",
+    "vs_describe_request: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

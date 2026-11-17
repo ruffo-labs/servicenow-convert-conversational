@@ -1,0 +1,241 @@
+{
+ "sys_id": "39b3c12b1b912910d1abda4ce54bcb6f",
+ "name": "Baixa de Ativo Fixo",
+ "sys_name": "Fixed Asset Low",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Ativo Fixo",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite uma Baixa por Devolução, Doação, Furto, Obsolescência/Descarte ou Venda de Ativo Imobilizado",
+ "description": "Solicite uma Baixa por Devolução, Doação, Furto, Obsolescência/Descarte ou Venda de Ativo Imobilizado",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "21",
+   "variaveis_ativas": "35",
+   "bloqueadores": "0",
+   "avisos": "29",
+   "perguntas_sem_conversational_label": "21"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @link_sn_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_email_with_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @legenda_doacao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @link_sn_obsolescencia: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @link_renf: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_destruicao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @documentos_furto_perda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @documentos_doacao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_furto_perda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @link_senf_nota: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_devolucao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_venda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @select_the_manager_who_apprends_this_request: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @documentos_destruicao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_files: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @documentos_venda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 21 de 21 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 21 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 17 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "e1ed453b1b55a110d1abda4ce54bcb21",
+   "name": "EY VS - Baixa de Ativo Fixo",
+   "order": "200",
+   "perguntas": [
+    "select_the_manager_who_apprends_this_request (Caixa de Seleção de Pesquisa): Select the manager who apprends this request",
+    "v_what_kind_of_casualty (Selecionar Caixa): What kind of casualty?",
+    "legenda_doacao (Rótulo de Rich Text): ",
+    "legenda_destruicao (Rótulo de Rich Text): ",
+    "legenda_furto_perda (Rótulo de Rich Text): ",
+    "legenda_devolucao (Rótulo de Rich Text): ",
+    "legenda_venda (Rótulo de Rich Text): ",
+    "v_number_assets (Selecionar Caixa): Enter the number of assets (according to the attached template)",
+    "v_issuing_invoice (Selecionar Caixa): Issuing invoice?",
+    "link_sn_avon (Rótulo de Rich Text): Download Template - Natura Fixed Asset Write-Off",
+    "link_sn_obsolescencia (Rótulo de Rich Text): Download Template - Natura Fixed Asset Write-Off",
+    "link_renf (Rótulo de Rich Text): Download Template - Natura Fixed Asset Write-Off",
+    "link_senf_nota (Rótulo de Rich Text): Download Template - Natura Fixed Asset Write-Off",
+    "v_legenda_attach (Rótulo de Rich Text): ",
+    "v_attach_files (Anexo): Attach Template",
+    "v_attach_email_with_approval (Anexo): Attach Documentation Support",
+    "documentos_furto_perda (Rótulo de Rich Text): Required Documents:\r\nPolice Report",
+    "documentos_doacao (Rótulo de Rich Text): Required Documents:\r\nPolice Report",
+    "documentos_destruicao (Rótulo de Rich Text): Required Documents:\r\nPolice Report",
+    "documentos_venda (Rótulo de Rich Text): Required Documents:\r\nPolice Report"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Tipo de Baixa \" Destruição/Obsolescência\"",
+   "when": "IO:v_what_kind_of_casualty=destruction_obsolescence^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "documentos_destruicao: visible=true",
+    "legenda_destruicao: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Company = Natura and Invoice = No",
+   "when": "IO:vs_which_company=natura^IO:v_issuing_invoice=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_sn_obsolescencia: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Company = Avon and Invoice = No",
+   "when": "IO:vs_which_companyNOT INnatura,tbs^IO:v_issuing_invoice=no^IO:vs_which_sub_company_8!=7f04f4d61b0acd10237642ece54bcb1f^IO:vs_which_sub_company_8!=93388c3a1b417910a530426fe54bcb79^IO:vs_which_sub_company_8!=cc14b8d6db0a01104f0d5e7cf39619cd^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_sn_avon: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Company = Avon and Invoice = Yes",
+   "when": "IO:vs_which_companyNOT INnatura,tbs^IO:v_issuing_invoice=yes^IO:vs_which_sub_company_8!=7f04f4d61b0acd10237642ece54bcb1f^IO:vs_which_sub_company_8!=93388c3a1b417910a530426fe54bcb79^IO:vs_which_sub_company_8!=cc14b8d6db0a01104f0d5e7cf39619cd^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_renf: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Issuing Invoice Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_issuing_invoice: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Tipo de Baixa \"Doação\"",
+   "when": "IO:v_what_kind_of_casualty=donation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_doacao: visible=true",
+    "documentos_doacao: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Tipo de Baixa \"Furto/Perda\"",
+   "when": "IO:v_what_kind_of_casualty=baixa_furto_perda^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "documentos_furto_perda: visible=true",
+    "legenda_furto_perda: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Company = Natura and Invoice = Yes",
+   "when": "IO:vs_which_company=natura^IO:v_issuing_invoice=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_senf_nota: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Tipo de Baixa \"Devolução\"",
+   "when": "IO:v_what_kind_of_casualty=baixa_devolucao^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_devolucao: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Tipo de Baixa \"Venda\"",
+   "when": "IO:v_what_kind_of_casualty=sale^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_venda: visible=true",
+    "documentos_venda: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Hide Fields OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Esconde 'v_issuing_invoice_2' e 'v_legenda_attach' na abertura do formulário. A linha que esconderia 'v_invoice_available' está comentada."
+  },
+  {
+   "name": "EY:IF subcompany 305, 315, 347, 332",
+   "type": "onChange",
+   "on": "9de674fc3bf1de10924d0247f4e45a7e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Compara a sub-empresa escolhida ('vs_which_sub_company_8') com quatro sys_ids fixos. Se for um deles, esconde e desobriga 'v_issuing_invoice' e exibe a legenda de anexo; caso contrário, exibe e obriga a emissão de nota e esconde a legenda. Duas linhas que controlariam os links 'link_sn_avon' e 'link_renf' estão comentadas."
+  },
+  {
+   "name": "EY: If sub-company is one of",
+   "type": "onChange",
+   "on": "9de674fc3bf1de10924d0247f4e45a7e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Mantém uma lista de 11 sys_ids de sub-empresas. Se a sub-empresa escolhida ('vs_which_sub_company_8') estiver na lista, força 'v_issuing_invoice' para 'no' e trava o campo como somente leitura; se não estiver, limpa o campo e o destrava."
+  }
+ ]
+}

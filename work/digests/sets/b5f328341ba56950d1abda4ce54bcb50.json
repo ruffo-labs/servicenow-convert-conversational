@@ -1,0 +1,131 @@
+{
+ "sys_id": "b5f328341ba56950d1abda4ce54bcb50",
+ "title": "EY VS - Variable Adiantamento Fornecedor ",
+ "internal_name": "ey_vs_variable_adiantamento_fornecedor",
+ "description": "VS destinado as Variavies do Form Adiantamento de pagamento ao Fornecedor",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Adiantamento de Pagamento ao Fornecedor"
+ ],
+ "variaveis": [
+  {
+   "name": "v_exchange",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Exchange"
+  },
+  {
+   "name": "v_contract_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contract number"
+  },
+  {
+   "name": "v_purchase_order_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purchase order number"
+  },
+  {
+   "name": "v_date_for_which_payment_is_requested",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Payment date proposal"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount"
+  },
+  {
+   "name": "vs_approval_manager",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Approval manager",
+   "reference": "sys_user",
+   "ref_qual": "javascript: new EYDownPaymentToSupplier().getUsersByAmount(current.variables.v_value);"
+  },
+  {
+   "name": "v_currency",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Currency",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_month_provision",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Reference month for the accounting statement (the entry of the note to carry out the settlement of the requested advance)"
+  },
+  {
+   "name": "v_document_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document number KA"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide Exchange",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_exchange: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Make Variables ReadOnly",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number: readonly=true",
+    "vs_approval_manager: readonly=true",
+    "v_contract_number: readonly=true",
+    "v_document_number: readonly=true",
+    "v_date_for_which_payment_is_requested: readonly=true",
+    "v_currency: readonly=true",
+    "v_value: readonly=true",
+    "v_ged_process_number: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Obrigatorio",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_currency: mandatory=true",
+    "v_contract_number: mandatory=true",
+    "vs_approval_manager: mandatory=true",
+    "v_purchase_order_number: mandatory=true",
+    "v_date_for_which_payment_is_requested: mandatory=true",
+    "v_document_number: mandatory=true",
+    "v_ged_process_number: mandatory=true",
+    "v_value: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Approver When Value Changes",
+   "type": "onChange",
+   "on": "f9f560b01be56950d1abda4ce54bcbac",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_approval_manager' quando o valor anterior muda."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "f9f560b01be56950d1abda4ce54bcbac",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'v_value' como moeda. Mais uma variante da série formatarMoeda, com hash diferente por espaçamento."
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "sys_id": "babe0b011b6d6dd0a530426fe54bcbce",
+ "title": "EY VS - Ajuste de inventário e ajuste Ciclico",
+ "internal_name": "ey_vs_ajuste_de_invent_rio_e_ajuste_ciclico",
+ "description": "Variable Set referente ao Form Ajuste de inventário e ajuste Ciclico",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Ajuste de Inventário e Ajuste Ciclico"
+ ],
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "default": "inventory_adjustment",
+   "choices": [
+    "Inventory Adjustment [=inventory_adjustment]",
+    "Cyclic Adjustment [=cyclic_adjustment]"
+   ]
+  },
+  {
+   "name": "v_issuance",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Issuance"
+  },
+  {
+   "name": "v_branch",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Branch"
+  },
+  {
+   "name": "v_responsible",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Responsible"
+  },
+  {
+   "name": "v_inventory_code",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Inventory Code"
+  },
+  {
+   "name": "v_desc_inventory",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "DESC_INVENTORY"
+  },
+  {
+   "name": "v_quantity_counted",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Quantity Counted"
+  },
+  {
+   "name": "v_validated",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Validated"
+  },
+  {
+   "name": "v_describe_the_information_you_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the information you need"
+  },
+  {
+   "name": "v_attach_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach File"
+  },
+  {
+   "name": "v_template",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "TEMPLATE",
+   "macro": "TMP DL - Ajuste de Inventario e Ciclico",
+   "widget": "Tmplt Download - Ajuste Inventario e Cic"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide if Ajuste != Ciclico",
+   "when": "IO:v_request_type=inventory_adjustment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_desc_inventory: visible=false",
+    "v_responsible: visible=false",
+    "v_branch: visible=false",
+    "v_inventory_code: visible=false",
+    "v_validated: visible=false",
+    "v_quantity_counted: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Request type Read-Only",
+   "when": "IO:v_request_type=inventory_adjustment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_validated_information_ok: readonly=true",
+    "v_validated: readonly=true",
+    "v_desc_inventory: readonly=true",
+    "v_branch: readonly=true",
+    "v_quantity_counted: readonly=true",
+    "v_request_type: readonly=true",
+    "v_inventory_code: readonly=true",
+    "v_issuance: readonly=true",
+    "v_describe_the_information_you_need: readonly=true",
+    "v_responsible: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_file: mandatory=true",
+    "v_request_type: mandatory=true",
+    "v_issuance: mandatory=true",
+    "v_describe_the_information_you_need: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

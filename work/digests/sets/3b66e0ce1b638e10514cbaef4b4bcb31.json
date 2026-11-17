@@ -1,0 +1,89 @@
+{
+ "sys_id": "3b66e0ce1b638e10514cbaef4b4bcb31",
+ "title": "EY: Opened by - Company:Avon/Natura - Describe2",
+ "internal_name": "ey_opened_by_company_avon_natura_describe2",
+ "description": "Opened by - Company:Avon/Natura - Describe",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Solicitação de Baixa de Titulo e Abertura de Débito",
+  "Solicitar criação de nota de crédito"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "read_only": true,
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "include_none": true,
+   "choices": [
+    "Title Write-Off [=title_write_off]",
+    "Debit Opening [=debit_opening]"
+   ]
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon Latam",
+    "Natura"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_finance.EY_DataFinanceUtils().getSubcompany(current.variables.vs_which_company, current.cat_item, current.variables.request_typ",
+   "include_none": true
+  },
+  {
+   "name": "vs_describe_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the request"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true",
+    "vs_describe_request: mandatory=true",
+    "vs_which_sub_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear sub-company value",
+   "type": "onChange",
+   "on": "648720741bbb1114d1abda4ce54bcb45",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa 'vs_which_sub_company'."
+  },
+  {
+   "name": "EY: Request type - Baixa de título",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que só exibe o campo 'request_type' num formulário específico, comparando o sys_id do formulário com um valor fixo no código. Nos demais, esconde o campo. Regra cravada por sys_id."
+  }
+ ]
+}

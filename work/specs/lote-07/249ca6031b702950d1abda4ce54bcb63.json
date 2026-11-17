@@ -1,0 +1,298 @@
+{
+ "sys_id": "249ca6031b702950d1abda4ce54bcb63",
+ "status": "dividido",
+ "motivo": "Item mistura 4 intenções (prestar contas de cartão corporativo, prestar contas de adiantamento, pedir reembolso e prestar contas de verba força de vendas) escolhidas por dois campos de processo em cascata. Dividido em 4 itens conforme a 1ª análise. Nos derivados de cartão corporativo e reembolso, os dois campos de processo deixam de ser perguntados na prática: policies com condição real (baseada no público) ocultam e definem o valor certo, preservando o dado sem perda; mantive um label de segurança nessas variáveis. No derivado de verba (força de vendas), a variável de processo continua sendo perguntada com as 5 opções originais, pois o formato não permite restringir a lista a só as 3 opções de verba relevantes desse derivado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_which_audience_do_you_belong_to": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_invoice_reference_month": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+   }
+  },
+  "v_enter_the_expense_report_number_generated": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_value_of_accountability": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_cover_document_exported_from_trip_linx_sharepoint": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_are_there_any_refunds": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_budget_reference_month": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+   }
+  },
+  "v_total_amount_of_accountability": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_refund_amount": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_cover_document_batch_report_cover": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_if_you_have_questions": "visual",
+  "v_perform_reimbursement_and_accountability": "visual",
+  "v_attached_file": "visual"
+ },
+ "policies": {
+  "fa36c0f01b81a5d0d1abda4ce54bcbad": "remover",
+  "dcb684b41b81a5d0d1abda4ce54bcb91": "remover",
+  "c118083c1b81a5d0d1abda4ce54bcbdc": "remover",
+  "0cecd8781b09a5d0d1abda4ce54bcb69": "remover",
+  "0f8114341b45a5d0d1abda4ce54bcba9": "remover",
+  "582a4c301bc1a5d0d1abda4ce54bcbeb": "remover",
+  "a05b59341bc9e5d0d1abda4ce54bcb8e": "remover",
+  "ced51df81b49e5d0d1abda4ce54bcb04": "remover",
+  "d8ef7cf41b81e5d0d1abda4ce54bcb45": "remover",
+  "nova_fix_process_corporate_admin": {
+   "short_description": "Define processo como cartão corporativo para público administrativo/operacional/varejo",
+   "conditions": "v_which_audience_do_you_belong_toINadministrative,operational,retail",
+   "actions": {
+    "v_accountability_on_which_process": {
+     "visible": false,
+     "set": "corporate_card"
+    },
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "visible": false
+    }
+   }
+  },
+  "nova_fix_process_corporate_sales": {
+   "short_description": "Define processo da força de vendas como cartão corporativo",
+   "conditions": "v_which_audience_do_you_belong_to=sales_force",
+   "actions": {
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "visible": false,
+     "set": "corporate_card"
+    },
+    "v_accountability_on_which_process": {
+     "visible": false
+    }
+   }
+  },
+  "nova_fix_process_reimb_admin": {
+   "short_description": "Define processo como reembolso para público administrativo/operacional/varejo",
+   "conditions": "v_which_audience_do_you_belong_toINadministrative,operational,retail",
+   "actions": {
+    "v_accountability_on_which_process": {
+     "visible": false,
+     "set": "reimbursement"
+    },
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "visible": false
+    }
+   }
+  },
+  "nova_fix_process_reimb_sales": {
+   "short_description": "Define processo da força de vendas como reembolso de transferência",
+   "conditions": "v_which_audience_do_you_belong_to=sales_force",
+   "actions": {
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "visible": false,
+     "set": "reimbursement_transfer_expenses"
+    },
+    "v_accountability_on_which_process": {
+     "visible": false
+    }
+   }
+  }
+ },
+ "scripts": {
+  "04d5a5fb1bf8e990a530426fe54bcbd8": {
+   "converter": "regex"
+  },
+  "cd2a9d771b38e990a530426fe54bcbfc": {
+   "converter": "regex"
+  },
+  "0679a1f81b8de5d0d1abda4ce54bcb15": {
+   "remover": "sem_efeito"
+  },
+  "3290e1b81b0de5d0d1abda4ce54bcb25": {
+   "remover": "sem_efeito"
+  },
+  "66d17e051bc16dd0d1abda4ce54bcb9a": {
+   "remover": "sem_efeito"
+  },
+  "7e47e1f01b8de5d0d1abda4ce54bcb07": {
+   "remover": "sem_efeito"
+  },
+  "8906e57c1b4de5d0d1abda4ce54bcb9b": {
+   "remover": "sem_efeito"
+  },
+  "96e665701b8de5d0d1abda4ce54bcb83": {
+   "remover": "sem_efeito"
+  },
+  "c4e821781b8de5d0d1abda4ce54bcbb2": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "vars": {
+    "v_accountability_on_which_process": {
+     "label": "Qual processo está relacionado a essa prestação de contas?"
+    },
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "label": "Qual processo da força de vendas está relacionado a essa prestação de contas?"
+    }
+   },
+   "sem_vars": [
+    "v_inform_the_market",
+    "v_inform_the_management",
+    "v_inform_the_sector",
+    "v_budget_reference_month",
+    "v_total_amount_of_accountability",
+    "v_refund_amount",
+    "v_attach_cover_document_batch_report_cover",
+    "v_attach_expense_template"
+   ],
+   "sem_policies": [
+    "aa3dd9f81bc9e5d0d1abda4ce54bcbe0",
+    "d50718bc1b85a5d0d1abda4ce54bcbfb",
+    "nova_fix_process_reimb_admin",
+    "nova_fix_process_reimb_sales"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_accountability_on_which_process": "advance"
+   },
+   "sem_vars": [
+    "v_which_audience_do_you_belong_to",
+    "v_accountability_of_the_sales_force_on_what_process",
+    "v_invoice_reference_month",
+    "v_inform_the_market",
+    "v_inform_the_management",
+    "v_inform_the_sector",
+    "v_budget_reference_month",
+    "v_total_amount_of_accountability",
+    "v_refund_amount",
+    "v_attach_cover_document_batch_report_cover",
+    "v_attach_corporate_card_invoice",
+    "v_are_there_any_expense_claims_on_the_invoice",
+    "v_enter_the_disputed_amount_on_the_invoice",
+    "v_attach_the_claim_form_for_unrecognized_expenses",
+    "v_is_there_any_credit_on_that_invoice",
+    "v_existing_credit_amount_on_the_invoice",
+    "v_attach_expense_template"
+   ],
+   "sem_policies": [
+    "17024df01bc1e5d0d1abda4ce54bcb15",
+    "aa3dd9f81bc9e5d0d1abda4ce54bcbe0",
+    "d50718bc1b85a5d0d1abda4ce54bcbfb",
+    "7003c1781bc1e5d0d1abda4ce54bcb09",
+    "862555381b49e5d0d1abda4ce54bcb57",
+    "nova_fix_process_corporate_admin",
+    "nova_fix_process_corporate_sales",
+    "nova_fix_process_reimb_admin",
+    "nova_fix_process_reimb_sales"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "vars": {
+    "v_accountability_on_which_process": {
+     "label": "Qual processo está relacionado a esse reembolso?"
+    },
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "label": "Qual processo da força de vendas está relacionado a esse reembolso?"
+    }
+   },
+   "sem_vars": [
+    "v_invoice_reference_month",
+    "v_value_of_accountability",
+    "v_budget_reference_month",
+    "v_total_amount_of_accountability",
+    "v_attach_cover_document_batch_report_cover",
+    "v_attach_corporate_card_invoice",
+    "v_are_there_any_expense_claims_on_the_invoice",
+    "v_enter_the_disputed_amount_on_the_invoice",
+    "v_attach_the_claim_form_for_unrecognized_expenses",
+    "v_is_there_any_credit_on_that_invoice",
+    "v_existing_credit_amount_on_the_invoice",
+    "v_are_there_any_refunds",
+    "v_return_value",
+    "v_return_date",
+    "v_attach_proof_of_return"
+   ],
+   "sem_policies": [
+    "17024df01bc1e5d0d1abda4ce54bcb15",
+    "7003c1781bc1e5d0d1abda4ce54bcb09",
+    "862555381b49e5d0d1abda4ce54bcb57",
+    "cf2c95381bc9e5d0d1abda4ce54bcb07",
+    "nova_fix_process_corporate_admin",
+    "nova_fix_process_corporate_sales"
+   ]
+  },
+  {
+   "de_1a": 3,
+   "fixas": {
+    "v_which_audience_do_you_belong_to": "sales_force"
+   },
+   "vars": {
+    "v_accountability_of_the_sales_force_on_what_process": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_vars": [
+    "v_accountability_on_which_process",
+    "v_invoice_reference_month",
+    "v_enter_the_expense_report_number_generated",
+    "v_value_of_accountability",
+    "v_refund_amount",
+    "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+    "v_attach_corporate_card_invoice",
+    "v_are_there_any_expense_claims_on_the_invoice",
+    "v_enter_the_disputed_amount_on_the_invoice",
+    "v_attach_the_claim_form_for_unrecognized_expenses",
+    "v_is_there_any_credit_on_that_invoice",
+    "v_existing_credit_amount_on_the_invoice",
+    "v_attach_expense_template"
+   ],
+   "sem_policies": [
+    "17024df01bc1e5d0d1abda4ce54bcb15",
+    "aa3dd9f81bc9e5d0d1abda4ce54bcbe0",
+    "7003c1781bc1e5d0d1abda4ce54bcb09",
+    "862555381b49e5d0d1abda4ce54bcb57",
+    "nova_fix_process_corporate_admin",
+    "nova_fix_process_corporate_sales",
+    "nova_fix_process_reimb_admin",
+    "nova_fix_process_reimb_sales"
+   ]
+  }
+ ]
+}

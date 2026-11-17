@@ -1,0 +1,174 @@
+{
+ "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+ "name": "Informações sobre Cartão Corporativo",
+ "sys_name": "Corporate Card Information",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Cartão Corporativo",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Chamado para esclarecer dúvidas sobre cartão corporativo ou informar viagem internacional.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "18",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_if_you_have_questions_about_the_process: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_you_have_questions_about_the_process",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_corporate_card_information",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Corporate Card Information"
+  },
+  {
+   "name": "v_what_type_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "Eligibility [=eligibility]",
+    "Questions regarding the 2nd Copy of the Corporate Card [=questions_regarding_the_2nd_copy]",
+    "Card Limit Questions [=card_limit_questions]",
+    "Card Blocking and Unblocking Questions [=card_blocking_and_unblocking]",
+    "Card receipt [=card_receipt]",
+    "Allowable expenses [=allowables_expenses]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_describe_your_question",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your question"
+  },
+  {
+   "name": "v_which_audience_do_you_belong_to",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which audience do you belong to?",
+   "include_none": true,
+   "choices": [
+    "Administrative [=administrative]",
+    "Sales Force [=sales_force]",
+    "Retail [=retail]"
+   ]
+  },
+  {
+   "name": "v_what_is_the_destination_of_the_international_trip",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the destination of the international trip?"
+  },
+  {
+   "name": "v_what_is_the_start_date_of_the_trip",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the start date of the trip?"
+  },
+  {
+   "name": "v_what_is_the_end_date_of_the_trip",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the end date of the trip?"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Call Demand",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_demand_for_the_call: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"What is the demand for the call?\" for \"Clarify Doubts\"",
+   "when": "IO:vs_company!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_do_you_have: visible=true,mandatory=true",
+    "v_describe_your_question: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"What is the demand for the call?\" for \"Report International Travel\"",
+   "when": "IO:v_what_is_the_demand_for_the_call=inform_international_travel^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_audience_do_you_belong_to: visible=true,mandatory=true",
+    "v_what_is_the_end_date_of_the_trip: visible=true,mandatory=true",
+    "v_what_is_the_start_date_of_the_trip: visible=true,mandatory=true",
+    "v_what_is_the_destination_of_the_international_trip: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "5d61e7a71bdc61d0d1abda4ce54bcb72",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de dúvida sobre viagem: tipo de dúvida, público, destino da viagem internacional e datas de início e fim."
+  },
+  {
+   "name": "EY: Destination - Only letters",
+   "type": "onChange",
+   "on": "cc952b2f1b10a1d0d1abda4ce54bcb54",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita só letras e espaços no destino da viagem internacional. Inválido: limpa o campo e mostra a mensagem padrão sobre números e caracteres especiais."
+  }
+ ]
+}

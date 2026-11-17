@@ -1,0 +1,40 @@
+{
+ "sys_id": "bc14ea5e87e57e94ec360e530cbb354a",
+ "title": "Select the collaborators present in the training",
+ "internal_name": "mrvs_collaborators_present",
+ "description": "Collaborators MRVS for \"Lista de Presença em Treinamentos\"",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Lista de Presença em Treinamentos"
+ ],
+ "variaveis": [
+  {
+   "name": "mrvs_collaborator_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee (Search by ID, Name, or Email)",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "mrvs_collaborator_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator ID",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "[AOOP][Default Read-Only]",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "mrvs_collaborator_id: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

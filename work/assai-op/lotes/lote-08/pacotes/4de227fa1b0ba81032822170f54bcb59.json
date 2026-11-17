@@ -1,0 +1,565 @@
+{
+ "sys_id": "4de227fa1b0ba81032822170f54bcb59",
+ "name": "NAC",
+ "category": "Gestor/RH Ponta",
+ "short_description": "Núcleo de Apoio ao Coordenador(a)",
+ "description": "N&uacute;cleo de Apoio ao Coordenador(a)",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Necessário reembolso?",
+   "perguntas": [
+    "necessar_io_reembolso"
+   ]
+  },
+  {
+   "title": "Adipar reembolso",
+   "perguntas": [
+    "valor_unit_rio_da_tarifa",
+    "motivo_detalhado_do_reembolso",
+    "name",
+    "m_s_de_refer_ncia",
+    "c_digo_do_itiner_rio",
+    "valor_de_reembolso",
+    "fim_per_odo_de_utiliza_o_do_reembolso",
+    "matricula",
+    "quantidade_de_passagens_por_dia",
+    "inicio_per_odo_de_utiliza_o_do_reembolso"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Admissão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional",
+    "reason_request_admission"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Admissão) Outros",
+     "quando": "reason_request_admission=outros_admissão"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Benefícios",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Benefícios N2"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional",
+    "reason_request_benefits"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Benefícios) Outros",
+     "quando": "reason_request_benefits=outros_beneficios"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Crachá",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Crachá"
+    },
+    {
+     "name": "Apoio aos processos de atendimento - Remuneração",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Remuneração e Estrutura"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "support_group": [
+     "RH - Crachá",
+     "RH - Remuneração e Estrutura"
+    ]
+   },
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Férias",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional",
+    "reason_request_vacation"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Férias) Outros",
+     "quando": "reason_request_vacation=outros_ferias"
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Folha de Pagamento ",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Pagamento Mensal"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_vacation",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_request_payroll",
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Folha de Pagamento) Outros",
+     "quando": "reason_request_payroll=outros_folha_pagamento"
+    }
+   ]
+  },
+  {
+   "k": 5,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Jornada de Trabalho",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Jornada de Trabalho"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Dado dos colaboradores",
+     "quando": "IO:cdfa7ab387c12e10182a0d440cbb35c9=banco_horas^ORIO:cdfa7ab387c12e10182a0d440cbb35c9=reembolso"
+    },
+    {
+     "policy": "CSA - Motivo da Solicitação (Jornada de Trabalho) Outros",
+     "quando": "IO:cdfa7ab387c12e10182a0d440cbb35c9=outros_jornada_trabalho"
+    },
+    {
+     "policy": "CSA - Dados do colaborador",
+     "quando": "IO:cdfa7ab387c12e10182a0d440cbb35c9=horas_extras"
+    }
+   ]
+  },
+  {
+   "k": 6,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Licenças",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Licenças"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_request_licences",
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Licenças) Outros",
+     "quando": "reason_request_licences=outros_licencas"
+    }
+   ]
+  },
+  {
+   "k": 7,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Rescisão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Rescisão"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_request_termination",
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da Solicitação (Rescisão) Outros",
+     "quando": "reason_request_termination=outros_rescisao"
+    }
+   ]
+  },
+  {
+   "k": 8,
+   "ofertas": [
+    {
+     "name": "Apoio aos processos de atendimento - Vale Transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_manager_regional"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Adipar reembolso",
+     "quando": "necessar_io_reembolso=Sim"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "reason_request_vacation_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  },
+  {
+   "name": "rh_number_called_portal",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do chamado aberto anteriormente",
+   "choices": []
+  },
+  {
+   "name": "reason_request_admission_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  },
+  {
+   "name": "reason_request_termination_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  },
+  {
+   "name": "reason_request_licences",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação",
+   "choices": [
+    "Licença Paternidade",
+    "Outros",
+    "Licença Maternidade - Extensão",
+    "Licença por Alistamento militar",
+    "Licença Maternidade - Cadastro"
+   ]
+  },
+  {
+   "name": "reason_request_benefits_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  },
+  {
+   "name": "reason_request_termination",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação?",
+   "choices": [
+    "Homologação",
+    "Pagamento rescisório",
+    "Desligamento de colaborador(a)",
+    "PPR (ex-colaborador(a))",
+    "Outros"
+   ]
+  },
+  {
+   "name": "reason_request_payroll",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação",
+   "choices": [
+    "Outros",
+    "PPR - Colaborador(a) ativo(a)",
+    "Pensão alimentícia",
+    "Adiantamento salarial",
+    "Pagamento mensal"
+   ]
+  },
+  {
+   "name": "rh_manager_regional",
+   "type": "Referência",
+   "question_text": "Aprovador",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "reason_request_vacation",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação",
+   "choices": [
+    "Problema sistêmico (Férias)",
+    "Inclusão, alteração ou cancelamento",
+    "Outros",
+    "Cálculo das férias",
+    "Pagamento das férias"
+   ]
+  },
+  {
+   "name": "reason_request_payroll_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  },
+  {
+   "name": "reason_request_benefits",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação",
+   "choices": [
+    "Aluguel",
+    "Outros",
+    "Kit material escolar",
+    "Reembolso de óculos",
+    "Auxílio creche",
+    "Vale-compras",
+    "Assistência odontológica",
+    "Veículos operacionais",
+    "Previdência privada",
+    "Vale-compras mamãe",
+    "Assistência médica",
+    "Compra+",
+    "Vale refeição",
+    "Auxílio funeral",
+    "Reembolso odontológico"
+   ]
+  },
+  {
+   "name": "reason_request_admission",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da Solicitação",
+   "choices": [
+    "Problema sistêmico",
+    "Processo de Admissão",
+    "Outros"
+   ]
+  },
+  {
+   "name": "reason_request_licences_others",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação?",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "22c1cf0087996e10182a0d440cbb35d9",
+   "name": "CSA - Dados do(s) colaboradore(s)",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad, muda o rótulo da variável reembolso_de_faltas_e_atrasos para 'Dados do(s) colaborador(es)'."
+  },
+  {
+   "sys_id": "41a0b91c3b2b2a10b28dd047f4e45af8",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "509b4c7f1b39ca1432822170f54bcba5",
+   "name": "CSA -limpar var caso valor não for igual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, compara rh_user_id_impacted com matricula; se forem diferentes, limpa a variável adipar_reembolso."
+  },
+  {
+   "sys_id": "9e42fa8c87d56e10182a0d440cbb355f",
+   "name": "CSA - Instance g_form",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, guarda a referência g_form em this.get_form para outros scripts do formulário."
+  },
+  {
+   "sys_id": "b790791c3b2b2a10b28dd047f4e45a77",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "efa4165f1bcb2450eca40dcbe54bcb82",
+   "name": "Onload set help message in Descrição",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, define o placeholder de rh_description como 'Descrever o caso se baseando em fatos e dados.'."
+  }
+ ]
+}

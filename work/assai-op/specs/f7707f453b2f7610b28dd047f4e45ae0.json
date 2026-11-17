@@ -1,0 +1,91 @@
+{
+ "sys_id": "f7707f453b2f7610b28dd047f4e45ae0",
+ "status": "conversacional",
+ "motivo": "Só uma oferta, o protocolo de atendimento para Pessoa com Deficiência, com tema, tipo de deficiência e ocorrência.",
+ "vars": {
+  "tema_do_protocolo": {
+   "label": "Qual é o tema do protocolo?"
+  },
+  "ocorrencia": {
+   "label": "Qual foi a ocorrência?"
+  },
+  "tipo_de_deficiencia": {
+   "label": "Qual é o tipo de deficiência?"
+  },
+  "service_offering": {
+   "label": "Qual serviço você deseja?"
+  }
+ },
+ "remover": {
+  "obs_detalhadamente": "visual",
+  "start": "visual",
+  "formatter2": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "16ca749287677650182a0d440cbb3554": "remover",
+  "30feec5287a37650182a0d440cbb3599": "remover",
+  "7e3ee01287a37650182a0d440cbb3568": "remover",
+  "9d7e6c1287a37650182a0d440cbb35fe": "remover",
+  "c49fa85687a37650182a0d440cbb352b": "remover",
+  "852fec5287a37650182a0d440cbb355b": "remover",
+  "nova_g0_2": {
+   "short_description": "CSA - Ocorrência",
+   "conditions": "tema_do_protocolo!=",
+   "actions": {
+    "ocorrencia": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_3": {
+   "short_description": "CSA - Descrição",
+   "conditions": "ocorrencia!=",
+   "actions": {
+    "rh_description": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Protocolo de atendimento para Pessoa com Deficiência",
+   "short_description": "Protocolo de atendimento para Pessoa com Deficiência.",
+   "description": "Use para acionar o protocolo de atendimento a uma Pessoa com Deficiência, informando o tema, o tipo de deficiência e a ocorrência. Atendido pelo RH - Diversidade, pela oferta \"Protocolo de atendimento para Pessoa com Deficiência - Diversidade e Inclusão\".",
+   "frases_exemplo": [
+    "Preciso abrir protocolo para pessoa com deficiência",
+    "Colaborador com deficiência sofreu constrangimento",
+    "Dúvida sobre legislação de PCD",
+    "Como oriento a equipe com um colaborador PCD?",
+    "Situação de isolamento de colaborador com deficiência"
+   ],
+   "vars": {
+    "tema_do_protocolo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "tipo_de_deficiencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ],
+ "scripts": {
+  "073064a287673a50182a0d440cbb35e0": {
+   "remover": {
+    "outro": "só limpa campo; coberto pelo derivado"
+   }
+  },
+  "2367186a87a33a50182a0d440cbb353a": {
+   "remover": {
+    "outro": "limpa campos ao trocar oferta; coberto pelo derivado"
+   }
+  }
+ }
+}

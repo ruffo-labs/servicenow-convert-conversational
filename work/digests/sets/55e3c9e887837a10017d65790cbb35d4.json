@@ -1,0 +1,75 @@
+{
+ "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+ "title": "EY: Requester Info",
+ "internal_name": "ey_requester_info",
+ "description": "",
+ "usado_por": 4,
+ "itens_exemplo": [
+  "Treinamentos Normativos",
+  "Solicitações Workday Learning",
+  "Atendimento a Franquias",
+  "Solicitação de Alteração de Custo Padrão (Materiais Produtivos)"
+ ],
+ "variaveis": [
+  {
+   "name": "opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "read_only": true,
+   "default": "javascript: gs.getUserID();",
+   "reference": "sys_user",
+   "include_none": true
+  },
+  {
+   "name": "request_for_who",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request for who?",
+   "reference": "x_nasm_hr_profile",
+   "include_none": true,
+   "choices": [
+    "For me [=me]",
+    "Another collaborator [=another]"
+   ]
+  },
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee's name",
+   "reference": "x_nasm_hr_profile",
+   "include_none": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Requested for me",
+   "when": "IO:request_for_who=me^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Requested for who",
+   "when": "IO:request_for_who=another^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Request for who Control",
+   "type": "onChange",
+   "on": "6ff34d2c87837a10017d65790cbb3597",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange sobre 'para quem é a solicitação'. Se o valor for 'me', chama o Script Include EY_HTRUtils, método getHRProfile, via GlideAjax, passando o sys_id do usuário logado; o retorno vem em JSON e o campo sysId da resposta é gravado na variável 'employee'. Se o valor for 'another', limpa 'employee' para o usuário informar outra pessoa."
+  }
+ ]
+}

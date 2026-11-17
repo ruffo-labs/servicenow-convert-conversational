@@ -1,0 +1,49 @@
+{
+ "sys_id": "d145c5a93bd1b650b28dd047f4e45a31",
+ "status": "conversacional",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de reembolso de vale-compras assaí (falta injustificada).",
+ "vars": {
+  "Month_which_the_loan_was_granted": {
+   "label": "Mês de concessão do crédito"
+  },
+  "was_there_separation": {
+   "label": "Houve afastamento?"
+  },
+  "reason_for_request": {
+   "label": "Motivo da solicitação"
+  }
+ },
+ "remover": {
+  "formatter2": "visual",
+  "formatter": "visual",
+  "container_start": "visual",
+  "observation": "visual",
+  "v_ticket_number": "oferta_inativa"
+ },
+ "policies": {
+  "0a10c6733b957690b28dd047f4e45a6e": "remover",
+  "b02101f73b9c4710b28dd047f4e45a21": {
+   "conditions": "service_offering=b78ff0733b9c4710b28dd047f4e45a16",
+   "actions": {
+    "reason_for_request": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Vale-compras Assaí",
+   "short_description": "Vale-compras Assaí",
+   "description": "Vale-compras Assa",
+   "frases_exemplo": [
+    "Divergência no valor recebido da cesta de Natal",
+    "Não recebimento do vale-compras Assaí"
+   ],
+   "sem_policies": [
+    "b02101f73b9c4710b28dd047f4e45a21"
+   ]
+  }
+ ]
+}

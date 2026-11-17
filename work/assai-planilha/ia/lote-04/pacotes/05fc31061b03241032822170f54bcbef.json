@@ -1,0 +1,158 @@
+{
+ "sys_id": "05fc31061b03241032822170f54bcbef",
+ "name": "Problema sistêmico",
+ "category": "Admissão",
+ "short_description": "Problema sistêmico",
+ "description": "Problema sist&ecirc;mico (Admiss&atilde;o ADP)",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Admissão",
+    "item": "Problema sistêmico"
+   },
+   "ofertas": [
+    {
+     "name": "Problema no processo admissional  - Novo fluxo de admissão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_request_number_rp",
+    "rh_admission_request_number_ra",
+    "what_stage_is_admission_at"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Problema no processo de admissão (novo fluxo)",
+     "description": "Use quando a admissão trava por problema no sistema no novo fluxo. Corresponde à oferta Problema no processo admissional - Novo fluxo de admissão."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Férias",
+    "item": "Problema sistêmico"
+   },
+   "ofertas": [
+    {
+     "name": "eXpert - Não consegue imprimir kit admissional",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    },
+    {
+     "name": "Kit admissional com erro",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [
+    "what_stage_is_admission_at"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_request_number_rp",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da Requisição de Pessoal (RP)",
+   "choices": [],
+   "label_atual": "Qual é o número da Requisição de Pessoal (RP)?"
+  },
+  {
+   "name": "rh_admission_request_number_ra",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da Requisição de Admissão (RA)",
+   "choices": [],
+   "label_atual": "Qual é o número da Requisição de Admissão (RA)?"
+  },
+  {
+   "name": "what_stage_is_admission_at",
+   "type": "Selecionar Caixa",
+   "question_text": "Em que fase a admissão está?",
+   "choices": [
+    "Processo de Requisição de Admissão (RA) na ADP",
+    "Conferência de documentação na ADP\r\n",
+    "Pesquisas",
+    "Abertura de Requisição de Pessoal (RP) na ADP\r\n",
+    "Subida de documentos do candidato na ADP",
+    "Confecção do contrato na ADP"
+   ],
+   "label_atual": "Em que fase a admissão está?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "1d0589143b632a10b28dd047f4e45af4",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "8264a9983ba72a10b28dd047f4e45a13",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

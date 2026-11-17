@@ -1,0 +1,126 @@
+{
+ "sys_id": "b1c9219f67d949ca91c06a04d12bc004",
+ "status": "dividido",
+ "motivo": "Restaurar banco completo pede ponto de restauração, destino e impacto; restaurar tabela ou objeto pede o objeto, o período, o destino e a evidência do problema. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_banco_de_dados": {
+   "label": "Qual banco de dados deve ser restaurado?"
+  },
+  "v_ponto_de_restauracao": {
+   "label": "Para qual ponto no tempo você quer restaurar?"
+  },
+  "v_destino_da_restauracao": {
+   "label": "Em qual destino a restauração deve ser feita?"
+  },
+  "v_impacto_no_negocio": {
+   "label": "Qual o impacto no negócio?"
+  },
+  "v_autorizacao_do_gestor": {
+   "label": "Quem é o gestor que autoriza a restauração?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_tabela_objeto_a_restaurar": {
+   "label": "Qual tabela ou objeto deve ser restaurado?"
+  },
+  "v_periodo_ponto_de_restauracao": {
+   "label": "De qual período ou ponto de restauração?"
+  },
+  "v_destino": {
+   "label": "Para qual destino a recuperação deve ir?"
+  },
+  "v_evidencia_do_problema": {
+   "label": "Envie a evidência do problema."
+  }
+ },
+ "policies": {
+  "774684d38a8349a6af22178302059687": "remover",
+  "821bc75a83204635a3229eef9d53a4dc": "remover"
+ },
+ "itens": [
+  {
+   "name": "Restaurar um banco de dados completo",
+   "short_description": "Peça a restauração de um banco de dados inteiro.",
+   "description": "Use para restaurar uma base completa. Corresponde à opção Restaurar banco de dados. Informe o banco, o ponto de restauração, o destino, o impacto no negócio e a autorização do gestor.",
+   "frases_exemplo": [
+    "Preciso restaurar um banco de dados",
+    "Quero voltar o banco para o estado de ontem",
+    "Dá pra restaurar a base inteira?",
+    "O banco foi corrompido, preciso de restore",
+    "Preciso restaurar o banco em outro servidor"
+   ],
+   "sem_vars": [
+    "v_tabela_objeto_a_restaurar",
+    "v_periodo_ponto_de_restauracao",
+    "v_destino",
+    "v_evidencia_do_problema"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Restaurar banco de dados"
+   },
+   "vars": {
+    "v_ponto_de_restauracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_destino_da_restauracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_no_negocio": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Restaurar tabela ou objeto de banco de dados",
+   "short_description": "Peça a recuperação de uma tabela ou objeto específico.",
+   "description": "Use para recuperar apenas uma tabela ou objeto. Corresponde à opção Restaurar tabela ou objeto. Informe banco, tabela ou objeto, período de restauração, destino, evidência do problema e autorização do gestor.",
+   "frases_exemplo": [
+    "Apaguei uma tabela sem querer, dá pra recuperar?",
+    "Preciso restaurar só uma tabela",
+    "Quero recuperar um objeto do banco",
+    "Alguém excluiu dados de uma tabela, como volto?",
+    "Preciso restaurar uma tabela de uma semana atrás"
+   ],
+   "sem_vars": [
+    "v_ponto_de_restauracao",
+    "v_destino_da_restauracao",
+    "v_impacto_no_negocio"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Restaurar tabela ou objeto"
+   },
+   "vars": {
+    "v_tabela_objeto_a_restaurar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_periodo_ponto_de_restauracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_evidencia_do_problema": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

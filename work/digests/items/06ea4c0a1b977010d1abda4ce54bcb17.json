@@ -1,0 +1,148 @@
+{
+ "sys_id": "06ea4c0a1b977010d1abda4ce54bcb17",
+ "name": "Rotinas de Folha de Pagamento",
+ "sys_name": "Payroll Routines",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Formulário para solicitação de folha de pagamento dos colaboradores, de acordo com o cronograma pré estabelecido pelo CSC.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_evidence: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_contrato: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @Employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "include_none": true,
+   "choices": [
+    "Inclusion [=10]",
+    "Update [=20]",
+    "Exclusion [=30]"
+   ]
+  },
+  {
+   "name": "budget_description",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Budget Description",
+   "reference": "x_nasm_hr_budget",
+   "include_none": true
+  },
+  {
+   "name": "enter_budget_description",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter Budget Description",
+   "hidden": true
+  },
+  {
+   "name": "info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_evidence",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "We request that evidence of approval be attached, according to guidelines and Compensation"
+  },
+  {
+   "name": "v_attach_contrato",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "We request that the contract signed by the employee be attached"
+  },
+  {
+   "name": "v_legenda_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "We request that evidence of approval be attached, according to guidelines and Compensation"
+  },
+  {
+   "name": "comment",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comment"
+  },
+  {
+   "name": "download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "6c1dc09e1b17b010d1abda4ce54bcbfa",
+   "name": "Informações dos colaboradores",
+   "order": "500",
+   "perguntas": [
+    "Employee (Referência): Employee",
+    "global_id (Texto de Linha Única, ro): Global ID",
+    "codigo_adp (Texto de Linha Única, ro): Código ADP",
+    "Value (Texto de Linha Única): Value"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Request Type = Inclusion and Retention Bonus, Hiring Bonus, Non Complete",
+   "when": "IO:request_type=10^IO:budget_description=a1d68a08878f1a10ec360e530cbb35ec^ORIO:budget_description=89460608878f1a10ec360e530cbb35cc^ORIO:budget_description=5d44c244878f1a10ec360e530cbb3543^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_attach: visible=true,mandatory=true",
+    "v_attach_contrato: visible=true,mandatory=true",
+    "v_attach_evidence: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN The  variable \"Enter Budget Description\" just shows when \"Budget Description\" is \" Other\"",
+   "when": "IO:budget_description=8a76e05a1b97b010d1abda4ce54bcb93^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "enter_budget_description: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatorty fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "budget_description: mandatory=true",
+    "request_type: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

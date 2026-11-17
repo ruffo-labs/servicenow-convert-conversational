@@ -1,0 +1,208 @@
+{
+ "sys_id": "e1ed453b1b55a110d1abda4ce54bcb21",
+ "title": "EY VS - Baixa de Ativo Fixo",
+ "internal_name": "ey_vs_baixa_de_ativo_fixo",
+ "description": "Variable Set referente ao Form Baixa de Ativo Fixo",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Baixa de Ativo Fixo"
+ ],
+ "variaveis": [
+  {
+   "name": "select_the_manager_who_apprends_this_request",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Select the manager who apprends this request",
+   "reference": "sys_user",
+   "lookup": "sys_user",
+   "ref_qual": "active=true^x_nasm_hr_rangeING,H,I,J,K,L",
+   "include_none": true
+  },
+  {
+   "name": "v_what_kind_of_casualty",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What kind of casualty?",
+   "include_none": true,
+   "choices": [
+    "1) Write-off due to Destruction/Obsolescence [=destruction_obsolescence]",
+    "2) Write-off by Return [=baixa_devolucao]",
+    "3) Write-off by Donation [=donation]",
+    "4) Write-off due to Theft/Loss [=baixa_furto_perda]",
+    "5) Write-off by Sale [=sale]"
+   ]
+  },
+  {
+   "name": "legenda_doacao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_destruicao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_furto_perda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_devolucao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_venda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_number_assets",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the number of assets (according to the attached template)",
+   "include_none": true,
+   "choices": [
+    "1 - 10 [=1_10]",
+    "11 - 20 [=11_20]",
+    "21 - 30 [=21_30]",
+    "31 - 40 [=31_40]",
+    "41 - 50 [=41_50]",
+    "51 - 60 [=51_60]",
+    "61 - 70 [=61_70]",
+    "71 - 80 [=71_80]",
+    "81 - 90 [=81_90]",
+    "91 - 100 [=91_100]"
+   ]
+  },
+  {
+   "name": "v_issuing_invoice",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Issuing invoice?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "link_sn_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download Template - Natura Fixed Asset Write-Off"
+  },
+  {
+   "name": "link_sn_obsolescencia",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download Template - Natura Fixed Asset Write-Off"
+  },
+  {
+   "name": "link_renf",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download Template - Natura Fixed Asset Write-Off"
+  },
+  {
+   "name": "link_senf_nota",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download Template - Natura Fixed Asset Write-Off"
+  },
+  {
+   "name": "v_legenda_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_files",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Template"
+  },
+  {
+   "name": "v_attach_email_with_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Documentation Support"
+  },
+  {
+   "name": "documentos_furto_perda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Required Documents:\r\nPolice Report"
+  },
+  {
+   "name": "documentos_doacao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Required Documents:\r\nPolice Report"
+  },
+  {
+   "name": "documentos_destruicao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Required Documents:\r\nPolice Report"
+  },
+  {
+   "name": "documentos_venda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Required Documents:\r\nPolice Report"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_kind_of_casualty: mandatory=true",
+    "select_the_manager_who_apprends_this_request: mandatory=true",
+    "v_issuing_invoice: ",
+    "v_invoice_available: ",
+    "v_number_assets: mandatory=true",
+    "v_attach_files: mandatory=true",
+    "v_attach_email_with_approval: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_invoice_2: readonly=true",
+    "v_number_assets: readonly=true",
+    "v_what_kind_of_casualty: readonly=true",
+    "v_issuing_invoice: readonly=true",
+    "v_attach_invoice: readonly=true",
+    "v_comments: readonly=true",
+    "v_invoice_available_2: readonly=true",
+    "v_attach_files: readonly=true",
+    "select_the_manager_who_apprends_this_request: readonly=true",
+    "v_attach_email_with_approval: readonly=true",
+    "v_invoice_available: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Issuance of Invoice",
+   "type": "onChange",
+   "on": "041ec1bb1b55a110d1abda4ce54bcbd2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange sobre emissão de nota fiscal. Mantém duas listas de sys_ids de sub-empresa: uma com três entradas e outra com doze. Conforme a sub-empresa escolhida caia numa lista, na outra ou em nenhuma, define o valor de emissão de nota e o estado do campo (preenchido e travado, ou liberado)."
+  }
+ ]
+}

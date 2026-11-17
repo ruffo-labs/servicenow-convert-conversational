@@ -1,0 +1,162 @@
+{
+ "sys_id": "5efcdbca1b0f241032822170f54bcbf4",
+ "name": "Cadastro de exames ocupacionais",
+ "category": "Medicina do Trabalho",
+ "short_description": "Cadastro de exames ocupacionais",
+ "description": "Cadastro de exames ocupacionais",
+ "sets": [
+  {
+   "title": "Informações do Candidato",
+   "perguntas": [
+    "rh_cpf_candidate",
+    "rh_email_candidate",
+    "rh_location",
+    "rh_name_candidate"
+   ]
+  },
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de cadastro de exame ocupacional - Operador de Empilhadeira",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Saúde e Medicina 1"
+    },
+    {
+     "name": "Solicitação de regularização de pendências de Atestados de Saúde Ocupacional (ASO)",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Saúde e Medicina 1"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "aso_date",
+    "exam_type"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "aso_date",
+   "type": "Data",
+   "question_text": "Data do ASO",
+   "choices": []
+  },
+  {
+   "name": "exam_type",
+   "type": "Selecionar Caixa",
+   "question_text": "Tipo de exame",
+   "choices": [
+    "Periódico",
+    "Retorno ao trabalho",
+    "Mudança de função",
+    "Admissão",
+    "Admissional",
+    "Demissão"
+   ]
+  }
+ ],
+ "tecnicas_ocultas": [
+  "rh_is_impacted_candidate"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "16aee1183b2b2a10b28dd047f4e45a66",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "2db39ed41b112910347221bbe54bcb1b",
+   "name": "Onchange CPF",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange de rh_cpf_candidate, valida o CPF (11 dígitos, sequências repetidas, dois dígitos verificadores; inválido limpa e mostra 'CPF inválido!'); válido formata o CPF."
+  },
+  {
+   "sys_id": "6413885f1bd8fcd0eca40dcbe54bcb34",
+   "name": "ALP - Impactado ou Candidato",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, lê rh_is_impacted_candidate. Se 'impacted', limpa os campos do candidato (nome, e-mail, CPF, cidade); se 'candidate', limpa os do colaborador impactado (solicitante, usuário, CPF, empresa, data de entrada, e-mail, cidade). Contém um console.log de depuração."
+  },
+  {
+   "sys_id": "7607b6d21b497d90347221bbe54bcb37",
+   "name": "CSA - Remover opção variavel",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, lê a oferta por getReference. Se for 'Solicitação de regularização de pendencias de exames ocupacionais (ASO)', remove a opção 'admissional' de exam_type; nas demais ofertas recria a lista de exam_type sem 'admissional' (Mudança de função, Periódico, Retorno ao trabalho, Admissão, Demissão)."
+  },
+  {
+   "sys_id": "77aea1183b2b2a10b28dd047f4e45a6d",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "c8d4aadd1b9e2150347221bbe54bcb57",
+   "name": "ALP - Check Data do ASO",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da data do ASO (aso_date), chama global.ClientDateTimeUtils.getNowDate via GlideAjax para obter a data de hoje do servidor. Calcula a diferença em dias; se o exame estiver a 7 dias ou menos no passado (ou futuro), limpa o campo e mostra mensagem de erro 'Exame dentro do prazo de cadastro da operadora'."
+  }
+ ]
+}

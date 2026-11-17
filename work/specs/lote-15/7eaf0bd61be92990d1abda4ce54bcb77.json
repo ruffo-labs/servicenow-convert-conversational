@@ -1,0 +1,42 @@
+{
+ "sys_id": "7eaf0bd61be92990d1abda4ce54bcb77",
+ "status": "conversacional",
+ "motivo": "Intenção única: pedir reclassificação de um lançamento de imposto informando data, descrição e o template preenchido. Os labels de download (rich text, sem dado) saem, pois a orientação passa para KB/description; a policy e o client script que só alternavam entre os dois templates de download ficam sem efeito. A policy 'Obrigatorios - Item view' vira prop mandatory direta nas variáveis que existem no set. Mantive v_attach_template (Anexo, coleta dado) porque não há substituta para ele: a 1ª análise pedia remover, mas isso perderia o próprio arquivo da solicitação.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_release_date": {
+   "label": "Qual a data do lançamento a reclassificar?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "describe_the_information_you_need": {
+   "label": "Descreva a reclassificação: qual imposto, conta atual e conta correta",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_template": {
+   "label": "Envie o template de reclassificação preenchido",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_download_template": "visual",
+  "v_download_template_2": "visual",
+  "v_information_note": "visual"
+ },
+ "policies": {
+  "34bec6d13b02d650924d0247f4e45ac8": "remover",
+  "01839f9e1be92990d1abda4ce54bcbb8": "remover"
+ },
+ "scripts": {
+  "bf65cedd3b8e9650924d0247f4e45a58": {
+   "remover": "sem_efeito"
+  }
+ }
+}

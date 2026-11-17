@@ -1,0 +1,127 @@
+{
+ "sys_id": "23c6b2b51b886198d1abda4ce54bcb70",
+ "status": "conversacional",
+ "motivo": "Intenção única (salário substituição/exercício temporário) com dois fluxos, individual e em massa, já resolvidos pelas policies existentes. O anexo obrigatório da planilha em massa passa a ser a variável nova_planilha_substituicao controlada por UI policy, substituindo o client script sem VA Support. As variáveis de dados do colaborador substituído que a 1ª análise pede para derivar continuam como perguntas somente-leitura, pois nenhuma tem default_value nem já era oculta no original. O checkbox de aviso de retroatividade (v_prezade_solicitante) também continua na conversa, com label de confirmação, pois é um checkbox (coleta dado) sem substituta — não há como removê-lo sem perder o dado da ciência do solicitante.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_overridden_collaborator_global_id": {
+   "label": "Qual é o ID global do colaborador substituído?"
+  },
+  "v_office": {
+   "label": "Qual é o escritório do colaborador substituído?"
+  },
+  "v_band": {
+   "label": "Qual é a banda salarial do colaborador substituído?"
+  },
+  "v_salary_of_replaced_employee": {
+   "label": "Qual é o salário do colaborador substituído?"
+  },
+  "v_substitute_employee_salary": {
+   "label": "Qual é o seu salário como substituto?"
+  },
+  "v_date_of_return_to_original_post": {
+   "label": "Quando você retorna ao cargo original?"
+  },
+  "v_prezade_solicitante": {
+   "label": "Você confirma ciência de que a data retroativa depende de aprovação da gestão e o prazo só começa após ela?"
+  },
+  "nova_planilha_substituicao": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a planilha preenchida com os colaboradores.",
+    "mandatory": false,
+    "order": 1550
+   }
+  }
+ },
+ "policies": {
+  "0b2367751b08a198d1abda4ce54bcbe6": {
+   "conditions": "v_is_this_request_individual_or_in_bulk=massive",
+   "actions": {
+    "v_download_massive": {
+     "visible": true
+    },
+    "nova_planilha_substituicao": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "2201a3791bc4a198d1abda4ce54bcb11": {
+   "conditions": "v_is_this_request_individual_or_in_bulk=individual",
+   "actions": {
+    "v_salary_of_replaced_employee": {
+     "visible": true,
+     "readonly": true
+    },
+    "v_additional_risk_of_the_position": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_reason_for_replacement": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_office": {
+     "visible": true,
+     "readonly": true
+    },
+    "v_replaced_employee_name": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_substitute_employee_salary": {
+     "visible": true,
+     "readonly": true
+    },
+    "v_overridden_collaborator_global_id": {
+     "visible": true,
+     "readonly": true
+    },
+    "v_band": {
+     "visible": true,
+     "readonly": true
+    },
+    "v_replacement_start_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_replacement_end_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_date_of_return_to_original_post": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "250697c11bb4a154d1abda4ce54bcb51": {
+   "remover": {
+    "substituido_por": "0b2367751b08a198d1abda4ce54bcbe6"
+   }
+  },
+  "26a7b4d41bfc61d0a530426fe54bcb45": {
+   "remover": "sem_efeito"
+  },
+  "2e563c101bfc61d0a530426fe54bcbbd": {
+   "remover": "sem_efeito"
+  },
+  "50f991a31b086dd8a530426fe54bcb2f": {
+   "converter": "auto_populate"
+  },
+  "b77dff0a1bc8e598d1abda4ce54bcbcf": {
+   "converter": "default"
+  },
+  "ee18cd2f1b806dd8a530426fe54bcb1c": {
+   "converter": "auto_populate"
+  },
+  "f76ad9a71b086dd8a530426fe54bcbce": {
+   "converter": "auto_populate"
+  }
+ }
+}

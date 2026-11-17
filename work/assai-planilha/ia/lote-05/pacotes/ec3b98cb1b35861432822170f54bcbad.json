@@ -1,0 +1,386 @@
+{
+ "sys_id": "ec3b98cb1b35861432822170f54bcbad",
+ "name": "Temporários",
+ "category": "Gestor/RH Ponta",
+ "short_description": "Solicitações referente a temporários",
+ "description": "Solicita&ccedil;&otilde;es referente a tempor&aacute;rios",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Aprovadores Matriz",
+   "perguntas": [
+    "matriz_approver_name_n_manager",
+    "area_manager_director",
+    "matriz_approver_name",
+    "area_director",
+    "area_manager",
+    "executive_director"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Temporários",
+    "item": "Temporários"
+   },
+   "ofertas": [
+    {
+     "name": "Erro sistêmico - Conecta - Temporários",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Temporários"
+    },
+    {
+     "name": "Temporário não compareceu no 1º dia - Temporários",
+     "sla": "SLA - GESTÃO DE GENTE - 08H"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 40H",
+     "SLA - GESTÃO DE GENTE - 08H"
+    ],
+    "support_group": [
+     "RH - Temporários",
+     ""
+    ]
+   },
+   "sai_do_formulario": [
+    "ds_gross_value",
+    "unit_name",
+    "name_registration_new_approver",
+    "cnpj_agency",
+    "month_validity",
+    "unit_cost_center",
+    "vacancy_ifood",
+    "unit_cnpj",
+    "agency_name",
+    "rh_email_responsible",
+    "what_is_the_doubt",
+    "amount_temporary",
+    "change_reason"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Erro sistêmico no Conecta (temporários)",
+     "description": "Use para reportar erro no Conecta relacionado a temporários, como botão de reativação ausente, vaga que não aparece ou temporário fora da aba de contratados. Atende a oferta Erro sistêmico - Conecta - Temporários, tratada pelo RH - Temporários."
+    },
+    {
+     "name": "Temporário não compareceu no 1º dia",
+     "description": "Use quando o temporário não apareceu no primeiro dia de trabalho. Atende a oferta Temporário não compareceu no 1º dia - Temporários. Você informa a data de início, a agência, o chamado do Conecta e os dados do temporário."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Temporários",
+    "item": "Temporários"
+   },
+   "ofertas": [
+    {
+     "name": "Alteração/delegação de aprovador - Temporários",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Temporários"
+    },
+    {
+     "name": "Dúvidas - Temporários",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Temporários"
+    },
+    {
+     "name": "Validação de Descrição de Serviço (DS)",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Orçamento"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 16H",
+     "SLA - GESTÃO DE GENTE - 40H"
+    ],
+    "support_group": [
+     "RH - Temporários",
+     "RH - Orçamento"
+    ],
+    "u_has_approver": [
+     "false",
+     "true"
+    ],
+    "u_user_criteria": [
+     "",
+     "ALP - Validação de Descrição de Serviço (DS)"
+    ]
+   },
+   "sai_do_formulario": [
+    "start_date",
+    "agency",
+    "call_number",
+    "what_is_the_error",
+    "full_name_of_the_temp",
+    "telephone_number_responsible_hr",
+    "temporary_cpf"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Alterar ou delegar aprovador de temporários",
+     "description": "Use para trocar ou delegar o aprovador de temporários. Atende a oferta Alteração/delegação de aprovador - Temporários, tratada pelo RH - Temporários. Você informa o novo aprovador e o motivo da alteração."
+    },
+    {
+     "name": "Dúvidas sobre temporários",
+     "description": "Use para tirar dúvidas sobre temporários, como substituição no Conecta, agência que não retorna ou vaga invalidada sem motivo. Atende a oferta Dúvidas - Temporários, tratada pelo RH - Temporários."
+    },
+    {
+     "name": "Validar Descrição de Serviço (DS) de temporários",
+     "description": "Use para validar uma Descrição de Serviço (DS) de temporários. Atende a oferta Validação de Descrição de Serviço (DS), tratada pelo RH - Orçamento. Você informa a unidade, a agência, o valor bruto, a vigência e a quantidade de temporários."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "ds_gross_value",
+   "type": "Texto de Linha Única",
+   "question_text": "Valor bruto da DS",
+   "choices": [],
+   "label_atual": "Qual é o valor bruto da DS?"
+  },
+  {
+   "name": "unit_name",
+   "type": "Referência",
+   "question_text": "Nome da unidade",
+   "reference": "core_company",
+   "choices": [],
+   "label_atual": "Qual é o nome da unidade?"
+  },
+  {
+   "name": "name_registration_new_approver",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome e matrícula do novo aprovador",
+   "choices": [],
+   "label_atual": "Qual é o nome e a matrícula do novo aprovador?"
+  },
+  {
+   "name": "start_date",
+   "type": "Data",
+   "question_text": "Data de início:",
+   "choices": [],
+   "label_atual": "Qual é a data de início do temporário?"
+  },
+  {
+   "name": "cnpj_agency",
+   "type": "Texto de Linha Única",
+   "question_text": "CNPJ da agência",
+   "choices": [],
+   "label_atual": "Qual é o CNPJ da agência?"
+  },
+  {
+   "name": "month_validity",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês da vigência",
+   "choices": [
+    "Outubro",
+    "Agosto",
+    "Março",
+    "Abril",
+    "Maio",
+    "Dezembro",
+    "Junho",
+    "Julho",
+    "Janeiro",
+    "Setembro",
+    "Novembro",
+    "Fevereiro"
+   ],
+   "label_atual": "Qual é o mês da vigência?"
+  },
+  {
+   "name": "unit_cost_center",
+   "type": "Texto de Linha Única",
+   "question_text": "Centro de Custo da unidade",
+   "choices": [],
+   "label_atual": "Qual é o centro de custo da unidade?"
+  },
+  {
+   "name": "vacancy_ifood",
+   "type": "Selecionar Caixa",
+   "question_text": "Vaga Ifood",
+   "choices": [
+    "Não",
+    "Sim"
+   ],
+   "label_atual": "A vaga é do iFood?"
+  },
+  {
+   "name": "unit_cnpj",
+   "type": "Texto de Linha Única",
+   "question_text": "CNPJ da unidade",
+   "choices": [],
+   "label_atual": "Qual é o CNPJ da unidade?"
+  },
+  {
+   "name": "agency_name",
+   "type": "Referência",
+   "question_text": "Nome da agência",
+   "reference": "core_company",
+   "choices": [],
+   "label_atual": "Qual é o nome da agência da DS?"
+  },
+  {
+   "name": "rh_email_responsible",
+   "type": "E-mail",
+   "question_text": "E-mail do RH Responsável",
+   "choices": [],
+   "label_atual": "Qual é o e-mail do RH responsável?"
+  },
+  {
+   "name": "agency",
+   "type": "Referência",
+   "question_text": "Agência:",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é a agência do temporário?"
+  },
+  {
+   "name": "what_is_the_doubt",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual é a dúvida?",
+   "choices": [
+    "Substituição de temporário (dúvidas/problemas para realizar a substituição no Conecta)",
+    "Agência não retorna",
+    "Vaga foi invalidada sem motivo"
+   ],
+   "label_atual": "Qual é a sua dúvida?"
+  },
+  {
+   "name": "call_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado do Conecta:",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado do Conecta?"
+  },
+  {
+   "name": "what_is_the_error",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual é o erro?",
+   "choices": [
+    "Botão de reativação não aparece",
+    "Vaga não aparece",
+    "Temporário não está na aba de contratados"
+   ],
+   "label_atual": "Qual erro você encontrou?"
+  },
+  {
+   "name": "full_name_of_the_temp",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo do temporário(a):",
+   "choices": [],
+   "label_atual": "Qual é o nome completo do temporário?"
+  },
+  {
+   "name": "telephone_number_responsible_hr",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do RH responsável:",
+   "choices": [],
+   "label_atual": "Qual é o telefone do RH responsável?"
+  },
+  {
+   "name": "amount_temporary",
+   "type": "Texto de Linha Única",
+   "question_text": "Quantidade de temporários",
+   "choices": [],
+   "label_atual": "Quantos temporários são?"
+  },
+  {
+   "name": "change_reason",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Motivo da alteração",
+   "choices": [],
+   "label_atual": "Qual é o motivo da alteração?"
+  },
+  {
+   "name": "temporary_cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do temporário:",
+   "choices": [],
+   "label_atual": "Qual é o CPF do temporário?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "03ed9f8c3bcede50b28dd047f4e45ab3",
+   "name": "ALP - remove readOnly if null",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, lê o registro core_company escolhido via GlideRecord. Se a empresa não tem centro de custo (u_cost_center), libera unit_cost_center, torna obrigatório e mostra 'Centro de custo indisponível, preencha manualmente.'; senão deixa somente leitura. Faz o mesmo para o CNPJ (u_cnpj) em unit_cnpj."
+  },
+  {
+   "sys_id": "7034f1183b6b2a10b28dd047f4e45a18",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "7d3475183b6b2a10b28dd047f4e45ac2",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

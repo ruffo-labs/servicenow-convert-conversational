@@ -1,0 +1,85 @@
+{
+ "sys_id": "0a851af93b241a10924d0247f4e45a70",
+ "title": "Dependent data",
+ "internal_name": "inclusion_of_dependents",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Plano de Saúde, Cobertura Médica, Previdência Social, EPS"
+ ],
+ "variaveis": [
+  {
+   "name": "employee_reference",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee Name",
+   "hidden": true,
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_full_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Full name",
+   "reference": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript: 'employee=' + current.variables.employee_reference.sys_id "
+  },
+  {
+   "name": "v_dni_dependent",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "DNI"
+  },
+  {
+   "name": "v_date_of_birth",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Date of birth"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: ReadOnly variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_date_of_birth: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_dni_dependent: mandatory=true",
+    "v_full_name: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Block same beneficiaries",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que impede beneficiários repetidos. Lê a lista de dependentes do sessionStorage e bloqueia o envio quando há duplicidade. Depende de estado guardado no navegador, não no formulário."
+  },
+  {
+   "name": "EY: Get dependent's data",
+   "type": "onChange",
+   "on": "e5e5923d3b241a10924d0247f4e45acf",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do dependente via EYHispanic_Employee_Information com GlideAjax."
+  },
+  {
+   "name": "EY: Set employee_reference",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."
+  }
+ ]
+}

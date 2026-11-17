@@ -1,0 +1,172 @@
+{
+ "sys_id": "1415094f1bc3e81032822170f54bcb1e",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios, com 1 oferta(s); Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios, com 2 oferta(s). 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Não recebimento de reembolso odontológico; ALP - Não recebimento de reembolso odontológico (Resolvedora).",
+ "vars": {
+  "rh_number_called_reimbursement": {
+   "label": "Qual é o número do chamado do pedido de reembolso?"
+  },
+  "rh_budget_value": {
+   "label": "O valor do orçamento ou declaração passa de R$ 1.200,00?"
+  },
+  "att_comprovante_de_pagamento": {
+   "label": "Envie o comprovante de pagamento."
+  },
+  "rh_dependent_complete_name": {
+   "label": "Qual é o nome completo do dependente?"
+  },
+  "rh_extrato_bancario": {
+   "label": "Envie o extrato bancário."
+  },
+  "rh_orcamento_declaracao": {
+   "label": "Envie o orçamento ou a declaração."
+  },
+  "rh_receipt_title": {
+   "label": "O recibo está no nome do titular?"
+  }
+ },
+ "remover": {
+  "rh_observacao_nao_reembolso": "visual",
+  "rh_observation_reembolso": "visual",
+  "rh_observation": "visual"
+ },
+ "policies": {
+  "0934c3f587517650182a0d440cbb35df": {
+   "conditions": "service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "rh_orcamento_declaracao": {
+     "visible": true
+    },
+    "rh_receipt_title": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_budget_value": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "79350d8f1bc3e81032822170f54bcb9c": {
+   "conditions": "service_offering=87d163941b47649032822170f54bcb87",
+   "actions": {
+    "rh_extrato_bancario": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_number_called_reimbursement": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8ce343b587517650182a0d440cbb35f4": {
+   "conditions": "rh_budget_value=yes^service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true
+    }
+   }
+  },
+  "98058b3987517650182a0d440cbb35a3": {
+   "conditions": "service_offering=87d163941b47649032822170f54bcb87",
+   "actions": {
+    "rh_extrato_bancario": {
+     "visible": true
+    },
+    "rh_number_called_reimbursement": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "a4d6bd0b1bc3a050eca40dcbe54bcb60": {
+   "conditions": "rh_budget_value=yes^service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "b9350d8f1bc3e81032822170f54bcb99": {
+   "conditions": "service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "rh_receipt_title": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_orcamento_declaracao": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_budget_value": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Reembolso Odontológico (reportar problema)",
+   "short_description": "Reportar que o reembolso odontológico de um colaborador não foi recebido.",
+   "description": "Use quando o colaborador já pediu o reembolso odontológico e não recebeu o valor. Atende a oferta Não recebimento de reembolso odontológico.",
+   "frases_exemplo": [
+    "O reembolso odontológico do colaborador não caiu",
+    "Funcionário não recebeu o reembolso do dentista",
+    "Reportar reembolso odontológico não pago",
+    "Pedi o reembolso odontológico e ainda não foi pago"
+   ],
+   "sem_vars": [
+    "rh_budget_value",
+    "att_comprovante_de_pagamento",
+    "rh_dependent_complete_name",
+    "rh_orcamento_declaracao",
+    "rh_receipt_title",
+    "container_start",
+    "formatter"
+   ],
+   "vars": {
+    "rh_number_called_reimbursement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_extrato_bancario": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "0934c3f587517650182a0d440cbb35df",
+    "79350d8f1bc3e81032822170f54bcb9c",
+    "8ce343b587517650182a0d440cbb35f4",
+    "9456350b1bc3a050eca40dcbe54bcb11",
+    "98058b3987517650182a0d440cbb35a3",
+    "a4d6bd0b1bc3a050eca40dcbe54bcb60",
+    "b9350d8f1bc3e81032822170f54bcb99"
+   ]
+  },
+  {
+   "name": "Reembolso Odontológico (solicitação)",
+   "short_description": "Consultar saldo ou pedir reembolso odontológico de um colaborador.",
+   "description": "Use para consultar o saldo disponível de reembolso odontológico ou para solicitar o reembolso de despesa odontológica de um colaborador, com orçamento ou declaração e recibo. Atende as ofertas Consulta de Saldo e Solicitação de reembolso odontológico.",
+   "frases_exemplo": [
+    "Quanto ainda tem de reembolso odontológico?",
+    "Quero consultar o saldo odontológico do colaborador",
+    "Preciso pedir reembolso de tratamento dentário",
+    "Solicitar reembolso do dentista de um funcionário"
+   ],
+   "sem_vars": [
+    "rh_number_called_reimbursement",
+    "rh_extrato_bancario"
+   ],
+   "sem_policies": [
+    "79350d8f1bc3e81032822170f54bcb9c",
+    "98058b3987517650182a0d440cbb35a3"
+   ]
+  }
+ ]
+}

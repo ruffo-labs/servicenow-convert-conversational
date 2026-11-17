@@ -1,0 +1,177 @@
+{
+ "sys_id": "30c718e51b091ed0514cbaef4b4bcb43",
+ "status": "conversacional",
+ "motivo": "Intenção única (reembolso de conectividade). Máscaras de moeda viram regex nas variáveis de valor. Os scripts que validam data, fatura duplicada, calculam o teto e aplicam a regra ARG ADM continuam como client scripts (a lógica roda no servidor via GlideAjax), só ampliando o UI type para funcionar também na conversa. Os dois pares que montam a data completa (mês/ano) e o que busca data/fatura do colaborador viram auto-preenchimento. sales_force_user vira valor oculto derivado do script include. Não foi possível fixar v_who_is_this_request_for (variável de set compartilhado) nem editar as choices de ano do script 'EY: Set Options - Year' (o formato não permite gerar/unir choices dinâmicas); mantive a variável perguntada e o script ajustado para todos os UI types.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "sales_force_user": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:new EYGetUserRange().validateSalesForceUser()"
+   }
+  },
+  "v_tope": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "v_month_year": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "invoice_number": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "what_month_does_the_invoice_expire": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "what_year_does_the_invoice_due_correspond_to": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "monto_internet": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[0-9]+([.,][0-9]+)?$"
+   }
+  },
+  "monto_television": {
+   "props": {
+    "validation_regex": "^[0-9]+([.,][0-9]+)?$"
+   }
+  },
+  "monto_celular": {
+   "props": {
+    "validation_regex": "^[0-9]+([.,][0-9]+)?$"
+   }
+  },
+  "monto_otros": {
+   "props": {
+    "validation_regex": "^[0-9]+([.,][0-9]+)?$"
+   }
+  },
+  "monto_total": {
+   "props": {
+    "validation_regex": "^[0-9]+([.,][0-9]+)?$"
+   }
+  }
+ },
+ "remover": {
+  "legenda_reintegro_60": "texto_movido_descricao"
+ },
+ "policies": {
+  "2d24a1c53b821650924d0247f4e45a0a": "remover",
+  "8f5ca1fb1b451250514cbaef4b4bcb94": "remover",
+  "c067cd2e1b015610514cbaef4b4bcb6c": "remover",
+  "ab54ed453b821650924d0247f4e45ae3": {
+   "conditions": "v_country=ARG^sales_force_user=true^NQv_country!=ARG^sales_force_user=true",
+   "actions": {
+    "v_amount_legenda": {
+     "visible": false
+    },
+    "monto_total": {
+     "visible": true,
+     "mandatory": true
+    },
+    "legenda_completar_campos": {
+     "visible": true
+    },
+    "monto_celular": {
+     "visible": true,
+     "mandatory": true
+    },
+    "monto_otros": {
+     "visible": true,
+     "mandatory": true
+    },
+    "monto_television": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "0cc40873871db214017d65790cbb3593": {
+   "converter": "default"
+  },
+  "0d991d381bdd9650514cbaef4b4bcb96": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "13dd3dec1ba51650514cbaef4b4bcbf8": {
+   "converter": "regex"
+  },
+  "15dd79ec1ba51650514cbaef4b4bcb2e": {
+   "converter": "regex"
+  },
+  "2f7f6a541b25d250514cbaef4b4bcb02": {
+   "remover": "sem_efeito"
+  },
+  "336df5201be51650514cbaef4b4bcbe0": {
+   "converter": "regex"
+  },
+  "57f06dfb3bed9610924d0247f4e45a3d": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "5e6079371b851250514cbaef4b4bcb23": {
+   "remover": "sem_efeito"
+  },
+  "67e3adf41b11d650514cbaef4b4bcb15": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "68cdb1201be51650514cbaef4b4bcbcf": {
+   "converter": "regex"
+  },
+  "6bc425781b11d650514cbaef4b4bcb1c": {
+   "converter": "auto_populate"
+  },
+  "809611593b469650924d0247f4e45a11": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "8892713f1b851250514cbaef4b4bcbe9": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "a5379df01bdd9650514cbaef4b4bcb33": {
+   "converter": "auto_populate"
+  },
+  "c2ba29741b51d650514cbaef4b4bcba3": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "c9f0653f3bed9610924d0247f4e45a32": {
+   "ajustar": [
+    "ui_type_all"
+   ]
+  },
+  "cc8e15bc1bdd9650514cbaef4b4bcb09": {
+   "converter": "auto_populate"
+  },
+  "e6cd35201be51650514cbaef4b4bcb27": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "description": "Use para pedir o reembolso mensal da fatura de internet (conectividade) que a empresa cobre para quem trabalha remoto ou híbrido na Natura/Avon Argentina. Você informa o número da fatura, o mês e o ano de vencimento e o valor de internet; quem é da força de vendas informa também os valores de televisão, celular e outros serviços. O reembolso respeita o teto (tope) do seu perfil e cada fatura só pode ser reembolsada uma vez. Se o seu perfil tiver direito ao reintegro de 60%, isso é aplicado automaticamente pelo sistema. Anexe a fatura no final da conversa. Não use para reembolso de kit escolar, de despesas de viagem ou de outros benefícios."
+  }
+ ]
+}

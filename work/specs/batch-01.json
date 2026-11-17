@@ -1,0 +1,4126 @@
+[
+ {
+  "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+  "name": "Informações sobre Cartão Corporativo",
+  "status": "dividido",
+  "motivo": "O item mistura duas intenções sem relação (tirar dúvida sobre o cartão e avisar viagem internacional) e a variável que separava os ramos (v_what_is_the_demand_for_the_call) está inativa. Cada ramo vira um item próprio; o flow, que identifica a origem pelo sys_id do producer, precisa reconhecer os dois novos itens.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_if_you_have_questions_about_the_process",
+    "motivo": "Rich Text Label com link da FAQ; a referência à FAQ foi movida para a descrição dos itens novos."
+   },
+   {
+    "name": "v_corporate_card_information",
+    "motivo": "Container Start, só layout."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre cartão corporativo",
+    "short_description": "Esclarecer dúvidas sobre uso, fatura, regras e políticas do cartão corporativo.",
+    "description": "Use para tirar dúvidas sobre o cartão corporativo: elegibilidade, segunda via, limite, bloqueio e desbloqueio, recebimento do cartão e gastos permitidos. Não use para pedir emissão, alteração de limite, desbloqueio ou cancelamento do cartão, nem para avisar viagem internacional; esses pedidos têm itens próprios. Antes de abrir, consulte a FAQ do cartão corporativo na base de conhecimento.",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre o cartão corporativo",
+     "posso usar o cartão da empresa para pagar combustível?",
+     "quem tem direito a cartão corporativo?",
+     "qual a política de uso do cartão corporativo?",
+     "ainda não recebi meu cartão corporativo"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_what_type_of_doubt_do_you_have",
+      "order": 100,
+      "conversational_label": "Sobre qual assunto é a sua dúvida: elegibilidade, segunda via, limite, bloqueio, recebimento, gastos permitidos ou outro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_describe_your_question",
+      "order": 200,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 1100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Call Demand",
+      "tipo": "ui_policy",
+      "como": "Removida: atua sobre variável inativa; a intenção passa a ser o próprio item."
+     },
+     {
+      "origem": "EY: If \"What is the demand for the call?\" for \"Clarify Doubts\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory aplicado direto em v_what_type_of_doubt_do_you_have e v_describe_your_question."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: sem troca de ramo não há campos a limpar."
+     }
+    ]
+   },
+   {
+    "name": "Avisar viagem internacional com cartão corporativo",
+    "short_description": "Informar destino e período de viagem internacional para uso do cartão corporativo no exterior.",
+    "description": "Use para avisar a área de cartão corporativo que você vai viajar para o exterior e vai usar o cartão, informando destino e datas da viagem. Não use para tirar dúvidas gerais sobre o cartão nem para pedir aumento de limite para a viagem (use \"Alterar limite do cartão corporativo\"). Dúvidas sobre o processo: consulte a FAQ do cartão corporativo na base de conhecimento.",
+    "frases_exemplo": [
+     "vou viajar para o exterior e quero usar o cartão corporativo",
+     "avisar viagem internacional",
+     "preciso liberar meu cartão da empresa para uso fora do Brasil",
+     "vou para o México semana que vem a trabalho",
+     "informar viagem internacional cartão corporativo"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_what_is_the_destination_of_the_international_trip",
+      "order": 100,
+      "conversational_label": "Para qual país ou cidade você vai viajar?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+      }
+     },
+     {
+      "name": "v_what_is_the_start_date_of_the_trip",
+      "order": 200,
+      "conversational_label": "Em que data a viagem começa?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_what_is_the_end_date_of_the_trip",
+      "order": 300,
+      "conversational_label": "E em que data termina?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 400,
+      "conversational_label": "Você é do administrativo, da força de vendas ou do varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 1100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Call Demand",
+      "tipo": "ui_policy",
+      "como": "Removida: atua sobre variável inativa; a intenção passa a ser o próprio item."
+     },
+     {
+      "origem": "EY: If \"What is the demand for the call?\" for \"Report International Travel\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory aplicado direto em público, destino e datas."
+     },
+     {
+      "origem": "EY: Destination - Only letters",
+      "tipo": "client_script",
+      "como": "Validation Regex (letras e espaços) em v_what_is_the_destination_of_the_international_trip."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: sem troca de ramo não há campos a limpar."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "0aa214221bf06d10d1abda4ce54bcb82",
+  "name": "Solicitação de alteração de limite do Cartão Corporativo",
+  "status": "conversacional",
+  "motivo": "Intenção única e clara. Mandatory fixo vai direto nas variáveis, validação de valor vira regex e as policies condicionais continuam; o país segue preenchido pelo script GlideAjax e fica fora da conversa.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_label_if_have_questions_click_here",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_the_limit_of_the_corporate_card",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "v_label_template_download",
+    "motivo": "Rich Text Label com link do template; a orientação de baixar o modelo na base de conhecimento foi movida para a descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Alterar limite do cartão corporativo",
+    "short_description": "Pedir aumento ou redução do limite do cartão corporativo, permanente ou por um período.",
+    "description": "Use para pedir alteração do limite de crédito do cartão corporativo, para um colaborador ou para um grupo de colaboradores, de forma definitiva ou só por um período (ex.: viagem). É preciso anexar a aprovação do gestor (administrativo, operacional e varejo) ou da Adm. de Vendas / Finanças de Vendas (força de vendas). Para grupo de colaboradores, baixe e preencha a planilha modelo disponível na FAQ do cartão corporativo na base de conhecimento. Não use para emitir, desbloquear ou cancelar o cartão, nem para avisar viagem internacional.",
+    "frases_exemplo": [
+     "preciso aumentar o limite do meu cartão corporativo",
+     "quero alterar o limite do cartão da empresa só durante a viagem",
+     "aumentar limite cartão corp da minha equipe",
+     "meu limite do cartão corporativo não é suficiente",
+     "reduzir limite do cartão corporativo"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees",
+      "order": 100,
+      "conversational_label": "A alteração é para um colaborador ou para um grupo de colaboradores?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_which_audience_does_the_card_holder_have",
+      "order": 200,
+      "conversational_label": "O titular do cartão é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_type_of_change_to_make",
+      "order": 300,
+      "conversational_label": "A alteração é definitiva ou só por um período?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_value_of_the_new_requested_limit",
+      "order": 400,
+      "conversational_label": "Qual o valor do novo limite (ex.: 10.000,00)?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{1,3}(\\.\\d{3})*,\\d{2}$"
+      }
+     },
+     {
+      "name": "v_what_is_the_start_date_for_the_new_limit",
+      "order": 500,
+      "conversational_label": "A partir de que data o novo limite deve valer?"
+     },
+     {
+      "name": "v_what_is_the_end_date_for_the_new_limit",
+      "order": 600,
+      "conversational_label": "Até que data?"
+     },
+     {
+      "name": "v_enter_the_reason_for_the_limit_change_request",
+      "order": 700,
+      "conversational_label": "Qual o motivo da alteração?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_the_request_template_for_changing_the_corporate_card_limit",
+      "order": 800,
+      "conversational_label": "Anexe a planilha modelo preenchida com os colaboradores do grupo."
+     },
+     {
+      "name": "v_attach_the_manager_s_proof_of_approval",
+      "order": 900,
+      "conversational_label": "Anexe a aprovação do gestor."
+     },
+     {
+      "name": "v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force",
+      "order": 1000,
+      "conversational_label": "Anexe a aprovação da Adm. de Vendas ou de Finanças de Vendas."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 1100,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     },
+     {
+      "name": "v_country",
+      "order": 1200,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 50
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 60
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 1700
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "30f4e9261b38ad10d1abda4ce54bcbb1",
+      "short_description": "Datas obrigatórias quando a alteração é por período",
+      "on_load": true,
+      "conditions": "v_type_of_change_to_make=v_limit_change_for_given_period",
+      "actions": [
+       {
+        "variable": "v_what_is_the_start_date_for_the_new_limit",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_what_is_the_end_date_for_the_new_limit",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "5063e56e1bf4ad10d1abda4ce54bcbd9",
+      "short_description": "Aprovação do gestor para administrativo, operacional ou varejo",
+      "on_load": true,
+      "conditions": "v_which_audience_does_the_card_holder_have=v_administrative^ORv_which_audience_does_the_card_holder_have=v_operational^ORv_which_audience_does_the_card_holder_have=v_retail",
+      "actions": [
+       {
+        "variable": "v_attach_the_manager_s_proof_of_approval",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "91946d221b38ad10d1abda4ce54bcb75",
+      "short_description": "Aprovação da Adm. de Vendas / Finanças de Vendas para força de vendas",
+      "on_load": true,
+      "conditions": "v_which_audience_does_the_card_holder_have=v_sales_force",
+      "actions": [
+       {
+        "variable": "v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "de1121661bf4ad10d1abda4ce54bcb2e",
+      "short_description": "Planilha modelo obrigatória para grupo de colaboradores",
+      "on_load": true,
+      "conditions": "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees=v_employee_group",
+      "actions": [
+       {
+        "variable": "v_attach_the_request_template_for_changing_the_corporate_card_limit",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "beca84b31b0129d4a530426fe54bcbaa",
+      "short_description": "Ocultar país quando a empresa é Aesop",
+      "on_load": true,
+      "conditions": "vs_company=Aesop",
+      "actions": [
+       {
+        "variable": "v_country",
+        "visible": "false",
+        "mandatory": "ignore",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "ace4c1e61bfc6d10d1abda4ce54bcb4a",
+      "name": "EY: Get Country",
+      "ajuste": "Mantido (GlideAjax preenche v_country a partir de vs_company). Não chamar o GlideAjax quando o valor estiver vazio; avaliar mover o preenchimento para o producer script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Make fields Visible and Mandatory ON LOAD",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas 5 perguntas e read-only em v_country (overrides)."
+     },
+     {
+      "origem": "EY: Validate value",
+      "tipo": "client_script",
+      "como": "Validation Regex de valor monetário brasileiro em v_value_of_the_new_requested_limit."
+     },
+     {
+      "origem": "EY: Clear field type of change",
+      "tipo": "client_script",
+      "como": "Removido: as perguntas dependentes são controladas pelas UI policies condicionais."
+     },
+     {
+      "origem": "EY: Clear Field card holder",
+      "tipo": "client_script",
+      "como": "Removido: os anexos dependentes são controlados pelas UI policies condicionais."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "e85928f31b94e1d0d1abda4ce54bcb4c",
+  "name": "Solicitação de Desbloqueio ou Cancelamento de Cartão Corporativo",
+  "status": "conversacional",
+  "motivo": "Formulário curto com duas opções simples; o tipo costuma vir da frase do usuário. Mandatory fixo vai para a variável, a policy de anexo continua e os scripts de limpeza saem.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_if_you_have_questions_about_the_process",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_corporate_card_unblocking_or_cancellation_request",
+    "motivo": "Container Start, só layout."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Desbloquear ou cancelar cartão corporativo",
+    "short_description": "Pedir desbloqueio ou cancelamento do cartão corporativo.",
+    "description": "Use quando o seu cartão corporativo estiver bloqueado e você precisar desbloquear, ou quando quiser cancelar o cartão (desligamento, troca de função, não uso). Para desbloqueio é preciso anexar o e-mail de aprovação do gestor. Não use para pedir um cartão novo, alterar o limite ou tirar dúvidas. Dúvidas sobre o processo: consulte a FAQ do cartão corporativo na base de conhecimento.",
+    "frases_exemplo": [
+     "meu cartão corporativo foi bloqueado",
+     "preciso desbloquear o cartão da empresa",
+     "quero cancelar meu cartão corporativo",
+     "cartão corp bloqueado, não passa",
+     "cancelar cartão corporativo de colaborador desligado"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_enter_the_type_of_request",
+      "order": 100,
+      "conversational_label": "Você quer desbloquear ou cancelar o cartão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 200,
+      "conversational_label": "Você é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_specify_the_reason",
+      "order": 300,
+      "conversational_label": "Qual o motivo do pedido?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_proof_of_approval_by_email_from_your_manager",
+      "order": 400,
+      "conversational_label": "Anexe o e-mail de aprovação do seu gestor."
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 1100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "c149f4bf1bd8e1d0d1abda4ce54bcba4",
+      "short_description": "Aprovação do gestor obrigatória no desbloqueio",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_request=card_unlock",
+      "actions": [
+       {
+        "variable": "v_attach_proof_of_approval_by_email_from_your_manager",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em público, tipo de solicitação e motivo (overrides)."
+     },
+     {
+      "origem": "EY: Clear Fields audience",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "3b4e97ec1becad14a530426fe54bcb14",
+  "name": "Solicitação de emissão do cartão corporativo",
+  "status": "dividido",
+  "motivo": "São mais de 30 perguntas e dois produtos diferentes: cartão corporativo (dados pessoais, endereço e termo de responsabilidade) e cartão saque (exige cadastro prévio no LINX). Divisão por v_select_card_type; matrícula e área seguem preenchidas pelo script do solicitante. Avaliar turn_off_nowassist no cartão corporativo se a política de privacidade não permitir CPF/RG/filiação no LLM.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_if_have_doubts",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição dos itens novos."
+   },
+   {
+    "name": "v_label_attention",
+    "motivo": "Rich Text Label com aviso de cadastro prévio no LINX (com VPN); texto movido para a descrição do item de cartão saque."
+   },
+   {
+    "name": "v_label_responsability_term_card_corporate",
+    "motivo": "Rich Text Label do termo de responsabilidade; orientação movida para a descrição do item de cartão corporativo."
+   },
+   {
+    "name": "v_label_if_requesting_card",
+    "motivo": "Label informativo (anexar termo quando o pedido é para outra pessoa); texto movido para a descrição do item de cartão corporativo."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Solicitar cartão corporativo",
+    "short_description": "Pedir a emissão de um cartão corporativo de crédito para você ou outro colaborador.",
+    "description": "Use para pedir um cartão corporativo novo, para você ou para outra pessoa. São pedidos dados pessoais do titular, endereço de entrega, o motivo (admissão, lojas, promoção, viagens) e a aprovação do gestor, diretor ou Adm. de Vendas. É preciso ler e aceitar o termo de uso do cartão. Se o pedido for para outra pessoa, anexe o Termo de Responsabilidade assinado pelo titular (modelo na FAQ da base de conhecimento). Não use para cartão saque, alteração de limite, desbloqueio ou cancelamento.",
+    "frases_exemplo": [
+     "quero solicitar um cartão corporativo",
+     "preciso de um cartão da empresa para viagens",
+     "pedir cartão corporativo para um colaborador novo da minha equipe",
+     "como faço para ter cartão corp?",
+     "emissão de cartão corporativo"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_select_card_type",
+      "value": "v_corporate card"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 100,
+      "conversational_label": "O titular é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_reason_requesting_card",
+      "order": 200,
+      "conversational_label": "Qual o motivo do pedido: admissão, lojas, promoção, viagens ou outro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_specify_the_reason",
+      "order": 300,
+      "conversational_label": "Descreva o motivo."
+     },
+     {
+      "name": "v_registration",
+      "order": 400,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_inform_the_area",
+      "order": 500,
+      "conversational_label": "Qual a área do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_your_grade",
+      "order": 600,
+      "conversational_label": "Qual o grade (nível) do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_your_cost_center",
+      "order": 700,
+      "conversational_label": "Qual o centro de custo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_email",
+      "order": 800,
+      "conversational_label": "Qual o e-mail do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_cell_phone",
+      "order": 900,
+      "conversational_label": "Qual o celular do titular?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_enter_business_phone_number",
+      "order": 1000,
+      "conversational_label": "Qual o telefone comercial?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_name_printed_on_card",
+      "order": 1100,
+      "conversational_label": "Qual nome deve ser impresso no cartão?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+      }
+     },
+     {
+      "name": "v_inform_the_cpf",
+      "order": 1200,
+      "conversational_label": "Qual o CPF do titular?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+      }
+     },
+     {
+      "name": "v_inform_the_rg",
+      "order": 1300,
+      "conversational_label": "E o RG?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_date_of_birth",
+      "order": 1400,
+      "conversational_label": "Qual a data de nascimento?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_gender",
+      "order": 1500,
+      "conversational_label": "Qual o gênero do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_naturalness",
+      "order": 1600,
+      "conversational_label": "Qual a naturalidade (cidade onde nasceu)?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+      }
+     },
+     {
+      "name": "v_mother_s_name",
+      "order": 1700,
+      "conversational_label": "Qual o nome da mãe?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+      }
+     },
+     {
+      "name": "v_father_s_name",
+      "order": 1800,
+      "conversational_label": "E o nome do pai? (opcional)",
+      "overrides": {
+       "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+      }
+     },
+     {
+      "name": "v_inform_your_postal_code",
+      "order": 1900,
+      "conversational_label": "Qual o CEP do endereço de entrega?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{5}-?\\d{3}$"
+      }
+     },
+     {
+      "name": "v_street_av_street",
+      "order": 2000,
+      "conversational_label": "Qual a rua ou avenida?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_number",
+      "order": 2100,
+      "conversational_label": "Qual o número?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_complemento",
+      "order": 2200,
+      "conversational_label": "Tem complemento?"
+     },
+     {
+      "name": "v_neighborhood",
+      "order": 2300,
+      "conversational_label": "Qual o bairro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_city",
+      "order": 2400,
+      "conversational_label": "Qual a cidade?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_state",
+      "order": 2500,
+      "conversational_label": "E o estado?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_approval_manager_director_or_sales",
+      "order": 2600,
+      "conversational_label": "Anexe a aprovação do gestor, diretor ou Adm. de Vendas.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_have_you_read_and_accept_the_terms_and_conditions",
+      "order": 2700,
+      "conversational_label": "Você leu e aceita o termo de uso do cartão corporativo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user",
+      "order": 2800,
+      "conversational_label": "Se o pedido é para outra pessoa, anexe o termo de responsabilidade assinado pelo titular."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 2900,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+      "name": "EY: Opened by",
+      "order": 10
+     },
+     {
+      "sys_id": "1181bd1b1b4d6194d1abda4ce54bcb5b",
+      "name": "EY: Requested for",
+      "order": 20
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 30
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3500
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "97b738061b60e510a530426fe54bcbec",
+      "short_description": "Especificar motivo quando for Outros",
+      "on_load": true,
+      "conditions": "v_enter_reason_requesting_card=v_others",
+      "actions": [
+       {
+        "variable": "v_specify_the_reason",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "062eac8d1b606554a530426fe54bcba7",
+      "name": "EY: Get Data of Requested for on change",
+      "ajuste": "Mantido (GlideAjax preenche matrícula e área a partir do solicitante). Não chamar quando o valor estiver vazio; avaliar trocar por auto-populate via dot-walk de vs_requested_for."
+     },
+     {
+      "sys_id": "8394bddf1b4d6194d1abda4ce54bcb0c",
+      "name": "EY: Get Data of Requested for on load",
+      "ajuste": "Mantido (preenche área e e-mail quando o pedido é para si mesmo); avaliar trocar por auto-populate/default value."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Make fields Visible and Mandatory IF Withdrawal Card",
+      "tipo": "ui_policy",
+      "como": "Condição era o cartão corporativo, que agora é o próprio item: mandatory/visível aplicado direto nas variáveis de dados pessoais, endereço e termo."
+     },
+     {
+      "origem": "EY: Make Mandatory Fields On Load ",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas variáveis (overrides)."
+     },
+     {
+      "origem": "EY: Make field Registration Read Only",
+      "tipo": "ui_policy",
+      "como": "Read-only direto em v_registration, que também sai da conversa."
+     },
+     {
+      "origem": "EY: Make field Visible and Mandatory IF Selected Type of Card IS \"Corporate Card\" AND Which audience IS \"Retail\"",
+      "tipo": "ui_policy",
+      "como": "Não se aplica ao cartão corporativo (condição era cartão saque)."
+     },
+     {
+      "origem": "EY: CEP Regex",
+      "tipo": "client_script",
+      "como": "Validation Regex em v_inform_your_postal_code."
+     },
+     {
+      "origem": "EY: Regex Cell Phone number",
+      "tipo": "client_script",
+      "como": "Validation Regex em v_inform_the_cell_phone."
+     },
+     {
+      "origem": "EY: Regex Bussiness Telephone number",
+      "tipo": "client_script",
+      "como": "Validation Regex em v_enter_business_phone_number."
+     },
+     {
+      "origem": "EY: Regex CPF",
+      "tipo": "client_script",
+      "como": "Validation Regex (formato) em v_inform_the_cpf."
+     },
+     {
+      "origem": "EY: Only Text Naturalness",
+      "tipo": "client_script",
+      "como": "Validation Regex só letras em v_naturalness."
+     },
+     {
+      "origem": "EY: Only Text Name Printed on Card",
+      "tipo": "client_script",
+      "como": "Validation Regex só letras em v_name_printed_on_card."
+     },
+     {
+      "origem": "EY: Only Text Mothers Name",
+      "tipo": "client_script",
+      "como": "Validation Regex só letras em v_mother_s_name."
+     },
+     {
+      "origem": "EY: Only Text Father's Name",
+      "tipo": "client_script",
+      "como": "Validation Regex só letras em v_father_s_name."
+     },
+     {
+      "origem": "EY: Clear Value Type of Card",
+      "tipo": "client_script",
+      "como": "Removido: tipo de cartão fixo no item."
+     },
+     {
+      "origem": "EY: Clear Value Which Audience Belong",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ]
+   },
+   {
+    "name": "Solicitar cartão saque",
+    "short_description": "Pedir a emissão de cartão saque (retirada de dinheiro) para despesas operacionais.",
+    "description": "Use para pedir um cartão saque. Atenção: antes, o titular precisa ter cadastro ativo no sistema LINX com o time de Cadastro de Clientes e Fornecedores (abra esse chamado primeiro; o acesso ao LINX exige estar conectado à VPN). Consulte a FAQ do cartão na base de conhecimento. Não use para cartão corporativo de crédito, alteração de limite, desbloqueio ou cancelamento.",
+    "frases_exemplo": [
+     "preciso de um cartão saque",
+     "quero cartão para saque de dinheiro da loja",
+     "solicitar cartão de saque para o varejo",
+     "pedir cartão saque para colaborador",
+     "cartão de retirada"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_select_card_type",
+      "value": "v_withdrawal_card"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 100,
+      "conversational_label": "O titular é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_reason_requesting_card",
+      "order": 200,
+      "conversational_label": "Qual o motivo do pedido: admissão, lojas, promoção, viagens ou outro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_specify_the_reason",
+      "order": 300,
+      "conversational_label": "Descreva o motivo."
+     },
+     {
+      "name": "v_registration",
+      "order": 400,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_inform_the_area",
+      "order": 500,
+      "conversational_label": "Qual a área do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_your_grade",
+      "order": 600,
+      "conversational_label": "Qual o grade (nível) do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_your_cost_center",
+      "order": 700,
+      "conversational_label": "Qual o centro de custo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_email",
+      "order": 800,
+      "conversational_label": "Qual o e-mail do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_cell_phone",
+      "order": 900,
+      "conversational_label": "Qual o celular do titular?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_enter_business_phone_number",
+      "order": 1000,
+      "conversational_label": "Qual o telefone comercial?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_inform_the_cpf",
+      "order": 1100,
+      "conversational_label": "Qual o CPF do titular?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+      }
+     },
+     {
+      "name": "v_date_of_birth",
+      "order": 1200,
+      "conversational_label": "Qual a data de nascimento?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_gender",
+      "order": 1300,
+      "conversational_label": "Qual o gênero do titular?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_approval_manager_director_or_sales",
+      "order": 1400,
+      "conversational_label": "Anexe a aprovação do gestor, diretor ou Adm. de Vendas.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_additional_information",
+      "order": 1500,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+      "name": "EY: Opened by",
+      "order": 10
+     },
+     {
+      "sys_id": "1181bd1b1b4d6194d1abda4ce54bcb5b",
+      "name": "EY: Requested for",
+      "order": 20
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 30
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3500
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "97b738061b60e510a530426fe54bcbec",
+      "short_description": "Especificar motivo quando for Outros",
+      "on_load": true,
+      "conditions": "v_enter_reason_requesting_card=v_others",
+      "actions": [
+       {
+        "variable": "v_specify_the_reason",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "062eac8d1b606554a530426fe54bcba7",
+      "name": "EY: Get Data of Requested for on change",
+      "ajuste": "Mantido (GlideAjax preenche matrícula e área a partir do solicitante). Não chamar quando o valor estiver vazio; avaliar trocar por auto-populate via dot-walk de vs_requested_for."
+     },
+     {
+      "sys_id": "8394bddf1b4d6194d1abda4ce54bcb0c",
+      "name": "EY: Get Data of Requested for on load",
+      "ajuste": "Mantido (preenche área e e-mail quando o pedido é para si mesmo); avaliar trocar por auto-populate/default value."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Make field Visible and Mandatory IF Selected Type of Card IS \"Corporate Card\" AND Which audience IS \"Retail\"",
+      "tipo": "ui_policy",
+      "como": "Aviso do LINX (rich text) movido para a descrição do item; policy não é mais necessária."
+     },
+     {
+      "origem": "EY: Make fields Visible and Mandatory IF Withdrawal Card",
+      "tipo": "ui_policy",
+      "como": "Não se aplica ao cartão saque (condição era cartão corporativo)."
+     },
+     {
+      "origem": "EY: Make Mandatory Fields On Load ",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas variáveis (overrides)."
+     },
+     {
+      "origem": "EY: Make field Registration Read Only",
+      "tipo": "ui_policy",
+      "como": "Read-only direto em v_registration, que também sai da conversa."
+     },
+     {
+      "origem": "EY: Regex Cell Phone number",
+      "tipo": "client_script",
+      "como": "Validation Regex em v_inform_the_cell_phone."
+     },
+     {
+      "origem": "EY: Regex Bussiness Telephone number",
+      "tipo": "client_script",
+      "como": "Validation Regex em v_enter_business_phone_number."
+     },
+     {
+      "origem": "EY: Regex CPF",
+      "tipo": "client_script",
+      "como": "Validation Regex (formato) em v_inform_the_cpf."
+     },
+     {
+      "origem": "EY: Clear Value Type of Card",
+      "tipo": "client_script",
+      "como": "Removido: tipo de cartão fixo no item."
+     },
+     {
+      "origem": "EY: Clear Value Which Audience Belong",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "da29efb81b08ad18a530426fe54bcb42",
+  "name": "Dúvidas sobre veículo corporativo",
+  "status": "conversacional",
+  "motivo": "Item de dúvida sem scripts: um processo principal e quatro subtipos condicionais que tinham o mesmo label. Basta labels distintos, mandatory direto na variável e manter as quatro policies condicionais.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_faq",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_suppliers_info",
+    "motivo": "Rich Text Label informativo sem dado; orientação geral coberta pela descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre veículo corporativo",
+    "short_description": "Dúvidas sobre multas, manutenção, devolução, elegibilidade, upgrade e desconto em folha do carro da empresa.",
+    "description": "Use para tirar dúvidas sobre o veículo corporativo (carro da frota): multas, manutenção, carro reserva, oficinas credenciadas, devolução ou compra do veículo, quem tem direito, catálogo de veículos, upgrade ou blindagem e descontos em folha. Não use para informar que um colaborador passou a ter direito a veículo nem para dúvidas sobre cartão combustível. Antes de abrir, consulte a FAQ de frotas na base de conhecimento.",
+    "frases_exemplo": [
+     "recebi uma multa com o carro da empresa, o que faço?",
+     "como agendo a manutenção do carro corporativo?",
+     "vou sair da empresa, como devolvo o carro?",
+     "tenho direito a carro da empresa?",
+     "por que descontaram o carro na minha folha?",
+     "dúvida upgrade veículo frota"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_doubts",
+      "order": 100,
+      "conversational_label": "Sua dúvida é sobre devolução, elegibilidade, manutenção, multas ou outro assunto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_doubt_fines",
+      "order": 200,
+      "conversational_label": "Sobre multas, a dúvida é de desconto em folha, multa de veículo vendido ou outra?"
+     },
+     {
+      "name": "v_doubt_maintenance",
+      "order": 300,
+      "conversational_label": "Sobre manutenção, a dúvida é de carro reserva, oficinas credenciadas, desconto em folha, preventiva, reclamação de serviço ou outra?"
+     },
+     {
+      "name": "v_doubt_return",
+      "order": 400,
+      "conversational_label": "Sobre devolução, a dúvida é de compra do veículo, desconto em folha, locais de devolução, política, troca ou renovação, veículo reserva ou outra?"
+     },
+     {
+      "name": "v_doubt_eligibility",
+      "order": 500,
+      "conversational_label": "Sobre elegibilidade, a dúvida é de carro temporário, catálogo de veículos, elegibilidade, prazo de chegada, upgrade ou blindagem, ou outra?"
+     },
+     {
+      "name": "v_inform_doubt",
+      "order": 600,
+      "conversational_label": "Conte com detalhes qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 20
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 30
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "1e7c3fc31bc0e5d8a530426fe54bcba0",
+      "short_description": "Mostrar subtipo de manutenção",
+      "on_load": true,
+      "conditions": "v_doubts=maintenance",
+      "actions": [
+       {
+        "variable": "v_doubt_maintenance",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "33fbf7831bc0e5d8a530426fe54bcb65",
+      "short_description": "Mostrar subtipo de multas",
+      "on_load": true,
+      "conditions": "v_doubts=fines",
+      "actions": [
+       {
+        "variable": "v_doubt_fines",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "8acc37871bc0e5d8a530426fe54bcb0b",
+      "short_description": "Mostrar subtipo de elegibilidade",
+      "on_load": true,
+      "conditions": "v_doubts=eligibility",
+      "actions": [
+       {
+        "variable": "v_doubt_eligibility",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "f79cf3471bc0e5d8a530426fe54bcbd7",
+      "short_description": "Mostrar subtipo de devolução",
+      "on_load": true,
+      "conditions": "v_doubts=return",
+      "actions": [
+       {
+        "variable": "v_doubt_return",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_doubts e v_inform_doubt (overrides)."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "215957c71b08a5d8a530426fe54bcbf1",
+  "name": "Informações de cartão combustível e redes credenciadas",
+  "status": "dividido",
+  "motivo": "Com mais de 30 perguntas o item abre como janela e junta três intenções via v_what_is_the_demand_of_the_call: tirar dúvida, pedir relatório/estudo e indicar posto para credenciamento. Cada ramo vira um item com a demanda fixa; as policies de relatório continuam sem a condição de demanda.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_template_frota_download",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição dos itens novos."
+   },
+   {
+    "name": "v_container_fuel_card_information_and_accredited_networks",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "v_label_acesse",
+    "motivo": "Rich Text Label informativo do ramo de indicação de posto; orientação coberta pela descrição do item."
+   },
+   {
+    "name": "v_tell_place_capilarity",
+    "motivo": "Label (sem dado) que só introduzia o local do estudo de capilaridade; o local é coletado por estado, município e bairro."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Container End/formatter, só layout."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre cartão combustível",
+    "short_description": "Dúvidas sobre segunda via, emissão, saldo, valores, rede credenciada, roubo ou perda do cartão combustível da frota.",
+    "description": "Use para tirar dúvidas sobre o cartão combustível do veículo corporativo: segunda via, elegibilidade, emissão, rede credenciada, roubo ou perda, saldo disponível e valores do cartão. Não use para pedir relatórios nem para indicar postos; para dúvidas sobre o carro em si (multa, manutenção) use \"Tirar dúvida sobre veículo corporativo\". Consulte também a FAQ de frotas na base de conhecimento.",
+    "frases_exemplo": [
+     "meu cartão combustível não passou no posto",
+     "perdi o cartão combustível, o que faço?",
+     "qual o saldo do cartão de abastecimento?",
+     "dúvida sobre cartão combustível da frota",
+     "como peço segunda via do cartão combustível?"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_what_is_the_demand_of_the_call",
+      "value": "v_remove_questions"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_what_kind_of_doubt_do_you_have",
+      "order": 100,
+      "conversational_label": "Sobre qual assunto é a sua dúvida: segunda via, elegibilidade, emissão, rede credenciada, roubo ou perda, saldo, valores ou outro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_your_question_",
+      "order": 200,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_additional_information_",
+      "order": 300,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Demand of call Mandatory",
+      "tipo": "ui_policy",
+      "como": "Demanda fixa no item (variaveis_fixas)."
+     },
+     {
+      "origem": "EY: If  What is the demand is Remove Questions",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto no tipo de dúvida e na descrição da dúvida."
+     }
+    ]
+   },
+   {
+    "name": "Solicitar relatório de cartão combustível ou rede credenciada",
+    "short_description": "Pedir relatório de uso do cartão combustível, relatório de rede credenciada ou estudo de capilaridade.",
+    "description": "Use para pedir relatório de uso do cartão combustível (por colaborador ou por centro de custo, num período), relatório de postos credenciados numa região ou estudo de capilaridade (se há postos suficientes num local). Não use para indicar um posto específico para credenciamento nem para tirar dúvidas sobre o cartão.",
+    "frases_exemplo": [
+     "preciso do relatório de abastecimento do meu centro de custo",
+     "quero o extrato do cartão combustível de um colaborador",
+     "quais postos credenciados tem em Campinas?",
+     "pedir estudo de capilaridade para a região de Uberlândia",
+     "relatório de uso do cartão combustível do mês passado"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_what_is_the_demand_of_the_call",
+      "value": "v_request_reports_studies"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_enter_the_type_of_report_or_study_you_want_to_request",
+      "order": 100,
+      "conversational_label": "Qual relatório você precisa: estudo de capilaridade, relatório de rede credenciada, relatório de uso do cartão ou outro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_request_for_what_type_of_query",
+      "order": 200,
+      "conversational_label": "O relatório de uso é por centro de custo ou por colaborador?"
+     },
+     {
+      "name": "v_enter_the_full_name_of_the_user_contributor",
+      "order": 300,
+      "conversational_label": "Qual o nome do colaborador?"
+     },
+     {
+      "name": "v_enter_collaborater_registration_number",
+      "order": 400,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_enter_the_cost_center_number",
+      "order": 500,
+      "conversational_label": "Qual o número do centro de custo?"
+     },
+     {
+      "name": "v_inform_start_date",
+      "order": 600,
+      "conversational_label": "Qual a data inicial do período?"
+     },
+     {
+      "name": "v_inform_end_date",
+      "order": 700,
+      "conversational_label": "E a data final?"
+     },
+     {
+      "name": "v_inform_the_state",
+      "order": 800,
+      "conversational_label": "Em qual estado?"
+     },
+     {
+      "name": "v_inform_the_municipality",
+      "order": 900,
+      "conversational_label": "Em qual município?"
+     },
+     {
+      "name": "v_if_you_wish_specify_the_neighborhood",
+      "order": 1000,
+      "conversational_label": "Quer informar um bairro específico?"
+     },
+     {
+      "name": "v_describe_desired_report",
+      "order": 1100,
+      "conversational_label": "Descreva o relatório que você precisa."
+     },
+     {
+      "name": "v_additional_information_",
+      "order": 1200,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "223df9a71b40add8a530426fe54bcb27",
+      "short_description": "Relatório de uso do cartão: período e tipo de consulta",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+      "actions": [
+       {
+        "variable": "v_inform_start_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_inform_end_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_request_for_what_type_of_query",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "448ff1231b80add8a530426fe54bcbfc",
+      "short_description": "Relatório de uso por centro de custo",
+      "on_load": true,
+      "conditions": "v_request_for_what_type_of_query=v_cost_center_^v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+      "actions": [
+       {
+        "variable": "v_enter_the_cost_center_number",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "510e75671b40add8a530426fe54bcbdc",
+      "short_description": "Relatório de uso por colaborador",
+      "on_load": true,
+      "conditions": "v_request_for_what_type_of_query=v_individual_contributor^v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+      "actions": [
+       {
+        "variable": "v_enter_the_full_name_of_the_user_contributor",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_enter_collaborater_registration_number",
+        "visible": "true",
+        "mandatory": "ignore",
+        "disabled": "true"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "bef9c6271b44add8a530426fe54bcbc2",
+      "short_description": "Outro relatório: descrever",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_others_",
+      "actions": [
+       {
+        "variable": "v_describe_desired_report",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "c268ce6f1b04add8a530426fe54bcbeb",
+      "short_description": "Capilaridade ou rede credenciada: local",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_capilarity_study^ORv_enter_the_type_of_report_or_study_you_want_to_request=v_accredited_report",
+      "actions": [
+       {
+        "variable": "v_inform_the_state",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_inform_the_municipality",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_if_you_wish_specify_the_neighborhood",
+        "visible": "true",
+        "mandatory": "ignore",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "12610d171b4829d8a530426fe54bcb93",
+      "name": "EY: Start Date before End Date",
+      "ajuste": "Mantido (validação entre dois campos, sem equivalente no-code). Confirmar VA Supported e que não usa DOM."
+     },
+     {
+      "sys_id": "95cbe4db1b4029d8a530426fe54bcb58",
+      "name": "EY: Get Matriculation",
+      "ajuste": "Mantido (GlideAjax preenche a matrícula do colaborador escolhido); avaliar trocar por auto-populate via dot-walk de v_enter_the_full_name_of_the_user_contributor."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Demand of call Mandatory",
+      "tipo": "ui_policy",
+      "como": "Demanda fixa no item (variaveis_fixas)."
+     },
+     {
+      "origem": "EY: If  What is the demand is  Request Reports ans Studies",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto no tipo de relatório."
+     },
+     {
+      "origem": "EY: If  Enter the type report or study is Capilarity Study",
+      "tipo": "ui_policy",
+      "como": "Removida: só mostrava um label; o local é pedido pela policy de capilaridade/rede credenciada."
+     },
+     {
+      "origem": "EY: If ... (policies de relatório)",
+      "tipo": "ui_policy",
+      "como": "Mantidas sem a condição v_what_is_the_demand_of_the_call, que agora é fixa."
+     }
+    ]
+   },
+   {
+    "name": "Indicar posto para a rede credenciada do cartão combustível",
+    "short_description": "Sugerir um posto de combustível para ser credenciado no cartão da frota.",
+    "description": "Use para indicar um posto de combustível que ainda não aceita o cartão combustível da frota, para que o fornecedor avalie o credenciamento. Informe nome, endereço e contato do posto. Não use para consultar a rede já credenciada (use \"Solicitar relatório de cartão combustível ou rede credenciada\").",
+    "frases_exemplo": [
+     "quero indicar um posto para aceitar o cartão combustível",
+     "o posto perto de casa não aceita o cartão da frota, dá pra credenciar?",
+     "indicar novo posto credenciado",
+     "sugerir posto para a rede do cartão combustível"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_what_is_the_demand_of_the_call",
+      "value": "v_indicate_accredited_network"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_fuel_station",
+      "order": 100,
+      "conversational_label": "Qual o nome do posto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_zip_code_",
+      "order": 200,
+      "conversational_label": "Qual o CEP do posto?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{5}-?\\d{3}$"
+      }
+     },
+     {
+      "name": "v_street_av_st",
+      "order": 300,
+      "conversational_label": "Qual a rua ou avenida?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_number",
+      "order": 400,
+      "conversational_label": "Qual o número?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_complement_",
+      "order": 500,
+      "conversational_label": "Tem complemento?"
+     },
+     {
+      "name": "v_neighborhood_",
+      "order": 600,
+      "conversational_label": "Qual o bairro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_city_",
+      "order": 700,
+      "conversational_label": "Qual a cidade?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_state_",
+      "order": 800,
+      "conversational_label": "E o estado?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_fuel_station_contact_name",
+      "order": 900,
+      "conversational_label": "Com quem falar no posto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_phone_post",
+      "order": 1000,
+      "conversational_label": "Qual o telefone do posto?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_additional_information_",
+      "order": 1100,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Demand of call Mandatory",
+      "tipo": "ui_policy",
+      "como": "Demanda fixa no item (variaveis_fixas)."
+     },
+     {
+      "origem": "EY: If  What is the demand is Indicate Accredited Network",
+      "tipo": "ui_policy",
+      "como": "Mandatory/visível direto nos dados do posto (overrides)."
+     },
+     {
+      "origem": "EY: Validation Fuel Station Phone",
+      "tipo": "client_script",
+      "como": "Validation Regex de telefone BR em v_inform_phone_post."
+     },
+     {
+      "origem": "EY: CEP Validation",
+      "tipo": "client_script",
+      "como": "Validation Regex de CEP em v_zip_code_."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "8efadce81b54215cd1abda4ce54bcbee",
+  "name": "Informar direito a solicitar novo veículo",
+  "status": "conversacional",
+  "motivo": "Item simples: faixa e cargo (preenchidos pelo script a partir do solicitante) e a carta de promoção em anexo. Mandatory vai direto nas variáveis; o script GlideAjax segue preenchendo faixa e cargo.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_start_text",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_text_attention",
+    "motivo": "Rich Text Label informativo, sem dado; orientação coberta pela descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Informar direito a veículo corporativo",
+    "short_description": "Avisar que um colaborador passou a ter direito a carro da empresa (promoção ou contratação).",
+    "description": "Use para informar a área de Frotas que um colaborador passou a ter direito a veículo corporativo, por promoção ou contratação, anexando a carta de promoção ou documento que comprove o direito. Não use para tirar dúvidas sobre elegibilidade, upgrade ou devolução (use \"Tirar dúvida sobre veículo corporativo\"). Dúvidas sobre o processo: consulte a FAQ de frotas na base de conhecimento.",
+    "frases_exemplo": [
+     "fui promovido e agora tenho direito a carro da empresa",
+     "quero solicitar meu veículo corporativo",
+     "colaborador novo tem direito a carro, como aviso?",
+     "informar direito a veículo da frota",
+     "recebi carta de promoção com carro"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_range",
+      "order": 100,
+      "conversational_label": "Qual a faixa do colaborador?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_office",
+      "order": 200,
+      "conversational_label": "Qual o cargo do colaborador?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach",
+      "order": 300,
+      "conversational_label": "Anexe a carta de promoção ou documento que mostre o direito ao veículo.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_additional_information",
+      "order": 400,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 10
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 20
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "6d7e24a41bd8215cd1abda4ce54bcbee",
+      "name": "EY: Get Range and Title",
+      "ajuste": "Mantido (GlideAjax preenche faixa e cargo; com os campos preenchidos a conversa pula as perguntas). Não chamar quando o valor estiver vazio; avaliar trocar por auto-populate."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_attach, v_range e v_office (overrides)."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "6de79cf73387369098331c07ee5c7b68",
+  "name": "Pré-edição e Reembolso - Cliente Final",
+  "status": "conversacional",
+  "motivo": "Formulário curto e sem scripts, mas o nome e a falta de descrição impedem o LLM de achar o item. Nome, descrição e labels novos; mandatory direto nas variáveis. Incluir o item no catálogo Virtual Agent Search.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Pedir reembolso de pré-pedido cancelado para cliente final",
+    "short_description": "Devolver ao cliente final o valor pago num pré-pedido que foi cancelado.",
+    "description": "Use quando um cliente final pagou um pré-pedido e o pedido foi cancelado, e é preciso devolver o valor a ele. Informe o código Natura, os dados do cliente (nome e CPF), o valor, o número da ocorrência, o motivo e anexe o comprovante. Não use para reembolso de despesas de colaborador ou de força de vendas (use \"Realizar reembolso e prestação de contas\").",
+    "frases_exemplo": [
+     "cliente pagou o pré-pedido e o pedido foi cancelado",
+     "preciso devolver o dinheiro de uma cliente",
+     "reembolso para cliente final",
+     "estorno de pré-pedido cancelado",
+     "minha cliente quer o dinheiro de volta do pedido cancelado"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_natura_code",
+      "order": 100,
+      "conversational_label": "Qual o seu código Natura?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_occurrence_number",
+      "order": 300,
+      "conversational_label": "Qual o número da ocorrência do pedido cancelado?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_refund_amount",
+      "order": 400,
+      "conversational_label": "Qual o valor a ser devolvido?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_reason_for_the_refund",
+      "order": 500,
+      "conversational_label": "Qual o motivo do reembolso?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_any_evidence",
+      "order": 600,
+      "conversational_label": "Anexe o comprovante de pagamento ou outra evidência.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "a3d2dca0874b3e10ec360e530cbb355b",
+      "name": "EY - Dados Básicos do Cliente",
+      "order": 200
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY - Set fields to Mandatory",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas variáveis do item (overrides). A obrigatoriedade do set EY - Dados Básicos do Cliente (nome e CPF) deve ser definida nas variáveis do próprio set."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "249ca6031b702950d1abda4ce54bcb63",
+  "name": "Realizar reembolso e prestação de contas",
+  "status": "dividido",
+  "motivo": "Item de alto volume com mais de 30 perguntas, 15 UI policies e 9 scripts, que junta processos diferentes por público (adiantamento, cartão corporativo, reembolso e verbas da força de vendas). Divide por processo; onde o público muda o fluxo, os dois campos de processo recebem o valor do mesmo processo e o público continua sendo perguntado. Os derivados podem apontar para o mesmo flow.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_if_you_have_questions",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição dos itens novos."
+   },
+   {
+    "name": "v_perform_reimbursement_and_accountability",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "v_attached_file",
+    "motivo": "Rich Text Label informativo sobre anexos, sem dado."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_accountability_on_which_process",
+      "value": "corporate_card"
+     },
+     {
+      "name": "v_accountability_of_the_sales_force_on_what_process",
+      "value": "corporate_card"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 100,
+      "conversational_label": "Você é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_invoice_reference_month",
+      "order": 200,
+      "conversational_label": "De qual mês é a fatura? (MM/AAAA)",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_enter_the_expense_report_number_generated",
+      "order": 300,
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_value_of_accountability",
+      "order": 400,
+      "conversational_label": "Qual o valor da prestação de contas?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "order": 500,
+      "conversational_label": "Anexe a capa do relatório exportada do sistema.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_corporate_card_invoice",
+      "order": 600,
+      "conversational_label": "Anexe a fatura do cartão corporativo."
+     },
+     {
+      "name": "v_are_there_any_expense_claims_on_the_invoice",
+      "order": 700,
+      "conversational_label": "Tem alguma despesa contestada nessa fatura?"
+     },
+     {
+      "name": "v_enter_the_disputed_amount_on_the_invoice",
+      "order": 800,
+      "conversational_label": "Qual o valor contestado?"
+     },
+     {
+      "name": "v_attach_the_claim_form_for_unrecognized_expenses",
+      "order": 900,
+      "conversational_label": "Anexe o formulário de contestação já enviado ao banco."
+     },
+     {
+      "name": "v_is_there_any_credit_on_that_invoice",
+      "order": 1000,
+      "conversational_label": "Tem algum crédito nessa fatura?"
+     },
+     {
+      "name": "v_existing_credit_amount_on_the_invoice",
+      "order": 1100,
+      "conversational_label": "Qual o valor do crédito?"
+     },
+     {
+      "name": "v_are_there_any_refunds",
+      "order": 1200,
+      "conversational_label": "Houve devolução de valor à empresa?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_return_value",
+      "order": 1300,
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "name": "v_return_date",
+      "order": 1400,
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "name": "v_attach_proof_of_return",
+      "order": 1500,
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 1600,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+      "name": "EY: Company: Natura/TBS/Aesop - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "17024df01bc1e5d0d1abda4ce54bcb15",
+      "short_description": "Força de vendas: fatura, contestação e crédito",
+      "on_load": true,
+      "conditions": "v_which_audience_do_you_belong_to=sales_force",
+      "actions": [
+       {
+        "variable": "v_attach_corporate_card_invoice",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_are_there_any_expense_claims_on_the_invoice",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_is_there_any_credit_on_that_invoice",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "7003c1781bc1e5d0d1abda4ce54bcb09",
+      "short_description": "Despesa contestada: valor e formulário",
+      "on_load": true,
+      "conditions": "v_are_there_any_expense_claims_on_the_invoice=Yes",
+      "actions": [
+       {
+        "variable": "v_enter_the_disputed_amount_on_the_invoice",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_attach_the_claim_form_for_unrecognized_expenses",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "862555381b49e5d0d1abda4ce54bcb57",
+      "short_description": "Crédito na fatura: valor",
+      "on_load": true,
+      "conditions": "v_is_there_any_credit_on_that_invoice=Yes",
+      "actions": [
+       {
+        "variable": "v_existing_credit_amount_on_the_invoice",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "cf2c95381bc9e5d0d1abda4ce54bcb07",
+      "short_description": "Houve devolução: valor, data e comprovante",
+      "on_load": true,
+      "conditions": "v_are_there_any_refunds=Yes",
+      "actions": [
+       {
+        "variable": "v_return_value",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_return_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_attach_proof_of_return",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_which_audience_do_you_belong_to; a ação sobre v_attach_proof_of_accountability_here (variável inativa) foi descartada."
+     },
+     {
+      "origem": "EY: Accountability on which process? / EY: Accountability of the Sales Force on which process?",
+      "tipo": "ui_policy",
+      "como": "Processo fixo no item (variaveis_fixas)."
+     },
+     {
+      "origem": "EY: If \"Accountability on what process?\" for \"Corporate Card\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_invoice_reference_month."
+     },
+     {
+      "origem": "EY: If \"Accountability on what process?\" for \"Advance\" or \"Corporate Card\" or \"Refund\" OR \"Sales Force ...\" for \"Corporate Card\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto no número do relatório e na capa exportada."
+     },
+     {
+      "origem": "EY: If \"Accountability on what process?\" for \"Advance\" or \"Corporate Card\" OR \"Sales Force ...\" for \"Corporate Card\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_value_of_accountability."
+     },
+     {
+      "origem": "EY: If ... for \"Corporate Card\" or \"Event Fund\" or \"Month Fund\" or \"GV Month Fund\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_are_there_any_refunds."
+     },
+     {
+      "origem": "EY: If \"Sales Force Accountability About What Process?\" for \"Corporate Card\"",
+      "tipo": "ui_policy",
+      "como": "Mantida com condição só de público = força de vendas; mês da fatura virou mandatory direto."
+     },
+     {
+      "origem": "EY: Date MM/AAAA",
+      "tipo": "client_script",
+      "como": "Validation Regex MM/AAAA em v_invoice_reference_month."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field accountability",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear Field sales force",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field Market",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear fields Refunds",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field credit invoice",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field expense claims",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     }
+    ],
+    "name": "Prestar contas de cartão corporativo",
+    "short_description": "Enviar a prestação de contas mensal da fatura do cartão corporativo.",
+    "description": "Use para prestar contas dos gastos do cartão corporativo de um mês: mês da fatura, número do relatório de despesas gerado no Trip/Linx/Sharepoint, valor, capa do relatório e eventuais devoluções. Força de vendas também anexa a fatura e informa contestações ou créditos. Não use para tirar dúvidas nem para desbloquear, cancelar ou alterar o limite do cartão. Dúvidas sobre o processo: consulte a FAQ na base de conhecimento.",
+    "frases_exemplo": [
+     "preciso prestar contas do cartão corporativo",
+     "enviar a prestação de contas da fatura de março",
+     "fechar a fatura do cartão corp",
+     "tenho uma despesa não reconhecida na fatura e preciso prestar contas",
+     "prestação de contas cartão corporativo força de vendas"
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_accountability_on_which_process",
+      "value": "advance"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 100,
+      "conversational_label": "Você é do administrativo, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_the_expense_report_number_generated",
+      "order": 200,
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_value_of_accountability",
+      "order": 300,
+      "conversational_label": "Qual o valor da prestação de contas?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "order": 400,
+      "conversational_label": "Anexe a capa do relatório exportada do sistema.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_are_there_any_refunds",
+      "order": 500,
+      "conversational_label": "Houve devolução de valor à empresa?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_return_value",
+      "order": 600,
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "name": "v_return_date",
+      "order": 700,
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "name": "v_attach_proof_of_return",
+      "order": 800,
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 900,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+      "name": "EY: Company: Natura/TBS/Aesop - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "cf2c95381bc9e5d0d1abda4ce54bcb07",
+      "short_description": "Houve devolução: valor, data e comprovante",
+      "on_load": true,
+      "conditions": "v_are_there_any_refunds=Yes",
+      "actions": [
+       {
+        "variable": "v_return_value",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_return_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_attach_proof_of_return",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_which_audience_do_you_belong_to; a ação sobre v_attach_proof_of_accountability_here (variável inativa) foi descartada."
+     },
+     {
+      "origem": "EY: Accountability on which process? / EY: Accountability of the Sales Force on which process?",
+      "tipo": "ui_policy",
+      "como": "Processo fixo no item (variaveis_fixas)."
+     },
+     {
+      "origem": "Policies de adiantamento (relatório, capa, valor, devolução)",
+      "tipo": "ui_policy",
+      "como": "Com o processo fixo, viraram mandatory direto nas variáveis."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field accountability",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear Field sales force",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field Market",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear fields Refunds",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field credit invoice",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field expense claims",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     }
+    ],
+    "name": "Prestar contas de adiantamento",
+    "short_description": "Prestar contas de um adiantamento de viagem ou despesas recebido.",
+    "description": "Use para prestar contas de um adiantamento que você recebeu (viagem ou despesas), informando o número do relatório gerado no Trip/Linx/Sharepoint, o valor, a capa do relatório e eventuais devoluções à empresa. Não use para pedir reembolso de despesas pagas do seu bolso (use \"Solicitar reembolso de despesas\") nem para prestar contas do cartão corporativo. Dúvidas sobre o processo: consulte a FAQ na base de conhecimento.",
+    "frases_exemplo": [
+     "preciso prestar contas do adiantamento de viagem",
+     "recebi adiantamento e quero fazer a prestação de contas",
+     "devolver sobra de adiantamento",
+     "prestação de contas de adiantamento administrativo",
+     "fechar adiantamento"
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_accountability_on_which_process",
+      "value": "reimbursement"
+     },
+     {
+      "name": "v_accountability_of_the_sales_force_on_what_process",
+      "value": "reimbursement_transfer_expenses"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 100,
+      "conversational_label": "Você é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_refund_amount",
+      "order": 200,
+      "conversational_label": "Qual o valor do reembolso?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_enter_the_expense_report_number_generated",
+      "order": 300,
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint?"
+     },
+     {
+      "name": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "order": 400,
+      "conversational_label": "Anexe a capa do relatório exportada do sistema."
+     },
+     {
+      "name": "v_inform_the_market",
+      "order": 500,
+      "conversational_label": "De qual mercado você é?"
+     },
+     {
+      "name": "v_inform_the_management",
+      "order": 600,
+      "conversational_label": "Qual a sua gerência?"
+     },
+     {
+      "name": "v_inform_the_sector",
+      "order": 700,
+      "conversational_label": "Qual o seu setor?"
+     },
+     {
+      "name": "v_attach_expense_template",
+      "order": 800,
+      "conversational_label": "Anexe a planilha de despesas preenchida."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 900,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+      "name": "EY: Company: Natura/TBS/Aesop - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "582a4c301bc1a5d0d1abda4ce54bcbeb",
+      "short_description": "Administrativo: relatório e capa exportada",
+      "on_load": true,
+      "conditions": "v_which_audience_do_you_belong_to=administrative^ORv_which_audience_do_you_belong_to=operational^ORv_which_audience_do_you_belong_to=retail",
+      "actions": [
+       {
+        "variable": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_enter_the_expense_report_number_generated",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "aa3dd9f81bc9e5d0d1abda4ce54bcbe0",
+      "short_description": "Força de vendas: planilha de despesas",
+      "on_load": true,
+      "conditions": "v_which_audience_do_you_belong_to=sales_force",
+      "actions": [
+       {
+        "variable": "v_attach_expense_template",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "d50718bc1b85a5d0d1abda4ce54bcbfb",
+      "short_description": "Força de vendas: mercado, gerência e setor",
+      "on_load": true,
+      "conditions": "v_which_audience_do_you_belong_to=sales_force",
+      "actions": [
+       {
+        "variable": "v_inform_the_market",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_inform_the_management",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_inform_the_sector",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_which_audience_do_you_belong_to; a ação sobre v_attach_proof_of_accountability_here (variável inativa) foi descartada."
+     },
+     {
+      "origem": "EY: Accountability on which process? / EY: Accountability of the Sales Force on which process?",
+      "tipo": "ui_policy",
+      "como": "Processo fixo no item (variaveis_fixas)."
+     },
+     {
+      "origem": "EY: If \"Accountability on what process?\" for \"Refund\" OR ... \"Refund - Transfer Charges\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_refund_amount."
+     },
+     {
+      "origem": "Policies de reembolso por público",
+      "tipo": "ui_policy",
+      "como": "Mantidas com a condição trocada do processo para o público (o processo agora é fixo)."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field accountability",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear Field sales force",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field Market",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear fields Refunds",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field credit invoice",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field expense claims",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     }
+    ],
+    "name": "Solicitar reembolso de despesas",
+    "short_description": "Pedir reembolso de despesas corporativas pagas com dinheiro próprio.",
+    "description": "Use para pedir reembolso de despesas de trabalho que você pagou do próprio bolso (viagem, transporte, refeição) ou, para força de vendas, reembolso de despesas de transferência e check-up anual. Administrativo informa o relatório do Trip/Linx/Sharepoint e anexa a capa; força de vendas informa mercado, gerência e setor e anexa a planilha de despesas. Não use para cartão corporativo nem adiantamento (há itens próprios de prestação de contas) e não use para reembolso de cliente final.",
+    "frases_exemplo": [
+     "quero pedir reembolso de uma despesa",
+     "paguei o táxi do meu bolso e quero reembolso",
+     "reembolso de despesas de viagem",
+     "reembolso de despesa de transferência força de vendas",
+     "como sou reembolsado de um gasto da empresa?"
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "value": "sales_force"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_accountability_of_the_sales_force_on_what_process",
+      "order": 100,
+      "conversational_label": "É verba evento, verba mês ou verba mês GV?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_budget_reference_month",
+      "order": 200,
+      "conversational_label": "De qual mês é a verba? (MM/AAAA)",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_total_amount_of_accountability",
+      "order": 300,
+      "conversational_label": "Qual o valor total da prestação de contas?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_market",
+      "order": 400,
+      "conversational_label": "De qual mercado você é?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_management",
+      "order": 500,
+      "conversational_label": "Qual a sua gerência?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_inform_the_sector",
+      "order": 600,
+      "conversational_label": "Qual o seu setor?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_cover_document_batch_report_cover",
+      "order": 700,
+      "conversational_label": "Anexe a capa do lote ou do relatório.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_are_there_any_refunds",
+      "order": 800,
+      "conversational_label": "Houve devolução de valor à empresa?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_return_value",
+      "order": 900,
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "name": "v_return_date",
+      "order": 1000,
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "name": "v_attach_proof_of_return",
+      "order": 1100,
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 1200,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+      "name": "EY: Company: Natura/TBS/Aesop - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 3100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "cf2c95381bc9e5d0d1abda4ce54bcb07",
+      "short_description": "Houve devolução: valor, data e comprovante",
+      "on_load": true,
+      "conditions": "v_are_there_any_refunds=Yes",
+      "actions": [
+       {
+        "variable": "v_return_value",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_return_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_attach_proof_of_return",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Accountability of the Sales Force on which process?",
+      "tipo": "ui_policy",
+      "como": "Público fixo (força de vendas); mandatory direto no processo."
+     },
+     {
+      "origem": "EY: If \"Sales Force Accountability About What Process?\" for Event Budget / Month Budget / Month Budget GV",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em valor total, mês da verba e capa do lote."
+     },
+     {
+      "origem": "EY: If \"Sales Force Accountability About What Process?\" for Reimbursement - Transfer Expenses / Event Budget / Month Budget / GV Month Budget",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em mercado, gerência e setor."
+     },
+     {
+      "origem": "EY: If ... \"Event Fund\" or \"Month Fund\" or \"GV Month Fund\" (devolução)",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_are_there_any_refunds."
+     },
+     {
+      "origem": "EY: Date MM/AAAA - budget month",
+      "tipo": "client_script",
+      "como": "Validation Regex MM/AAAA em v_budget_reference_month."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field accountability",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear Field sales force",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field Market",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear fields Refunds",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field credit invoice",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     },
+     {
+      "origem": "EY: Clear field expense claims",
+      "tipo": "client_script",
+      "como": "Removido: limpeza em cascata desnecessária na conversa e com o processo fixo no item."
+     }
+    ],
+    "name": "Prestar contas de verba evento ou verba mês (força de vendas)",
+    "short_description": "Prestar contas da verba evento, verba mês ou verba mês GV recebida pela força de vendas.",
+    "description": "Use, se você é da força de vendas, para prestar contas de uma verba evento, verba mês ou verba mês GV já recebida: mês de referência, valor total, mercado, gerência e setor, capa do lote ou relatório e eventuais devoluções. Não use para pedir a verba (use \"Solicitar verba evento ou verba mês (força de vendas)\") nem para dúvidas.",
+    "frases_exemplo": [
+     "prestar contas da verba evento",
+     "preciso enviar a prestação de contas da verba mês",
+     "fechar verba mês GV",
+     "prestação de contas de verba do encontro de consultoras",
+     "enviar capa de lote da verba evento"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "3d34417b1bdce1d0d1abda4ce54bcbbd",
+  "name": "Solicitação de Verba Evento e Verba Mês - Força de Vendas",
+  "status": "conversacional",
+  "motivo": "Intenção única (pedir verba) com duas variações que o LLM preenche pela frase. Links dos modelos vão para a descrição, mandatory fixo vai para a variável e as policies de anexo continuam.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_request_for_event_budget_and_month_budget_natura_sales_force",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "v_template_verba_evento",
+    "motivo": "Rich Text Label com link do modelo de verba evento; orientação movida para a descrição do item."
+   },
+   {
+    "name": "v_template_verba_mes",
+    "motivo": "Rich Text Label com link do modelo de verba mês; orientação movida para a descrição do item."
+   },
+   {
+    "name": "v_document_repository",
+    "motivo": "Label informativo, sem dado."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_application_for_what_type_of_funding",
+      "order": 100,
+      "conversational_label": "Você quer pedir verba evento ou verba mês?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 200,
+      "conversational_label": "Você é do administrativo, da força de vendas ou do varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_the_event_fund_advance_base",
+      "order": 300,
+      "conversational_label": "Anexe a base de adiantamento da verba evento preenchida no modelo."
+     },
+     {
+      "name": "v_attach_the_monthly_budget_advance_base",
+      "order": 400,
+      "conversational_label": "Anexe a base de adiantamento da verba mês preenchida no modelo."
+     },
+     {
+      "name": "v_attach_advance_approvals",
+      "order": 500,
+      "conversational_label": "Anexe as aprovações do adiantamento."
+     },
+     {
+      "name": "v_additional_information",
+      "order": 600,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+      "name": "EY: Company  - Avon/Natura and Sub Company",
+      "order": 1100
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "6627593b1b1425d0d1abda4ce54bcbf4",
+      "short_description": "Verba mês: base de adiantamento",
+      "on_load": true,
+      "conditions": "v_application_for_what_type_of_funding=monthly_budget",
+      "actions": [
+       {
+        "variable": "v_attach_the_monthly_budget_advance_base",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "dea695b71b1425d0d1abda4ce54bcbb3",
+      "short_description": "Verba evento: base de adiantamento",
+      "on_load": true,
+      "conditions": "v_application_for_what_type_of_funding=event_budget",
+      "actions": [
+       {
+        "variable": "v_attach_the_event_fund_advance_base",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "c9a8d1bf1b1425d0d1abda4ce54bcb29",
+      "short_description": "Força de vendas: aprovações do adiantamento",
+      "on_load": true,
+      "conditions": "v_which_audience_do_you_belong_to=sales_force",
+      "actions": [
+       {
+        "variable": "v_attach_advance_approvals",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_which_audience_do_you_belong_to."
+     },
+     {
+      "origem": "EY: type of funding",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_application_for_what_type_of_funding."
+     },
+     {
+      "origem": "EY: If \"Request for what type of grant?\" (Month Budget / Event Verb)",
+      "tipo": "ui_policy",
+      "como": "Mantidas sem a ação sobre os rich text de modelo, que saíram do item."
+     },
+     {
+      "origem": "EY: clear type of  event",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     },
+     {
+      "origem": "EY: Clear field ",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ],
+    "name": "Solicitar verba evento ou verba mês (força de vendas)",
+    "short_description": "Pedir adiantamento de verba evento ou verba mês para a força de vendas.",
+    "description": "Use, se você é da força de vendas, para pedir o adiantamento de verba evento (encontros, eventos com consultoras) ou verba mês. É preciso anexar a base de adiantamento preenchida no modelo (modelos de verba evento e verba mês disponíveis na base de conhecimento) e, para força de vendas, as aprovações do adiantamento. Não use para prestar contas de uma verba já recebida (use \"Prestar contas de verba evento ou verba mês (força de vendas)\").",
+    "frases_exemplo": [
+     "preciso solicitar verba evento",
+     "quero pedir a verba mês",
+     "adiantamento de verba para o encontro de consultoras",
+     "solicitar verba para evento da minha gerência",
+     "pedido de verba mês força de vendas"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "9e05bc511b38a514a530426fe54bcbdf",
+  "name": "Dúvidas sobre Reembolso Corporativo e Prestação de Contas",
+  "status": "conversacional",
+  "motivo": "Alto volume e intenção única (tirar dúvida), com um processo principal e três subtipos com o mesmo label. Labels distintos, descrição preenchida (hoje vazia), mandatory direto nas variáveis e regex no mês; o ramo de conciliação bancária mostra os dados do depósito do set.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_if_you_have_questions_about",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_questions_about_reimbursement",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Container End/formatter, só layout."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_doubt_about_which_process",
+      "order": 100,
+      "conversational_label": "Sua dúvida é sobre adiantamento, conciliação bancária (depósito), prestação de contas, reembolso, relatório de despesas por centro de custo ou outro assunto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_what_type_of_doubt_Reimbursement",
+      "order": 200,
+      "conversational_label": "Sobre reembolso, a dúvida é de como pedir, despesas em moeda estrangeira, despesas permitidas, prazos, limite de gastos ou outra?"
+     },
+     {
+      "name": "v_what_type_of_doubt_Advance",
+      "order": 300,
+      "conversational_label": "Sobre adiantamento, a dúvida é de adiantamento inicial, como pedir, critérios, dados bancários para devolução, prazos, status, valor limite ou outra?"
+     },
+     {
+      "name": "v_what_type_of_doubt_do_you_have",
+      "order": 400,
+      "conversational_label": "Sobre prestação de contas, a dúvida é de cancelamento de capa de lote, dados bancários para devolução, moeda estrangeira, documentos, fatura do cartão, motivo de devolução, prazos, status ou outra?"
+     },
+     {
+      "name": "v_budget_reference_month",
+      "order": 500,
+      "conversational_label": "De qual mês é o lote? (MM/AAAA)",
+      "overrides": {
+       "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_which_audience_do_you_belong_to",
+      "order": 600,
+      "conversational_label": "Você é do administrativo, força de vendas, operacional ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_describe_your_question",
+      "order": 700,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+      "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+      "order": 1100
+     },
+     {
+      "sys_id": "bc6bd86d1b34e554d1abda4ce54bcbfa",
+      "name": "Informe os dados do depósito",
+      "order": 900
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "035db8a11bbce554d1abda4ce54bcb0f",
+      "short_description": "Prestação de contas: tipo de dúvida",
+      "on_load": true,
+      "conditions": "v_doubt_about_which_process=accountability",
+      "actions": [
+       {
+        "variable": "v_what_type_of_doubt_do_you_have",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "26feb8e91bbce554d1abda4ce54bcbf0",
+      "short_description": "Conciliação bancária: dados do depósito",
+      "on_load": true,
+      "conditions": "v_doubt_about_which_process=bank_reconciliation",
+      "actions": [
+       {
+        "variable": "v_depositor",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_date",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_value",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_accounting_document_batch",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "36aefce91bbce554d1abda4ce54bcb3e",
+      "short_description": "Adiantamento: tipo de dúvida",
+      "on_load": true,
+      "conditions": "v_doubt_about_which_process=advance",
+      "actions": [
+       {
+        "variable": "v_what_type_of_doubt_Advance",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "c20e74291bbce554d1abda4ce54bcb9d",
+      "short_description": "Reembolso: tipo de dúvida",
+      "on_load": true,
+      "conditions": "v_doubt_about_which_process=reimbursement",
+      "actions": [
+       {
+        "variable": "v_what_type_of_doubt_Reimbursement",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "577f38211bfce554d1abda4ce54bcb4c",
+      "short_description": "Cancelamento de capa de lote: mês de referência",
+      "on_load": true,
+      "conditions": "v_what_type_of_doubt_do_you_have=batch_cover_cancellation",
+      "actions": [
+       {
+        "variable": "v_budget_reference_month",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Doubt about which process?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_doubt_about_which_process."
+     },
+     {
+      "origem": "EY: Which audience do you belong to?",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_which_audience_do_you_belong_to e v_describe_your_question."
+     },
+     {
+      "origem": "EY: If \"Doubt about which process?\" for \"Bank Reconciliation\"",
+      "tipo": "ui_policy",
+      "como": "A ação sobre o container do set (enter_deposit_details) virou ações nas variáveis do set Informe os dados do depósito."
+     },
+     {
+      "origem": "EY: Date MM/AAAA",
+      "tipo": "client_script",
+      "como": "Validation Regex MM/AAAA em v_budget_reference_month."
+     },
+     {
+      "origem": "EY: Clear Fields",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ],
+    "name": "Tirar dúvida sobre reembolso e prestação de contas",
+    "short_description": "Dúvidas sobre reembolso, adiantamento, prestação de contas, relatório de despesas e identificação de depósitos.",
+    "description": "Use para tirar dúvidas sobre reembolso de despesas corporativas, adiantamento, prestação de contas (inclusive cancelamento de capa de lote, fatura do cartão corporativo, prazos e status), relatório de despesas por centro de custo ou para identificar um depósito/devolução feito à empresa (conciliação bancária). Não use para enviar a prestação de contas ou pedir o reembolso em si; para isso use \"Prestar contas de cartão corporativo\", \"Prestar contas de adiantamento\", \"Solicitar reembolso de despesas\" ou \"Prestar contas de verba evento ou verba mês (força de vendas)\". Antes de abrir, consulte a FAQ na base de conhecimento.",
+    "frases_exemplo": [
+     "meu reembolso ainda não caiu, o que aconteceu?",
+     "tenho dúvida sobre a prestação de contas",
+     "como funciona o adiantamento de viagem?",
+     "fiz um depósito devolvendo o adiantamento, como identifico?",
+     "preciso cancelar a capa do lote",
+     "dúvida reembolso"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "bd575a8f1bb8e550d1abda4ce54bcb1d",
+  "name": "Realizar Prestação de Contas - LATAM",
+  "status": "conversacional",
+  "motivo": "Formulário curto sem lógica condicional. v_opened_by sai da conversa, mandatory vai direto nas variáveis e a validação de valor (formato brasileiro) vira regex numérica independente de moeda. Avaliar labels também em espanhol para o público LATAM.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_click_here_to_download_the_template_that_should_be_used_in_the_field_below",
+    "motivo": "Rich Text Label com link do modelo; orientação movida para a descrição do item."
+   },
+   {
+    "name": "v_attach_the_support_documents_for_accountability_below",
+    "motivo": "Label informativo sem dado; instrução coberta pelo label do anexo."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_what_kind_of_accountability",
+      "order": 100,
+      "conversational_label": "Que tipo de prestação de contas: adiantamento força de vendas, adiantamento varejo, viagem corporativa ou cartão corporativo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_how_many_accountability_write_downs_are_being_requested",
+      "order": 200,
+      "conversational_label": "Quantas baixas de prestação de contas são?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_what_is_the_total_amount_being_held_accountable",
+      "order": 300,
+      "conversational_label": "Qual o valor total da prestação de contas?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{1,3}([.,]?\\d{3})*([.,]\\d{1,2})?$"
+      }
+     },
+     {
+      "name": "v_what_currency_is_used",
+      "order": 400,
+      "conversational_label": "Em qual moeda?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_the_template",
+      "order": 500,
+      "conversational_label": "Anexe o modelo preenchido.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_approval",
+      "order": 600,
+      "conversational_label": "Anexe a aprovação.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_additional_information",
+      "order": 700,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     },
+     {
+      "name": "v_opened_by",
+      "order": 800,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "9994ae4b1bbce550d1abda4ce54bcb11",
+      "name": "EY: Company: Natura/TBS - Country Subcompany",
+      "order": 50
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 1400
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Make fields Visible and Mandatory On Load",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas variáveis e read-only em v_opened_by; ações sobre o rich text e sobre v_which_country (inexistente no item) descartadas."
+     },
+     {
+      "origem": "EY: Validate Value",
+      "tipo": "client_script",
+      "como": "Validation Regex numérica independente de moeda em v_what_is_the_total_amount_being_held_accountable."
+     }
+    ],
+    "name": "Prestar contas - LATAM",
+    "short_description": "Prestação de contas (rendición de cuentas) para colaboradores da Argentina, Chile, Colômbia, Peru e México.",
+    "description": "Use se você trabalha na Argentina, Chile, Colômbia, Peru ou México e precisa fazer uma prestação de contas (rendición de cuentas) de adiantamento da força de vendas, do varejo, de viagem corporativa ou do cartão corporativo, informando quantidade de baixas, valor total, moeda e anexando o modelo preenchido (disponível na base de conhecimento) e a aprovação. Não use para anular, reclassificar ou legalizar adiantamentos (use \"Reclassificar ou legalizar adiantamento - LATAM\") e não use se você é do Brasil.",
+    "frases_exemplo": [
+     "necesito hacer una rendición de cuentas",
+     "quero prestar contas, sou da Argentina",
+     "rendir gastos de viaje Chile",
+     "prestação de contas Colômbia",
+     "enviar rendición de cuentas con la plantilla"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "b2fc94b81b09a5d0d1abda4ce54bcb5e",
+  "name": "Reclassificação e Legalização de Adiantamentos a Colaboradores – LATAM",
+  "status": "conversacional",
+  "motivo": "Uma intenção (tratar adiantamento de colaborador LATAM) com quatro processos que mudam poucas perguntas; não compensa dividir. Mandatory fixo vai para a variável, as policies por processo continuam e as validações viram regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_click_here_to_download_the_template",
+    "motivo": "Rich Text Label com link do modelo; orientação movida para a descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_what_process_is_the_request_for",
+      "order": 100,
+      "conversational_label": "O que você precisa: anular, legalizar pagamento, reclassificar ou reintegrar depósito?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_which_country",
+      "order": 200,
+      "conversational_label": "Em qual país: Argentina, Chile, Colômbia, México ou Peru?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_what_audience_is_question",
+      "order": 300,
+      "conversational_label": "O colaborador é do administrativo, força de vendas ou varejo?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_what_month",
+      "order": 400,
+      "conversational_label": "De qual mês são os lançamentos? (MM/AAAA)",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+      }
+     },
+     {
+      "name": "v_enter_the_total_amount_of_the_accounting",
+      "order": 500,
+      "conversational_label": "Qual o valor total contábil?",
+      "overrides": {
+       "validation_regex": "^\\d{1,3}([.,]?\\d{3})*([.,]\\d{1,2})?$"
+      }
+     },
+     {
+      "name": "v_enter_the_total_amount_of_legalization_requested",
+      "order": 600,
+      "conversational_label": "Qual o valor total solicitado?",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^\\d{1,3}([.,]?\\d{3})*([.,]\\d{1,2})?$"
+      }
+     },
+     {
+      "name": "v_what_currency_is_used",
+      "order": 700,
+      "conversational_label": "Em qual moeda?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_attach_the_report_or_detail_of_the_request",
+      "order": 800,
+      "conversational_label": "Anexe o relatório ou detalhamento do pedido."
+     },
+     {
+      "name": "v_attach_the_claim_vouchers",
+      "order": 900,
+      "conversational_label": "Se tiver, anexe os comprovantes."
+     },
+     {
+      "name": "v_attach_approval",
+      "order": 1000,
+      "conversational_label": "Anexe a aprovação.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_additional_information",
+      "order": 1100,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     },
+     {
+      "name": "v_opened_by",
+      "order": 1200,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "9994ae4b1bbce550d1abda4ce54bcb11",
+      "name": "EY: Company: Natura/TBS - Country Subcompany",
+      "order": 50
+     },
+     {
+      "sys_id": "acc8308d1bc1e9d0d1abda4ce54bcbf0",
+      "name": "Informe o número do documento a ser anulado",
+      "order": 450
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 1700
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "556e78811b45e9d0d1abda4ce54bcb66",
+      "short_description": "Reclassificação ou reintegração: comprovantes",
+      "on_load": true,
+      "conditions": "v_what_process_is_the_request_for=v_reclassification^ORv_what_process_is_the_request_for=v_reintegrating_deposits",
+      "actions": [
+       {
+        "variable": "v_attach_the_claim_vouchers",
+        "visible": "true",
+        "mandatory": "ignore",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "b4cd7ccd1b05e9d0d1abda4ce54bcb63",
+      "short_description": "Anulação: número e ano do documento",
+      "on_load": true,
+      "conditions": "v_what_process_is_the_request_for=v_abort",
+      "actions": [
+       {
+        "variable": "vs_document_number",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "vs_document_year",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "e77cf0c91b05e9d0d1abda4ce54bcbba",
+      "short_description": "Legalização, reclassificação ou reintegração: relatório e valor contábil",
+      "on_load": true,
+      "conditions": "v_what_process_is_the_request_for=v_legalization_payments^ORv_what_process_is_the_request_for=v_reclassification^ORv_what_process_is_the_request_for=v_reintegrating_deposits",
+      "actions": [
+       {
+        "variable": "v_attach_the_report_or_detail_of_the_request",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_enter_the_total_amount_of_the_accounting",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Make fields Visible and Mandatory On Load",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas variáveis e read-only em v_opened_by; ação sobre o rich text descartada."
+     },
+     {
+      "origem": "EY: Make field Visible and Mandatory IF ... \"Aborts\"",
+      "tipo": "ui_policy",
+      "como": "A ação sobre o container do set virou ações em vs_document_number e vs_document_year."
+     },
+     {
+      "origem": "EY: Validate value",
+      "tipo": "client_script",
+      "como": "Validation Regex numérica em v_enter_the_total_amount_of_the_accounting (e no valor solicitado)."
+     },
+     {
+      "origem": "EY: Validate date 2 ",
+      "tipo": "client_script",
+      "como": "Validation Regex MM/AAAA em v_what_month."
+     }
+    ],
+    "name": "Reclassificar ou legalizar adiantamento - LATAM",
+    "short_description": "Anular, reclassificar, reintegrar depósito ou legalizar pagamento de adiantamento de colaborador na LATAM.",
+    "description": "Use se você trabalha na Argentina, Chile, Colômbia, Peru ou México e precisa anular um documento de adiantamento, reclassificar lançamentos, reintegrar depósitos ou legalizar pagamentos de adiantamento a colaboradores. O modelo de detalhamento está disponível na base de conhecimento. Não use para a prestação de contas comum (use \"Prestar contas - LATAM\") e não use se você é do Brasil.",
+    "frases_exemplo": [
+     "necesito anular un anticipo",
+     "reclasificar anticipo de empleado",
+     "legalizar pagos de anticipo en Colombia",
+     "reintegro de depósito de anticipo",
+     "quero anular o documento de adiantamento no México"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "2d4edf611b042d58a530426fe54bcb87",
+  "name": "Dúvidas no processo de RPE",
+  "status": "conversacional",
+  "motivo": "Item de dúvida com duas perguntas próprias e sem bloqueador. Falta explicar a sigla RPE na descrição, labels conversacionais e mandatory direto nas variáveis.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_faq_doubts_in_the_rpe_process",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "formatter2",
+    "motivo": "Formatter, só layout."
+   },
+   {
+    "name": "v_describe_your_question_about_the_rpe_process",
+    "motivo": "Container Start, só layout."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Formatter, só layout."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_what_type_of_doubt_do_you_have",
+      "order": 100,
+      "conversational_label": "Sua dúvida de RPE é sobre estoque, status do pedido ou outro assunto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_report_your_query",
+      "order": 200,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 1000
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 1100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: mandatory fields for Catalog Item \"Doubts in the RPE process\"",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto nas duas variáveis."
+     },
+     {
+      "origem": "EY: Clear field",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ],
+    "name": "Tirar dúvida sobre RPE (solicitação de produtos acabados do estoque)",
+    "short_description": "Dúvidas sobre o processo de RPE, a solicitação de produtos acabados do estoque.",
+    "description": "Use para tirar dúvidas sobre o RPE (Solicitação de Produtos Acabados em Estoque): dúvidas de estoque, status do pedido, como pedir, aprovação, prazos ou centro de custo. Não use para fazer o pedido de produtos em si (use \"Solicitar produtos acabados do estoque (RPE)\"). Consulte também a FAQ do RPE na base de conhecimento.",
+    "frases_exemplo": [
+     "tenho dúvida sobre RPE",
+     "como funciona a solicitação de produtos do estoque?",
+     "meu RPE ainda não foi aprovado",
+     "onde acompanho meu pedido de RPE?",
+     "não achei o centro de custo no RPE"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "4ca298e41b5ef910a530426fe54bcb82",
+  "name": "Solicitação de RPE",
+  "status": "analise_humana",
+  "motivo": "Formulário de pedido com lista de produtos em multi-row variable set, variável Custom com widget de anexo obrigatório, onChange que percorre as linhas do MRVS (anexo acima de 1000 unidades), onSubmit que trava o envio sem centro de custo e onLoad que deixa tudo read-only. Decidir se fica como formulário (make_item_non_conversational, com nome/descrição novos: \"Solicitar produtos acabados do estoque (RPE)\") ou se o pedido é redesenhado; corrigir também a comparação \"No\"/\"no\" do onSubmit.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "d131c8533b6b6ad0924d0247f4e45aa1",
+  "name": "Beneficiamento, Sucatas e Resíduos: Envio de informações, solicitações e dúvidas de clientes",
+  "status": "analise_humana",
+  "motivo": "Formulário público para cliente externo (aberto com usuário genérico pelo producer script), com variável Custom de anexo público (widget) e uma policy onLoad que deixa quase todas as perguntas read-only, o que faria a conversa pular tudo. O público não usa o VA interno e o volume é muito baixo: decidir se fica como formulário (non-conversational, com nome/descrição corrigidos) ou se é redesenhado para o canal externo.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "f96c20891b606554a530426fe54bcb0f",
+  "name": "Informações de motoboy, correios e malotes corporativos",
+  "status": "conversacional",
+  "motivo": "Duas perguntas próprias, sem scripts e sem bloqueador. A descrição atual promete solicitar serviços, mas o formulário só registra dúvida (o pedido é feito no portal indicado na base de conhecimento); nome e descrição alinhados e mandatory direto nas variáveis.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_faq",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_portal",
+    "motivo": "Rich Text Label com link do portal de pedido do serviço; orientação movida para a descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_doubt",
+      "order": 100,
+      "conversational_label": "Sua dúvida é sobre cobrança no centro de custo, despesa indevida, postagem particular, modalidades de entrega, processo de postagem, reclamação, prazo de entrega ou outro assunto?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_describe_your_doubt",
+      "order": 200,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 30
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 40
+     },
+     {
+      "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+      "name": "EY: Additional information",
+      "order": 700
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_doubt e v_describe_your_doubt."
+     }
+    ],
+    "name": "Tirar dúvida sobre motoboy, correios e malote",
+    "short_description": "Dúvidas sobre envio por motoboy, correios e malote corporativo.",
+    "description": "Use para tirar dúvidas sobre envio de documentos e objetos por motoboy, correios ou malote corporativo: como funciona o processo de postagem, prazo de entrega, modalidades de entrega do fornecedor, cobrança no centro de custo, despesas indevidas no centro de custo, postagens particulares ou reclamação do serviço. O pedido do serviço em si é feito no portal de serviços indicado na base de conhecimento. Não use para serviços de cartório.",
+    "frases_exemplo": [
+     "como faço para mandar um documento por motoboy?",
+     "meu malote não chegou",
+     "qual o prazo de entrega do motoboy?",
+     "veio uma cobrança de correios no meu centro de custo",
+     "quero reclamar do serviço de malote"
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "ad8d410d1ba42910d1abda4ce54bcb20",
+  "name": "Solicitação de pagamento de fornecedor",
+  "status": "analise_humana",
+  "motivo": "Nenhum chamado desde a criação. Item restrito à célula de Remuneração e Pagamentos, com muitas perguntas fiscais, busca de dados da empresa por GlideAjax e anexo obrigatório. Confirmar com o dono se o processo ainda existe ou migrou para outro canal (ex.: Ariba) antes de converter ou desativar.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "d00642bf1bc8a11ca530426fe54bcbb0",
+  "name": "Solicitar serviços e informações de cartório",
+  "status": "conversacional",
+  "motivo": "Mistura pedido de serviço de cartório e dúvida, mas com volume muito baixo não compensa dividir. Policies sem script continuam (a de \"Outros\" corrigida para o value real da choice, \"Outras\"), validações viram regex e o mandatory fixo vai para a variável.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_faq",
+    "motivo": "Rich Text Label com link da FAQ; referência movida para a descrição do item."
+   },
+   {
+    "name": "v_notary_info",
+    "motivo": "Rich Text Label informativo sobre os cartórios; orientação coberta pela descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variaveis_fixas": [],
+    "variables": [
+     {
+      "name": "v_demand",
+      "order": 100,
+      "conversational_label": "Você quer pedir um serviço de cartório ou tirar uma dúvida?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_service_notary",
+      "order": 200,
+      "conversational_label": "Qual serviço: reconhecimento de firma, autenticação de documentos, certidão, procuração ou outro?"
+     },
+     {
+      "name": "v_service",
+      "order": 300,
+      "conversational_label": "Descreva o serviço."
+     },
+     {
+      "name": "v_office",
+      "order": 400,
+      "conversational_label": "Em qual cartório: Cajamar ou Rodrigues Cruz (NASP)?"
+     },
+     {
+      "name": "v_privy_or_corporate",
+      "order": 500,
+      "conversational_label": "É um pedido da empresa ou particular?"
+     },
+     {
+      "name": "v_individuals_or_legal_entities",
+      "order": 600,
+      "conversational_label": "É para pessoa física ou jurídica?"
+     },
+     {
+      "name": "v_cpf",
+      "order": 700,
+      "conversational_label": "Qual o CPF?",
+      "overrides": {
+       "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+      }
+     },
+     {
+      "name": "v_cnpj",
+      "order": 800,
+      "conversational_label": "Qual o CNPJ?",
+      "overrides": {
+       "validation_regex": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$"
+      }
+     },
+     {
+      "name": "v_cost_center_or_pep",
+      "order": 900,
+      "conversational_label": "Qual o centro de custo ou PEP (elemento PEP do projeto)?"
+     },
+     {
+      "name": "v_withdraw_document",
+      "order": 1000,
+      "conversational_label": "Vai ser preciso retirar o documento?"
+     },
+     {
+      "name": "v_withdrawal_address",
+      "order": 1100,
+      "conversational_label": "Qual o endereço de retirada?"
+     },
+     {
+      "name": "v_doubt",
+      "order": 1200,
+      "conversational_label": "Conte qual é a sua dúvida.",
+      "overrides": {
+       "type": "2"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "724f41271b446dd8a530426fe54bcb28",
+      "name": "EY: Opened by - Requested for data",
+      "order": 20
+     },
+     {
+      "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+      "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+      "order": 30
+     },
+     {
+      "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+      "name": "EY: Additional information",
+      "order": 1700
+     },
+     {
+      "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+      "name": "EY: Document repository",
+      "order": 1800
+     }
+    ],
+    "ui_policies": [
+     {
+      "origem_sys_id": "161f3e081b94291ca530426fe54bcbc7",
+      "short_description": "Pedido de serviço: cartório, tipo de pessoa, serviço e origem",
+      "on_load": true,
+      "conditions": "v_demand=Solicitar serviço de cartório",
+      "actions": [
+       {
+        "variable": "v_office",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_individuals_or_legal_entities",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_service_notary",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_privy_or_corporate",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "a579e8071b602d90d1abda4ce54bcba7",
+      "short_description": "Pedido de serviço: retirada e centro de custo/PEP",
+      "on_load": true,
+      "conditions": "v_demand=Solicitar serviço de cartório",
+      "actions": [
+       {
+        "variable": "v_withdraw_document",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       },
+       {
+        "variable": "v_cost_center_or_pep",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "2b03c7881bd4291ca530426fe54bcbf4",
+      "short_description": "Retirada do documento: endereço",
+      "on_load": true,
+      "conditions": "v_withdraw_document=Sim",
+      "actions": [
+       {
+        "variable": "v_withdrawal_address",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "58f387cc1bd4291ca530426fe54bcb51",
+      "short_description": "Outro serviço: descrever",
+      "on_load": true,
+      "conditions": "v_service_notary=Outras",
+      "actions": [
+       {
+        "variable": "v_service",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "6a61cb441bd4291ca530426fe54bcbe4",
+      "short_description": "Pessoa física: CPF",
+      "on_load": true,
+      "conditions": "v_individuals_or_legal_entities=Pessoa Física",
+      "actions": [
+       {
+        "variable": "v_cpf",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "a03203081bd4291ca530426fe54bcb1d",
+      "short_description": "Pessoa jurídica: CNPJ",
+      "on_load": true,
+      "conditions": "v_individuals_or_legal_entities=Pessoa Jurídica",
+      "actions": [
+       {
+        "variable": "v_cnpj",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     },
+     {
+      "origem_sys_id": "f75287081bd4291ca530426fe54bcb41",
+      "short_description": "Dúvida no processo: descrever",
+      "on_load": true,
+      "conditions": "v_demand=Dúvidas no processo",
+      "actions": [
+       {
+        "variable": "v_doubt",
+        "visible": "true",
+        "mandatory": "true",
+        "disabled": "ignore"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "Mandatory direto em v_demand."
+     },
+     {
+      "origem": "EY: Show field when service is anything",
+      "tipo": "ui_policy",
+      "como": "Condição \"serviço preenchido\" trocada por demanda = Solicitar serviço de cartório (o serviço é obrigatório nesse ramo)."
+     },
+     {
+      "origem": "EY: Show field when Others",
+      "tipo": "ui_policy",
+      "como": "Condição corrigida de \"Outros\" para o value real da choice, \"Outras\"."
+     },
+     {
+      "origem": "EY: Validade CNPJ",
+      "tipo": "client_script",
+      "como": "Validation Regex de CNPJ em v_cnpj."
+     },
+     {
+      "origem": "EY: Validate CPF",
+      "tipo": "client_script",
+      "como": "Validation Regex de CPF em v_cpf."
+     },
+     {
+      "origem": "EY: Clear values demand",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     },
+     {
+      "origem": "EY: Clear values individual or legal ent",
+      "tipo": "client_script",
+      "como": "Removido: limpeza desnecessária na conversa."
+     }
+    ],
+    "name": "Solicitar serviço de cartório ou tirar dúvida",
+    "short_description": "Pedir reconhecimento de firma, autenticação e outros serviços de cartório, ou tirar dúvidas sobre o processo.",
+    "description": "Use para pedir um serviço de cartório para a empresa ou para você (abertura e reconhecimento de firma, autenticação de documentos, emissão de certidão, emissão de procuração e outros), informando o cartório (Cajamar ou Rodrigues Cruz - NASP), se é pessoa física ou jurídica, o centro de custo ou PEP e se é preciso retirar o documento; ou para tirar dúvidas sobre o processo de cartório. Não use para envio de documentos por motoboy ou malote.",
+    "frases_exemplo": [
+     "preciso reconhecer firma de um documento",
+     "autenticar cópia em cartório",
+     "quero pedir um serviço de cartório para a empresa",
+     "dúvida sobre como funciona o cartório",
+     "preciso de uma procuração registrada em cartório"
+    ]
+   }
+  ]
+ }
+]

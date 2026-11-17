@@ -1,0 +1,60 @@
+{
+ "sys_id": "d52bb384873a5a50ec360e530cbb35db",
+ "title": "Select the date and name of the collaborator",
+ "internal_name": "selecione_a_data_e_o_nome_do_colaborador",
+ "description": "Data, Nome completo, Matrícula, CPF",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Pagamento Sindical (taxas e boletos)"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_data",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date"
+  },
+  {
+   "name": "vs_full_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Full name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^EQ"
+  },
+  {
+   "name": "vs_employee_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee number"
+  },
+  {
+   "name": "vs_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_full_name: mandatory=true",
+    "vs_data: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill information for Name Employee ",
+   "type": "onChange",
+   "on": "6baeb74c873a5a50ec360e530cbb359f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche as informações a partir do nome do colaborador. Observação: tem uma checagem redundante de valor vazio logo após a guarda inicial, que já cobre esse caso."
+  }
+ ]
+}

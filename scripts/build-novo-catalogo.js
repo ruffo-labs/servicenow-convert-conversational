@@ -26,7 +26,7 @@ const VAR_TEMPLATE = Object.fromEntries(Object.keys(d.itens.find((i) => i.catalo
 Object.assign(VAR_TEMPLATE, { active: 'true', mandatory: 'false', hidden: 'false', read_only: 'false', include_none: 'false', map_to_field: 'false', lookup_unique: 'false', not_available_conversation: 'false', choice_direction: 'down', sys_class_name: 'item_option_new' });
 delete VAR_TEMPLATE.question_choices;
 
-const ITEM_FIELDS = ['active', 'category', 'order', 'sc_catalogs', 'sys_class_name', 'type', 'table_name', 'redirect_url', 'view', 'flow_designer_flow', 'workflow', 'taxonomy_topic', 'script', 'post_insert_script', 'save_script'];
+const ITEM_FIELDS = ['active', 'category', 'order', 'sc_catalogs', 'sys_class_name', 'type', 'table_name', 'redirect_url', 'view', 'flow_designer_flow', 'workflow', 'taxonomy_topic', 'script', 'post_insert_script', 'save_script', 'meta'];
 const OVERRIDE_BOOL = new Set(['mandatory', 'hidden', 'read_only', 'include_none', 'not_available_conversation', 'map_to_field']);
 
 function resolveValue(varRec, value) {

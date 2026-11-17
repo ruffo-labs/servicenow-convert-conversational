@@ -1,0 +1,151 @@
+{
+ "sys_id": "95d6eae91b156910a530426fe54bcb39",
+ "name": "Ajuste de Lançamento de Fornecedor ",
+ "sys_name": "Supplier Launch Adjustment",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "Virtual Agent Search, PTP_",
+ "short_description": "Solicite um ajuste de lançamento à fornecedor",
+ "description": "Solicite um ajuste de lançamento à fornecedor",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "23",
+   "bloqueadores": "0",
+   "avisos": "13",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_supplier: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "0",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "a276c5e51b99e510a530426fe54bcbb0",
+   "name": "EY VS - Fornecedores",
+   "order": "100",
+   "perguntas": [
+    "v_supplier (Referência): Supplier",
+    "v_supplier_code (Texto de Linha Única): Supplier Code",
+    "v_vendor_tax_code_cnpj_cuit_ruc (Texto de Linha Única): Vendor Tax Code (CNPJ/CUIT/RUC)"
+   ]
+  },
+  {
+   "sys_id": "ccae2aa11bd56910a530426fe54bcbe7",
+   "name": "EY VS -  Campos Ajuste de Lançamentos",
+   "order": "100",
+   "perguntas": [
+    "reason_for_adjustment (Selecionar Caixa): Reason for adjustment",
+    "document_number_invoice (Texto de Linha Única): Document number (Invoice)",
+    "value (Texto de Linha Única): Amount",
+    "service_sheet_number (Texto de Linha Única): Service sheet number",
+    "purchase_order_number (Texto de Linha Única): Purchase order number"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "200",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Variavel Folha de Serviços Visible ",
+   "when": "IO:reason_for_adjustment=service_sheet^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "service_sheet_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "ey_vs_fornecedores: readonly=true",
+    "ey_vs_campos_ajuste_de_lan_amentos: readonly=true",
+    "ey_vs_empresas_natura: readonly=true",
+    "ey_vs_informa_oes_anexo: readonly=true"
+   ]
+  },
+  {
+   "name": "Variavel Pedido de Compra Visible ",
+   "when": "IO:reason_for_adjustment=order_number^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "purchase_order_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Variaveis obrigatorias ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: mandatory=true",
+    "value: mandatory=true",
+    "v_vendor_tax_code_cnpj_cuit_ruc: mandatory=true",
+    "v_which_sub_company_is_the_service_for: mandatory=true",
+    "v_additional_information: mandatory=true",
+    "v_opened_by: mandatory=true",
+    "v_supplier_code: mandatory=true",
+    "v_vendor_tax_code_cnpj_cuit_ruc: mandatory=true",
+    "v_supplier: ",
+    "reason_for_adjustment: mandatory=true",
+    "v_country: mandatory=true",
+    "document_number_invoice: mandatory=true",
+    "v_is_your_request_for_which_company: mandatory=true",
+    "v_attachment: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

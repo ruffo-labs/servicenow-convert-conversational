@@ -1,0 +1,366 @@
+{
+ "sys_id": "c2fed4948715fa10182a0d440cbb3551",
+ "name": "Assistência Médica (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Assistência Médica",
+ "description": "Assist&ecirc;ncia M&eacute;dica",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Beneficiário(a) não consegue ser atendido(a)",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Assistência Médica"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_medical_report",
+    "v_dependent_cpf_attach",
+    "v_policyholder_phone",
+    "v_cpf_dependent",
+    "v_reason_solicitation",
+    "v_number_holder_card",
+    "v_estimated_date_childbirth",
+    "v_reason_solicitation_exemption",
+    "v_exemption_for_the_dependent",
+    "v_number_dependent_card"
+   ],
+   "passa_a_obrigatoria": [
+    "v_policyholder_or_dependent",
+    "v_operating_name"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Qual o nome da clínica/hospital que o beneficiário(a) não conseguiu ser atendido? - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_policyholder_or_dependentANYTHING"
+    },
+    {
+     "policy": "ALP - Observação (Bradesco) - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_reason_of_service_not_being_performed=v_problems_access_app^v_operating_name=v_bradesco_health"
+    },
+    {
+     "policy": "ALP - Motivo do atendimento não realizado (Limpar Campo) - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_policyholder_or_dependentANYTHING"
+    },
+    {
+     "policy": "ALP - Qual o nome da clínica/hospital que o beneficiário(a) não conseguiu ser atendido? (Limpar Campo) - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_policyholder_or_dependentANYTHING"
+    },
+    {
+     "policy": "ALP - Nome do(a) dependente (Limpar Campo) - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_policyholder_or_dependentINv_dependent,v_both"
+    },
+    {
+     "policy": "ALP - Observação (Notredame Intermédica) - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_reason_of_service_not_being_performed=v_problems_access_app^v_operating_name=v_notredame_intermedica"
+    },
+    {
+     "policy": "ALP - Motivo do atendimento não realizado - Beneficiário(a) não consegue ser atendido(a)",
+     "quando": "v_policyholder_or_dependentANYTHING"
+    },
+    {
+     "policy": "ALP - Nome do(a) dependente - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_policyholder_or_dependentINv_dependent,v_both"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de 2ª via da carteirinha Bradesco Saúde",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Assistência Médica N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_medical_report",
+    "v_dependent_cpf_attach",
+    "v_policyholder_phone",
+    "v_cpf_dependent",
+    "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive",
+    "v_reason_solicitation",
+    "v_number_holder_card",
+    "v_estimated_date_childbirth",
+    "v_reason_solicitation_exemption",
+    "v_operating_name",
+    "v_exemption_for_the_dependent",
+    "v_number_dependent_card",
+    "v_reason_of_service_not_being_performed"
+   ],
+   "passa_a_obrigatoria": [
+    "v_policyholder_or_dependent"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nome do(a) dependente (Limpar Campo) - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_policyholder_or_dependentINv_dependent,v_both"
+    },
+    {
+     "policy": "ALP - Nome do(a) dependente - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_policyholder_or_dependentINv_dependent,v_both"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de isenção de coparticipação",
+     "sla": "SLA - GESTÃO DE GENTE - 48H",
+     "grupo_suporte": "RH - Isenção de Coparticipação"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_policyholder_or_dependent",
+    "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive",
+    "v_reason_of_service_not_being_performed"
+   ],
+   "passa_a_obrigatoria": [
+    "v_operating_name",
+    "v_exemption_for_the_dependent"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Nº da carteirinha do(a) titular (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no"
+    },
+    {
+     "policy": "ALP - Telefone do(a) titular (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependentINv_yes,v_no"
+    },
+    {
+     "policy": "ALP - CPF do(a) dependente - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Motivo da solicitação - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no"
+    },
+    {
+     "policy": "ALP - Telefone do(a) titular - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependentINv_yes,v_no"
+    },
+    {
+     "policy": "ALP - CPF do(a) dependente ANEXO - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Informar motivo da solicitação (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no^v_reason_solicitation_exemption=v_other"
+    },
+    {
+     "policy": "ALP - Observação (relatorio medico) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no"
+    },
+    {
+     "policy": "ALP - Nº da carteirinha do(a) titular - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no"
+    },
+    {
+     "policy": "ALP - Relatório médico (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependentINv_yes,v_no"
+    },
+    {
+     "policy": "ALP - CPF do(a) dependente ANEXO (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Informar motivo da solicitação - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no^v_reason_solicitation_exemption=v_other"
+    },
+    {
+     "policy": "ALP - Relatório médico - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependentINv_yes,v_no"
+    },
+    {
+     "policy": "ALP - Nome do(a) dependente (Limpar Campo) - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - CPF do(a) dependente (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Motivo da solicitação (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no"
+    },
+    {
+     "policy": "ALP - Observação (isencao-sim) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Nº da carteirinha do(a) dependente (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Data estimada do parto - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no^v_reason_solicitation_exemption=v_gestation"
+    },
+    {
+     "policy": "ALP - Data estimada do parto (Limpar Campo) - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_no^v_reason_solicitation_exemption=v_gestation"
+    },
+    {
+     "policy": "ALP - Nome do(a) dependente - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    },
+    {
+     "policy": "ALP - Nº da carteirinha do(a) dependente - Solicitação de isenção de coparticipação",
+     "quando": "v_exemption_for_the_dependent=v_yes"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_medical_report",
+   "type": "Anexo",
+   "question_text": "Relatório médico",
+   "choices": []
+  },
+  {
+   "name": "v_policyholder_or_dependent",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Titular",
+    "Ambos",
+    "Dependente"
+   ]
+  },
+  {
+   "name": "v_dependent_cpf_attach",
+   "type": "Anexo",
+   "question_text": "CPF do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_dependent_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_policyholder_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do(a) titular",
+   "choices": []
+  },
+  {
+   "name": "v_cpf_dependent",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do (a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o nome da clínica/hospital que o beneficiário(a) não conseguiu ser atendido?",
+   "choices": []
+  },
+  {
+   "name": "v_reason_solicitation",
+   "type": "Texto de Linha Única",
+   "question_text": "Informar motivo da solicitação",
+   "choices": []
+  },
+  {
+   "name": "v_number_holder_card",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da carteirinha do(a) titular",
+   "choices": []
+  },
+  {
+   "name": "v_estimated_date_childbirth",
+   "type": "Data",
+   "question_text": "Data estimada do parto",
+   "choices": []
+  },
+  {
+   "name": "v_reason_solicitation_exemption",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Gestação",
+    "Outros",
+    "Doença crônica"
+   ]
+  },
+  {
+   "name": "v_operating_name",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "Notredame Intermédica",
+    "Bradesco Saúde"
+   ]
+  },
+  {
+   "name": "v_exemption_for_the_dependent",
+   "type": "Selecionar Caixa",
+   "question_text": "A isenção é para o(a) dependente?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "v_number_dependent_card",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da carteirinha do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_reason_of_service_not_being_performed",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do atendimento não realizado",
+   "choices": [
+    "Beneficiário(a) com divergência nos dados",
+    "Problemas para acessar o APP",
+    "Outros",
+    "Beneficiário(a) inativo(a) na operadora",
+    "Beneficiário(a) com carência"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "c13493413b99f250b28dd047f4e45ab2",
+   "name": "ALP - Problemas acesso APP",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se o motivo v_reason_of_service_not_being_performed for 'v_problems_access_app', mostra mensagem de erro orientando a falar direto com a operadora, com telefones/SAC (um texto específico para Bradesco Saúde e outro para as demais operadoras), e bloqueia o envio."
+  }
+ ]
+}

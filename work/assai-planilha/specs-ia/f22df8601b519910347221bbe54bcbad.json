@@ -1,0 +1,164 @@
+{
+ "sys_id": "f22df8601b519910347221bbe54bcbad",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Jovem Aprendiz (1 oferta(s)); Gestor - RH Ponta > Preciso de um serviço de RH > Jovem Aprendiz (5 oferta(s)). 1 policy(ies) condicionais descartadas em grupos onde a variável da condição não existe.",
+ "vars": {
+  "reason_for_shutdown_delay": {
+   "label": "Qual foi o motivo do atraso no desligamento?"
+  },
+  "clearance_number": {
+   "label": "Qual é o número do chamado de afastamento?"
+  },
+  "what_is_the_discrepancy_to_be_corrected": {
+   "label": "Qual é a divergência que precisa ser corrigida?"
+  },
+  "end_date_of_the_impacted_partys_contract": {
+   "label": "Qual é a data de fim do contrato do aprendiz?"
+  },
+  "work_accident": {
+   "label": "O afastamento foi por acidente de trabalho?"
+  },
+  "number_cat": {
+   "label": "Qual é o número do chamado de solicitação da CAT?"
+  },
+  "name_of_educational_institution": {
+   "label": "Qual é o nome da instituição de ensino?"
+  },
+  "last_day_worked": {
+   "label": "Qual foi o último dia trabalhado?"
+  },
+  "expected_date_of_delivery": {
+   "label": "Qual é a data prevista do parto?"
+  },
+  "reason_for_extension": {
+   "label": "Qual é o motivo da prorrogação?"
+  },
+  "ra_or_apprentice_enrollment": {
+   "label": "Qual é o RA ou a matrícula do aprendiz?"
+  }
+ },
+ "remover": {
+  "observation_aditivo_contratual": "visual",
+  "observation_4": "visual",
+  "observation_12": "visual",
+  "observation_1": "visual",
+  "expected_return_date": "oferta_inativa",
+  "observation_instituicao": "visual",
+  "observation_2": "visual",
+  "formatter3": "visual",
+  "observation_gestac": "visual",
+  "observation_3": "visual"
+ },
+ "policies": {
+  "0a2805ec1b519910347221bbe54bcbca": "remover",
+  "1c0985201b919910347221bbe54bcb84": {
+   "conditions": "service_offering=e4c545e81b519910347221bbe54bcbc3^NQreason_for_extension=Gestação",
+   "actions": {
+    "expected_date_of_delivery": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "61ec05e41b919910347221bbe54bcbfb": "remover",
+  "7488c1201b919910347221bbe54bcb68": "remover",
+  "83894d601b919910347221bbe54bcbd4": "remover",
+  "cb5bc5e01b919910347221bbe54bcbf7": "remover",
+  "d22a45601b919910347221bbe54bcb62": "remover",
+  "5f7df3231be13114347221bbe54bcbfa": "remover",
+  "f620578f1b2df9d0347221bbe54bcb7d": {
+   "conditions": "work_accident=Yes",
+   "actions": {
+    "number_cat": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Atendimento nos Processos de jovem Aprendiz (divergência na admissão)",
+   "short_description": "Reporte de divergência na admissão de Jovem Aprendiz.",
+   "description": "Use quando houver divergência na admissão de Jovem Aprendiz que precisa ser corrigida. Atende a oferta Divergência na admissão do Jovem aprendiz.",
+   "frases_exemplo": [
+    "A admissão do jovem aprendiz está com erro",
+    "Há divergência no cadastro do aprendiz",
+    "Os dados do jovem aprendiz foram admitidos errado",
+    "Preciso corrigir a admissão de um aprendiz"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1"
+   ],
+   "vars": {
+    "what_is_the_discrepancy_to_be_corrected": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "name_of_educational_institution": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "ra_or_apprentice_enrollment": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "010d8bc31b2df9d0347221bbe54bcbc6",
+    "1c0985201b919910347221bbe54bcb84",
+    "43cc49a41b919910347221bbe54bcb93",
+    "4ac9ee831ba5f9d0347221bbe54bcb86",
+    "811d47bc1b86061032822170f54bcb6f",
+    "897c05a41b919910347221bbe54bcb30",
+    "8e8a05e01b919910347221bbe54bcb4f",
+    "a4bc41a41b919910347221bbe54bcb86",
+    "de2ac5b61b55591032822170f54bcbb4",
+    "f07ccfb53b056210b28dd047f4e45af0",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc",
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  },
+  {
+   "name": "Atendimento nos Processos de jovem Aprendiz (solicitações do contrato)",
+   "short_description": "Pedido de prorrogação, desligamento, vale-transporte, licença ou afastamento de Jovem Aprendiz.",
+   "description": "Use para solicitar prorrogação de contrato por afastamento, alteração de vale-transporte, cadastro de licença por alistamento militar, cadastro de afastamento maior que 15 dias ou desligamento fora do prazo de um Jovem Aprendiz. Atende as ofertas correspondentes a cada um desses pedidos.",
+   "frases_exemplo": [
+    "Preciso prorrogar o contrato de um jovem aprendiz",
+    "Quero mudar o vale-transporte do aprendiz",
+    "O aprendiz vai servir ao exército",
+    "Preciso desligar um aprendiz depois do prazo",
+    "Cadastrar afastamento longo de aprendiz"
+   ],
+   "sem_vars": [
+    "what_is_the_discrepancy_to_be_corrected",
+    "name_of_educational_institution",
+    "ra_or_apprentice_enrollment"
+   ],
+   "sem_policies": [
+    "43cc49a41b919910347221bbe54bcb93",
+    "897c05a41b919910347221bbe54bcb30",
+    "a4bc41a41b919910347221bbe54bcb86"
+   ]
+  }
+ ],
+ "scripts": {
+  "0d8d89281b919910347221bbe54bcb1f": {
+   "remover": {
+    "outro": "limpa campos conforme a oferta; coberto pela estrutura dos derivados"
+   }
+  }
+ }
+}

@@ -1,0 +1,187 @@
+{
+ "sys_id": "31ca83d11b3b1d14a530426fe54bcbbb",
+ "name": "Solicitação de Baixa de Titulo e Abertura de Débito",
+ "sys_name": "Request title write-off and opening of debit",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Formulário para baixas de títulos e criações de débitos para Consultoras e Franqueadas",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_template_multa: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_template_debito: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_spreadsheet: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Late Fee [=multa]",
+    "Write-off of undue debt [=debito_indevido]"
+   ]
+  },
+  {
+   "name": "v_motivo",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "v_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^user.active=true^EQ"
+  },
+  {
+   "name": "v_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_multa",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_debito",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_spreadsheet",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the spreadsheet with the titles to be written off"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "3b66e0ce1b638e10514cbaef4b4bcb31",
+   "name": "EY: Opened by - Company:Avon/Natura - Describe2",
+   "order": "10",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "request_type (Selecionar Caixa): Request Type",
+    "vs_which_company (Selecionar Caixa): Which company is your request for?",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "vs_describe_request (Texto de Várias Linhas): Describe the request"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "900",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_spreadsheet: mandatory=true",
+    "v_attach_approval: mandatory=true",
+    "v_select_the_approver: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: IF \"Baixa de título\"",
+   "when": "IO:request_type=title_write_off^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_approver: readonly=true"
+   ]
+  },
+  {
+   "name": "EY:  Se \"Abertura de débito\" e \"Multa\"",
+   "when": "IO:request_type=debit_opening^IO:v_category=multa^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_multa: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Se \"Abertura de Débito\" e \"Baixa de débito indevido\"",
+   "when": "IO:request_type=debit_opening^IO:v_category=debito_indevido^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_debito: visible=true"
+   ]
+  },
+  {
+   "name": "EY: IF \"Abertura de Débito\"",
+   "when": "IO:request_type=debit_opening^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_category: visible=true,mandatory=true",
+    "v_motivo: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear fields",
+   "type": "onChange",
+   "on": "543588133b069690924d0247f4e45a38",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_which_company' quando o campo anterior muda."
+  },
+  {
+   "name": "EY: Hide Avon se Abertura de Débito",
+   "type": "onChange",
+   "on": "543588133b069690924d0247f4e45a38",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que restringe as empresas disponíveis. Remove sempre a opção 'Avon Latam' de 'vs_which_company' e, quando o tipo de solicitação é 'debit_opening' (abertura de débito), remove opções adicionais. A leitura da empresa atual está comentada no topo."
+  }
+ ]
+}

@@ -1,0 +1,170 @@
+{
+ "sys_id": "822a4a181b1f3010d1abda4ce54bcbe7",
+ "name": "Lançamento de Atestados",
+ "sys_name": "Release of Certificates",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licenças e Ausências",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Envio de atestados de 1 dia ou mais para lançamento e/ou justificativa de ausências do ponto eletrônico.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "13",
+   "bloqueadores": "1",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY:OnLoadRules"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @inicial_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_the_certificate: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Lançamento de Atestados. Lê o perfil pela variável 'employee' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "inicial_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "certificate_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Certificate start date"
+  },
+  {
+   "name": "certificate_days",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of days"
+  },
+  {
+   "name": "attach_the_certificate",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach the certificate to the end of the form"
+  },
+  {
+   "name": "contact_phone_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please enter a contact phone number",
+   "example": "(DDD) 9999-9999 / (DDD) 99999-9999"
+  },
+  {
+   "name": "field_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use this field in case of additional information"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your certificate here"
+  },
+  {
+   "name": "greater_than_fifteen",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Auxiliary variable",
+   "hidden": true,
+   "include_none": true
+  },
+  {
+   "name": "loop_control",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Loop Control",
+   "hidden": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "400",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: OnLoad rules",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "certificate_days: mandatory=true",
+    "certificate_start_date: mandatory=true",
+    "v_attachment: visible=true,mandatory=true",
+    "contact_phone_number: mandatory=true",
+    "v_attachment: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Validate Pensioner Phone",
+   "type": "onChange",
+   "on": "0987b7481b6b3410a530426fe54bcbd1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o telefone do pensionista. Variante maior do irmão, com o mesmo propósito."
+  },
+  {
+   "name": "ACN: Set greater than 15 days",
+   "type": "onChange",
+   "on": "df6928191b57f050a530426fe54bcb4a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que marca uma variável de controle quando o valor informado é maior que 15 (dias), para que outros scripts reajam a esse limite."
+  },
+  {
+   "name": "EY: Check certificate_start_date",
+   "type": "onChange",
+   "on": "03dcd2dc1b5ffc10a530426fe54bcb2d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data inicial do atestado. Usa uma variável 'loop_control' na condição de saída para evitar disparo em cascata — o script escreve num campo que dispararia a si mesmo, e essa flag quebra o laço."
+  },
+  {
+   "name": "EY: Check certificate_days",
+   "type": "onChange",
+   "on": "df6928191b57f050a530426fe54bcb4a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a quantidade de dias do atestado. Há uma versão anterior da condição, que também testava o 'loop_control', comentada logo abaixo."
+  },
+  {
+   "name": "EY:OnLoadRules",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que lê a URL do navegador (top.location.href) e extrai o parâmetro 'table' com URLSearchParams para descobrir em que contexto o formulário está aberto. Observação: acessar top.location é frágil dentro de iframe e pode falhar por política de mesma origem."
+  }
+ ]
+}

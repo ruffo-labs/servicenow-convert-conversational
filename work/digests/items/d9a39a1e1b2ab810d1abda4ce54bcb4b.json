@@ -1,0 +1,165 @@
+{
+ "sys_id": "d9a39a1e1b2ab810d1abda4ce54bcb4b",
+ "name": "Alteração de Vale Refeição - VR, Alimentação - VA",
+ "sys_name": "Change of Meal Voucher, Food Voucher",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Vale Alimentação e Vale Refeição",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Com este formulário você consegue alterar o benefício de Vale Refeição ou Alimentação.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "15",
+   "bloqueadores": "1",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": ACN_form_on_catalog, ACN: Hide \"Remove All\" and \"X\" icons"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @info_maia: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "info_maia",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "formatter4",
+   "type": "Divisão do contêiner",
+   "type_code": "24",
+   "label": ""
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "information_accuracy_responsibility",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Do you declare to assume full responsibility for the accuracy of the information contained in this form?"
+  },
+  {
+   "name": "formatter3",
+   "type": "Pausa",
+   "type_code": "12",
+   "label": ""
+  },
+  {
+   "name": "payroll_deduction_awareness",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I am aware that the benefit is subject to payroll deduction, as per legal provision/benefit policy."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "f739b6911b1c1510d1abda4ce54bcb8f",
+   "name": "ACN: Candidate",
+   "order": "40",
+   "perguntas": []
+  },
+  {
+   "sys_id": "0fbd2b391b177010d1abda4ce54bcb90",
+   "name": "Suas informações pessoais",
+   "order": "300",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "update_information_link (Rótulo de Rich Text): "
+   ]
+  },
+  {
+   "sys_id": "a3a27ed21baeb810d1abda4ce54bcb85",
+   "name": "Plan requests",
+   "order": "800",
+   "perguntas": [
+    "option_type (Selecionar Caixa): Option type",
+    "desired_joining_option (Selecionar Caixa): Desired option for change to the benefit",
+    "benefit_option_date (Data, default, ro): Benefit option date"
+   ]
+  },
+  {
+   "sys_id": "d5a017c31be70510a530426fe54bcbb1",
+   "name": "Benefícios do colaborador",
+   "order": "950",
+   "perguntas": [
+    "employee_id (Texto de Linha Única): Employee",
+    "benefit_code (Texto de Linha Única): Benefit Code",
+    "product (Texto de Linha Única): Product",
+    "option_date (Texto de Linha Única): Option Date"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: Option Type is Accession",
+   "when": "IO:option_typeINaccession,change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_benefits: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "address_delivery: mandatory=true",
+    "number_vt: mandatory=true",
+    "city: mandatory=true",
+    "information_accuracy_responsibility: mandatory=true",
+    "x_state: mandatory=true",
+    "zip_code: mandatory=true",
+    "payroll_deduction_awareness: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Lookup benefits - Food Voucher",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad de 2 KB que consulta os benefícios de vale-alimentação chamando o Script Include IntegraAdp_utils via GlideAjax — integração com o sistema ADP."
+  },
+  {
+   "name": "ACN_form_on_catalog",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que detecta se está rodando no Service Portal, testando o contexto com `if (this)`. Comentário no código explica a intenção. Teste frágil: `this` costuma ser verdadeiro nos dois contextos."
+  },
+  {
+   "name": "ACN: Hide \"Remove All\" and \"X\" icons",
+   "type": "onChange",
+   "on": "5e6b7a9e1baeb810d1abda4ce54bcb39",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que esconde os ícones 'Remove All' e 'X' do controle, manipulando a interface para impedir que o usuário limpe a seleção."
+  }
+ ]
+}

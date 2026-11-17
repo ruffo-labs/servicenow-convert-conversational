@@ -1,0 +1,85 @@
+{
+ "sys_id": "b6b5e07a3b355210924d0247f4e45a73",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedido de serviço/reembolso de frota) com perguntas condicionais por tipo de solicitação, seguindo nome, descrição e labels da 1ª análise. As policies sem condição viram prop nas variáveis; os 4 client scripts sem VA Supported (lembrete e validação de erro) saem, com a validação de v_details e a máscara de moeda de v_total virando validation_regex, o que resolve o bloqueio do diagnóstico. Legendas e FAQ (rich text, só exibição) saem junto das policies que só as mostravam.",
+ "vars": {
+  "v_type_of_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_subcategory": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_total": {
+   "props": {
+    "validation_regex": "^\\d+([.,]\\d{1,2})?$"
+   }
+  },
+  "v_details": {
+   "props": {
+    "validation_regex": "^.{10,}$"
+   }
+  },
+  "v_month_year": {
+   "props": {
+    "hidden": true
+   }
+  }
+ },
+ "remover": {
+  "v_faqs": "visual",
+  "v_legenda_1": "visual",
+  "v_legenda_2": "visual",
+  "v_legenda_3": "visual"
+ },
+ "policies": {
+  "3fba90043b0e5a10924d0247f4e45ad6": "remover",
+  "450b703a3bf55210924d0247f4e45a98": "remover",
+  "728918403b0e5a10924d0247f4e45a11": {
+   "conditions": "v_type_of_request=6d837f1687719210ec360e530cbb35c1^ORv_type_of_request=3e83bbd687719210ec360e530cbb3578",
+   "actions": {
+    "v_year": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_month": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_total": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "c86a90803b0e5a10924d0247f4e45a5a": "remover",
+  "e4391c003b0e5a10924d0247f4e45ad3": "remover"
+ },
+ "scripts": {
+  "40ef603e3b755210924d0247f4e45a73": {
+   "remover": "sem_efeito"
+  },
+  "879de0f23b755210924d0247f4e45acb": {
+   "remover": "sem_efeito"
+  },
+  "53f838f23bf55210924d0247f4e45ae6": {
+   "remover": {
+    "substituido_por": "v_details"
+   }
+  },
+  "ad49b4f23bf55210924d0247f4e45a5a": {
+   "remover": {
+    "substituido_por": "v_details"
+   }
+  },
+  "835cba943b469e10924d0247f4e45a88": {
+   "remover": "sem_efeito"
+  },
+  "bbcd18083b0e5a10924d0247f4e45a4f": {
+   "converter": "regex"
+  }
+ }
+}

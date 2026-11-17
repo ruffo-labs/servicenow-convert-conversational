@@ -1,0 +1,39 @@
+{
+ "sys_id": "c0aea2511b405a50514cbaef4b4bcbcb",
+ "status": "conversacional",
+ "motivo": "Intenção única de reclassificação/compensação bancária. compensation_type tem opção única e vira valor fixo oculto; v_approver não tem uma origem de valor padrão segura (aprovador específico do grupo), então segue como pergunta obrigatória em vez de ser ocultada, como pedia a 1ª análise.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "compensation_type": {
+   "props": {
+    "not_available_conversation": true,
+    "read_only": true,
+    "default_value": "entries_charges"
+   }
+  },
+  "v_approver": {
+   "label": "Quem vai aprovar esta solicitação?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_anexo_planilha": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe a planilha com os recebimentos a conciliar, no modelo padrão.",
+    "mandatory": true,
+    "order": 900
+   }
+  }
+ },
+ "remover": {
+  "link_template": "visual"
+ },
+ "policies": {
+  "6bf88cad1b085a50514cbaef4b4bcbbb": "remover",
+  "7d83c4651b085a50514cbaef4b4bcb11": "remover",
+  "ae92cce11b085a50514cbaef4b4bcbfb": "remover"
+ }
+}

@@ -1,0 +1,555 @@
+{
+ "sys_id": "23094fd91bfab990d1abda4ce54bcb29",
+ "name": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+ "sys_name": "FORM0000593",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Utilize esse formulário para solicitações adesão, alteração e cancelamento de vale transporte",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "44",
+   "variaveis_ativas": "60",
+   "bloqueadores": "1",
+   "avisos": "21",
+   "perguntas_sem_conversational_label": "44"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Pop UP - Form Adesão"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_label_transport_infos: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_your_transport_card_photo_here: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @legenda_linha_onibus: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_subscribing: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @if_you_have_more_than_one_transport_card_attach_it_here: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_transport_line_update: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_fill_request: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_cancel_transport_voucher_and_charter: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_cancel_charter: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_vt: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_cancel_transport_voucher: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_chartered: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_transport_subscribing: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @cpf: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_unitary_value: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_line_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 44 de 44 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 44 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 29 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_fill_request",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_select_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select an option",
+   "include_none": true,
+   "choices": [
+    "Membership [=membership]",
+    "Amendment [=amendment]",
+    "Cancellation [=cancellation]",
+    "I'm a new employee and I don't want to join the benefits [=new_employee_do_not_join]"
+   ]
+  },
+  {
+   "name": "v_benefit_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Benefit type",
+   "include_none": true,
+   "choices": [
+    "Transport voucher [=transport_voucher]"
+   ]
+  },
+  {
+   "name": "v_label_subscribing",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_transport_subscribing",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_transport_line_update",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_cancel_transport_voucher",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_cancel_charter",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_cancel_transport_voucher_and_charter",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_linha_onibus",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Remembering that, if you use more than one bus line, you must add one at a time."
+  },
+  {
+   "name": "v_already_have_a_vt_card",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Already have a VT card?",
+   "include_none": true
+  },
+  {
+   "name": "legenda_vt",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "attach_your_transport_card_photo_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your transport card photo here"
+  },
+  {
+   "name": "if_you_have_more_than_one_transport_card_attach_it_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "If you have more than one transport card, attach it here."
+  },
+  {
+   "name": "responsability_terms",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Termos de responsabilidade"
+  },
+  {
+   "name": "v_checkbox_transport_voucher_1",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that I must inform you of all the transport voucher lines I will be using to get from home to work and from work to home."
+  },
+  {
+   "name": "v_checkbox_transport_voucher_2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I undertake to update the information, annually or whenever changes occur, and to use the Transport Vouchers granted to me exclusively on the home-work route and vice versa. I am aware that in the event that I breach this commitment, the company may dismiss me for just cause, under the terms of article 7, paragraph 3, of Decree No. 95.247/87."
+  },
+  {
+   "name": "v_checkbox_transport_voucher_3",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that 6% of my salary will be deducted from my payroll, in accordance with Law 7.418 of 16/12/85."
+  },
+  {
+   "name": "checkbox_vt_responsability",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Declaro assumir total responsabilidade pela veracidade das informações contidas neste formulário"
+  },
+  {
+   "name": "v_label_transport_infos",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_chartered",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "termos_de_responsabilidade",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Termos de responsabilidade"
+  },
+  {
+   "name": "v_checkbox_chartered_1",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "TERM OF UNDERTAKING: I undertake to update the information, annually or whenever changes occur, and to use the Charter granted to me exclusively on the home-work route and vice versa."
+  },
+  {
+   "name": "v_checkbox_chartered_2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I hereby declare that I am aware of the rules contained in the Manual of Good Practices for the charter transportation service, contained in standard NM-0018."
+  },
+  {
+   "name": "v_checkbox_chartered_responsability",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Declaration of Veracity: I declare that I take full responsibility for the veracity of the information contained in this form. In the event of cancellation, all current benefits will be deleted. To delete just one of them, use the \"Change\" option."
+  },
+  {
+   "name": "v_checkbox_chartered_4",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that in the event of cancellation, all current benefits will be excluded."
+  },
+  {
+   "name": "v_checkbox_responsability",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I take full responsibility for the accuracy of the information contained in this form"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+   "name": "Suas informações pessoais",
+   "order": "10",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "company (Texto de Linha Única, ro): Company",
+    "company_cnpj (Texto de Linha Única, ro): Company CNPJ",
+    "location (Texto de Linha Única, ro): Location",
+    "id_global (Texto de Linha Única, ro): ID Global",
+    "registration (Texto de Linha Única, ro): Registration",
+    "mobile_phone (Texto de Linha Única, ro): Mobile Phone",
+    "employee_start_date (Data, ro): Employment start date",
+    "cpf (Texto de Linha Única, ro): CPF",
+    "marital_status (Texto de Linha Única, ro): Marital Status",
+    "birth_date (Data, ro): Birth date",
+    "mother_name (Texto de Linha Única, ro): Mother name",
+    "title (Texto de Linha Única, ro): Title",
+    "pis (Texto de Linha Única, ro): PIS",
+    "home_address (Texto de Linha Única, ro): Home Address",
+    "home_address_n (Texto de Linha Única, ro): Home Address Nº",
+    "complementary_residential_address (Texto de Linha Única, ro): Complementary Residential Address",
+    "residential_address_neighborhood (Texto de Linha Única, ro): Residential Address Neighborhood",
+    "residential_address_city (Texto de Linha Única, ro): Residential Address City",
+    "residential_address_uf (Texto de Linha Única, ro): Residential Address UF",
+    "residential_address_cep (Texto de Linha Única, ro): Residential Address CEP"
+   ]
+  },
+  {
+   "sys_id": "350894e51b76f990d1abda4ce54bcb15",
+   "name": "Vale transporte",
+   "order": "200",
+   "perguntas": [
+    "v_state (Caixa de Seleção de Pesquisa): State",
+    "v_line_name (Caixa de Seleção de Pesquisa): Operator name + modality",
+    "v_didnt_find_the_line (Sim/Não): I didn't find the line I was looking for",
+    "v_line_city (Texto de Linha Única): Line City",
+    "v_inform_name_city_line (Texto de Linha Única): Qual operadora de transporte você utiliza?",
+    "v_number_tickets_day (Selecionar Caixa): Number of tickets used for each day of the carrier selected above",
+    "v_unitary_value (Caixa de Seleção de Pesquisa): Unitary value",
+    "v_inform_unitary_value (Texto de Linha Única): Inform the unitary value below",
+    "v_additional_comments (Texto de Linha Única): Additional comments"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Cancellation and Transport voucher",
+   "when": "IO:v_select_option=cancellation^IO:v_benefit_type=transport_voucher^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_cancel_transport_voucher: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Checkbox Veracity",
+   "when": "IO:v_select_optionINmembership,amendment^IO:v_benefit_type=chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_checkbox_chartered_responsability: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Adhesion and Transport voucher + Chartered",
+   "when": "IO:v_select_option=membership^IO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_subscribing: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Adhesion or Amendment and Transport voucher or Transport voucher + Chartered",
+   "when": "IO:v_select_option=membership^ORIO:v_select_option=amendment^IO:v_benefit_type=transport_voucher^ORIO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "transport_voucher: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Ocultar dados do colaborador - Item view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: readonly=true",
+    "container_colab: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Checkbox Adhesion or Amendment and Transport Voucher + Chartered or Chartered",
+   "when": "IO:v_select_optionINmembership,amendment^IO:v_benefit_type=chartered^ORIO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "formatter4: visible=true",
+    "formatter3: visible=true",
+    "v_label_chartered: visible=true,mandatory=true",
+    "v_checkbox_chartered_1: visible=true,mandatory=true",
+    "v_checkbox_chartered_2: visible=true,mandatory=true",
+    "formatter5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Adhesion and Transport voucher",
+   "when": "IO:v_select_option=membership^IO:v_benefit_type=transport_voucher^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_transport_subscribing: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_option: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Checkbox Cancellation and Transport Voucher + Chartered or Chartered",
+   "when": "IO:v_select_option=cancellation^IO:v_benefit_type=chartered^ORIO:v_benefit_type=transport_voucher_chartered^ORIO:v_benefit_type=transport_voucher^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_checkbox_chartered_4: visible=true,mandatory=true",
+    "formatter6: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Checkbox Adhesion or Amendment and Transport Voucher and Chartered or Transport Voucher",
+   "when": "IO:v_select_optionINmembership,amendment^IO:v_benefit_type=transport_voucher^ORIO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_checkbox_transport_voucher_2: visible=true,mandatory=true",
+    "formatter2: visible=true",
+    "v_checkbox_transport_voucher_1: visible=true,mandatory=true",
+    "formatter: visible=true",
+    "v_checkbox_transport_voucher_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Adjust Visibility",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "location: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Checkbox Reponsability VT",
+   "when": "IO:v_select_optionINmembership,amendment^IO:v_benefit_type=transport_voucher^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "checkbox_vt_responsability: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Adhesion or Amendment and Chartered or Transport voucher + Chartered",
+   "when": "IO:v_select_option=membership^ORIO:v_select_option=amendment^IO:v_benefit_type=chartered^ORIO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "chartered: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Ocultar dados do colaborador - Task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: readonly=true",
+    "container_colab: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Cancellation and Chartered",
+   "when": "IO:v_select_option=cancellation^IO:v_benefit_type=chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_cancel_charter: visible=true"
+   ]
+  },
+  {
+   "name": "EY: VT OR VT + CHARTERED ",
+   "when": "IO:v_benefit_typeINtransport_voucher,transport_voucher_chartered^IO:v_select_optionINmembership,amendment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_vt: visible=true",
+    "v_already_have_a_vt_card: visible=true,mandatory=true",
+    "legenda_linha_onibus: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Adhesion or Amendment and Transport voucher + Chartered",
+   "when": "IO:v_benefit_type=transport_voucher_chartered^ORIO:v_benefit_type=chartered^IO:v_select_option=amendment^ORIO:v_select_option=membership^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_transport_infos: visible=true",
+    "divide: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If you have more than one transport card",
+   "when": "IO:v_already_have_a_vt_card=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "if_you_have_more_than_one_transport_card_attach_it_here: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Amendment and Transport voucher or Transport voucher + Chartered",
+   "when": "IO:v_select_option=amendment^IO:v_benefit_type=transport_voucher^ORIO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_transport_line_update: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Cancellation and Transport voucher + Chartered",
+   "when": "IO:v_select_option=cancellation^IO:v_benefit_type=transport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_cancel_transport_voucher_and_charter: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Attach ",
+   "when": "IO:v_already_have_a_vt_card=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_your_transport_card_photo_here: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Checkbox Adhesion, Amendment or Cancellation",
+   "when": "IO:v_select_optionINcancellation,new_employee_do_not_join^NQIO:v_select_optionINmembership,amendment^IO:v_benefit_typeINtransport_voucher_chartered^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_checkbox_responsability: visible=true,mandatory=true",
+    "formatter7: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set transport voucher and chartered",
+   "type": "onChange",
+   "on": "6aa7271d1bbeb990d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta os campos de vale-transporte e fretado conforme a opção escolhida em 'v_select_option'."
+  },
+  {
+   "name": "EY: Clear value attachment field",
+   "type": "onChange",
+   "on": "6aa7271d1bbeb990d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_already_have_a_vt_card'."
+  },
+  {
+   "name": "EY: Checkbox mandatory",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit de 2,1 KB que valida a marcação de checkboxes conforme a combinação de opção ('v_select_option') e tipo de benefício, com tratamento específico para o caso de cancelamento."
+  },
+  {
+   "name": "EY: Benefity type mandatory or read only",
+   "type": "onChange",
+   "on": "6aa7271d1bbeb990d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que torna o tipo de benefício obrigatório ou somente leitura conforme o valor escolhido — para 'new_employee' aplica regra específica."
+  },
+  {
+   "name": "EY: Clear values",
+   "type": "onChange",
+   "on": "9c9e375d1b72f990d1abda4ce54bcb96",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os checkboxes de transporte e campos relacionados."
+  },
+  {
+   "name": "EY: Pop UP - Form Adesão",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad de 5,6 KB que exibe um modal (spModal) com orientações em HTML sobre adesão ao fretado, incluindo contato direto com a empresa. Verifica antes se spModal está definido — cuidado ausente em outros scripts que usam modal. É o maior script de comunicação ao usuário do levantamento."
+  },
+  {
+   "name": "EY: If transport only",
+   "type": "onChange",
+   "on": "6aa7271d1bbeb990d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trata o caso de alteração ('amendment') quando o benefício é apenas transporte."
+  }
+ ]
+}

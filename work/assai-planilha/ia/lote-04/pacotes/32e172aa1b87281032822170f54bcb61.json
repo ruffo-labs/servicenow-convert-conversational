@@ -1,0 +1,112 @@
+{
+ "sys_id": "32e172aa1b87281032822170f54bcb61",
+ "name": "Ponto livre",
+ "category": "Jornada de Trabalho",
+ "short_description": "Ponto livre",
+ "description": "Ponto livre",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados do impactado",
+   "perguntas": [
+    "data_da_ocorrencia",
+    "descricao",
+    "nome_colaborador",
+    "cpf_do_colaborador",
+    "matricula"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Jornada de Trabalho",
+    "item": "Ponto livre"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de lançamento de falta para colaborador ponto livre",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Ponto Livre"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Lançar falta para colaborador ponto livre",
+     "description": "Use para solicitar o lançamento de falta de colaborador que trabalha em ponto livre. Corresponde à oferta Solicitação de lançamento de falta para colaborador ponto livre."
+    }
+   ]
+  }
+ ],
+ "perguntas": [],
+ "client_scripts": [
+  {
+   "sys_id": "3541a4551b2cc210347221bbe54bcb96",
+   "name": "CSA - Check Impactado",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Lê o MRVS csa_dados_do_impactado (JSON) e compara a matrícula de cada linha com a da primeira linha. Se alguma divergir, limpa rh_user_id_impacted, mostra 'A solicitação só pode ser feita para um colaborador de cada vez' e bloqueia o envio; há um segundo ramo análogo com mensagem pedindo ajustar o campo de matrícula."
+  },
+  {
+   "sys_id": "724de9143b2b2a10b28dd047f4e45ad5",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "e14de9143b2b2a10b28dd047f4e45a03",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

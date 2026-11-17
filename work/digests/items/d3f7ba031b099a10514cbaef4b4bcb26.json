@@ -1,0 +1,158 @@
+{
+ "sys_id": "d3f7ba031b099a10514cbaef4b4bcb26",
+ "name": "Conexa (Psicologia Viva) - Inclusão, Alteração ou Cancelamento de Beneficiário / Rede de afeto",
+ "sys_name": "Conexa (Psicologia Viva) - Inclusion, Change or Cancellation of Beneficiary / Network of affection",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Psicologia Viva (Conexa)",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Neste formulario você pode solicitar a inclusão, alteração e exclusão, do beneficio psicologia viva para a rede de afeto de sua preferência",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "16",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "16"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_more_informations_label: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_fill_request: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_help_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 16 de 16 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de troca de escala coletiva. Lê o perfil de RH mas define requested_for como o usuário logado — mesma inconsistência do script de Rescisão Complementar.",
+ "variaveis": [
+  {
+   "name": "v_help_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_more_informations_label",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "include_none": true,
+   "choices": [
+    "Inclusion of Beneficiary [=inclusion_of_beneficiary]",
+    "Change of Beneficiary [=change_of_beneficiary]",
+    "Exclusion of Beneficiary [=exclusion_of_beneficiary]"
+   ]
+  },
+  {
+   "name": "v_label_fill_request",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_full_name_no_abbreviations",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full Name (no abbreviations)"
+  },
+  {
+   "name": "v_beneficiary_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Beneficiary's CPF"
+  },
+  {
+   "name": "v_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  },
+  {
+   "name": "v_beneficiary_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Beneficiary email"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "07cd7a4b1b499a10514cbaef4b4bcbb5",
+   "name": "User Informations - Variable Set",
+   "order": "200",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_employee_email (Texto de Linha Única): Employee email",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_company (Texto de Linha Única): Company",
+    "v_sub_company (Texto de Linha Única): Sub-company",
+    "v_department (Texto de Linha Única): Department",
+    "v_position (Texto de Linha Única): Position",
+    "v_employee_cpf (Texto de Linha Única): Employee's CPF",
+    "v_city (Texto de Linha Única): City",
+    "v_uf (Texto de Linha Única): UF"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_date_of_birth: mandatory=true",
+    "v_beneficiary_cpf: mandatory=true",
+    "v_request_type: mandatory=true",
+    "v_beneficiary_email: mandatory=true",
+    "v_full_name_no_abbreviations: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_beneficiary_email: readonly=true",
+    "v_additional_information: readonly=true",
+    "v_beneficiary_cpf: readonly=true",
+    "v_full_name_no_abbreviations: readonly=true",
+    "v_date_of_birth: readonly=true",
+    "v_request_type: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: CPF Validation Regex",
+   "type": "onChange",
+   "on": "271edfc31b8d9a10514cbaef4b4bcb7d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF. Esta versão usa `\\d{3}\\.` com o ponto ESCAPADO — é a implementação correta, ao contrário das irmãs do mesmo catálogo que deixam o ponto solto."
+  }
+ ]
+}

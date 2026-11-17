@@ -1,0 +1,58 @@
+{
+ "sys_id": "7392f8da1b13b010a530426fe54bcbe0",
+ "name": "Desligamento",
+ "sys_name": "Termination",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Desligamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Formulário para comunicação das áreas sobre os desligamentos. Necessidade de levantamento de pendências para lançamento na Rescisão de Contrato.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "2",
+   "variaveis_ativas": "2",
+   "bloqueadores": "0",
+   "avisos": "2",
+   "perguntas_sem_conversational_label": "2"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "sem_conversational_label: 2 de 2 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Desligamento. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for, além de gravar item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "termination_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Termination date"
+  },
+  {
+   "name": "comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comments"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Campos Obrigatorios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "termination_date: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

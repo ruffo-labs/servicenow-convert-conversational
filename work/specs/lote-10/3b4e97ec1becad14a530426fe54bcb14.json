@@ -1,0 +1,261 @@
+{
+ "sys_id": "3b4e97ec1becad14a530426fe54bcb14",
+ "status": "dividido",
+ "motivo": "Duas intenções bem distintas (cartão corporativo de crédito x cartão saque) com formulários próprios, ligadas por v_select_card_type, que vira valor fixo em cada derivado. Policies condicionadas ao tipo de cartão viram mandatory/visible fixos nas variáveis do derivado correspondente; scripts de máscara/formato viram validation_regex e os de auto-preenchimento (matrícula/área a partir de quem solicita) viram auto_populate.",
+ "divergencias": [
+  "limite_formato",
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_registration": {
+   "label": "Qual é a matrícula do titular?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_inform_the_area": {
+   "label": "Qual é a área do titular?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_your_grade": {
+   "label": "Qual é o cargo do titular?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_your_cost_center": {
+   "label": "Qual é o centro de custo?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_which_audience_do_you_belong_to": {
+   "label": "O titular é do administrativo, operacional, varejo ou força de vendas?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_the_email": {
+   "label": "Qual é o e-mail do titular?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_the_cell_phone": {
+   "label": "Qual é o celular do titular?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\(\\d{2}\\)\\s?\\d{4,5}-?\\d{4}$"
+   }
+  },
+  "v_enter_business_phone_number": {
+   "label": "Qual é o telefone comercial do titular?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\(\\d{2}\\)\\s?\\d{4,5}-?\\d{4}$"
+   }
+  },
+  "v_inform_the_cpf": {
+   "label": "Qual é o CPF do titular?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "v_inform_the_rg": {
+   "label": "E o RG?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_date_of_birth": {
+   "label": "Qual é a data de nascimento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_naturalness": {
+   "label": "Qual é a naturalidade (cidade onde nasceu)?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+   }
+  },
+  "v_gender": {
+   "label": "Qual é o gênero do titular?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_name_printed_on_card": {
+   "label": "Qual nome deve ser impresso no cartão?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+   }
+  },
+  "v_mother_s_name": {
+   "label": "Qual é o nome da mãe?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+   }
+  },
+  "v_father_s_name": {
+   "label": "E o nome do pai? (opcional)",
+   "props": {
+    "validation_regex": "^[A-Za-zÀ-ÿ\\s]+$"
+   }
+  },
+  "v_inform_your_postal_code": {
+   "label": "Qual é o CEP do endereço de entrega?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{5}-?\\d{3}$"
+   }
+  },
+  "v_street_av_street": {
+   "label": "Qual é a rua ou avenida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_number": {
+   "label": "Qual é o número?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_complemento": {
+   "label": "Tem complemento?"
+  },
+  "v_neighborhood": {
+   "label": "Qual é o bairro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_city": {
+   "label": "Qual é a cidade?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_state": {
+   "label": "E o estado?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_reason_requesting_card": {
+   "label": "Qual é o motivo do pedido do cartão?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_specify_the_reason": {
+   "label": "Descreva o motivo."
+  },
+  "v_attach_approval_manager_director_or_sales": {
+   "label": "Anexe a aprovação do gestor, diretor ou Adm. de Vendas.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_have_you_read_and_accept_the_terms_and_conditions": {
+   "label": "Você leu e aceita o termo de uso do cartão corporativo?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user": {
+   "label": "Se o pedido é para outra pessoa, anexe o termo de responsabilidade assinado por ela."
+  },
+  "v_additional_information": {
+   "label": "Quer adicionar alguma informação extra ao pedido?"
+  }
+ },
+ "remover": {
+  "v_if_have_doubts": "visual",
+  "v_label_attention": "texto_movido_descricao",
+  "v_label_responsability_term_card_corporate": "visual",
+  "v_label_if_requesting_card": "visual"
+ },
+ "policies": {
+  "96b080061b20a510a530426fe54bcbad": "remover",
+  "ce3bf9b81b3c6dd0a530426fe54bcb35": "remover",
+  "d7d1ed241bbce5d0a530426fe54bcb6e": "remover",
+  "f14c2c4a1b6ca510a530426fe54bcb2d": "remover"
+ },
+ "scripts": {
+  "062eac8d1b606554a530426fe54bcba7": {
+   "converter": "auto_populate"
+  },
+  "169b06701b70add0a530426fe54bcb1d": {
+   "remover": "sem_efeito"
+  },
+  "449f46bc1b70add0a530426fe54bcb60": {
+   "remover": "sem_efeito"
+  },
+  "6d9bad891b60a554a530426fe54bcb9c": {
+   "converter": "regex"
+  },
+  "82b921051b60a554a530426fe54bcb51": {
+   "converter": "regex"
+  },
+  "8394bddf1b4d6194d1abda4ce54bcb0c": {
+   "converter": "auto_populate"
+  },
+  "9412f5c61be1a590d1abda4ce54bcb0b": {
+   "converter": "regex"
+  },
+  "ae4aad451b60a554a530426fe54bcb86": {
+   "converter": "regex"
+  },
+  "e9f23dc61be1a590d1abda4ce54bcbc8": {
+   "converter": "regex"
+  },
+  "ea43b54a1be1a590d1abda4ce54bcb2f": {
+   "converter": "regex"
+  },
+  "ebae89411ba86554a530426fe54bcb25": {
+   "converter": "regex"
+  },
+  "fc737d4a1be1a590d1abda4ce54bcb0a": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_select_card_type": "v_corporate card"
+   }
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_select_card_type": "v_withdrawal_card"
+   },
+   "sem_vars": [
+    "v_inform_the_rg",
+    "v_naturalness",
+    "v_name_printed_on_card",
+    "v_mother_s_name",
+    "v_father_s_name",
+    "v_inform_your_postal_code",
+    "v_street_av_street",
+    "v_number",
+    "v_complemento",
+    "v_neighborhood",
+    "v_city",
+    "v_state",
+    "v_have_you_read_and_accept_the_terms_and_conditions",
+    "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user",
+    "v_additional_information"
+   ]
+  }
+ ]
+}

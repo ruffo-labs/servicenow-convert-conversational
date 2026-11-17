@@ -1,0 +1,66 @@
+{
+ "sys_id": "bae172aa1b87281032822170f54bcb2e",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema e Preciso de um serviço de RH > Jornada de Trabalho, com 3 ofertas no total. 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de Cadastro de Licença-Maternidade para Jovem Aprendiz.",
+ "vars": {
+  "rh_divergence_date": {
+   "label": "Em que data consta a divergência?"
+  }
+ },
+ "remover": {
+  "rh_observation_form_extension": "visual",
+  "rh_observation_form_extension_denied": "visual",
+  "rh_observation_form_docs_apprentice": "visual",
+  "rh_observation_form_docs": "visual",
+  "rh_expected_date_childbirth": "oferta_inativa"
+ },
+ "policies": {
+  "3fe136aa1b87281032822170f54bcb50": "remover",
+  "77c608761bcbac10eca40dcbe54bcb3f": "remover",
+  "7ff78c7a1bcbac10eca40dcbe54bcb3c": "remover",
+  "96278cb61bcbac10eca40dcbe54bcb55": "remover"
+ },
+ "itens": [
+  {
+   "name": "Licença-maternidade (problemas)",
+   "short_description": "Reportar licença-maternidade não cadastrada.",
+   "description": "Use quando a licença-maternidade deveria estar cadastrada e não está, informando a data em que consta a divergência. Atende a oferta \"Licença-maternidade não está cadastrada\".",
+   "frases_exemplo": [
+    "A licença-maternidade não aparece cadastrada",
+    "A colaboradora está de licença e o sistema não mostra",
+    "Falta cadastrar a licença-maternidade",
+    "Licença-maternidade sumiu do cadastro",
+    "Descontaram dia de quem está de licença-maternidade"
+   ],
+   "vars": {
+    "rh_divergence_date": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "5a6c616a1bd7e81032822170f54bcbd4",
+    "7fe136aa1b87281032822170f54bcb4d"
+   ]
+  },
+  {
+   "name": "Licença-maternidade (serviços)",
+   "short_description": "Solicitar cadastro de licença-maternidade ou de recusa de extensão.",
+   "description": "Use para cadastrar uma licença-maternidade ou registrar que a colaboradora recusou a extensão da licença, anexando a documentação. Atende as ofertas \"Solicitação de cadastro de licença-maternidade\" e \"Solicitação de cadastro de recusa de extensão de licença-maternidade\".",
+   "frases_exemplo": [
+    "Preciso cadastrar uma licença-maternidade",
+    "A colaboradora vai entrar de licença-maternidade",
+    "Ela recusou a extensão da licença-maternidade",
+    "Como registro recusa de extensão da licença?",
+    "Quero lançar licença-maternidade"
+   ],
+   "sem_vars": [
+    "rh_divergence_date"
+   ],
+   "sem_policies": [
+    "7fe136aa1b87281032822170f54bcb4d"
+   ]
+  }
+ ]
+}

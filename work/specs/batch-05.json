@@ -1,0 +1,3720 @@
+[
+ {
+  "sys_id": "58c52cfc3b7c5290924d0247f4e45a3d",
+  "name": "Solicitar troca de escala coletiva",
+  "status": "conversacional",
+  "motivo": "Item curto e sem bloqueadores. Ajustes: nome/descrição de negócio, labels conversacionais, mandatory direto nas variáveis e texto do anexo obrigatório movido para a descrição. Os checkboxes de turno ficam agrupados pelo label intermediário para não quebrar o flow.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "personal_information",
+    "motivo": "Rich text de título, só visual."
+   },
+   {
+    "name": "v_text",
+    "motivo": "Rich text informativo; a exigência de anexar o e-mail de acordo das relações sindicais foi movida para a descrição do item."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Solicitar troca coletiva de escala (feriado por dia trabalhado)",
+    "short_description": "Pedir a troca coletiva de um feriado por outro dia trabalhado para os turnos de uma filial.",
+    "description": "Use para pedir a troca coletiva de escala, ou seja, quando um grupo de colaboradores de uma filial vai folgar num feriado e trabalhar em outro dia no lugar. A troca depende de aprovação das relações sindicais e deve ser pedida com pelo menos 5 dias úteis de antecedência. <b>É obrigatório anexar o e-mail de acordo das relações sindicais</b> com as regras da troca. Não use para troca individual de folga ou de turno de um único colaborador, nem para dúvidas sobre banco de horas ou ponto.",
+    "frases_exemplo": [
+     "Preciso trocar o feriado de sexta por um sábado trabalhado para a fábrica",
+     "quero fazer troca de escala coletiva do feriado",
+     "a filial vai folgar no feriado e compensar no sábado, como peço?",
+     "troca de feriado por dia trabalhado para o 1º e 2º turno",
+     "solicitar mudança coletiva de escala aprovada pelo sindicato"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_filial",
+      "order": 100,
+      "conversational_label": "Em qual filial será feita a troca de escala?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "which_day_will_be_off",
+      "order": 200,
+      "conversational_label": "Qual feriado (data) será de folga?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "which_day_will_be_worked",
+      "order": 300,
+      "conversational_label": "Qual dia será trabalhado no lugar do feriado?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "container_start",
+      "order": 400
+     },
+     {
+      "name": "eligible_shifts_for_collective_schedule_change",
+      "order": 500,
+      "conversational_label": "Quais turnos participam da troca?",
+      "overrides": {
+       "mandatory": true,
+       "question_text": "Turnos que participam da troca coletiva de escala:"
+      }
+     },
+     {
+      "name": "primeiro_turno",
+      "order": 510,
+      "conversational_label": "O 1º turno participa da troca?"
+     },
+     {
+      "name": "segundo_turno",
+      "order": 520,
+      "conversational_label": "O 2º turno participa da troca?"
+     },
+     {
+      "name": "terceiro_turno",
+      "order": 530,
+      "conversational_label": "O 3º turno participa da troca?"
+     },
+     {
+      "name": "formatter",
+      "order": 600
+     },
+     {
+      "name": "v_detail",
+      "order": 700,
+      "conversational_label": "Descreva os detalhes da troca.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "fleg_ciente",
+      "order": 800,
+      "conversational_label": "Você confirma que está ciente de que a troca depende de aprovação sindical e precisa ser pedida com 5 dias úteis de antecedência?",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "64da79341ba5fd50a530426fe54bcb7e",
+      "name": "EY VS - Empresas Natura/Avon",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Read only fields",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_opened_by",
+        "disabled": "true"
+       }
+      ],
+      "origem_sys_id": "199414413b7cd290924d0247f4e45a53"
+     },
+     {
+      "short_description": "EY: Hide fields VS",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_country",
+        "visible": "false",
+        "mandatory": "false"
+       }
+      ],
+      "origem_sys_id": "1a07d0413b7cd290924d0247f4e45aa5"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "Policy onLoad incondicional: mandatory aplicado direto em v_filial, which_day_will_be_off, which_day_will_be_worked, eligible_shifts_for_collective_schedule_change (grupo de checkboxes), v_detail e fleg_ciente. Policy removida."
+     },
+     {
+      "origem": "EY: Read only fields / EY: Hide fields VS",
+      "tipo": "ui_policy",
+      "como": "Mantidas como policy porque agem sobre variáveis do set (v_opened_by, v_country), que não recebem override no item."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "4a564f8b3bfb0e10924d0247f4e45a5e",
+  "name": "Dúvidas, consultas, reclamações ou sugestões sobre Dados Pessoais",
+  "status": "conversacional",
+  "motivo": "Item simples (motivo, categoria e detalhe). Mandatory vai direto nas variáveis e a validação de 40 caracteres por client script vira Validation Regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "FAQs",
+    "motivo": "Rich text informativo; a orientação de consultar antes as FAQs de dados pessoais do país foi movida para a descrição."
+   },
+   {
+    "name": "v_minimun_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela mensagem da Validation Regex em v_detail_field."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou registrar reclamação sobre dados pessoais (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre seus dados pessoais cadastrados no RH, para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre seus dados pessoais cadastrados (documento, estado civil, contatos, dependentes, dados bancários etc.), quando o tema não estiver nas perguntas frequentes (FAQs) de dados pessoais do seu país. Vale para colaboradores da América Hispânica (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Não use para pedir a alteração efetiva dos dados (use \"Solicitar alteração de dados pessoais\") nem se você trabalha no Brasil.",
+    "frases_exemplo": [
+     "tengo una duda sobre mis datos personales",
+     "quero reclamar que meu endereço está errado no sistema",
+     "consulta sobre mis datos registrados en RRHH",
+     "sugestão sobre o cadastro de dependentes",
+     "no sé cómo ver mis datos personales en Workday"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_contact_reason",
+      "order": 100,
+      "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_select_the_category_lookup",
+      "order": 200,
+      "conversational_label": "Sobre qual tema dos seus dados pessoais?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_detail_field",
+      "order": 300,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 50
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory - v_select_category_lookup",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_select_the_category_lookup."
+     },
+     {
+      "origem": "EY: Mandatory - v_detail_field",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_detail_field."
+     },
+     {
+      "origem": "EY: Mandatory - v_contact_reason mandatory",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_contact_reason."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail_field (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange",
+      "tipo": "client_script",
+      "como": "Removido: a legenda de mínimo de caracteres foi substituída pela Validation Regex."
+     },
+     {
+      "origem": "EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removido: sem a legenda, o script perde a função."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "bcb96c711b942550d1abda4ce54bcbce",
+  "name": "Informações ou dúvidas relacionadas à Dados Pessoais",
+  "status": "conversacional",
+  "motivo": "Formulário genérico de uma pergunta, bloqueado só pelos widgets de busca (Custom). Sem eles e sem as policies órfãs, vira item conversacional de uma pergunta.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "Info",
+    "motivo": "Rich text informativo; orientação relevante movida para a descrição."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Container end sem container start, só visual."
+   },
+   {
+    "name": "contextual_search_results",
+    "motivo": "Widget de apresentação (Custom) de busca contextual; bloqueador na conversa."
+   },
+   {
+    "name": "ai_search_assist",
+    "motivo": "Widget de apresentação (Custom) de AI Search; bloqueador na conversa."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre dados pessoais (Brasil)",
+    "short_description": "Envie ao RH uma dúvida sobre seus dados pessoais cadastrados quando não houver formulário específico nem resposta nos materiais de apoio.",
+    "description": "Use para tirar dúvidas ou pedir informações sobre seus dados pessoais cadastrados no RH (nome, documentos, endereço, contatos, dependentes etc.) quando o assunto não tiver um formulário específico nem estiver nos materiais de apoio. Para colaboradores no Brasil. Não use para pedir declarações ou documentos, nem se você trabalha em país da América Hispânica (use o formulário hispânico de dados pessoais).",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre meus dados cadastrais",
+     "meu nome está errado no sistema do RH, o que faço?",
+     "como atualizo meu endereço no cadastro?",
+     "dúvida sobre cadastro de dependente",
+     "onde vejo meus dados pessoais?"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_description_details",
+      "order": 100,
+      "conversational_label": "Qual é a sua dúvida sobre dados pessoais? Conte com detalhes.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Show kb link",
+      "tipo": "ui_policy",
+      "como": "Removida: policy órfã (condição e ação em variáveis que não existem mais no item)."
+     },
+     {
+      "origem": "EY: Mandatory Fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_description_details; ações órfãs descartadas."
+     },
+     {
+      "origem": "EY: minimum caracter",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_description_details (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "bd7ff4121bb41690514cbaef4b4bcb86",
+  "name": "Solicitação de modificação de Dados Pessoais",
+  "status": "dividido",
+  "motivo": "O select v_select_category (dados pessoais, conta bancária, endereço, dependentes) muda todo o formulário via 9 policies. Cada opção é uma intenção própria; a 1ª análise não viu a opção \"Personal data\" (data), que vira um 4º item. As regras por país (ARG x COL/CHL/ECU) continuam como UI policy sem script sobre v_country.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_minimum_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_detail."
+   }
+  ],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "name": "Alterar dados pessoais no cadastro do RH (América Hispânica)",
+    "short_description": "Pedir a correção ou atualização de dados pessoais (nome, documento, estado civil etc.) no cadastro do RH, público operacional da América Hispânica.",
+    "description": "Uso do público operacional. Use para pedir a correção ou atualização de dados pessoais cadastrados no RH, como nome, documento de identidade, estado civil ou dados de contato. Descreva o que deve ser alterado. Para trocar conta bancária, endereço ou dependentes, use os itens específicos. Não use para dúvidas sobre dados pessoais.",
+    "frases_exemplo": [
+     "quiero corregir mi nombre en el sistema",
+     "preciso alterar meu estado civil no cadastro",
+     "cambiar mi número de documento en RRHH",
+     "atualizar meus dados pessoais"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_select_category",
+      "value": "data"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_detail",
+      "order": 100,
+      "conversational_label": "Qual dado pessoal precisa ser alterado e qual é o valor correto?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Show category",
+      "tipo": "ui_policy",
+      "como": "Removida: a categoria virou o próprio item (v_select_category fixa)."
+     },
+     {
+      "origem": "EY: Show v_detail",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_detail."
+     },
+     {
+      "origem": "EY: Clear values on catagory changes",
+      "tipo": "client_script",
+      "como": "Removido: sem seleção de categoria no item derivado, não há o que limpar."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda v_minimum_characters substituída pela Validation Regex."
+     }
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Show v_cbu e v_message_physical_bank (Argentina)",
+      "on_load": true,
+      "conditions": "v_country=ARG",
+      "actions": [
+       {
+        "variable": "v_cbu",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_message_physical_bank",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "31ec9bea1b3cd690514cbaef4b4bcb8c"
+     },
+     {
+      "short_description": "EY: Show v_bank_account_number, v_bank_account_type e v_message_2 (COL/CHL/ECU)",
+      "on_load": true,
+      "conditions": "v_country=COL^ORv_country=CHL^ORv_country=ECU",
+      "actions": [
+       {
+        "variable": "v_message_2",
+        "visible": "true"
+       },
+       {
+        "variable": "v_bank_account_number",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_bank_account_type",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "11112fe21b7cd690514cbaef4b4bcbda"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "7edc3baa1b301a90514cbaef4b4bcb79",
+      "name": "EY: Remove option onLoad",
+      "ajuste": "Filtra as opções de tipo de conta por país; validar o comportamento na conversa. Alternativa no-code: desativar as opções não usadas de v_bank_account_type, se o negócio aceitar a mesma lista para todos os países."
+     },
+     {
+      "sys_id": "bdddb7ea1b301a90514cbaef4b4bcbe8",
+      "name": "EY: Add options onChange",
+      "ajuste": "Marcar VA Supported (hoje false) e testar na conversa; mesma alternativa no-code do script onLoad."
+     }
+    ],
+    "name": "Alterar conta bancária para pagamento de salário (América Hispânica)",
+    "short_description": "Pedir a troca da conta bancária onde você recebe o salário (público operacional de Argentina, Chile, Colômbia e Equador).",
+    "description": "Uso do público operacional. Use para informar uma nova conta bancária para receber o salário. Na Argentina informe o CBU (22 dígitos); no Chile, na Colômbia e no Equador informe número e tipo de conta. Não use para dúvidas sobre pagamento ou folha (use o formulário de remuneração).",
+    "frases_exemplo": [
+     "quiero cambiar mi cuenta sueldo",
+     "cambié de banco, cómo actualizo mi CBU?",
+     "quero mudar a conta onde recebo o salário",
+     "nueva cuenta bancaria para el pago"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_select_category",
+      "value": "bank"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_message_data",
+      "order": 100,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_bank_name",
+      "order": 200,
+      "conversational_label": "Qual é o nome do banco?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_message_physical_bank",
+      "order": 300
+     },
+     {
+      "name": "v_cbu",
+      "order": 400,
+      "conversational_label": "Qual é o CBU da conta (22 dígitos)?",
+      "overrides": {
+       "validation_regex": "^\\d{22}$"
+      }
+     },
+     {
+      "name": "v_message_2",
+      "order": 500
+     },
+     {
+      "name": "v_bank_account_number",
+      "order": 600,
+      "conversational_label": "Qual é o número da conta?"
+     },
+     {
+      "name": "v_bank_account_type",
+      "order": 700,
+      "conversational_label": "Qual é o tipo de conta?"
+     },
+     {
+      "name": "v_detail",
+      "order": 800,
+      "conversational_label": "Quer acrescentar algum detalhe sobre a troca de conta?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Show category",
+      "tipo": "ui_policy",
+      "como": "Removida: a categoria virou o próprio item (v_select_category fixa)."
+     },
+     {
+      "origem": "EY: Show v_detail",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_detail."
+     },
+     {
+      "origem": "EY: Clear values on catagory changes",
+      "tipo": "client_script",
+      "como": "Removido: sem seleção de categoria no item derivado, não há o que limpar."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda v_minimum_characters substituída pela Validation Regex."
+     },
+     {
+      "origem": "EY: Show v_message_data e v_bank_name",
+      "tipo": "ui_policy",
+      "como": "Condição de categoria sumiu: visible direto em v_message_data e visible/mandatory direto em v_bank_name."
+     },
+     {
+      "origem": "EY: Show v_cbu e v_message_physical_bank / EY: Show v_bank_account_number, v_bank_account_type e v_message_2",
+      "tipo": "ui_policy",
+      "como": "Mantidas só com a condição de país (v_country), sem a de categoria."
+     },
+     {
+      "origem": "EY: Regex to set CBU",
+      "tipo": "client_script",
+      "como": "Validation Regex ^\\d{22}$ em v_cbu (mensagem: \"O CBU deve ter 22 dígitos\")."
+     }
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Show location data (Argentina)",
+      "on_load": true,
+      "conditions": "v_country=ARG",
+      "actions": [
+       {
+        "variable": "v_postal_code",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_neighborhood",
+        "visible": "true"
+       },
+       {
+        "variable": "v_between_streets",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_floor",
+        "visible": "true"
+       },
+       {
+        "variable": "v_calle",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_party",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_dept",
+        "visible": "true"
+       },
+       {
+        "variable": "v_number",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_location_form",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_phone",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "5565abaa1b7cd690514cbaef4b4bcbb3"
+     },
+     {
+      "short_description": "EY: Show v_full_address (COL/CHL/ECU)",
+      "on_load": true,
+      "conditions": "v_country=COL^ORv_country=CHL^ORv_country=ECU",
+      "actions": [
+       {
+        "variable": "v_full_address",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "8cd6676e1b7cd690514cbaef4b4bcb14"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "name": "Alterar endereço no cadastro do RH (América Hispânica)",
+    "short_description": "Pedir a atualização do seu endereço residencial (público operacional de Argentina, Chile, Colômbia e Equador).",
+    "description": "Uso do público operacional. Use quando você se mudou e precisa atualizar o endereço no cadastro do RH. Na Argentina o endereço é pedido por partes (rua, número, andar, bairro, localidade, partido, código postal e telefone); no Chile, na Colômbia e no Equador, em um único campo. É preciso declarar sob juramento que a informação é verdadeira.",
+    "frases_exemplo": [
+     "me mudé, quiero actualizar mi domicilio",
+     "preciso trocar meu endereço",
+     "cambio de dirección",
+     "actualizar mi dirección y teléfono"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_select_category",
+      "value": "address"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_calle",
+      "order": 100,
+      "conversational_label": "Qual é a rua?"
+     },
+     {
+      "name": "v_number",
+      "order": 200,
+      "conversational_label": "Qual é o número?"
+     },
+     {
+      "name": "v_floor",
+      "order": 300,
+      "conversational_label": "Qual é o andar (se houver)?"
+     },
+     {
+      "name": "v_dept",
+      "order": 400,
+      "conversational_label": "Qual é o apartamento (se houver)?"
+     },
+     {
+      "name": "v_between_streets",
+      "order": 500,
+      "conversational_label": "Entre quais ruas fica?"
+     },
+     {
+      "name": "v_neighborhood",
+      "order": 600,
+      "conversational_label": "Qual é o bairro?"
+     },
+     {
+      "name": "v_location_form",
+      "order": 700,
+      "conversational_label": "Qual é a localidade?"
+     },
+     {
+      "name": "v_party",
+      "order": 800,
+      "conversational_label": "Qual é o partido (município)?"
+     },
+     {
+      "name": "v_postal_code",
+      "order": 900,
+      "conversational_label": "Qual é o código postal?"
+     },
+     {
+      "name": "v_phone",
+      "order": 1000,
+      "conversational_label": "Qual é o telefone de contato (celular ou fixo)?"
+     },
+     {
+      "name": "v_full_address",
+      "order": 1100,
+      "conversational_label": "Qual é o seu novo endereço completo (prédio, bairro, andar, apartamento, município)?"
+     },
+     {
+      "name": "v_declare_checkbox",
+      "order": 1200,
+      "conversational_label": "Você declara sob juramento que as informações são verdadeiras?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_detail",
+      "order": 1300,
+      "conversational_label": "Quer acrescentar algum detalhe sobre a mudança de endereço?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Show category",
+      "tipo": "ui_policy",
+      "como": "Removida: a categoria virou o próprio item (v_select_category fixa)."
+     },
+     {
+      "origem": "EY: Show v_detail",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_detail."
+     },
+     {
+      "origem": "EY: Clear values on catagory changes",
+      "tipo": "client_script",
+      "como": "Removido: sem seleção de categoria no item derivado, não há o que limpar."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda v_minimum_characters substituída pela Validation Regex."
+     },
+     {
+      "origem": "EY: Show v_declare_checkbox",
+      "tipo": "ui_policy",
+      "como": "Condição de categoria sumiu: visible/mandatory direto em v_declare_checkbox."
+     },
+     {
+      "origem": "EY: Show location data / EY: Show v_full_address",
+      "tipo": "ui_policy",
+      "como": "Mantidas só com a condição de país (v_country), sem a de categoria."
+     }
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "name": "Alterar dependentes no cadastro do RH (América Hispânica)",
+    "short_description": "Pedir inclusão, exclusão ou correção de dependentes (público operacional da América Hispânica).",
+    "description": "Uso do público operacional. Use para incluir, excluir ou corrigir dependentes (cargas familiares) no cadastro do RH. Descreva a alteração, informando nome e parentesco, e anexe os documentos comprobatórios.",
+    "frases_exemplo": [
+     "quiero agregar a mi hijo como carga familiar",
+     "preciso incluir minha esposa como dependente",
+     "dar de baja un dependiente",
+     "corregir datos de mi hijo"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_select_category",
+      "value": "dependents"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_message_1",
+      "order": 100,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_detail",
+      "order": 200,
+      "conversational_label": "Qual alteração de dependente você precisa? Informe nome e parentesco.",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Show category",
+      "tipo": "ui_policy",
+      "como": "Removida: a categoria virou o próprio item (v_select_category fixa)."
+     },
+     {
+      "origem": "EY: Show v_detail",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_detail."
+     },
+     {
+      "origem": "EY: Clear values on catagory changes",
+      "tipo": "client_script",
+      "como": "Removido: sem seleção de categoria no item derivado, não há o que limpar."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda v_minimum_characters substituída pela Validation Regex."
+     },
+     {
+      "origem": "EY: Show v_message_1",
+      "tipo": "ui_policy",
+      "como": "Condição de categoria sumiu: visible direto em v_message_1."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "b9f1160b1b3d8510d1abda4ce54bcbef",
+  "name": "Workday Wiki - Materiais de apoio para execução de processos no Workday",
+  "status": "analise_humana",
+  "motivo": "Record producer sem variáveis e sem nenhum registro (0 em 12 meses e no total), usado como vitrine de material de apoio do Workday. Decidir se desativa e publica o conteúdo como artigo de KB ou se mantém como link (non-conversational).",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "87cb02061b5ce950a530426fe54bcb55",
+  "name": "Aplicação / Devolução de Medida Disciplinar",
+  "status": "dividido",
+  "motivo": "O select v_type_of_service separa duas intenções: pedir a emissão de uma medida disciplinar (colaborador, tipo e motivo) e devolver a medida assinada (quem recebeu + anexo). Cada ramo vira um item com 2 a 3 perguntas reais; o resto é preenchido por script e fica fora da conversa.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [],
+    "ui_policies": [],
+    "name": "Solicitar emissão de medida disciplinar (advertência ou suspensão)",
+    "short_description": "Gestor pede ao RH a emissão de advertência ou suspensão para um colaborador.",
+    "description": "Use quando você, como gestor, precisa que o RH emita uma medida disciplinar (advertência verbal ou escrita, ou suspensão de 1 ou 3 dias) para um colaborador. Informe quem solicita, o colaborador, o tipo de medida e o motivo. Não use para devolver a medida já assinada (use \"Devolver medida disciplinar assinada\").",
+    "frases_exemplo": [
+     "preciso dar uma advertência para um colaborador",
+     "quero aplicar uma suspensão",
+     "emitir advertência por atraso",
+     "gerar medida disciplinar para alguém do meu time",
+     "como faço advertência formal?"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_type_of_service",
+      "value": "issuance"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_opened_by",
+      "order": 100,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_cont_start",
+      "order": 300,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_requester",
+      "order": 400,
+      "conversational_label": "Quem está solicitando a medida disciplinar?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_id",
+      "order": 500,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_area_department",
+      "order": 600,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_company",
+      "order": 700,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "formatter",
+      "order": 750
+     },
+     {
+      "name": "v_cont_start2",
+      "order": 800,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_warning_type",
+      "order": 900,
+      "conversational_label": "Qual é o tipo de medida: advertência verbal, advertência escrita, suspensão de 1 dia ou de 3 dias?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_name",
+      "order": 1000,
+      "conversational_label": "Qual colaborador vai receber a medida disciplinar?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_id2",
+      "order": 1100,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_area_department2",
+      "order": 1200,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_company2",
+      "order": 1300,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_reason",
+      "order": 1400,
+      "conversational_label": "Qual é o motivo da medida? Descreva o ocorrido.",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "formatter2",
+      "order": 1500
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "819cbed21b94ad50d1abda4ce54bcb5a",
+      "name": "EY: Fill data job requester",
+      "ajuste": "Já é VA Supported; preenche v_id, v_area_department e v_company a partir de v_requester. Alternativa no-code: auto-populate (dependent question v_requester) e remover o script."
+     },
+     {
+      "sys_id": "fe1e32da1b94ad50d1abda4ce54bcbf5",
+      "name": "EY: Fill data job contributor's",
+      "ajuste": "Já é VA Supported; preenche v_id2, v_area_department2 e v_company2 a partir de v_name. Alternativa no-code: auto-populate (dependent question v_name) e remover o script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: v_opened_by read-only direto na variável (e fora da conversa); v_type_of_service virou variável fixa do item."
+     },
+     {
+      "origem": "EY: Mandatory if Issuance",
+      "tipo": "ui_policy",
+      "como": "Condição do ramo sumiu: visible/mandatory direto em v_requester, v_warning_type, v_name e v_reason; visible/read-only direto (e fora da conversa) em v_id, v_area_department, v_company, v_id2, v_area_department2 e v_company2."
+     }
+    ]
+   },
+   {
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variable_sets": [],
+    "ui_policies": [],
+    "name": "Devolver medida disciplinar assinada",
+    "short_description": "Enviar ao RH a medida disciplinar assinada pelo colaborador.",
+    "description": "Use para devolver ao RH a advertência ou suspensão já emitida e assinada pelo colaborador, anexando o documento assinado. Não use para pedir uma nova medida disciplinar.",
+    "frases_exemplo": [
+     "devolver advertência assinada",
+     "o colaborador assinou a advertência, onde envio?",
+     "anexar medida disciplinar assinada",
+     "retorno da advertência"
+    ],
+    "variaveis_fixas": [
+     {
+      "name": "v_type_of_service",
+      "value": "return"
+     }
+    ],
+    "variables": [
+     {
+      "name": "v_opened_by",
+      "order": 100,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_cont_start3",
+      "order": 1600,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_who_received",
+      "order": 1700,
+      "conversational_label": "Qual colaborador recebeu a medida disciplinar?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_id3",
+      "order": 1800,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_attach",
+      "order": 1900,
+      "conversational_label": "Anexe a medida disciplinar assinada.",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "8fec69421be02910a530426fe54bcbe9",
+      "name": "EY: Fill ID",
+      "ajuste": "Já é VA Supported; preenche v_id3 a partir de v_who_received. Alternativa no-code: auto-populate (dependent question v_who_received) e remover o script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: v_opened_by read-only direto na variável (e fora da conversa); v_type_of_service virou variável fixa do item."
+     },
+     {
+      "origem": "EY: Mandatory and read only if return",
+      "tipo": "ui_policy",
+      "como": "Condição do ramo sumiu: visible/mandatory direto em v_who_received e v_attach; visible/read-only direto (e fora da conversa) em v_id3."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "2c07a9771ba48510a530426fe54bcbb9",
+  "name": "Declaração de vínculo ou lotação e escala de trabalho",
+  "status": "conversacional",
+  "motivo": "Uma pergunta (tipo de declaração) mais o colaborador do set, que já vem preenchido. Falta só nome, descrição e label; a pergunta passa a ser obrigatória.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Pedir declaração de vínculo ou de lotação e escala de trabalho",
+    "short_description": "Emitir declaração de vínculo empregatício ou de lotação e escala de trabalho.",
+    "description": "Use para pedir uma declaração que comprove seu vínculo com a empresa ou seu local de lotação e sua escala/horário de trabalho, por exemplo para faculdade, banco, aluguel ou órgão público. Não use para outros tipos de declaração (use \"Solicitar declaração ao RH\") nem para documentos de processo trabalhista ou PPP.",
+    "frases_exemplo": [
+     "preciso de uma declaração de vínculo empregatício",
+     "declaração que trabalho na empresa para a faculdade",
+     "quero uma declaração com minha escala de trabalho",
+     "declaração de lotação",
+     "comprovante de que sou funcionário"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "escolha_o_tipo_de_declaracao",
+      "order": 200,
+      "conversational_label": "Qual declaração você precisa: de vínculo ou de lotação e escala de trabalho?",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "0fbd2b391b177010d1abda4ce54bcb90",
+      "name": "Suas informações pessoais",
+      "order": 100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": []
+   }
+  ]
+ },
+ {
+  "sys_id": "59a2d0171bef9190d1abda4ce54bcb98",
+  "name": "Documentos para Processo Trabalhista, Auditoria e Fiscalização",
+  "status": "conversacional",
+  "motivo": "Sem bloqueadores. Os 11 checkboxes de documentos ficam agrupados pelo label v_text_checkbox (variável intermediária), preservando o flow; policies condicionais por tipo de processo são mantidas sem script. O default do reclamante (usuário logado) sai, senão a conversa pula a pergunta.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Solicitar documentos para processo trabalhista, auditoria ou fiscalização",
+    "short_description": "Pedir ao RH documentos de um colaborador ou ex-colaborador para defesa em processo trabalhista, auditoria ou fiscalização.",
+    "description": "Use quando a área Jurídica, de auditoria ou de compliance precisa de documentos trabalhistas de um colaborador ou ex-colaborador (contrato, cartões de ponto, holerites, FGTS - Fundo de Garantia do Tempo de Serviço, TRCT - Termo de Rescisão do Contrato de Trabalho, PPP - Perfil Profissiográfico Previdenciário, fichas de EPI - Equipamento de Proteção Individual etc.) para processo trabalhista, auditoria ou fiscalização. Não use para pedir o seu próprio PPP (use \"Solicitar PPP\") nem declarações comuns.",
+    "frases_exemplo": [
+     "preciso dos documentos do reclamante para um processo trabalhista",
+     "documentos para defesa trabalhista",
+     "a fiscalização pediu documentos de um funcionário",
+     "preciso de cartões de ponto e holerites de um ex-colaborador para auditoria",
+     "solicitar TRCT e FGTS para processo"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_div_variables_labor",
+      "order": 50
+     },
+     {
+      "name": "v_claimant_s_name",
+      "order": 100,
+      "conversational_label": "De qual colaborador ou ex-colaborador são os documentos?",
+      "overrides": {
+       "mandatory": true,
+       "default_value": ""
+      }
+     },
+     {
+      "name": "v_enter_the_type_of_process",
+      "order": 200,
+      "conversational_label": "Os documentos são para processo trabalhista, auditoria ou fiscalização?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_date_of_admission",
+      "order": 300,
+      "conversational_label": "Qual foi a data de admissão?"
+     },
+     {
+      "name": "v_dismissal_date",
+      "order": 400,
+      "conversational_label": "Qual foi a data de desligamento?"
+     },
+     {
+      "name": "v_company",
+      "order": 500,
+      "conversational_label": "De qual empresa é esse colaborador (Natura ou TBS)?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_sub_company",
+      "order": 600,
+      "conversational_label": "Qual é a sub-empresa?"
+     },
+     {
+      "name": "v_text_checkbox",
+      "order": 700,
+      "conversational_label": "Quais documentos você precisa?",
+      "overrides": {
+       "question_text": "Informe os documentos"
+      }
+     },
+     {
+      "name": "v_early_warning",
+      "order": 705,
+      "conversational_label": "Precisa do aviso prévio?"
+     },
+     {
+      "name": "v_employment_contract_and_any_additions",
+      "order": 710,
+      "conversational_label": "Precisa do contrato de trabalho e aditivos?"
+     },
+     {
+      "name": "v_timecards",
+      "order": 715,
+      "conversational_label": "Precisa dos cartões de ponto?"
+     },
+     {
+      "name": "v_job_description",
+      "order": 720,
+      "conversational_label": "Precisa da descrição de cargo?"
+     },
+     {
+      "name": "v_fgts_and_analytical_extract_and_payments_upon_termination",
+      "order": 725,
+      "conversational_label": "Precisa do extrato analítico do FGTS e dos pagamentos da rescisão?"
+     },
+     {
+      "name": "v_complete_registration_form",
+      "order": 730,
+      "conversational_label": "Precisa da ficha de registro completa?"
+     },
+     {
+      "name": "v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate",
+      "order": 733,
+      "conversational_label": "Precisa das fichas de entrega de EPI e do certificado de aprovação dos equipamentos?"
+     },
+     {
+      "name": "v_payslips",
+      "order": 740,
+      "conversational_label": "Precisa dos holerites?"
+     },
+     {
+      "name": "v_ppp",
+      "order": 750,
+      "conversational_label": "Precisa do PPP?"
+     },
+     {
+      "name": "v_trct_and_proof_of_payment",
+      "order": 755,
+      "conversational_label": "Precisa do TRCT e do comprovante de pagamento?"
+     },
+     {
+      "name": "v_others",
+      "order": 757,
+      "conversational_label": "Precisa de algum outro documento?"
+     },
+     {
+      "name": "v_inform_the_document",
+      "order": 800,
+      "conversational_label": "Qual outro documento você precisa?"
+     },
+     {
+      "name": "v_specify_the_required_documents",
+      "order": 900,
+      "conversational_label": "Quais documentos a auditoria ou fiscalização pediu?"
+     },
+     {
+      "name": "v_description",
+      "order": 1000,
+      "conversational_label": "Quer acrescentar alguma informação, como número do processo ou prazo?"
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [
+     {
+      "short_description": "EY: Specify the required documents Visible",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_process=2^ORv_enter_the_type_of_process=3",
+      "actions": [
+       {
+        "variable": "v_specify_the_required_documents",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "3427275c1bbf99d0a530426fe54bcbb9"
+     },
+     {
+      "short_description": "EY: If type = trabalhista and doc=other",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_process=1^v_others=true",
+      "actions": [
+       {
+        "variable": "v_inform_the_document",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "35b54b8f1b7ce950a530426fe54bcb55"
+     },
+     {
+      "short_description": "EY: Set Sub-Company",
+      "on_load": true,
+      "conditions": "v_company=natura^ORv_company=tbs",
+      "actions": [
+       {
+        "variable": "v_sub_company",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "684027451bdbb950a530426fe54bcbbb"
+     },
+     {
+      "short_description": "EY: If type is trabalhista",
+      "on_load": true,
+      "conditions": "v_enter_the_type_of_process=1",
+      "actions": [
+       {
+        "variable": "v_others",
+        "visible": "true"
+       },
+       {
+        "variable": "v_date_of_admission",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_fgts_and_analytical_extract_and_payments_upon_termination",
+        "visible": "true"
+       },
+       {
+        "variable": "v_timecards",
+        "visible": "true"
+       },
+       {
+        "variable": "v_trct_and_proof_of_payment",
+        "visible": "true"
+       },
+       {
+        "variable": "v_early_warning",
+        "visible": "true"
+       },
+       {
+        "variable": "v_ppp",
+        "visible": "true"
+       },
+       {
+        "variable": "v_payslips",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_employment_contract_and_any_additions",
+        "visible": "true"
+       },
+       {
+        "variable": "v_complete_registration_form",
+        "visible": "true"
+       },
+       {
+        "variable": "v_job_description",
+        "visible": "true"
+       },
+       {
+        "variable": "v_dismissal_date",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate",
+        "visible": "true"
+       },
+       {
+        "variable": "v_text_checkbox",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "f6f3cf071b7ce950a530426fe54bcb82"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY:  Mandatory",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_company, v_enter_the_type_of_process e v_claimant_s_name."
+     },
+     {
+      "origem": "EY: If type is trabalhista",
+      "tipo": "ui_policy",
+      "como": "Mantida; incluída a ação visible em v_text_checkbox para o grupo de documentos só aparecer no processo trabalhista."
+     },
+     {
+      "origem": "v_claimant_s_name (default gs.getUserID())",
+      "tipo": "ui_policy",
+      "como": "Default removido: pergunta pré-preenchida é pulada na conversa e o reclamante raramente é quem pede."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "e58c5dad1b5c2150a530426fe54bcb64",
+  "name": "Informações ou dúvidas relacionadas à Declarações",
+  "status": "conversacional",
+  "motivo": "Genérico de uma pergunta, bloqueado só pelos widgets de busca (Custom). Sem eles e sem as policies órfãs, fica pronto para conversa; a descrição passa a separá-lo dos itens que emitem declarações.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "Info",
+    "motivo": "Rich text informativo; orientação relevante movida para a descrição."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Container end sem container start, só visual."
+   },
+   {
+    "name": "contextual_search_results",
+    "motivo": "Widget de apresentação (Custom) de busca contextual; bloqueador na conversa."
+   },
+   {
+    "name": "ai_search_assist",
+    "motivo": "Widget de apresentação (Custom) de AI Search; bloqueador na conversa."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre declarações e documentos do RH",
+    "short_description": "Envie ao RH uma dúvida sobre declarações e documentos quando não houver formulário específico nem resposta nos materiais de apoio.",
+    "description": "Use para tirar dúvidas sobre declarações e documentos emitidos pelo RH (prazos, conteúdo, validade, como pedir) quando o assunto não tiver formulário próprio nem estiver nos materiais de apoio. Não use para pedir a emissão de uma declaração (use \"Solicitar declaração ao RH\" ou \"Pedir declaração de vínculo ou de lotação e escala de trabalho\"), nem para PPP ou documentos de processo trabalhista.",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre declaração",
+     "quanto tempo demora para sair minha declaração?",
+     "a declaração que recebi está errada",
+     "que tipo de declaração o RH emite?",
+     "dúvida sobre documento do RH"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_description_details",
+      "order": 1550,
+      "conversational_label": "Qual é a sua dúvida sobre declarações ou documentos? Conte com detalhes.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Show kb link",
+      "tipo": "ui_policy",
+      "como": "Removida: policy órfã (condição e ação em variáveis que não existem mais no item)."
+     },
+     {
+      "origem": "EY: Mandatory Fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_description_details; ações órfãs descartadas."
+     },
+     {
+      "origem": "EY: Limit minimun caracter",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_description_details (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "4f50f3a71b102dd0a530426fe54bcb88",
+  "name": "PPP - Perfil Profissiográfico Previdenciário",
+  "status": "conversacional",
+  "motivo": "Poucas perguntas, mas bloqueado pelo client script onSubmit de anexo obrigatório (sem VA Supported). Ele vira uma variável Attachment OOB com UI policy sem script, e a validação de CPF vira Validation Regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_text_if_date2000",
+    "motivo": "Rich text informativo exibido para desligamentos na Natura antes de 2001; orientação movida para a descrição (a condição com data em javascript não é no-code)."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Solicitar PPP (Perfil Profissiográfico Previdenciário)",
+    "short_description": "Pedir o PPP, documento usado para aposentadoria no INSS, para colaborador ativo ou ex-colaborador.",
+    "description": "Use para pedir o PPP (Perfil Profissiográfico Previdenciário), documento que o INSS (Instituto Nacional do Seguro Social) exige para análise de aposentadoria, inclusive aposentadoria especial. Serve para colaboradores ativos e para ex-colaboradores; nesse caso informe CPF e data de desligamento e anexe os documentos pedidos. Desligamentos na Natura anteriores a 2001 têm tratamento diferenciado. Não use para comunicar que você se aposentou (use \"Comunicar aposentadoria pelo INSS\") nem para documentos de processo trabalhista.",
+    "frases_exemplo": [
+     "preciso do meu PPP para me aposentar",
+     "como peço o perfil profissiográfico previdenciário?",
+     "sou ex-funcionário e preciso do PPP",
+     "o INSS pediu o PPP",
+     "documento para aposentadoria especial"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_active_contributor",
+      "order": 200,
+      "conversational_label": "Você ainda trabalha na empresa?",
+      "overrides": {
+       "mandatory": true,
+       "include_none": true
+      }
+     },
+     {
+      "name": "v_cpf",
+      "order": 300,
+      "conversational_label": "Qual é o seu CPF?",
+      "overrides": {
+       "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+      }
+     },
+     {
+      "name": "v_dismissal_date",
+      "order": 400,
+      "conversational_label": "Qual foi a data do seu desligamento?"
+     },
+     {
+      "name": "v_which_company",
+      "order": 500,
+      "conversational_label": "Em qual empresa você trabalha ou trabalhou: Avon, Natura ou TBS?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_description",
+      "order": 600,
+      "conversational_label": "Quer acrescentar alguma informação ao pedido?"
+     },
+     {
+      "name": "nova_anexo_documentos",
+      "order": 650,
+      "conversational_label": "Anexe os documentos pedidos para ex-colaboradores.",
+      "nova": {
+       "type": "33",
+       "question_text": "Anexe os documentos solicitados",
+       "mandatory": false
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+      "name": "EY: Requester Data",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: If active is NO",
+      "on_load": true,
+      "conditions": "v_active_contributor=No",
+      "actions": [
+       {
+        "variable": "v_dismissal_date",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_cpf",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "nova_anexo_documentos",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "2f66bb231b902dd0a530426fe54bcb87"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_which_company e v_active_contributor."
+     },
+     {
+      "origem": "EY: If active is NO",
+      "tipo": "ui_policy",
+      "como": "Mantida; removidas as ações órfãs (v_current_date, v_text_attach_the_documents) e incluída nova_anexo_documentos obrigatória."
+     },
+     {
+      "origem": "EY: date",
+      "tipo": "ui_policy",
+      "como": "Removida junto com o rich text v_text_if_date2000; orientação na descrição."
+     },
+     {
+      "origem": "EY: Mandatory attachment",
+      "tipo": "client_script",
+      "como": "Substituído por nova_anexo_documentos (Attachment OOB) obrigatória via UI policy quando v_active_contributor=No. Validar com o RH se a regra original (combinação de data, empresa e situação) pede anexo em outros casos e ajustar o flow para ler o anexo da variável."
+     },
+     {
+      "origem": "EY: CPF",
+      "tipo": "client_script",
+      "como": "Validation Regex ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$ em v_cpf (corrige o ponto sem escape do script)."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "9895a2241ba7dd18d1abda4ce54bcb49",
+  "name": "Solicitação de Cadastro de Aposentadoria",
+  "status": "conversacional",
+  "motivo": "Item enxuto (descrição e anexo da carta do INSS), sem scripts. Ajuste de nome, descrição, labels e mandatory direto nas variáveis.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Comunicar aposentadoria pelo INSS",
+    "short_description": "Informar ao RH que a aposentadoria foi concedida pelo INSS, anexando a carta de concessão.",
+    "description": "Use para comunicar ao RH que a sua aposentadoria (ou a de um colaborador) foi concedida pelo INSS (Instituto Nacional do Seguro Social), anexando a carta de concessão, para atualização do cadastro. Não use para pedir documentos para dar entrada na aposentadoria (use \"Solicitar PPP\") nem para pedir desligamento.",
+    "frases_exemplo": [
+     "me aposentei, como informo o RH?",
+     "saiu minha aposentadoria do INSS",
+     "quero cadastrar minha aposentadoria",
+     "enviar carta de concessão do INSS",
+     "comunicar aposentadoria de colaborador"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_description",
+      "order": 400,
+      "conversational_label": "Conte os detalhes da aposentadoria, como a data de início do benefício.",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_communicate_retirement_attach_the_inss_decision",
+      "order": 500,
+      "conversational_label": "Anexe a carta de concessão da aposentadoria do INSS.",
+      "overrides": {
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+      "name": "EY: Requester Data",
+      "order": 100
+     }
+    ],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_description e v_communicate_retirement_attach_the_inss_decision."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "3ac2b8cc1bbbb010a530426fe54bcbe6",
+  "name": "Solicitação de declaração",
+  "status": "conversacional",
+  "motivo": "Estrutura boa para conversa (tipo de declaração, \"outros\" condicional e informações necessárias), sem scripts. Faltam descrição e labels; o label de instrução de anexo e o container sem fim saem.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "type_need",
+    "motivo": "Container start só visual (sem container end)."
+   },
+   {
+    "name": "formatter2",
+    "motivo": "Label de instrução sobre anexar arquivo pelo clipe; na conversa o anexo é oferecido no final."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Solicitar declaração ao RH",
+    "short_description": "Pedir ao RH uma declaração (banco, INSS, IR, plano médico, consulado, dependentes, estágio, último dia trabalhado etc.).",
+    "description": "Use para pedir ao RH uma declaração para fins pessoais: para banco, conselho regional, consulado, dependentes, descrição de função/cargo, estágio, data de depósito do FGTS (Fundo de Garantia do Tempo de Serviço), INSS (Instituto Nacional do Seguro Social), IR (Imposto de Renda), plano médico, reintegração, último dia trabalhado, formulário do INSS para benefício, mudança de escala de trabalho ou outra. Informe o tipo e o que deve constar nela. Não use para declaração de vínculo ou de lotação e escala de trabalho (tem item próprio), PPP ou documentos para processo trabalhista.",
+    "frases_exemplo": [
+     "preciso de uma declaração do RH",
+     "quero uma declaração para o banco",
+     "declaração para o consulado",
+     "preciso de declaração para o imposto de renda",
+     "declaração do último dia trabalhado"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "need_statement",
+      "order": 900,
+      "conversational_label": "Qual tipo de declaração você precisa?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "formatter",
+      "order": 1000,
+      "conversational_label": "Qual é o tipo de declaração que você precisa?"
+     },
+     {
+      "name": "information_need",
+      "order": 1100,
+      "conversational_label": "O que precisa constar na declaração?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+      "name": "Informações pessoais",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "ACN: if is statement_need is others, shows is formatter",
+      "on_load": true,
+      "conditions": "need_statement=others",
+      "actions": [
+       {
+        "variable": "formatter",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "d53df9d01b7ff010a530426fe54bcb0c"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em need_statement."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "23e1547e1b1ce190d1abda4ce54bcbba",
+  "name": "Consulta de estabilidade médica (casos restritos)",
+  "status": "conversacional",
+  "motivo": "Sem bloqueadores. Das 8 perguntas, 4 são preenchidas por script a partir do colaborador (ID, CPF, localização e departamento) e saem da conversa; ficam empresa, colaborador, data prevista e descrição.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_text_star",
+    "motivo": "Rich text informativo; orientação movida para a descrição."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Consultar estabilidade médica antes de desligar (casos restritos)",
+    "short_description": "Pedir ao RH a análise prévia de estabilidade médica de um colaborador antes de um desligamento.",
+    "description": "Use, como gestor ou RH, para pedir a análise prévia de estabilidade médica (por exemplo, retorno de afastamento, acidente de trabalho ou doença ocupacional) de um colaborador que você pretende desligar, nos casos restritos. Informe a empresa, o colaborador e a data prevista do desligamento. Não use para pedir o desligamento em si (use \"Comunicar desligamento de colaborador\") nem para prévia de rescisão.",
+    "frases_exemplo": [
+     "preciso verificar se o colaborador tem estabilidade antes de desligar",
+     "consulta de estabilidade médica",
+     "o funcionário voltou de afastamento, posso desligar?",
+     "análise de estabilidade para desligamento"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_cont_start",
+      "order": 200
+     },
+     {
+      "name": "v_what_company_are_the_employees_part_of",
+      "order": 300,
+      "conversational_label": "De qual empresa é o colaborador: Avon, Natura ou TBS?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_collaborator",
+      "order": 400,
+      "conversational_label": "Qual colaborador você pretende desligar?"
+     },
+     {
+      "name": "v_id",
+      "order": 500,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_cpf",
+      "order": 600,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_expected_shutdown_date",
+      "order": 700,
+      "conversational_label": "Qual é a data prevista do desligamento?"
+     },
+     {
+      "name": "v_localization",
+      "order": 800,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_department",
+      "order": 900,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_description",
+      "order": 1000,
+      "conversational_label": "Há alguma informação relevante sobre a saúde ou afastamentos do colaborador?"
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [
+     {
+      "short_description": "EY: Mandatory and read only fields",
+      "on_load": true,
+      "conditions": "v_what_company_are_the_employees_part_of=Avon LATAM^ORv_what_company_are_the_employees_part_of=Natura^ORv_what_company_are_the_employees_part_of=TBS",
+      "actions": [
+       {
+        "variable": "v_description",
+        "visible": "true"
+       },
+       {
+        "variable": "v_collaborator",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_cpf",
+        "visible": "true",
+        "disabled": "true"
+       },
+       {
+        "variable": "v_id",
+        "visible": "true",
+        "disabled": "true"
+       },
+       {
+        "variable": "v_department",
+        "visible": "true",
+        "disabled": "true"
+       },
+       {
+        "variable": "v_expected_shutdown_date",
+        "visible": "true",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_localization",
+        "visible": "true",
+        "disabled": "true"
+       }
+      ],
+      "origem_sys_id": "e0d410fa1b5ce190d1abda4ce54bcbec"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "c1f61c361b9ce190d1abda4ce54bcbba",
+      "name": "EY: Fill data job",
+      "ajuste": "Já é VA Supported; preenche v_id, v_cpf, v_localization e v_department a partir de v_collaborator. Alternativa no-code: auto-populate (dependent question v_collaborator) e remover o script."
+     },
+     {
+      "sys_id": "749d7d0a1b81e554a530426fe54bcbc8",
+      "name": "EY: clear values",
+      "ajuste": "Já é VA Supported; limpa v_collaborator e dependentes quando a empresa muda. Pode sair se os campos passarem a usar auto-populate."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Wich company",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_what_company_are_the_employees_part_of."
+     },
+     {
+      "origem": "v_id / v_cpf / v_localization / v_department",
+      "tipo": "ui_policy",
+      "como": "Read-only e \"not available in conversation\" direto nas variáveis, pois são preenchidas por script."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "7392f8da1b13b010a530426fe54bcbe0",
+  "name": "Desligamento",
+  "status": "conversacional",
+  "motivo": "Só 2 perguntas e nenhum script; o ajuste é nome e descrição que o separem dos irmãos de desligamento, labels e mandatory direto na data. Atenção: o producer script lê a variável \"employee\", que não existe no item; confirmar com o dono como o colaborador é identificado.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Comunicar desligamento de colaborador",
+    "short_description": "Área comunica ao RH um desligamento para levantamento de pendências e lançamento na rescisão.",
+    "description": "Use, como gestor ou área responsável, para comunicar ao RH o desligamento de um colaborador e a data de saída, para que as pendências sejam levantadas e lançadas na rescisão do contrato. Não use para transferência internacional permanente, prévia de rescisão, rescisão complementar, consulta de estabilidade médica ou dúvidas sobre desligamento: cada um tem item próprio.",
+    "frases_exemplo": [
+     "preciso comunicar o desligamento de um colaborador",
+     "vou desligar uma pessoa do meu time",
+     "informar data de desligamento",
+     "abrir desligamento no RH",
+     "o funcionário pediu demissão, onde registro?"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "termination_date",
+      "order": 100,
+      "conversational_label": "Qual é a data do desligamento?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "comments",
+      "order": 200,
+      "conversational_label": "Quem será desligado e quais pendências ou observações devem entrar na rescisão (equipamentos, adiantamentos, benefícios)?"
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Campos Obrigatorios",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em termination_date."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "7153436d1b046d58d1abda4ce54bcb54",
+  "name": "Desligamento Transferência Permanente Internacional",
+  "status": "conversacional",
+  "motivo": "Bloqueado só pelo client script \"EY: Show Msg\" (testa spModal, sem VA Supported), que some junto com o rich text que ele controla. Das 14 perguntas, 10 são read-only preenchidas a partir do colaborador e saem da conversa; sobram 4.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_text_start",
+    "motivo": "Rich text de título/instrução; orientação movida para a descrição."
+   },
+   {
+    "name": "v_text_resolv",
+    "motivo": "Rich text para o resolvedor, controlado pelo script \"EY: Show Msg\" (removido); só visual."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Desligar colaborador por transferência internacional permanente",
+    "short_description": "Pedir o desligamento no Brasil de um colaborador que será admitido em outro país do grupo.",
+    "description": "Use quando um colaborador do Brasil vai ser transferido de forma permanente para outro país do grupo e precisa ser desligado aqui para ser admitido lá. Informe o colaborador, a data de desligamento e se haverá reposição da vaga; os dados de cargo, empresa e gestor são preenchidos automaticamente. Não use para desligamentos comuns (use \"Comunicar desligamento de colaborador\") nem para transferências temporárias ou expatriação.",
+    "frases_exemplo": [
+     "colaborador vai ser transferido para o México, como desligo no Brasil?",
+     "desligamento por transferência internacional",
+     "transferência permanente para outro país",
+     "funcionário vai trabalhar na Argentina definitivamente"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_name",
+      "order": 200,
+      "conversational_label": "Qual colaborador será transferido e desligado no Brasil?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_id",
+      "order": 250,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_admission_date",
+      "order": 300,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_reason_for_dismissal",
+      "order": 350,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_termination_date",
+      "order": 400,
+      "conversational_label": "Qual é a data de desligamento no Brasil?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_employment_type",
+      "order": 500,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_job_profile",
+      "order": 530,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_company",
+      "order": 560,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_supervisory",
+      "order": 600,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_location",
+      "order": 630,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_manager",
+      "order": 660,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_id_manager",
+      "order": 700,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "v_yes_no",
+      "order": 750,
+      "conversational_label": "A vaga será reposta?",
+      "overrides": {
+       "mandatory": true,
+       "include_none": true
+      }
+     },
+     {
+      "name": "v_description",
+      "order": 900,
+      "conversational_label": "Para qual país e empresa o colaborador vai? Quer acrescentar algo?"
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "e7b049e71b006dd8a530426fe54bcbbc",
+      "name": "EY: Fill data job",
+      "ajuste": "Já é VA Supported; preenche os dados de cargo a partir de v_name. Alternativa no-code: auto-populate (dependent question v_name) e remover o script."
+     },
+     {
+      "sys_id": "790c5dfd3377721498331c07ee5c7b9e",
+      "name": "EY: End date Script",
+      "ajuste": "Já é VA Supported; verificar se só valida a data. Se for regra simples, trocar por validação sem script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory and read only fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_name, v_termination_date e v_yes_no; read-only (e fora da conversa) direto em v_id, v_admission_date, v_reason_for_dismissal, v_employment_type, v_job_profile, v_company, v_supervisory, v_location, v_manager e v_id_manager."
+     },
+     {
+      "origem": "EY: Show Msg",
+      "tipo": "client_script",
+      "como": "Removido (sem VA Supported, testa spModal): o rich text v_text_resolv que ele escondia saiu do item."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "8d6da4711bd42550d1abda4ce54bcb5d",
+  "name": "Informações ou dúvidas relacionadas à Desligamento",
+  "status": "conversacional",
+  "motivo": "Genérico de uma pergunta, bloqueado só pelos widgets de busca (Custom). Sem eles e sem as policies órfãs vira conversa de uma pergunta; a descrição o separa dos itens transacionais de desligamento.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "Info",
+    "motivo": "Rich text informativo; orientação relevante movida para a descrição."
+   },
+   {
+    "name": "formatter",
+    "motivo": "Container end sem container start, só visual."
+   },
+   {
+    "name": "contextual_search_results",
+    "motivo": "Widget de apresentação (Custom) de busca contextual; bloqueador na conversa."
+   },
+   {
+    "name": "ai_search_assist",
+    "motivo": "Widget de apresentação (Custom) de AI Search; bloqueador na conversa."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre desligamento e rescisão",
+    "short_description": "Envie ao RH uma dúvida sobre desligamento ou rescisão quando não houver formulário específico nem resposta nos materiais de apoio.",
+    "description": "Use para tirar dúvidas sobre desligamento e rescisão (prazos de pagamento, verbas, aviso prévio, homologação, exame demissional, TRCT - Termo de Rescisão do Contrato de Trabalho) quando não houver item específico nem resposta nos materiais de apoio. Não use para comunicar um desligamento, pedir prévia de rescisão, rescisão complementar ou consulta de estabilidade: cada um tem item próprio.",
+    "frases_exemplo": [
+     "dúvida sobre minha rescisão",
+     "quando cai o pagamento da rescisão?",
+     "como funciona o aviso prévio?",
+     "tenho uma pergunta sobre desligamento",
+     "não recebi o TRCT"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_description_details",
+      "order": 1550,
+      "conversational_label": "Qual é a sua dúvida sobre desligamento ou rescisão? Conte com detalhes.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Show kb link",
+      "tipo": "ui_policy",
+      "como": "Removida: policy órfã (condição e ação em variáveis que não existem mais no item)."
+     },
+     {
+      "origem": "EY: Mandatory Fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_description_details; ações órfãs descartadas."
+     },
+     {
+      "origem": "EY: Minimum caracter",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_description_details (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "3a4932df87544b14ec360e530cbb3516",
+  "name": "Solicitação de Prévia de Rescisão",
+  "status": "conversacional",
+  "motivo": "Público restrito e sem bloqueadores: os GlideAjax são VA Supported e as 3 variáveis read-only saem da conversa. As choices mostram que o motivo é \"experiência do colaborador\" ou \"impacto financeiro\", e o label foi corrigido. Conteúdo sensível (verbas de executivos): validar com Privacidade se pode ir ao LLM.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "name": "Solicitar prévia de rescisão (diretores, +20 anos ou pacote de desligamento)",
+    "short_description": "Pedir a simulação prévia da rescisão de diretores e cargos acima, colaboradores com mais de 20 anos de casa ou com pacote de desligamento.",
+    "description": "Use para pedir ao RH uma prévia (simulação) dos valores de rescisão antes de um desligamento, exclusivamente para diretores e cargos acima, colaboradores com mais de 20 anos de empresa ou desligamentos com pacote. Informe o colaborador, o motivo (experiência do colaborador ou impacto financeiro), a data prevista e se haverá multa ou pagamento adicional. Não use para comunicar o desligamento em si nem para rescisão complementar.",
+    "frases_exemplo": [
+     "preciso de uma prévia de rescisão de um diretor",
+     "simular rescisão antes de desligar",
+     "quanto vai custar o desligamento desse colaborador com 25 anos de casa?",
+     "prévia de rescisão com pacote"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "select_collaborator",
+      "order": 100,
+      "conversational_label": "Para qual colaborador é a prévia de rescisão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "global_id",
+      "order": 200,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "name",
+      "order": 300,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "date_admission",
+      "order": 400,
+      "overrides": {
+       "read_only": true,
+       "not_available_conversation": true
+      }
+     },
+     {
+      "name": "reason_requesting_preliminary_approval",
+      "order": 500,
+      "conversational_label": "O motivo da prévia é experiência do colaborador ou impacto financeiro?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "expected_shutdown_date",
+      "order": 600,
+      "conversational_label": "Qual é a data prevista do desligamento?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "termination_fee",
+      "order": 700,
+      "conversational_label": "Haverá multa rescisória?",
+      "overrides": {
+       "mandatory": true,
+       "include_none": true
+      }
+     },
+     {
+      "name": "additional_payment",
+      "order": 800,
+      "conversational_label": "Haverá algum pagamento adicional?",
+      "overrides": {
+       "mandatory": true,
+       "include_none": true
+      }
+     },
+     {
+      "name": "additional_payment_included_termination_settlement",
+      "order": 900,
+      "conversational_label": "Qual pagamento adicional será incluído na rescisão?"
+     },
+     {
+      "name": "additional_information",
+      "order": 1000,
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [
+     {
+      "short_description": "Aoop: Show Describe what additional payment",
+      "on_load": true,
+      "conditions": "additional_payment=Yes",
+      "actions": [
+       {
+        "variable": "additional_payment_included_termination_settlement",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "e1930cab875c8b14ec360e530cbb355e"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "814bd72b87144f14ec360e530cbb356b",
+      "name": "Aoop: Set Date of Admission",
+      "ajuste": "Já é VA Supported (GlideAjax); preenche date_admission a partir de select_collaborator. Alternativa no-code: auto-populate se a data estiver em campo do usuário/perfil."
+     },
+     {
+      "sys_id": "4ee2d9e187308710ec360e530cbb3579",
+      "name": "Aoop: Validate Expected Shutdown Date",
+      "ajuste": "Já é VA Supported (GlideAjax); manter, a regra de calendário efetivo não é expressável sem script. Testar a mensagem de erro na conversa."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "Aoop: Show mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em select_collaborator, reason_requesting_preliminary_approval, expected_shutdown_date, termination_fee e additional_payment; read-only (e fora da conversa) direto em global_id, name e date_admission."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "5b674a3b87e55210ec360e530cbb354c",
+  "name": "Solicitar desligamento de um colaborador da minha equipe",
+  "status": "analise_humana",
+  "motivo": "Record producer sem variáveis e sem registros, que só explica como pedir desligamento e disputa a intenção com \"Desligamento\" (7392f8da). Decidir se desativa e publica o texto como artigo de KB, ou se mantém como link non-conversational.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "44b5349e1b13b010a530426fe54bcbf7",
+  "name": "Solicitar Rescisão Complementar",
+  "status": "conversacional",
+  "motivo": "Poucas perguntas no item (tipo de verba, descrição se \"Outros\", justificativa) e o ex-colaborador e o valor vêm do set, que não é multi-row. Ajustes: labels, mandatory direto na variável e o set passa a ser perguntado primeiro.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "info",
+    "motivo": "Rich text informativo; orientação movida para a descrição."
+   },
+   {
+    "name": "termination_template",
+    "motivo": "Rich text de modelo/instrução; se houver link de modelo, levar a URL para a descrição."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Solicitar rescisão complementar para ex-colaborador",
+    "short_description": "Pedir pagamento ou desconto complementar de verbas rescisórias de um ex-colaborador.",
+    "description": "Use quando um ex-colaborador precisa receber (ou ter descontado) um valor complementar da rescisão: comissão, gratificação, PLR (Participação nos Lucros e Resultados), prêmio, pagamento de pacote, estabilidade, diferença de hora extra ou adicional noturno, reembolsos diversos (farmácia, mobilidade, VT, VR, coparticipação), devolução de empréstimo, descontos e outros. Informe o ex-colaborador, o valor, o tipo de verba e a justificativa. Não use para comunicar um novo desligamento nem para prévia de rescisão.",
+    "frases_exemplo": [
+     "preciso pagar uma diferença na rescisão de um ex-funcionário",
+     "rescisão complementar",
+     "faltou pagar uma verba na rescisão",
+     "pagar PLR para quem já saiu da empresa",
+     "reembolsar farmácia de ex-colaborador"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "request_here",
+      "order": 200
+     },
+     {
+      "name": "release_type",
+      "order": 300,
+      "conversational_label": "Qual é o tipo de verba (por exemplo, comissão, PLR, gratificação, reembolso)?",
+      "overrides": {
+       "mandatory": true,
+       "include_none": true
+      }
+     },
+     {
+      "name": "payment_description",
+      "order": 400,
+      "conversational_label": "Descreva o pagamento."
+     },
+     {
+      "name": "formatter",
+      "order": 1000,
+      "overrides": {
+       "question_text": ""
+      }
+     },
+     {
+      "name": "comments_termination_2",
+      "order": 1100,
+      "conversational_label": "Qual é a justificativa para a rescisão complementar?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "3dd40d161b93b010a530426fe54bcb63",
+      "name": "Adicionar um ex-colaborador",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "ACN: Field Request for Release Type is \"Other\"",
+      "on_load": true,
+      "conditions": "release_type!=Outros",
+      "actions": [
+       {
+        "variable": "payment_description",
+        "visible": "false",
+        "mandatory": "false"
+       }
+      ],
+      "origem_sys_id": "7eb285521b93b010a530426fe54bcbe1"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em release_type."
+     },
+     {
+      "origem": "Adicionar um ex-colaborador (ordem do set)",
+      "tipo": "ui_policy",
+      "como": "Ordem do set mudou de 1000 para 100, para perguntar primeiro o ex-colaborador e o valor."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "56e683221be95990a530426fe54bcba6",
+  "name": "DIGICARD",
+  "status": "analise_humana",
+  "motivo": "Record producer sem variáveis e sem registros, que funciona como link para o DIGICARD (licenças médicas e acidentes da Avon Argentina). User criteria contraditório (disponível para \"ACN: Users Argentina\" e indisponível para \"ACN Argentina Users\"). Decidir se desativa e publica como artigo de KB com o link.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "5a4445e23b809210924d0247f4e45a9d",
+  "name": "Dúvidas, consultas, reclamações ou sugestões relacionadas à Remuneração",
+  "status": "conversacional",
+  "motivo": "Alto volume no catálogo hispânico e sem bloqueadores. Mandatory vai direto nas variáveis, a validação de 40 caracteres vira regex e as legendas saem; a subcategoria continua dependendo do GlideAjax VA Supported \"Check if Subcat exists\".",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_caption",
+    "motivo": "Rich text de legenda exibida por script para a Colômbia; orientação movida para a descrição."
+   },
+   {
+    "name": "v_minimun_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_detail_field."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou reclamar sobre salário e pagamentos (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre folha de pagamento, recibo de salário, adiantamentos e liquidações, para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre remuneração: pagamento do salário, recibo de pagamento, descontos, horas extras, adiantamentos e liquidação final. Vale para colaboradores da América Hispânica (Argentina, Chile, Colômbia, Equador, Peru e Uruguai); na Colômbia, algumas categorias têm orientação específica do RH local. Não use para benefícios, férias ou licenças (têm formulários próprios) nem para mudar a conta bancária (use \"Alterar conta bancária para pagamento de salário\").",
+    "frases_exemplo": [
+     "no me llegó el sueldo completo",
+     "tengo una duda con mi recibo de sueldo",
+     "quero reclamar de um desconto no meu salário",
+     "cuándo pagan la liquidación final?",
+     "consulta sobre un anticipo de sueldo",
+     "me pagaron mal las horas extra"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_type_of_request",
+      "order": 750,
+      "conversational_label": "É uma dúvida, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_category_lookup",
+      "order": 800,
+      "conversational_label": "Sobre qual assunto de pagamento é o seu pedido?"
+     },
+     {
+      "name": "v_subcategory_lookup",
+      "order": 900,
+      "conversational_label": "Qual é o assunto específico?"
+     },
+     {
+      "name": "v_detail_field",
+      "order": 950,
+      "conversational_label": "Conte em detalhes o que aconteceu (mês, valor, o que esperava receber).",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     },
+     {
+      "name": "subcategory_exists",
+      "order": 2000,
+      "overrides": {
+       "not_available_conversation": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Mandatory - v_corporate_e_mail",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_corporate_e_mail",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "4bc12f6a3b08d210924d0247f4e45afe"
+     },
+     {
+      "short_description": "EY: Show/Mandatory - v_category_lookup",
+      "on_load": true,
+      "conditions": "v_employee!=",
+      "actions": [
+       {
+        "variable": "v_category_lookup",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "7dd1ab6a3b08d210924d0247f4e45a4e"
+     },
+     {
+      "short_description": "EY: Show - v_subcategory_lookup",
+      "on_load": true,
+      "conditions": "subcategory_exists=yes",
+      "actions": [
+       {
+        "variable": "v_subcategory_lookup",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "a0aa3a983ba1de10924d0247f4e45a18"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "048c99151b98d250514cbaef4b4bcb81",
+      "name": "EY: Check if Subcat exists",
+      "ajuste": "Já é VA Supported (GlideAjax); preenche subcategory_exists. Testar na conversa."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory - v_type_of_request",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_type_of_request."
+     },
+     {
+      "origem": "EY: Mandatory - v_detail_field",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_detail_field."
+     },
+     {
+      "origem": "EY: Mandatory - v_corporate_e_mail",
+      "tipo": "ui_policy",
+      "como": "Mantida como policy: age sobre variável do set."
+     },
+     {
+      "origem": "EY: Hide v_caption OnLoad",
+      "tipo": "ui_policy",
+      "como": "Removida junto com o rich text v_caption."
+     },
+     {
+      "origem": "EY: ReadOnly - v_subcategory_lookup",
+      "tipo": "ui_policy",
+      "como": "Removida: o read-only incondicional impediria responder a subcategoria que a policy \"Show - v_subcategory_lookup\" torna obrigatória (na conversa a pergunta seria pulada). Validar com o dono."
+     },
+     {
+      "origem": "EY: Show/Mandatory - v_category_lookup",
+      "tipo": "ui_policy",
+      "como": "Condição \"v_employee não vazio\" escrita como v_employee!= (equivale a ISNOTEMPTY na avaliação da policy)."
+     },
+     {
+      "origem": "EY: Show v_caption according  category",
+      "tipo": "client_script",
+      "como": "Removido junto com o rich text v_caption; orientação da Colômbia na descrição."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail_field (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda substituída pela Validation Regex."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "343924291bc09a50514cbaef4b4bcbcf",
+  "name": "Dúvidas, consultas, reclamações ou sugestões sobre benefícios",
+  "status": "conversacional",
+  "motivo": "Maior volume do grupo hispânico, sem bloqueadores. Mandatory vai direto nas variáveis, o script onLoad \"Who is this req Mandatory\" vira UI policy sem script e a validação de 40 caracteres vira regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "FAQs",
+    "motivo": "Rich text informativo; orientação de consultar as FAQs de benefícios movida para a descrição."
+   },
+   {
+    "name": "v_min_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_field_detail."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou reclamar sobre benefícios (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre benefícios (cobertura médica, seguro de vida, alimentação etc.) para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre benefícios, como cobertura médica/plano de saúde, seguro de vida, auxílio alimentação, academia e outros benefícios do seu país, quando o tema não estiver nas perguntas frequentes. Vale para colaboradores da América Hispânica (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Não use se você trabalha no Brasil (use \"Tirar dúvida ou reclamar sobre benefícios (Brasil)\") nem para salário, férias ou licenças.",
+    "frases_exemplo": [
+     "tengo una duda sobre mi prepaga",
+     "quiero reclamar por el seguro de vida",
+     "cómo agrego a mi hijo a la obra social?",
+     "dúvida sobre o benefício de alimentação",
+     "sugerencia sobre los beneficios",
+     "no me aparece el reintegro del gimnasio"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_contact_reason",
+      "order": 800,
+      "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_select_category",
+      "order": 900,
+      "conversational_label": "Sobre qual benefício é o seu pedido?"
+     },
+     {
+      "name": "v_subcategory",
+      "order": 950,
+      "conversational_label": "Qual é o assunto específico desse benefício?"
+     },
+     {
+      "name": "v_field_detail",
+      "order": 1000,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Hide Category on load",
+      "on_load": true,
+      "conditions": "v_employee!=",
+      "actions": [
+       {
+        "variable": "v_select_category",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "01081c751b0cda50514cbaef4b4bcbab"
+     },
+     {
+      "short_description": "EY: Mandatory v_corporate_email",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_corporate_e_mail",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "2e3623a21b8892509c4797d01b4bcba2"
+     },
+     {
+      "short_description": "EY: Who is this req Mandatory (ex-client script)",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_who_is_this_request_for",
+        "mandatory": "true"
+       },
+       {
+        "variable": "v_employee",
+        "visible": "false"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "31ac80443bd49e10924d0247f4e45ad9",
+      "name": "EY: Check if Subcat exists",
+      "ajuste": "Já é VA Supported (GlideAjax); mostra v_subcategory só quando há opções. Testar na conversa."
+     },
+     {
+      "sys_id": "53fc08c03bd49e10924d0247f4e45a88",
+      "name": "EY: Hide subcat onLoad",
+      "ajuste": "Já é VA Supported; mantido porque o par \"Check if Subcat exists\" revela o campo por script (uma policy onLoad conflitaria com ele)."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory v_contact_reason",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_contact_reason."
+     },
+     {
+      "origem": "EY: Mandatory v_field_detail",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_field_detail."
+     },
+     {
+      "origem": "EY: Mandatory v_corporate_email",
+      "tipo": "ui_policy",
+      "como": "Mantida como policy: age sobre variável do set."
+     },
+     {
+      "origem": "EY: Hide Category on load",
+      "tipo": "ui_policy",
+      "como": "Condição \"v_employee não vazio\" escrita como v_employee!= (equivale a ISNOTEMPTY na avaliação da policy)."
+     },
+     {
+      "origem": "EY: Who is this req Mandatory",
+      "tipo": "client_script",
+      "como": "Convertido em UI policy onLoad sem script (v_who_is_this_request_for obrigatória e v_employee oculta; variáveis do set)."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_field_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda substituída pela Validation Regex."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "18ac98eb3bb30250924d0247f4e45ac5",
+  "name": "Dúvidas, consultas, reclamações ou sugestões sobre licenças",
+  "status": "conversacional",
+  "motivo": "Mesmo padrão dos irmãos hispânicos: poucas perguntas próprias e sem bloqueadores. Mandatory direto nas variáveis, validação de 40 caracteres por regex e remoção da ação órfã (why_are_you_opening_on_behalf_of).",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "FAQs",
+    "motivo": "Rich text informativo; orientação de consultar as FAQs de licença por país movida para a descrição."
+   },
+   {
+    "name": "v_minimun_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_detail_field."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou reclamar sobre licenças (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre licenças (médica, maternidade, paternidade, estudo etc.) para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre licenças: licença médica, maternidade, paternidade, casamento, luto, estudo e outras previstas no seu país, quando o tema não estiver nas perguntas frequentes de licenças do seu país. Vale para colaboradores da América Hispânica (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Não use para férias (use o formulário de férias) nem para salário ou benefícios.",
+    "frases_exemplo": [
+     "cuántos días de licencia por paternidad tengo?",
+     "duda sobre mi licencia médica",
+     "licencia por matrimonio, cómo la pido?",
+     "quero reclamar que descontaram minha licença",
+     "consulta sobre licencia por estudio"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "reason_for_contact",
+      "order": 50,
+      "conversational_label": "É uma dúvida, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "select_the_license_type",
+      "order": 80,
+      "conversational_label": "Sobre qual tipo de licença?"
+     },
+     {
+      "name": "select_the_category_as_appropriate",
+      "order": 90,
+      "conversational_label": "Qual é o assunto específico?"
+     },
+     {
+      "name": "v_detail_field",
+      "order": 100,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 1
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Hide fields if employee is me",
+      "on_load": true,
+      "conditions": "v_who_is_this_request_for=for_me^ORv_who_is_this_request_for=",
+      "actions": [
+       {
+        "variable": "v_employee",
+        "visible": "false"
+       }
+      ],
+      "origem_sys_id": "3d559da33bfb0250924d0247f4e45a1c"
+     },
+     {
+      "short_description": "EY: Mandatory fields (e-mail corporativo)",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_corporate_e_mail",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "83f7a0e81b489250514cbaef4b4bcbde"
+     },
+     {
+      "short_description": "EY: View category",
+      "on_load": true,
+      "conditions": "v_employee!=",
+      "actions": [
+       {
+        "variable": "select_the_license_type",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "dd8bb8701b481650514cbaef4b4bcbbd"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "b156cc483b149e10924d0247f4e45a69",
+      "name": "EY: Check if Subcat exists",
+      "ajuste": "Já é VA Supported (GlideAjax); mostra select_the_category_as_appropriate só quando há opções. Testar na conversa."
+     },
+     {
+      "sys_id": "011ac4cc3b549e10924d0247f4e45aa0",
+      "name": "EY: Hide subcat onLoad",
+      "ajuste": "Já é VA Supported; mantido porque o par \"Check if Subcat exists\" revela o campo por script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em reason_for_contact e v_detail_field; a ação em v_corporate_e_mail (variável do set) continua na policy."
+     },
+     {
+      "origem": "EY: Hide fields if employee is me",
+      "tipo": "ui_policy",
+      "como": "Mantida; removida a ação órfã em why_are_you_opening_on_behalf_of (variável inexistente)."
+     },
+     {
+      "origem": "EY: Hide v_minimun_characters onLoad",
+      "tipo": "ui_policy",
+      "como": "Removida junto com o rich text v_minimun_characters."
+     },
+     {
+      "origem": "EY: View category",
+      "tipo": "ui_policy",
+      "como": "Condição \"v_employee não vazio\" escrita como v_employee!= (equivale a ISNOTEMPTY na avaliação da policy)."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail_field (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Show error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda substituída pela Validation Regex."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "b774fd621b3b8610514cbaef4b4bcbea",
+  "name": "Dúvidas, questões, reclamações ou sugestões relativas a admissões, movimentos, promoções ou saídas",
+  "status": "conversacional",
+  "motivo": "Item simples (motivo, categoria, detalhe) sem bloqueadores; aqui o colaborador (v_employee) é sempre perguntado e \"para quem é\" fica oculto. Mandatory direto nas variáveis e validação de 40 caracteres por regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "v_min_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_field_detail."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre admissão, movimentação, promoção ou saída (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre admissões, movimentações, promoções ou saídas, para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre admissão, transferência ou movimentação interna, promoção ou saída/fechamento de ciclo de um colaborador (você ou alguém da sua equipe). Vale para os públicos da América Hispânica. Não use para salário, benefícios, férias ou licenças.",
+    "frases_exemplo": [
+     "duda sobre la promoción de un colaborador de mi equipo",
+     "consulta sobre un traslado de área",
+     "quando sai a alteração do cargo?",
+     "tengo una consulta sobre el ingreso de una persona nueva",
+     "reclamo sobre mi egreso"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_contact_reason",
+      "order": 800,
+      "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_select_category",
+      "order": 900,
+      "conversational_label": "O assunto é admissão, movimentação, promoção ou saída?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_field_detail",
+      "order": 1000,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Hide v_who_is_this_request_for",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_who_is_this_request_for",
+        "visible": "false"
+       }
+      ],
+      "origem_sys_id": "18857d383b089a50924d0247f4e45abe"
+     },
+     {
+      "short_description": "EY: Show v_employee",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_employee",
+        "visible": "true",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "ddd96cf91b8cda50514cbaef4b4bcbe4"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory v_field_detail / EY: Mandatory v_contact_reason / EY: Mandatory v_select_category",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto nas variáveis."
+     },
+     {
+      "origem": "EY: Hide v_who_is_this_request_for / EY: Show v_employee",
+      "tipo": "ui_policy",
+      "como": "Mantidas como policy: agem sobre variáveis do set."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_field_detail (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda substituída pela Validation Regex."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "b99630ca1b766d10a530426fe54bcba4",
+  "name": "Dúvidas, reclamações e sugestões relacionadas a benefícios",
+  "status": "conversacional",
+  "motivo": "Maior volume do lote e poucas perguntas reais (tipo, benefício, detalhe). Bloqueado pelos widgets de busca (Custom), que saem, e por um client script sem VA Supported que filtra opções pelo idioma, que fica com ajuste. Validação de tamanho vira regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "Info",
+    "motivo": "Rich text informativo; orientação relevante movida para a descrição."
+   },
+   {
+    "name": "contextual_search_results",
+    "motivo": "Widget de apresentação (Custom) de busca contextual; bloqueador na conversa."
+   },
+   {
+    "name": "ai_search_assist",
+    "motivo": "Widget de apresentação (Custom) de AI Search; bloqueador na conversa."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou reclamar sobre benefícios (Brasil)",
+    "short_description": "Dúvidas, reclamações ou sugestões sobre benefícios (plano de saúde, odontológico, vale-refeição, vale-alimentação etc.) quando não houver formulário específico.",
+    "description": "Use para enviar ao RH uma dúvida, reclamação ou sugestão sobre benefícios no Brasil: assistência médica e odontológica, auxílio-creche, berçário, auxílio internet, farmácia, fretado, Wellhub (Gympass), previdência privada, psicologia, restaurante, seguro de vida, vale-alimentação, vale-refeição, vale-transporte, auxílio combustível e similares, quando não houver formulário específico nem resposta nos materiais de apoio. Não use se você trabalha em país da América Hispânica (use o formulário hispânico de benefícios) nem para salário, férias ou licenças.",
+    "frases_exemplo": [
+     "meu vale-refeição não caiu",
+     "dúvida sobre o plano de saúde",
+     "quero incluir meu filho no plano odontológico",
+     "reclamação sobre o cartão alimentação",
+     "como funciona o auxílio-creche?",
+     "o reembolso da farmácia não foi pago"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "request_type",
+      "order": 900,
+      "conversational_label": "É uma dúvida, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "beneficios",
+      "order": 1000,
+      "conversational_label": "Sobre qual benefício?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_text_vale_ref_alim",
+      "order": 1100
+     },
+     {
+      "name": "v_description_details",
+      "order": 1550,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "1a401a591b15f510a530426fe54bcb1a",
+      "name": "Informações pessoais - Benefícios",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "EY: Set text vale refeição/alimentação",
+      "on_load": true,
+      "conditions": "beneficios=food _voucher^ORbeneficios=meal_voucher",
+      "actions": [
+       {
+        "variable": "v_text_vale_ref_alim",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "d999dc1e3b047610924d0247f4e45a9d"
+     }
+    ],
+    "client_scripts_mantidos": [
+     {
+      "sys_id": "cb7640ad33a983d098331c07ee5c7b5d",
+      "name": "EY: Remove options based on country",
+      "ajuste": "Marcar VA Supported (hoje false) e testar na conversa. Alternativa no-code: desativar em beneficios as opções que não valem para o Brasil e remover o script."
+     }
+    ],
+    "conversoes": [
+     {
+      "origem": "NVLX: Mandatory Fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em beneficios, request_type e v_description_details."
+     },
+     {
+      "origem": "NVLX: Minimum caracter",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_description_details (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "a62589461bbc9290514cbaef4b4bcb4d",
+  "name": "Solicitações de Empréstimos de Emergência",
+  "status": "analise_humana",
+  "motivo": "Formulário complexo: 37 perguntas, assinatura digital em widget Custom, anexo obrigatório condicionado a país e perfil HRBP, script de opções sem VA Supported e vários GlideAjax, com conteúdo financeiro e contratual. Decidir se fica como formulário (make non-conversational + turn off Now Assist, com nome/descrição melhores) ou se os ramos \"pagar parcelas\" e \"desistir\" viram um item conversacional leve à parte.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "9869b07c1bbf1114d1abda4ce54bcb13",
+  "name": "Devolução do Aviso de Férias",
+  "status": "dividido",
+  "motivo": "Segundo maior volume do lote e duas intenções: o colaborador dar ciência das próprias férias (data + confirmação) e o gestor devolver o aviso da equipe com anexo do ADP e lista de colaboradores. O script onSubmit de anexo (DOM, sem VA Supported) só existe no ramo do gestor e vira uma variável Attachment OOB.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "label_importante",
+    "motivo": "Rich text informativo; orientação movida para as descrições."
+   },
+   {
+    "name": "label_assistente_maia",
+    "motivo": "Rich text informativo sobre a assistente virtual; só visual."
+   },
+   {
+    "name": "label_kb_adp",
+    "motivo": "Rich text com link para o artigo do ADP; orientação movida para as descrições."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Dar ciência das minhas férias programadas",
+    "short_description": "Confirmar que você está ciente da data de início das suas férias programadas no ADP.",
+    "description": "Use para dar ciência (devolver o aviso) das suas próprias férias já programadas no sistema ADP, informando a data de início. É a confirmação obrigatória do aviso de férias. Não use para programar ou alterar férias (faça no ADP), para devolver o aviso de colaboradores da sua equipe nem para tirar dúvidas sobre férias.",
+    "frases_exemplo": [
+     "quero dar ciência das minhas férias",
+     "recebi o aviso de férias, como confirmo?",
+     "devolver meu aviso de férias",
+     "confirmar início das férias dia 10",
+     "assinar aviso de férias"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_cont_start_vacation",
+      "order": 150
+     },
+     {
+      "name": "v_vacation_start_date",
+      "order": 200,
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      },
+      "conversational_label": "Qual é a data de início das suas férias?"
+     },
+     {
+      "name": "formatter",
+      "order": 550
+     },
+     {
+      "name": "v_aware_vacation",
+      "order": 600,
+      "conversational_label": "Você confirma que está ciente da data de início das suas férias?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_description",
+      "order": 1000,
+      "conversational_label": "Quer acrescentar alguma observação?"
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+      "name": "EY: Requester Data",
+      "order": 100
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "Fixar solicitação própria (ex-ramo my_request)",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "vs_solicitation_to_whom",
+        "value": "my_request",
+        "value_action": "setValue",
+        "visible": "false",
+        "mandatory": "false"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Fields mandatory",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_vacation_start_date; ações órfãs (v_13th_salary, v_number_days_enjoyment, v_sale_of_10_days) descartadas."
+     },
+     {
+      "origem": "vs_solicitation_to_whom (ramo)",
+      "tipo": "ui_policy",
+      "como": "A variável que fixa o ramo é do set \"EY: Requester Data\", então não entra em variaveis_fixas: o valor é fixado por UI policy onLoad (setValue + oculta). Se a versão da instância não suportar setValue em UI policy, ajustar no flow/producer."
+     },
+     {
+      "origem": "EY: Field mandatory if my request",
+      "tipo": "ui_policy",
+      "como": "Condição do ramo sumiu: visible/mandatory direto em v_aware_vacation."
+     }
+    ]
+   },
+   {
+    "name": "Devolver aviso de férias da minha equipe",
+    "short_description": "Gestor ou responsável envia o aviso de férias gerado pelo ADP para colaboradores da equipe.",
+    "description": "Use, como gestor ou responsável, para devolver o aviso de férias de colaboradores da sua equipe. <b>Anexe o aviso de férias gerado pelo ADP com 35 dias de antecedência da data de início</b>, informe os colaboradores e as datas de início e confirme que incluiu todos os colaboradores do documento. Não use para as suas próprias férias (use \"Dar ciência das minhas férias programadas\").",
+    "frases_exemplo": [
+     "devolver aviso de férias da equipe",
+     "enviar avisos de férias do meu time",
+     "anexar aviso de férias do ADP dos colaboradores",
+     "ciência de férias de funcionários da minha área"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_cont_start_vacation",
+      "order": 150
+     },
+     {
+      "name": "v_vacation_start_date",
+      "order": 200,
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      },
+      "conversational_label": "Qual é a data de início das férias?"
+     },
+     {
+      "name": "formatter",
+      "order": 550
+     },
+     {
+      "name": "v_i_confirm_added_all",
+      "order": 750,
+      "conversational_label": "Você confirma que incluiu todos os colaboradores que constam no documento anexado?",
+      "overrides": {
+       "mandatory": true,
+       "hidden": false
+      }
+     },
+     {
+      "name": "v_description",
+      "order": 1000,
+      "conversational_label": "Quer acrescentar alguma observação?"
+     },
+     {
+      "name": "v_text_attach",
+      "order": 1100,
+      "overrides": {
+       "hidden": false
+      }
+     },
+     {
+      "name": "nova_anexo_aviso_adp",
+      "order": 1150,
+      "conversational_label": "Anexe o aviso de férias gerado pelo ADP.",
+      "nova": {
+       "type": "33",
+       "question_text": "Anexe o aviso de férias gerado pelo ADP",
+       "mandatory": true
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+      "name": "EY: Requester Data",
+      "order": 100
+     },
+     {
+      "sys_id": "31ab31051b3f9514a530426fe54bcb02",
+      "name": "(+)Adicionar Colaborador",
+      "order": 700
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "Fixar solicitação para outro colaborador (ex-ramo another_employee)",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "vs_solicitation_to_whom",
+        "value": "another_employee",
+        "value_action": "setValue",
+        "visible": "false",
+        "mandatory": "false"
+       }
+      ]
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Fields mandatory",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: visible/mandatory direto em v_vacation_start_date; ações órfãs (v_13th_salary, v_number_days_enjoyment, v_sale_of_10_days) descartadas."
+     },
+     {
+      "origem": "vs_solicitation_to_whom (ramo)",
+      "tipo": "ui_policy",
+      "como": "A variável que fixa o ramo é do set \"EY: Requester Data\", então não entra em variaveis_fixas: o valor é fixado por UI policy onLoad (setValue + oculta). Se a versão da instância não suportar setValue em UI policy, ajustar no flow/producer."
+     },
+     {
+      "origem": "EY: Field mandatory if my team",
+      "tipo": "ui_policy",
+      "como": "Condição do ramo sumiu: visible/mandatory direto em v_i_confirm_added_all e visible em v_text_attach; ações órfãs (adicionar_anexo, add_contributor) substituídas por nova_anexo_aviso_adp."
+     },
+     {
+      "origem": "EY: Attach mandatory",
+      "tipo": "client_script",
+      "como": "Substituído por nova_anexo_aviso_adp (Attachment OOB, obrigatória). Ajustar o flow para ler o anexo da variável."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "b4e12da91bdc2150a530426fe54bcb1a",
+  "name": "Informações ou dúvidas relacionadas à Férias",
+  "status": "conversacional",
+  "motivo": "Alto volume e 3 perguntas (tema, tipo, detalhe), bloqueado só pelos widgets de busca (Custom). Sem eles e sem as policies órfãs fica pronto; os textos por tema continuam condicionados por policy sem script.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "Info",
+    "motivo": "Rich text informativo; orientação (Norma STD-00536) movida para a descrição."
+   },
+   {
+    "name": "contextual_search_results",
+    "motivo": "Widget de apresentação (Custom) de busca contextual; bloqueador na conversa."
+   },
+   {
+    "name": "ai_search_assist",
+    "motivo": "Widget de apresentação (Custom) de AI Search; bloqueador na conversa."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida sobre férias (Brasil)",
+    "short_description": "Envie ao RH uma dúvida sobre férias quando a resposta não estiver na norma de férias (STD-00536).",
+    "description": "Use para tirar dúvidas sobre férias no Brasil (programação, férias obrigatórias, férias coletivas, recesso de estagiário, licenças e férias, pagamento e cálculo das férias) quando a resposta não estiver na Norma STD-00536 - Férias de Colaboradores, no Portal docs. Não use para dar ciência do aviso de férias (use \"Dar ciência das minhas férias programadas\"), para programar férias (faça no ADP) nem se você trabalha em país da América Hispânica.",
+    "frases_exemplo": [
+     "dúvida sobre minhas férias",
+     "posso vender 10 dias de férias?",
+     "quando cai o pagamento das férias?",
+     "como funcionam as férias coletivas?",
+     "não consigo programar férias no ADP",
+     "tenho férias vencendo, o que faço?"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "selecione_o_tema",
+      "order": 1500,
+      "conversational_label": "Sua dúvida é sobre qual tema de férias?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "mandatory_vacations_txt",
+      "order": 1510
+     },
+     {
+      "name": "programming_vacations_txt",
+      "order": 1511
+     },
+     {
+      "name": "request_type",
+      "order": 1520,
+      "conversational_label": "É uma dúvida, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_description_details",
+      "order": 1550,
+      "conversational_label": "Conte em detalhes a sua dúvida sobre férias.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [],
+    "ui_policies": [
+     {
+      "short_description": "EY: Theme = Schudele Vacation",
+      "on_load": true,
+      "conditions": "selecione_o_tema=vacation_scheduling",
+      "actions": [
+       {
+        "variable": "programming_vacations_txt",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "680520393bae9a10924d0247f4e45a46"
+     },
+     {
+      "short_description": "EY: Theme = Mandatory vacation",
+      "on_load": true,
+      "conditions": "selecione_o_tema=mandatory_vacation",
+      "actions": [
+       {
+        "variable": "mandatory_vacations_txt",
+        "visible": "true"
+       }
+      ],
+      "origem_sys_id": "93a4a8793bae9a10924d0247f4e45ab5"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory Fields",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em v_description_details; ações órfãs descartadas."
+     },
+     {
+      "origem": "EY: Mandatory select boxes",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto em selecione_o_tema e request_type."
+     },
+     {
+      "origem": "EY: Show kb link",
+      "tipo": "ui_policy",
+      "como": "Removida: policy órfã (condição e ação em variáveis que não existem mais no item)."
+     },
+     {
+      "origem": "EY: Minimum caracter",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_description_details (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "sys_id": "3d2e068f1b398910a530426fe54bcb1d",
+  "name": "Programação / Consulta Férias – ADP",
+  "status": "analise_humana",
+  "motivo": "Record producer sem variáveis e sem registros, que só serve de atalho para a plataforma ADP. Decidir se desativa e publica como artigo de KB com o link (para o Now Assist responder \"como programo minhas férias?\") ou se mantém como link non-conversational.",
+  "variaveis_nao_utilizadas": [],
+  "novos_itens": [
+   {
+    "copiar_original": true
+   }
+  ]
+ },
+ {
+  "sys_id": "6a2fa9bc1b005650514cbaef4b4bcb85",
+  "name": "Questões, dúvidas, reclamações ou sugestões relacionadas a Férias",
+  "status": "conversacional",
+  "motivo": "Poucas perguntas próprias e sem bloqueadores. Os scripts que mostram a categoria só no Equador (um deles com setTimeout) viram UI policy sem script por v_country, e a validação de 40 caracteres vira regex.",
+  "variaveis_nao_utilizadas": [
+   {
+    "name": "FAQs",
+    "motivo": "Rich text informativo; orientação de consultar antes as FAQs movida para a descrição."
+   },
+   {
+    "name": "v_minimun_characters",
+    "motivo": "Rich text de aviso de mínimo de caracteres; substituída pela Validation Regex em v_detail_field."
+   }
+  ],
+  "novos_itens": [
+   {
+    "name": "Tirar dúvida ou reclamar sobre férias (América Hispânica)",
+    "short_description": "Dúvidas, consultas, reclamações ou sugestões sobre férias para colaboradores da América Hispânica.",
+    "description": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre férias (saldo de dias, programação, pagamento das férias e, no Equador, venda de férias) quando o tema não estiver nas perguntas frequentes. Vale para colaboradores da América Hispânica (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Não use se você trabalha no Brasil (use \"Tirar dúvida sobre férias (Brasil)\") nem para licenças.",
+    "frases_exemplo": [
+     "cuántos días de vacaciones me quedan?",
+     "duda sobre mis vacaciones",
+     "no me pagaron las vacaciones",
+     "quiero reclamar porque no me aprobaron las vacaciones",
+     "consulta sobre venta de vacaciones en Ecuador"
+    ],
+    "make_item_non_conversational": false,
+    "turn_off_nowassist_conversation": false,
+    "variables": [
+     {
+      "name": "v_contact_reason",
+      "order": 750,
+      "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+      "overrides": {
+       "mandatory": true
+      }
+     },
+     {
+      "name": "v_select_the_category",
+      "order": 810,
+      "conversational_label": "O assunto é férias ou venda de férias?"
+     },
+     {
+      "name": "v_detail_field",
+      "order": 850,
+      "conversational_label": "Conte em detalhes o que você precisa.",
+      "overrides": {
+       "mandatory": true,
+       "validation_regex": "^[\\s\\S]{40,}$"
+      }
+     }
+    ],
+    "variable_sets": [
+     {
+      "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+      "name": "EY: Hispana Personal Information",
+      "order": 50
+     }
+    ],
+    "ui_policies": [
+     {
+      "short_description": "Mostrar categoria só para Equador (ex-client scripts)",
+      "on_load": true,
+      "conditions": "v_country=ECU",
+      "actions": [
+       {
+        "variable": "v_select_the_category",
+        "visible": "true"
+       }
+      ]
+     },
+     {
+      "short_description": "EY: Mandatory - v_corporate_e_mail",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_corporate_e_mail",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "2bc6df091b88d650514cbaef4b4bcbaa"
+     },
+     {
+      "short_description": "EY: hide v_reason_on_behalf",
+      "on_load": true,
+      "conditions": "v_who_is_this_request_for=for_me",
+      "actions": [
+       {
+        "variable": "v_reason_on_behalf",
+        "visible": "false"
+       }
+      ],
+      "origem_sys_id": "8c0df0ff1b8dde10514cbaef4b4bcbad"
+     },
+     {
+      "short_description": "EY: Mandatory - v_employee",
+      "on_load": true,
+      "conditions": "",
+      "actions": [
+       {
+        "variable": "v_employee",
+        "mandatory": "true"
+       }
+      ],
+      "origem_sys_id": "b2c653491b88d650514cbaef4b4bcb6c"
+     }
+    ],
+    "client_scripts_mantidos": [],
+    "conversoes": [
+     {
+      "origem": "EY: Mandatory - v_contact_reason / EY: Mandatory - v_detail_field",
+      "tipo": "ui_policy",
+      "como": "onLoad incondicional: mandatory direto nas variáveis."
+     },
+     {
+      "origem": "EY: Mandatory - v_corporate_e_mail / EY: Mandatory - v_employee / EY: hide v_reason_on_behalf",
+      "tipo": "ui_policy",
+      "como": "Mantidas como policy: agem sobre variáveis do set."
+     },
+     {
+      "origem": "EY: Hide category OnLoad / EY: Show category if Equador OnChange",
+      "tipo": "client_script",
+      "como": "Substituídos por UI policy sem script: v_select_the_category visível quando v_country=ECU (oculta nos demais pelo reverse if false)."
+     },
+     {
+      "origem": "EY: Show error message onSubmit",
+      "tipo": "client_script",
+      "como": "Validation Regex ^[\\s\\S]{40,}$ em v_detail_field (mensagem: \"Descreva com um pouco mais de detalhe, mínimo de 40 caracteres\")."
+     },
+     {
+      "origem": "EY: Show error message onChange / EY: Hide error message onLoad",
+      "tipo": "client_script",
+      "como": "Removidos: legenda substituída pela Validation Regex."
+     }
+    ]
+   }
+  ]
+ }
+]

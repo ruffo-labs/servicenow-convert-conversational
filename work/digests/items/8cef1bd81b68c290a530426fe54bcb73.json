@@ -1,0 +1,313 @@
+{
+ "sys_id": "8cef1bd81b68c290a530426fe54bcb73",
+ "name": "Designação de beneficiários do seguro de vida",
+ "sys_name": "FORM0000605",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Seguro de Vida",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Utilize este formulário para designar ou alterar os beneficiários do seu seguro de vida.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "32",
+   "variaveis_ativas": "37",
+   "bloqueadores": "3",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "32"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "show_signature"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "show_signature"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": EY: If Beneficiary designation form, Aoop: Validate Percentage"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @title_benef: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @informative_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @informative_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @informative_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @informative_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sim_nao_sem_include_none @has_signature_created: Sim/Nao sem \"Include None\" marcado",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 32 de 32 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 32 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "screen_height",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Screen Height",
+   "hidden": true
+  },
+  {
+   "name": "title_benef",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "do_you_want_to_add_beneficiaries",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to add beneficiaries?",
+   "include_none": true
+  },
+  {
+   "name": "informative_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "informative_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "informative_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "checkbox_1",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I have had prior and express knowledge of the terms of the Contractual Conditions of the chosen plan, as well as the General Insurance Conditions available for consultation on the website https://portal.sulamericaseguros.com.br/"
+  },
+  {
+   "name": "formatter4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "formatter"
+  },
+  {
+   "name": "checkbox_2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I AM AWARE THAT Sul América Seguros de Pessoas e Previdência S.A.* WILL ONLY CONSIDER THE DESIGNATION OF THE BENEFICIARIES INDICATED ABOVE AFTER THIS FORM HAS BEEN FILED WITH THE INSURANCE COMPANY."
+  },
+  {
+   "name": "informative_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "show_signature",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Show Signature",
+   "widget": "EY:Show_Signature"
+  },
+  {
+   "name": "signature_consent",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I agree that this constitutes my electronic signature and has the same legal impact as signing a printed version of this document.",
+   "mandatory": true
+  },
+  {
+   "name": "local",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Local",
+   "reference": "cmn_location"
+  },
+  {
+   "name": "data",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date",
+   "default": " javascript:new GlideDate().getDisplayValue();"
+  },
+  {
+   "name": "form_identifier",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Form Identifier"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "b9fa04801b190110d1abda4ce54bcb1d",
+   "name": "Suas informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "cpf_employee (Texto de Linha Única, ro): CPF",
+    "id_global (Texto de Linha Única, ro): ID Global",
+    "telephone (Texto de Linha Única, ro): Telephone",
+    "mobile_phone (Texto de Linha Única, ro): Mobile Phone",
+    "fax (Texto de Linha Única, ro): Fax",
+    "home_address (Texto de Linha Única, ro): Home Address",
+    "home_address_n (Texto de Linha Única, ro): Home Address Nº",
+    "complementary_residential_address (Texto de Linha Única, ro): Complementary Residential Address",
+    "residential_address_neighborhood (Texto de Linha Única, ro): Residential Address Neighborhood",
+    "residential_address_city (Texto de Linha Única, ro): Residential Address City",
+    "residential_address_uf (Texto de Linha Única, ro): Residential Address UF",
+    "residential_address_cep (Texto de Linha Única, ro): Residential Address CEP",
+    "country (Texto de Linha Única): Country",
+    "email (Texto de Linha Única, ro): E-mail"
+   ]
+  },
+  {
+   "sys_id": "003e17161b2f7010d1abda4ce54bcb85",
+   "name": "Dados do(s) Beneficiário(s)",
+   "order": "350",
+   "perguntas": [
+    "full_name (Texto de Linha Única): Full name",
+    "cpf (Texto de Linha Única): CPF",
+    "affinity (Texto de Linha Única): Affinity",
+    "birth_date (Data): Birth Date",
+    "participation (Texto de Linha Única): Participation",
+    "lembre_se (Texto de Várias Linhas, default): Lembre-se:"
+   ]
+  },
+  {
+   "sys_id": "51ec0bed1bdb5154d1abda4ce54bcbb3",
+   "name": "Tem Assinatura",
+   "order": "10000",
+   "perguntas": [
+    "has_signature_created (Sim/Não, hidden, default): A assinatura foi criada?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide user data",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "country: visible=false",
+    "home_address: visible=false",
+    "residential_address_cep: visible=false",
+    "id_global: visible=false",
+    "mobile_phone: visible=false",
+    "email: visible=false",
+    "complementary_residential_address: visible=false",
+    "residential_address_city: visible=false",
+    "fax: visible=false",
+    "home_address_n: visible=false",
+    "residential_address_neighborhood: visible=false",
+    "cpf_employee: visible=false",
+    "residential_address_uf: visible=false",
+    "telephone: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Add Beneficiaries is YES",
+   "when": "IO:do_you_want_to_add_beneficiaries=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "informative_1: visible=true",
+    "informative_3: visible=true",
+    "beneficiaries_information: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Add Beneficiaries is NO",
+   "when": "IO:do_you_want_to_add_beneficiaries=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "informative_2: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set form sys_id",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que grava o sys_id do próprio formulário numa variável 'form_identifier'. Padrão útil: permite que regras server-side saibam de qual item o registro veio sem depender do sysparm_id da URL."
+  },
+  {
+   "name": "EY:  Hide form identifier",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a variável técnica 'form_identifier' do usuário. Par do script anterior."
+  },
+  {
+   "name": "[AOOP]Set Datas from Maternity Leave",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que busca as datas da licença maternidade chamando x_nasm_hr.RequestMaternityLeaveUtils via GlideAjax. O comentário indica que o Script Include recupera um JSON guardado na sessão."
+  },
+  {
+   "name": "EY: Get screen height for PDF",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que lê a altura da janela do navegador (top.innerHeight) e grava numa variável 'screen_height' — usado depois para dimensionar a geração de PDF. Observação: acessar top.innerHeight pode falhar dentro de iframe por política de mesma origem."
+  },
+  {
+   "name": "ACN:Participation Percentage Requiriment",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o percentual de participação dos beneficiários. Quando há beneficiários, faz parse do JSON do multi-row e confere se os percentuais fecham o exigido."
+  },
+  {
+   "name": "EY: Hide fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde campos. BUG: passa a STRING 'false' em vez do booleano para setVisible em dois campos ('local' e 'data') — string não vazia é valor verdadeiro, então esses campos podem ficar VISÍVEIS em vez de escondidos. Só o primeiro (setDisplay com booleano) funciona como esperado."
+  },
+  {
+   "name": "EY: Mandatory",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que torna obrigatórios o campo de beneficiários e os checkboxes de confirmação."
+  },
+  {
+   "name": "EY: Add local",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche o local do usuário quando ainda está vazio, a partir do colaborador — evita sobrescrever valor já informado."
+  },
+  {
+   "name": "EY:Participation Percentage Requiriment",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do validador de percentual de participação dos beneficiários, disparada por outra variável de controle."
+  },
+  {
+   "name": "ACN: HTR_VerifyE-signature",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando a assinatura eletrônica não foi criada, exibindo mensagem traduzida via getMessage."
+  }
+ ]
+}

@@ -1,0 +1,233 @@
+{
+ "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+ "title": "EY: Hispana Personal Information",
+ "internal_name": "ey_hispana_personal_information",
+ "description": "",
+ "usado_por": 33,
+ "itens_exemplo": [
+  "Solicitação de apólice de seguro / seguro de vida",
+  "Dúvidas, consultas, reclamações ou sugestões relacionadas à Frota",
+  "Dúvidas, consultas, reclamações ou sugestões sobre licenças",
+  "Seguro complementar (saúde, vida e odontológico)",
+  "Serviço de transporte para ir ao trabalho",
+  "Outras solicitações de licença",
+  "Solicitação de serviços funerários",
+  "Solicitar reembolsos de conectividade"
+ ],
+ "variaveis": [
+  {
+   "name": "v_unionized_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Unionized Employee",
+   "hidden": true
+  },
+  {
+   "name": "v_created_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Created by",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_who_is_this_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Who is this request for?",
+   "include_none": true,
+   "choices": [
+    "For me [=for_me]",
+    "For somebody else [=for_somebody_else]"
+   ]
+  },
+  {
+   "name": "v_reason_on_behalf",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for opening on behalf or another person:",
+   "include_none": true,
+   "choices": [
+    "License/Absence [=license_absence]",
+    "No access [=no_access]",
+    "Dosn't know how to use platform [=doesnt_know]"
+   ]
+  },
+  {
+   "name": "v_employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^user.location.countryINARG,COL,CHL,URY,ECU,PER,^user.employee_numberNOT LIKE_old^user.user_nameNOT LIKE_old^user.locked_out=false^EQ"
+  },
+  {
+   "name": "v_employee_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee ID"
+  },
+  {
+   "name": "v_corporate_e_mail",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Corporate e-mail"
+  },
+  {
+   "name": "v_country_of_residence",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Country of Residence",
+   "include_none": true,
+   "choices": [
+    "Argentina [=argentina]",
+    "Chile [=chile]",
+    "Colombia [=colombia]",
+    "Ecuador [=ecuador]",
+    "Peru [=peru]",
+    "Uruguai [=uruguai]"
+   ]
+  },
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  },
+  {
+   "name": "v_manager_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager Name"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Location"
+  },
+  {
+   "name": "v_admission_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Admission Date"
+  },
+  {
+   "name": "v_identity_document",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Identity Document"
+  },
+  {
+   "name": "v_position",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position"
+  },
+  {
+   "name": "v_public",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Public"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide variables in portal",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_manager_name: visible=false",
+    "v_position: visible=false",
+    "v_country_of_residence: mandatory=true",
+    "v_admission_date: visible=false",
+    "v_employee_id: visible=false",
+    "v_corporate_e_mail: ",
+    "v_location: visible=false",
+    "v_public: visible=false",
+    "v_identity_document: visible=false",
+    "v_dni: visible=false",
+    "v_country: visible=false",
+    "v_company: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Show variables to resolver",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee_id: visible=true",
+    "v_position: visible=true",
+    "v_identity_document: visible=true",
+    "v_location: visible=true",
+    "v_country_of_residence: visible=true",
+    "v_public: visible=true",
+    "v_company: visible=true",
+    "v_manager_name: visible=true",
+    "v_dni: visible=true",
+    "v_admission_date: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set Operario Sindicalizado",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que verifica se o operário é sindicalizado, consultando EYHispanic_Employee_Information via GlideAjax."
+  },
+  {
+   "name": "EY: Pre fill Employee info - Some Forms",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad de 8 KB que pré-preenche os dados do colaborador conforme o formulário. Mantém listas de sys_ids de formulários (formsNoOther e outras) para decidir qual conjunto de campos preencher. Mesmo padrão de listas cravadas visto nos catálogos RTR e PTP."
+  },
+  {
+   "name": "EY: ReadOnly Always Form",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "0",
+   "what": "Catalog Client Script onLoad que trava 'v_employee' como somente leitura."
+  },
+  {
+   "name": "EY: For me information",
+   "type": "onChange",
+   "on": "fe5180a41b849250514cbaef4b4bcbf9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta obrigatoriedade e preenchimento quando a solicitação é para o próprio usuário."
+  },
+  {
+   "name": "EY: Fill Created By",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que preenche 'v_created_by' com o usuário logado e trava o campo."
+  },
+  {
+   "name": "EY: Fill Information for Employee",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 2,5 KB que preenche as informações do colaborador (id e demais campos), limpando tudo quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Hide option country of residence",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que, para um formulário específico identificado por sys_id, zera a lista de países de residência com clearOptions e recoloca apenas as opções válidas para aquele caso."
+  }
+ ]
+}

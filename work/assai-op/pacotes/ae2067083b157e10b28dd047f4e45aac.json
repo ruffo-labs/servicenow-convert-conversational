@@ -1,0 +1,70 @@
+{
+ "sys_id": "ae2067083b157e10b28dd047f4e45aac",
+ "name": "Seguro de Vida (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Seguro de Vida",
+ "description": "Seguro de Vida",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de inclusão ou alteração de beneficiários(as) no seguro de vida",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Seguro de Vida"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "life_insurance_form"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "life_insurance_form",
+   "type": "Anexo",
+   "question_text": "Formulário de seguro de vida",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "dd34af403b557e10b28dd047f4e45a9b",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa life_insurance_form (sempre)."
+  }
+ ]
+}

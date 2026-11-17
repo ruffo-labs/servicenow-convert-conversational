@@ -1,0 +1,232 @@
+{
+ "sys_id": "01fc31061b03241032822170f54bcbfc",
+ "status": "dividido",
+ "motivo": "Quatro ofertas de admissão com formulários distintos: data nova, cancelamento (com motivo), dados do contrato e validação de documentação. 7 policy(ies) com condição em variável inexistente (nunca disparavam) foram descartadas.",
+ "vars": {
+  "rfb_irregularity_detail": {
+   "label": "Qual é o detalhe da irregularidade na Receita Federal?"
+  },
+  "rfb_registration_status": {
+   "label": "Qual é a situação cadastral do CPF na Receita Federal?"
+  },
+  "new_admission_date": {
+   "label": "Qual é a nova data de admissão?"
+  },
+  "rh_info_incorrect": {
+   "label": "Qual dado está incorreto?"
+  },
+  "ra_number": {
+   "label": "Qual é o número do RA?"
+  },
+  "registration": {
+   "label": "Qual é a matrícula do colaborador?"
+  },
+  "rh_registration_newly_admitted": {
+   "label": "Qual é a matrícula do recém-admitido?"
+  },
+  "rh_full_name_newly_admitted": {
+   "label": "Qual é o nome completo do recém-admitido?"
+  },
+  "admission_date": {
+   "label": "Qual é a data de admissão atual?"
+  },
+  "reason": {
+   "label": "Qual é o motivo do cancelamento?"
+  },
+  "what_is_the_documentary_discrepancy": {
+   "label": "Qual é a divergência na documentação?"
+  },
+  "cpf": {
+   "label": "Qual é o CPF do colaborador?"
+  },
+  "Attachment": {
+   "label": "Envie o anexo da solicitação."
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_alert_4": "visual",
+  "rh_alert_1": "visual",
+  "formatter2": "visual",
+  "rh_month_undue_discount": "oferta_inativa",
+  "start": "visual",
+  "rh_alert_2": "visual",
+  "rh_alert_3": "visual",
+  "rh_alert_5": "visual"
+ },
+ "policies": {
+  "0a3baf02873c4310182a0d440cbb35e8": "remover",
+  "431dff0e87fc4310182a0d440cbb35de": "remover",
+  "5938f73c3b4e9210b28dd047f4e45a2b": "remover",
+  "61cd2bc6873c4310182a0d440cbb3538": "remover",
+  "65873fb83b4e9210b28dd047f4e45aba": "remover",
+  "7bfc79061b03241032822170f54bcbac": "remover",
+  "7d3500453b02d210b28dd047f4e45a24": "remover",
+  "86baab8e87f84310182a0d440cbb35db": "remover",
+  "90d890893b06d210b28dd047f4e45aca": "remover",
+  "91ba7fb43b8e9210b28dd047f4e45a7b": "remover",
+  "969718053b06d210b28dd047f4e45ad0": "remover",
+  "a15fbe5c87cd4390182a0d440cbb3591": "remover",
+  "b327270687f84310182a0d440cbb35b6": "remover",
+  "b3fa6f8e87f84310182a0d440cbb35cb": "remover",
+  "bbfc79061b03241032822170f54bcba9": "remover",
+  "bd663f5487c98390182a0d440cbb358d": "remover",
+  "c1087ff83b4e9210b28dd047f4e45ab3": "remover",
+  "de6d6bc6873c4310182a0d440cbb35be": "remover",
+  "eb1b6702873c4310182a0d440cbb35f2": "remover",
+  "f13e3b343bce9210b28dd047f4e45ac7": "remover",
+  "f3deb7b43bce9210b28dd047f4e45a17": "remover",
+  "fbfc79061b03241032822170f54bcba6": "remover",
+  "nova_g1_5": {
+   "short_description": "Hide - Informações do Impactado",
+   "conditions": "u_hide_impactado_on_ritm=v2",
+   "actions": {
+    "rh_user_id_impacted": {
+     "mandatory": false
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Alterar data de admissão",
+   "short_description": "Solicitar alteração da data de admissão",
+   "description": "Use para pedir mudança da data de admissão de um candidato. Corresponde à oferta Solicitação de alteração de data de admissão.",
+   "frases_exemplo": [
+    "Preciso mudar a data de admissão",
+    "Adiar a admissão de um candidato",
+    "Trocar a data de entrada do novo colaborador",
+    "Remarcar a admissão"
+   ],
+   "sem_vars": [
+    "rfb_registration_status",
+    "rh_info_incorrect",
+    "ra_number",
+    "registration",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "admission_date",
+    "reason",
+    "what_is_the_documentary_discrepancy",
+    "cpf"
+   ],
+   "vars": {
+    "new_admission_date": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_5",
+    "3d2e238a873c4310182a0d440cbb352f"
+   ]
+  },
+  {
+   "name": "Cancelar admissão",
+   "short_description": "Solicitar cancelamento de admissão",
+   "description": "Use para cancelar uma admissão em andamento. Corresponde à oferta Solicitação de cancelamento de admissão.",
+   "frases_exemplo": [
+    "Quero cancelar uma admissão",
+    "O candidato desistiu da vaga",
+    "Cancelar a admissão do novo colaborador",
+    "Preciso desfazer uma admissão"
+   ],
+   "sem_vars": [
+    "rfb_registration_status",
+    "new_admission_date",
+    "rh_info_incorrect",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "what_is_the_documentary_discrepancy",
+    "Attachment"
+   ],
+   "sem_policies": [
+    "3d2e238a873c4310182a0d440cbb352f"
+   ]
+  },
+  {
+   "name": "Corrigir dados do contrato de admissão",
+   "short_description": "Solicitar correção de dados do contrato",
+   "description": "Use quando há dado incorreto no contrato de um recém-admitido. Corresponde à oferta Solicitação de correção de dados do contrato.",
+   "frases_exemplo": [
+    "O contrato saiu com dado errado",
+    "Corrigir o nome no contrato",
+    "Matrícula do contrato está incorreta",
+    "Preciso ajustar dados do contrato"
+   ],
+   "sem_vars": [
+    "rfb_registration_status",
+    "new_admission_date",
+    "ra_number",
+    "registration",
+    "admission_date",
+    "reason",
+    "what_is_the_documentary_discrepancy",
+    "cpf",
+    "Attachment"
+   ],
+   "vars": {
+    "rh_info_incorrect": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_registration_newly_admitted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_full_name_newly_admitted": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_5",
+    "3d2e238a873c4310182a0d440cbb352f"
+   ]
+  },
+  {
+   "name": "Validar documentação da admissão digital",
+   "short_description": "Solicitar validação de documentação na admissão digital",
+   "description": "Use para pedir a validação da documentação de uma admissão digital, como pendências de regularização na Receita Federal. Corresponde à oferta Solicitação de validação de documentação - Admissão digital.",
+   "frases_exemplo": [
+    "Validar documentos da admissão digital",
+    "CPF do candidato está irregular na Receita",
+    "Documentação do admitido pendente",
+    "Preciso liberar a documentação da admissão"
+   ],
+   "sem_vars": [
+    "new_admission_date",
+    "rh_info_incorrect",
+    "ra_number",
+    "registration",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "admission_date",
+    "reason",
+    "cpf",
+    "Attachment"
+   ],
+   "vars": {
+    "rfb_registration_status": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_5"
+   ]
+  }
+ ],
+ "scripts": {
+  "ec647b8e877c4310182a0d440cbb35d5": {
+   "remover": {
+    "outro": "preenche descrição padrão conforme oferta; coberto pelo derivado"
+   }
+  }
+ }
+}

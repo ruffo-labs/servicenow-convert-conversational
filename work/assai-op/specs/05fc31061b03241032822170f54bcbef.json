@@ -1,0 +1,63 @@
+{
+ "sys_id": "05fc31061b03241032822170f54bcbef",
+ "status": "conversacional",
+ "motivo": "Oferta única; exige números da RP e RA e a fase da admissão.",
+ "vars": {
+  "rh_request_number_rp": {
+   "label": "Qual é o número da Requisição de Pessoal (RP)?"
+  },
+  "rh_admission_request_number_ra": {
+   "label": "Qual é o número da Requisição de Admissão (RA)?"
+  },
+  "what_stage_is_admission_at": {
+   "label": "Em que fase a admissão está?"
+  }
+ },
+ "remover": {
+  "rh_ra_number": "oferta_inativa",
+  "rh_alert_2": "visual",
+  "rh_request_number": "oferta_inativa",
+  "rh_alert_1": "visual",
+  "rh_request_number_adp": "oferta_inativa"
+ },
+ "policies": {
+  "26fe0c651b1a069032822170f54bcbf5": "remover",
+  "8f893c381b6fa090eca40dcbe54bcb04": "remover",
+  "b066a12a1b8fe41032822170f54bcb25": "remover",
+  "b06e94251b9a069032822170f54bcbcc": "remover",
+  "cbd465e51b52469032822170f54bcb74": "remover",
+  "e84f85e21b0fe41032822170f54bcbbd": "remover",
+  "fe5e0d621b0fe41032822170f54bcb19": "remover"
+ },
+ "itens": [
+  {
+   "name": "Problema no processo de admissão (novo fluxo)",
+   "short_description": "Reportar problema sistêmico na admissão",
+   "description": "Use quando a admissão trava por problema no sistema no novo fluxo. Corresponde à oferta Problema no processo admissional - Novo fluxo de admissão.",
+   "frases_exemplo": [
+    "A admissão travou no sistema",
+    "Deu erro na admissão de um candidato",
+    "Problema na ADP na admissão",
+    "Não consigo avançar a admissão",
+    "Sistema da admissão com falha"
+   ],
+   "vars": {
+    "rh_request_number_rp": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_admission_request_number_ra": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "what_stage_is_admission_at": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

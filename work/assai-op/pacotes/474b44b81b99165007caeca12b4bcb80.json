@@ -1,0 +1,174 @@
+{
+ "sys_id": "474b44b81b99165007caeca12b4bcb80",
+ "name": "Kit Material Escolar",
+ "category": "Operação de Benefícios",
+ "short_description": "Kit Material Escolar",
+ "description": "Kit Material Escolar",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados do dependente",
+   "perguntas": [
+    "requested_for_vs",
+    "user_id_impacted_vs",
+    "age",
+    "possui_conjuge_que_trabalha_no_assai",
+    "cpf_impacted_vs",
+    "dependent_cpf",
+    "conjuge_CPF",
+    "dependents_full_name",
+    "date_of_birth"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Cartão Kit Material Escolar não recebido",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Kit Material Escolar N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "colaborador_elegivel_ao_beneficio"
+   ],
+   "passa_a_obrigatoria": [
+    "request_number",
+    "descricao_2"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de Kit Material Escolar",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Kit Material Escolar N2"
+    }
+   ],
+   "sai_do_formulario": [
+    "request_number",
+    "descricao_2"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Dados do dependente (ReadOnly)",
+     "quando": "rh_user_id_impactedISEMPTY^rh_cpf_impactedISEMPTY"
+    },
+    {
+     "policy": "Caso selecionar Solicitação de Kit Material Escolar",
+     "quando": "rh_cpf_impactedISNOTEMPTY^rh_user_id_impactedISNOTEMPTY"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "request_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de solicitação do kit material escolar",
+   "choices": []
+  },
+  {
+   "name": "descricao_2",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "00d8eb163bd13e50b28dd047f4e45aa2",
+   "name": "ALP - Solicitar Kit Ate 07/12 [IGNORE]",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "false",
+   "resumo": "Marcado [IGNORE] no nome. onSubmit: se a data atual for igual ou posterior a 08/12/2025, chama global.GetPropertiesAjax para ler a propriedade solicitacaoKitMaterialEscolar; se a oferta escolhida for a da propriedade, mostra 'O prazo para solicitação de kit material escolar expirou. Entre em contato com o seu Coordenador de RH' e bloqueia o envio. Prazo vencido na data de hoje, então o script já bloquearia se estivesse ativo."
+  },
+  {
+   "sys_id": "06e4d29485ab075057c3e93e45535a00",
+   "name": "ALP-Block Kit Material Escolar Dia 14",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se hoje estiver entre 14/11/2026 e 24/11/2026 e a oferta for 'Solicitação de kit material escolar', mostra 'O prazo para solicitação desse benefício expirou. Entre em contato com o seu Coordenador de RH' e bloqueia o envio. Datas fixas no script."
+  },
+  {
+   "sys_id": "0d41b7163b153e50b28dd047f4e45ac8",
+   "name": "ALP - Show Label Message 07/12",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad, compara a data atual com uma data de referência fixa no código (14/12/2026) e exibe a mensagem v_atencao se a data atual for igual ou posterior; antes disso oculta. Atenção: o comentário do script fala em liberar o kit de material escolar só até 07/12/2025 e referência 08/12/2025, mas o código usa new Date(2026, 11, 14), ou seja, 14/12/2026 (mês 11 = dezembro). Comentário e código divergem."
+  },
+  {
+   "sys_id": "1b8139dc3b2b2a10b28dd047f4e45a73",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "6660d06b3b00b290b28dd047f4e45a37",
+   "name": "ALP - clear mrvs Dados do dependente",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange (mesmo em carregamento, não sai cedo com valor vazio; só sai se isLoading), chama global.GetPropertiesAjax.getProperty para ler a propriedade offering_solicitacao_kit_material_escolar. Se a oferta atual for igual ao retorno, limpa service_offering e zera o múltiplas linhas dados_dos_dependentes (array vazio)."
+  },
+  {
+   "sys_id": "9091f9dc3b2b2a10b28dd047f4e45ae6",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "9c3e3c673b44b290b28dd047f4e45a9b",
+   "name": "ALP - Check User impacted",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange do colaborador impactado, carrega o UI Script x_asat_csc.CheckUserImpactedKitMaterialE (g_ui_scripts.getUIScript) e chama script.check(g_form, rh_user_id_impacted). Não foi lido o conteúdo do UI Script; ele faz a checagem do kit de material escolar para o colaborador."
+  }
+ ]
+}

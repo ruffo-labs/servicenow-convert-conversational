@@ -1,0 +1,236 @@
+{
+ "sys_id": "b65a340d1b2f9558d1abda4ce54bcbc7",
+ "name": "Solicitação de retorno do colaborador",
+ "sys_name": "Employee return request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licenças e Ausências",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Comunicar retorno ao trabalho de colaborador afastado",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "22",
+   "variaveis_ativas": "25",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "22"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_return_exam_two: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_return_exam: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_inss_decision_notice: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 22 de 22 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 22 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 12 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_return_maternity_inss",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is it a return from maternity leave or INSS leave?",
+   "include_none": true,
+   "choices": [
+    "Returning from maternity leave [=return_maternity]",
+    "INSS leave [=inss_leave]"
+   ]
+  },
+  {
+   "name": "employee_return_request",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Employee return request"
+  },
+  {
+   "name": "v_sector",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Sector"
+  },
+  {
+   "name": "v_shift",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Shift",
+   "include_none": true,
+   "choices": [
+    "1º [=shift_1]",
+    "2º [=shift_2]",
+    "3º [=shift_3]",
+    "ADM [=adm]"
+   ]
+  },
+  {
+   "name": "v_administrative_allowance",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Administrative allowance?",
+   "include_none": true
+  },
+  {
+   "name": "v_administrative_allowance_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Administrative allowance start date"
+  },
+  {
+   "name": "v_end_date_of_administrative_allowance",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of administrative allowance"
+  },
+  {
+   "name": "v_alta_beneficio_analise",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Early discharge or benefit under review?",
+   "include_none": true
+  },
+  {
+   "name": "v_date_of_last_day_of_inss_benefit",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of last day of INSS benefit"
+  },
+  {
+   "name": "v_date_of_first_visit_to_the_health_space",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of first visit to the health space"
+  },
+  {
+   "name": "v_date_of_return_to_work_aso_doctor",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of return to work/ASO (doctor)"
+  },
+  {
+   "name": "v_requested_medical_report_or_complementary_exam",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Requested medical report or complementary exam?",
+   "include_none": true
+  },
+  {
+   "name": "v_attach_return_exam",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach return exam"
+  },
+  {
+   "name": "v_attach_return_exam_two",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach return exam"
+  },
+  {
+   "name": "v_attach_the_inss_decision_notice",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the INSS decision notice"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show date fields if adm allowance",
+   "when": "IO:v_administrative_allowance=Yes^IO:v_return_maternity_inss=inss_leave^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_administrative_allowance_start_date: visible=true,mandatory=true",
+    "v_end_date_of_administrative_allowance: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Alta antecipada ou benefício em análise\" is \"No\"",
+   "when": "IO:v_alta_beneficio_analise=No^IO:v_return_maternity_inss=inss_leave^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_date_of_last_day_of_inss_benefit: visible=true,mandatory=true",
+    "v_attach_the_inss_decision_notice: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Alta antecipada ou benefício em análise\" is \"Yes\"",
+   "when": "IO:v_alta_beneficio_analise=Yes^IO:v_return_maternity_inss=inss_leave^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_inss_decision_notice: mandatory=false",
+    "v_date_of_last_day_of_inss_benefit: "
+   ]
+  },
+  {
+   "name": "EY: If \" Retorno Licença maternidade\"",
+   "when": "IO:v_return_maternity_inss=return_maternity^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_return_exam: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Afastamento INSS\"",
+   "when": "IO:v_return_maternity_inss=inss_leave^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_requested_medical_report_or_complementary_exam: visible=true,mandatory=true",
+    "v_sector: visible=true,mandatory=true",
+    "v_date_of_first_visit_to_the_health_space: visible=true,mandatory=true",
+    "v_alta_beneficio_analise: visible=true,mandatory=true",
+    "employee_return_request: visible=true,mandatory=true",
+    "v_administrative_allowance: visible=true,mandatory=true",
+    "vs_solicitation_to_whom: visible=true,mandatory=true",
+    "v_description: visible=true,mandatory=true",
+    "v_attach_return_exam_two: visible=true,mandatory=true",
+    "v_date_of_return_to_work_aso_doctor: visible=true,mandatory=true",
+    "v_attach_the_inss_decision_notice: visible=true,mandatory=true",
+    "v_shift: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_return_maternity_inss: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

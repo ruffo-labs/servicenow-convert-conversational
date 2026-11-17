@@ -1,0 +1,132 @@
+{
+ "sys_id": "9389d3c02cfb4fe6a25604e3f73d55e7",
+ "status": "dividido",
+ "motivo": "Avaliar capacidade pede bancos, período e crescimento; dimensionar infraestrutura para projeto pede volume, crescimento projetado, disponibilidade e prazo. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_banco_s_em_analise": {
+   "label": "Quais bancos devem ser analisados?"
+  },
+  "v_periodo_de_analise": {
+   "label": "Qual período deve ser analisado?"
+  },
+  "v_crescimento_atual": {
+   "label": "Qual o crescimento atual do banco?"
+  },
+  "v_previsao_de_crescimento": {
+   "label": "Qual a previsão de crescimento?"
+  },
+  "v_criticidade": {
+   "label": "Qual a criticidade desse pedido?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_volume_usuarios_transacoes": {
+   "label": "Qual o volume de usuários e transações esperado?"
+  },
+  "v_crescimento_projetado": {
+   "label": "Qual o crescimento projetado do projeto?"
+  },
+  "v_disponibilidade_requerida": {
+   "label": "Que disponibilidade o projeto exige?"
+  },
+  "v_prazo": {
+   "label": "Qual o prazo desejado?"
+  }
+ },
+ "policies": {
+  "102609ef477c4876bf4e71b0d7bb295c": "remover",
+  "9145e4092ca143d09630e98939f0ed71": "remover"
+ },
+ "itens": [
+  {
+   "name": "Avaliar capacidade de banco de dados",
+   "short_description": "Peça uma avaliação de consumo e crescimento de bancos de dados.",
+   "description": "Use para analisar consumo e crescimento de bancos. Corresponde à opção Avaliar capacidade de banco. Informe bancos, período, crescimento atual, previsão e criticidade.",
+   "frases_exemplo": [
+    "Preciso avaliar a capacidade de um banco",
+    "O banco está crescendo muito, quero uma análise",
+    "Quanto espaço o banco ainda tem?",
+    "Quero uma previsão de crescimento do banco",
+    "Preciso analisar o consumo do banco de dados"
+   ],
+   "sem_vars": [
+    "v_volume_usuarios_transacoes",
+    "v_crescimento_projetado",
+    "v_disponibilidade_requerida",
+    "v_prazo"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Avaliar capacidade de banco"
+   },
+   "vars": {
+    "v_banco_s_em_analise": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_periodo_de_analise": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_crescimento_atual": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_previsao_de_crescimento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Dimensionar infraestrutura de banco para um projeto",
+   "short_description": "Peça o dimensionamento da infraestrutura de dados de um projeto.",
+   "description": "Use para dimensionar infraestrutura de banco para um novo projeto. Corresponde à opção Dimensionar infraestrutura para projeto. Informe volume de usuários e transações, crescimento projetado, disponibilidade, criticidade e prazo.",
+   "frases_exemplo": [
+    "Preciso dimensionar o banco para um projeto novo",
+    "Quanto de infraestrutura meu projeto vai precisar?",
+    "Quero estimar recursos de banco para um sistema",
+    "Vou lançar um sistema e preciso de dimensionamento",
+    "Preciso de sizing de banco para um projeto"
+   ],
+   "sem_vars": [
+    "v_banco_s_em_analise",
+    "v_periodo_de_analise",
+    "v_crescimento_atual",
+    "v_previsao_de_crescimento"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Dimensionar infraestrutura para projeto"
+   },
+   "vars": {
+    "v_volume_usuarios_transacoes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_crescimento_projetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_disponibilidade_requerida": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_prazo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

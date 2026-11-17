@@ -1,0 +1,199 @@
+{
+ "sys_id": "c2fed4948715fa10182a0d440cbb3551",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Observação (Bradesco) - Beneficiário(a) não consegue ser atendido(a); ALP - Observação (Notredame Intermédica) - Beneficiário(a) não consegue ser atendido(a).",
+ "vars": {
+  "v_medical_report": {
+   "label": "Relatório médico"
+  },
+  "v_policyholder_or_dependent": {
+   "label": "Titular ou dependente?"
+  },
+  "v_dependent_cpf_attach": {
+   "label": "CPF do(a) dependente"
+  },
+  "v_dependent_name": {
+   "label": "Nome do(a) dependente"
+  },
+  "v_policyholder_phone": {
+   "label": "Telefone do(a) titular"
+  },
+  "v_cpf_dependent": {
+   "label": "CPF do (a) dependente"
+  },
+  "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive": {
+   "label": "Qual o nome da clínica/hospital que o beneficiário(a) não conseguiu ser atendido?"
+  },
+  "v_reason_solicitation": {
+   "label": "Informar motivo da solicitação"
+  },
+  "v_number_holder_card": {
+   "label": "Nº da carteirinha do(a) titular"
+  },
+  "v_estimated_date_childbirth": {
+   "label": "Data estimada do parto"
+  },
+  "v_reason_solicitation_exemption": {
+   "label": "Motivo da solicitação"
+  },
+  "v_operating_name": {
+   "label": "Nome da operadora"
+  },
+  "v_exemption_for_the_dependent": {
+   "label": "A isenção é para o(a) dependente?"
+  },
+  "v_number_dependent_card": {
+   "label": "Nº da carteirinha do(a) dependente"
+  },
+  "v_reason_of_service_not_being_performed": {
+   "label": "Motivo do atendimento não realizado"
+  }
+ },
+ "remover": {
+  "v_observation_intermedica": "visual",
+  "v_observation_medical_assist": "visual",
+  "formatter2": "visual",
+  "v_observation_medical_report": "visual",
+  "v_observation_cancel_assist": "visual",
+  "v_start": "visual",
+  "v_atention": "visual",
+  "v_inclusion_form": "oferta_inativa",
+  "v_atention_medical_assist": "visual",
+  "v_observation_exemption": "visual",
+  "formatter": "visual",
+  "v_cancel_form": "oferta_inativa",
+  "v_observation_bradesco": "visual"
+ },
+ "policies": {
+  "34cb47093b19f250b28dd047f4e45a74": "remover",
+  "42111f453b59f250b28dd047f4e45a84": "remover",
+  "425407453bd5f250b28dd047f4e45a84": "remover",
+  "4e304bc13b95f250b28dd047f4e45adb": "remover",
+  "4ea353cd3b59f250b28dd047f4e45ade": "remover",
+  "6d40f8ee3b993e50b28dd047f4e45a4f": "remover",
+  "7580f4ee3b993e50b28dd047f4e45a64": "remover",
+  "a5f487c53bd5f250b28dd047f4e45a65": "remover",
+  "bcbfba813b95f250b28dd047f4e45a86": "remover",
+  "cb4a0f053b19f250b28dd047f4e45a5e": "remover",
+  "d431cf453b95f250b28dd047f4e45a94": "remover",
+  "f053d38d3b59f250b28dd047f4e45a31": "remover",
+  "nova_g1_1": {
+   "short_description": "ALP - Qual o nome da clínica/hospital que o beneficiário(a) não conseguiu ser atendido? - Beneficiário(a) não consegue ser atendido(a)",
+   "conditions": "v_policyholder_or_dependentANYTHING",
+   "actions": {
+    "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_7": {
+   "short_description": "ALP - Motivo do atendimento não realizado - Beneficiário(a) não consegue ser atendido(a)",
+   "conditions": "v_policyholder_or_dependentANYTHING",
+   "actions": {
+    "v_reason_of_service_not_being_performed": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_8": {
+   "short_description": "ALP - Nome do(a) dependente - Beneficiário(a) não consegue ser atendido(a) - Solicitação de 2ª via da carteirinha Bradesco Saúde - Solicitação de isenção de coparticipação",
+   "conditions": "v_policyholder_or_dependentINv_dependent,v_both",
+   "actions": {
+    "v_dependent_name": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Assistência Médica (Autoatendimento - Gestão de Gente - servico)",
+   "short_description": "Assistência Médica",
+   "description": "Assist ncia M dica",
+   "frases_exemplo": [
+    "Solicitação de 2ª via da carteirinha Bradesco Saúde",
+    "Solicitação de isenção de coparticipação"
+   ],
+   "sem_vars": [
+    "v_which_name_of_the_clinic_hospital_where_beneficiary_was_unable_to_receive",
+    "v_reason_of_service_not_being_performed"
+   ],
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_7",
+    "nova_g1_8",
+    "15cb36493b55f250b28dd047f4e45a2a",
+    "6ddfec6e3b993e50b28dd047f4e45a3e",
+    "945ea4ea3b993e50b28dd047f4e45a8f",
+    "beebba493b55f250b28dd047f4e45ac4"
+   ]
+  },
+  {
+   "name": "Assistência Médica (Autoatendimento - Gestão de Gente - problema)",
+   "short_description": "Assistência Médica",
+   "description": "Assist ncia M dica",
+   "frases_exemplo": [
+    "Beneficiário(a) não consegue ser atendido(a)"
+   ],
+   "sem_vars": [
+    "v_medical_report",
+    "v_dependent_cpf_attach",
+    "v_policyholder_phone",
+    "v_cpf_dependent",
+    "v_reason_solicitation",
+    "v_number_holder_card",
+    "v_estimated_date_childbirth",
+    "v_reason_solicitation_exemption",
+    "v_exemption_for_the_dependent",
+    "v_number_dependent_card"
+   ],
+   "vars": {
+    "v_policyholder_or_dependent": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_operating_name": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "0e1bae2a3b29ba10b28dd047f4e45a21",
+    "11be6cea3b993e50b28dd047f4e45a06",
+    "15cb36493b55f250b28dd047f4e45a2a",
+    "1a780b013b19f250b28dd047f4e45af5",
+    "1d5f47cd3b19f250b28dd047f4e45a7d",
+    "29398b813b19f250b28dd047f4e45a1c",
+    "2edac3853b19f250b28dd047f4e45a3b",
+    "2f1030ee3b993e50b28dd047f4e45af1",
+    "3cee202e3b993e50b28dd047f4e45a4d",
+    "560b626a3b29ba10b28dd047f4e45a8e",
+    "61c0c7053b95f250b28dd047f4e45a4a",
+    "628e68ea3b993e50b28dd047f4e45a7c",
+    "6ddfec6e3b993e50b28dd047f4e45a3e",
+    "7bd074223bd93e50b28dd047f4e45af8",
+    "824138623bd93e50b28dd047f4e45aaa",
+    "88a05bc13b59f250b28dd047f4e45a2e",
+    "945ea4ea3b993e50b28dd047f4e45a8f",
+    "97aacb453b19f250b28dd047f4e45a53",
+    "988f20ae3b993e50b28dd047f4e45ae1",
+    "98f9be053b55f250b28dd047f4e45a9a",
+    "a811f8223bd93e50b28dd047f4e45a83",
+    "b9ff60ee3b993e50b28dd047f4e45a87",
+    "beebba493b55f250b28dd047f4e45ac4",
+    "ce2fa06e3b993e50b28dd047f4e45a8d",
+    "d060db813b59f250b28dd047f4e45ae3",
+    "dbb078223bd93e50b28dd047f4e45aef",
+    "dcbf60ae3b993e50b28dd047f4e45a24",
+    "f35b72093b55f250b28dd047f4e45a12",
+    "f6f80b813b19f250b28dd047f4e45a81",
+    "fe0b3ac53b55f250b28dd047f4e45aa6"
+   ]
+  }
+ ]
+}

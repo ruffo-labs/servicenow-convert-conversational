@@ -1,0 +1,264 @@
+{
+ "sys_id": "b6290e291b19e110d1abda4ce54bcb04",
+ "title": "EY: Company: NTCO - Subcompany",
+ "internal_name": "ey_company_ntco_subcompany",
+ "description": "EY: Company: NTCO - Subcompany",
+ "usado_por": 4,
+ "itens_exemplo": [
+  "Solicitar Pagamento de Serviço Internacional",
+  "Comprovante de Pagamento Internacional",
+  "Solicitar criação de pagamento manual e ITP",
+  "Solicitar Criação de Pedido de Compra, Folha de Serviço e Aceite de Folha de Serviço"
+ ],
+ "variaveis": [
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The request is for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "called_area",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which area will the call be opened?",
+   "include_none": true,
+   "choices": [
+    "Legal [=juridico]",
+    "Corporate HR [=rh_corporativo]",
+    "Investor relations [=relacao_investidores]",
+    "CSC [=csc]",
+    "Avon Industrial [=avon_industrial]",
+    "Controladoria [=controladoria]",
+    "Desenvolvimento de Produto [=desenvolvimento_produto]",
+    "Força de Vendas [=forca_vendas]",
+    "Instituto Natura [=instituto_natura]",
+    "Inteligência de Mercado [=inteligencia_mercado]",
+    "Internacionalização [=internacionalizacao]",
+    "Natura Pay [=natura_pay]",
+    "O&L [=oel]",
+    "Omnicanal [=omnicanal]",
+    "Proativa [=proativa]",
+    "Seguros [=seguros]",
+    "Serviços Comerciais CSC [=servicos_comerciais_csc]",
+    "Varejo [=varejo]",
+    "Diretoria de Vendas & Jornada Brasil [=diretoria_vendas_jornada_brasil]",
+    "HR Benefits Wallet [=carteira_rh_beneficios]",
+    "Outros [=outros]"
+   ]
+  },
+  {
+   "name": "called_area_others",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Add Area Name"
+  },
+  {
+   "name": "vs_responsible_area2",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Indicate the area responsible for hiring",
+   "include_none": true
+  },
+  {
+   "name": "vs_subcategory2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Subcategory",
+   "reference": "x_nasm_ptp_area_responsible_for_hiring",
+   "ref_qual": "javascript: 'responsible_area=' + current.variables.vs_responsible_area2"
+  },
+  {
+   "name": "vs_which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "The request is for which sub-company?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_which_company + '^nameNOT LIKE331'",
+   "include_none": true
+  },
+  {
+   "name": "vs_which_sub_company_2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "The request is for which sub-company?",
+   "reference": "core_company",
+   "ref_qual": "name=EC30 - N&CO Ecuador S.A.S^u_brand=Natura^EQ",
+   "include_none": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide subcompany if 'varejo'",
+   "when": "IO:called_area=varejo^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_sub_company: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide Country",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Read Only Variables in task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "called_area: visible=true,readonly=true",
+    "vs_which_company: readonly=true",
+    "called_area_others: visible=true,readonly=true",
+    "vs_which_sub_company: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Variables in Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields - \"Subcategory\" and \"Responsible Area\"",
+   "when": "IO:called_area=diretoria_vendas_jornada_brasil^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_responsible_area: visible=true,mandatory=true",
+    "vs_subcategory2: visible=true,mandatory=true",
+    "vs_responsible_area2: visible=true,mandatory=true",
+    "vs_subcategory: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Tratando o campo de \"Adicione o nome da área\"",
+   "when": "IO:called_area=outros^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "called_area_others: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set Country 2",
+   "type": "onChange",
+   "on": "b81caaec87db9a50ec360e530cbb359a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company_2'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "EY: Clear country",
+   "type": "onChange",
+   "on": "b81caaec87db9a50ec360e530cbb359a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_country' apenas quando o novo valor fica vazio."
+  },
+  {
+   "name": "EY: Hide subcompany if 'varejo'",
+   "type": "onChange",
+   "on": "be1f796c1bdc8a10a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que esconde e desobriga a sub-empresa quando a área é 'varejo'."
+  },
+  {
+   "name": "EY: Set Country",
+   "type": "onChange",
+   "on": "0f7a426d1b19e110d1abda4ce54bcb75",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company' (sem sufixo). Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "EY: Validate the form for the area field",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que só exibe 'called_area' em dois formulários específicos, comparando o sys_id contra dois valores fixos. BUG: declara duas variáveis (sysId e sysId_2) recebendo exatamente o mesmo g_form.getUniqueValue(), e compara cada uma com um sys_id diferente usando AND. Como as duas guardam o mesmo valor, a condição só é falsa se o formulário for um dos dois — funciona por acidente, mas a intenção escrita não é a executada."
+  },
+  {
+   "name": "EY: Clear vs_which_sub_company",
+   "type": "onChange",
+   "on": "d9490e291b19e110d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_which_sub_company' e 'vs_which_sub_company_2'."
+  },
+  {
+   "name": "EY: Hide sub companies",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que decide quais sub-empresas exibir a partir de listas de sys_ids de formulários (formEC30, others). Mesmo padrão de listas cravadas visto no catálogo RTR."
+  },
+  {
+   "name": "EY: Hide option 'Mercados'",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove a opção 'markets' da lista de área responsável, apenas num formulário específico identificado por sys_id."
+  },
+  {
+   "name": "EY: Hide option 'Varejo'",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que acrescenta a opção 'Varejo' à lista de áreas em dois formulários específicos e a remove nos demais."
+  },
+  {
+   "name": "EY: Clear country",
+   "type": "onChange",
+   "on": "0f7a426d1b19e110d1abda4ce54bcb75",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_country' apenas quando o novo valor fica vazio."
+  },
+  {
+   "name": "EY: Hide option 'Diretoria de Vendas '",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que acrescenta a opção 'Diretoria de Vendas & Jornada Brasil' num formulário específico e a remove nos demais."
+  },
+  {
+   "name": "EY: Hide company",
+   "type": "onChange",
+   "on": "d9490e291b19e110d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que esconde empresas conforme listas de sys_ids de formulários. Observação: a lista formEC30 está com o único sys_id comentado e uma string vazia no lugar — na prática a lista não casa com nada."
+  },
+  {
+   "name": "EY: Clear vs_subcategory2",
+   "type": "onChange",
+   "on": "79e6567787b716d0ec360e530cbb3582",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_subcategory2'."
+  }
+ ]
+}

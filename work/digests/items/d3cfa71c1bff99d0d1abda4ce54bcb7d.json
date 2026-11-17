@@ -1,0 +1,184 @@
+{
+ "sys_id": "d3cfa71c1bff99d0d1abda4ce54bcb7d",
+ "name": "Consulta/aplicação de pagamento",
+ "sys_name": "Sending proof of payment / Bank search",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamados para consulta e aplicação de pagamento",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "25",
+   "variaveis_ativas": "26",
+   "bloqueadores": "0",
+   "avisos": "17",
+   "perguntas_sem_conversational_label": "25"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_payment: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_franchisee_code_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_representative_email_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_representative_cnpj_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_consultant_name_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_representative_code_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_consultant_code_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_representative_name_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_franchisee_cnpj_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_franchisee_name_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_franchisee_email_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_consultant_email_new_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_consultant_cnpj_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 25 de 25 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 25 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 23 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_claim_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the number of the claimed title?"
+  },
+  {
+   "name": "v_what_installment",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What's the installment?"
+  },
+  {
+   "name": "v_value_installment",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the value of the installment?"
+  },
+  {
+   "name": "v_maturity_bond",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the maturity of the bond?"
+  },
+  {
+   "name": "v_status_title",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the status of the title?"
+  },
+  {
+   "name": "v_what_request",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is your request?"
+  },
+  {
+   "name": "v_mandatory_attach",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "It is mandatory to attach proof. If you have the ticket, attach it below along with the receipt."
+  },
+  {
+   "name": "v_attach_payment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach proof of payment for the title claimed"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "e7c6a4311bffd154d1abda4ce54bcb54",
+   "name": "EY: Company:Natura/Avon/TBS - Collaborator - Code",
+   "order": "10",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company is your request for?",
+    "vs_subcompany (Referência): Which sub-company is the service for?",
+    "vs_data_search (Selecionar Caixa): What data do you want to search for?",
+    "vs_consultant_name_new_2 (Texto de Linha Única): Consultant's name",
+    "v_pesquisar_cpf (Texto de Linha Única): Search by CPF/CNPJ",
+    "vs_consultant_cnpj_new (Referência): Consultant's name",
+    "vs_consultant_code_new_2 (Texto de Linha Única): Consultant's code search",
+    "vs_consultant_email_new_2 (Texto de Linha Única): Consultant's email search",
+    "vs_representative_name_new_2 (Texto de Linha Única): Representative's name",
+    "vs_representative_cnpj_new (Referência): Representative's name",
+    "vs_representative_code_new_2 (Texto de Linha Única): Representative's code search",
+    "vs_representative_email_new_2 (Texto de Linha Única): Representative's email search",
+    "vs_franchisee_name_new (Referência): Franchisee's name",
+    "vs_franchisee_cnpj_new (Referência): Franchisee's name",
+    "vs_franchisee_code_new (Referência): Franchisee's code search",
+    "vs_franchisee_email_new (Referência): Franchisee's email search",
+    "vs_franchisee_code (Texto de Linha Única, ro): Franchisee Code"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "900",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_maturity_bond: mandatory=true",
+    "v_attach_payment: mandatory=true",
+    "v_what_request: mandatory=true",
+    "v_what_installment: mandatory=true",
+    "v_value_installment: mandatory=true",
+    "v_claim_number: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Select Franchisee",
+   "when": "IO:1b64bf9c1b33d9d0d1abda4ce54bcb19=TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Show Select Representative",
+   "when": "IO:1b64bf9c1b33d9d0d1abda4ce54bcb19=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Show Select Consultant",
+   "when": "IO:1b64bf9c1b33d9d0d1abda4ce54bcb19=Natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Remove TBS",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove a opção 'TBS' da lista 'vs_company'."
+  },
+  {
+   "name": "EY: Clear sub-company and select person",
+   "type": "onChange",
+   "on": "1b64bf9c1b33d9d0d1abda4ce54bcb19",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a sub-empresa e as três variáveis de seleção de pessoa: consultor, representante e franqueado."
+  }
+ ]
+}

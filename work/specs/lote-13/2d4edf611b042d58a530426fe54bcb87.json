@@ -1,0 +1,33 @@
+{
+ "sys_id": "2d4edf611b042d58a530426fe54bcb87",
+ "status": "conversacional",
+ "motivo": "Intenção única de tirar dúvida sobre o processo de RPE, com duas perguntas (tipo de dúvida e descrição). Variáveis de apresentação (containers e rich text) não coletam dado e saem da conversa; a policy sem condição vira mandatory direto nas variáveis e o script que limpava o campo de descrição é removido por não ter efeito útil.",
+ "vars": {
+  "v_what_type_of_doubt_do_you_have": {
+   "label": "Sobre qual assunto é a sua dúvida de RPE?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_report_your_query": {
+   "label": "Conte qual é a sua dúvida.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_faq_doubts_in_the_rpe_process": "visual",
+  "v_describe_your_question_about_the_rpe_process": "visual",
+  "formatter2": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "2f281bf51b082198a530426fe54bcb0c": "remover"
+ },
+ "scripts": {
+  "222a500d1b2c2554a530426fe54bcb2f": {
+   "remover": "sem_efeito"
+  }
+ }
+}

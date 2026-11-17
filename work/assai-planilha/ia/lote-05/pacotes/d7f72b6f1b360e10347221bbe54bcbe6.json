@@ -1,0 +1,268 @@
+{
+ "sys_id": "d7f72b6f1b360e10347221bbe54bcbe6",
+ "name": "Reembolso de Óculos (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Reembolso de Óculos ou Lentes Corretivas",
+ "description": "Reembolso de &Oacute;culos ou Lentes Corretivas",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Localidade do cliente RH",
+   "perguntas": [
+    "vs_number",
+    "public_place",
+    "neighbor_not_found",
+    "country",
+    "city_not_found",
+    "neighbor",
+    "state_not_found",
+    "city",
+    "state",
+    "street_not_found",
+    "complement",
+    "cep"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios",
+    "item": "Reembolso de Óculos"
+   },
+   "ofertas": [
+    {
+     "name": "Não recebimento de reembolso de óculos ou lentes corretivas -  Reembolso de Óculos",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Reembolso de Óculos"
+    }
+   ],
+   "sai_do_formulario": [
+    "comprovante_dos_dados_bancarios",
+    "checking_account",
+    "agency",
+    "bank",
+    "comprovante_de_endereco",
+    "nota_fiscal_da_compra",
+    "pedido_m_dico_com_carimbo_e_crm",
+    "v_role"
+   ],
+   "passa_a_obrigatoria": [
+    "numero_do_chamado_de_reembolso",
+    "does_note_receive_a_refund"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Reembolso de óculos não recebido (Gestor/RH Ponta)",
+     "description": "Use quando o reembolso de óculos ou lentes corretivas de um colaborador não foi recebido. Corresponde à oferta Não recebimento de reembolso de óculos ou lentes corretivas."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios",
+    "item": "Reembolso de Óculos"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de reembolso de óculos ou lentes corretivas",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Reembolso de Óculos"
+    }
+   ],
+   "sai_do_formulario": [
+    "numero_do_chamado_de_reembolso",
+    "does_note_receive_a_refund"
+   ],
+   "passa_a_obrigatoria": [
+    "comprovante_dos_dados_bancarios",
+    "checking_account",
+    "agency",
+    "bank",
+    "comprovante_de_endereco",
+    "nota_fiscal_da_compra",
+    "pedido_m_dico_com_carimbo_e_crm",
+    "v_role"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Solicitar reembolso de óculos (Gestor/RH Ponta)",
+     "description": "Use para pedir reembolso de óculos ou lentes de um colaborador, com nota, pedido médico e dados bancários. Corresponde à oferta Solicitação de reembolso de óculos ou lentes corretivas."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "comprovante_dos_dados_bancarios",
+   "type": "Anexo",
+   "question_text": "Comprovante dos dados Bancários",
+   "choices": [],
+   "label_atual": "Envie o comprovante dos dados bancários."
+  },
+  {
+   "name": "checking_account",
+   "type": "Texto de Linha Única",
+   "question_text": "Conta Corrente (com dígito, se houver)",
+   "choices": [],
+   "label_atual": "Qual é o número da conta corrente, com dígito?"
+  },
+  {
+   "name": "numero_do_chamado_de_reembolso",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de reembolso",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado de reembolso?"
+  },
+  {
+   "name": "agency",
+   "type": "Texto de Linha Única",
+   "question_text": "Agência",
+   "choices": [],
+   "label_atual": "Qual é a agência da conta?"
+  },
+  {
+   "name": "bank",
+   "type": "Selecionar Caixa",
+   "question_text": "Banco",
+   "choices": [
+    "004 - Banco do Nordeste do Brasil S.A",
+    "323 - Mercadopago.Com Representacoes Ltda",
+    "041 - Banco do Estado do Rio Grande do Sul S.A (Banrisul)",
+    "735 - Neon Pagamentos S.A",
+    "237 - Bradesco BBI S.A",
+    "341 - Itaú Unibanco Banco Múltiplo S.A",
+    "412 - Banco Capital S.A",
+    "033 - Banco Santander S.A",
+    "260 - Nu Pagamentos S.A",
+    "318 - Banco BMG S.A",
+    "001 - Banco do Brasil S.A",
+    "037 - Banco do Estado do Pará S.A",
+    "637 - Banco Sofisa S.A",
+    "380 - Picpay Servicos S.A",
+    "003 - Banco da Amazonia S.A"
+   ],
+   "label_atual": "Qual é o banco?"
+  },
+  {
+   "name": "comprovante_de_endereco",
+   "type": "Anexo",
+   "question_text": "Comprovante de endereço",
+   "choices": [],
+   "label_atual": "Envie um comprovante de endereço."
+  },
+  {
+   "name": "nota_fiscal_da_compra",
+   "type": "Anexo",
+   "question_text": "Nota Fiscal da Compra",
+   "choices": [],
+   "label_atual": "Envie a nota fiscal da compra."
+  },
+  {
+   "name": "pedido_m_dico_com_carimbo_e_crm",
+   "type": "Anexo",
+   "question_text": "Pedido médico (Com carimbo e CRM)",
+   "choices": [],
+   "label_atual": "Envie o pedido médico com carimbo e CRM."
+  },
+  {
+   "name": "does_note_receive_a_refund",
+   "type": "Anexo",
+   "question_text": "Anexar o comprovante bancário demonstrando o não recebimento do reembolso",
+   "choices": [],
+   "label_atual": "Envie o comprovante bancário que mostra o não recebimento."
+  },
+  {
+   "name": "v_role",
+   "type": "Selecionar Caixa",
+   "question_text": "Cargo",
+   "choices": [
+    "Diretor",
+    "Diretor Geral",
+    "Colaborador",
+    "Gerente"
+   ],
+   "label_atual": "Qual é o cargo do colaborador?"
+  }
+ ],
+ "tecnicas_ocultas": [
+  "v_case_aberto_cadastro_conta_sap"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "77c71da98760d6100ac543370cbb35b5",
+   "name": "ALP - Check Chamados (Offering)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma verificação de chamado duplicado de reembolso de óculos, disparada pelo onChange da oferta (service_offering) quando há colaborador impactado: chama x_asat_csc.CSAAjax.checkReembolsoOculos e, se já existe solicitação (exist=true), limpa a oferta e mostra erro com número do Case e link; senão esconde a mensagem."
+  },
+  {
+   "sys_id": "d6a1fddc3b2b2a10b28dd047f4e45af2",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "dfa1fddc3b2b2a10b28dd047f4e45a63",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "e81a117187e05a100ac543370cbb359f",
+   "name": "ALP - Check Chamados (Impactado)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do colaborador impactado (rh_user_id_impacted), se há oferta selecionada lê o service_offering por getReference. Quando a oferta é 'Solicitação de reembolso de óculos ou lentes corretivas', mostra 'Buscando Chamados...' e chama x_asat_csc.CSAAjax.checkReembolsoOculos (impactado, oferta). O retorno é um JSON: se exist=true, esconde a mensagem, limpa o service_offering e mostra erro com número do Case e link do chamado existente; senão, apenas esconde a mensagem. Bloqueia pedido duplicado."
+  }
+ ]
+}

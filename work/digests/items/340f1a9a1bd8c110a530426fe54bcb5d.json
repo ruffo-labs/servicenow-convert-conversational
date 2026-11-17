@@ -1,0 +1,40 @@
+{
+ "sys_id": "340f1a9a1bd8c110a530426fe54bcb5d",
+ "name": "Alterar dados de conta bancária",
+ "sys_name": "Change bank account details",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Mudou o tipo da sua conta e precisa alterar? Acesse o sistema e atualize a seguir.",
+ "description": "Clique em acessar a plataforma para ser direcionado ao Workday.\nEm caso de dúvidas para alterar dados bancários, clique aqui.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "apto",
+  "resumo": {
+   "perguntas": "0",
+   "variaveis_ativas": "0",
+   "bloqueadores": "0",
+   "avisos": "0",
+   "perguntas_sem_conversational_label": "0"
+  },
+  "bloqueadores": [],
+  "avisos": []
+ },
+ "producer_script": "",
+ "variaveis": [],
+ "variable_sets": [],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "EY: hide submit button",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que IMPEDE o envio sempre (`var result = false`) e em vez disso redireciona o usuário para uma URL externa do Workday. Na prática o formulário não cria chamado: serve só de ponte para outra plataforma. Há uma mensagem orientando o clique em 'acessar a plataforma' comentada."
+  }
+ ]
+}

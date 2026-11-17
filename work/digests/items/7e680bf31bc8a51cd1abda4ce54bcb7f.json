@@ -1,0 +1,117 @@
+{
+ "sys_id": "7e680bf31bc8a51cd1abda4ce54bcb7f",
+ "name": "Aprovar reembolsos diários por país",
+ "sys_name": "Approve daily refunds by country",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Solicitar programação de pagamento de reembolso para consultoras/representantes/franqueados",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "8",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_payment_list: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_number_of_refunds_requested",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of refunds requested?"
+  },
+  {
+   "name": "v_which_currency",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which currency",
+   "include_none": true,
+   "choices": [
+    "Argentina - Argentine Peso (ARS) [=argentina]",
+    "Brazil - Real(BRL) [=brazil]",
+    "Colombia - Colombian Peso (COP) [=colombia]",
+    "Chile - Chilean Peso (CLP) [=chile]",
+    "Equador - Dolar Americano (USD) [=equador]",
+    "Mexico - Mexican Peso (MXN) [=mexico]",
+    "Peru - Soles (SUN) [=peru]"
+   ]
+  },
+  {
+   "name": "v_what_is_the_refund_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the refund amount?"
+  },
+  {
+   "name": "v_attach_payment_list",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach a payment list"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "64da79341ba5fd50a530426fe54bcb7e",
+   "name": "EY VS - Empresas Natura/Avon",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide fields VS ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_opened_by: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_country_is_the_refund_for: mandatory=true",
+    "v_attach_payment_list: mandatory=true",
+    "v_number_of_refunds_requested: mandatory=true",
+    "v_what_is_the_refund_amount: mandatory=true",
+    "v_which_currency: mandatory=true",
+    "select_the_approver: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide TBS",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove a opção 'tbs' da lista de empresas, escondendo a TBS deste formulário."
+  }
+ ]
+}

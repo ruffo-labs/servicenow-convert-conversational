@@ -1,0 +1,70 @@
+{
+ "sys_id": "45555aab583541dd86415fea01823ab7",
+ "status": "dividido",
+ "motivo": "Certificado digital pede coligada e filial; dúvidas, melhorias e parametrização só pedem descrição. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_coligada": {
+   "label": "De qual coligada é o pedido?"
+  },
+  "v_filial": {
+   "label": "De qual filial é o pedido?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  }
+ },
+ "policies": {
+  "67fed197bbd945e280b3e37ec8367522": "remover"
+ },
+ "itens": [
+  {
+   "name": "Solicitar certificado digital no Guardian",
+   "short_description": "Peça certificado digital do Guardian para uma coligada e filial.",
+   "description": "Use para certificado digital do Guardian. Corresponde à opção Certificado Digital. Informe coligada e filial.",
+   "frases_exemplo": [
+    "Preciso do certificado digital do Guardian",
+    "O certificado do Guardian venceu",
+    "Quero instalar certificado no Guardian",
+    "Preciso renovar o certificado de uma filial",
+    "Pode configurar o certificado digital no Guardian?"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Certificado Digital"
+   },
+   "vars": {
+    "v_coligada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_filial": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Dúvidas, melhorias ou parametrização do Guardian",
+   "short_description": "Peça informações, melhorias ou parametrizações do Guardian.",
+   "description": "Use para demais pedidos do Guardian. Cobre as opções Dúvidas e Informações, Melhorias e Desenvolvimentos e Parametrizar. Basta descrever o pedido.",
+   "frases_exemplo": [
+    "Tenho uma dúvida sobre o Guardian",
+    "Quero uma melhoria no Guardian",
+    "Preciso parametrizar o Guardian",
+    "Dá pra desenvolver uma funcionalidade nova?",
+    "Preciso de informações sobre o sistema Guardian"
+   ],
+   "sem_vars": [
+    "v_coligada",
+    "v_filial"
+   ]
+  }
+ ]
+}

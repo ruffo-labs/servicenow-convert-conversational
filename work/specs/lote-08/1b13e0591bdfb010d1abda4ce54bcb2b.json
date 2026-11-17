@@ -1,0 +1,224 @@
+{
+ "sys_id": "1b13e0591bdfb010d1abda4ce54bcb2b",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas no mesmo formulário: registrar a licença-maternidade (parto, adoção ou atestado, com data, período e emenda de férias) e, separadamente, incluir o recém-nascido como dependente nos benefícios. has_the_child_been_born vira fixo=Yes no segundo derivado. Widgets, containers e labels de exibição foram removidos; os três checkboxes de benefício viraram uma única variável de múltipla escolha e o anexo de certidão virou variável de anexo dedicada. O set 'Eligibilities Informative' só tem variáveis de exibição (widget custom e HTML, sem dado); ficou no derivado de inclusão de dependente (as variáveis de exibição foram removidas) para não perder o set.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "what_is_the_reason_for_the_leave": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "has_the_child_been_born": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "period_maternity_leave": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "start_date_maternity_leave": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "phone_number_with_area_code": {
+   "props": {
+    "validation_regex": "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
+   }
+  },
+  "please_enter_the_number_of_newborns": {
+   "label": "Quantos bebês nasceram?"
+  },
+  "mother_full_name": {
+   "label": "Qual é o nome completo da mãe?"
+  },
+  "employee_home_address": {
+   "label": "Qual é o endereço residencial para correspondência?"
+  },
+  "nova_beneficios_dependente": {
+   "nova": {
+    "type": "3",
+    "question_text": "Em quais benefícios você quer incluir o bebê?",
+    "mandatory": true,
+    "order": 1550,
+    "choices": [
+     {
+      "text": "Imposto de Renda",
+      "value": "income_tax"
+     },
+     {
+      "text": "Plano de saúde",
+      "value": "health_insurance"
+     },
+     {
+      "text": "Plano odontológico",
+      "value": "dental_insurance"
+     },
+     {
+      "text": "Nenhum benefício agora",
+      "value": "none"
+     }
+    ]
+   }
+  },
+  "nova_certidao_nascimento": {
+   "nova": {
+    "type": "33",
+    "question_text": "Envie a certidão de nascimento do bebê.",
+    "mandatory": true,
+    "order": 3040
+   }
+  }
+ },
+ "remover": {
+  "more_info_about_maternity_license": "visual",
+  "about_maternity_leave": "visual",
+  "subject_to_verification_of_available_vacation_days": "visual",
+  "baby_didnt_born_yet": "visual",
+  "info_select_where_you_want_to_add": "visual",
+  "select_where_you_want_to_add": "visual",
+  "none": {
+   "substituida_por": "nova_beneficios_dependente"
+  },
+  "income_tax": {
+   "substituida_por": "nova_beneficios_dependente"
+  },
+  "health_insurance": {
+   "substituida_por": "nova_beneficios_dependente"
+  },
+  "dental_insuracne": {
+   "substituida_por": "nova_beneficios_dependente"
+  },
+  "refund_information": "visual",
+  "formatter": "visual",
+  "container_add_new_dependent": "visual",
+  "important_notice_and_next_steps": "visual",
+  "text_life_insurance": "visual",
+  "attach_the_birth_certificates_here": {
+   "substituida_por": "nova_certidao_nascimento"
+  },
+  "formatter2": "visual"
+ },
+ "policies": {
+  "890561a187cbfe50ec360e530cbb3503": {
+   "conditions": "has_the_child_been_born=No^ORhas_the_child_been_born=",
+   "actions": {
+    "please_enter_the_number_of_newborns": {
+     "visible": false,
+     "mandatory": false
+    },
+    "vacations_end_your_maternity_leave": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "c1fea14187600710ec360e530cbb351e": {
+   "conditions": "has_the_child_been_born=No",
+   "actions": {
+    "please_attach_the_medical_certificate_maternity_leave": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "6c94a14587ecc310ec360e530cbb35d4": {
+   "conditions": "vacations_end_your_maternity_leave=yes_want_to_take_a_vacation",
+   "actions": {
+    "enter_the_number_of_vacation_days": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "0ce2318987600710ec360e530cbb3525": "remover",
+  "43ccdd09872cc310ec360e530cbb3577": "remover",
+  "5c8fd6231b1fb010a530426fe54bcb97": "remover",
+  "6153a7b31b214510d1abda4ce54bcb29": "remover",
+  "7ee10c753324879498331c07ee5c7bcc": "remover",
+  "d0f4fee53328079498331c07ee5c7b26": "remover",
+  "df9bd5c5872cc310ec360e530cbb350a": "remover",
+  "e5a6364d1b724290d1abda4ce54bcbd6": "remover"
+ },
+ "scripts": {
+  "055819f487c1c310ec360e530cbb3570": {
+   "remover": "sem_efeito"
+  },
+  "2552133b1bdbf010a530426fe54bcb40": {
+   "remover": "sem_efeito"
+  },
+  "2e43c72d33ac079498331c07ee5c7ba5": {
+   "remover": "sem_efeito"
+  },
+  "30942fcc8770cb90ec360e530cbb35f2": {
+   "remover": "sem_efeito"
+  },
+  "6ea65d3487c1c310ec360e530cbb35e1": {
+   "remover": "sem_efeito"
+  },
+  "c93d519987a88710ec360e530cbb351a": {
+   "converter": "regex"
+  },
+  "d85e93971b404510d1abda4ce54bcb16": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "nova_beneficios_dependente",
+    "bank_code_refund",
+    "reimbursement_agency",
+    "current_account_reimbursement",
+    "nova_certidao_nascimento",
+    "i_have_read_and_agree",
+    "mother_full_name",
+    "employee_home_address"
+   ],
+   "sem_sets": [
+    "acc8c11d87608710ec360e530cbb35e9",
+    "5659d1691b000510d1abda4ce54bcb2f"
+   ],
+   "sem_policies": [
+    "1fd9fe491bb24290d1abda4ce54bcb39"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "has_the_child_been_born": "Yes"
+   },
+   "sem_vars": [
+    "personal_email",
+    "phone_number_with_area_code",
+    "please_attach_the_medical_certificate_maternity_leave",
+    "what_is_the_reason_for_the_leave",
+    "start_date_maternity_leave",
+    "period_maternity_leave",
+    "vacations_end_your_maternity_leave",
+    "enter_the_number_of_vacation_days",
+    "description_of_maternity_leave",
+    "please_enter_the_number_of_newborns",
+    "msg_attach_judicial_custody",
+    "msg_attach_medical_certificate"
+   ],
+   "sem_policies": [
+    "c1fea14187600710ec360e530cbb351e",
+    "04ebbdae1b7f3410d1abda4ce54bcbe2",
+    "46c4f6ff1b690510d1abda4ce54bcb01",
+    "58dc119587a88710ec360e530cbb351b",
+    "6c94a14587ecc310ec360e530cbb35d4",
+    "06cd9aaf1bdbb010a530426fe54bcbb5",
+    "2d5abbfb1be14510d1abda4ce54bcbfd",
+    "890561a187cbfe50ec360e530cbb3503"
+   ]
+  }
+ ]
+}

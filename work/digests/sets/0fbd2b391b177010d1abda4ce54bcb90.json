@@ -1,0 +1,42 @@
+{
+ "sys_id": "0fbd2b391b177010d1abda4ce54bcb90",
+ "title": "My personal information",
+ "internal_name": "personal_information_user",
+ "description": "",
+ "usado_por": 4,
+ "itens_exemplo": [
+  "Solicitação de Acordo do Saldo Devedor",
+  "Declaração de vínculo ou lotação e escala de trabalho",
+  "Alteração de Vale Refeição - VR, Alimentação - VA",
+  "Reembolso Auxílio Creche ou Babá"
+ ],
+ "variaveis": [
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "default": "javascript: gs.getUserID();",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^EQ"
+  },
+  {
+   "name": "update_information_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Employee",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

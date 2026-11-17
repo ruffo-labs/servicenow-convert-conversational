@@ -1,0 +1,66 @@
+{
+ "sys_id": "bfe6ed8f1b318e90d1abda4ce54bcb41",
+ "title": "Supplier",
+ "internal_name": "supplier",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de compras descentralizadas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_cnpj_tax_supplier_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ/TAX Supplier ID:"
+  },
+  {
+   "name": "vs_email_supplier",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email to contact the supplier"
+  },
+  {
+   "name": "vs_info_email_supplier",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "vs_email_supplier_registration",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email for supplier registration"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_cnpj_tax_supplier_id: mandatory=true",
+    "vs_email_supplier: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate email supplier registration",
+   "type": "onChange",
+   "on": "d319bae31bb50ed0a530426fe54bcb55",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida o e-mail de cadastro de fornecedor. A regex limita o domínio de topo a 2–4 caracteres, então rejeita domínios como .online ou .company."
+  },
+  {
+   "name": "EY: Validate email supplier",
+   "type": "onChange",
+   "on": "1b2765cf1b318e90d1abda4ce54bcbb8",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida o e-mail do fornecedor com a mesma regex limitada a domínio de 2–4 caracteres do irmão."
+  }
+ ]
+}

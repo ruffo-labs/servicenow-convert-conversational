@@ -1,0 +1,75 @@
+{
+ "sys_id": "474b44b81b99165007caeca12b4bcb80",
+ "status": "dividido",
+ "motivo": "O cartão não recebido pede o número do chamado do kit e uma descrição; a solicitação de kit usa os dados do dependente e não pede esses dois campos. Pendências: Prazos fixos no código (bloqueio de 14/11 a 24/11/2026 e aviso a partir de 14/12/2026): confirmar se continuam valendo no novo catálogo.",
+ "vars": {
+  "request_number": {
+   "label": "Qual é o número do chamado em que você pediu o kit material escolar?"
+  },
+  "descricao_2": {
+   "label": "O que aconteceu com o cartão do kit material escolar?"
+  }
+ },
+ "remover": {
+  "v_atencao": "visual",
+  "observation": "visual"
+ },
+ "policies": {
+  "8f7da0b0871d9650182a0d440cbb3522": "remover",
+  "9b5a814587dd1a50182a0d440cbb3582": "remover",
+  "e880f438871d9650182a0d440cbb357f": "remover",
+  "6c0273963b153e50b28dd047f4e45aa9": "remover"
+ },
+ "itens": [
+  {
+   "name": "Cartão do Kit Material Escolar não recebido",
+   "short_description": "Informar que não recebeu o cartão do Kit Material Escolar",
+   "description": "Use quando o cartão do Kit Material Escolar já foi solicitado e não chegou. Corresponde à oferta Cartão Kit Material Escolar não recebido. Informe o número do chamado da solicitação do kit e descreva o ocorrido.",
+   "frases_exemplo": [
+    "não recebi o cartão do kit material escolar",
+    "cadê meu cartão do material escolar?",
+    "o cartão do kit escolar não chegou",
+    "pedi o kit escolar e o cartão não veio",
+    "cartão material escolar atrasado"
+   ],
+   "sem_vars": [
+    "colaborador_elegivel_ao_beneficio"
+   ],
+   "vars": {
+    "request_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "descricao_2": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitação de Kit Material Escolar",
+   "short_description": "Solicitar o Kit Material Escolar",
+   "description": "Use para solicitar o benefício Kit Material Escolar para os dependentes. Corresponde à oferta Solicitação de Kit Material Escolar. Informe os dados dos dependentes. Existe prazo para fazer a solicitação.",
+   "frases_exemplo": [
+    "quero pedir o kit material escolar",
+    "solicitar kit escolar para meu filho",
+    "benefício de material escolar",
+    "como peço o kit material escolar?",
+    "preciso do kit escolar do dependente"
+   ],
+   "sem_vars": [
+    "request_number",
+    "descricao_2"
+   ]
+  }
+ ],
+ "scripts": {
+  "6660d06b3b00b290b28dd047f4e45a37": {
+   "remover": {
+    "outro": "limpa oferta e dependentes conforme a oferta; coberto pela estrutura do derivado"
+   }
+  }
+ }
+}

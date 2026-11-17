@@ -1,0 +1,116 @@
+{
+ "sys_id": "08c17b981b29ed90a530426fe54bcbc7",
+ "title": "EY VS - Bloqueio ou Desbloqueio Variable",
+ "internal_name": "ey_vs_bloqueio_ou_desbloqueio_variable",
+ "description": "Variable Set Destinado as Variaveis do Form Bloqueio ou Desbloqueio de Pagamentos",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Bloqueio ou Desbloqueio de Pagamentos"
+ ],
+ "variaveis": [
+  {
+   "name": "v_lock_or_unlock",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Blockage or Unblockage?",
+   "include_none": true,
+   "choices": [
+    "Blockage [=block]",
+    "Unblockage [=unlocking]"
+   ]
+  },
+  {
+   "name": "v_reason",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason"
+  },
+  {
+   "name": "v_document_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Document Type",
+   "include_none": true,
+   "choices": [
+    "SAP Document Number [=sap_document_number]",
+    "RC Number [=rc_number]",
+    "GED Protocol [=ged_protocol]",
+    "ERP Number [=erp_number]"
+   ]
+  },
+  {
+   "name": "v_invoice_data",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice Data"
+  },
+  {
+   "name": "v_document_number_invoice",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document number (Invoice)"
+  },
+  {
+   "name": "v_maturity",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Due Date"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount"
+  },
+  {
+   "name": "v_payment_date_proposal",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Payment Date Proposal"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Variaveis Obrigatorias ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_maturity: mandatory=true",
+    "v_document_number_invoice: mandatory=true",
+    "v_reason: mandatory=true",
+    "v_payment_date_proposal: mandatory=true",
+    "v_lock_or_unlock: mandatory=true",
+    "v_invoice_data: mandatory=true",
+    "v_value: mandatory=true",
+    "v_document_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variaveis Formulario Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_lock_or_unlock: readonly=true",
+    "v_maturity: readonly=true",
+    "v_document_number_invoice: readonly=true",
+    "v_value: readonly=true",
+    "v_document_type: readonly=true",
+    "v_reason: readonly=true",
+    "v_invoice_data: readonly=true",
+    "v_payment_date_proposal: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "26b8a0241be161d0a530426fe54bcb40",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'v_value' como moeda pela função formatarMoeda. Observação: a implementação usa parseInt no valor, o que descarta os centavos antes de formatar."
+  }
+ ]
+}

@@ -1,0 +1,185 @@
+{
+ "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+ "title": "EY: Requester Data",
+ "internal_name": "ey_requester_data",
+ "description": "1",
+ "usado_por": 20,
+ "itens_exemplo": [
+  "OurTalents",
+  "Solicitação de Reembolso do Ponto Eletrônico",
+  "Solicitação Salário Substituição / Exercício Temporário",
+  "Solicitação de Exclusão da Aprovação",
+  "MyPerformance",
+  "PPP - Perfil Profissiográfico Previdenciário",
+  "Solicitação de Adiantamento e Complemento Previdenciário",
+  "Sobre Aviso"
+ ],
+ "variaveis": [
+  {
+   "name": "container_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Personal Information"
+  },
+  {
+   "name": "vs_solicitation_to_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation to Whom?",
+   "include_none": true,
+   "choices": [
+    "My request [=my_request]",
+    "Request for another employee [=another_employee]"
+   ]
+  },
+  {
+   "name": "vs_employee_status",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Employee status",
+   "include_none": true,
+   "choices": [
+    "Active [=active]",
+    "Away [=away]",
+    "Disconnected [=disconnected]"
+   ]
+  },
+  {
+   "name": "vs_employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "vs_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID"
+  },
+  {
+   "name": "vs_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "vs_personal_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Personal email"
+  },
+  {
+   "name": "vs_external_user",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "External user",
+   "hidden": true
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Employee readonly",
+   "when": "IO:vs_solicitation_to_whom=my_request^ORIO:vs_employee_status=active^ORIO:vs_employee_status=away^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_employee: visible=true,mandatory=true",
+    "vs_id: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Employee disconnected",
+   "when": "IO:vs_employee_status=disconnected^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_name: visible=true,mandatory=true",
+    "vs_personal_email: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_solicitation_to_whom: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  solicitation to is none and item is 'ADP Access Maintenance'",
+   "when": "IO:vs_solicitation_to_whom=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Employee status",
+   "when": "IO:vs_solicitation_to_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_employee_status: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Employee away",
+   "when": "IO:vs_employee_status=away^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_personal_email: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get user data",
+   "type": "onChange",
+   "on": "c8ddac4b1bafdd50a530426fe54bcb87",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do usuário, limpando os campos do colaborador quando o valor fica vazio."
+  },
+  {
+   "name": "EY: If 'ADP Access Maintenance'",
+   "type": "onChange",
+   "on": "c8ddac4b1bafdd50a530426fe54bcb87",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trata o caso específico do item 'ADP Access Maintenance', comparando o item atual."
+  },
+  {
+   "name": "EY: Fill user data",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do usuário a partir do colaborador selecionado."
+  },
+  {
+   "name": "EY: Show employee and ID on task",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe o colaborador e o ID na tarefa, conforme a solicitação escolhida."
+  },
+  {
+   "name": "EY: Check external user",
+   "type": "onChange",
+   "on": "e1c1f7b81b7cedd0a530426fe54bcb39",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que copia o valor para a variável de controle 'vs_external_user', marcando o caso de usuário externo."
+  }
+ ]
+}

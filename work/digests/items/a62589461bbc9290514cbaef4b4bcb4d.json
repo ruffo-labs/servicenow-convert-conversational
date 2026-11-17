@@ -1,0 +1,402 @@
+{
+ "sys_id": "a62589461bbc9290514cbaef4b4bcb4d",
+ "name": "Solicitações de Empréstimos de Emergência",
+ "sys_name": "Emergency Loan Requests",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Empréstimos de emergência",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Para utilizar este formulário, lembre-se de conversar previamente com seu Parceiro de Negócios, o/a referente a recursos humanos de sua área",
+ "description": "Para utilizar este formulário, lembre-se de conversar previamente com seu Parceiro de Negócios, o/a referente a recursos humanos de sua área",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "37",
+   "variaveis_ativas": "42",
+   "bloqueadores": "3",
+   "avisos": "13",
+   "perguntas_sem_conversational_label": "37"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "signature"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "signature"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show choices category OnChange"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @legend_text_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legend_text5: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legend_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legend_text_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @bussiness_partner: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @legend_text_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @collaborator_id: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @attach_document: Attachment: anexo exige tratamento a parte na conversa",
+   "sim_nao_sem_include_none @has_signature_created: Sim/Nao sem \"Include None\" marcado",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 37 de 37 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 37 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Empréstimos de Emergência. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a atribuição dupla de requested_for vista nos irmãos.",
+ "variaveis": [
+  {
+   "name": "control_user_HRBP",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "User is HRBP?",
+   "hidden": true
+  },
+  {
+   "name": "category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Loan Application [=request]",
+    "Loan Simulation [=simulation]",
+    "Pay all outstanding installments [=pay]",
+    "I got cold feet, I want to cancel the loan request [=regret]"
+   ]
+  },
+  {
+   "name": "bussiness_partner",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Selecciona el Bussiness Partner (HRBP) o el referente de recursos humanos de tu área con quien coordinaste las condiciones del préstamo:",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=e85086c91bb05e50514cbaef4b4bcb04^EQ"
+  },
+  {
+   "name": "legend_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "date_request",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date request:"
+  },
+  {
+   "name": "collaborator_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator ID:",
+   "reference": "sys_user",
+   "ref_qual": "javascript: new x_nasm_hr.EYHispanic_Employee_Information().getUserInformationPrestamoForm(current.variables.v_employee);"
+  },
+  {
+   "name": "name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "date_of_entry",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Date of entry:",
+   "reference": "sys_user"
+  },
+  {
+   "name": "area",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Area:",
+   "reference": "sys_user"
+  },
+  {
+   "name": "position_collaborator",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position Colaborator",
+   "reference": "sys_user"
+  },
+  {
+   "name": "requested_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Requested amount:"
+  },
+  {
+   "name": "payment_terms",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Payment terms:"
+  },
+  {
+   "name": "payment_method",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Payment method:"
+  },
+  {
+   "name": "periodicity",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Periodicity"
+  },
+  {
+   "name": "form_payment_termination",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Form of payment in case of termination of employment:"
+  },
+  {
+   "name": "number_of_ticket",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of ticket"
+  },
+  {
+   "name": "legend_text_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Reason for request:"
+  },
+  {
+   "name": "legend_text_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "policy_check",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I confirm that I have read and understood the Natura &Co Emergency Loan Policy and, by signing this application, I agree to all the terms and conditions set forth in said policy."
+  },
+  {
+   "name": "legend_text5",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legend_text_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "To place this order, please be sure to attach the completed application form signed by all approvers. Click here to download the application form."
+  },
+  {
+   "name": "attach_document",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach document"
+  },
+  {
+   "name": "signature",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Digital signature",
+   "widget": "EY:Show_Signature"
+  },
+  {
+   "name": "agreement",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I agree that this signature constitutes my electronic signature and has the same legal effect as signing a printed version of this document."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "51ec0bed1bdb5154d1abda4ce54bcbb3",
+   "name": "Tem Assinatura",
+   "order": "100",
+   "perguntas": [
+    "has_signature_created (Sim/Não, hidden, default): A assinatura foi criada?"
+   ]
+  },
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show variables catgory 1 and not ECU",
+   "when": "IO:category=request^IO:v_country!=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "form_payment_termination: visible=true,mandatory=true",
+    "requested_amount: visible=true,mandatory=true",
+    "legend_text_3: visible=true",
+    "date_request: visible=true,mandatory=true",
+    "payment_terms: visible=true,mandatory=true",
+    "position_collaborator: visible=true",
+    "name: visible=true",
+    "payment_method: visible=true,mandatory=true",
+    "agreement: visible=true,mandatory=true",
+    "bussiness_partner: visible=true,mandatory=true",
+    "collaborator_id: visible=true",
+    "signature: visible=true,mandatory=true",
+    "legend_text: visible=true",
+    "periodicity: visible=true,mandatory=true",
+    "area: visible=true",
+    "date_of_entry: visible=true"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly variables catgory 1 and not ECU",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "date_of_entry: readonly=true",
+    "position_collaborator: readonly=true",
+    "name: readonly=true",
+    "collaborator_id: readonly=true",
+    "area: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show variables category 3 and 4",
+   "when": "IO:categoryINpay,regret^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "number_of_ticket: visible=true,mandatory=true",
+    "legend_text_2: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields category 1",
+   "when": "IO:category=request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "policy_check: visible=true,mandatory=true",
+    "legend_text5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields category 1 and country ECU",
+   "when": "IO:category=request^IO:v_country=ECU^NQIO:control_user_HRBP=true^IO:v_who_is_this_request_for=for_somebody_else^IO:category=request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_document: visible=true,mandatory=true",
+    "legend_text_4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show category and Detail",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "category: visible=true,mandatory=true",
+    "v_detail: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message OnChange",
+   "type": "onChange",
+   "on": "ddb665621bb89690514cbaef4b4bcb4c",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que exige no mínimo 30 caracteres, usando getMessage com a chave 'error_message_30_char' para a mensagem traduzida — abordagem melhor que a dos irmãos, que trazem o texto cravado em cada idioma."
+  },
+  {
+   "name": "EY: HTR_VerifyE-signature",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que verifica a assinatura eletrônica. Quando a categoria é 'request' e o país NÃO é 'ECU', exige a e-signature preenchida antes de permitir o envio."
+  },
+  {
+   "name": "EY: Get user information category 1",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca as informações do colaborador para a categoria 1, limpando 'collaborator_id' e campos relacionados quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Show error message OnSubmit",
+   "type": "onSubmit",
+   "on": "ddb665621bb89690514cbaef4b4bcb4c",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que exige 30 caracteres em 'v_detail', exibindo a mensagem traduzida via getMessage num showErrorBox."
+  },
+  {
+   "name": "EY: Show choices category OnChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que monta as opções de categoria, desobrigando e escondendo o campo nos casos vazio e 'None'."
+  },
+  {
+   "name": "EY: Clear All Fields OnChange Category",
+   "type": "onChange",
+   "on": "85a1e52e1b389690514cbaef4b4bcbcc",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa todos os campos quando a categoria muda, considerando também o colaborador selecionado."
+  },
+  {
+   "name": "EY: Clean category field OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove as opções 'request', 'simulation', 'pay' e outras da lista de categorias na abertura."
+  },
+  {
+   "name": "EY: Set control_user_HRBP",
+   "type": "onLoad",
+   "on": "85a1e52e1b389690514cbaef4b4bcbcc",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que identifica se o usuário é HRBP. Chama o Script Include EYGetUserRange, método getUserGroupSysUser, via GlideAjax, e guarda o resultado numa variável de controle do formulário."
+  }
+ ]
+}

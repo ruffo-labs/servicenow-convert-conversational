@@ -1,0 +1,179 @@
+{
+ "sys_id": "1b4c8d151b5da118d1abda4ce54bcb4b",
+ "name": "Solicitação de acesso ao portal GED",
+ "sys_name": "Request for access to the GED portal",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Outros Serviços",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Formulário para Solicitar acesso ao portal GED",
+ "description": "Formulário para Solicitar acesso ao portal GED",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @attachment_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "registration_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Registration number (plate number)"
+  },
+  {
+   "name": "email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "E-mail"
+  },
+  {
+   "name": "phone_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone Number"
+  },
+  {
+   "name": "full_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name"
+  },
+  {
+   "name": "model_users_mirror",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Model users to mirror?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "name_user_mirrored",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the username to be mirrored"
+  },
+  {
+   "name": "email_user_mirrored",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the email of the user to be mirrored"
+  },
+  {
+   "name": "type_of_access",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of access?",
+   "include_none": true,
+   "choices": [
+    "Maintenance [=maintenance]",
+    "Law Suit [=law_suit]",
+    "Reports [=reports]",
+    "Users [=users]"
+   ]
+  },
+  {
+   "name": "inclua_as_ilhas_necessarias",
+   "type": "Texto de Linha Única Larga",
+   "type_code": "16",
+   "label": "Qual a ilha solicitada?"
+  },
+  {
+   "name": "attachment_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Approval (copy of the manager's email approving)"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only/Visible Fields in Target view - Model User Mirror = No",
+   "when": "IO:model_users_mirror=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "inclua_as_ilhas_necessarias: visible=true,readonly=true",
+    "type_of_access: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields in Target View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "full_name: readonly=true",
+    "registration_number: readonly=true",
+    "attachment_approval: readonly=true",
+    "email: readonly=true",
+    "phone_number: readonly=true",
+    "model_users_mirror: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields in Service Portal - Model User Mirror = Yes",
+   "when": "IO:model_users_mirror=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "name_user_mirrored: visible=true,mandatory=true",
+    "email_user_mirrored: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields in Service Portal",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attachment_approval: mandatory=true",
+    "email: mandatory=true",
+    "model_users_mirror: mandatory=true",
+    "registration_number: mandatory=true",
+    "phone_number: mandatory=true",
+    "full_name: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields in Service Portal - Model User Mirror = No",
+   "when": "IO:model_users_mirror=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "inclua_as_ilhas_necessarias: visible=true,mandatory=true",
+    "type_of_access: visible=true,mandatory=true",
+    "requested_island: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only/Visible Fields in Target view - Model User Mirror = Yes",
+   "when": "IO:model_users_mirror=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "name_user_mirrored: visible=true,readonly=true",
+    "email_user_mirrored: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

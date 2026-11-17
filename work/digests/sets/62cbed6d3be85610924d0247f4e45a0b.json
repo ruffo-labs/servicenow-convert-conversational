@@ -1,0 +1,92 @@
+{
+ "sys_id": "62cbed6d3be85610924d0247f4e45a0b",
+ "title": "Inclusion of dependents",
+ "internal_name": "inclusion_of_dependents",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Seguro complementar (saúde, vida e odontológico)"
+ ],
+ "variaveis": [
+  {
+   "name": "employee_reference",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee name",
+   "hidden": true,
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_full_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Full name",
+   "reference": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript: 'employee=' + current.variables.employee_reference.sys_id "
+  },
+  {
+   "name": "v_family_relationship",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Family relationship"
+  },
+  {
+   "name": "v_document",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Identity document"
+  },
+  {
+   "name": "v_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set ReadOnly",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_family_relationship: readonly=true",
+    "v_date_of_birth: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Set Mandatoy",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_full_name: visible=true,mandatory=true",
+    "v_document: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get dependent's data",
+   "type": "onChange",
+   "on": "796ca1ed3be85610924d0247f4e45a02",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script que busca os dados do dependente via EYHispanic_Employee_Information."
+  },
+  {
+   "name": "EY: Set employee_reference",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."
+  },
+  {
+   "name": "EY: Block same beneficiaries",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que impede beneficiários repetidos. Lê a lista de dependentes do sessionStorage e bloqueia o envio quando há duplicidade. Depende de estado guardado no navegador, não no formulário."
+  }
+ ]
+}

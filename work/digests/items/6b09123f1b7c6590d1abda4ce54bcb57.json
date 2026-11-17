@@ -1,0 +1,275 @@
+{
+ "sys_id": "6b09123f1b7c6590d1abda4ce54bcb57",
+ "name": "Relatórios Gerais de Recursos Humanos",
+ "sys_name": "General Human Resources Reports",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relatórios",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Solicite aqui seu relatório",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "22",
+   "bloqueadores": "1",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Select all companies, EY: Select all subcompanies"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_sub_company: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @v_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_company: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @v_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @anexo_aprovacao: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_region: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @v_region: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 12 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email"
+  },
+  {
+   "name": "v_report_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select Report Type",
+   "include_none": true,
+   "choices": [
+    "Benefits [=benefits]",
+    "Active and Off Employees (HC) [=colab_active_off]",
+    "Employees on leave [=employees_leave]",
+    "Journey Control [=journey_control]",
+    "Employees' Dependents [=dependets]",
+    "Vacations [=vacations]",
+    "Indicators [=indicators]"
+   ]
+  },
+  {
+   "name": "v_solicitation_about",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation about",
+   "include_none": true,
+   "choices": [
+    "Area [=area]",
+    "Cost Center [=cost_center]",
+    "Management [=management]"
+   ]
+  },
+  {
+   "name": "v_what_need_data",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "What is the need for the data?"
+  },
+  {
+   "name": "v_what_data",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "What data do you need"
+  },
+  {
+   "name": "v_company",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Company",
+   "ref_qual": "question=26babf601b8d65d0d1abda4ce54bcbbe",
+   "choices": [
+    "Avon LATAM",
+    "Natura [=natura]",
+    "TBS"
+   ]
+  },
+  {
+   "name": "v_select_all_companies",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Selecionar todas"
+  },
+  {
+   "name": "v_sub_company",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Sub Company",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brandIN'+current.variables.v_company.getDisplayValue() + '^nameNOT LIKE331';"
+  },
+  {
+   "name": "v_select_all_companies2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Selecionar todas"
+  },
+  {
+   "name": "v_region",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Region",
+   "ref_qual": "question=fed6ea3b1b70a590d1abda4ce54bcb58",
+   "include_none": true,
+   "choices": [
+    "Brasil [=brasil]",
+    "Latam [=latam]"
+   ]
+  },
+  {
+   "name": "v_data_sensitive",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is your data sensitive?",
+   "include_none": true
+  },
+  {
+   "name": "anexo_aprovacao",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Anexar aprovação do gestor"
+  },
+  {
+   "name": "v_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Details"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Field email",
+   "when": "IO:vs_solicitation_to_whom=my_request^IO:vs_employeeISNOTEMPTY^NQIO:vs_solicitation_to_whom=another_employee^IO:vs_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_email: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show the attachment field",
+   "when": "IO:v_data_sensitive=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "anexo_aprovacao: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Rule field sensitive data",
+   "when": "IO:v_report_type=colab_active_off^ORIO:v_report_type=employees_leave^ORIO:v_report_type=dependets^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_data_sensitive: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Data field rules",
+   "when": "IO:v_report_type=colab_active_off^ORIO:v_report_type=employees_leave^ORIO:v_report_type=dependets^ORIO:v_report_type=journey_control^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_data: visible=true,mandatory=true",
+    "v_what_need_data: visible=true,mandatory=true",
+    "v_select_all_companies: visible=true",
+    "v_company: visible=true,mandatory=true",
+    "v_sub_company: visible=true,mandatory=true",
+    "v_select_all_companies2: visible=true",
+    "v_region: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_report_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Detail is not empty",
+   "when": "IO:v_solicitation_about!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_details: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Select all companies",
+   "type": "onChange",
+   "on": "b869e2e81bad8a10a530426fe54bcb8e",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que seleciona todas as empresas no list collector, manipulando o objeto g_list. Verifica antes se g_list está definido."
+  },
+  {
+   "name": "EY: Clear Subcompany 1",
+   "type": "onChange",
+   "on": "b869e2e81bad8a10a530426fe54bcb8e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_sub_company'."
+  },
+  {
+   "name": "EY: Select all subcompanies",
+   "type": "onChange",
+   "on": "12eba2601bed8a10a530426fe54bcbe7",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que seleciona todas as sub-empresas no list collector, a partir da empresa escolhida. Par do script de seleção de empresas."
+  },
+  {
+   "name": "EY: Clear Subcompany 2",
+   "type": "onChange",
+   "on": "26babf601b8d65d0d1abda4ce54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_sub_company'."
+  },
+  {
+   "name": "EY: Email",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o e-mail do usuário. A linha de limpeza no caso de valor vazio está comentada."
+  }
+ ]
+}

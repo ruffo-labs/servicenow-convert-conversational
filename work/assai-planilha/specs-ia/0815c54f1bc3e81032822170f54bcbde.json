@@ -1,0 +1,77 @@
+{
+ "sys_id": "0815c54f1bc3e81032822170f54bcbde",
+ "status": "conversacional",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Compra+, com 2 ofertas. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): CSA - Contestação do valor do desconto no Compra+ Assaí; ALP - Contestação do valor descontado de utilização do Cartão Multicheque.",
+ "vars": {
+  "v_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "v_payment_statement": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "v_usage_statement": {
+   "label": "Envie o extrato de utilização do Compra+."
+  }
+ },
+ "remover": {
+  "buy_date": "oferta_inativa",
+  "there_separation": "oferta_inativa",
+  "rh_reason_not_unlocked": "oferta_inativa",
+  "rh_reference_month": "oferta_inativa",
+  "buy_value": "oferta_inativa",
+  "buy_store": "oferta_inativa",
+  "rh_date_admission": "oferta_inativa",
+  "rh_protocol_number": "oferta_inativa",
+  "rh_number_card": "oferta_inativa",
+  "csa_observation": "visual",
+  "v_observation_analise": "visual",
+  "observacao_app": "visual",
+  "atencao": "visual",
+  "formatter": "visual",
+  "rh_contested_buy_date": "oferta_inativa",
+  "rh_container_init": "visual",
+  "csa_attatchment": "oferta_inativa",
+  "formatter2": "visual",
+  "rh_observation": "visual"
+ },
+ "policies": {
+  "1f844ec71b47a050eca40dcbe54bcb29": "remover",
+  "31350d8f1bc3e81032822170f54bcb88": "remover",
+  "39f382871b47a050eca40dcbe54bcb74": "remover",
+  "6bc7525687eaaa10182a0d440cbb35b7": "remover",
+  "e2a03b958734aa10182a0d440cbb3551": {
+   "conditions": "service_offering=a2ae32553bb02a90b28dd047f4e45a53",
+   "actions": {
+    "v_usage_statement": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_payment_statement": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_reference_month": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "e81098d33bc29650b28dd047f4e45a55": "remover",
+  "ec8352333b29d610b28dd047f4e45a91": "remover",
+  "fd350d8f1bc3e81032822170f54bcb8a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Compra+",
+   "short_description": "Reportar Compra+ Assaí sem limite ou desconto incorreto de colaborador.",
+   "description": "Use quando o Compra+ Assaí de um colaborador estiver sem limite de utilização ou o desconto parecer incorreto e o RH - Compra+ precisar analisar. Atende as ofertas Compra+ Assaí sem limite de utilização e Solicitação de análise de desconto do Compra+ Assaí. Na análise de desconto, informe o mês de referência e envie o extrato de utilização e o demonstrativo de pagamento.",
+   "frases_exemplo": [
+    "Colaborador está sem limite no Compra+",
+    "O desconto do Compra+ de um funcionário está errado",
+    "Preciso de análise do desconto do Compra+",
+    "Compra+ do colaborador sem limite de utilização",
+    "Reportar problema no Compra+ Assaí"
+   ]
+  }
+ ]
+}

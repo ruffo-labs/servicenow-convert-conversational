@@ -1,0 +1,201 @@
+{
+ "sys_id": "3d34417b1bdce1d0d1abda4ce54bcbbd",
+ "name": "Solicitação de Verba Evento e Verba Mês - Força de Vendas",
+ "sys_name": "Solicitud de Presupuesto de Evento y Presupuesto Mes - Fuerza de Ventas Natura",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Reembolso e prestação de contas para FV",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar verba evento ou verba mês para força de vendas.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_template_verba_mes: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_the_monthly_budget_advance_base: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_template_verba_evento: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_the_event_fund_advance_base: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_advance_approvals: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_request_for_event_budget_and_month_budget_natura_sales_force",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request for Event Budget and Month Budget - Sales Force"
+  },
+  {
+   "name": "v_which_audience_do_you_belong_to",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which audience do you belong to?",
+   "include_none": true,
+   "choices": [
+    "Administrative [=administrative]",
+    "Sales Force [=sales_force]",
+    "Retail [=retail]"
+   ]
+  },
+  {
+   "name": "v_application_for_what_type_of_funding",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Application for what type of funding?",
+   "include_none": true,
+   "choices": [
+    "Event Budget [=event_budget]",
+    "Monthly Budget [=monthly_budget]"
+   ]
+  },
+  {
+   "name": "v_template_verba_evento",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_verba_mes",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_the_event_fund_advance_base",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the event fund advance base"
+  },
+  {
+   "name": "v_attach_the_monthly_budget_advance_base",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the monthly budget advance base"
+  },
+  {
+   "name": "v_attach_advance_approvals",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach advance approvals"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information"
+  },
+  {
+   "name": "v_document_repository",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Document Repository"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "100",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+   "name": "EY: Company  - Avon/Natura and Sub Company",
+   "order": "110",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): For which company is the service being requested?",
+    "vs_sub_company (Referência): Which sub-company is the service for?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If \"Request for what type of grant?\" for \"Month Budget\"",
+   "when": "IO:v_application_for_what_type_of_funding=monthly_budget^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_verba_mes: visible=true",
+    "v_attach_the_monthly_budget_advance_base: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Which audience do you belong to?\" for \"Sales Force\"",
+   "when": "IO:v_which_audience_do_you_belong_to=sales_force^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_advance_approvals: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Which audience do you belong to?",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_audience_do_you_belong_to: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Request for what type of grant?\" for \"Event Verb\"",
+   "when": "IO:v_application_for_what_type_of_funding=event_budget^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_event_fund_advance_base: visible=true,mandatory=true",
+    "v_template_verba_evento: visible=true"
+   ]
+  },
+  {
+   "name": "EY: type of funding",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_application_for_what_type_of_funding: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: clear type of  event",
+   "type": "onChange",
+   "on": "37e0913f1b9025d0d1abda4ce54bcb2e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de adiantamento de evento: informações adicionais, aprovações do adiantamento, base do fundo de evento e base do orçamento mensal."
+  },
+  {
+   "name": "EY: Clear field ",
+   "type": "onChange",
+   "on": "d3afc9bb1b9025d0d1abda4ce54bcbf6",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o tipo de financiamento solicitado e os mesmos anexos de adiantamento do script irmão."
+  }
+ ]
+}

@@ -1,0 +1,144 @@
+{
+ "sys_id": "ef63fb481be9e590a530426fe54bcb57",
+ "title": "EY VS - Antecipação do Vencimento para Pagamento",
+ "internal_name": "ey_vs_antecipa_o_do_vencimento_para_pagamento",
+ "description": "Variable Set destinada a Variaveis do Form Antecipação do Vencimento para Pagamento",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Antecipação de Vencimento e Postergação"
+ ],
+ "variaveis": [
+  {
+   "name": "v_type_of_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Payment type",
+   "include_none": true,
+   "choices": [
+    "Vendors [=suppliers]",
+    "Taxes [=taxes]",
+    "Utilities [=concessionaires]",
+    "Others [=others]",
+    "Benefit Sharing",
+    "Incentives and Sponsorships"
+   ]
+  },
+  {
+   "name": "v_select_request_type_v2",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Select request type"
+  },
+  {
+   "name": "v_early_payment_v2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Early Payment",
+   "mandatory": true
+  },
+  {
+   "name": "v_due_date_extension_v2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Due Date Extension",
+   "mandatory": true
+  },
+  {
+   "name": "select_approver_v2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user",
+   "ref_qual": "javascript: new x_nasm_ptp.EY_PTPUtils().getApproverCompras();"
+  },
+  {
+   "name": "v_form_of_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Payment method",
+   "include_none": true,
+   "choices": [
+    "Account Credit [=account_credit]",
+    "Tax Guide [=tax_guide]",
+    "Boleto [=ticket]"
+   ]
+  },
+  {
+   "name": "v_document_number_invoice",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document number (invoice)"
+  },
+  {
+   "name": "v_currency",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Coin",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount"
+  },
+  {
+   "name": "original_expiration_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Original expiration date"
+  },
+  {
+   "name": "v_payment_s_date_requested",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Payment's date requested"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Clear Due Date Ext. v2",
+   "when": "IO:v_early_payment_v2=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_due_date_extension_v2: visible=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Clear Early Payment v2",
+   "when": "IO:v_due_date_extension_v2=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_early_payment_v2: visible=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Variaveis Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_value: readonly=true",
+    "v_form_of_payment: readonly=true",
+    "v_document_number_invoice: readonly=true",
+    "v_currency: readonly=true",
+    "v_type_of_payment: readonly=true",
+    "v_payment_s_date_requested: readonly=true",
+    "original_expiration_date: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "afee53dc1badad90a530426fe54bcbb4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'v_value' como moeda pela função formatarMoeda. Observação: a implementação usa parseInt no valor, o que descarta os centavos antes de formatar."
+  }
+ ]
+}

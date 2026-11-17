@@ -1,0 +1,739 @@
+{
+ "sys_id": "1b13e0591bdfb010d1abda4ce54bcb2b",
+ "name": "Solicitação de Licença Maternidade",
+ "sys_name": "FORM0000092",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licenças e Ausências",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicite o cadastro de sua Licença Maternidade neste formulário.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "32",
+   "variaveis_ativas": "47",
+   "bloqueadores": "6",
+   "avisos": "15",
+   "perguntas_sem_conversational_label": "32"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "text_life_insurance"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "text_life_insurance"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "HTML (type 23 / HTML)",
+    "onde": "benefit_description_value"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": [Aoop]Check the attchament before submit"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @msg_attach_judicial_custody: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @subject_to_verification_of_available_vacation_days: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @baby_didnt_born_yet: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @msg_attach_medical_certificate: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @important_notice_and_next_steps: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @info_select_where_you_want_to_add: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @please_attach_the_medical_certificate_maternity_leave: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @refund_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_the_birth_certificates_here: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @more_info_about_maternity_license: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 32 de 32 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 32 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 30 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Licença Maternidade. Lê o registro em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for. Grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "more_info_about_maternity_license",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "personal_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Personal Email"
+  },
+  {
+   "name": "phone_number_with_area_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone number with area code",
+   "example": "(XX) XXXXX-XXXX"
+  },
+  {
+   "name": "about_maternity_leave",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "About Maternity Leave:"
+  },
+  {
+   "name": "has_the_child_been_born",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Has the child been born?",
+   "include_none": true
+  },
+  {
+   "name": "please_enter_the_number_of_newborns",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please enter the number of newborns",
+   "include_none": true,
+   "choices": [
+    "1 Baby [=1]",
+    "2 Babies (twins) [=2]",
+    "3 or more babies [=3]"
+   ]
+  },
+  {
+   "name": "what_is_the_reason_for_the_leave",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the reason for the leave?",
+   "include_none": true,
+   "choices": [
+    "Pre-natal - Leave on medical advice [=pre_natal_leave_on_medical]",
+    "Post-natal - Childbirth [=post_natal_childbirth]",
+    "Due to adoption or legal guardianship [=due_to_adoption_or_legal_guardianship]"
+   ]
+  },
+  {
+   "name": "msg_attach_judicial_custody",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "reference": "sys_user"
+  },
+  {
+   "name": "msg_attach_medical_certificate",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "reference": "sys_user"
+  },
+  {
+   "name": "start_date_maternity_leave",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the start date of maternity leave?"
+  },
+  {
+   "name": "period_maternity_leave",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the period of your maternity leave",
+   "include_none": true,
+   "choices": [
+    "120 days [=1]",
+    "180 days [=2]"
+   ]
+  },
+  {
+   "name": "vacations_end_your_maternity_leave",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Would you like to take a vacation after your maternity leave?",
+   "include_none": true,
+   "choices": [
+    "YES - I want to take a vacation right after my maternity leave [=yes_want_to_take_a_vacation]",
+    "NO - I'd rather wait to take my vacation later [=no_i_rather_wait_to_take]"
+   ]
+  },
+  {
+   "name": "subject_to_verification_of_available_vacation_days",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Subject to verification of available vacation days"
+  },
+  {
+   "name": "enter_the_number_of_vacation_days",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of vacation days"
+  },
+  {
+   "name": "baby_didnt_born_yet",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "baby_didnt_born_yet"
+  },
+  {
+   "name": "please_attach_the_medical_certificate_maternity_leave",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Please attach the medical certificate requesting maternity leave here."
+  },
+  {
+   "name": "info_select_where_you_want_to_add",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "info_select_where_you_want_to_add"
+  },
+  {
+   "name": "select_where_you_want_to_add",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Select where you want to add the new dependent"
+  },
+  {
+   "name": "none",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "None"
+  },
+  {
+   "name": "income_tax",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Income tax"
+  },
+  {
+   "name": "health_insurance",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Health insurance"
+  },
+  {
+   "name": "dental_insuracne",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Dental insurance"
+  },
+  {
+   "name": "mother_full_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "mother's full name",
+   "reference": "u_hr_profile",
+   "lookup": "u_hr_profile"
+  },
+  {
+   "name": "employee_home_address",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee's home address",
+   "reference": "x_nasm_hr_employee_address"
+  },
+  {
+   "name": "refund_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Refund information"
+  },
+  {
+   "name": "bank_code_refund",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank Code"
+  },
+  {
+   "name": "reimbursement_agency",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Agency"
+  },
+  {
+   "name": "current_account_reimbursement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Checking account with a digit"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "container_add_new_dependent",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "To add the new dependent and update benefits:"
+  },
+  {
+   "name": "new_dependent_dental_care",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to include the new dependent in Dental Care?",
+   "hidden": true,
+   "include_none": true
+  },
+  {
+   "name": "important_notice_and_next_steps",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "important_notice_and_next_steps"
+  },
+  {
+   "name": "i_have_read_and_agree",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I have read and agree to the Disclaimer above."
+  },
+  {
+   "name": "text_life_insurance",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Text Life insurance",
+   "widget": "[AOOP][Life Insurance Get Data]"
+  },
+  {
+   "name": "attach_the_birth_certificates_here",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click the following icon below to attach the birth certificates."
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "description_of_maternity_leave",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  },
+  {
+   "sys_id": "5659d1691b000510d1abda4ce54bcb2f",
+   "name": "Eligibilities Informative",
+   "order": "1795",
+   "perguntas": [
+    "benefit_description (Personalizado): Benefit description",
+    "benefit_description_value (HTML): Plan details"
+   ]
+  },
+  {
+   "sys_id": "acc8c11d87608710ec360e530cbb35e9",
+   "name": "Preencha os dados da nova pessoa dependente",
+   "order": "1799",
+   "perguntas": [
+    "dependent_s_full_name (Texto de Linha Única): Dependent's full name",
+    "dependent_s_cpf_number (Texto de Linha Única): Dependent's CPF number",
+    "dependent_s_gender (Selecionar Caixa): Dependent's Gender",
+    "dependent_s_date_of_birth (Data): Dependent's date of birth"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: If the field \"the child was born\" is \"no\" and the field \"is the medical certificate for absence or maternity leave?\" is \"absence\", the rest of the fields are hidden.",
+   "when": "IO:has_the_child_been_born=No^IO:certificate_absence_maternity_leave=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vacations_end_your_maternity_leave: visible=false,mandatory=false",
+    "keep_form_complete_part2: visible=false,mandatory=false",
+    "type_maternity_leave: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "ACN - vacations_end_your_maternity_leave is YES",
+   "when": "IO:vacations_end_your_maternity_leave=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "amount_of_days: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show \"Msg  attach judicial custody\" field when \"What type of maternity leave?\" field is \"Maternity Leave by Adoption\"",
+   "when": "IO:type_maternity_leave=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "msg_attach_judicial_custody: visible=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show new dependent CheckBox ",
+   "when": "IO:has_the_child_been_born=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dental_insuracne: visible=true",
+    "health_insurance: visible=true",
+    "income_tax: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Show fields when \"If the child is not yet born, just select No.\" field is \"Yes\" AND \"Dependent health care\" is \"Yes\" OR \"Dependent dental care\" is \"Yes\" 2",
+   "when": "IO:has_the_child_been_born=Yes^IO:new_dependent_health_care=Yes^ORIO:new_dependent_dental_care=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "full_name_new_dependent: visible=true,mandatory=true",
+    "birth_date_: visible=true,mandatory=true",
+    "bank_code_refund: visible=true,mandatory=true",
+    "ssn_new_dependent: visible=true,mandatory=true",
+    "mother_full_name: visible=true,mandatory=true",
+    "declare_co_payment: visible=true,mandatory=true",
+    "gender_new_dependent: visible=true,mandatory=true",
+    "reimbursement_agency: visible=true,mandatory=true",
+    "alive_birth_certificate: visible=true,mandatory=true",
+    "current_account_reimbursement: visible=true,mandatory=true",
+    "employee_home_address: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN - type_maternity_leave is Maternity Leave",
+   "when": "IO:type_maternity_leave=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "msg_attach_medical_certificate: visible=true"
+   ]
+  },
+  {
+   "name": "ACN - has_the_child_been_born is not None , certificate_absence_maternity_leave is  show and mandatory",
+   "when": "IO:has_the_child_been_born!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "certificate_absence_maternity_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show none when no one benefits has been set to the dependent",
+   "when": "IO:income_tax=false^IO:dental_insuracne=false^IO:health_insurance=false^IO:has_the_child_been_born=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "none: visible=true"
+   ]
+  },
+  {
+   "name": "ACN - certificate_absence_maternity_leave is \"Maternity Leave\"",
+   "when": "IO:certificate_absence_maternity_leave=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vacations_end_your_maternity_leave: visible=true,mandatory=true",
+    "type_maternity_leave: visible=true,mandatory=true",
+    "period_maternity_leave: visible=true,mandatory=true",
+    "start_date_maternity_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show fields after select who will be request",
+   "when": "IO:employeeISNOTEMPTY^IO:solicitation_whom!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "personal_email: visible=true,mandatory=true",
+    "phone_number_with_area_code: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show fields when \"If the child is not yet born, just select No.\" field is \"Yes\"",
+   "when": "IO:has_the_child_been_born=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "msg_family_salary: visible=true",
+    "add_new_dependent: visible=true,mandatory=true",
+    "term_responsability_part2: visible=true",
+    "birth_certificate_new_dependent: visible=true",
+    "container_add_new_dependent: visible=true",
+    "new_dependent_income_tax: visible=true,mandatory=true",
+    "new_dependent_dental_care: ",
+    "new_dependent_health_care: visible=true,mandatory=true",
+    "term_responsability: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN - has_the_child_been_born is YES",
+   "when": "IO:has_the_child_been_born=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "new_dependent_income_tax: visible=true",
+    "container_add_new_dependent: visible=true",
+    "new_dependent_health_care: visible=true",
+    "msg_continue_decision_keep_form: visible=true",
+    "new_dependent_dental_care: "
+   ]
+  },
+  {
+   "name": "Aoop: Show field  to set Enter the number of vacation days",
+   "when": "IO:vacations_end_your_maternity_leave=yes_want_to_take_a_vacation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "subject_to_verification_of_available_vacation_days: visible=true",
+    "enter_the_number_of_vacation_days: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: hide some info messages on resolver view.",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "text_life_insurance: visible=false",
+    "more_info_about_maternity_license: visible=false",
+    "attach_the_birth_certificates_here: visible=false"
+   ]
+  },
+  {
+   "name": "EY: If \"Has the child been born\" is \"No\"",
+   "when": "IO:has_the_child_been_born=No^ORIO:has_the_child_been_born=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "current_account_reimbursement: visible=false,mandatory=false",
+    "alive_birth_certificate: visible=false,mandatory=false",
+    "i_have_read_and_agree: visible=false,mandatory=false",
+    "vacations_end_your_maternity_leave: visible=false,mandatory=false",
+    "employee_home_address: visible=false,mandatory=false",
+    "bank_code_refund: visible=false,mandatory=false",
+    "important_notice_and_next_steps: visible=false,mandatory=false",
+    "reimbursement_agency: visible=false,mandatory=false",
+    "select_where_you_want_to_add: visible=false",
+    "please_enter_the_number_of_newborns: visible=false,mandatory=false",
+    "refund_information: visible=false",
+    "info_select_where_you_want_to_add: visible=false",
+    "text_life_insurance: visible=false",
+    "attach_the_birth_certificates_here: visible=false",
+    "enter_the_information_for_the_new_dependent: visible=false,mandatory=false",
+    "container_add_new_dependent: visible=false",
+    "mother_full_name: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "ACN If eligibilities_informative is yes and Health or dental care ir yes, elegibility is show",
+   "when": "IO:alive_birth_certificate=Yes^ORIO:alive_birth_certificate=Yes^NQIO:dental_insuracne=true^ORIO:health_insurance=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "eligibilities_informative: visible=true,readonly=false"
+   ]
+  },
+  {
+   "name": "Aoop: If \"Has the child been born\" is \"No\"",
+   "when": "IO:has_the_child_been_born=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "please_attach_the_medical_certificate_maternity_leave: visible=true,mandatory=true",
+    "baby_didnt_born_yet: visible=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show  If eligibilities_informative is yes and Health or dental care ir yes, elegibility is show - Resolver view",
+   "when": "IO:alive_birth_certificate=Yes^ORIO:alive_birth_certificate=Yes^NQIO:dental_insuracne=true^ORIO:health_insurance=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "eligibilities_informative: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Resolver view  Child has been born",
+   "when": "IO:has_the_child_been_born=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "alive_birth_certificate: visible=true,readonly=true",
+    "refund_information: visible=true,readonly=true",
+    "container_add_new_dependent: visible=true,readonly=true",
+    "employee_home_address: visible=true,readonly=true",
+    "enter_the_information_for_the_new_dependent: visible=true,readonly=true",
+    "bank_code_refund: visible=true,readonly=true",
+    "mother_full_name: visible=true,readonly=true",
+    "important_notice_and_next_steps: visible=true,readonly=true",
+    "i_have_read_and_agree: visible=true,readonly=true",
+    "current_account_reimbursement: visible=true,readonly=true",
+    "vacations_end_your_maternity_leave: visible=true,readonly=true",
+    "please_enter_the_number_of_newborns: visible=true,readonly=true",
+    "info_select_where_you_want_to_add: visible=true,readonly=true",
+    "select_where_you_want_to_add: visible=true,readonly=true",
+    "reimbursement_agency: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Set new dependent CheckBox as mandatory when none is not selected",
+   "when": "IO:has_the_child_been_born=Yes^IO:none=false^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "income_tax: mandatory=true,readonly=false",
+    "dental_insuracne: mandatory=true,readonly=false",
+    "health_insurance: mandatory=true,readonly=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields 2",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "what_is_the_reason_for_the_leave: visible=true,mandatory=true",
+    "add_new_dependent: mandatory=true",
+    "has_the_child_been_born: mandatory=true",
+    "period_maternity_leave: mandatory=true",
+    "gender_new_dependent: mandatory=true",
+    "start_date_maternity_leave: mandatory=true",
+    "type_maternity_leave: mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: if  has_the_child_been_born is no and certificate_absence_maternity_leave is Absense, the mensage select_managment is show",
+   "when": "IO:has_the_child_been_born=No^IO:certificate_absence_maternity_leave=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_management: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: has_the_child_been_born Is \"NO\" 2",
+   "when": "IO:has_the_child_been_born=No^IO:certificate_absence_maternity_leave=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "keep_form_complete_part2: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Aoop:Set Old Field Dental Insurance",
+   "type": "onChange",
+   "on": "849e6c4587ac8310ec360e530cbb3591",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, quando o valor fica vazio, força 'new_dependent_dental_care' para 'No' — garante um padrão explícito em vez de deixar o campo indefinido."
+  },
+  {
+   "name": "ACN: Validate CPF",
+   "type": "onChange",
+   "on": "f60c91151b93f010d1abda4ce54bcb1e",
+   "va_supported": "true",
+   "ui_type": "0",
+   "what": "Catalog Client Script onChange que valida CPF com máscara, documentado por comentário no código. Versão 'ACN' do validador."
+  },
+  {
+   "name": "ACN: Add \"Employee home address\" details",
+   "type": "onChange",
+   "on": "168d2ad51b6af410d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o endereço residencial do colaborador via GlideAjax e preenche os campos do formulário."
+  },
+  {
+   "name": "Aoop: Check fulfillment of new dependent",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que confere o preenchimento do multi-row de recém-nascidos: compara o número informado em 'please_enter_the_number_of_newborns' com a quantidade de linhas do MRVS, impedindo divergência. Os comentários numerados documentam os passos."
+  },
+  {
+   "name": "[Aoop]Check the attchament before submit",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que verifica o anexo antes do envio, condicionado à resposta sobre o nascimento da criança."
+  },
+  {
+   "name": "Aoop:Validate start date Maternity Leave",
+   "type": "onChange",
+   "on": "a55bb41d1b13f010d1abda4ce54bcb6a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de início da licença maternidade, escondendo a mensagem de campo quando o valor fica vazio — cuidado que a maioria dos scripts do levantamento não tem."
+  },
+  {
+   "name": "Aoop:Input validation for vacation days",
+   "type": "onChange",
+   "on": "c9d3698187ecc310ec360e530cbb35ad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número de dias de férias convertendo para inteiro e conferindo o intervalo permitido."
+  },
+  {
+   "name": "Aoop:Set Old Field Heath Insurance",
+   "type": "onChange",
+   "on": "977e60c187ac8310ec360e530cbb35f0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Gêmeo do script de plano odontológico: quando o valor fica vazio, força 'new_dependent_health_care' para 'No'."
+  },
+  {
+   "name": "ACN: Medical Certificate Error",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando a criança ainda não nasceu mas o atestado de afastamento por maternidade foi marcado — combinação incoerente."
+  },
+  {
+   "name": "Aoop: Format Phone Number",
+   "type": "onChange",
+   "on": "0dbcdddd87688710ec360e530cbb35f3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata o telefone digitado, com comentários em inglês explicando cada etapa."
+  },
+  {
+   "name": "ACN Validate Fax",
+   "type": "onChange",
+   "on": "eeeddb571b404510d1abda4ce54bcb5d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número de fax, normalizando o valor antes de testar."
+  },
+  {
+   "name": "ACN: Fill field mother full name",
+   "type": "onChange",
+   "on": "168d2ad51b6af410d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o nome completo da mãe a partir do valor selecionado."
+  }
+ ]
+}

@@ -1,0 +1,598 @@
+{
+ "sys_id": "c090328d1bc83d10a530426fe54bcbe2",
+ "name": "Adesão, Alteração ou Não Adesão da Previdência Privada",
+ "sys_name": "Accession, Change or Non-accession to Private Pension",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Previdência Privada",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Preencha este formulário para aderir, alterar ou não aderir sua previdência privada.",
+ "description": "Preencha este formulário para aderir, alterar ou não aderir sua previdência privada.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "46",
+   "bloqueadores": "2",
+   "avisos": "28",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_insert_signature"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_insert_signature"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_politically_exposed_person_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_statement_of_participation_in_the_plan_and_discount_authorization: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_lgpd_considering_the_provisions_of_law: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_i_declare_that_on_this_date_i_became_aware_of_law_number: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_links: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_redemptions_taxed_at_15_at_source_for_any_amount: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_taxation_option: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_Logo: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_introduction: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_your_investment_profile_can_only_be_changed_in_the_months_of_june_and_december_through_the_website: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_redemptions_and_benefits_will_be_taxed_at_source: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_the_contribution_percentage_and_period_can_be_changed_at_any_time: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_declaration_of_cancellation_or_no_participation_in_the_benefit_plan_and_no_discount_authorization: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_the_participants_monthly_basic_contribution: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @vs_in_the_month_following_your_membership: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_i_declare_to_be_aware_that_i_may_change_my_basic_contribution_percentage: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_will_be_enabled_to_make_a_contribution_on_the_contribution_salary: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_it_is_mandatory_to_register_the_subscription: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_2_i_declare_that_on_this_date_i_became_aware_of_law_number_09_01_2024: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_additional_contribution_is_allowed_for_all_participants: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_it_will_be_available_on_nossaprevs_website_for_updating: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_for_the_purposes_of_the_above_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_cpf: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_global_id: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sim_nao_sem_include_none @has_signature_created: Sim/Nao sem \"Include None\" marcado",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "v_Logo",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_introduction",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "It is with pride that we can state that Nossaprev's mission goes far beyond supplementing its employees' retirement income. It involves respect for the work and dedication of each professional who contributes to the success of the Natura &Co Group today and in the future.\r\nNossaprev's objective is to manage one of the main Benefits that the Natura &Co group offers its employees.\r\nNossaprev has bee…"
+  },
+  {
+   "name": "v_links",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Access the material and support below:\r\nDownload the regulation here\r\nDownload the Explanatory Material here\r\nDownload the Bylaws here"
+  },
+  {
+   "name": "v_your_choice_options",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Your choice options"
+  },
+  {
+   "name": "v_choice_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choice option",
+   "include_none": true,
+   "choices": [
+    "Accession [=accession]",
+    "Change [=change]",
+    "Non-accession [=non_accession]"
+   ]
+  },
+  {
+   "name": "v_it_will_be_available_on_nossaprevs_website_for_updating",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "vs_in_the_month_following_your_membership",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_declaration_of_cancellation_or_no_participation_in_the_benefit_plan_and_no_discount_authorization",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Declaration of cancellation or \"NO\" participation in the benefit plan and \"NO\" discount authorization."
+  },
+  {
+   "name": "v_i_declare_no_participation_in_the_natura_pension_plan_and_no_discount_authorization",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare \"NO\" Participation in the Natura Pension Plan and \"NO\" Discount Authorization."
+  },
+  {
+   "name": "v_the_participants_monthly_basic_contribution",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_is_your_salary_more_than_15_urs",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is your salary more than 15 RUs (R$ 12.347,40)?",
+   "include_none": true
+  },
+  {
+   "name": "v_enter_a_percentage_from_0_to_3",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter a percentage from 0% to 3%, on the portion of the Contribution Salary up to 15 (fifteen) Reference Units (RU).",
+   "include_none": true,
+   "choices": [
+    "0,0%",
+    "0,5%",
+    "1,0%",
+    "1,5%",
+    "2,0%",
+    "2,5%",
+    "3,0%"
+   ]
+  },
+  {
+   "name": "v_enter_a_percentage_from_0_to_5",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter a percentage from 0% to 5%, on the portion of the Contribution Salary that exceeds 15 (fifteen) Reference Units (RU) limited to 1 Limiting Unit (LU).",
+   "include_none": true,
+   "choices": [
+    "0,0%",
+    "0,5%",
+    "1,0%",
+    "1,5%",
+    "2,0%",
+    "2,5%",
+    "3,0%",
+    "3,5%",
+    "4,0%",
+    "4,5%",
+    "5,0%"
+   ]
+  },
+  {
+   "name": "v_will_be_enabled_to_make_a_contribution_on_the_contribution_salary",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Will be enabled to make a contribution on the Contribution Salary"
+  },
+  {
+   "name": "v_additional_contribution_is_allowed_for_all_participants",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Additional Contribution is allowed for all participants regardless of UR. The additional contribution option has no counterpart from the company."
+  },
+  {
+   "name": "v_on_the_contribution_salary_or_on_profit_sharing_or_other_payments_made_by_the_sponsor",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "% - on the Contribution Salary or on profit sharing or other payments made by the Sponsor.",
+   "example": "A contribuição adicional é limitada a 30% do salário base menos o % da contribuição básica.",
+   "include_none": true,
+   "choices": [
+    "0,00%",
+    "0,50%",
+    "1,00%",
+    "1,50%",
+    "2,00%",
+    "2,50%",
+    "3,00%",
+    "3,50%",
+    "4,00%",
+    "4,50%",
+    "5,00%",
+    "5,50%",
+    "6,00%",
+    "6,50%",
+    "7,00%",
+    "7,50%",
+    "8,00%",
+    "8,50%",
+    "9,00%",
+    "9,50%",
+    "10,00%",
+    "10,50%",
+    "11,00%",
+    "11,50%",
+    "12,00%",
+    "12,50%",
+    "13,00%",
+    "13,50%",
+    "14,00%",
+    "14,50%",
+    "15,00%",
+    "15,50%",
+    "16,00%",
+    "16,50%",
+    "17,00%",
+    "17,50%",
+    "18,00%",
+    "18,50%",
+    "19,00%",
+    "19,50%",
+    "… +21"
+   ]
+  },
+  {
+   "name": "v_will_your_additional_contribution_be_for_a_certain_period",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Will your additional contribution be for a certain period?",
+   "include_none": true
+  },
+  {
+   "name": "v_how_many_months",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "How many months?"
+  },
+  {
+   "name": "v_the_contribution_percentage_and_period_can_be_changed_at_any_time",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "The contribution percentage and period can be changed at any time."
+  },
+  {
+   "name": "v_i_am_aware_that_after_the_informed_months_i_will_not_have_the_additional_contribution_discount",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that after the informed months I will not have the additional contribution discount."
+  },
+  {
+   "name": "v_by_my_own_free_will_i_choose_the_following_investment_portfolio",
+   "type": "Múltipla Escolha",
+   "type_code": "3",
+   "label": "By my own free will, I choose the following Investment Portfolio, to allocate the amounts related to the Participant Account balance:",
+   "include_none": true,
+   "choices": [
+    "Conservative Portfolio or Profile A [=conservative_portfolio_or_profile_a]",
+    "Moderate Portfolio or Profile B [=moderate_portfolio_or_profile_b]",
+    "Aggressive Portfolio or Profile C [=aggressive_portfolio_or_profile_c]",
+    "Life Cycle Portfolio [=life_cycle_portfolio]"
+   ]
+  },
+  {
+   "name": "v_your_investment_profile_can_only_be_changed_in_the_months_of_june_and_december_through_the_website",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_i_declare_to_be_aware_that_i_may_change_my_basic_contribution_percentage",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "I declare to be aware that:\r\nI may change my Basic Contribution percentage at any time, determined in multiples of 0.5%;\r\nOn the enrollment date for the Natura &Co Group Benefit Plan, I must choose the Basic Contribution percentage. If I do not make my choice, the percentage of 0% (zero percent) will be considered;\r\nThe amount of the Basic Contribution will change when there is a change in my Cont…"
+  },
+  {
+   "name": "v_i_know",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I know."
+  },
+  {
+   "name": "v_taxation_option",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_i_declare_that_on_this_date_i_became_aware_of_law_number",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "I inform you that, on this date, I have become aware of Law number 14,803, dated 01/11/2024, which grants the possibility of opting for the tax regime until the moment of requesting the first redemption or obtaining the benefit related to the amounts accumulated in plans of benefits administered by supplementary pension entities. As a Participant of the Natura &Co Group Benefits Plan.",
+   "include_none": true,
+   "choices": [
+    "Opt for the Progressive Tax Regime [=opt_for_the_progressive_tax_regime]",
+    "Opt for the Regressive Tax Regime [=opt_for_the_regressive_tax_regime.]"
+   ]
+  },
+  {
+   "name": "v_2_i_declare_that_on_this_date_i_became_aware_of_law_number_09_01_2024",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Opção de Tributação (Lei nº 11.053/04)"
+  },
+  {
+   "name": "v_i_know_14803",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I know"
+  },
+  {
+   "name": "v_redemptions_taxed_at_15_at_source_for_any_amount",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Redemptions taxed at 15% at source for any amount, as an advance tax due on the Annual Adjustment Statement. Benefits will be taxed according to the progressive table. You will be able to opt for the Regressive Regime until the last business day of the next month through an Option Term. After this period, your permanence in the Progressive Regime will be definitive."
+  },
+  {
+   "name": "v_redemptions_and_benefits_will_be_taxed_at_source",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_politically_exposed_person_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Politically Exposed Person Information."
+  },
+  {
+   "name": "v_i_declare_in_compliance_with_previc_normative_instruction_34",
+   "type": "Múltipla Escolha",
+   "type_code": "3",
+   "label": "I declare, in compliance with Previc Normative Instruction No. 34, of 10/28/2020, which deals with the procedures to be adopted by Closed Supplementary Pension Entities to monitor operations carried out by politically exposed persons, aiming to curb \"laundering\" crimes or concealment of assets, rights and values, the information that follows:",
+   "include_none": true,
+   "choices": [
+    "I DO NOT fit the definition adopted for people considered politically exposed; [=i_do_not_fit_the_definition_adopted_for_people_considered_politically_exposed]",
+    "I FIT THE definition adopted for people considered politically exposed. [=i_fit_the_definition_adopted_for_people_considered_politically_exposed]"
+   ]
+  },
+  {
+   "name": "v_for_the_purposes_of_the_above_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "For the purposes of the above information, I declare that I am aware that a politically exposed person means the public agent who performs or has performed, in the last five years, in Brazil or in a country, territory or foreign dependency, position, job or relevant public function, as well as their representatives, family members and other people of your close relationship.\r\nFor the purposes of N…"
+  },
+  {
+   "name": "v_statement_of_participation_in_the_plan_and_discount_authorization",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "i_know_declaration_of_participation",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I know."
+  },
+  {
+   "name": "v_lgpd_considering_the_provisions_of_law",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "GDPR\r\nConsidering the provisions of Law 13.709/2018 (General Law for the Protection of Personal Data - LGPD), I express my consent to the processing of personal data by Nossaprev, especially: registration information (name, date of birth, marital status, RG, CPF, address), family composition, dependents, employer, salary, current account, social security information, taxes and income report. In ad…"
+  },
+  {
+   "name": "v_i_know_lgpd",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I know."
+  },
+  {
+   "name": "v_it_is_mandatory_to_register_the_subscription",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "IT IS MANDATORY TO REGISTER THE SUBSCRIPTION!"
+  },
+  {
+   "name": "v_insert_signature",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Insert signature",
+   "widget": "EY:Show_Signature"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "51ec0bed1bdb5154d1abda4ce54bcbb3",
+   "name": "Tem Assinatura",
+   "order": "100",
+   "perguntas": [
+    "has_signature_created (Sim/Não, hidden, default): A assinatura foi criada?"
+   ]
+  },
+  {
+   "sys_id": "201a83d11bc4bd10a530426fe54bcb66",
+   "name": "Suas informações pessoais",
+   "order": "400",
+   "perguntas": [
+    "v_employee (Referência): Employee",
+    "v_global_id (Texto de Linha Única): Global ID",
+    "v_cpf (Texto de Linha Única): CPF",
+    "v_rg (Texto de Linha Única): RG",
+    "v_admission_date (Data): Admission date",
+    "v_date_of_birth (Data): Date of birth"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Choice option field mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_choice_option: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Accession option and Opt for the Regressive Tax Regime option",
+   "when": "IO:v_i_declare_that_on_this_date_i_became_aware_of_law_number=opt_for_the_regressive_tax_regime.^IO:v_choice_option=accession^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_redemptions_and_benefits_will_be_taxed_at_source: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Insert signature mandatory fields",
+   "when": "IO:v_i_know_lgpd=true^ORIO:v_i_declare_no_participation_in_the_natura_pension_plan_and_no_discount_authorization=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_insert_signature: visible=true,mandatory=true",
+    "v_it_is_mandatory_to_register_the_subscription: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Non-accession option",
+   "when": "IO:v_choice_option=non_accession^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_i_declare_no_participation_in_the_natura_pension_plan_and_no_discount_authorization: visible=true,mandatory=true",
+    "v_declaration_of_cancellation_or_no_participation_in_the_benefit_plan_and_no_discount_authorization: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Accession option",
+   "when": "IO:v_choice_option=accession^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_in_the_case_of_no_option: visible=true",
+    "vs_in_the_month_following_your_membership: visible=true",
+    "v_i_declare_that_on_this_date_i_became_aware_of_law_number: visible=true",
+    "v_by_my_own_free_will_i_choose_the_following_investment_portfolio: visible=true,mandatory=true",
+    "v_taxation_option: visible=true",
+    "v_i_know_14803: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Accession or Change options and YES option  for your salary more than 15 Urs field",
+   "when": "IO:v_is_your_salary_more_than_15_urs=Yes^IO:v_enter_a_percentage_from_0_to_3=3,0%^IO:v_choice_optionINaccession,change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_a_percentage_from_0_to_5: visible=true,mandatory=true",
+    "v_will_be_enabled_to_make_a_contribution_on_the_contribution_salary: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Change option",
+   "when": "IO:v_choice_option=change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_your_investment_profile_can_only_be_changed_in_the_months_of_june_and_december_through_the_website: visible=true",
+    "v_it_will_be_available_on_nossaprevs_website_for_updating: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Accession or Change options",
+   "when": "IO:v_choice_optionINaccession,change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_for_the_purposes_of_the_above_information: visible=true",
+    "v_i_declare_in_compliance_with_previc_normative_instruction_34: visible=true,mandatory=true",
+    "v_statement_of_participation_in_the_plan_and_discount_authorization: visible=true",
+    "v_the_participants_monthly_basic_contribution: visible=true",
+    "v_on_the_contribution_salary_or_on_profit_sharing_or_other_payments_made_by_the_sponsor: visible=true",
+    "i_know_declaration_of_participation: visible=true,mandatory=true",
+    "v_i_know: visible=true,mandatory=true",
+    "v_is_your_salary_more_than_15_urs: visible=true,mandatory=true",
+    "v_additional_contribution_is_allowed_for_all_participants: visible=true",
+    "v_enter_a_percentage_from_0_to_3: visible=true,mandatory=true",
+    "v_politically_exposed_person_information: visible=true",
+    "v_i_declare_to_be_aware_that_i_may_change_my_basic_contribution_percentage: visible=true",
+    "v_i_know_lgpd: visible=true,mandatory=true",
+    "v_lgpd_considering_the_provisions_of_law: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Accession or Change options and % - on the Contribution Salary or on profit sharing or other payments made by the Sponsor field is NOT empty",
+   "when": "IO:v_on_the_contribution_salary_or_on_profit_sharing_or_other_payments_made_by_the_sponsorISNOTEMPTY^IO:v_on_the_contribution_salary_or_on_profit_sharing_or_other_payments_made_by_the_sponsor!=0^IO:v_choice_optionINaccession,change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_the_contribution_percentage_and_period_can_be_changed_at_any_time: visible=true",
+    "v_will_your_additional_contribution_be_for_a_certain_period: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Accession or Change options and Will your additional contribution be for a certain period? field is YES option",
+   "when": "IO:v_will_your_additional_contribution_be_for_a_certain_period=Yes^IO:v_choice_optionINaccession,change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_how_many_months: visible=true,mandatory=true",
+    "v_i_am_aware_that_after_the_informed_months_i_will_not_have_the_additional_contribution_discount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide \"TEXTO ATÉ 09/01/2024 - Opção de Tributação (Lei nº 11.053/04) \"",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_2_i_declare_that_on_this_date_i_became_aware_of_law_number_09_01_2024: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Accession option and Opt for the Progressive Tax Regime option",
+   "when": "IO:v_i_declare_that_on_this_date_i_became_aware_of_law_number=opt_for_the_progressive_tax_regime^IO:v_choice_option=accession^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_redemptions_taxed_at_15_at_source_for_any_amount: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Field Nossaprev",
+   "type": "onChange",
+   "on": "64a04e1a1bc8f150a530426fe54bcb8a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de campos do plano Nossaprev quando a escolha anterior muda."
+  },
+  {
+   "name": "EY: Clear Certain period Field Nossaprev",
+   "type": "onChange",
+   "on": "54faf85a1b04f150a530426fe54bcb0f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o campo de período determinado do Nossaprev."
+  },
+  {
+   "name": "EY: Clear Limit 30% Field Nossaprev",
+   "type": "onChange",
+   "on": "912a781a1b04f150a530426fe54bcbc4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o campo de limite de 30% do Nossaprev. Observação: sai apenas no isLoading, sem checar valor vazio — então limpa também quando o campo é esvaziado."
+  },
+  {
+   "name": "EY: HTR_Verify E-signature",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que verifica a assinatura eletrônica antes do envio. Tem uma mensagem pedindo reconfirmação da assinatura comentada no topo."
+  },
+  {
+   "name": "EY: Clear Salary Field Nossaprev",
+   "type": "onChange",
+   "on": "fa9fa4da1b80f150a530426fe54bcbfd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o campo de salário do Nossaprev e dependentes."
+  }
+ ]
+}

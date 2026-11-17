@@ -1,0 +1,146 @@
+{
+ "sys_id": "9f456ded1b3c2d14a530426fe54bcbc1",
+ "name": "Programa Florescer",
+ "sys_name": "Florescer Program",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Aprendizagem, Desenvolvimento e Desempenho",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Para solicitações relacionadas ao Programa de Jovens Aprendizes",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "13",
+   "variaveis_ativas": "16",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "13"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @faq_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_select_manager_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 13 de 13 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 9 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Information about the Jovem Aprendiz [=information_jovem_aprendiz]",
+    "Request change of manager/tutor [=manager_tutor_change]",
+    "Information about events/trainings [=information_events_trainings]",
+    "Sending Communications [=sending_communications]",
+    "Information about data/indicators [=information_about_data_indicators]"
+   ]
+  },
+  {
+   "name": "faq_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_select_manager_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select manager name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "v_manager_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager ID"
+  },
+  {
+   "name": "v_manager_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager email"
+  },
+  {
+   "name": "v_request_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Request date"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory type",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Description",
+   "when": "IO:v_request_typeINinformation_jovem_aprendiz,information_events_trainings^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Change of manager/tutor",
+   "when": "IO:v_request_type=manager_tutor_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_manager_email: visible=true,readonly=true",
+    "v_manager_id: visible=true,readonly=true",
+    "v_select_manager_name: visible=true,mandatory=true",
+    "v_request_date: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill manager info",
+   "type": "onChange",
+   "on": "c67869ad1b7c2d14a530426fe54bcbe8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do gestor, limpando o ID quando o valor fica vazio."
+  }
+ ]
+}

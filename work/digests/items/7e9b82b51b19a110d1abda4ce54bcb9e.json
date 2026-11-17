@@ -1,0 +1,86 @@
+{
+ "sys_id": "7e9b82b51b19a110d1abda4ce54bcb9e",
+ "name": "Informações HUB de Pagamentos sobre Requisições e Contratos",
+ "sys_name": "Payment HUB Information on Requests and Contracts",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Dúvidas em Requisições criadas pelo Hub de Pagamentos ou aprovações de Requisições do grupo aprovador CSC Contratos",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "18",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "18"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_label_explain_CRW_CW: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 18 de 18 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "942e4af11b59a110d1abda4ce54bcb04",
+   "name": "EY VS - Solicitar Informações",
+   "order": "200",
+   "perguntas": [
+    "v_hub_customer (Sim/Não): Are you a Hub Customer?",
+    "v_what_type_of_doubt_do_you_have (Selecionar Caixa): What kind of question do you have?",
+    "v_label_explain_CRW_CW (Rótulo de Rich Text): Criação de CW - Contrato jurídico que possui pergunta de risco respondidas como \"Sim\" e que necessitam de algum tipo de pagamentoCriação de CRW - Contrato jurídico que possui perguntas de risco respondidas como \"Não\" e não tem características de valores, ou seja, não há possibilidade de gerar algum tipo de pagamento, ex.: (parceria para divulgação da marca; patrocínio; etc.)",
+    "v_inform_your_question (Texto de Várias Linhas): Inform your question"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

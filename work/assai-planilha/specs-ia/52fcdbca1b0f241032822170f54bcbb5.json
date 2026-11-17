@@ -1,0 +1,179 @@
+{
+ "sys_id": "52fcdbca1b0f241032822170f54bcbb5",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso de um serviço de RH > Medicina do trabalho (5 oferta(s)); Gestor - RH Ponta > Preciso reportar um problema > Medicina do trabalho (1 oferta(s)). 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de correção de cadastro de afastamento.",
+ "vars": {
+  "rh_away_days": {
+   "label": "Quantos dias de afastamento são?"
+  },
+  "rh_last_job_date": {
+   "label": "Qual foi o último dia trabalhado?"
+  },
+  "rh_date_time_expertise": {
+   "label": "Quando é a perícia (data e horário)?"
+  },
+  "rh_info_job_return": {
+   "label": "Se o colaborador é de ponto livre, ele voltou ao trabalho?"
+  },
+  "rh_center_cost_impacted": {
+   "label": "Qual é o centro de custo do colaborador?"
+  },
+  "rh_number_request_expertise": {
+   "label": "Qual é o número do requerimento da perícia?"
+  },
+  "rh_date_expertise_medical": {
+   "label": "Em que data foi realizada a perícia?"
+  },
+  "rh_date_correct_move_away": {
+   "label": "Qual é a data correta do afastamento?"
+  },
+  "rh_store_name": {
+   "label": "Em qual loja o colaborador trabalha?"
+  },
+  "rh_benefit_number": {
+   "label": "Qual é o número do benefício?"
+  },
+  "rh_phone_number": {
+   "label": "Qual é o telefone atualizado do colaborador, com DDD?"
+  }
+ },
+ "remover": {
+  "rh_observation_2": "visual",
+  "rh_observation_4": "visual",
+  "rh_observation_6": "visual",
+  "rh_observation_1": "visual",
+  "rh_observation_3": "visual",
+  "rh_observation_5": "visual",
+  "rh_observation": "visual"
+ },
+ "policies": {
+  "050d530e1b0f241032822170f54bcb1d": {
+   "conditions": "service_offering=f5d1af541b47649032822170f54bcb05",
+   "actions": {
+    "rh_number_request_expertise": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_date_time_expertise": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "0a9c1d5b1b832450eca40dcbe54bcb5f": "remover",
+  "450d530e1b0f241032822170f54bcb1a": {
+   "conditions": "service_offering=7dd1af541b47649032822170f54bcb01",
+   "actions": {
+    "rh_date_correct_move_away": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_away_days": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "4d7cd91b1b832450eca40dcbe54bcbf1": "remover",
+  "850d530e1b0f241032822170f54bcb17": {
+   "conditions": "service_offering=65d16f541b47649032822170f54bcbdf",
+   "actions": {
+    "rh_last_job_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_info_job_return": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8dcc159b1b832450eca40dcbe54bcb40": "remover"
+ },
+ "itens": [
+  {
+   "name": "Afastamento - Atualização (envios e solicitações)",
+   "short_description": "Pedido ou envio de informações sobre afastamento: decisão do INSS, perícia, recurso, aposentadoria por invalidez e AVT.",
+   "description": "Use para enviar a decisão do INSS, os dados de agendamento de perícia ou documentos de recurso e processo judicial de um colaborador afastado, e para solicitar aposentadoria por invalidez ou o aviso de volta ao trabalho (AVT). Atende as ofertas de envio de comunicação de decisão do INSS, dados de perícia, documento de recurso, aposentadoria por invalidez e AVT.",
+   "frases_exemplo": [
+    "Saiu a decisão do INSS do colaborador afastado",
+    "Preciso enviar o agendamento da perícia",
+    "Quero mandar o documento do processo judicial",
+    "Preciso pedir o AVT, ele vai voltar ao trabalho",
+    "O colaborador teve aposentadoria por invalidez"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "rh_date_correct_move_away"
+   ],
+   "sem_policies": [
+    "450d530e1b0f241032822170f54bcb1a"
+   ]
+  },
+  {
+   "name": "Afastamento - Atualização (correção de cadastro)",
+   "short_description": "Reporte de erro nos dias ou na data de início do afastamento cadastrado.",
+   "description": "Use quando os dias de afastamento ou a data de início estiverem registrados errado no cadastro do colaborador. Atende a oferta Solicitação de correção de cadastro de afastamento.",
+   "frases_exemplo": [
+    "A data do afastamento está errada no cadastro",
+    "Os dias de afastamento estão incorretos",
+    "Preciso corrigir o afastamento de um colaborador",
+    "O afastamento foi cadastrado com data errada"
+   ],
+   "sem_vars": [
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise"
+   ],
+   "vars": {
+    "rh_away_days": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_expertise_medical": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_correct_move_away": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "050d530e1b0f241032822170f54bcb1d",
+    "090d530e1b0f241032822170f54bcb11",
+    "450d530e1b0f241032822170f54bcb1a",
+    "850d530e1b0f241032822170f54bcb17",
+    "9784ad071bfd861432822170f54bcb43",
+    "b1f2dfbe1ba20254347221bbe54bcb82",
+    "c50d530e1b0f241032822170f54bcb14",
+    "e6b5959b1b432450eca40dcbe54bcb70"
+   ]
+  }
+ ]
+}

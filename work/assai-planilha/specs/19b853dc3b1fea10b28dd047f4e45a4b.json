@@ -1,0 +1,137 @@
+{
+ "sys_id": "19b853dc3b1fea10b28dd047f4e45a4b",
+ "status": "conversacional",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "v_motivo_da_solicitacao": {
+   "label": "Motivo da solicitação"
+  },
+  "v_data_nascimento": {
+   "label": "Data de nascimento"
+  },
+  "v_anexar_foto_2": {
+   "label": "Anexar foto"
+  },
+  "v_apelido_social": {
+   "label": "Apelido Social"
+  },
+  "v_deseja_alterar_foto": {
+   "label": "Deseja alterar a foto?"
+  },
+  "v_anexar_foto_3": {
+   "label": "Anexar foto"
+  },
+  "v_nome_social": {
+   "label": "Nome Social"
+  },
+  "v_motivo_solicitacao": {
+   "label": "Motivo da solicitação"
+  },
+  "v_autodeclaracao": {
+   "label": "Autodeclaração"
+  },
+  "v_anexar_foto": {
+   "label": "Anexar nova foto"
+  },
+  "v_cpf_prestador": {
+   "label": "CPF do prestador de serviço"
+  },
+  "v_nome_prestador": {
+   "label": "Nome completo do prestador de serviço"
+  }
+ },
+ "remover": {
+  "v_observacao": "visual",
+  "v_observacao_nome": "visual",
+  "formatter": "visual",
+  "container_start": "visual",
+  "v_observacao_apelido": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "4c7132283bd36e10b28dd047f4e45a7e": {
+   "conditions": "v_deseja_alterar_foto=Yes^service_offering=2437a26c3b536e10b28dd047f4e45a9b",
+   "actions": {
+    "v_anexar_foto": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "73c47eec3bd36e10b28dd047f4e45a8c": {
+   "conditions": "v_motivo_solicitacao=2^service_offering=799826203b936e10b28dd047f4e45a08",
+   "actions": {
+    "v_nome_social": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_autodeclaracao": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8aa1bee43bd36e10b28dd047f4e45a38": {
+   "conditions": "service_offering=2b2826203b936e10b28dd047f4e45a03",
+   "actions": {
+    "v_cpf_prestador": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_anexar_foto_3": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_nome_prestador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "90e27ee83bd36e10b28dd047f4e45aa4": {
+   "conditions": "v_motivo_solicitacao=1^service_offering=799826203b936e10b28dd047f4e45a08",
+   "actions": {
+    "v_apelido_social": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "922b946287d17210182a0d440cbb3541": {
+   "conditions": "v_deseja_alterar_foto=Yes^service_offering=2437a26c3b536e10b28dd047f4e45a9b",
+   "actions": {
+    "v_anexar_foto": {
+     "visible": true
+    }
+   }
+  },
+  "c12c50a287d17210182a0d440cbb3537": {
+   "conditions": "service_offering=2b2826203b936e10b28dd047f4e45a03",
+   "actions": {
+    "v_anexar_foto_3": {
+     "visible": true
+    },
+    "v_cpf_prestador": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_nome_prestador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Crachá",
+   "short_description": "Crachá",
+   "description": "Crach",
+   "frases_exemplo": [
+    "Solicitação de 2ª via de crachá - Crachá",
+    "Solicitação de crachá - Prestador de serviço - Crachá",
+    "Solicitação de crachá - Nome social - Crachá"
+   ]
+  }
+ ]
+}

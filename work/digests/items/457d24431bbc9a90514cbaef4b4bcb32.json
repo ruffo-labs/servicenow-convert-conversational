@@ -1,0 +1,285 @@
+{
+ "sys_id": "457d24431bbc9a90514cbaef4b4bcb32",
+ "name": "Pedido de Reembolso de Energia Elétrica",
+ "sys_name": "Request for Electricity Refunds",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Reembolsos",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Utilize este formulário para solicitar o seu Reembolso de Energia Elétrica",
+ "description": "Utilize este formulário para solicitar o seu Reembolso de Energia Elétrica",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "28",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_legenda_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_legenda_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legenda_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_frequency_of_your_invoice",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the frequency of your invoice?",
+   "include_none": true,
+   "choices": [
+    "Monthly [=monthly]",
+    "Bimonthly [=bimonthly]"
+   ]
+  },
+  {
+   "name": "v_legenda_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "What is the frequency of your invoice?"
+  },
+  {
+   "name": "v_invoice_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice Number"
+  },
+  {
+   "name": "v_legenda_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "What is the frequency of your invoice?"
+  },
+  {
+   "name": "v_month",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What month is the invoice due?",
+   "include_none": true,
+   "choices": [
+    "January [=01]",
+    "February [=02]",
+    "March [=03]",
+    "April [=04]",
+    "May [=05]",
+    "June [=06]",
+    "July [=07]",
+    "August [=08]",
+    "September [=09]",
+    "October [=10]",
+    "November [=11]",
+    "December [=12]"
+   ]
+  },
+  {
+   "name": "v_year",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What year is the invoice due?",
+   "include_none": true
+  },
+  {
+   "name": "v_month_year",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complete date"
+  },
+  {
+   "name": "v_electricity_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Electricity amount"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Electricity amount"
+  },
+  {
+   "name": "v_records",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Records",
+   "hidden": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide portal variables",
+   "when": "IO:v_month_yearISEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_month_year: visible=false"
+   ]
+  },
+  {
+   "name": "EY: readOnly country of residence",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country_of_residence: mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show employee ID",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee_id: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_year: visible=true,mandatory=true",
+    "v_frequency_of_your_invoice: visible=true,mandatory=true",
+    "v_attachment: visible=true",
+    "v_month: visible=true,mandatory=true",
+    "v_electricity_amount: visible=true,mandatory=true",
+    "v_legenda_2: visible=true",
+    "v_invoice_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show legendas",
+   "when": "IO:v_frequency_of_your_invoice=bimonthly^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_3: visible=true",
+    "v_legenda_4: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set complete date OnChange month",
+   "type": "onChange",
+   "on": "d306f8071bfc9a90514cbaef4b4bcbb8",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que compõe a data completa a partir do mês escolhido e do ano já preenchido."
+  },
+  {
+   "name": "EY: Check invoce OnChange",
+   "type": "onChange",
+   "on": "f7b578071bfc9a90514cbaef4b4bcb97",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que verifica se a fatura informada já foi usada, consultando o servidor com o colaborador, o número da fatura e o sys_id do formulário — evita reembolso duplicado."
+  },
+  {
+   "name": "EY: Check date OnChange",
+   "type": "onChange",
+   "on": "7f47bc4b1bfc9a90514cbaef4b4bcb7f",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Gêmeo do anterior, validando a data informada em vez do número da fatura."
+  },
+  {
+   "name": "EY: Clear values change",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa frequência, número da fatura, mês e ano. ATENÇÃO: não tem a guarda `if (isLoading)` — também dispara no carregamento, apagando valores já preenchidos ao reabrir o formulário. Mesmo problema do 'EY: Clear values' do lote anterior."
+  },
+  {
+   "name": "EY: Get date and invoice OnChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que, ao escolher o colaborador, busca data e fatura correspondentes no servidor via GlideAjax."
+  },
+  {
+   "name": "EY: Set complete date OnChange year",
+   "type": "onChange",
+   "on": "092678471bfc9a90514cbaef4b4bcbea",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Par do script de data completa, disparado pela mudança do ano em vez do mês."
+  },
+  {
+   "name": "EY: Set years options",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que monta a lista de anos dinamicamente com o ano atual e o anterior, em vez de deixá-los cravados."
+  },
+  {
+   "name": "EY: Check date and invoice OnSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que impede registro duplicado: faz parse do JSON dos registros já lançados e compara com o número da fatura e a data informados."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "37a77c4b1bfc9a90514cbaef4b4bcb8f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata valor como moeda, aceitando dígitos, ponto e vírgula. Repete o erro de digitação `var regex = regex = /.../` visto no catálogo PTP."
+  }
+ ]
+}

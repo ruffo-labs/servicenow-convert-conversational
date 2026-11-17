@@ -1,0 +1,125 @@
+{
+ "sys_id": "13a1b0d287474390ec360e530cbb3512",
+ "name": "Solicitação de Liberação de Medicamento",
+ "sys_name": "Medication Release Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "pharmacy",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Formulário para solicitação de liberação de medicamento, de uso exclusivo para equipe do Serviço Médico Natura.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "8",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @attachment_medical_prescription: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @requested_for: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Liberação de Medicamento. Comentários no código explicam a intenção: vincula o sys_id do producer em current.item para disparar o Flow Designer e mapeia o usuário da sys_user a partir do perfil de RH. É um dos poucos scripts do levantamento com comentários explicativos úteis.",
+ "variaveis": [
+  {
+   "name": "opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "read_only": true,
+   "default": "javascript: gs.getUserID();",
+   "reference": "sys_user",
+   "map_to_field": true
+  },
+  {
+   "name": "requested_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Request for whom?",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^user.location.country=BRA^EQ",
+   "map_to_field": true
+  },
+  {
+   "name": "id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global",
+   "read_only": true
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF",
+   "read_only": true
+  },
+  {
+   "name": "phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone",
+   "read_only": true
+  },
+  {
+   "name": "employee_personal_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee's Personal Email",
+   "example": "nome@dominio.com"
+  },
+  {
+   "name": "description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe Your Request",
+   "map_to_field": true
+  },
+  {
+   "name": "attachment_medical_prescription",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Medical Prescription Here"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Exibe campos de perfil somente quando colaborador for selecionado",
+   "when": "IO:requested_forISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "cpf: visible=true,readonly=true",
+    "id_global: visible=true,readonly=true",
+    "phone: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Campos obigatórios",
+   "when": "IO:opened_byISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "requested_for: mandatory=true",
+    "employee_personal_email: mandatory=true",
+    "attachment_medical_prescription: mandatory=true",
+    "description: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

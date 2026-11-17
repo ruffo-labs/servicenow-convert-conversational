@@ -1,0 +1,552 @@
+{
+ "sys_id": "09fc71061b03241032822170f54bcb15",
+ "name": "Reintegração ou cancelamento de desligamento",
+ "category": "Rescisão",
+ "short_description": "Reintegração ou cancelamento de desligamento",
+ "description": "Reintegra&ccedil;&atilde;o ou cancelamento de desligamento",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Reativação de Benefícios - Reintegração",
+     "sla": "SLA - GESTÃO DE GENTE - 80H",
+     "grupo_suporte": "RH - Reativação de Benefícios"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_attach_medical_support_new",
+    "attach_reintegration_email_sent_by_the_legal",
+    "rh_reinstatement_reason",
+    "v_date_comunication_pregnancy",
+    "rh_attach_aso_unfit_dismissal_new",
+    "rh_attach_ultrasound_new",
+    "rh_attach_trct_new",
+    "rh_reinstatement_reason_new",
+    "attach_reintegration_request_form",
+    "rh_attach_bank_details_new",
+    "rh_attach_bank_details",
+    "rh_pregnancy_date_report",
+    "rh_detailed_reason_for_reinstatement",
+    "rh_attach_trct",
+    "rh_attach_medical_support",
+    "v_employee_handwritten_letter",
+    "rh_regional_doctor",
+    "rh_attach_aso_unfit_dismissal"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_date_dismissal"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data da reintegração",
+     "quando": "reintegration_dateISNOTEMPTY"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de reativação de benefícios - Reintegração",
+     "sla": "SLA - GESTÃO DE GENTE - 80H",
+     "grupo_suporte": "RH - Reativação de Benefícios"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_attach_ultrasound_new"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Anexar documento comprovatório",
+     "quando": "rh_reinstatement_reason="
+    },
+    {
+     "policy": "ALP - TRCT new - Limpar Campo",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new=pregnancy^NQrh_attach_trct_newISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Colaborador não encontrado (mandatory)",
+     "quando": "rh_user_id_impacted="
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto (Resolvedora)",
+     "quando": "rh_reinstatement_reason=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - Laudo Médico new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report"
+    },
+    {
+     "policy": "ALP - Data da comunicação da gestação",
+     "quando": "rh_reinstatement_reason=pregnancy^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP -  Médico Regional",
+     "quando": "rh_regional_doctorISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários (Resolvedora)",
+     "quando": "rh_attach_bank_detailsISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Anexar e-mail de reintegração enviado pelo jurídico",
+     "quando": "attach_reintegration_email_sent_by_the_legalISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Solicitação de reintegração Gestante",
+     "quando": "rh_attach_ultrasoundISNOTEMPTY^ORrh_pregnancy_date_reportISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Observation - Cancelamento ou interrupção do aviso prévio",
+     "quando": "rh_reinstatement_reason=cancellation_or_interruption_of_notice_period^NQrh_reinstatement_reason_new=cancellation_or_interruption_of_notice_period"
+    },
+    {
+     "policy": "ALP - Descreva com detalhes o motivo da solicitação de reintegração",
+     "quando": "rh_reinstatement_reason=others^NQrh_reinstatement_reason_new=others"
+    },
+    {
+     "policy": "ALP - Data da reintegração",
+     "quando": "reintegration_dateISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários",
+     "quando": "rh_reinstatement_reason=aso_for_dismissal_unfit^ORrh_reinstatement_reason=submission_leave_comorbidity_report^ORrh_reinstatement_reason=^ORrh_reinstatement_reason=pregnancy^NQrh_attach_bank_detailsISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Solicitação de reintegração",
+     "quando": "rh_reinstatement_reason!="
+    },
+    {
+     "policy": "ALP - Laudo Médico (Resolvadora)",
+     "quando": "rh_reinstatement_reason=submission_leave_comorbidity_report^ORrh_reinstatement_reason=^NQrh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new="
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto new",
+     "quando": "rh_reinstatement_reason_new=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto new - Limpar campo",
+     "quando": "rh_reinstatement_reason_new=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - Anexar formulário de Solicitação de Reintegração",
+     "quando": "attach_reintegration_request_formISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Anexar documento comprovatório (Resolvedora)",
+     "quando": "attach_reintegration_email_sent_by_the_legalISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários new - Limpar campo",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new=pregnancy^NQrh_attach_bank_details_newISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Motivo da Solicitacao new",
+     "quando": "rh_reinstatement_reason_new!="
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto",
+     "quando": "rh_reinstatement_reason=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - TRCT",
+     "quando": "rh_reinstatement_reason=aso_for_dismissal_unfit^ORrh_reinstatement_reason=submission_leave_comorbidity_report^ORrh_reinstatement_reason=^ORrh_reinstatement_reason=pregnancy^NQrh_attach_trctISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Laudo Médico",
+     "quando": "rh_reinstatement_reason=submission_leave_comorbidity_report^ORrh_reinstatement_reason="
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report^ORrh_reinstatement_reason_new=pregnancy^NQrh_attach_bank_details_newISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Observation - Cancelamento por decisão do colaborador",
+     "quando": "rh_reinstatement_reason=termination_cancellation_by_employee_decision^NQrh_reinstatement_reason_new=termination_cancellation_by_employee_decision"
+    },
+    {
+     "policy": "ALP - Carta de próprio punho do colaborador",
+     "quando": "rh_reinstatement_reason=termination_cancellation_by_employee_decision^ORrh_reinstatement_reason=cancellation_or_interruption_of_notice_period^NQrh_reinstatement_reason_new=termination_cancellation_by_employee_decision^ORrh_reinstatement_reason_new=cancellation_or_interruption_of_notice_period"
+    },
+    {
+     "policy": "ALP - Data de Desligamento",
+     "quando": "rh_date_dismissalISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - TRCT new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report^ORrh_reinstatement_reason_new=pregnancy^NQrh_attach_trct_newISNOTEMPTY"
+    },
+    {
+     "policy": "ALP - Laudo Médico new - Limpar Campo",
+     "quando": "rh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new="
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de Reintegração Judicial - Reintegração",
+     "sla": "SLA - GESTÃO DE GENTE - 80H",
+     "grupo_suporte": "RH - Reintegração"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_attach_medical_support_new",
+    "rh_reinstatement_reason",
+    "v_date_comunication_pregnancy",
+    "rh_attach_aso_unfit_dismissal_new",
+    "rh_attach_ultrasound_new",
+    "rh_attach_trct_new",
+    "rh_reinstatement_reason_new",
+    "rh_attach_bank_details_new",
+    "rh_attach_bank_details",
+    "rh_pregnancy_date_report",
+    "rh_detailed_reason_for_reinstatement",
+    "rh_attach_trct",
+    "rh_attach_medical_support",
+    "v_employee_handwritten_letter",
+    "reintegration_date",
+    "rh_regional_doctor",
+    "rh_attach_aso_unfit_dismissal"
+   ],
+   "passa_a_obrigatoria": [
+    "attach_reintegration_email_sent_by_the_legal",
+    "rh_date_dismissal",
+    "attach_reintegration_request_form"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Colaborador não encontrado (mandatory)",
+     "quando": "rh_user_id_impacted="
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Solicitação de reintegração ou cancelamento de desligamento",
+     "grupo_suporte": "RH - Reintegração"
+    }
+   ],
+   "sai_do_formulario": [
+    "attach_reintegration_email_sent_by_the_legal",
+    "rh_reinstatement_reason",
+    "attach_reintegration_request_form",
+    "rh_attach_bank_details",
+    "rh_pregnancy_date_report",
+    "rh_attach_trct",
+    "reintegration_date",
+    "rh_attach_aso_unfit_dismissal"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_reinstatement_reason_new",
+    "rh_date_dismissal"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - TRCT new - Limpar Campo",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Laudo Médico new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report"
+    },
+    {
+     "policy": "ALP - Data da comunicação da gestação",
+     "quando": "rh_reinstatement_reason=pregnancy^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP -  Médico Regional",
+     "quando": "rh_reinstatement_reasonINaso_for_dismissal_unfit,submission_leave_comorbidity_report,pregnancy^ORrh_reinstatement_reason_newINaso_for_dismissal_unfit,submission_leave_comorbidity_report,pregnancy"
+    },
+    {
+     "policy": "ALP - Observation - Cancelamento ou interrupção do aviso prévio",
+     "quando": "rh_reinstatement_reason_new=cancellation_or_interruption_of_notice_period"
+    },
+    {
+     "policy": "ALP - Descreva com detalhes o motivo da solicitação de reintegração",
+     "quando": "rh_reinstatement_reason_new=others"
+    },
+    {
+     "policy": "ALP - Ultrassom com laudo médico, comprovando o tempo de gestação new",
+     "quando": "rh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Laudo Médico (Resolvadora)",
+     "quando": "rh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new="
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto new",
+     "quando": "rh_reinstatement_reason_new=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - Anexar ASO demissional inapto new - Limpar campo",
+     "quando": "rh_reinstatement_reason_new=aso_for_dismissal_unfit"
+    },
+    {
+     "policy": "ALP - Anexar documento comprovatório (Resolvedora)",
+     "quando": "rh_reinstatement_reason="
+    },
+    {
+     "policy": "ALP - Ultrassom com laudo médico, comprovando o tempo de gestação new - Limpar Campo",
+     "quando": "rh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários new - Limpar campo",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Comprovante dos dados bancários new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Observation - Cancelamento por decisão do colaborador",
+     "quando": "rh_reinstatement_reason_new=termination_cancellation_by_employee_decision"
+    },
+    {
+     "policy": "ALP - Carta de próprio punho do colaborador",
+     "quando": "rh_reinstatement_reason_new=termination_cancellation_by_employee_decision^ORrh_reinstatement_reason_new=cancellation_or_interruption_of_notice_period"
+    },
+    {
+     "policy": "ALP - TRCT new",
+     "quando": "rh_reinstatement_reason_new=^ORrh_reinstatement_reason_new=aso_for_dismissal_unfit^ORrh_reinstatement_reason_new=submission_leave_comorbidity_report^ORrh_reinstatement_reason_new=pregnancy"
+    },
+    {
+     "policy": "ALP - Laudo Médico new - Limpar Campo",
+     "quando": "rh_reinstatement_reason_new=Afastamento por laudo médico^ORrh_reinstatement_reason_new="
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_attach_medical_support_new",
+   "type": "Anexo",
+   "question_text": "Laudo Médico",
+   "choices": []
+  },
+  {
+   "name": "attach_reintegration_email_sent_by_the_legal",
+   "type": "Anexo",
+   "question_text": "Anexar e-mail de reintegração enviado pelo jurídico",
+   "choices": []
+  },
+  {
+   "name": "rh_reinstatement_reason",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o motivo da solicitação de reintegração",
+   "choices": [
+    "Gestação",
+    "Erro no processo de aprovação do desligamento",
+    "Cancelamento do desligamento por decisão da empresa",
+    "Lançamento incorreto do desligamento no sistema",
+    "Cancelamento do desligamento por decisão do colaborador",
+    "Pedido de demissão do colaborador",
+    "ASO demissional inapto",
+    "Cancelamento ou interrupção do aviso prévio",
+    "Apresentação de atestado médico no dia do desligamento",
+    "Afastamento por laudo médico",
+    "Outros",
+    "Não comparecimento do colaborador no dia do desligamento"
+   ]
+  },
+  {
+   "name": "v_date_comunication_pregnancy",
+   "type": "Data",
+   "question_text": "Data da comunicação da gestação",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_aso_unfit_dismissal_new",
+   "type": "Anexo",
+   "question_text": "ASO demissional",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_ultrasound_new",
+   "type": "Anexo",
+   "question_text": "Ultrassom com laudo médico, comprovando o tempo de gestação",
+   "choices": []
+  },
+  {
+   "name": "v_termination_payment_made",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve pagamento da rescisão?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "rh_attach_trct_new",
+   "type": "Anexo",
+   "question_text": "TRCT",
+   "choices": []
+  },
+  {
+   "name": "rh_reinstatement_reason_new",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Erro no processo de aprovação do desligamento",
+    "Afastamento por laudo médico",
+    "Cancelamento ou interrupção do aviso prévio",
+    "Cancelamento do desligamento por decisão do colaborador",
+    "Apresentação de atestado médico no dia do desligamento",
+    "Cancelamento do desligamento por decisão da empresa",
+    "Não comparecimento do colaborador no dia do desligamento",
+    "Outros",
+    "ASO demissional inapto",
+    "Pedido de demissão do colaborador",
+    "Gestação",
+    "Lançamento incorreto do desligamento no sistema"
+   ]
+  },
+  {
+   "name": "rh_date_dismissal",
+   "type": "Data",
+   "question_text": "Data do desligamento",
+   "choices": []
+  },
+  {
+   "name": "attach_reintegration_request_form",
+   "type": "Anexo",
+   "question_text": "Anexar formulário de Solicitação de Reintegração",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_bank_details_new",
+   "type": "Anexo",
+   "question_text": "Comprovante dos dados bancários",
+   "choices": []
+  },
+  {
+   "name": "v_cancellation_or_reinstatement",
+   "type": "Selecionar Caixa",
+   "question_text": "Cancelamento ou reintegração?",
+   "choices": [
+    "Reintegração",
+    "Cancelamento"
+   ]
+  },
+  {
+   "name": "rh_attach_bank_details",
+   "type": "Anexo",
+   "question_text": "Anexar comprovante dos dados bancários",
+   "choices": []
+  },
+  {
+   "name": "rh_pregnancy_date_report",
+   "type": "Data",
+   "question_text": "Data da comunicação sobre a gestação",
+   "choices": []
+  },
+  {
+   "name": "rh_detailed_reason_for_reinstatement",
+   "type": "Texto de Linha Única",
+   "question_text": "Descreva com detalhes o motivo da solicitação de reintegração",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_trct",
+   "type": "Anexo",
+   "question_text": "Anexar TRCT",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_medical_support",
+   "type": "Anexo",
+   "question_text": "Anexar Laudo médico ou documento comprovatório",
+   "choices": []
+  },
+  {
+   "name": "v_employee_handwritten_letter",
+   "type": "Anexo",
+   "question_text": "Carta de próprio punho do colaborador",
+   "choices": []
+  },
+  {
+   "name": "reintegration_date",
+   "type": "Data",
+   "question_text": "Data da reintegração",
+   "choices": []
+  },
+  {
+   "name": "rh_regional_doctor",
+   "type": "Referência",
+   "question_text": "Médico Regional",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "rh_attach_aso_unfit_dismissal",
+   "type": "Anexo",
+   "question_text": "Anexar ASO demissional inapto",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "68e3b5d43b6b2a10b28dd047f4e45a15",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "91e335d43b6b2a10b28dd047f4e45ac7",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

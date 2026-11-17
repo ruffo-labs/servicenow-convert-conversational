@@ -1,0 +1,127 @@
+{
+ "sys_id": "cbd68d5b3bc9b610b28dd047f4e45a03",
+ "name": "Compra+ Assaí (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Compra+ Assaí",
+ "description": "Compra+ Assa&iacute;",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Compra+ Assaí sem limite de utilização",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Compra+"
+    }
+   ],
+   "sai_do_formulario": [
+    "usage_statement",
+    "reference_month",
+    "dayment_statement"
+   ],
+   "passa_a_obrigatoria": [
+    "Was_separation"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de análise de desconto do Compra+ Assaí",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Compra+"
+    }
+   ],
+   "sai_do_formulario": [
+    "Was_separation"
+   ],
+   "passa_a_obrigatoria": [
+    "usage_statement",
+    "reference_month",
+    "dayment_statement"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "usage_statement",
+   "type": "Anexo",
+   "question_text": "Extrato de utilização",
+   "choices": []
+  },
+  {
+   "name": "reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Maio",
+    "Janeiro",
+    "Agosto",
+    "Dezembro",
+    "Abril",
+    "Junho",
+    "Novembro",
+    "Julho",
+    "Março",
+    "Outubro",
+    "Fevereiro",
+    "Setembro"
+   ]
+  },
+  {
+   "name": "Was_separation",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve afastamento?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "dayment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "da34563f3bcdba10b28dd047f4e45aad",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa Was_separation, reference_month, dayment_statement e usage_statement (sempre)."
+  }
+ ]
+}

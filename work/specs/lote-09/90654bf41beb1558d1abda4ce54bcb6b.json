@@ -1,0 +1,131 @@
+{
+ "sys_id": "90654bf41beb1558d1abda4ce54bcb6b",
+ "status": "dividido",
+ "motivo": "Segue a divisão da 1ª análise em três intenções (contrato, relatório de atividades e dúvidas gerais), fixando v_request_type por derivado. Policies condicionadas só nesse campo viram atributo obrigatório na variável; as condicionadas também na opção interna são mantidas e restritas ao derivado correspondente. Não foi possível aplicar os labels que a 1ª análise sugere para variáveis de sets (manager_name, manager_id, manager_email, manager_name1, manager_id1, manager_email1, start_date, end_date): sets são compartilhados e não podem ser alterados pela spec do item; visibilidade/obrigatoriedade delas continua controlada pelas policies do item, sem perda de dado.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_option_if_type_contract": {
+   "label": "O que você precisa no contrato: enviar o assinado, fazer um aditivo, prorrogar, trocar o gestor ou tirar uma dúvida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_new_period_course": {
+   "label": "Qual é a nova data prevista de conclusão do curso?"
+  },
+  "v_attach_educ_institution_link": {
+   "label": "Envie o comprovante de vínculo com a instituição de ensino."
+  },
+  "v_attach_your_signed_contract": {
+   "label": "Envie o contrato de estágio assinado."
+  },
+  "v_option_if_type_report": {
+   "label": "Você quer enviar o relatório assinado ou trocar o gestor do relatório?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_your_signed_report_here": {
+   "label": "Envie o relatório de atividades assinado."
+  },
+  "v_description": {
+   "label": "Conte com mais detalhes o que você precisa."
+  }
+ },
+ "remover": {
+  "v_cont_start_internship_program": "visual",
+  "faq_text": "visual"
+ },
+ "policies": {
+  "4e9b6bf41b675558d1abda4ce54bcba0": "remover",
+  "960e6fb41ba75558d1abda4ce54bcb02": "remover",
+  "c1a5b4c11beb9558d1abda4ce54bcb72": "remover",
+  "4121cdc91baf9558d1abda4ce54bcb9f": "remover"
+ },
+ "scripts": {
+  "6f8130461beca510a530426fe54bcbe5": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_request_type": "internship_contract"
+   },
+   "sem_vars": [
+    "v_option_if_type_report",
+    "v_attach_your_signed_report_here"
+   ],
+   "sem_sets": [
+    "5b30c4cd1beb5558d1abda4ce54bcb29",
+    "f2e3f8cd1bab9558d1abda4ce54bcbeb"
+   ],
+   "sem_policies": [
+    "e396bc851beb9558d1abda4ce54bcbe8",
+    "b44978811b2f9558d1abda4ce54bcbe3",
+    "7f0b0f061ba79d10d1abda4ce54bcbf0"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_request_type": "activity_report"
+   },
+   "sem_vars": [
+    "v_option_if_type_contract",
+    "v_new_period_course",
+    "v_attach_educ_institution_link",
+    "v_attach_your_signed_contract",
+    "v_description"
+   ],
+   "sem_sets": [
+    "bf156c8e1ba8a510a530426fe54bcbf0"
+   ],
+   "sem_policies": [
+    "c264ff741b2b5558d1abda4ce54bcb8a",
+    "94bafff01bab5558d1abda4ce54bcb30",
+    "c064cd891bef9558d1abda4ce54bcbfa",
+    "d7954d011b23d558d1abda4ce54bcb26"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_request_type": "training_information"
+   },
+   "sem_vars": [
+    "v_option_if_type_contract",
+    "v_new_period_course",
+    "v_attach_educ_institution_link",
+    "v_attach_your_signed_contract",
+    "v_option_if_type_report",
+    "v_attach_your_signed_report_here"
+   ],
+   "sem_sets": [
+    "5b30c4cd1beb5558d1abda4ce54bcb29",
+    "bf156c8e1ba8a510a530426fe54bcbf0",
+    "f2e3f8cd1bab9558d1abda4ce54bcbeb"
+   ],
+   "sem_policies": [
+    "c264ff741b2b5558d1abda4ce54bcb8a",
+    "94bafff01bab5558d1abda4ce54bcb30",
+    "c064cd891bef9558d1abda4ce54bcbfa",
+    "d7954d011b23d558d1abda4ce54bcb26",
+    "e396bc851beb9558d1abda4ce54bcbe8",
+    "b44978811b2f9558d1abda4ce54bcbe3",
+    "7f0b0f061ba79d10d1abda4ce54bcbf0"
+   ],
+   "vars": {
+    "v_description": {
+     "label": "Qual é a sua dúvida sobre o programa de estágio?",
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

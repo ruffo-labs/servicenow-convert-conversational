@@ -1,0 +1,174 @@
+{
+ "sys_id": "ba6efdcbc5c94850a90c4d4fcc7e2fc6",
+ "status": "dividido",
+ "motivo": "Alterar integração pede qual integração, mudança, testes e retorno; nova integração pede origem, destino, dados, autenticação, volume e sensibilidade. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_integracao_a_alterar": {
+   "label": "Qual integração você quer alterar?"
+  },
+  "v_alteracao_desejada": {
+   "label": "Que alteração você precisa?"
+  },
+  "v_impacto_esperado": {
+   "label": "Qual o impacto esperado da mudança?"
+  },
+  "v_plano_de_testes": {
+   "label": "Qual o plano de testes?"
+  },
+  "v_janela_de_execucao": {
+   "label": "Em qual janela a mudança deve ser feita?"
+  },
+  "v_plano_de_retorno": {
+   "label": "Qual o plano de retorno se algo der errado?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_sistema_origem": {
+   "label": "Qual o sistema de origem dos dados?"
+  },
+  "v_sistema_destino": {
+   "label": "Qual o sistema de destino dos dados?"
+  },
+  "v_dados_trafegados": {
+   "label": "Quais dados serão trafegados?"
+  },
+  "v_frequencia": {
+   "label": "Com que frequência os dados serão enviados?"
+  },
+  "v_autenticacao": {
+   "label": "Como será feita a autenticação?"
+  },
+  "v_volume_estimado": {
+   "label": "Qual o volume estimado de dados?"
+  },
+  "v_dados_sensiveis": {
+   "label": "A integração trafega dados sensíveis?"
+  }
+ },
+ "policies": {
+  "8f809f97ba1240778ba28b60ace308d7": "remover",
+  "02b0a32172124f88b6629282d3b4df5a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Alterar integração corporativa existente",
+   "short_description": "Peça uma alteração em uma integração entre plataformas já existente.",
+   "description": "Use quando uma integração já existente precisa mudar. Corresponde à opção Alterar integração existente. Informe a integração, a alteração, impacto, plano de testes, janela e plano de retorno.",
+   "frases_exemplo": [
+    "Preciso alterar uma integração existente",
+    "Quero mudar o leiaute de uma integração",
+    "Dá pra ajustar a frequência dessa integração?",
+    "Preciso de uma mudança numa integração entre plataformas",
+    "Quero pedir alteração de regra em uma integração"
+   ],
+   "sem_vars": [
+    "v_sistema_origem",
+    "v_sistema_destino",
+    "v_dados_trafegados",
+    "v_frequencia",
+    "v_autenticacao",
+    "v_volume_estimado",
+    "v_dados_sensiveis"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar integração existente"
+   },
+   "vars": {
+    "v_integracao_a_alterar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_alteracao_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_esperado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_testes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_execucao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_retorno": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar nova integração entre plataformas",
+   "short_description": "Peça a criação de uma nova integração entre plataformas corporativas.",
+   "description": "Use para criar uma integração nova. Corresponde à opção Solicitar nova integração. Informe sistemas de origem e destino, dados trafegados, frequência, autenticação, volume e se há dados sensíveis.",
+   "frases_exemplo": [
+    "Preciso de uma integração nova entre dois sistemas",
+    "Quero integrar duas plataformas",
+    "Dá pra criar uma integração para trocar dados?",
+    "Quero solicitar uma nova integração",
+    "Preciso conectar o sistema A ao sistema B"
+   ],
+   "sem_vars": [
+    "v_integracao_a_alterar",
+    "v_alteracao_desejada",
+    "v_impacto_esperado",
+    "v_plano_de_testes",
+    "v_janela_de_execucao",
+    "v_plano_de_retorno"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar nova integração"
+   },
+   "vars": {
+    "v_sistema_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_sistema_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dados_trafegados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_frequencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_autenticacao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_volume_estimado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dados_sensiveis": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

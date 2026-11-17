@@ -1,0 +1,177 @@
+{
+ "sys_id": "439f2ae9879fe210182a0d440cbb35b8",
+ "name": "Imposto de Renda",
+ "category": "Folha de Pagamento",
+ "short_description": "Imposto de renda",
+ "description": "D&uacute;vidas referentes ao imposto de renda",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Imposto de Renda"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de informe de rendimentos - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Cópia de Documentos"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_de_rendimento_com_a_divergencia",
+    "notificacao_da_receita_federal_se_houver",
+    "informe_o_ano_da_divergencia",
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "ano_de_referencia"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Solicitação de informe de rendimentos",
+     "description": "Use para pedir uma cópia do informe de rendimentos para o Imposto de Renda. Corresponde à oferta Solicitação de informe de rendimentos. Informe o ano de referência."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Imposto de Renda"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência no desconto de Imposto de Renda - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Imposto de Renda"
+    },
+    {
+     "name": "Solicitação de análise de Informe de Rendimentos com divergência - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Imposto de Renda"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 40H",
+     "SLA - GESTÃO DE GENTE - 16H"
+    ]
+   },
+   "sai_do_formulario": [
+    "ano_de_referencia"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência no desconto de Imposto de Renda",
+     "description": "Use quando o desconto de Imposto de Renda no contracheque estiver divergente. Corresponde à oferta Divergência no desconto de Imposto de Renda. Informe o mês, em qual pagamento está a divergência e anexe o demonstrativo."
+    },
+    {
+     "name": "Análise de informe de rendimentos com divergência",
+     "description": "Use quando o informe de rendimentos tiver valores divergentes. Corresponde à oferta Solicitação de análise de Informe de Rendimentos com divergência. Anexe o informe e indique o ano da divergência; a notificação da Receita Federal é opcional."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "informe_de_rendimento_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Informe de Rendimento com a divergência",
+   "choices": [],
+   "label_atual": "Envie o informe de rendimentos que está com divergência."
+  },
+  {
+   "name": "notificacao_da_receita_federal_se_houver",
+   "type": "Anexo",
+   "question_text": "Notificação da Receita Federal (se houver)",
+   "choices": [],
+   "label_atual": "Envie a notificação da Receita Federal, se você recebeu alguma."
+  },
+  {
+   "name": "informe_o_ano_da_divergencia",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o ano da divergência",
+   "choices": [],
+   "label_atual": "Em que ano está a divergência?"
+  },
+  {
+   "name": "demonstrativo_de_pagamento_o_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento o com a divergência",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento com a divergência."
+  },
+  {
+   "name": "informe_em_qual_pagamento_esta_a_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe em qual pagamento está a divergência",
+   "choices": [
+    "Pagamento mensal",
+    "Adiantamento salarial"
+   ],
+   "label_atual": "Em qual pagamento está a divergência?"
+  },
+  {
+   "name": "ano_de_referencia",
+   "type": "Texto de Linha Única",
+   "question_text": "Ano de referência",
+   "choices": [],
+   "label_atual": "De qual ano você precisa do informe?"
+  },
+  {
+   "name": "informe_o_mes_da_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Abril",
+    "Dezembro",
+    "Janeiro",
+    "Junho",
+    "Agosto",
+    "Novembro",
+    "Outubro",
+    "Maio",
+    "Março",
+    "Fevereiro",
+    "Setembro",
+    "Julho"
+   ],
+   "label_atual": "Em qual mês está a divergência?"
+  }
+ ],
+ "client_scripts": []
+}

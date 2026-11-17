@@ -1,0 +1,109 @@
+{
+ "sys_id": "1c15094f1bc3e81032822170f54bcb04",
+ "motivo": "As ofertas de previdência privada diferem nos dados pedidos: alteração pede tipo de alteração e formulário, cancelamento pede qual solicitação, proposta digital pede nº do chamado e telefone, adesão pede telefone com DDD; as demais não pedem campo extra.",
+ "derivados": [
+  {
+   "k": 0,
+   "name": "Cancelamento de plano, termo de cancelamento e dúvidas de previdência",
+   "short_description": "Comunicar cancelamento, pedir termo de cancelamento ou tirar dúvidas de previdência",
+   "description": "Use para comunicar o cancelamento do plano de previdência, solicitar o termo de cancelamento de plano ou tirar dúvidas diversas sobre previdência privada. Corresponde às ofertas Comunicação de Cancelamento do Plano de Previdência, Solicitação do Termo de Cancelamento de Plano e Dúvidas Diversas. Não pede informações adicionais além da descrição.",
+   "frases_exemplo": [
+    "Preciso do termo de cancelamento do meu plano",
+    "Já cancelei a previdência e quero comunicar",
+    "Tenho uma dúvida sobre minha previdência privada",
+    "Como faço para receber o termo de cancelamento?",
+    "Quero avisar que cancelei meu plano de previdência"
+   ]
+  },
+  {
+   "k": 1,
+   "name": "Confirmação de resgate total do plano de previdência",
+   "short_description": "Receber a confirmação de resgate total da previdência",
+   "description": "Use para pedir o envio da confirmação de resgate total do plano de previdência privada. Corresponde à oferta Envio da Confirmação de Resgate Total do Plano.",
+   "frases_exemplo": [
+    "Preciso da confirmação do resgate total da previdência",
+    "Fiz o resgate total e quero o comprovante",
+    "Cadê a confirmação do resgate do meu plano?",
+    "Me envia a confirmação de resgate da previdência",
+    "Quero o documento do resgate total"
+   ]
+  },
+  {
+   "k": 2,
+   "name": "Não recebi a proposta digital da previdência privada",
+   "short_description": "Informar que a proposta digital de previdência não chegou",
+   "description": "Use quando você pediu a proposta de previdência privada e ela não chegou por meio digital. Corresponde à oferta Não recebimento de proposta digital. Você informa o número do chamado da proposta e um telefone de contato.",
+   "frases_exemplo": [
+    "A proposta digital da previdência não chegou",
+    "Não recebi o e-mail da proposta de previdência",
+    "Pedi a proposta e nada de chegar",
+    "Preciso reenviar a proposta digital do meu plano",
+    "Minha proposta de previdência não apareceu"
+   ]
+  },
+  {
+   "k": 3,
+   "name": "Adesão à previdência privada",
+   "short_description": "Solicitar adesão ao plano de previdência privada",
+   "description": "Use para solicitar sua adesão à previdência privada. Corresponde à oferta Solicitação de adesão da previdência privada. Você informa um telefone de contato com DDD.",
+   "frases_exemplo": [
+    "Quero aderir à previdência privada",
+    "Como faço para entrar no plano de previdência?",
+    "Quero contratar a previdência da empresa",
+    "Preciso fazer minha adesão na previdência",
+    "Quero começar a contribuir para a previdência privada"
+   ]
+  },
+  {
+   "k": 4,
+   "name": "Alteração da previdência privada",
+   "short_description": "Solicitar alteração do plano de previdência privada",
+   "description": "Use para solicitar alteração no seu plano de previdência privada. Corresponde à oferta Solicitação de alteração da previdência privada. Você informa o tipo de alteração (VGBL ou Suplementar) e envia o formulário de alteração.",
+   "frases_exemplo": [
+    "Quero alterar minha previdência privada",
+    "Preciso mudar a contribuição do plano",
+    "Quero fazer uma alteração no meu VGBL",
+    "Como altero meu plano de previdência?",
+    "Tenho o formulário de alteração da previdência para enviar"
+   ]
+  },
+  {
+   "k": 5,
+   "name": "Cancelamento da previdência privada",
+   "short_description": "Solicitar o cancelamento do plano de previdência privada",
+   "description": "Use para solicitar o cancelamento da previdência privada. Corresponde à oferta Solicitação de cancelamento da previdência privada. Você informa qual é a solicitação: cancelamento de contribuição suplementar, confirmação de resgate total ou termo de cancelamento.",
+   "frases_exemplo": [
+    "Quero cancelar minha previdência privada",
+    "Preciso cancelar a contribuição suplementar",
+    "Como faço para cancelar o plano de previdência?",
+    "Quero parar de contribuir para a previdência",
+    "Solicito o cancelamento do meu plano"
+   ]
+  }
+ ],
+ "labels": {
+  "att_handwritten_letter": "Envie a carta escrita de próprio punho.",
+  "what_is_request": "Qual é a sua solicitação?",
+  "type_of_change": "Que tipo de alteração você quer fazer no plano?",
+  "open_ticket_number_for_requesting_the_proposal": "Qual é o número do chamado aberto para pedir a proposta?",
+  "employee_contact_telephone_number": "Qual é o seu telefone para contato?",
+  "change_form": "Envie o formulário de alteração preenchido.",
+  "contact_number_with_area_code": "Qual é o seu telefone para contato, com DDD?",
+  "rh_maintenance_description": "Descreva a manutenção que você precisa no plano.",
+  "att_email_brasilprev": "Envie o e-mail recebido da BrasilPrev."
+ },
+ "scripts": {
+  "71a436911b98c5d832822170f54bcb8f": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ },
+ "pendencias": [
+  "Variável órfã rh_maintenance_description (descrição da manutenção): não está em nenhum set nem nos grupos; confirmar se ainda é usada.",
+  "Variáveis att_handwritten_letter e att_email_brasilprev não aparecem nos grupos nem nos sets; confirmar se são anexos usados por alguma oferta.",
+  "Scripts ALP - RH Default Validation (onLoad e onChange) delegam a lógica a um UI Script não visível; decisão omitida.",
+  "Grupo k=0 junta 3 ofertas com SLAs diferentes (104H, 40H, 24H) e finalidades distintas (cancelamento, termo, dúvidas); confirmar se devem ser um item só.",
+  "Script de validação de telefone (71a436) já tem va_supported true e só se aplica a contact_number_with_area_code; ajuste assumido, confirmar."
+ ]
+}

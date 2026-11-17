@@ -1,0 +1,425 @@
+{
+ "sys_id": "c93db36a1bbfd194a530426fe54bcb02",
+ "status": "dividido",
+ "motivo": "O item mistura 6 intenções distintas de assistência médica/odontológica, diferenciadas pelo campo de assunto (carta de viagem, autorização, reembolso, gestante, extensão universitária e dúvidas gerais). Cada derivado fixa o assunto original e só mantém as variáveis que usa; as demais saem via sem_vars para não ficarem sem label. Sub-assuntos que dependiam do assunto (2,4,5,9,10) viram novas perguntas de seleção, sem perda de dado.",
+ "vars": {
+  "v_cpf": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_full_name.getRefRecord().u_cpf"
+   }
+  },
+  "v_email": {
+   "props": {
+    "hidden": true,
+    "default_value": "javascript:current.variables.v_full_name.getRefRecord().email"
+   }
+  },
+  "nova_assunto_duvida": {
+   "nova": {
+    "type": "5",
+    "question_text": "Sua dúvida é sobre rede credenciada, carteirinha, coparticipação, check-up ou outro assunto?",
+    "mandatory": true,
+    "order": 1550,
+    "choices": [
+     {
+      "text": "Rede credenciada",
+      "value": "rede"
+     },
+     {
+      "text": "Carteirinha do plano",
+      "value": "carteirinha"
+     },
+     {
+      "text": "Coparticipação",
+      "value": "coparticipacao"
+     },
+     {
+      "text": "Check-up",
+      "value": "checkup"
+     },
+     {
+      "text": "Outro assunto",
+      "value": "duvida_geral"
+     }
+    ]
+   }
+  },
+  "nova_tipo_reembolso": {
+   "nova": {
+    "type": "5",
+    "question_text": "É uma prévia de valor ou um reembolso de algo já pago?",
+    "mandatory": true,
+    "order": 4250,
+    "choices": [
+     {
+      "text": "Prévia de valor",
+      "value": "previa"
+     },
+     {
+      "text": "Reembolso de algo já pago",
+      "value": "reembolso"
+     }
+    ]
+   }
+  }
+ },
+ "remover": {
+  "v_benefits": "visual"
+ },
+ "policies": {
+  "244ee4081bccadd4d1abda4ce54bcba2": "remover",
+  "c59f9f8b1b3f1d94a530426fe54bcbe6": "remover",
+  "4118dedf1bbf91d4d1abda4ce54bcb10": "remover",
+  "54825a171b7f91d4d1abda4ce54bcb75": "remover",
+  "b57e5b871b3f1d94a530426fe54bcb72": "remover",
+  "9d74de5f1b7f91d4d1abda4ce54bcba9": "remover",
+  "4328b1931bb791d4d1abda4ce54bcb12": "remover",
+  "4d4abd9b1bb791d4d1abda4ce54bcba0": "remover",
+  "85af821b1b3f91d4d1abda4ce54bcbd5": "remover",
+  "53654e9b1b7b91d4d1abda4ce54bcbfb": "remover",
+  "0f51d8841b970e10d1abda4ce54bcbbf": "remover",
+  "fa2250081b970e10d1abda4ce54bcb2b": {
+   "conditions": "v_what_is_the_subject_of_your_requestIN5,6,11",
+   "actions": {
+    "v_description": {
+     "mandatory": true
+    }
+   }
+  },
+  "72e8dadf1bbf91d4d1abda4ce54bcbd0": {
+   "conditions": "v_what_is_the_subject_of_your_request=3",
+   "actions": {
+    "v_shipment_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_incase_companion": {
+     "visible": true
+    },
+    "return_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_telephone": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_full_name": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_destination_country": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_inform_the_desired_language_in_the_letter": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_label_sending_information": {
+     "visible": true
+    },
+    "v_full_home_address": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_descricao_duvida_gestante": {
+   "short_description": "Descrição obrigatória quando é dúvida no Programa Gestante",
+   "conditions": "v_type_of_care2=1",
+   "actions": {
+    "v_description": {
+     "mandatory": true
+    }
+   }
+  },
+  "nova_duvida_rede": {
+   "short_description": "Mostrar tipo de atendimento e região para rede credenciada",
+   "conditions": "nova_assunto_duvida=rede",
+   "actions": {
+    "v_type_of_care": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_region": {
+     "visible": true
+    }
+   }
+  },
+  "nova_duvida_coparticipacao": {
+   "short_description": "Mostrar tabela de coparticipação",
+   "conditions": "nova_assunto_duvida=coparticipacao",
+   "actions": {
+    "v_label_copayment_drawing": {
+     "visible": true
+    }
+   }
+  },
+  "nova_duvida_checkup": {
+   "short_description": "Mostrar informações de check-up",
+   "conditions": "nova_assunto_duvida=checkup",
+   "actions": {
+    "v_label_employees_band": {
+     "visible": true
+    }
+   }
+  },
+  "nova_duvida_carteirinha": {
+   "short_description": "Mostrar informações da carteirinha digital",
+   "conditions": "nova_assunto_duvida=carteirinha",
+   "actions": {
+    "v_label_medial_dental_card": {
+     "visible": true
+    }
+   }
+  },
+  "nova_reembolso_previa": {
+   "short_description": "Mostrar instruções de prévia de reembolso",
+   "conditions": "nova_tipo_reembolso=previa",
+   "actions": {
+    "v_label_request_prior": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "01957bf01b042158d1abda4ce54bcb78": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "1d0c28b71b7799d4d1abda4ce54bcb3c": {
+   "converter": "auto_populate"
+  },
+  "e443a0c71bf35994a530426fe54bcbe4": {
+   "converter": "auto_populate"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "3"
+   },
+   "sem_vars": [
+    "nova_assunto_duvida",
+    "nova_tipo_reembolso",
+    "v_procedure_name",
+    "v_request_date",
+    "v_procedure_date",
+    "V_provider",
+    "v_type_of_care",
+    "v_region",
+    "v_type_of_care2",
+    "v_attach_the_term_of_consent_and_the_medical_report",
+    "v_attach_university_proof",
+    "v_description",
+    "v_attachment"
+   ],
+   "sem_policies": [
+    "fa2250081b970e10d1abda4ce54bcb2b",
+    "nova_duvida_rede",
+    "nova_duvida_coparticipacao",
+    "nova_duvida_checkup",
+    "nova_duvida_carteirinha",
+    "nova_reembolso_previa",
+    "323bd3071bfb1d94a530426fe54bcbda",
+    "a0d353071b7b1d94a530426fe54bcbe9",
+    "1247961f1bbf91d4d1abda4ce54bcb76",
+    "269596d31bbf91d4d1abda4ce54bcb33",
+    "ecb90ad31bbb91d4d1abda4ce54bcb44",
+    "0822d2d31b7f91d4d1abda4ce54bcb5e",
+    "nova_descricao_duvida_gestante"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "1"
+   },
+   "sem_vars": [
+    "nova_assunto_duvida",
+    "nova_tipo_reembolso",
+    "v_type_of_care",
+    "v_region",
+    "v_type_of_care2",
+    "v_attach_the_term_of_consent_and_the_medical_report",
+    "v_attach_university_proof",
+    "v_full_name",
+    "v_telephone",
+    "v_destination_country",
+    "v_shipment_date",
+    "return_date",
+    "v_full_home_address",
+    "v_incase_companion",
+    "v_inform_the_desired_language_in_the_letter"
+   ],
+   "sem_policies": [
+    "nova_duvida_rede",
+    "nova_duvida_coparticipacao",
+    "nova_duvida_checkup",
+    "nova_duvida_carteirinha",
+    "nova_reembolso_previa",
+    "72e8dadf1bbf91d4d1abda4ce54bcbd0",
+    "269596d31bbf91d4d1abda4ce54bcb33",
+    "ecb90ad31bbb91d4d1abda4ce54bcb44",
+    "0822d2d31b7f91d4d1abda4ce54bcb5e",
+    "nova_descricao_duvida_gestante"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "11"
+   },
+   "sem_vars": [
+    "nova_assunto_duvida",
+    "v_procedure_name",
+    "v_request_date",
+    "v_procedure_date",
+    "V_provider",
+    "v_type_of_care",
+    "v_region",
+    "v_type_of_care2",
+    "v_attach_the_term_of_consent_and_the_medical_report",
+    "v_attach_university_proof",
+    "v_full_name",
+    "v_telephone",
+    "v_destination_country",
+    "v_shipment_date",
+    "return_date",
+    "v_full_home_address",
+    "v_incase_companion",
+    "v_inform_the_desired_language_in_the_letter"
+   ],
+   "sem_policies": [
+    "nova_duvida_rede",
+    "nova_duvida_coparticipacao",
+    "nova_duvida_checkup",
+    "nova_duvida_carteirinha",
+    "72e8dadf1bbf91d4d1abda4ce54bcbd0",
+    "323bd3071bfb1d94a530426fe54bcbda",
+    "269596d31bbf91d4d1abda4ce54bcb33",
+    "ecb90ad31bbb91d4d1abda4ce54bcb44",
+    "0822d2d31b7f91d4d1abda4ce54bcb5e",
+    "nova_descricao_duvida_gestante"
+   ]
+  },
+  {
+   "de_1a": 3,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "8"
+   },
+   "sem_vars": [
+    "nova_assunto_duvida",
+    "nova_tipo_reembolso",
+    "v_procedure_name",
+    "v_request_date",
+    "v_procedure_date",
+    "V_provider",
+    "v_type_of_care",
+    "v_region",
+    "v_attach_university_proof",
+    "v_full_name",
+    "v_telephone",
+    "v_destination_country",
+    "v_shipment_date",
+    "return_date",
+    "v_full_home_address",
+    "v_incase_companion",
+    "v_inform_the_desired_language_in_the_letter",
+    "v_attachment"
+   ],
+   "sem_policies": [
+    "nova_duvida_rede",
+    "nova_duvida_coparticipacao",
+    "nova_duvida_checkup",
+    "nova_duvida_carteirinha",
+    "nova_reembolso_previa",
+    "72e8dadf1bbf91d4d1abda4ce54bcbd0",
+    "323bd3071bfb1d94a530426fe54bcbda",
+    "a0d353071b7b1d94a530426fe54bcbe9",
+    "1247961f1bbf91d4d1abda4ce54bcb76",
+    "269596d31bbf91d4d1abda4ce54bcb33"
+   ]
+  },
+  {
+   "de_1a": 4,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "7"
+   },
+   "sem_vars": [
+    "nova_assunto_duvida",
+    "nova_tipo_reembolso",
+    "v_procedure_name",
+    "v_request_date",
+    "v_procedure_date",
+    "V_provider",
+    "v_type_of_care",
+    "v_region",
+    "v_type_of_care2",
+    "v_attach_the_term_of_consent_and_the_medical_report",
+    "v_full_name",
+    "v_telephone",
+    "v_destination_country",
+    "v_shipment_date",
+    "return_date",
+    "v_full_home_address",
+    "v_incase_companion",
+    "v_inform_the_desired_language_in_the_letter",
+    "v_attachment"
+   ],
+   "sem_policies": [
+    "nova_duvida_rede",
+    "nova_duvida_coparticipacao",
+    "nova_duvida_checkup",
+    "nova_duvida_carteirinha",
+    "nova_reembolso_previa",
+    "72e8dadf1bbf91d4d1abda4ce54bcbd0",
+    "323bd3071bfb1d94a530426fe54bcbda",
+    "a0d353071b7b1d94a530426fe54bcbe9",
+    "1247961f1bbf91d4d1abda4ce54bcb76",
+    "ecb90ad31bbb91d4d1abda4ce54bcb44",
+    "0822d2d31b7f91d4d1abda4ce54bcb5e",
+    "nova_descricao_duvida_gestante"
+   ]
+  },
+  {
+   "de_1a": 5,
+   "fixas": {
+    "v_what_is_the_subject_of_your_request": "6"
+   },
+   "sem_vars": [
+    "nova_tipo_reembolso",
+    "v_procedure_name",
+    "v_request_date",
+    "v_procedure_date",
+    "V_provider",
+    "v_type_of_care2",
+    "v_attach_the_term_of_consent_and_the_medical_report",
+    "v_attach_university_proof",
+    "v_full_name",
+    "v_telephone",
+    "v_destination_country",
+    "v_shipment_date",
+    "return_date",
+    "v_full_home_address",
+    "v_incase_companion",
+    "v_inform_the_desired_language_in_the_letter"
+   ],
+   "sem_policies": [
+    "nova_reembolso_previa",
+    "72e8dadf1bbf91d4d1abda4ce54bcbd0",
+    "323bd3071bfb1d94a530426fe54bcbda",
+    "a0d353071b7b1d94a530426fe54bcbe9",
+    "269596d31bbf91d4d1abda4ce54bcb33",
+    "ecb90ad31bbb91d4d1abda4ce54bcb44",
+    "0822d2d31b7f91d4d1abda4ce54bcb5e",
+    "nova_descricao_duvida_gestante"
+   ]
+  }
+ ]
+}

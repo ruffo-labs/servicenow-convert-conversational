@@ -1,0 +1,416 @@
+{
+ "sys_id": "f22df8601b519910347221bbe54bcbad",
+ "name": "Atendimento nos processos de Jovem Aprendiz",
+ "category": "Jovem aprendiz",
+ "short_description": "Atendimento nos processos de Jovem",
+ "description": "Atendimento nos processos de Jovem",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Necessário reembolso?",
+   "perguntas": [
+    "necessar_io_reembolso"
+   ]
+  },
+  {
+   "title": "Adipar reembolso",
+   "perguntas": [
+    "valor_unit_rio_da_tarifa",
+    "motivo_detalhado_do_reembolso",
+    "name",
+    "m_s_de_refer_ncia",
+    "c_digo_do_itiner_rio",
+    "valor_de_reembolso",
+    "fim_per_odo_de_utiliza_o_do_reembolso",
+    "matricula",
+    "quantidade_de_passagens_por_dia",
+    "inicio_per_odo_de_utiliza_o_do_reembolso"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência na admissão do Jovem aprendiz -Atendimento nos processos de Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1"
+   ],
+   "passa_a_obrigatoria": [
+    "what_is_the_discrepancy_to_be_corrected",
+    "name_of_educational_institution",
+    "ra_or_apprentice_enrollment"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de alteração de vale transporte para Jovem Aprendiz - Atendimento nos processos de Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 48H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Adipar rembolso MTRW",
+     "quando": "necessar_io_reembolso=Sim"
+    },
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de cadastro de afastamento maior que 15 dias para Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 120H",
+     "grupo_suporte": "RH - Gestão de Afastados 1"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_shutdown_delay",
+    "what_is_the_discrepancy_to_be_corrected",
+    "end_date_of_the_impacted_partys_contract",
+    "name_of_educational_institution",
+    "reason_for_extension",
+    "ra_or_apprentice_enrollment"
+   ],
+   "passa_a_obrigatoria": [
+    "total_number_of_days_away",
+    "single_certificate_sum_certificates",
+    "work_accident",
+    "last_day_worked",
+    "attchament_1"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Solicitação de cadastro de licença por alistamento militar para Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Licenças"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Solicitação de desligamento de Jovem aprendiz depois do prazo - Atendimento nos processos de Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Desligamento N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_for_shutdown_delay",
+    "end_date_of_the_impacted_partys_contract"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  },
+  {
+   "k": 5,
+   "ofertas": [
+    {
+     "name": "Solicitação de prorrogação de contrato devido a afastamento de Jovem Aprendiz",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_for_extension"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Data prevista do parto",
+     "quando": "reason_for_extension=Gestação"
+    },
+    {
+     "policy": "ALP - Attachments",
+     "quando": "reason_for_extension=Gestação^ORreason_for_extension=Mudança do calendário - Instituição de ensino "
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "reason_for_shutdown_delay",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Motivo do atraso do desligamento",
+   "choices": []
+  },
+  {
+   "name": "clearance_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de afastamento",
+   "choices": []
+  },
+  {
+   "name": "what_is_the_discrepancy_to_be_corrected",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Qual a divergência a ser corrigida?",
+   "choices": []
+  },
+  {
+   "name": "end_date_of_the_impacted_partys_contract",
+   "type": "Data",
+   "question_text": "Data fim do contrato do impactado",
+   "choices": []
+  },
+  {
+   "name": "work_accident",
+   "type": "Sim/Não",
+   "question_text": "Acidente de trabalho?",
+   "choices": []
+  },
+  {
+   "name": "number_cat",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de solicitação de CAT",
+   "choices": []
+  },
+  {
+   "name": "name_of_educational_institution",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da Instituição de ensino",
+   "choices": []
+  },
+  {
+   "name": "last_day_worked",
+   "type": "Data",
+   "question_text": "Data do último dia trabalhado",
+   "choices": []
+  },
+  {
+   "name": "expected_date_of_delivery",
+   "type": "Data",
+   "question_text": "Data prevista do Parto",
+   "choices": []
+  },
+  {
+   "name": "reason_for_extension",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da prorrogação",
+   "choices": [
+    "Auxílio doença",
+    "Mudança do calendário - Instituição de ensino ",
+    "Licença militar",
+    "Acidente de trabalho",
+    "Gestação"
+   ]
+  },
+  {
+   "name": "ra_or_apprentice_enrollment",
+   "type": "Texto de Linha Única",
+   "question_text": "RA ou Matricula do Aprendiz",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "email_of_the_impacted",
+  "updated_phone",
+  "cost_center_impacted",
+  "store_name",
+  "zip_code_employee"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0d8d89281b919910347221bbe54bcb1f",
+   "name": "Clear Fields Form Service Offering",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa ra_or_apprentice_enrollment, expected_date_of_delivery, expected_date_of_birth_pregnant, name_of_educational_institution e expected_return_date (com valor ou vazio)."
+  },
+  {
+   "sys_id": "21ada5543b2b2a10b28dd047f4e45ad2",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "32ade9543b2b2a10b28dd047f4e45a94",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "444ecb701bc6061032822170f54bcb33",
+   "name": "CSA -limpar var caso valor não for igual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, compara rh_user_id_impacted com matricula; se forem diferentes, limpa a variável adipar_reembolso."
+  }
+ ]
+}

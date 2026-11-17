@@ -1,0 +1,209 @@
+{
+ "sys_id": "bd7ff4121bb41690514cbaef4b4bcb86",
+ "status": "dividido",
+ "motivo": "Formulário de RH hispânico com 4 categorias (dados gerais, conta bancária, endereço, dependentes) que abrem perguntas totalmente distintas; convertido em item dividido por categoria, com v_select_category fixado por derivado. Scripts de manipulação de opções e de mensagem de erro viram Validation Regex ou são removidos, o que também resolve o bloqueio por client script sem VA Supported (EY: Add options onChange).",
+ "divergencias": [
+  "divisao_diferente"
+ ],
+ "vars": {
+  "v_cbu": {
+   "props": {
+    "validation_regex": "^\\d{22}$"
+   }
+  },
+  "v_bank_name": {
+   "props": {
+    "mandatory": true,
+    "hidden": false
+   }
+  },
+  "v_detail": {
+   "props": {
+    "mandatory": true,
+    "hidden": false,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_message_data": "visual",
+  "v_message_physical_bank": "visual",
+  "v_minimum_characters": "visual",
+  "v_message_1": "texto_movido_descricao",
+  "v_message_2": "visual"
+ },
+ "policies": {
+  "042c5baa1b3cd690514cbaef4b4bcb32": "remover",
+  "a2a7e3ee1b7cd690514cbaef4b4bcb2c": "remover",
+  "e238a3221bbcd690514cbaef4b4bcb6d": "remover",
+  "fd44e36a1b7cd690514cbaef4b4bcbb9": "remover",
+  "11112fe21b7cd690514cbaef4b4bcbda": {
+   "conditions": "v_select_category=bank^v_country=COL^ORv_country=CHL^ORv_country=ECU",
+   "actions": {
+    "v_bank_account_number": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_bank_account_type": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "31ec9bea1b3cd690514cbaef4b4bcb8c": {
+   "conditions": "v_select_category=bank^v_country=ARG",
+   "actions": {
+    "v_cbu": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "6c2e17ae1b3cd690514cbaef4b4bcbcc": {
+   "converter": "regex"
+  },
+  "99ea9fa61b3cd690514cbaef4b4bcb3d": {
+   "converter": "regex"
+  },
+  "57ea1fe61b3cd690514cbaef4b4bcbfa": {
+   "remover": {
+    "substituido_por": "v_detail"
+   }
+  },
+  "deeadfa61b3cd690514cbaef4b4bcbbf": {
+   "remover": {
+    "substituido_por": "v_detail"
+   }
+  },
+  "7edc3baa1b301a90514cbaef4b4bcb79": {
+   "remover": "sem_efeito"
+  },
+  "bdddb7ea1b301a90514cbaef4b4bcbe8": {
+   "remover": "sem_efeito"
+  },
+  "d759eb621bbcd690514cbaef4b4bcb99": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_select_category": "bank"
+   },
+   "sem_vars": [
+    "v_calle",
+    "v_number",
+    "v_floor",
+    "v_dept",
+    "v_between_streets",
+    "v_neighborhood",
+    "v_location_form",
+    "v_party",
+    "v_postal_code",
+    "v_phone",
+    "v_full_address",
+    "v_declare_checkbox"
+   ],
+   "sem_policies": [
+    "26776fae1b7cd690514cbaef4b4bcbd5",
+    "5565abaa1b7cd690514cbaef4b4bcbb3",
+    "8cd6676e1b7cd690514cbaef4b4bcb14"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_select_category": "address"
+   },
+   "sem_vars": [
+    "v_cbu",
+    "v_bank_account_number",
+    "v_bank_account_type",
+    "v_bank_name",
+    "v_detail"
+   ],
+   "sem_policies": [
+    "11112fe21b7cd690514cbaef4b4bcbda",
+    "31ec9bea1b3cd690514cbaef4b4bcb8c"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_select_category": "dependents"
+   },
+   "sem_vars": [
+    "v_cbu",
+    "v_bank_account_number",
+    "v_bank_account_type",
+    "v_bank_name",
+    "v_calle",
+    "v_number",
+    "v_floor",
+    "v_dept",
+    "v_between_streets",
+    "v_neighborhood",
+    "v_location_form",
+    "v_party",
+    "v_postal_code",
+    "v_phone",
+    "v_full_address",
+    "v_declare_checkbox"
+   ],
+   "sem_policies": [
+    "11112fe21b7cd690514cbaef4b4bcbda",
+    "26776fae1b7cd690514cbaef4b4bcbd5",
+    "31ec9bea1b3cd690514cbaef4b4bcb8c",
+    "5565abaa1b7cd690514cbaef4b4bcbb3",
+    "8cd6676e1b7cd690514cbaef4b4bcb14"
+   ]
+  },
+  {
+   "name": "Solicitar outras alterações de dados pessoais",
+   "short_description": "Pedir outra alteração no cadastro de dados pessoais não coberta pelas opções acima (público operacional de Argentina, Chile, Colômbia e Equador).",
+   "description": "Use para pedir uma alteração de dados pessoais que não seja conta bancária, endereço ou dependentes. Descreva com detalhes o que você precisa alterar.",
+   "frases_exemplo": [
+    "preciso corrigir meu nome no cadastro",
+    "quiero actualizar otro dato personal",
+    "tenho outra alteração de dados pessoais para pedir",
+    "necesito corregir un dato que no es de banco ni dirección"
+   ],
+   "fixas": {
+    "v_select_category": "data"
+   },
+   "vars": {
+    "v_detail": {
+     "label": "Qual alteração você precisa fazer nos seus dados pessoais? Descreva com detalhes."
+    }
+   },
+   "sem_vars": [
+    "v_cbu",
+    "v_bank_account_number",
+    "v_bank_account_type",
+    "v_bank_name",
+    "v_calle",
+    "v_number",
+    "v_floor",
+    "v_dept",
+    "v_between_streets",
+    "v_neighborhood",
+    "v_location_form",
+    "v_party",
+    "v_postal_code",
+    "v_phone",
+    "v_full_address",
+    "v_declare_checkbox"
+   ],
+   "sem_policies": [
+    "11112fe21b7cd690514cbaef4b4bcbda",
+    "26776fae1b7cd690514cbaef4b4bcbd5",
+    "31ec9bea1b3cd690514cbaef4b4bcb8c",
+    "5565abaa1b7cd690514cbaef4b4bcbb3",
+    "8cd6676e1b7cd690514cbaef4b4bcb14"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+ "sys_id": "a42417fa3b013610b28dd047f4e45a39",
+ "status": "dividido",
+ "motivo": "Não recebimento pede mês e demonstrativo da divergência; solicitação do benefício pede mês, boleto ou nota fiscal e nomes dos dependentes.",
+ "vars": {
+  "v_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "v_attachment_payment_invoice": {
+   "label": "Envie o boleto ou a nota fiscal."
+  },
+  "v_attachment_payment_statement": {
+   "label": "Envie o demonstrativo de pagamento que mostra a divergência."
+  },
+  "v_all_dependents": {
+   "label": "Quais são os nomes de todos os dependentes para os quais você pede o benefício?"
+  }
+ },
+ "remover": {
+  "v_attemption_1": "visual",
+  "v_observation_1": "visual",
+  "formatter": "visual",
+  "formatter2": "visual",
+  "container_start_form": "visual"
+ },
+ "policies": {
+  "07ed351f3b81f610b28dd047f4e45a7f": "remover",
+  "11585fb23b413610b28dd047f4e45a23": "remover",
+  "3a5bfd973b81f610b28dd047f4e45aa6": "remover",
+  "425acdb93b9df650b28dd047f4e45ad1": "remover",
+  "652eb11f3b81f610b28dd047f4e45a26": "remover",
+  "82fa39973b81f610b28dd047f4e45a04": "remover",
+  "a68bfd973b81f610b28dd047f4e45a31": "remover",
+  "f81cbdd73b81f610b28dd047f4e45a4d": "remover",
+  "032c3dd73b81f610b28dd047f4e45aab": "remover",
+  "21acf95b3b81f610b28dd047f4e45a0a": "remover",
+  "7c8c7d1b3b81f610b28dd047f4e45a27": "remover"
+ },
+ "itens": [
+  {
+   "name": "Auxílio-creche não recebido ou com valor errado",
+   "short_description": "Não recebimento ou divergência no valor do auxílio-creche",
+   "description": "Use quando não recebeu o auxílio-creche ou o valor veio divergente. Informe o mês de referência e anexe o demonstrativo de pagamento que mostra a divergência.",
+   "frases_exemplo": [
+    "Não recebi o auxílio-creche",
+    "Valor do auxílio-creche veio errado",
+    "Divergência no meu auxílio-creche",
+    "Meu auxílio-creche não caiu"
+   ],
+   "sem_vars": [
+    "v_attachment_payment_invoice",
+    "v_all_dependents"
+   ],
+   "vars": {
+    "v_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_attachment_payment_statement": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar auxílio-creche",
+   "short_description": "Solicitação de auxílio-creche",
+   "description": "Use para solicitar o auxílio-creche. Informe o mês de referência, anexe o boleto ou a nota fiscal e liste os dependentes.",
+   "frases_exemplo": [
+    "Quero pedir o auxílio-creche",
+    "Como solicito auxílio-creche para meu filho?",
+    "Pedido de auxílio-creche",
+    "Tenho a nota da creche, como envio?"
+   ],
+   "sem_vars": [
+    "v_attachment_payment_statement"
+   ],
+   "vars": {
+    "v_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_attachment_payment_invoice": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_all_dependents": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ],
+ "scripts": {
+  "9e3ffd9f3b81f610b28dd047f4e45a70": {
+   "remover": {
+    "outro": "limpa campos conforme a oferta; coberto pela estrutura dos derivados"
+   }
+  }
+ }
+}

@@ -1,0 +1,736 @@
+{
+ "sys_id": "0d09683e1bada510a530426fe54bcbdd",
+ "name": "Ex Colaboradores ou Colaboradores Afastados",
+ "sys_name": "Former Employees or Retired Employees",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços Externos",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Serviços para ex colaborares ou colaboradores afastados",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "25",
+   "variaveis_ativas": "38",
+   "bloqueadores": "8",
+   "avisos": "14",
+   "perguntas_sem_conversational_label": "25"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Modal IR ExColaboradores"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_download_creche_baba: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_baba: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_ctrl_jorn_reembolso: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_dados_cadast: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_compl_prev: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_adiant_prev_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_adiant_prev: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_pensao_alim: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_adiant_prev_for_description: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sim_nao_sem_include_none @v_has_attachment: Sim/Nao sem \"Include None\" marcado",
+   "tipo_com_limitacao @v_text_ctrl_jorn_lanc_atestado: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 25 de 25 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 25 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 23 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Ex-Colaboradores ou Colaboradores Afastados. Grava current.item com o sysparm_id e força requested_for e opened_by para o usuário genérico da system property 'acn_guest_user'. Padrão de atendimento a quem não tem mais acesso à plataforma.",
+ "variaveis": [
+  {
+   "name": "v_cont_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Applicant Data"
+  },
+  {
+   "name": "v_what_situation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is your current situation?",
+   "include_none": true,
+   "choices": [
+    "Collaborator on leave [=colab_afast]",
+    "Former employee [=ex_colab]"
+   ]
+  },
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone"
+  },
+  {
+   "name": "v_category_ex_colab",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "FGTS Key [=chave_fgts]",
+    "Statements and Documents [=dec_docs]",
+    "Payroll Questions [=duv_fopag]",
+    "Benefits Questions [=duv_benef]",
+    "Dismissal Questions [=duv_deslig]",
+    "Commercial Services [=serv_comerc]",
+    "Homologation Questions [=homol_question]",
+    "Nursery Extension [=extensao_bercario]",
+    "Questions related to PLR [=questions_plr_ex]"
+   ]
+  },
+  {
+   "name": "dispensa_justa_causa",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "A dispensa foi sem justa causa?",
+   "include_none": true,
+   "choices": [
+    "Sim [=1]",
+    "Não [=2]"
+   ]
+  },
+  {
+   "name": "texto_extensao_bercario_justa_causa",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "A extensão do berçário é elegível somente para os desligamentos por dispensa sem justa causa."
+  },
+  {
+   "name": "data_do_desligamento",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Data do desligamento"
+  },
+  {
+   "name": "v_category_afastados",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Benefits [=beneficio]",
+    "Journey Control [=contr_jorn]",
+    "Registration Data [=dados_cadast]",
+    "Declarations and Documents [=dec_doc]",
+    "Payroll [=duv_fopag]",
+    "Vacations [=ferias]",
+    "Leaves and Absences [=licenc_ausenc]",
+    "Homologation Questions [=homol_questions]",
+    "Questions related to PLR [=questions_plr]"
+   ]
+  },
+  {
+   "name": "localidade_do_bercario",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Localidade do Berçário",
+   "include_none": true,
+   "choices": [
+    "Nasp [=nasp]",
+    "Cajamar [=cajamar]"
+   ]
+  },
+  {
+   "name": "nome_completo_crianca",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nome completo da criança"
+  },
+  {
+   "name": "data_de_nascimento",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Data de Nascimento"
+  },
+  {
+   "name": "ate_quando_manter_beneficio",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Até quando pretende manter o benefício?"
+  },
+  {
+   "name": "v_subcategory_declar_doc",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Statements and miscellaneous documents [=dec_doc_div]",
+    "Income report [=inform_rend]",
+    "PPP [=ppp]"
+   ]
+  },
+  {
+   "name": "orientacao_mantimento_beneficio",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Consulte no informativo de desligamento, prazos e regras do benefício. (cartilha com todas as informações onde o gestor entrega no momento do desligamento)."
+  },
+  {
+   "name": "v_subcategory_vacation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Return of Vacation Notice [=dev_aviso]",
+    "General Questions [=duv_gerais]",
+    "Request Cancellation/Change [=canc_alteracao]"
+   ]
+  },
+  {
+   "name": "v_subcategory_benefits",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Daycare and Babysitter Assistance [=creche_baba]",
+    "Medical Assistance Doubt [=duv_assist_medica]",
+    "Dental Care Doubt [=duv_odont]",
+    "Private Pension Doubt [=duv_prev_priv]",
+    "VT/Chartered Doubt [=duv_vt_fretado]",
+    "VA/VR Doubt [=duv_va_vr]"
+   ]
+  },
+  {
+   "name": "v_subcategory_fopag",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Alimony registration request [=pensao_alim]",
+    "Other doubt [=outras]"
+   ]
+  },
+  {
+   "name": "v_subcategory_journey_control",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Certificate Release [=lanc_atest]",
+    "Reimbursement [=reembolso]",
+    "Other Doubt [=outras]"
+   ]
+  },
+  {
+   "name": "v_subcategory_lic_ausenc",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Social Security Supplement [=compl_prev]",
+    "Documents for procedure with the INSS [=inss]",
+    "Maternity Leave [=maternidade]",
+    "Paternity Leave [=paternidade]",
+    "Social Security Advance Request [=adiant_prev]",
+    "Other doubt [=outras]"
+   ]
+  },
+  {
+   "name": "v_subcategory_serv_comerc",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Sub Category",
+   "include_none": true,
+   "choices": [
+    "Support for FV transfer logistics [=transf_fv]",
+    "Fleet Management [=gestao_frota]",
+    "Accountability [=prest_contas]",
+    "Reimbursement [=reembolso_serv_comerc]"
+   ]
+  },
+  {
+   "name": "v_download_adiant_prev",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_download_creche_baba",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_adiant_prev_for_description",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_describe",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request"
+  },
+  {
+   "name": "v_text_dados_cadast",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_pensao_alim",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_ctrl_jorn_lanc_atestado",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_ctrl_jorn_reembolso",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_adiant_prev_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_compl_prev",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_baba",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Resultados da pesquisa contextual",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  },
+  {
+   "name": "vs_add_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Add attachment",
+   "widget": "EY: Enable public attachment"
+  },
+  {
+   "name": "v_has_attachment",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Has attachment",
+   "default": "No"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Day Care / Babysitter",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=beneficio^IO:v_subcategory_benefits=creche_baba^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_baba: visible=true",
+    "v_download_creche_baba: visible=true"
+   ]
+  },
+  {
+   "name": "Ey: If sub category is doubt fopag",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=duv_fopag^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_fopag: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Registration Data",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=dados_cadast^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_dados_cadast: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name: visible=true,mandatory=true",
+    "v_describe: visible=true,mandatory=true",
+    "v_has_attachment: visible=false",
+    "v_cpf: visible=true,mandatory=true",
+    "v_email: visible=true,mandatory=true",
+    "v_phone: visible=true,mandatory=true",
+    "v_what_situation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If compl.prev.",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=licenc_ausenc^IO:v_subcategory_lic_ausenc=compl_prev^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_compl_prev: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If sub category is Leaves and absences",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=licenc_ausenc^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_lic_ausenc: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If maternity",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=licenc_ausenc^IO:v_subcategory_lic_ausenc=maternidade^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_lic_mat: visible=true",
+    "v_download_lic_mat: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If  Pens. Alim.",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=duv_fopag^IO:v_subcategory_fopag=pensao_alim^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_pensao_alim: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If adiant.prev",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=licenc_ausenc^IO:v_subcategory_lic_ausenc=adiant_prev^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_adiant_prev: visible=true",
+    "v_text_adiant_prev_attach: visible=true",
+    "v_text_adiant_prev_for_description: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If serviços comerciais e corporativos",
+   "when": "IO:v_category_ex_colab=serv_comerc^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_serv_comerc: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide subcategory if category PLR",
+   "when": "IO:v_category_afastados=questions_plr^ORIO:v_category_ex_colab=questions_plr_ex^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: If reembolso",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=contr_jorn^IO:v_subcategory_journey_control=reembolso^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_ctrl_jorn_reembolso: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If lanc.atest.",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=contr_jorn^IO:v_subcategory_journey_control=lanc_atest^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_ctrl_jorn_lanc_atestado: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If Declar. and Doc",
+   "when": "IO:v_what_situationINcolab_afast,ex_colab^IO:v_category_afastados=dec_doc^ORIO:v_category_ex_colab=dec_docs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_declar_doc: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ey: If sub category is journey control",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=contr_jorn^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_journey_control: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If sub category is vacation",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=ferias^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_vacation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If collaborator on leave",
+   "when": "IO:v_what_situation=colab_afast^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_category_afastados: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If sub category is benefits",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=beneficio^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_subcategory_benefits: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If ex collaborator",
+   "when": "IO:v_what_situation=ex_colab^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_category_ex_colab: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Showing or hiding the just cause field",
+   "when": "IO:v_category_ex_colab=extensao_bercario^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dispensa_justa_causa: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Treating fields dependent on just cause",
+   "when": "IO:dispensa_justa_causa=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "orientacao_mantimento_beneficio: visible=true",
+    "localidade_do_bercario: visible=true,mandatory=true",
+    "nome_completo_crianca: visible=true,mandatory=true",
+    "data_do_desligamento: visible=true,mandatory=true",
+    "data_de_nascimento: visible=true,mandatory=true",
+    "ate_quando_manter_beneficio: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If paternity",
+   "when": "IO:v_what_situation=colab_afast^IO:v_category_afastados=licenc_ausenc^IO:v_subcategory_lic_ausenc=paternidade^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_lic_pat: visible=true",
+    "v_text_lic_pat: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Showing or hiding the just cause label",
+   "when": "IO:dispensa_justa_causa=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "texto_extensao_bercario_justa_causa: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate CPF",
+   "type": "onChange",
+   "on": "6fecac721beda510a530426fe54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF por formato. Observação: a regex usa ponto sem escape ('.') entre os grupos, o que no regex casa QUALQUER caractere — então '123x456y789-00' passaria na validação."
+  },
+  {
+   "name": "Ey: Attach mandatory leaves and absences",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que torna o anexo obrigatório para certas subcategorias de licenças e ausências. Observação: verifica a presença do anexo inspecionando o DOM por classe CSS em vez de usar a API do formulário — frágil a mudanças de tema ou versão. Há uma linha de depuração comentada."
+  },
+  {
+   "name": "EY: Modal IR ExColaboradores",
+   "type": "onChange",
+   "on": "c84ea0761beda510a530426fe54bcb33",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que abre um modal (spModal) quando a opção escolhida é 'inform_rend' (informe de rendimentos), orientando ex-colaboradores."
+  },
+  {
+   "name": "EY SHow message IR - OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que exibe a mensagem 'message_ir' na abertura."
+  },
+  {
+   "name": "EY: Validate Phone",
+   "type": "onChange",
+   "on": "721de8b21beda510a530426fe54bcbb3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone aceitando de 9 a 18 dígitos, sem máscara. Mais permissivo que os validadores de telefone dos outros catálogos."
+  },
+  {
+   "name": "EY: Attach mandatory  benefits",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo para certas subcategorias de benefícios (creche e outras). Usa a mesma inspeção de DOM por classe CSS do irmão."
+  },
+  {
+   "name": "EY: IF Just Cause is No, cannot submit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando a dispensa NÃO é por justa causa, exibindo mensagem de que a extensão do benefício não se aplica nesse caso."
+  },
+  {
+   "name": "EY: Attach Previdenc",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando o tipo de solicitação é complementação previdenciária ('compl_prev')."
+  },
+  {
+   "name": "EY: Clear Category and Subcategory",
+   "type": "onChange",
+   "on": "192c20721beda510a530426fe54bcb1c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera categoria e subcategoria de ex-colaborador quando o valor anterior muda."
+  },
+  {
+   "name": "EY: Validate ate_quando_manter_beneficio",
+   "type": "onChange",
+   "on": "72bc70a51b4d0690d1abda4ce54bcbb5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida até quando manter o benefício, comparando com a data de desligamento. ESTRUTURA SUSPEITA: declara uma função interna `onChangeDataDesligamento()` dentro do onChange — se essa função nunca for chamada, a validação não roda."
+  },
+  {
+   "name": "EY: Validate Email",
+   "type": "onChange",
+   "on": "a7fc6cb21beda510a530426fe54bcb53",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail por regex padrão. Inválido: limpa o campo e mostra erro."
+  },
+  {
+   "name": "EY: Berçário - Validar data",
+   "type": "onChange",
+   "on": "5a114d2d1b4d0690d1abda4ce54bcb44",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data do berçário chamando o Script Include x_nasm_hr.EYCSCExternalForms via GlideAjax."
+  },
+  {
+   "name": "EY: Attach mandatory Data",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando a categoria de afastados é 'dados_cadastrais'. Mesma inspeção de DOM dos irmãos."
+  },
+  {
+   "name": "EY: Attach mandatory Journey Ctrl",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo para certas subcategorias de controle de jornada."
+  }
+ ]
+}

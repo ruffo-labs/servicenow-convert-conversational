@@ -1,0 +1,74 @@
+{
+ "sys_id": "77c5dffa1bb0f110d1abda4ce54bcbb8",
+ "title": "EY: Tax - Company Avon/Natura - Subcompany",
+ "internal_name": "ey_tax_company_avon_natura_subcompany",
+ "description": "",
+ "usado_por": 11,
+ "itens_exemplo": [
+  "Resíduos",
+  "Emissão de Notas de Venda de Mercadoria",
+  "Remessa para Conserto",
+  "Emissão de Notas Fiscais de Devolução",
+  "Retorno Comodato/Locação",
+  "Divergência entre Físico e Fiscal",
+  "Nota Fiscal Outras Saídas",
+  "Cadastro preço Brasil/Cadastro de preço exportação"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_which_company_is_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon [=AVON Latam]",
+    "Natura"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company_is_the_request_from",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request from?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_which_company_is_your_request",
+   "include_none": true,
+   "choices": [
+    "Branches [=vs_branches]",
+    "Avon [=vs_avon]",
+    "Natura [=vs_natura]"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company_is_your_request: mandatory=true",
+    "vs_which_sub_company_is_the_request_from: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: If company is 7900",
+   "type": "onChange",
+   "on": "ed469ffa1bb0f110d1abda4ce54bcbfd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trata a empresa 7900. Compara o sys_id do formulário e a sub-empresa com valores fixos: na combinação específica de emissão de nota de retorno, esconde e desobriga 'vs_which_company_do_you_want_to_ship_to'; nos demais casos exibe e torna obrigatório. Regras cravadas por sys_id."
+  },
+  {
+   "name": "EY: Clear subcompany",
+   "type": "onChange",
+   "on": "47a391701b0dbd10a530426fe54bcb5d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_which_sub_company_is_the_request_from' quando o campo anterior muda. Variante do mesmo padrão, sobre a variável do variable set."
+  }
+ ]
+}

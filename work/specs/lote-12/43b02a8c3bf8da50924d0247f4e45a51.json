@@ -1,0 +1,196 @@
+{
+ "sys_id": "43b02a8c3bf8da50924d0247f4e45a51",
+ "status": "dividido",
+ "motivo": "v_category (register/cancel/sell) separa 3 intenções claras, cada uma virando um item derivado com a categoria fixa. O item original é mantido como 'Outras solicitações sobre férias' para dúvidas que não caem nessas três (v_category continua perguntada com as mesmas 3 opções, pois o formato não permite remover choices de uma variável existente — limite_formato). Os scripts de montagem dinâmica de categoria (bloqueador sem VA Supported) e o de ocultar categorias no load ficam sem efeito, já que a divisão resolve isso.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_number_of_days": {
+   "props": {
+    "validation_regex": "^[0-9]{1,2}$"
+   }
+  },
+  "v_number_of_days_in_cash": {
+   "props": {
+    "validation_regex": "^[0-9]{1,2}$"
+   }
+  }
+ },
+ "remover": {
+  "v_faq": "visual"
+ },
+ "policies": {
+  "29e2b2cc3b7cda50924d0247f4e45aee": "remover"
+ },
+ "scripts": {
+  "1e3c9a103b7c5e50924d0247f4e45a10": {
+   "converter": "regex"
+  },
+  "2a2806583bb85e50924d0247f4e45a73": {
+   "converter": "regex"
+  },
+  "b0bd2e443b7cda50924d0247f4e45a14": {
+   "remover": "sem_efeito"
+  },
+  "c80e66843b7cda50924d0247f4e45af1": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "name": "Outras solicitações sobre férias",
+   "short_description": "Dúvidas e pedidos sobre férias que não sejam registrar, cancelar ou vender dias de férias.",
+   "description": "Use para dúvidas ou pedidos sobre férias que não têm item próprio, como consulta de saldo de dias, dúvidas sobre pagamento de férias ou correção de um registro. Não use para registrar novas férias (use 'Registrar férias'), para cancelar férias já programadas (use 'Cancelar férias registradas') nem para vender dias de férias (use 'Vender dias de férias'). Disponível para colaboradores dos países hispânicos.",
+   "frases_exemplo": [
+    "tenho uma dúvida sobre minhas férias",
+    "quero saber quantos dias de férias eu tenho",
+    "meu pagamento de férias veio errado",
+    "preciso corrigir o período das minhas férias",
+    "consulta sobre férias"
+   ],
+   "vars": {
+    "v_category": {
+     "label": "Sobre qual assunto de férias é a sua solicitação?"
+    },
+    "v_detail": {
+     "label": "Conte com detalhes o que você precisa."
+    }
+   },
+   "sem_vars": [
+    "v_message_cancelation",
+    "v_ticket_number",
+    "v_message_registration",
+    "v_request_step_detention",
+    "v_message_step_detention",
+    "v_sales_cycle",
+    "v_number_of_days",
+    "v_start_date",
+    "v_end_date",
+    "v_return_to_work_date",
+    "v_request_paid_vacation",
+    "v_number_of_days_in_cash",
+    "v_want_to_receive_vacation_pay",
+    "v_when_receive_vacation_pay",
+    "v_manager_approval",
+    "v_file_download",
+    "v_vacation_sale_request",
+    "v_attach_document"
+   ],
+   "sem_policies": [
+    "08eb92dc3b3c5e50924d0247f4e45a4f",
+    "37049adc3bf85e50924d0247f4e45a5e",
+    "78d606943bb85e50924d0247f4e45a6c",
+    "7e03efe01bb09a50514cbaef4b4bcb3e",
+    "882267e01bb09a50514cbaef4b4bcb54",
+    "8ecc82d03bf85e50924d0247f4e45aba",
+    "9b43b2003bbcda50924d0247f4e45a28",
+    "9bb302903bb85e50924d0247f4e45aca",
+    "a279be4c3bbcda50924d0247f4e45aa3",
+    "a82b5e5c3b3c5e50924d0247f4e45a2c",
+    "c050e6183b7c5e50924d0247f4e45a10",
+    "cd3126983b7c5e50924d0247f4e45aa9",
+    "d8ba72003bfcda50924d0247f4e45af6",
+    "e4cc9a503b7c5e50924d0247f4e45a41",
+    "ed6d1a903b7c5e50924d0247f4e45a78",
+    "edd0e6583b7c5e50924d0247f4e45a6a"
+   ]
+  },
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_category": "register"
+   },
+   "sem_vars": [
+    "v_message_cancelation",
+    "v_ticket_number",
+    "v_file_download",
+    "v_vacation_sale_request"
+   ],
+   "sem_policies": [
+    "9b43b2003bbcda50924d0247f4e45a28",
+    "edd0e6583b7c5e50924d0247f4e45a6a"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_category": "cancel"
+   },
+   "sem_vars": [
+    "v_message_registration",
+    "v_request_step_detention",
+    "v_message_step_detention",
+    "v_sales_cycle",
+    "v_number_of_days",
+    "v_start_date",
+    "v_end_date",
+    "v_return_to_work_date",
+    "v_request_paid_vacation",
+    "v_number_of_days_in_cash",
+    "v_want_to_receive_vacation_pay",
+    "v_when_receive_vacation_pay",
+    "v_manager_approval",
+    "v_file_download",
+    "v_vacation_sale_request",
+    "v_attach_document"
+   ],
+   "sem_policies": [
+    "08eb92dc3b3c5e50924d0247f4e45a4f",
+    "37049adc3bf85e50924d0247f4e45a5e",
+    "78d606943bb85e50924d0247f4e45a6c",
+    "7e03efe01bb09a50514cbaef4b4bcb3e",
+    "882267e01bb09a50514cbaef4b4bcb54",
+    "8ecc82d03bf85e50924d0247f4e45aba",
+    "9bb302903bb85e50924d0247f4e45aca",
+    "a279be4c3bbcda50924d0247f4e45aa3",
+    "a82b5e5c3b3c5e50924d0247f4e45a2c",
+    "c050e6183b7c5e50924d0247f4e45a10",
+    "cd3126983b7c5e50924d0247f4e45aa9",
+    "d8ba72003bfcda50924d0247f4e45af6",
+    "e4cc9a503b7c5e50924d0247f4e45a41",
+    "ed6d1a903b7c5e50924d0247f4e45a78",
+    "edd0e6583b7c5e50924d0247f4e45a6a"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_category": "sell"
+   },
+   "sem_vars": [
+    "v_message_cancelation",
+    "v_ticket_number",
+    "v_message_registration",
+    "v_request_step_detention",
+    "v_message_step_detention",
+    "v_sales_cycle",
+    "v_start_date",
+    "v_end_date",
+    "v_return_to_work_date",
+    "v_request_paid_vacation",
+    "v_number_of_days_in_cash",
+    "v_want_to_receive_vacation_pay",
+    "v_when_receive_vacation_pay",
+    "v_manager_approval",
+    "v_attach_document"
+   ],
+   "sem_policies": [
+    "08eb92dc3b3c5e50924d0247f4e45a4f",
+    "37049adc3bf85e50924d0247f4e45a5e",
+    "78d606943bb85e50924d0247f4e45a6c",
+    "7e03efe01bb09a50514cbaef4b4bcb3e",
+    "882267e01bb09a50514cbaef4b4bcb54",
+    "9b43b2003bbcda50924d0247f4e45a28",
+    "9bb302903bb85e50924d0247f4e45aca",
+    "a279be4c3bbcda50924d0247f4e45aa3",
+    "a82b5e5c3b3c5e50924d0247f4e45a2c",
+    "c050e6183b7c5e50924d0247f4e45a10",
+    "cd3126983b7c5e50924d0247f4e45aa9",
+    "d8ba72003bfcda50924d0247f4e45af6",
+    "e4cc9a503b7c5e50924d0247f4e45a41",
+    "ed6d1a903b7c5e50924d0247f4e45a78"
+   ]
+  }
+ ]
+}

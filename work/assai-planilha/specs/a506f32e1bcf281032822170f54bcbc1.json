@@ -1,0 +1,161 @@
+{
+ "sys_id": "a506f32e1bcf281032822170f54bcbc1",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de alteração/ atualização de feriados.",
+ "vars": {
+  "rh_month_payment": {
+   "label": "Mês de pagamento"
+  },
+  "rh_previous_requesting": {
+   "label": "Chamado anterior solicitando a isenção:"
+  },
+  "v_union_mandate": {
+   "label": "Mandato sindical"
+  },
+  "rh_contribution_type": {
+   "label": "Tipo de contribuição"
+  },
+  "rh_cnpj_store": {
+   "label": "CNPJ da loja"
+  },
+  "v_month": {
+   "label": "Competência"
+  },
+  "rh_branch": {
+   "label": "Filial"
+  },
+  "rh_business_date": {
+   "label": "Data do dia do comerciário"
+  },
+  "rh_union_region": {
+   "label": "Região que é atendida pelo sindicato"
+  },
+  "v_what_payment": {
+   "label": "Qual pagamento se refere?"
+  },
+  "rh_union_name": {
+   "label": "Nome do sindicato"
+  },
+  "event_date": {
+   "label": "Data do evento"
+  },
+  "rh_cnpj_union": {
+   "label": "CNPJ do sindicato"
+  },
+  "rh_holiday_changed": {
+   "label": "Feriado a ser alterado"
+  },
+  "csa_attatchment": {
+   "label": "Anexo:"
+  },
+  "rh_discount_month": {
+   "label": "Mês do desconto:"
+  }
+ },
+ "remover": {
+  "rh_observation_queue_brasilia_dourados": "visual",
+  "formatter4": "visual",
+  "rh_observation_sheet_standard": "visual",
+  "formatter2": "visual",
+  "rh_observation_convention": "visual",
+  "rh_observation_payment_ticket": "visual",
+  "rh_observation_letter_docs": "visual",
+  "rh_observation_payment_withdrawal": "visual",
+  "observacao_desconto_domingo_e_feriado": "visual",
+  "rh_observation_opposition_letter": "visual",
+  "rh_protocol_number": "oferta_inativa",
+  "rh_observation_adhesion_signed": "visual",
+  "formatter": "visual",
+  "start_container": "visual",
+  "rh_observacao_domingo_feriado": "visual",
+  "formatter_start": "visual",
+  "rh_observation_doc_additional": "visual",
+  "formatter3": "visual",
+  "rh_observation_form_central": "visual"
+ },
+ "policies": {
+  "0011c84b1b036050eca40dcbe54bcbd9": "remover",
+  "074e67761b030690347221bbe54bcbb7": "remover",
+  "1f7e426a1bca7590347221bbe54bcb66": {
+   "conditions": "service_offering=051b0e621bca7590347221bbe54bcb2c",
+   "actions": {
+    "aux_widget": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "2939083a1b83681032822170f54bcbe7": "remover",
+  "2c738c831b436050eca40dcbe54bcb9a": "remover",
+  "6939083a1b83681032822170f54bcbe4": {
+   "conditions": "service_offering=b5d1af541b47649032822170f54bcb1b",
+   "actions": {
+    "rh_holiday_changed": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "80df80bc1b852d1032822170f54bcb54": "remover",
+  "85ef3bb61b036050eca40dcbe54bcbba": "remover",
+  "89c380c31b436050eca40dcbe54bcb49": "remover",
+  "9850000b1b036050eca40dcbe54bcbcf": "remover",
+  "c961c0cb1b036050eca40dcbe54bcb91": "remover",
+  "e482c88f1b036050eca40dcbe54bcb20": "remover",
+  "e922cc4f1b036050eca40dcbe54bcb51": "remover"
+ },
+ "itens": [
+  {
+   "name": "Sindicatos (Folha de Pagamento - problema)",
+   "short_description": "Sindicatos",
+   "description": "Sindicatos",
+   "frases_exemplo": [
+    "Divergência no pagamento de bonus/gratificação sindical",
+    "Não recebimento de quebra de caixa",
+    "Não recebimento de valor da gratificação",
+    "Não recebimento ou divergência no valor recebido do dia do comerciário",
+    "Solicitação de confirmação de pagamentos de obrigações sindicais"
+   ],
+   "sem_vars": [
+    "v_union_mandate",
+    "event_date",
+    "rh_holiday_changed",
+    "csa_attatchment"
+   ],
+   "sem_policies": [
+    "3dd8833187917650182a0d440cbb3557",
+    "6939083a1b83681032822170f54bcbe4",
+    "c44b64e5878812900ac543370cbb3500",
+    "e8784f891b9b6510347221bbe54bcb5f"
+   ]
+  },
+  {
+   "name": "Sindicatos (Folha de Pagamento - servico)",
+   "short_description": "Sindicatos",
+   "description": "Sindicatos",
+   "frases_exemplo": [
+    "Solicitação de pagamento de gratificação de domingos e feriados",
+    "Solicitação de alteração/ atualização de feriados",
+    "Envio de boletos/guias de contribuições em geral",
+    "Lançar contabilização de pagamento de gratificação de domingo ou feriado",
+    "Lançar contabilização de pagamento de gratificação de Inventário"
+   ],
+   "sem_vars": [
+    "rh_previous_requesting",
+    "v_month",
+    "rh_branch",
+    "rh_business_date",
+    "rh_union_region",
+    "v_what_payment",
+    "rh_discount_month"
+   ],
+   "sem_policies": [
+    "72519f1f1bae911032822170f54bcb71",
+    "9b21d71f1bae911032822170f54bcb7b",
+    "a939083a1b83681032822170f54bcbe1",
+    "e0cd6b851ba65910347221bbe54bcb4a",
+    "e939083a1b83681032822170f54bcbde"
+   ]
+  }
+ ]
+}

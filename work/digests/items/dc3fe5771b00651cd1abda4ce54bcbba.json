@@ -1,0 +1,368 @@
+{
+ "sys_id": "dc3fe5771b00651cd1abda4ce54bcbba",
+ "name": "Informações de Táxis e Viagens Corporativas",
+ "sys_name": "Taxi and Corporate Travel Information",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Viagens Corporativas e Táxi",
+ "catalogs": "OTC Serviços de Suporte Administrativo, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar informações ou relatórios de utilização de táxi corporativo por Centro de custo, PEP ou Colaborador.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "30",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attention_to_proceed_with_the_request_to_change: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_click_here_to_access_taxi_and_corporate: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_to_contact_the_travel_agency: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_if_you_have_questions_about_the_process: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_you_have_questions_about_the_process",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_taxi_and_corporate_travel_information",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Taxi and Corporate Travel Information"
+  },
+  {
+   "name": "v_what_is_the_demand_for_the_call",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the demand for the call?",
+   "include_none": true,
+   "choices": [
+    "Clarifying doubts about the Corporate Taxi process [=answer_questions_about_the_corporate_taxi_process]",
+    "Clarifying doubts about the Corporate Travel process [=answer_questions_about_the_corporate_travel_process]",
+    "Request Taxi usage reports [=resquest_taxi_usage_reports]",
+    "Request Trip usage reports [=request_trip_usage_reports]"
+   ]
+  },
+  {
+   "name": "v_to_contact_the_travel_agency",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_what_type_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "How to access the travel system [=how_to_access_the_travel_system]",
+    "Travel agency service channel [=travel_agency_service_channel]",
+    "Travel policy [=travel_policy]",
+    "Ticket issue status [=ticket_issue_status]",
+    "How to request travel for guests [=how_to_request_travel_for_guests]",
+    "Trip approval status [=trip_approval_status]",
+    "Change cost center or PEP owner [=change_cost_center_or_pep_owner]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_attention_to_proceed_with_the_request_to_change",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_inform_the_cost_center_or_pep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cost Center or PEP"
+  },
+  {
+   "name": "v_inform_the_new_owner_approver_of_the_cost_center_or_pep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the new owner/approver of the cost center or PEP"
+  },
+  {
+   "name": "v_what_type_of_doubt_do_you_have_tx",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "Inconsistencies in Taxi Systems [=inconsistencies_in_taxi_systems]",
+    "Register or Change Information [=register_or_change_information]",
+    "Improper Entries [=improper_entries]",
+    "Cost center [=cost_center]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_describe_your_question",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your question"
+  },
+  {
+   "name": "v_click_here_to_access_taxi_and_corporate",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_is_the_desired_report_available",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is the desired report available?",
+   "include_none": true
+  },
+  {
+   "name": "v_do_you_want_information_by_cost_center_pep_or_employee",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Do you want information by Cost Center, PEP or Employee?",
+   "include_none": true,
+   "choices": [
+    "Cost center [=cost_center]",
+    "PEP [=pep]",
+    "collaborator"
+   ]
+  },
+  {
+   "name": "v_enter_the_cost_center_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the Cost Center number"
+  },
+  {
+   "name": "v_enter_the_pep_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the PEP number"
+  },
+  {
+   "name": "v_name_of_the_employee_who_wants_the_report",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Enter the name of the Employee who wants the report",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_enrollment_employee_report",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enrollment of the Employee who wants the report"
+  },
+  {
+   "name": "v_inform_requested_period_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform requested period Start Date"
+  },
+  {
+   "name": "v_inform_requested_period_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform requested period End date"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "100",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "2100",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: When you want cost center information",
+   "when": "IO:v_do_you_want_information_by_cost_center_pep_or_employee=cost_center^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_cost_center_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When you want information about PEP",
+   "when": "IO:v_do_you_want_information_by_cost_center_pep_or_employee=pep^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_pep_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When No - \"Is the desired report available?\"",
+   "when": "IO:v_is_the_desired_report_available=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_do_you_want_information_by_cost_center_pep_or_employee: visible=true,mandatory=true",
+    "v_inform_requested_period_end_date: visible=true,mandatory=true",
+    "v_inform_requested_period_start_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Request Taxi or Trip usage reports",
+   "when": "IO:v_what_is_the_demand_for_the_call=resquest_taxi_usage_reports^ORIO:v_what_is_the_demand_for_the_call=request_trip_usage_reports^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_click_here_to_access_taxi_and_corporate: visible=true",
+    "v_is_the_desired_report_available: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Describe your question",
+   "when": "IO:v_what_is_the_demand_for_the_call=answer_questions_about_the_corporate_taxi_process^NQIO:v_what_is_the_demand_for_the_call=answer_questions_about_the_corporate_travel_process^IO:v_what_type_of_doubt_do_you_have!=change_cost_center_or_pep_owner^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_your_question: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When you want information about Contributor",
+   "when": "IO:v_do_you_want_information_by_cost_center_pep_or_employee=collaborator^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name_of_the_employee_who_wants_the_report: visible=true,mandatory=true",
+    "v_enrollment_employee_report: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: When it is \"Change cost center or PEP owner\"",
+   "when": "IO:v_what_type_of_doubt_do_you_have=change_cost_center_or_pep_owner^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_the_new_owner_approver_of_the_cost_center_or_pep: visible=true,mandatory=true",
+    "v_attention_to_proceed_with_the_request_to_change: visible=true",
+    "v_inform_the_cost_center_or_pep: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When it is \"Resolve doubts about the corporate taxi process\"",
+   "when": "IO:v_what_is_the_demand_for_the_call=answer_questions_about_the_corporate_taxi_process^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_do_you_have_tx: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: What is the demand for the call?",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_demand_for_the_call: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When it is \"Solve doubts about the Corporate Travel process\"",
+   "when": "IO:v_what_is_the_demand_for_the_call=answer_questions_about_the_corporate_travel_process^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_do_you_have: visible=true,mandatory=true",
+    "v_to_contact_the_travel_agency: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Fields type doubt taxi",
+   "type": "onChange",
+   "on": "45f50a3b1b84651cd1abda4ce54bcbb7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a descrição da dúvida e as informações adicionais quando o tipo de dúvida sobre táxi muda."
+  },
+  {
+   "name": "EY: Clear report available",
+   "type": "onChange",
+   "on": "84f70a371bc4651cd1abda4ce54bcb06",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de relatório: agrupamento (centro de custo, PEP ou colaborador), datas de início e fim do período, informações adicionais e número do centro de custo."
+  },
+  {
+   "name": "EY: Get ID Global",
+   "type": "onChange",
+   "on": "0eb9c2ff1bc4651cd1abda4ce54bcbee",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o ID global do colaborador. Chama x_nasm_finance.EY_UserDataFinanceUtils, método getGlobalID, via GlideAjax; o retorno preenche 'v_enrollment_employee_report'. Se o valor ficar vazio limpa o campo antes, mas a chamada dispara mesmo assim."
+  },
+  {
+   "name": "EY: Clear information",
+   "type": "onChange",
+   "on": "cb2806f71bc4651cd1abda4ce54bcb01",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de período e identificação: datas de início e fim, informações adicionais, número do centro de custo e número do PEP."
+  },
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "502ef5b71b04651cd1abda4ce54bcbfa",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera o bloco de dúvida sobre relatórios: tipo de dúvida (duas variantes), se o relatório desejado está disponível, o agrupamento da informação e a descrição."
+  },
+  {
+   "name": "EY: Clear Fields type doubt travel",
+   "type": "onChange",
+   "on": "d4b24abb1b44651cd1abda4ce54bcbcb",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a descrição da dúvida e as informações adicionais quando o tipo de dúvida sobre viagem muda. Gêmeo do script equivalente de táxi."
+  }
+ ]
+}

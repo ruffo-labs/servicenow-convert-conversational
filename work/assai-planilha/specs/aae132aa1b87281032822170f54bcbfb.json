@@ -1,0 +1,75 @@
+{
+ "sys_id": "aae132aa1b87281032822170f54bcbfb",
+ "status": "conversacional",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "rh_schedule_creation": {
+   "label": "A criação de horário é para Jovem aprendiz?"
+  }
+ },
+ "remover": {
+  "observacao": "visual",
+  "formatter": "visual",
+  "rh_container_init": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "ffe136aa1b87281032822170f54bcb47": "remover",
+  "f3fd6bf8872ce610182a0d440cbb35a1": {
+   "conditions": "rh_schedule_creation=yes",
+   "actions": {
+    "anexar_contrato_do_jovem_aprendiz": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Horário de trabalho",
+   "short_description": "Horário de trabalho",
+   "description": "Hor rio de trabalho",
+   "frases_exemplo": [
+    "Solicitação de criação de horário de trabalho"
+   ],
+   "vars": {
+    "horario_de_intervalo_entrada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_schedule_creation": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "horas_mensais": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "horario_de_saida": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "escala": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "horario_de_intervalo_saida": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "horario_de_entrada": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

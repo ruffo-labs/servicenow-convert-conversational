@@ -1,0 +1,2537 @@
+[
+ {
+  "sys_id": "95d6eae91b156910a530426fe54bcb39",
+  "nome_atual": "Ajuste de Lançamento de Fornecedor",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 11178,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 50,
+  "justificativa": "É o 3º item em volume (11 mil casos em 12 meses) e tem intenção única e clara. Não tem bloqueador, mas passa de 20 perguntas por causa das variantes de sub-empresa do set e nenhuma pergunta tem conversational label. Com o set enxuto e labels em pt-BR, a conversa fica com umas 8 perguntas.",
+  "nome_sugerido": "Solicitar ajuste de lançamento de fornecedor",
+  "short_description_sugerida": "Peça a correção de um lançamento contábil de fornecedor (valor, pedido de compra ou folha de serviço)",
+  "descricao_sugerida": "Use para pedir ao Contas a Pagar a correção de um lançamento já registrado para um fornecedor: valor errado, nota fiscal lançada no pedido de compra ou na folha de serviço errados, ou outro ajuste no documento. Você vai informar o fornecedor, o motivo do ajuste, o número da nota fiscal e o valor. Não use para bloquear/desbloquear pagamento, antecipar vencimento, avisar pagamento duplicado ou pedir nota de débito: esses pedidos têm itens próprios.",
+  "frases_exemplo": [
+   "preciso corrigir o lançamento de uma nota do fornecedor",
+   "a nota foi lançada no pedido de compra errado",
+   "valor da NF lançado errado, precisa ajustar",
+   "ajustar lançamento de fornecedor na folha de serviço",
+   "lançaram a fatura do fornecedor com valor diferente"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "reason_for_adjustment",
+    "origem": "set:EY VS - Campos Ajuste de Lançamentos",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo do ajuste?",
+    "obs": "Select box; a resposta abre as perguntas condicionais de folha de serviço ou pedido de compra."
+   },
+   {
+    "ordem": 2,
+    "variavel": "document_number_invoice",
+    "origem": "set:EY VS - Campos Ajuste de Lançamentos",
+    "acao": "manter",
+    "conversational_label": "Qual o número da nota fiscal ou fatura?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "value",
+    "origem": "set:EY VS - Campos Ajuste de Lançamentos",
+    "acao": "manter",
+    "conversational_label": "Qual o valor do lançamento?",
+    "obs": "Validation Regex numérica no lugar do script de máscara."
+   },
+   {
+    "ordem": 4,
+    "variavel": "service_sheet_number",
+    "origem": "set:EY VS - Campos Ajuste de Lançamentos",
+    "acao": "manter",
+    "conversational_label": "Qual o número da folha de serviço?",
+    "obs": "Só quando o motivo for folha de serviço (UI policy sem script, VA Supported)."
+   },
+   {
+    "ordem": 5,
+    "variavel": "purchase_order_number",
+    "origem": "set:EY VS - Campos Ajuste de Lançamentos",
+    "acao": "manter",
+    "conversational_label": "Qual o número do pedido de compra?",
+    "obs": "Só quando o motivo for pedido de compra."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Obrigatória por policy do item; label conversacional é definida no set (compartilhado)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Variavel Folha de Serviços Visible",
+    "acao": "manter",
+    "substituicao": "UI policy sem script com VA Supported; desmarcar \"On load\" (a condição já cobre)."
+   },
+   {
+    "nome": "Variavel Pedido de Compra Visible",
+    "acao": "manter",
+    "substituicao": "Idem: manter condicional, desmarcar \"On load\"."
+   },
+   {
+    "nome": "EY: Read Only Variables",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "Variaveis obrigatorias",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Também remover as entradas duplicadas (v_country, v_vendor_tax_code_cnpj_cuit_ruc) e as de nomes que não existem no item (v_which_sub_company_is_the_service_for, v_is_your_request_for_which_company). A entrada v_attachment vira \"Mandatory attachment\" do producer."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Campos Ajuste de Lançamentos)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ficar abaixo de 20 perguntas ativas (glide.sc.va.inline_render.question.limit) depois do ajuste do set de empresas"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Os choices de reason_for_adjustment não vieram no digest; revisar os textos para linguagem de negócio."
+ },
+ {
+  "sys_id": "a45ea79c1ba5ed90a530426fe54bcbc9",
+  "nome_atual": "Bloqueio ou Desbloqueio de Pagamentos",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 64,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Volume baixo (64 em 12 meses). Sem bloqueador, mas soma 26 perguntas e passa do limite de 20, então hoje abre como janela. Bloquear e desbloquear são duas opções de uma mesma pergunta que o usuário já diz na primeira frase; não vale dividir.",
+  "nome_sugerido": "Bloquear ou desbloquear pagamento a fornecedor",
+  "short_description_sugerida": "Peça para bloquear ou liberar o pagamento de uma nota fiscal de fornecedor",
+  "descricao_sugerida": "Use para pedir ao Contas a Pagar que segure (bloqueie) ou libere (desbloqueie) o pagamento de um documento de fornecedor, por exemplo por divergência na entrega ou pendência resolvida. Você vai informar o fornecedor, a nota fiscal, o vencimento, o valor e o motivo. Não use para mudar a data de vencimento (use antecipação ou prorrogação de vencimento) nem para avisar pagamento duplicado ou incorreto.",
+  "frases_exemplo": [
+   "preciso bloquear o pagamento de uma nota",
+   "segura o pagamento desse fornecedor",
+   "quero desbloquear um pagamento que está travado",
+   "liberar pagamento bloqueado do fornecedor",
+   "suspender pagamento da NF por divergência"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_lock_or_unlock",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Você quer bloquear ou desbloquear o pagamento?",
+    "obs": "Slot filling direto da frase inicial."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_document_type",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o tipo de documento?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_document_number_invoice",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o número da nota fiscal ou documento?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_invoice_data",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Date",
+    "conversational_label": "Qual a data de emissão da nota?",
+    "obs": "O label \"Invoice Data\" parece tradução errada de \"data da fatura\". Confirmar e trocar para Date; se for outra informação, renomear o label."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_maturity",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Qual a data de vencimento?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_value",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o valor do documento?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_payment_date_proposal",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Para quando você propõe o pagamento?",
+    "obs": "Faz sentido só no desbloqueio: tornar visível/obrigatória com UI policy sem script quando v_lock_or_unlock = desbloqueio."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_reason",
+    "origem": "set:EY VS - Bloqueio ou Desbloqueio Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo do bloqueio ou desbloqueio?"
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Variaveis Obrigatorias (set Bloqueio ou Desbloqueio)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Exceto v_payment_date_proposal, que passa a ser obrigatória só no desbloqueio."
+   },
+   {
+    "nome": "EY: Variaveis Formulario Read Only (set Bloqueio ou Desbloqueio)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Bloqueio ou Desbloqueio)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "aecc23c61b5d6910d1abda4ce54bcb8c",
+  "nome_atual": "Comprovante de Pagamento Internacional",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 203,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Volume moderado (203 em 12 meses) e poucas perguntas próprias. Sem bloqueador; o código do fornecedor já é derivado do nome, então sai da conversa. O rich text de instrução não chega ao LLM e deve virar texto da descrição.",
+  "nome_sugerido": "Solicitar comprovante de pagamento internacional",
+  "short_description_sugerida": "Peça o comprovante de um pagamento feito a fornecedor no exterior",
+  "descricao_sugerida": "Use para pedir o comprovante (por exemplo, o SWIFT ou recibo bancário) de um pagamento internacional já realizado a um fornecedor. Você vai informar o fornecedor, o número da solicitação ou da nota (invoice), a moeda e o valor. Não use para pedir um novo pagamento de serviço internacional (há item próprio) nem para consultar pagamento atrasado.",
+  "frases_exemplo": [
+   "preciso do comprovante de um pagamento internacional",
+   "o fornecedor lá fora pediu o swift do pagamento",
+   "comprovante de pagamento em dólar para fornecedor",
+   "me manda o recibo do pagamento internacional da invoice",
+   "quero o comprovante da remessa ao exterior"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_request_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Que tipo de solicitação é essa?",
+    "obs": "Choices não vieram no digest; revisar os textos para linguagem de negócio."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_supplier_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o fornecedor?",
+    "obs": "Reference com qualificador estático; ok para conversa."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_supplier_code",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Lookup com ref_qual dinâmico baseado no fornecedor; já é read-only. Preencher via auto-populate (dot-walk v_supplier_name.u_vendor_id) e deixar fora da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_request_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o número da solicitação de pagamento?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_invoice_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o número da invoice?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_coin",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual moeda foi o pagamento?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_value",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor pago?",
+    "obs": "Adicionar Validation Regex numérica."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_fill_informations",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text de instrução: mover o texto útil para a descrição do item."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read Only Field - Resolver View",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Mandatory/ Read Only Field - Catalog Item View",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Manter v_supplier_code read-only no atributo da variável."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa vêm do set EY: Company: NTCO - Subcompany, tratado na análise dos sets. Descrição atual (\"Formulário para envio de comprovante\") é ambígua: confirmar com a área se o item é para pedir o comprovante ou para enviar um comprovante ao CSC, e ajustar nome e frases."
+ },
+ {
+  "sys_id": "886b94a81be56150d1abda4ce54bcb80",
+  "nome_atual": "Conciliação Bancária - Saídas e Entradas de Fornecedores",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 3645,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 55,
+  "justificativa": "Volume alto (3.645 em 12 meses, rank 12). Sem bloqueador e com poucas perguntas próprias (tipo de compensação, entrada/saída e aprovador). O client script que alterna os campos duplica as UI policies e pode sair. A descrição atual usa jargão (\"reclassificação e compensação\") e precisa de exemplos.",
+  "nome_sugerido": "Solicitar conciliação bancária de fornecedor (entradas e saídas)",
+  "short_description_sugerida": "Peça a compensação ou reclassificação de entradas e saídas bancárias na conta do fornecedor",
+  "descricao_sugerida": "Use para pedir à Tesouraria/Contas a Pagar que concilie um movimento bancário com a conta do fornecedor: compensar uma saída (pagamento debitado no banco) ou uma entrada (devolução/crédito recebido do fornecedor) e reclassificar o lançamento. Você vai escolher o tipo de compensação, o movimento e o aprovador. Não use para ajustar o lançamento da nota fiscal (use ajuste de lançamento de fornecedor) nem para avisar pagamento duplicado.",
+  "frases_exemplo": [
+   "preciso compensar uma saída bancária do fornecedor",
+   "conciliar pagamento que saiu do banco com a conta do fornecedor",
+   "fornecedor devolveu dinheiro, precisa compensar a entrada",
+   "reclassificar movimento bancário de fornecedor",
+   "baixa de partida em aberto do fornecedor no banco"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_compensation_type",
+    "origem": "set:VS - Conciliação bancaria",
+    "acao": "manter",
+    "conversational_label": "A compensação é de uma entrada ou de uma saída bancária?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_compensation_bank_entries",
+    "origem": "set:VS - Conciliação bancaria",
+    "acao": "manter",
+    "conversational_label": "Qual o tipo de entrada bancária a compensar?",
+    "obs": "Só quando o tipo for entrada (UI policy sem script)."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_compensa_o_sa_das_banc_rias",
+    "origem": "set:VS - Conciliação bancaria",
+    "acao": "manter",
+    "conversational_label": "Qual o tipo de saída bancária a compensar?",
+    "obs": "Só quando o tipo for saída. Renomear a variável é opcional; o label em português deve ser revisto."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_approver",
+    "origem": "set:VS - Conciliação bancaria",
+    "acao": "manter",
+    "conversational_label": "Quem é o gestor que vai aprovar?",
+    "obs": "Reference com qualificador avançado: conferir se resolve por nome na conversa; se não, simplificar para active=true + filtro estático de cargo."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Label no set compartilhado."
+   },
+   {
+    "ordem": 6,
+    "variavel": "link_template",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text com link de template: mídia é removida na conversa. Colocar o link (KB) na descrição e pedir o arquivo como anexo no final."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Treating bank input and output field (set Conciliação bancaria)",
+    "acao": "remover",
+    "substituicao": "As duas UI policies condicionais já mostram o campo certo conforme v_compensation_type."
+   },
+   {
+    "nome": "if select compensation_bank_entries... (2 policies)",
+    "acao": "manter",
+    "substituicao": "UI policies sem script, VA Supported; desmarcar \"On load\". Conferir o valor \"bank _outgoing_compensation\" (tem espaço no choice value)."
+   },
+   {
+    "nome": "EY: Obrigatorio (set Conciliação bancaria)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar v_approver e v_compensation_type como Mandatory na variável."
+   },
+   {
+    "nome": "EY: Somente leitura / case-task (set Conciliação bancaria)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Entrada x saída são 2 opções de uma pergunta: não justifica dividir."
+ },
+ {
+  "sys_id": "318821691bd12910a530426fe54bcb43",
+  "nome_atual": "Consulta a Pagamentos Atrasados",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 331,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Volume médio (331 em 12 meses), intenção simples e só 3 perguntas próprias. Sem bloqueador; passa de 20 perguntas só por causa do set de empresas. Falta descrição que diferencie de itens irmãos de pagamento.",
+  "nome_sugerido": "Consultar pagamento atrasado a fornecedor",
+  "short_description_sugerida": "Pergunte por que um pagamento a fornecedor não foi feito no vencimento",
+  "descricao_sugerida": "Use quando um fornecedor não recebeu um pagamento que já venceu e você quer saber o status ou o motivo do atraso. Você vai informar o fornecedor, o número da nota fiscal, o vencimento e o valor. Não use para pedir antecipação/prorrogação de vencimento, bloqueio de pagamento ou para avisar pagamento duplicado ou errado.",
+  "frases_exemplo": [
+   "o fornecedor está reclamando que não recebeu",
+   "pagamento vencido e não caiu",
+   "por que a nota do fornecedor ainda não foi paga?",
+   "consultar pagamento atrasado",
+   "fornecedor cobrando nota vencida"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_document_number_invoice",
+    "origem": "set:EY VS - Consulta a Pagamentos Atrasados",
+    "acao": "manter",
+    "conversational_label": "Qual o número da nota fiscal?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_due_date",
+    "origem": "set:EY VS - Consulta a Pagamentos Atrasados",
+    "acao": "manter",
+    "conversational_label": "Qual era a data de vencimento?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_amount",
+    "origem": "set:EY VS - Consulta a Pagamentos Atrasados",
+    "acao": "manter",
+    "conversational_label": "Qual o valor da nota?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Label no set compartilhado."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Consulta a Pagamentos Atrasados)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar Mandatory nas 3 variáveis."
+   },
+   {
+    "nome": "EY: Variaveis Read Only (set Consulta a Pagamentos Atrasados)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Consulta a Pagamentos Atrasados)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "7b483bfd1b912510a530426fe54bcb12",
+  "nome_atual": "Criação de Nota de Débito",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 83,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 45,
+  "justificativa": "Volume baixo (83 em 12 meses). Sem bloqueador, mas 25 perguntas (acima do limite) e labels confusos (\"Reason for Credit\" num item de débito, \"Account Account\"). Ajustes de label e o enxugamento do set resolvem.",
+  "nome_sugerido": "Solicitar nota de débito para fornecedor",
+  "short_description_sugerida": "Peça a emissão de uma nota de débito contra um fornecedor",
+  "descricao_sugerida": "Use para pedir ao Contas a Pagar a emissão de uma nota de débito para cobrar ou descontar um valor de um fornecedor (por exemplo, multa contratual, devolução ou diferença de preço). Você vai informar o fornecedor, o motivo, a nota fiscal de referência, os valores, o centro de custo e a conta contábil. Não use para corrigir o lançamento da nota (use ajuste de lançamento).",
+  "frases_exemplo": [
+   "preciso emitir uma nota de débito para o fornecedor",
+   "cobrar multa do fornecedor com nota de débito",
+   "descontar diferença de preço do fornecedor",
+   "criar ND para fornecedor",
+   "nota de débito por devolução de mercadoria"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_reason_for_credit",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo da nota de débito?",
+    "obs": "Label atual fala em crédito: corrigir."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_document_number_invoice",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual o número da nota fiscal de referência?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_due_date",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual a data de vencimento?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_amount",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual o valor da nota fiscal de referência?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_credit_amount",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual o valor a debitar do fornecedor?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_cost_center",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual o centro de custo?",
+    "obs": "Se houver tabela de centros de custo, trocar para Reference."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_account_account",
+    "origem": "set:EY VS - Criação de Nota de Débito",
+    "acao": "manter",
+    "conversational_label": "Qual a conta contábil?",
+    "obs": "Corrigir o label \"Account Account\"."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Label no set compartilhado."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Variaveis Obrigatorias",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). A entrada v_attachment não é variável do item: trocar pela opção \"Mandatory attachment\" do record producer, e o anexo é pedido ao final da conversa."
+   },
+   {
+    "nome": "EY: Read Only Variables",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (v_amount e v_credit_amount, set Criação de Nota de Débito)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_amount e v_credit_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "cd7437fd1b592510d1abda4ce54bcb89",
+  "nome_atual": "Envio de Informações para Contas a Pagar",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 119,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Volume baixo (119 em 12 meses) e só 2 perguntas próprias, sem bloqueador. O problema é de descoberta: nome e descrição genéricos competem com todos os itens de pagamento. Precisa de descrição que diga quando usar e juntar as duas perguntas de texto.",
+  "nome_sugerido": "Enviar informação ou documento ao Contas a Pagar",
+  "short_description_sugerida": "Envie ao Contas a Pagar uma informação ou documento que não se encaixa em outro pedido",
+  "descricao_sugerida": "Use para mandar ao time de Contas a Pagar uma informação ou documento avulso que eles precisam (por exemplo, dados bancários atualizados de um fornecedor para conferência, relatório pedido pelo time ou resposta a uma pendência). Não use para pedir pagamento, ajuste de lançamento, bloqueio, antecipação ou consulta de pagamento atrasado: esses pedidos têm itens próprios.",
+  "frases_exemplo": [
+   "preciso mandar um documento para o contas a pagar",
+   "o contas a pagar pediu uma informação, onde envio?",
+   "enviar relatório para o time de pagamentos",
+   "responder pendência do contas a pagar",
+   "mandar arquivo para o CAP"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_report_information",
+    "origem": "set:EY VS - Envio de Informações para o Contas à Pagar",
+    "acao": "manter",
+    "conversational_label": "Sobre o que é a informação que você quer enviar?",
+    "obs": "Texto curto (assunto)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Detalhe livre; label no set compartilhado. Anexo opcional ao final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Envio de Informações)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar v_report_information como Mandatory na variável."
+   },
+   {
+    "nome": "EY: Somente leitura (set Envio de Informações)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Permitir anexo opcional no final da conversa"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "b3004b311b11e110a530426fe54bcb64",
+  "nome_atual": "Notificação de Pagamentos Incorretos e/ou Duplicados",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 19,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 50,
+  "justificativa": "Volume muito baixo (19 em 12 meses). Sem bloqueador; 22 perguntas por causa do set de empresas. Incorreto e duplicado são 2 opções de uma pergunta que o usuário responde na primeira frase.",
+  "nome_sugerido": "Avisar pagamento incorreto ou duplicado a fornecedor",
+  "short_description_sugerida": "Informe um pagamento feito em duplicidade ou com valor errado a um fornecedor",
+  "descricao_sugerida": "Use para avisar o Contas a Pagar que um fornecedor recebeu um pagamento em duplicidade ou com valor/destinatário errado, para que seja feita a cobrança ou o estorno. Você vai informar o fornecedor, a nota fiscal, o vencimento e o valor. Não use para pagamento atrasado ou para corrigir lançamento antes do pagamento.",
+  "frases_exemplo": [
+   "pagamos duas vezes o mesmo fornecedor",
+   "pagamento duplicado de nota fiscal",
+   "o fornecedor recebeu valor errado",
+   "pagaram a nota a mais",
+   "avisar pagamento incorreto"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_tipo_de_notifica_o",
+    "origem": "set:EY VS - Notificação de pagamentos incorretos ou duplicados",
+    "acao": "manter",
+    "conversational_label": "O pagamento foi duplicado ou incorreto?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_document_number_invoice",
+    "origem": "set:EY VS - Notificação de pagamentos incorretos ou duplicados",
+    "acao": "manter",
+    "conversational_label": "Qual o número da nota fiscal?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_due_date",
+    "origem": "set:EY VS - Notificação de pagamentos incorretos ou duplicados",
+    "acao": "manter",
+    "conversational_label": "Qual a data de vencimento da nota?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_amount",
+    "origem": "set:EY VS - Notificação de pagamentos incorretos ou duplicados",
+    "acao": "manter",
+    "conversational_label": "Qual o valor pago?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Label no set compartilhado."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Notificação)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Marcar Mandatory nas 4 variáveis."
+   },
+   {
+    "nome": "EY: Somente leitura (set Notificação)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Notificação)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_amount (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "db5be02a1b152150d1abda4ce54bcbca",
+  "nome_atual": "Pagamento de Pré-edição",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 4659,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 30,
+  "justificativa": "Volume alto (4.659 em 12 meses, rank 16). Está bloqueado só pelo client script \"EY: Approver PopUp\" (onLoad sem VA Supported), um aviso com data de expiração 2026-07-24 que já passou: dá pra remover. Depois disso, é ajustar labels, obrigatoriedade e o rich text de anexos.",
+  "nome_sugerido": "Solicitar pagamento manual (pré-edição)",
+  "short_description_sugerida": "Peça um pagamento manual a fornecedor, de imposto ou de taxa fora do fluxo normal de notas",
+  "descricao_sugerida": "Use para pedir um pagamento manual (pré-edição) que não passa pelo fluxo normal de pedido de compra e nota fiscal: fornecedor sem pedido, impostos, taxas, guias ou boletos. Você vai informar a categoria do pagamento, o número do documento, a moeda, o valor, as datas de pagamento e vencimento, o gestor aprovador (nível G ou acima) e anexar o documento de cobrança. Não use se você tem o formulário Global SPR (use pagamento via SPR), para serviço internacional ou para antecipar vencimento.",
+  "frases_exemplo": [
+   "preciso pagar um boleto manualmente",
+   "pagamento manual de imposto",
+   "pagar taxa que não tem pedido de compra",
+   "solicitar pré-edição de pagamento",
+   "pagar fornecedor sem PO",
+   "tenho uma guia para pagar com urgência"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Approver PopUp",
+    "problema": "onLoad sem VA Supported: bloqueia a conversa. Só exibe um aviso de mudança de processo e já passou da data de expiração (2026-07-24).",
+    "acao": "Desativar o script. Se o aviso ainda for necessário, colocar o texto na descrição do item."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_is_the_payment_category",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Qual a categoria do pagamento (fornecedor, imposto, taxa ou outro)?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_payment_description",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Descreva o que está sendo pago",
+    "obs": "Só quando a categoria for \"outros\" (UI policy sem script)."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_document_number",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o número do documento (nota, boleto ou guia)?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_currency",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Em qual moeda?",
+    "obs": "Default value BRL para reduzir pergunta quando possível."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_value",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Qual o valor a pagar?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_due_date",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Qual a data de vencimento?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_payment_date",
+    "origem": "set:EY VS - Solicitar Pagamentos Manuais Variable",
+    "acao": "manter",
+    "conversational_label": "Em que data o pagamento deve ser feito?"
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_select_the_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem é o gestor (nível G ou acima) que vai aprovar?",
+    "obs": "Reference sys_user com qualificador estático (x_nasm_hr_range>=G); ok para conversa. Visível conforme a sub-empresa."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_additional_information",
+    "origem": "set:EY VS - Informaçoes/anexo",
+    "acao": "manter",
+    "obs": "Label no set compartilhado."
+   },
+   {
+    "ordem": 10,
+    "variavel": "label_obrigatoriedade_anexos",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text sobre anexos obrigatórios: mover o texto para a descrição e usar \"Mandatory attachment\" no producer."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_type_of_request",
+    "origem": "set:EY VS - Empresas Natura",
+    "acao": "ocultar_na_conversa",
+    "obs": "A policy \"EY: Exibir type of request\" torna visível e obrigatório no item, contrariando o set que esconde. Confirmar se o campo é mesmo necessário; se for, fixar default value e deixar oculto."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Approver PopUp",
+    "acao": "remover",
+    "substituicao": "Aviso expirado; se ainda útil, vira texto da descrição."
+   },
+   {
+    "nome": "EY: Clean Approver Field",
+    "acao": "converter",
+    "substituicao": "Limpa o aprovador para dois sys_ids fixos de sub-empresa. Trocar pela própria UI policy \"EY: Approver\" com \"Clear the variable value\" ao esconder; remover o script."
+   },
+   {
+    "nome": "EY: Approver",
+    "acao": "manter",
+    "substituicao": "UI policy sem script, VA Supported; desmarcar \"On load\" e ativar \"clear value when hidden\". Os dois sys_ids fixos de sub-empresa ficam documentados."
+   },
+   {
+    "nome": "Descrição do Pagamento Visible",
+    "acao": "manter",
+    "substituicao": "Condicional sem script; desmarcar \"On load\"."
+   },
+   {
+    "nome": "EY: Exibir type of request",
+    "acao": "remover",
+    "substituicao": "Ver pergunta v_type_of_request."
+   },
+   {
+    "nome": "Variavies Obrigatorias",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Também limpar as entradas sem ação (v_payment_description, v_country etc.) e as de variáveis que não existem."
+   },
+   {
+    "nome": "EY: Read Only Variables",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Solicitar Pagamentos Manuais)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer (documento de cobrança)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Há sobreposição de intenção com \"Solicitação de Pagamento Via SPR\" (impostos, taxas): as descrições propostas separam pelo formulário Global SPR. O item dispara dois flows (PTP - Pagamento de Pré-edição e EY: PTP - Solicitar Pagamentos Manuais): confirmar se os dois ainda são necessários."
+ },
+ {
+  "sys_id": "aef6af841b65e590a530426fe54bcb4c",
+  "nome_atual": "Solicitação de Antecipação de Vencimento e Postergação",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 1716,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Volume alto (1.716 em 12 meses). O item mistura duas intenções opostas (antecipar pagamento e prorrogar vencimento) com dois checkboxes mutuamente exclusivos, o que a conversa não agrupa bem, e o aprovador só existe na antecipação. Dois itens casam melhor com o que o usuário pede e cada um fica com cerca de 8 perguntas.",
+  "nome_sugerido": "Antecipar pagamento ou prorrogar vencimento (item original)",
+  "short_description_sugerida": "Item original a ser substituído pelos dois itens derivados",
+  "descricao_sugerida": "Manter só enquanto os itens derivados não estiverem publicados; depois desativar ou tirar do catálogo do Virtual Agent para não concorrer com eles.",
+  "frases_exemplo": [
+   "antecipar pagamento de fornecedor",
+   "prorrogar vencimento de nota",
+   "mudar a data de pagamento da nota",
+   "postergar pagamento"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variáveis v_early_payment_v2 e v_due_date_extension_v2 (Checkbox)",
+    "problema": "Checkboxes obrigatórios e mutuamente exclusivos por UI policy: checkbox não agrupa em conversa e a combinação confunde o LLM.",
+    "acao": "Cada checkbox vira um item derivado (default value fixo, oculto). Se preferir não dividir, trocar os dois por um único Select Box \"Antecipação | Prorrogação\"."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Clear Due Date Ext. v2 / EY: Clear Early Payment v2",
+    "acao": "remover",
+    "substituicao": "Desnecessárias com o tipo fixado em cada item derivado."
+   },
+   {
+    "nome": "EY: Select the approver",
+    "acao": "converter",
+    "substituicao": "No item de antecipação a condição fica só v_type_of_payment = suppliers (a outra parte já é fixa). Desmarcar \"On load\"."
+   },
+   {
+    "nome": "EY: Clear Select Approver v2",
+    "acao": "remover",
+    "substituicao": "Usar \"clear value when hidden\" na UI policy do aprovador."
+   },
+   {
+    "nome": "Variaveis Obrigatorias",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). A entrada v_attachment não é variável do item: trocar pela opção \"Mandatory attachment\" do record producer, e o anexo é pedido ao final da conversa."
+   },
+   {
+    "nome": "EY: Variaveis Read Only (set Antecipação do Vencimento)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: Máscara de Moeda (set Antecipação do Vencimento)",
+    "acao": "converter",
+    "substituicao": "Remover o script e usar Validation Regex na variável v_value (ex.: ^\\d+([.,]\\d{1,2})?$, mensagem \"Informe só o valor numérico, ex.: 1500,00\"). O script atual usa parseInt e descarta os centavos."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Após publicar os derivados, desativar o original ou removê-lo do catálogo Virtual Agent Search"
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar antecipação de pagamento a fornecedor",
+    "short_description": "Peça para pagar uma nota antes da data de vencimento original",
+    "descricao": "Use para pedir que uma nota ou título seja pago antes do vencimento original (por exemplo, acordo comercial com desconto ou necessidade do fornecedor). Você vai informar o fornecedor, a nota, a moeda, o valor, o vencimento original, a data desejada e, para fornecedores, o gestor que aprova. Não use para adiar o vencimento (use prorrogação de vencimento).",
+    "frases_exemplo": [
+     "preciso antecipar o pagamento de uma nota",
+     "fornecedor pediu para receber antes do vencimento",
+     "pagar a NF antes da data",
+     "antecipação de pagamento com desconto",
+     "adiantar o vencimento do boleto"
+    ],
+    "fixar": "v_early_payment_v2 = true e v_due_date_extension_v2 = false (default value, ocultos)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_type_of_payment",
+      "conversational_label": "O pagamento é para fornecedor ou de outro tipo?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_document_number_invoice",
+      "conversational_label": "Qual o número da nota fiscal?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_value",
+      "conversational_label": "Qual o valor da nota?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_currency",
+      "conversational_label": "Em qual moeda?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "original_expiration_date",
+      "conversational_label": "Qual a data de vencimento original?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_payment_s_date_requested",
+      "conversational_label": "Para qual data você quer antecipar o pagamento?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_form_of_payment",
+      "conversational_label": "Qual a forma de pagamento?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "select_approver_v2",
+      "conversational_label": "Quem é o gestor que aprova a antecipação?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar prorrogação de vencimento de pagamento",
+    "short_description": "Peça para adiar a data de vencimento de uma nota ou título a pagar",
+    "descricao": "Use para pedir que o vencimento de uma nota ou título a pagar seja adiado para uma data posterior (postergação), por exemplo por acordo com o fornecedor ou pendência de documentação. Você vai informar o fornecedor, a nota, a moeda, o valor, o vencimento original e a nova data. Não use para antecipar pagamento nem para bloquear o pagamento sem nova data (use bloqueio de pagamento).",
+    "frases_exemplo": [
+     "preciso prorrogar o vencimento de uma nota",
+     "adiar o pagamento do fornecedor",
+     "postergar vencimento da NF",
+     "mudar o vencimento para o mês que vem",
+     "estender prazo de pagamento"
+    ],
+    "fixar": "v_due_date_extension_v2 = true e v_early_payment_v2 = false (default value, ocultos); select_approver_v2 oculto",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_type_of_payment",
+      "conversational_label": "O pagamento é para fornecedor ou de outro tipo?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_document_number_invoice",
+      "conversational_label": "Qual o número da nota fiscal?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_value",
+      "conversational_label": "Qual o valor da nota?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_currency",
+      "conversational_label": "Em qual moeda?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "original_expiration_date",
+      "conversational_label": "Qual a data de vencimento original?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_payment_s_date_requested",
+      "conversational_label": "Para qual nova data você quer prorrogar?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_form_of_payment",
+      "conversational_label": "Qual a forma de pagamento?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Os triggers de flow identificam o item pelo sys_id do producer (x_nasm_hr_item): ao criar os itens derivados, incluir os novos sys_ids no trigger do flow atual ou gravar o sys_id do item original no producer script. v_currency tem reference qualifier avançado: conferir se resolve em conversa."
+ },
+ {
+  "sys_id": "f7bc58b88741ba10ec360e530cbb3572",
+  "nome_atual": "Solicitação de Exceção para Payment Run",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 29,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Volume baixo (29 em 12 meses, item recente). Sem bloqueador formal, mas usa três List Collectors com qualificador dinâmico, uma variável Attachment e um bloco \"para quem\" que dá pra derivar. Com Select Box no lugar da marca e anexo no fim da conversa, fica viável.",
+  "nome_sugerido": "Incluir ou excluir fornecedor da exceção do Payment Run",
+  "short_description_sugerida": "Peça para incluir ou tirar um fornecedor da lista de exceção da rodada automática de pagamentos",
+  "descricao_sugerida": "Use para pedir que um fornecedor seja incluído na lista de exceção do Payment Run (rodada automática de pagamentos do SAP), para que não seja pago automaticamente, ou retirado dela. Você vai informar a ação (inclusão ou exclusão), a marca e as subsidiárias afetadas, o CNPJ, o nome e o código do fornecedor, a justificativa e anexar a aprovação. Não use para bloquear um pagamento específico (use bloqueio de pagamento).",
+  "frases_exemplo": [
+   "tirar fornecedor do payment run",
+   "incluir fornecedor na exceção do pagamento automático",
+   "não quero que o fornecedor entre na rodada de pagamento",
+   "excluir fornecedor da lista de exceção do payment run",
+   "exceção de payment run para fornecedor da Avon"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "attach_approval (Attachment)",
+    "problema": "Attachment não aceita linguagem natural na conversa.",
+    "acao": "Remover a variável e ativar \"Mandatory attachment\" no producer; a aprovação é pedida como anexo no final da conversa."
+   },
+   {
+    "onde": "which_brand_is_impacted e subsidiárias (List Collector)",
+    "problema": "List Collector com qualificador dinâmico/scriptado pode quebrar na conversa.",
+    "acao": "Trocar a marca por Select Box (Natura | Avon | Ambas) e as subsidiárias por List Collector com qualificador estático (sem javascript:) sobre a tabela correta."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "type_of_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você quer incluir ou excluir o fornecedor da exceção do Payment Run?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "suppliers_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o nome do fornecedor?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "suppliers_cnpj",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o CNPJ do fornecedor?",
+    "obs": "Validation Regex de 14 dígitos."
+   },
+   {
+    "ordem": 4,
+    "variavel": "suppliers_code",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o código do fornecedor no SAP?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "which_brand_is_impacted",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Select Box",
+    "conversational_label": "Qual marca é afetada: Natura, Avon ou as duas?",
+    "obs": "Hoje é List Collector com reference sys_user (provável erro de configuração)."
+   },
+   {
+    "ordem": 6,
+    "variavel": "select_the_natura_subsidiaries_that_will_be_impacted",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quais subsidiárias da Natura serão afetadas?",
+    "obs": "Qualificador estático; visível quando a marca incluir Natura."
+   },
+   {
+    "ordem": 7,
+    "variavel": "select_the_avon_subsidiaries_that_will_be_impacted",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quais subsidiárias da Avon serão afetadas?",
+    "obs": "Qualificador estático; visível quando a marca incluir Avon."
+   },
+   {
+    "ordem": 8,
+    "variavel": "describe_the_justification_for_the_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual a justificativa do pedido?"
+   },
+   {
+    "ordem": 9,
+    "variavel": "who_is_your_request_for",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Default \"para mim\"; só perguntar se o usuário disser que é para outra pessoa."
+   },
+   {
+    "ordem": 10,
+    "variavel": "select_the_employee",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Default gs.getUserID(); visível só quando for para outra pessoa."
+   },
+   {
+    "ordem": 11,
+    "variavel": "attach_approval",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Vira anexo obrigatório no final da conversa."
+   },
+   {
+    "ordem": 12,
+    "variavel": "attach_approval_label",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text; a instrução \"anexe a aprovação\" vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Select the Avon/Natura subsidiaries that will be impacted",
+    "acao": "converter",
+    "substituicao": "Refazer a condição sobre o novo Select Box de marca (Avon/Ambas, Natura/Ambas), sem LIKE em sys_id. Desmarcar \"On load\"."
+   },
+   {
+    "nome": "EY: Select the employee",
+    "acao": "manter",
+    "substituicao": "Condicional sem script; desmarcar \"On load\"."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). attach_approval e attach_approval_label saem; usar \"Mandatory attachment\" do producer."
+   },
+   {
+    "nome": "EY: Readonly fields (record)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer (aprovação)"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Os List Collectors apontam para sys_user com qualificadores que parecem de outra tabela: revisar a configuração antes de ajustar para conversa."
+ },
+ {
+  "sys_id": "7fd2d33987beb214ec360e530cbb35cf",
+  "nome_atual": "Solicitação de Pagamento Via SPR",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 140,
+  "recomendacao": "manter_formulario",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 35,
+  "justificativa": "Volume baixo (140 em 12 meses). O processo depende de baixar um template (Global SPR), preenchê-lo e anexar dois arquivos obrigatórios em variáveis Attachment separadas, além de cinco client scripts. Converter dá pouco ganho; vale deixar como formulário e garantir que o VA o encontre e abra o link.",
+  "nome_sugerido": "Solicitar pagamento via SPR (formulário Global SPR)",
+  "short_description_sugerida": "Envie um formulário Global SPR preenchido para pagamento manual de imposto, taxa ou processo judicial",
+  "descricao_sugerida": "Use quando o pagamento manual precisa do formulário Global SPR (Special Payment Request): impostos, taxas, processos jurídicos e judiciais. Você vai baixar o modelo, preenchê-lo e anexá-lo junto com a aprovação; só uma SPR por chamado. Não use para pagamento manual comum sem SPR (use pagamento manual / pré-edição) nem para serviço internacional.",
+  "frases_exemplo": [
+   "preciso abrir uma SPR",
+   "pagamento de processo judicial via SPR",
+   "enviar formulário global SPR",
+   "pagar taxa com SPR",
+   "solicitação de pagamento especial SPR"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_approval_attachment, v_attach_here_spr_form, v_support_documentation (Attachment)",
+    "problema": "Três variáveis Attachment (duas obrigatórias) não aceitam linguagem natural.",
+    "acao": "Manter como formulário. Numa conversão futura, trocar por um único \"Mandatory attachment\" no producer."
+   },
+   {
+    "onde": "v_form_template (Rich Text Label)",
+    "problema": "Link de template: a mídia é removida na conversa.",
+    "acao": "Manter no formulário; publicar o template também em artigo de KB."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Trocar por Validation Regex em v_payment_amount (corrige também a atribuição dupla \"var regex = regex\")."
+   },
+   {
+    "nome": "EY: Cant select a payday before today",
+    "acao": "manter",
+    "substituicao": "Regra de negócio; funciona no formulário."
+   },
+   {
+    "nome": "EY: Set requester name / Set requester name based on collabor / Set Supplier Code",
+    "acao": "manter",
+    "substituicao": "Funcionam no formulário; numa conversão futura trocar por auto-populate."
+   },
+   {
+    "nome": "EY: Set variables to mandatory",
+    "acao": "converter",
+    "substituicao": "Tirar mandatory de v_info_about_spr e v_form_template (rótulos) e marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Marcar \"Make the item non-conversational in VA\" para o VA mostrar o link do formulário",
+    "Manter o item no catálogo Virtual Agent Search para ser encontrado pelo nome e descrição"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "short_description atual (\"Criação de form para o fluxo de SPR\") é texto técnico: trocar pela sugerida. Sobreposição com \"Pagamento de Pré-edição\" resolvida pela menção ao formulário Global SPR."
+ },
+ {
+  "sys_id": "798e5eed1bdde110d1abda4ce54bcbf0",
+  "nome_atual": "Solicitar Pagamento de Serviço Internacional",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 6,
+  "recomendacao": "manter_formulario",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 35,
+  "justificativa": "Volume muito baixo (6 em 12 meses). Tem quatro variáveis Attachment (três obrigatórias, incluindo formulário próprio preenchido a partir de template) e dois rich text com links. Não compensa converter; manter como formulário com nome e descrição que o VA encontre. Vale avaliar com a área se o item ainda é necessário.",
+  "nome_sugerido": "Solicitar pagamento de serviço internacional",
+  "short_description_sugerida": "Peça o pagamento de um serviço prestado por fornecedor do exterior",
+  "descricao_sugerida": "Use para pedir o pagamento de um serviço contratado de fornecedor no exterior (importação de serviço), por pedido de compra ou pagamento manual. Você vai anexar o formulário de pagamento de serviço internacional, a invoice e, se houver, o contrato. Não use para pedir comprovante de pagamento internacional já feito nem para compra de mercadoria.",
+  "frases_exemplo": [
+   "pagar serviço de fornecedor no exterior",
+   "pagamento de invoice de consultoria internacional",
+   "preciso pagar um fornecedor estrangeiro",
+   "importação de serviço, como pago?",
+   "pagamento internacional de serviço com PO"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_invoice, v_attach_int_service_payment, v_attach_manual_document, v_attach_copy_contract (Attachment)",
+    "problema": "Várias variáveis Attachment obrigatórias não aceitam linguagem natural.",
+    "acao": "Manter como formulário."
+   },
+   {
+    "onde": "v_questions_about_process, v_download_template (Rich Text Label)",
+    "problema": "Links de FAQ/template perdem a mídia na conversa.",
+    "acao": "Manter no formulário; publicar o FAQ em KB."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Remove Company Options",
+    "acao": "manter",
+    "substituicao": "Funciona no formulário; alternativa no-code é desativar o choice \"TBS\" no próprio set."
+   },
+   {
+    "nome": "Policies Resolver View / Catalog Item View",
+    "acao": "manter",
+    "substituicao": "Sem mudança enquanto for formulário."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Marcar \"Make the item non-conversational in VA\"",
+    "Manter no catálogo Virtual Agent Search"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Volume de 6 casos em 12 meses: fica perto do critério de desativação; sugerido confirmar com a área de Pagamentos se o processo migrou para outro canal. Os dois rich text têm o mesmo label (\"If you have questions about the process...\") e um deles deveria ser o link de template."
+ },
+ {
+  "sys_id": "41f22d2287848b10ec360e530cbb35cb",
+  "nome_atual": "Fornecedores de Argentina – Cadastro de E-mail para Recebimento de Comprovantes de Retenção",
+  "tabela": "x_nasm_ptp_case",
+  "volume_12m": 221,
+  "recomendacao": "conversacional",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 75,
+  "justificativa": "Volume médio (221 em 12 meses, todo recente), só 3 perguntas de texto e scripts VA Supported. Está quase pronto: falta short description, labels conversacionais e trocar os dois scripts de validação por Validation Regex.",
+  "nome_sugerido": "Cadastrar e-mail para receber comprovantes de retenção (fornecedores da Argentina)",
+  "short_description_sugerida": "Fornecedor da Argentina: informe o e-mail que deve receber os certificados de retenção de impostos",
+  "descricao_sugerida": "Exclusivo para fornecedores da Argentina. Use para indicar o e-mail (ou vários, separados por ponto e vírgula) que deve receber os certificados de retenção de impostos das faturas pagas. Você vai informar o CUIT (Clave Única de Identificación Tributaria) da empresa, a razão social e o e-mail. Isso não altera os dados cadastrais do fornecedor no SAP; para alterar cadastro, use o item de cadastro de fornecedores.",
+  "frases_exemplo": [
+   "quiero recibir los certificados de retención por mail",
+   "cadastrar e-mail para comprovante de retenção",
+   "cambiar el correo donde llegan las retenciones",
+   "soy proveedor de Argentina y no recibo los certificados de retención",
+   "enviar comprovantes de retenção para outro e-mail"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "question_enter_cuit",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o CUIT da empresa (só números)?",
+    "obs": "Validation Regex ^\\d{11}$ no lugar do script de limpeza."
+   },
+   {
+    "ordem": 2,
+    "variavel": "question_enter_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual a razão social da empresa?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "question_email",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual e-mail devemos enviar os certificados de retenção? Pode informar mais de um, separados por ponto e vírgula.",
+    "obs": "Validation Regex de lista de e-mails no lugar do script."
+   },
+   {
+    "ordem": 4,
+    "variavel": "question_important_info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text informativo: o conteúdo já está na descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "[AOOP] Sanitize entered CUIT",
+    "acao": "converter",
+    "substituicao": "Validation Regex ^\\d{11}$ com mensagem \"Informe o CUIT só com números\". O script corrige em vez de rejeitar; na conversa a validação é mais clara."
+   },
+   {
+    "nome": "[AOOP] Validate emails",
+    "acao": "converter",
+    "substituicao": "Validation Regex para lista de e-mails separada por \";\" direto na variável."
+   },
+   {
+    "nome": "[AOOP] Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory nas três variáveis; o rich text sai."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Público externo (Public): traduzir nome, descrição e labels para espanhol, idioma dos fornecedores"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Item disponível para \"Public\": confirmar se o VA/Otto está habilitado para esse público. Categoria \"Serviços Externos\"."
+ },
+ {
+  "sys_id": "8bad8c671b152550a530426fe54bcb90",
+  "nome_atual": "Solicitação de Apropriação e Diferimento",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 348,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "alto",
+  "prontidao_atual": 25,
+  "justificativa": "Volume médio (348 em 12 meses). Bloqueado por três variáveis Custom with Label (UI Macro/widget de download de template e nota informativa) e tem duas variáveis Attachment obrigatórias. Trocando os templates por link em KB e os anexos por um único anexo obrigatório no fim, sobram 3 perguntas próprias.",
+  "nome_sugerido": "Solicitar apropriação ou diferimento contábil",
+  "short_description_sugerida": "Peça o lançamento de uma apropriação ou de um diferimento de despesa ou receita",
+  "descricao_sugerida": "Use para pedir à Contabilidade o registro de uma apropriação (reconhecer no mês uma despesa ou receita ainda sem nota) ou de um diferimento (distribuir um valor pago ou recebido ao longo dos meses de competência). Você vai escolher o tipo, informar se há controle SOX (Sarbanes-Oxley) associado e anexar o template preenchido com a nota fiscal ou contrato. Não use para ajuste de lançamento de fornecedor, capitalização de gastos ou IFRS 16.",
+  "frases_exemplo": [
+   "preciso fazer uma provisão de despesa do mês",
+   "diferir um pagamento anual ao longo dos meses",
+   "lançar apropriação de despesa sem nota",
+   "solicitar diferimento contábil",
+   "apropriar despesa de serviço do mês"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_download_template_appropriation_and_deferral_request_es / _pt (Custom with Label + UI Macro + widget)",
+    "problema": "Tipo customizado com macro e widget não renderiza em conversa.",
+    "acao": "Remover e publicar os templates PT/ES em um artigo de KB; citar o link na descrição e no label da pergunta de anexo."
+   },
+   {
+    "onde": "v_nota_informativa (Custom with Label)",
+    "problema": "Tipo customizado não suportado.",
+    "acao": "Remover; o texto \"anexar nota fiscal ou contrato\" vai para a descrição."
+   },
+   {
+    "onde": "v_attach_template e v_document_repository (Attachment)",
+    "problema": "Duas variáveis Attachment obrigatórias não aceitam linguagem natural.",
+    "acao": "Remover as duas e ativar \"Mandatory attachment\" no producer, pedindo template preenchido e documentação de suporte num único passo no fim da conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_request_type",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "manter",
+    "conversational_label": "É uma apropriação ou um diferimento?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "does_this_request_have_sox_control_attached",
+    "origem": "set:EY VS - Sox",
+    "acao": "manter",
+    "conversational_label": "Esse pedido está ligado a algum controle SOX (Sarbanes-Oxley)?",
+    "obs": "Yes/No via Select Box: incluir \"None\"."
+   },
+   {
+    "ordem": 3,
+    "variavel": "sox_control_name",
+    "origem": "set:EY VS - Sox",
+    "acao": "manter",
+    "conversational_label": "Qual o nome do controle SOX?",
+    "obs": "Só se a resposta anterior for sim. A policy \"If Sox Control is YES 2\" deixa o campo read-only quando sim: corrigir, senão a VA pula a pergunta."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_comments",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "manter",
+    "conversational_label": "Descreva o lançamento que precisa ser feito (valor, período e conta)"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_attach_template",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "remover",
+    "obs": "Vira anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_document_repository",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "remover",
+    "obs": "Idem, no mesmo passo de anexo."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_nota_informativa",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "remover",
+    "obs": "Custom with Label."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_download_template_appropriation_and_deferral_request_es",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "remover",
+    "obs": "Macro/widget; link em KB."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_download_template_appropriation_and_deferral_request_pt",
+    "origem": "set:EY VS - Solicitação de Apropriação e Diferimento",
+    "acao": "remover",
+    "obs": "Macro/widget; link em KB."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Apropriação e Diferimento)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só v_request_type obrigatório; anexos passam para \"Mandatory attachment\" do producer."
+   },
+   {
+    "nome": "EY: Read-Only (set Apropriação e Diferimento)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   },
+   {
+    "nome": "EY: If Sox Control is YES 2 (set Sox)",
+    "acao": "converter",
+    "substituicao": "Trocar readonly por mandatory quando a resposta for sim (recomendação a confirmar na análise do set Sox)."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Tabela x_nasm_rtr_case (RTR). O set de apropriação é exclusivo deste item, então as remoções podem ser feitas direto no set."
+ },
+ {
+  "sys_id": "b57dc2c41ba12590a530426fe54bcbf3",
+  "nome_atual": "Ativação de Projeto em Curso (Alta)",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 149,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Volume baixo (149 em 12 meses). Sem bloqueador, mas o item depende de template que muda por sub-empresa (client script + UI policy com seis sys_ids fixos) e de uma variável Attachment. Com os templates num artigo de KB e anexo no fim da conversa, sobram 2 perguntas próprias.",
+  "nome_sugerido": "Solicitar ativação de projeto em curso (início da depreciação)",
+  "short_description_sugerida": "Peça a transferência de ativo em andamento para a classe definitiva, iniciando a depreciação",
+  "descricao_sugerida": "Use quando um projeto ou obra registrado como ativo em andamento (imobilizado em curso) foi concluído e precisa ser ativado na classe definitiva para começar a depreciar. Você vai informar a quantidade de ativos e anexar o template preenchido. Não use para baixa de ativo, transferência entre centros de custo ou capitalização de gastos lançados em despesa.",
+  "frases_exemplo": [
+   "o projeto terminou, preciso ativar o ativo",
+   "transferir imobilizado em curso para classe definitiva",
+   "iniciar depreciação de obra concluída",
+   "ativar projeto em andamento",
+   "capitalizar projeto em curso"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   },
+   {
+    "onde": "v_download_template, v_download_template_2, v_informative_note_2 (Rich Text Label)",
+    "problema": "Links de template perdem a mídia; a troca por sub-empresa depende de script.",
+    "acao": "Publicar os dois templates (Brasil e demais países) em um artigo de KB e citar na descrição e no pedido de anexo."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_enter_the_number_of_assets",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "manter",
+    "conversational_label": "Quantos ativos serão ativados?",
+    "obs": "Mapeado para campo da tabela (map_to_field); manter."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_comments",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "manter",
+    "conversational_label": "Descreva o projeto que precisa ser ativado"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "remover",
+    "obs": "Vira anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_download_template",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "remover",
+    "obs": "Link em KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_download_template_2",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "remover",
+    "obs": "Link em KB."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_informative_note_2",
+    "origem": "set:EY VS -  Capitalização de Projeto em Curso (Alta)",
+    "acao": "remover",
+    "obs": "Texto vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Download template based subcompany",
+    "acao": "remover",
+    "substituicao": "Com templates na KB não há o que alternar."
+   },
+   {
+    "nome": "EY: Hide download template 2 onLoad",
+    "acao": "remover",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: Mandatory (set Capitalização de Projeto em Curso)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Remover a entrada v_attach_email_with_approval, que não existe no set."
+   },
+   {
+    "nome": "EY: Read-Only (set Capitalização de Projeto em Curso)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "39b3c12b1b912910d1abda4ce54bcb6f",
+  "nome_atual": "Baixa de Ativo Fixo",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 267,
+  "recomendacao": "manter_formulario",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 30,
+  "justificativa": "Volume médio (267 em 12 meses), mas é o item mais pesado do lote: 35 variáveis, 16 rich text com legendas e documentos por tipo de baixa, duas variáveis Attachment obrigatórias, 10 UI policies e três client scripts com listas de sys_ids de sub-empresa que definem a emissão de nota. Cinco tipos de baixa com volume pequeno cada não justificam dividir agora.",
+  "nome_sugerido": "Solicitar baixa de ativo imobilizado",
+  "short_description_sugerida": "Peça a baixa de ativo fixo por devolução, doação, furto/perda, obsolescência/descarte ou venda",
+  "descricao_sugerida": "Use para pedir à Contabilidade a baixa de um bem do ativo imobilizado (máquina, móvel, equipamento, veículo) por devolução, doação, furto ou perda, obsolescência ou descarte, ou venda. Você vai escolher o tipo de baixa, o gestor aprovador, a quantidade de ativos e anexar o template preenchido e os documentos exigidos (por exemplo, boletim de ocorrência em caso de furto). Não use para transferir ativo entre centros de custo ou filiais (use transferência de ativos).",
+  "frases_exemplo": [
+   "preciso dar baixa em um ativo",
+   "o notebook foi roubado, como baixo o ativo?",
+   "baixa de equipamento obsoleto",
+   "vender um ativo imobilizado",
+   "doação de móveis do patrimônio",
+   "descartar máquina quebrada do ativo fixo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_files e v_attach_email_with_approval (Attachment)",
+    "problema": "Dois anexos obrigatórios em variáveis Attachment.",
+    "acao": "Manter como formulário; numa conversão futura, um único \"Mandatory attachment\"."
+   },
+   {
+    "onde": "16 Rich Text Labels (legendas, documentos exigidos, links de template)",
+    "problema": "Conteúdo essencial (documentos por tipo de baixa) não chega ao LLM.",
+    "acao": "Manter no formulário; publicar os requisitos por tipo de baixa em KB."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: If sub-company is one of / EY:IF subcompany 305, 315, 347, 332 / EY: Issuance of Invoice",
+    "acao": "converter",
+    "substituicao": "Três scripts disputam o mesmo campo v_issuing_invoice com listas diferentes de sys_ids. Consolidar num só (ou num campo na tabela de sub-empresa lido por auto-populate) mesmo mantendo o formulário."
+   },
+   {
+    "nome": "Hide Fields OnLoad",
+    "acao": "remover",
+    "substituicao": "Esconde variáveis inexistentes (v_issuing_invoice_2); marcar hidden direto na variável v_legenda_attach."
+   },
+   {
+    "nome": "UI policies de legenda por tipo de baixa",
+    "acao": "manter",
+    "substituicao": "Funcionam no formulário."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Marcar \"Make the item non-conversational in VA\"",
+    "Manter no catálogo Virtual Agent Search"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Label \"Select the manager who apprends this request\" tem erro de digitação (approves). Se o volume crescer, avaliar dividir por tipo de baixa (furto/perda e venda são os de documentação mais distinta)."
+ },
+ {
+  "sys_id": "6c6655a71b552910d1abda4ce54bcbf3",
+  "nome_atual": "Capitalização de Gastos",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 35,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 35,
+  "justificativa": "Volume baixo (35 em 12 meses). Bloqueado por uma variável com UI Macro (v_template_capitalization_expenses) e usa Attachment. Com template em KB e anexo no fim, sobram 2 perguntas.",
+  "nome_sugerido": "Solicitar capitalização de gastos no ativo fixo",
+  "short_description_sugerida": "Peça a reclassificação de gastos lançados em despesa para o ativo imobilizado",
+  "descricao_sugerida": "Use para pedir que gastos lançados como despesa sejam reclassificados para o ativo imobilizado (capitalizados), por exemplo melhorias ou peças que aumentam a vida útil de um bem. Você vai informar a data do lançamento, descrever o pedido e anexar o template preenchido. Não use para ativar projeto em curso nem para reclassificação de impostos.",
+  "frases_exemplo": [
+   "capitalizar gasto que foi para despesa",
+   "reclassificar despesa para o ativo fixo",
+   "lançaram melhoria como despesa, precisa ir para o imobilizado",
+   "capitalização de gastos",
+   "transferir despesa para ativo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_template_capitalization_expenses (Rich Text com UI Macro)",
+    "problema": "UI Macro não renderiza em conversa.",
+    "acao": "Remover; publicar o template em KB e citar na descrição."
+   },
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_release_date",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "manter",
+    "conversational_label": "Qual a data do lançamento em despesa?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_describe_the_information_you_need",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "manter",
+    "conversational_label": "Descreva os gastos que precisam ser capitalizados"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "remover",
+    "obs": "Anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_template_capitalization_expenses",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "remover",
+    "obs": "Macro; link em KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_template_accounting_entry_avon",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "remover",
+    "obs": "Rich text de template; link em KB."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_informative_note",
+    "origem": "set:EY VS - Capitalização de Gastos",
+    "acao": "remover",
+    "obs": "Texto vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Capitalização de Gastos)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só v_describe_the_information_you_need; anexo vira \"Mandatory attachment\"."
+   },
+   {
+    "nome": "EY: Read-Only (set Capitalização de Gastos)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. A policy Read-Only cita variáveis que não existem no set (v_enter_the_period_start_date etc.): limpar."
+ },
+ {
+  "sys_id": "7eaf0bd61be92990d1abda4ce54bcb77",
+  "nome_atual": "Reclassificação de Impostos",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 84,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 45,
+  "justificativa": "Volume baixo (84 em 12 meses). Sem bloqueador; mesmo padrão dos itens de ativo fixo: template que muda por sub-empresa via script e uma variável Attachment. Com templates em KB e anexo no fim, sobram 2 perguntas.",
+  "nome_sugerido": "Solicitar reclassificação contábil de impostos",
+  "short_description_sugerida": "Peça a reclassificação de um lançamento de imposto para a conta correta",
+  "descricao_sugerida": "Use para pedir à Contabilidade que um imposto lançado na conta ou no centro de custo errado seja reclassificado. Você vai informar a data do lançamento, descrever o ajuste e anexar o template preenchido. Não use para ajuste de lançamento de fornecedor nem para capitalização de gastos.",
+  "frases_exemplo": [
+   "reclassificar imposto lançado errado",
+   "o ICMS foi para a conta errada",
+   "preciso corrigir a conta de um imposto",
+   "reclasificación fiscal",
+   "reclassificação de impostos no razão"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_template (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   },
+   {
+    "onde": "v_download_template / v_download_template_2 (Rich Text Label)",
+    "problema": "Links de template perdem a mídia; troca por sub-empresa depende de script.",
+    "acao": "Publicar os dois templates em KB e citar na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_release_date",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "manter",
+    "conversational_label": "Qual a data do lançamento a reclassificar?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "describe_the_information_you_need",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "manter",
+    "conversational_label": "Descreva a reclassificação: qual imposto, conta atual e conta correta"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_template",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "remover",
+    "obs": "Anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_download_template",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "remover",
+    "obs": "Link em KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_download_template_2",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "remover",
+    "obs": "Link em KB."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_information_note",
+    "origem": "set:EY VS Reclassificação de impostos",
+    "acao": "remover",
+    "obs": "Texto vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "If sub-company is one of the",
+    "acao": "remover",
+    "substituicao": "Com templates na KB não há o que alternar."
+   },
+   {
+    "nome": "EY: Hide download template 2 onLoad",
+    "acao": "remover",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: Obrigatorios - Item view (set Reclassificação de impostos)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Remover v_report_start_date e v_report_end_date, que não existem no set."
+   },
+   {
+    "nome": "EY: Somente leitura - Target record (set Reclassificação de impostos)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. A categoria atual é \"Ativo Fixo\", mas o assunto é fiscal/contábil: avaliar mover de categoria."
+ },
+ {
+  "sys_id": "a304ae8c1b6d2590a530426fe54bcb1b",
+  "nome_atual": "Registros IFRS 16",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 64,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Volume baixo (64 em 12 meses). Sem bloqueador e só 3 perguntas próprias; falta explicar a sigla IFRS 16 na descrição e trocar a variável Attachment por anexo no fim da conversa.",
+  "nome_sugerido": "Solicitar registro de contrato de arrendamento (IFRS 16)",
+  "short_description_sugerida": "Peça o registro contábil de um contrato de aluguel ou arrendamento pela norma IFRS 16",
+  "descricao_sugerida": "Use para pedir à Contabilidade o registro de um contrato de arrendamento (aluguel de imóvel, veículo ou equipamento) conforme a norma IFRS 16 (International Financial Reporting Standards 16, arrendamentos). Você vai informar o período inicial e final do contrato, descrever o pedido e anexar o contrato. Não use para pagamento do aluguel ao fornecedor.",
+  "frases_exemplo": [
+   "registrar contrato de aluguel no IFRS 16",
+   "novo contrato de arrendamento para contabilizar",
+   "lançar leasing de veículos",
+   "registro IFRS 16 de imóvel alugado",
+   "contrato de locação precisa entrar no IFRS"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_is_the_initial_period",
+    "origem": "set:EY VS - Registro IFRS 16",
+    "acao": "manter",
+    "conversational_label": "Qual a data de início do contrato?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_what_is_the_final_period",
+    "origem": "set:EY VS - Registro IFRS 16",
+    "acao": "manter",
+    "conversational_label": "Qual a data de término do contrato?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_describe_the_information_you_need",
+    "origem": "set:EY VS - Registro IFRS 16",
+    "acao": "manter",
+    "conversational_label": "Descreva o contrato (o que é arrendado, valor e fornecedor)"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS - Registro IFRS 16",
+    "acao": "remover",
+    "obs": "Anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_informative_note",
+    "origem": "set:EY VS - Registro IFRS 16",
+    "acao": "remover",
+    "obs": "Texto vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Registro IFRS 16)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). v_attach_file sai; usar \"Mandatory attachment\" do producer."
+   },
+   {
+    "nome": "EY: Read-Only (set Registro IFRS 16)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "96a7a46c1ba161d0a530426fe54bcb01",
+  "nome_atual": "Transferência de Ativos e Dados Cadastrais",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 250,
+  "recomendacao": "dividir",
+  "prioridade": "media",
+  "esforco": "alto",
+  "prontidao_atual": 25,
+  "justificativa": "Volume médio (250 em 12 meses). Bloqueado por client script sem VA Supported e com seis outros scripts manipulando choices por país, idioma e sub-empresa. O select v_request_type junta dois grupos de intenção bem diferentes: alteração de cadastro (centro de custo, dados mestres) e transferência física com nota fiscal (comodato, entre filiais). Separar simplifica a lógica e melhora o casamento de intenção.",
+  "nome_sugerido": "Transferência de ativos e dados cadastrais (item original)",
+  "short_description_sugerida": "Item original a ser substituído pelos dois itens derivados",
+  "descricao_sugerida": "Manter só enquanto os itens derivados não estiverem publicados; depois desativar ou tirar do catálogo do Virtual Agent.",
+  "frases_exemplo": [
+   "transferir ativo",
+   "mudar centro de custo do ativo",
+   "alterar dados do imobilizado"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: If sub-company is one of the",
+    "problema": "onChange sem VA Supported que recria o choice \"loan_transfer\" conforme g_lang.",
+    "acao": "Remover: usar tradução de choice OOB (sys_choice/sys_translated) no lugar de montar o rótulo por script."
+   },
+   {
+    "onde": "client scripts EY: Onload Hide Fields + addOpt Transf / EY: Add Choice if Country == BR",
+    "problema": "Adicionam/removem o choice \"transfer_between_branches\" por país via g_form.",
+    "acao": "No item derivado de transferência física, deixar o choice fixo e explicar na descrição que entre filiais vale só no Brasil; validar no flow."
+   },
+   {
+    "onde": "client scripts EY: Fill invoice option coniditional / coniditional SUB",
+    "problema": "Preenchem v_invoice_issue a partir de listas de 12 sys_ids de sub-empresa, travando o campo.",
+    "acao": "Tirar a pergunta da conversa: o flow deriva a emissão de nota (tabela/propriedade com as sub-empresas), ou auto-populate a partir de um campo na core_company."
+   },
+   {
+    "onde": "v_attach_file e v_attach_email_with_approval (Attachment) + 10 Rich Text Labels",
+    "problema": "Anexos e legendas/links de template não funcionam em conversa.",
+    "acao": "Anexo obrigatório no fim da conversa; legendas viram descrição dos itens derivados; templates em KB."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: If sub-company is one of the",
+    "acao": "remover",
+    "substituicao": "Tradução de choice OOB."
+   },
+   {
+    "nome": "EY: Fill invoice option coniditional / coniditional SUB",
+    "acao": "remover",
+    "substituicao": "Derivar no flow."
+   },
+   {
+    "nome": "EY: Onload Hide Fields + addOpt Transf / EY: Add Choice if Country == BR",
+    "acao": "remover",
+    "substituicao": "Choices fixos por item derivado."
+   },
+   {
+    "nome": "EY: Hide fields onLoad / EY: Show label and temp for each request / EY: Hide all labels onLoad",
+    "acao": "remover",
+    "substituicao": "Legendas e links saem da conversa."
+   },
+   {
+    "nome": "Policies de templates por sub-empresa (EY: Hide fields if 347, 305 and 315 e as duas \"If subempresa Uruguai, Argentina, Chile...\")",
+    "acao": "remover",
+    "substituicao": "Templates em KB."
+   },
+   {
+    "nome": "EY: Hide attach comodato",
+    "acao": "converter",
+    "substituicao": "No derivado de transferência física, pedir o contrato de comodato no passo de anexo quando o tipo for comodato."
+   },
+   {
+    "nome": "EY: Mandatory (set Transferência de Ativo Fixo)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). A entrada v_attachment não é variável do item: trocar pela opção \"Mandatory attachment\" do record producer, e o anexo é pedido ao final da conversa."
+   },
+   {
+    "nome": "EY: Read-Only (set Transferência de Ativo Fixo)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" nos itens derivados",
+    "Após publicar os derivados, desativar o original ou removê-lo do catálogo Virtual Agent Search"
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Alterar centro de custo ou dados cadastrais de ativo imobilizado",
+    "short_description": "Peça a mudança de centro de custo ou de dados cadastrais de um ativo fixo, sem movimentação física",
+    "descricao": "Use para pedir à Contabilidade a troca do centro de custo de depreciação ou do responsável por um ativo, ou a alteração de dados cadastrais do bem na base contábil (descrição, plaqueta, localização etc.). Não há emissão de nota fiscal. Você vai escolher o tipo de alteração, informar a quantidade de ativos e anexar o template preenchido. Não use para mover o bem fisicamente entre filiais ou para prestador (comodato).",
+    "frases_exemplo": [
+     "mudar o centro de custo de um ativo",
+     "o ativo está no centro de custo errado",
+     "alterar dados cadastrais do imobilizado",
+     "trocar responsável pelo ativo",
+     "corrigir descrição do ativo fixo"
+    ],
+    "fixar": "v_request_type limitado a cost_center_change | fixed_asset_master_data_change; v_invoice_issue = no (default, oculto)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_request_type",
+      "conversational_label": "É mudança de centro de custo ou de dados cadastrais do ativo?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_assets_number",
+      "conversational_label": "Quantos ativos serão alterados?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_additional_information",
+      "conversational_label": "Descreva a alteração que precisa ser feita"
+     }
+    ]
+   },
+   {
+    "nome": "Transferir ativo imobilizado entre filiais ou em comodato",
+    "short_description": "Peça a transferência física de ativo fixo entre filiais ou para prestador de serviço (comodato), com nota fiscal",
+    "descricao": "Use para pedir a movimentação física de um bem do ativo imobilizado entre filiais do mesmo centro (só Brasil) ou entre a empresa e um prestador de serviço em comodato (empréstimo). Nessas operações é emitida nota fiscal. Você vai escolher o tipo de transferência, informar a quantidade de ativos e anexar o template preenchido e, no comodato, o contrato. Não use para só trocar centro de custo ou dados cadastrais.",
+    "frases_exemplo": [
+     "transferir máquina para outra filial",
+     "emprestar equipamento para prestador em comodato",
+     "mover ativo entre filiais com nota",
+     "comodato de ativo para fornecedor",
+     "transferência física de imobilizado"
+    ],
+    "fixar": "v_request_type limitado a loan_transfer | transfer_between_branches; v_invoice_issue derivado no flow a partir da sub-empresa (oculto)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_request_type",
+      "conversational_label": "A transferência é entre filiais ou em comodato com prestador?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_assets_number",
+      "conversational_label": "Quantos ativos serão transferidos?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_additional_information",
+      "conversational_label": "Informe origem, destino e o motivo da transferência"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Os triggers de flow identificam o item pelo sys_id do producer (x_nasm_hr_item): ao criar os itens derivados, incluir os novos sys_ids no trigger do flow atual ou gravar o sys_id do item original no producer script. Choices de v_assets_number não vieram no digest."
+ },
+ {
+  "sys_id": "5061c7c41b21a590a530426fe54bcb8a",
+  "nome_atual": "Envio De Informações de Fechamento Contábil",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 75,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Volume baixo (75 em 12 meses). Sem bloqueador e só uma pergunta própria mais anexo. Basta trocar a variável Attachment por anexo obrigatório no fim da conversa e melhorar a descrição.",
+  "nome_sugerido": "Enviar arquivo para o fechamento contábil",
+  "short_description_sugerida": "Envie à Contabilidade o arquivo pedido para o fechamento contábil do mês",
+  "descricao_sugerida": "Use para enviar à Contabilidade um arquivo ou informação exigido no fechamento contábil mensal (por exemplo, relatório de provisões, posição de estoque ou controles da sua área). Você vai descrever o que está enviando e anexar o arquivo. Não use para pedir lançamentos específicos como apropriação, reclassificação ou ajuste de inventário: esses têm itens próprios.",
+  "frases_exemplo": [
+   "enviar arquivo do fechamento contábil",
+   "mandar o relatório do fechamento do mês",
+   "a contabilidade pediu a planilha de fechamento",
+   "entregar informação para o fechamento",
+   "onde envio o arquivo do fechamento?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_describe_the_information_you_need",
+    "origem": "set:EY VS - Envio De Informações de Fechamento Contábil",
+    "acao": "manter",
+    "conversational_label": "Qual arquivo ou informação você está enviando e de qual período?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS - Envio De Informações de Fechamento Contábil",
+    "acao": "remover",
+    "obs": "Anexo obrigatório no fim da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Fechamento Contábil)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Fica só a descrição; anexo vira \"Mandatory attachment\"."
+   },
+   {
+    "nome": "EY: Read-Only (set Fechamento Contábil)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ },
+ {
+  "sys_id": "565e078d1b2d6dd0a530426fe54bcbd2",
+  "nome_atual": "Ajuste de Inventário e Ajuste Ciclico",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 4081,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 30,
+  "justificativa": "Volume alto (4.081 em 12 meses, rank 11). Bloqueado só pela variável v_template (Custom with Label com UI Macro e widget). O tipo tem default \"inventory_adjustment\" e uma policy o deixa read-only nesse valor, escondendo os seis campos do ajuste cíclico; na prática o item funciona só como ajuste de inventário. Removendo o template customizado e os campos cíclicos inacessíveis, a conversa fica com 2 perguntas mais anexo.",
+  "nome_sugerido": "Solicitar ajuste de inventário",
+  "short_description_sugerida": "Peça o ajuste contábil de estoque após inventário ou contagem cíclica",
+  "descricao_sugerida": "Use para pedir à área de Estoques e Custos o ajuste do saldo contábil de estoque depois de um inventário ou contagem (sobras ou faltas de material). Você vai informar a data de emissão, descrever o ajuste e anexar o template preenchido com os itens e quantidades. Não use para consulta ou relatório de Bloco K nem para baixa de ativo imobilizado.",
+  "frases_exemplo": [
+   "preciso ajustar o estoque depois do inventário",
+   "ajuste de inventário da filial",
+   "diferença de contagem no estoque, precisa ajustar",
+   "ajuste cíclico de estoque",
+   "lançar sobra e falta do inventário"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_template (Custom with Label + UI Macro + widget)",
+    "problema": "Tipo customizado com macro/widget de download de template não renderiza em conversa.",
+    "acao": "Remover; publicar o template em KB e citar na descrição e no pedido de anexo."
+   },
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural.",
+    "acao": "Remover e ativar \"Mandatory attachment\" no producer."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_request_type",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "ocultar_na_conversa",
+    "obs": "Default inventory_adjustment e read-only nesse valor: marcar hidden direto na variável."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_issuance",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "manter",
+    "conversational_label": "Qual a data de emissão do inventário?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_describe_the_information_you_need",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "manter",
+    "conversational_label": "Descreva o ajuste: filial, materiais e diferenças encontradas"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_branch",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Campo do ajuste cíclico, sempre oculto. Se o cíclico for mantido, os dados em tabela (filial, código, descrição, quantidade) devem ir no template anexado, não em 6 textos multilinha."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_responsible",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Idem."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_inventory_code",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Idem."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_desc_inventory",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Idem."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_quantity_counted",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Idem."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_validated",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Idem."
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Anexo obrigatório no fim da conversa."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_template",
+    "origem": "set:EY VS - Ajuste de inventário e ajuste Ciclico",
+    "acao": "remover",
+    "obs": "Custom with Label; link em KB."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Hide if Ajuste != Ciclico",
+    "acao": "remover",
+    "substituicao": "Os campos cíclicos saem do item."
+   },
+   {
+    "nome": "EY: Request type Read-Only",
+    "acao": "remover",
+    "substituicao": "v_request_type fica hidden com default."
+   },
+   {
+    "nome": "EY: Mandatory (set Ajuste de inventário)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). Ficam v_issuance e a descrição; anexo vira \"Mandatory attachment\"."
+   },
+   {
+    "nome": "EY: Read-Only (set Ajuste de inventário)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Ativar \"Mandatory attachment\" no record producer"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item. Confirmar com a área se o ajuste cíclico ainda é usado: pelas policies, ele não é acessível na visão do catálogo. Se for, criar um item próprio \"Solicitar ajuste cíclico de inventário\" com os dados em template. O item tem dois flows ativos (um é \"Copy of ...\"): conferir se a cópia deve ser desativada."
+ },
+ {
+  "sys_id": "bfaed8a41bad21d0a530426fe54bcb11",
+  "nome_atual": "Informações Bloco K",
+  "tabela": "x_nasm_rtr_case",
+  "volume_12m": 125,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Volume baixo (125 em 12 meses). Sem bloqueador e com 4 perguntas próprias. Precisa explicar \"Bloco K\" na descrição e trocar a variável Attachment; o anexo obrigatório não faz sentido quando o pedido é só um relatório.",
+  "nome_sugerido": "Solicitar relatório ou consulta sobre Bloco K",
+  "short_description_sugerida": "Peça um relatório ou tire uma dúvida sobre o Bloco K (controle de produção e estoque do SPED Fiscal)",
+  "descricao_sugerida": "Use para pedir um relatório do Bloco K (registro de controle da produção e do estoque enviado no SPED Fiscal / EFD ICMS IPI) de um período, ou para fazer uma consulta sobre as informações entregues. Você vai escolher se é relatório ou consulta, informar o período e descrever o que precisa. Não use para pedir ajuste de inventário.",
+  "frases_exemplo": [
+   "preciso do relatório do bloco K de março",
+   "dúvida sobre o bloco K do SPED",
+   "consultar informação do bloco K",
+   "extrair bloco K do período",
+   "relatório de produção e estoque do SPED fiscal"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_file (Attachment)",
+    "problema": "Attachment não aceita linguagem natural; hoje é obrigatório até para pedido de relatório.",
+    "acao": "Remover e deixar anexo opcional no fim da conversa (ou obrigatório só na consulta, se a área exigir)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_request_type",
+    "origem": "set:EY VS - Informações Bloco K",
+    "acao": "manter",
+    "conversational_label": "Você quer um relatório ou fazer uma consulta sobre o Bloco K?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_report_start_date",
+    "origem": "set:EY VS - Informações Bloco K",
+    "acao": "manter",
+    "conversational_label": "Qual a data inicial do período?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_report_end_date",
+    "origem": "set:EY VS - Informações Bloco K",
+    "acao": "manter",
+    "conversational_label": "Qual a data final do período?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_describe_the_information_you_need",
+    "origem": "set:EY VS - Informações Bloco K",
+    "acao": "manter",
+    "conversational_label": "Descreva o que você precisa"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_attach_file",
+    "origem": "set:EY VS - Informações Bloco K",
+    "acao": "remover",
+    "obs": "Anexo opcional no fim da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory (set Informações Bloco K)",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto em cada variável (atributo da variável, sem policy onLoad). v_attach_file sai da lista de obrigatórios."
+   },
+   {
+    "nome": "EY: Read-Only (set Informações Bloco K)",
+    "acao": "manter",
+    "substituicao": "Conferir que a policy aplica só em \"Applies on Target Record\" (visão do caso/tarefa). Se valer também no Catalog Item, a VA trata as perguntas como read-only e pula todas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Preencher Conversational Label em todas as perguntas que ficam na conversa",
+    "Manter o producer script (grava x_nasm_hr_item com o sys_id do producer, usado pelos triggers de flow)",
+    "Permitir anexo opcional no fim da conversa"
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Empresa/sub-empresa (EY VS - Empresas Natura) e fornecedor (EY VS - Fornecedores) são tratados na análise dos variable sets: v_opened_by vira derivado do usuário logado, v_country é derivado da sub-empresa e só uma variante de sub-empresa deve ficar ativa por item."
+ }
+]

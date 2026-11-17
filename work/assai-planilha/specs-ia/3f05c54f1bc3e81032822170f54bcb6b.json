@@ -1,0 +1,256 @@
+{
+ "sys_id": "3f05c54f1bc3e81032822170f54bcb6b",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios (1 oferta(s)); Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios (2 oferta(s)). 4 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): CSA - Extrato bancário e observação. (Resolvedora); CSA - Extrato bancário e observação.; CSA - Comprovante de Pagamento, Atenção e Boleto de Pagamento (Resolvedora); CSA - Comprovante de Pagamento, Atenção e Boleto de Pagamento.",
+ "vars": {
+  "rh_month_reimbursement": {
+   "label": "De qual mês é o reembolso?"
+  },
+  "rh_year_reimbursement": {
+   "label": "De qual ano é o reembolso?"
+  },
+  "rh_rent_price": {
+   "label": "Qual é o valor do aluguel?"
+  },
+  "comprovante_multa": {
+   "label": "Envie o comprovante bancário do pagamento da multa."
+  },
+  "boleto_ou_recibo_multa": {
+   "label": "Envie o boleto da multa ou o recibo de pagamento."
+  },
+  "bank": {
+   "label": "Em qual banco você recebe o reembolso?"
+  },
+  "rh_value_reimbursement": {
+   "label": "Qual é o valor do reembolso?"
+  },
+  "checking_account": {
+   "label": "Qual é a conta corrente, com o dígito?"
+  },
+  "attach_proof_of_condominium_and_or_IPTU": {
+   "label": "Envie o comprovante de condomínio e/ou IPTU."
+  },
+  "rh_rental_end_date": {
+   "label": "Quando termina o contrato de aluguel?"
+  },
+  "rh_allocation_type": {
+   "label": "O imóvel é casa ou apartamento?"
+  },
+  "extrato_bancario": {
+   "label": "Envie o extrato bancário que mostra que o reembolso não caiu."
+  },
+  "rh_previous_call_number": {
+   "label": "Qual é o número do chamado do pedido de reembolso?"
+  },
+  "agency": {
+   "label": "Qual é a agência da sua conta?"
+  },
+  "attached_rental_contract": {
+   "label": "Envie a cópia do contrato de aluguel."
+  },
+  "v_role": {
+   "label": "Qual é o seu cargo?"
+  },
+  "attach_bank_details": {
+   "label": "Envie o comprovante dos seus dados bancários."
+  },
+  "rh_price_IPTU": {
+   "label": "Qual é o valor do IPTU, se houver?"
+  },
+  "rh_rental_start_date": {
+   "label": "Quando começa o contrato de aluguel?"
+  },
+  "rh_condominium_value": {
+   "label": "Qual é o valor do condomínio, se houver?"
+  }
+ },
+ "remover": {
+  "boleto_de_pagamento": "oferta_inativa",
+  "atencao": "visual",
+  "atencao_multa": "visual",
+  "label": "visual",
+  "cost_center": "oferta_inativa",
+  "comprovante_pagamento": "oferta_inativa",
+  "attention_rent": "visual",
+  "observacao_multa": "visual",
+  "rh_observation_contract": "visual",
+  "rh_observation_payment": "visual",
+  "observacao": "visual"
+ },
+ "policies": {
+  "0093bd3587593650182a0d440cbb3569": {
+   "conditions": "service_offering=dbadef051b4df814eca40dcbe54bcbe3",
+   "actions": {
+    "extrato_bancario": {
+     "visible": true
+    }
+   }
+  },
+  "15350d8f1bc3e81032822170f54bcb18": {
+   "conditions": "service_offering=29d16f541b47649032822170f54bcb83",
+   "actions": {
+    "rh_allocation_type": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_condominium_value": {
+     "visible": true
+    },
+    "rh_rental_start_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_price_IPTU": {
+     "visible": true
+    },
+    "rh_rental_end_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_rent_price": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "4a1621491b584dd8eca40dcbe54bcb50": "remover",
+  "86f29f2b3b8f6610b28dd047f4e45ad1": {
+   "conditions": "service_offering=42c3876b3bcb6610b28dd047f4e45a88",
+   "actions": {
+    "boleto_ou_recibo_multa": {
+     "visible": true,
+     "mandatory": true
+    },
+    "comprovante_multa": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "991a8ba73b0f6610b28dd047f4e45afd": "remover",
+  "c6b83fdb3b872610b28dd047f4e45aac": {
+   "conditions": "service_offering=dbadef051b4df814eca40dcbe54bcbe3",
+   "actions": {
+    "extrato_bancario": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "d2f2fdf187593650182a0d440cbb3537": {
+   "conditions": "service_offering=42c3876b3bcb6610b28dd047f4e45a88",
+   "actions": {
+    "comprovante_multa": {
+     "visible": true
+    },
+    "boleto_ou_recibo_multa": {
+     "visible": true
+    }
+   }
+  },
+  "f704e1851b584dd8eca40dcbe54bcb1a": "remover",
+  "f744f57587593650182a0d440cbb3592": "remover",
+  "fa83b7db3b472610b28dd047f4e45adb": "remover"
+ },
+ "itens": [
+  {
+   "name": "Aluguel (reembolso não recebido)",
+   "short_description": "Reporte de reembolso de aluguel não recebido.",
+   "description": "Use quando o reembolso do aluguel foi solicitado e o valor não caiu na conta. Atende a oferta Não recebimento do reembolso de aluguel.",
+   "frases_exemplo": [
+    "Não recebi o reembolso do aluguel",
+    "O reembolso do aluguel não caiu",
+    "Pedi reembolso de aluguel e nada ainda",
+    "Cadê o reembolso do aluguel do colaborador?"
+   ],
+   "sem_vars": [
+    "rh_month_reimbursement",
+    "rh_year_reimbursement",
+    "rh_rent_price",
+    "comprovante_multa",
+    "boleto_ou_recibo_multa",
+    "bank",
+    "rh_value_reimbursement",
+    "checking_account",
+    "attach_proof_of_condominium_and_or_IPTU",
+    "rh_rental_end_date",
+    "rh_allocation_type",
+    "agency",
+    "attached_rental_contract",
+    "v_role",
+    "attach_bank_details",
+    "rh_price_IPTU",
+    "rh_rental_start_date",
+    "rh_condominium_value",
+    "rh_container_init_1",
+    "formatter2",
+    "start_02",
+    "formatter3",
+    "formatter4",
+    "start_03",
+    "formatter5",
+    "formatter6",
+    "Pagamento",
+    "formatter7"
+   ],
+   "vars": {
+    "extrato_bancario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_previous_call_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "0093bd3587593650182a0d440cbb3569",
+    "11350d8f1bc3e81032822170f54bcb15",
+    "15350d8f1bc3e81032822170f54bcb18",
+    "194056731bb1d11032822170f54bcb2a",
+    "1f913468872016900ac543370cbb35ff",
+    "24c0d2b31bb1d11032822170f54bcb13",
+    "2ea7b7091b8df814eca40dcbe54bcbbf",
+    "30709a731bb1d11032822170f54bcb10",
+    "4f411ef31bb1d11032822170f54bcb19",
+    "6fe01eb31bb1d11032822170f54bcbc0",
+    "7a063df587593650182a0d440cbb3554",
+    "86f29f2b3b8f6610b28dd047f4e45ad1",
+    "882116f31bb1d11032822170f54bcbd4",
+    "939012b31bb1d11032822170f54bcb53",
+    "990112f31bb1d11032822170f54bcb36",
+    "9980da731bb1d11032822170f54bcb9e",
+    "c6b83fdb3b872610b28dd047f4e45aac",
+    "ca82bca8872016900ac543370cbb35f7",
+    "cb505e731bb1d11032822170f54bcb22",
+    "d2f2fdf187593650182a0d440cbb3537",
+    "d5719af31bb1d11032822170f54bcbb7",
+    "d73234a8872016900ac543370cbb35ce",
+    "e44539f587593650182a0d440cbb357a",
+    "efd056b31bb1d11032822170f54bcb48"
+   ]
+  },
+  {
+   "name": "Aluguel (nova solicitação e multa)",
+   "short_description": "Pedido de auxílio de aluguel ou de reembolso de multa por quebra de contrato.",
+   "description": "Use para abrir um novo pedido de auxílio de aluguel ou para pedir o reembolso da multa paga por quebra do contrato de aluguel. Atende as ofertas de nova solicitação de aluguel e de reembolso de multa por quebra do contrato.",
+   "frases_exemplo": [
+    "Quero pedir auxílio de aluguel",
+    "Preciso abrir uma nova solicitação de aluguel",
+    "Como peço reembolso da multa do contrato?",
+    "Paguei multa por quebrar o contrato de aluguel"
+   ],
+   "sem_vars": [
+    "extrato_bancario",
+    "rh_previous_call_number"
+   ],
+   "sem_policies": [
+    "0093bd3587593650182a0d440cbb3569",
+    "2ea7b7091b8df814eca40dcbe54bcbbf",
+    "c6b83fdb3b872610b28dd047f4e45aac"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,765 @@
+{
+ "sys_id": "c7573a6f1b8f3c10a530426fe54bcb07",
+ "name": "Logística de Ações de Aprendizagem",
+ "sys_name": "Training Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Aprendizagem, Desenvolvimento e Desempenho",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Para solicitações de Logística de Treinamento",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "43",
+   "variaveis_ativas": "49",
+   "bloqueadores": "1",
+   "avisos": "14",
+   "perguntas_sem_conversational_label": "43"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Retroactive date lock"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @template_workday: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_sodexo: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @mailing_destinatarios: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @attach_form_workday: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @peca_comunicacao_texto_email: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @other_format_coment: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @training_responsible: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @email_convidados: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @template_sodexo: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 43 de 43 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 43 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 33 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Logística de Ações de Aprendizagem. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "training_specifics",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Training Specifics"
+  },
+  {
+   "name": "categoria_de_aprendizagem",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Categoria de Aprendizagem",
+   "include_none": true,
+   "choices": [
+    "Núcleo [=nucleo]",
+    "HUB [=hub]",
+    "Células [=celulas]",
+    "Portas de Entrada [=portas_entrada]"
+   ]
+  },
+  {
+   "name": "seleciona_o_hub",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Selecione o HUB",
+   "include_none": true,
+   "choices": [
+    "Essência, Cultura e Regeneração [=essencia_cultura_regeneracao]",
+    "Excelência Operacional [=excelencia_operacional]",
+    "Foco no Cliente [=foco_cliente]",
+    "Gestão de Talentos e Compliance [=gestao_talentos_compliance]",
+    "Inovação Regenerativa [=inovacao_regenerativa]",
+    "Plataforma Multi [=plataforma_multi]",
+    "Tecnologia e Dados [=tecnologia_dados]"
+   ]
+  },
+  {
+   "name": "nome_da_celula",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nome da Célula"
+  },
+  {
+   "name": "training_responsible",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Training responsible",
+   "reference": "sys_user",
+   "ref_qual": "active=true^ORlocked_out=true^EQ"
+  },
+  {
+   "name": "qual_solicitacao",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Qual a solicitação?",
+   "include_none": true,
+   "choices": [
+    "Logística completa de treinamento [=logistica_completa_treinamento]",
+    "Envio de comunicado (E-mail ou Chat) [=envio_comunicacao_ativacao_email]",
+    "Envio de convite na agenda [=envio_convite_agenda]"
+   ]
+  },
+  {
+   "name": "training_is_registered_workday",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Training is registered in the Workday?",
+   "include_none": true,
+   "choices": [
+    "No [=v_no]",
+    "Yes [=v_yes]"
+   ]
+  },
+  {
+   "name": "template_workday",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "attach_form_workday",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Form"
+  },
+  {
+   "name": "training_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training Name"
+  },
+  {
+   "name": "training_objective",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training Objective"
+  },
+  {
+   "name": "facilitation_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What will be the facilitation type?",
+   "include_none": true,
+   "choices": [
+    "Internal",
+    "External"
+   ]
+  },
+  {
+   "name": "instructor_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the name of the instructor?"
+  },
+  {
+   "name": "instructor_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the instructor's email address?"
+  },
+  {
+   "name": "instructor_ssn",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the instructor's SSN number?",
+   "hidden": true
+  },
+  {
+   "name": "descricao",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Descrição"
+  },
+  {
+   "name": "descricao_2",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Descrição'"
+  },
+  {
+   "name": "room_layout",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Room Layout",
+   "hidden": true,
+   "include_none": true,
+   "choices": [
+    "Groups",
+    "U",
+    "Auditorium",
+    "U with chairs",
+    "Fishbone",
+    "Other [=other]"
+   ]
+  },
+  {
+   "name": "start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start Date",
+   "example": "dd/mm/aaaa"
+  },
+  {
+   "name": "start_time",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Start time"
+  },
+  {
+   "name": "end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End Date",
+   "example": "dd/mm/aaaa"
+  },
+  {
+   "name": "end_time",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "End time"
+  },
+  {
+   "name": "training_location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training Location",
+   "hidden": true
+  },
+  {
+   "name": "total_workload",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total workload",
+   "example": "HH:mm"
+  },
+  {
+   "name": "class_capacity",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the maximum capacity of the class?"
+  },
+  {
+   "name": "inscricoes_workday_direto_agenda",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "As inscrições serão realizadas pelo Workday ou será enviado convite direto na agenda?",
+   "include_none": true,
+   "choices": [
+    "Workday [=workday]",
+    "Convite na Agenda [=convite_agenda]"
+   ]
+  },
+  {
+   "name": "forward_invitation",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Would you like CSC to forward the invitation?",
+   "include_none": true
+  },
+  {
+   "name": "titulo_convite",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Título do Convite"
+  },
+  {
+   "name": "descricao_convite",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Descrição do Convite"
+  },
+  {
+   "name": "email_convidados",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "E-mail dos convidados"
+  },
+  {
+   "name": "do_you_need_to_request_coffee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you need to request coffee?",
+   "include_none": true
+  },
+  {
+   "name": "template_sodexo",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the coffee request form that should be used in the field below"
+  },
+  {
+   "name": "attach_sodexo",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the form"
+  },
+  {
+   "name": "cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cost Center",
+   "hidden": true
+  },
+  {
+   "name": "informe_classe_contabil",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Informe a Classe Contábil"
+  },
+  {
+   "name": "titulo_comunicado",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Título do Comunicado"
+  },
+  {
+   "name": "peca_comunicacao_texto_email",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Peça de Comunicação/Layout ou Texto do e-mail"
+  },
+  {
+   "name": "mailing_destinatarios",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Mailing dos destinatários"
+  },
+  {
+   "name": "data_envio",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Data de envio"
+  },
+  {
+   "name": "canal_envio",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Canal de envio",
+   "include_none": true,
+   "choices": [
+    "E-mail [=email]",
+    "Chat [=chat]"
+   ]
+  },
+  {
+   "name": "informacao_adicional",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Se tiver alguma outra informação adicional, utilize este campo"
+  },
+  {
+   "name": "assessment_deadline",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the deadline for applying the assessment?",
+   "example": "dd/mm/aaaa"
+  },
+  {
+   "name": "other_format_coment",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "If you have any additional information, please use this field (for example: materials needed for the room, giveaways, hiring a sign language interpreter, etc)"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: Field Request for Training Request Selection is \"Presential\"",
+   "when": "IO:training_typeNOT INPresencial,Misto^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "coffee_1: visible=false",
+    "coffee_time_1: visible=false",
+    "coffee_time_2: visible=false",
+    "room_htr: visible=false,mandatory=false",
+    "coffee_2: visible=false",
+    "cost_center: ",
+    "training_location: ",
+    "room_layout: "
+   ]
+  },
+  {
+   "name": "EY: Treinamento está cadastrado no Workday?",
+   "when": "IO:qual_solicitacao=logistica_completa_treinamento^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "training_is_registered_workday: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Field Request for Training Request Selection is \"Online\"",
+   "when": "IO:training_type!=Online^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "which_platform: visible=false,mandatory=false",
+    "access_link: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "ACN: Field Request for Training Request Selection is \"Other\"",
+   "when": "IO:training_type!=Other^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_specification_htr: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Nome da célula",
+   "when": "IO:categoria_de_aprendizagem=celulas^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "nome_da_celula: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Informação adicional",
+   "when": "IO:qual_solicitacaoINenvio_comunicacao_ativacao_email,envio_convite_agenda^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "informacao_adicional: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Convite",
+   "when": "IO:inscricoes_workday_direto_agenda=convite_agenda^IO:forward_invitation=Yes^NQIO:qual_solicitacao=envio_convite_agenda^NQIO:qual_solicitacao=logistica_completa_treinamento^IO:forward_invitation=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "email_convidados: visible=true,mandatory=true",
+    "titulo_convite: visible=true,mandatory=true",
+    "descricao_convite: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Informe o Centro de Custo",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao=logistica_completa_treinamento^IO:do_you_need_to_request_coffee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "cost_center: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "end_time: ",
+    "training_objective: ",
+    "training_distribution: mandatory=true",
+    "total_workload: ",
+    "training_responsible: mandatory=true",
+    "start_date: ",
+    "start_time: ",
+    "instructor_email: ",
+    "do_you_need_to_request_coffee: ",
+    "categoria_de_aprendizagem: mandatory=true",
+    "educational_material: mandatory=true",
+    "training_name: ",
+    "self_enroll: mandatory=true",
+    "specific_assessment: mandatory=true",
+    "total_training_days: mandatory=true",
+    "training_is_registered_workday: ",
+    "facilitation_type: ",
+    "training_type: mandatory=true",
+    "instructor_name: ",
+    "end_date: ",
+    "training_type_2: mandatory=true",
+    "accounting_class_number: mandatory=true",
+    "qual_solicitacao: mandatory=true",
+    "programa_do_ecossistema_de_aprendizagem_trilha: mandatory=true",
+    "forward_invitation: ",
+    "class_capacity: "
+   ]
+  },
+  {
+   "name": "EY: Informe a Classe Contábil",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao=logistica_completa_treinamento^IO:do_you_need_to_request_coffee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "informe_classe_contabil: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Titulo Comunicado/Mailing",
+   "when": "IO:qual_solicitacao=envio_comunicacao_ativacao_email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "peca_comunicacao_texto_email: visible=true,mandatory=true",
+    "mailing_destinatarios: visible=true,mandatory=true",
+    "titulo_comunicado: visible=true,mandatory=true",
+    "data_envio: visible=true,mandatory=true",
+    "canal_envio: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Local de Treinamento",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao!=envio_comunicacao_ativacao_email^NQIO:categoria_de_aprendizagem=celulas^IO:qual_solicitacao=envio_convite_agenda^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "training_location: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Field Request for Specific Assessmentis is  \"Yes\"",
+   "when": "IO:specific_assessment!=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "specific_template_htr: visible=false,mandatory=false",
+    "assessment_application: visible=false,mandatory=false",
+    "template_attachment: visible=false,mandatory=false",
+    "if_yes: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "If Assestmente Application is Other, the assetment_deadline appears",
+   "when": "IO:additional_informationLIKE3eff01681b800110d1abda4ce54bcbff^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "assessment_deadline: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Field Request for Facilitation Type is \"External\"",
+   "when": "IO:facilitation_type!=External^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "investment_value: visible=false,mandatory=false",
+    "instructor_ssn: visible=false,mandatory=false",
+    "provider_telephone: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "If Others, show description 2",
+   "when": "IO:additional_information=10^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "descricao_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Data Inicio/Fim",
+   "when": "IO:qual_solicitacao=logistica_completa_treinamento^ORIO:qual_solicitacao=envio_convite_agenda^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "end_time: visible=true,mandatory=true",
+    "end_date: visible=true,mandatory=true",
+    "start_time: visible=true,mandatory=true",
+    "start_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Training Objective",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao=logistica_completa_treinamento^IO:training_is_registered_workday=v_no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "training_objective: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Would you like CSC to forward the invitation? - Yes",
+   "when": "IO:forward_invitation=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "specific_invitation: visible=true",
+    "invited_list: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Facilitação/CC",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao=logistica_completa_treinamento^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "informe_classe_contabil: ",
+    "inscricoes_workday_direto_agenda: visible=true,mandatory=true",
+    "do_you_need_to_request_coffee: visible=true,mandatory=true",
+    "training_objective: ",
+    "facilitation_type: visible=true,mandatory=true",
+    "total_workload: visible=true,mandatory=true",
+    "room_layout: visible=true,mandatory=true",
+    "cost_center: ",
+    "class_capacity: visible=true,mandatory=true",
+    "additional_information: visible=true",
+    "forward_invitation: "
+   ]
+  },
+  {
+   "name": "EY: Nome do Treinamento",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacaoNOT INenvio_comunicacao_ativacao_email,envio_convite_agenda^NQIO:categoria_de_aprendizagem=celulas^IO:qual_solicitacao=envio_comunicacao_ativacao_email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "training_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If the Layout of the room is other, the inofrmation is show",
+   "when": "IO:room_layout=other^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "other_format_coment: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Nome/RG instrutor",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:facilitation_type=External^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "instructor_email: visible=true,mandatory=true",
+    "instructor_name: visible=true,mandatory=true",
+    "instructor_ssn: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Do you need to request coffee?  is \"YES\"",
+   "when": "IO:do_you_need_to_request_coffee=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "template_sodexo: visible=true",
+    "attach_sodexo: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Training is registered in the Workday? is \"NO\"",
+   "when": "IO:training_is_registered_workday=v_no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "template_workday: visible=true",
+    "attach_form_workday: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Deseja que a CSC encaminhe o convite?",
+   "when": "IO:categoria_de_aprendizagemINnucleo,hub,portas_entrada^IO:qual_solicitacao=logistica_completa_treinamento^IO:inscricoes_workday_direto_agenda=convite_agenda^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "forward_invitation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Selecione o HUB",
+   "when": "IO:categoria_de_aprendizagem=hub^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "seleciona_o_hub: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If Others, show description",
+   "when": "IO:additional_information=8^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "descricao: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Field Request for Educational Material is  \"Yes\"",
+   "when": "IO:educational_material!=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "educational_material_attachment: visible=false,mandatory=false",
+    "attach_educational_material: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Validate Provider: Telephone",
+   "type": "onChange",
+   "on": "7312904c1b53bc10a530426fe54bcb6b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o telefone do prestador, normalizando o valor antes de testar."
+  },
+  {
+   "name": "ACN: Date Criteria",
+   "type": "onChange",
+   "on": "8aa510801b93bc10a530426fe54bcb82",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data usando o formato de data do usuário (g_user_date_format) em vez de assumir um formato fixo — cuidado com internacionalização que a maioria dos scripts não tem."
+  },
+  {
+   "name": "EY: Workday ou Convite na agenda control",
+   "type": "onChange",
+   "on": "fdc6c3a6877a3a10ec360e530cbb35ec",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que grava uma variável de controle conforme a escolha entre Workday e convite na agenda."
+  },
+  {
+   "name": "EY: Qual a solicitação? control",
+   "type": "onChange",
+   "on": "e72836ea87363a10ec360e530cbb356e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta o formulário conforme a categoria de aprendizagem escolhida."
+  },
+  {
+   "name": "EY: Retroactive date lock",
+   "type": "onChange",
+   "on": "c154d8001b93bc10a530426fe54bcb85",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que bloqueia data retroativa, com mensagem traduzida conforme o idioma do usuário."
+  }
+ ]
+}

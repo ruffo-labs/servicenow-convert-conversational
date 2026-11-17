@@ -1,0 +1,33 @@
+{
+ "sys_id": "1181bd1b1b4d6194d1abda4ce54bcb5b",
+ "title": "EY: Requested for",
+ "internal_name": "ey_requested_for",
+ "description": "Requested for",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de emissão do cartão corporativo"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_requested_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Requested for",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user",
+   "ref_qual": "active=true^user_nameISNOTEMPTY^first_name!=NULL^nameISNOTEMPTY^name!=NULL^ORDERBYfirst_name"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_requested_for: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

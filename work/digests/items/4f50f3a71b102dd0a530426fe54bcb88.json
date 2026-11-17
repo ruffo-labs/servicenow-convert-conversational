@@ -1,0 +1,149 @@
+{
+ "sys_id": "4f50f3a71b102dd0a530426fe54bcb88",
+ "name": "PPP - Perfil Profissiográfico Previdenciário",
+ "sys_name": "PPP - Social Security Professional Profile",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Declarações e Documentos",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicitação de documento para aposentadoria",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "15",
+   "bloqueadores": "1",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Mandatory attachment"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_text_if_date2000: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 9 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_active_contributor",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Active Contributor",
+   "include_none": true
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter your CPF"
+  },
+  {
+   "name": "v_dismissal_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Dismissal date"
+  },
+  {
+   "name": "v_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Company",
+   "include_none": true,
+   "choices": [
+    "Avon [=avon]",
+    "Natura [=natura]",
+    "TBS [=tbs]"
+   ]
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_text_if_date2000",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If active is NO",
+   "when": "IO:v_active_contributor=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_current_date: visible=true,readonly=true",
+    "v_dismissal_date: visible=true,mandatory=true",
+    "v_cpf: visible=true,mandatory=true",
+    "v_text_attach_the_documents: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: date",
+   "when": "IO:v_dismissal_date<javascript:gs.dateGenerate('2000-12-31','start')^IO:v_which_company=natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_if_date2000: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_company: visible=true,mandatory=true",
+    "v_active_contributor: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Mandatory attachment",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo conforme a combinação de data de desligamento, contribuinte ativo e empresa."
+  },
+  {
+   "name": "EY: CPF",
+   "type": "onChange",
+   "on": "a802776f1b102dd0a530426fe54bcb42",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF por formato. Repete o defeito do irmão: usa ponto sem escape na regex, que casa qualquer caractere no lugar dos separadores."
+  }
+ ]
+}

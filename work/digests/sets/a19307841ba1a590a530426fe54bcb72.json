@@ -1,0 +1,46 @@
+{
+ "sys_id": "a19307841ba1a590a530426fe54bcb72",
+ "title": "EY VS - Envio De Informações de Fechamento Contábil ",
+ "internal_name": "ey_vs_envio_de_informa_es_de_fechamento_cont_bil",
+ "description": "Variable Set referente ao Form Envio De Informações de Fechamento Contábil",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Envio De Informações de Fechamento Contábil"
+ ],
+ "variaveis": [
+  {
+   "name": "v_describe_the_information_you_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the information you need"
+  },
+  {
+   "name": "v_attach_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach file"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_the_information_you_need: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_file: mandatory=true",
+    "v_describe_the_information_you_need: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

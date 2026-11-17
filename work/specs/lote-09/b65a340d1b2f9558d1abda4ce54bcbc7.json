@@ -1,0 +1,146 @@
+{
+ "sys_id": "b65a340d1b2f9558d1abda4ce54bcbc7",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas (retorno de licença-maternidade vs. retorno de afastamento do INSS) com perguntas totalmente diferentes; v_return_maternity_inss vira valor fixo em cada derivado e as policies de ramo viram props diretas nas variáveis.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_sector": {
+   "label": "Qual é o setor do colaborador?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_shift": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_administrative_allowance": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_alta_beneficio_analise": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_date_of_first_visit_to_the_health_space": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_date_of_return_to_work_aso_doctor": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_requested_medical_report_or_complementary_exam": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_return_exam": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_return_exam_two": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_the_inss_decision_notice": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "employee_return_request": "visual"
+ },
+ "policies": {
+  "d1b00d091baf9558d1abda4ce54bcb0f": "remover",
+  "c9a254081bcab550a530426fe54bcb73": "remover",
+  "98b190841bcab550a530426fe54bcb90": "remover",
+  "4112c98d1baf9558d1abda4ce54bcb09": {
+   "conditions": "v_administrative_allowance=Yes",
+   "actions": {
+    "v_administrative_allowance_start_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_end_date_of_administrative_allowance": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "70d858c41b0eb550a530426fe54bcbfc": {
+   "conditions": "v_alta_beneficio_analise=Yes",
+   "actions": {
+    "v_attach_the_inss_decision_notice": {
+     "mandatory": false
+    }
+   }
+  },
+  "5ec9d8081b0eb550a530426fe54bcb74": {
+   "conditions": "v_alta_beneficio_analise=No",
+   "actions": {
+    "v_date_of_last_day_of_inss_benefit": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_the_inss_decision_notice": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_return_maternity_inss": "return_maternity"
+   },
+   "sem_vars": [
+    "v_sector",
+    "v_shift",
+    "v_administrative_allowance",
+    "v_administrative_allowance_start_date",
+    "v_end_date_of_administrative_allowance",
+    "v_alta_beneficio_analise",
+    "v_date_of_last_day_of_inss_benefit",
+    "v_date_of_first_visit_to_the_health_space",
+    "v_date_of_return_to_work_aso_doctor",
+    "v_requested_medical_report_or_complementary_exam",
+    "v_attach_return_exam_two",
+    "v_attach_the_inss_decision_notice"
+   ],
+   "sem_policies": [
+    "4112c98d1baf9558d1abda4ce54bcb09",
+    "70d858c41b0eb550a530426fe54bcbfc",
+    "5ec9d8081b0eb550a530426fe54bcb74"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_return_maternity_inss": "inss_leave"
+   },
+   "sem_vars": [
+    "v_attach_return_exam"
+   ],
+   "vars": {
+    "v_description": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,140 @@
+{
+ "sys_id": "71b073b033084b9498331c07ee5c7b88",
+ "name": "Atendimento a Franquias",
+ "sys_name": "Franchise Support",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "Virtual Agent Search, OTC Suporte à Força de Vendas e Recebíveis",
+ "short_description": "Solicitações relacionadas à análise de pedidos de clientes",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @anexo_solicitacao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Atendimento a Franquias. Grava x_nasm_hr_item com o sysparm_id da URL e define requested_for a partir da variável 'employee'.",
+ "variaveis": [
+  {
+   "name": "nome_do_franqueado",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nome do franqueado"
+  },
+  {
+   "name": "codigo_do_franqueado",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Código do Franqueado"
+  },
+  {
+   "name": "numero_do_pedido",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Número do pedido"
+  },
+  {
+   "name": "tipo_de_solicitacao",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Tipo de solicitação",
+   "include_none": true,
+   "choices": [
+    "Reembolso [=1]",
+    "Outros assuntos [=2]"
+   ]
+  },
+  {
+   "name": "valor_emanapay",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Valor EmanaPay"
+  },
+  {
+   "name": "valor_capta",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Valor Capta"
+  },
+  {
+   "name": "valor_a_ser_estornado_reembolsado",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Valor a ser estornado/reembolsado"
+  },
+  {
+   "name": "numero_de_protocolo_nat",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Número de protocolo NAT"
+  },
+  {
+   "name": "detalhamento_da_solicitacao",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Detalhamento da solicitação"
+  },
+  {
+   "name": "anexo_solicitacao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Detalhamento da solicitação"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+   "name": "EY: Informação do solicitante",
+   "order": "100",
+   "perguntas": [
+    "opened_by (Referência, default, ro): Opened By",
+    "request_for_who (Selecionar Caixa): Request for who?",
+    "employee (Referência): Employee's name"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "detalhamento_da_solicitacao: visible=true,mandatory=true",
+    "nome_do_franqueado: visible=true,mandatory=true",
+    "request_for_who: visible=true,mandatory=true",
+    "tipo_de_solicitacao: visible=true,mandatory=true",
+    "numero_do_pedido: visible=true,mandatory=true",
+    "codigo_do_franqueado: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Reembolso",
+   "when": "IO:tipo_de_solicitacao=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "valor_capta: visible=true,mandatory=true",
+    "valor_a_ser_estornado_reembolsado: visible=true,mandatory=true",
+    "numero_de_protocolo_nat: visible=true,mandatory=true",
+    "valor_emanapay: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,358 @@
+{
+ "sys_id": "915e4ed31b3311d4a530426fe54bcbfe",
+ "name": "Contabilização e Conciliação de Folha de Pagamento",
+ "sys_name": "Payroll accounting and reconciliation",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Caso precise de dados e suporte em contabilização de folha de pagamento acesse este caminho",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_download_totvs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_alert_accounting_entries: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_for_system_entry: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_linx: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_e1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_totvs_sap: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 12 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Encargos (Jurídico). Define requested_for como o usuário logado e grava current.item. As duas primeiras linhas, que buscariam o colaborador em x_nasm_hr_profile, estão comentadas — o comportamento atual ignora a variável de colaborador do formulário.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_request",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Payroll accounting and reconciliation"
+  },
+  {
+   "name": "v_what_is_your_need",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is your need?",
+   "include_none": true,
+   "choices": [
+    "Accounting Entry [=v_accounting_entry]",
+    "Accounting Reclassification [=v_accounting_reclassification]",
+    "Accounting Report [=v_accounting_report]"
+   ]
+  },
+  {
+   "name": "v_alert_accounting_entries",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_text_for_system_entry",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_processing_data",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which accounting system do you need data processing/retrieval from?",
+   "include_none": true,
+   "choices": [
+    "E1 [=v_e1]",
+    "LINX [=v_linx]",
+    "SAP [=v_sap]",
+    "TOTVS [=v_totvs]"
+   ]
+  },
+  {
+   "name": "v_which_accounting_system_for_report",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which accounting system do you need data processing/retrieval from?",
+   "include_none": true,
+   "choices": [
+    "E1 [=e1]",
+    "LINX [=linx]",
+    "SAP [=sap]",
+    "TOTVS [=totvs]"
+   ]
+  },
+  {
+   "name": "v_select_company_e1",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Avon Cosméticos [=avon_cosm]",
+    "Avon Indústria [=avon_ind]"
+   ]
+  },
+  {
+   "name": "v_select_company_semtemplate_e1",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Avon Cosméticos [=avon_cosm]",
+    "Avon Indústria [=avon_ind]"
+   ]
+  },
+  {
+   "name": "v_select_company_sap",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Biosphera [=biosphera]",
+    "Holding [=holding]",
+    "Instituto Natura [=inst_nat]",
+    "Natura Cosméticos [=nat_cosm]",
+    "Natura Indústria [=nat_ind]"
+   ]
+  },
+  {
+   "name": "v_select_company_semtemplate_sap",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Biosphera [=biosphera]",
+    "Holding [=holding]",
+    "Instituto Natura [=inst_nat]",
+    "Natura Cosméticos [=nat_cosm]",
+    "Natura Indústria [=nat_ind]"
+   ]
+  },
+  {
+   "name": "v_select_company_semtemplate_totvs",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "The Body Shop Indústria [=tbs_ind]"
+   ]
+  },
+  {
+   "name": "v_select_company_totvs",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "The Body Shop Indústria [=tbs_ind]"
+   ]
+  },
+  {
+   "name": "v_selex_company_semtemplate_linx",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Natura Comercial [=nat_comerc]",
+    "The Body Shop Franquias [=tbs_franq]"
+   ]
+  },
+  {
+   "name": "v_selex_company_linx",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which group company is the process necessary?",
+   "include_none": true,
+   "choices": [
+    "Natura Comercial [=nat_comerc]",
+    "The Body Shop Franquias [=tbs_franq]"
+   ]
+  },
+  {
+   "name": "v_download_linx",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download template LINX"
+  },
+  {
+   "name": "v_download_totvs_sap",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download template SAP"
+  },
+  {
+   "name": "v_download_totvs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_download_e1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download template E1"
+  },
+  {
+   "name": "v_text_account_values",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "If you need to collect any accounting data or enter accounting values ​​related to the Payroll, you will need to indicate the details to be considered in the processing, including cost centers, accounting accounts and amounts."
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: If E1",
+   "when": "IO:v_processing_data=v_e1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_e1: visible=true",
+    "v_select_company_e1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Company sem template SAP",
+   "when": "IO:v_what_is_your_need=v_accounting_report^IO:v_which_accounting_system_for_report=sap^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_company_semtemplate_sap: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Lançamento Contábil ou Reclassificação Contábil",
+   "when": "IO:v_what_is_your_need=v_accounting_entry^ORIO:v_what_is_your_need=v_accounting_reclassification^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_processing_data: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Company sem template LINX",
+   "when": "IO:v_what_is_your_need=v_accounting_report^IO:v_which_accounting_system_for_report=linx^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_selex_company_semtemplate_linx: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If SAP",
+   "when": "IO:v_processing_data=v_sap^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_company_sap: visible=true,mandatory=true",
+    "v_download_totvs_sap: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_your_need: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: E1 company sem template",
+   "when": "IO:v_what_is_your_need=v_accounting_report^IO:v_which_accounting_system_for_report=e1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_company_semtemplate_e1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If LINX",
+   "when": "IO:v_processing_data=v_linx^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_linx: visible=true",
+    "v_selex_company_linx: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field accounting entry",
+   "when": "IO:v_what_is_your_need=v_accounting_entry^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_alert_accounting_entries: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If TOTVS",
+   "when": "IO:v_processing_data=v_totvs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_totvs: visible=true",
+    "v_select_company_totvs: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Company sem template TOTVS",
+   "when": "IO:v_what_is_your_need=v_accounting_report^IO:v_which_accounting_system_for_report=totvs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_company_semtemplate_totvs: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Report",
+   "when": "IO:v_what_is_your_need=v_accounting_report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_accounting_system_for_report: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: clear values company",
+   "type": "onChange",
+   "on": "10f39ed31bb311d4a530426fe54bcb63",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a empresa selecionada e campos relacionados."
+  },
+  {
+   "name": "EY: clear values",
+   "type": "onChange",
+   "on": "8e7bf8411b896114a530426fe54bcb8c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de limpeza de empresa, cobrindo mais campos."
+  },
+  {
+   "name": "EY: clear values one field",
+   "type": "onChange",
+   "on": "f2025a5b1b7311d4a530426fe54bcbd9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa um único campo de processamento."
+  }
+ ]
+}

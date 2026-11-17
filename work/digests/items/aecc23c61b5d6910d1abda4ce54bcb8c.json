@@ -1,0 +1,156 @@
+{
+ "sys_id": "aecc23c61b5d6910d1abda4ce54bcb8c",
+ "name": "Comprovante de Pagamento Internacional",
+ "sys_name": "Proof of International Payment",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Formulário para envio de comprovante de pagamento internacional.",
+ "description": "Formulário para envio de comprovante de pagamento internacional.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "15",
+   "variaveis_ativas": "16",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "15"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_coin: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_fill_informations: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_supplier_code: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcategory2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 15 de 15 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_fill_informations",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Import of Goods [=import_goods]",
+    "International Services [=international_services]"
+   ]
+  },
+  {
+   "name": "v_supplier_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Supplier name:",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "u_source_systemSTARTSWITHECC^ORu_source_systemSTARTSWITHE1^ORu_source_systemSTARTSWITHBIDs^nameISNOTEMPTY^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_supplier_code",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Supplier code:",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_vendor_id='+ current.variables.v_supplier_name.u_vendor_id"
+  },
+  {
+   "name": "v_request_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Request number",
+   "include_none": true
+  },
+  {
+   "name": "v_invoice_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice number",
+   "include_none": true
+  },
+  {
+   "name": "v_coin",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Coin",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "b6290e291b19e110d1abda4ce54bcb04",
+   "name": "EY: Company: NTCO - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "v_country (Texto de Linha Única): Country",
+    "vs_which_company (Selecionar Caixa): The request is for which company?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "called_area_others (Texto de Linha Única): Add Area Name",
+    "vs_responsible_area2 (Selecionar Caixa): Indicate the area responsible for hiring",
+    "vs_subcategory2 (Referência): Subcategory",
+    "vs_which_sub_company (Referência): The request is for which sub-company?",
+    "vs_which_sub_company_2 (Referência): The request is for which sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only Field - Resolver View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_coin: readonly=true",
+    "v_request_number: readonly=true",
+    "v_supplier_code: readonly=true",
+    "v_supplier_name: readonly=true",
+    "v_value: readonly=true",
+    "v_request_type: readonly=true",
+    "v_invoice_number: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory/ Read Only Field - Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_coin: mandatory=true",
+    "v_request_number: mandatory=true",
+    "v_request_type: mandatory=true",
+    "v_supplier_code: readonly=true",
+    "v_value: mandatory=true",
+    "v_invoice_number: mandatory=true",
+    "v_supplier_name: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

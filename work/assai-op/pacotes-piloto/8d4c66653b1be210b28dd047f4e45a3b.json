@@ -1,0 +1,120 @@
+{
+ "sys_id": "8d4c66653b1be210b28dd047f4e45a3b",
+ "name": "Adiantamento Salarial (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Adiantamento salarial",
+ "description": "Adiantamento salarial",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no adiantamento salarial",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    }
+   ],
+   "sai_do_formulario": [
+    "mes_nao_recebimento"
+   ],
+   "passa_a_obrigatoria": [
+    "demonstrativo_de_pagamento_com_a_divergencia",
+    "informe_o_mes"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Não recebimento do adiantamento salarial",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Adiantamento Salarial"
+    }
+   ],
+   "sai_do_formulario": [
+    "demonstrativo_de_pagamento_com_a_divergencia",
+    "informe_o_mes"
+   ],
+   "passa_a_obrigatoria": [
+    "mes_nao_recebimento"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "mes_nao_recebimento",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês do não recebimento",
+   "choices": [
+    "Março",
+    "Junho",
+    "Fevereiro",
+    "Setembro",
+    "Abril",
+    "Maio",
+    "Agosto",
+    "Novembro",
+    "Outubro",
+    "Janeiro",
+    "Dezembro",
+    "Julho"
+   ]
+  },
+  {
+   "name": "demonstrativo_de_pagamento_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com a divergência",
+   "choices": []
+  },
+  {
+   "name": "informe_o_mes",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Novembro",
+    "Fevereiro",
+    "Junho",
+    "Março",
+    "Maio",
+    "Abril",
+    "Outubro",
+    "Janeiro",
+    "Julho",
+    "Dezembro",
+    "Agosto",
+    "Setembro"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,100 @@
+{
+ "sys_id": "66ac57671b98e9d0a530426fe54bcbcd",
+ "name": "Sobre Aviso",
+ "sys_name": "About Notice",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Controle de Jornada",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Utilize esse formulário para solicitações de Sobre Aviso do controle de jornada",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach About Notice Template"
+  },
+  {
+   "name": "v_attach",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Manager approval attachment"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company: visible=true,readonly=true",
+    "v_attach: visible=true,mandatory=true",
+    "v_attach_template: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get company",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando o valor fica vazio."
+  }
+ ]
+}

@@ -1,0 +1,199 @@
+{
+ "sys_id": "0b843aee1b87281032822170f54bcbbb",
+ "status": "dividido",
+ "motivo": "Cada oferta de rescisão mostra um conjunto diferente de perguntas: reagendamento pede o motivo, kit não localizado pede a data de desligamento, rescisão complementar pede centro de resultado, homologação e dissídio, e correção de TRCT pede o motivo.",
+ "vars": {
+  "rh_center_result_cost": {
+   "label": "Qual é o centro de resultado (centro de custo)?"
+  },
+  "rh_rescheduling_reason": {
+   "label": "Qual é o motivo do reagendamento?"
+  },
+  "rh_colaborador_foi_homologado": {
+   "label": "O colaborador já foi homologado?"
+  },
+  "rh_date_termination": {
+   "label": "Qual foi a data de desligamento?"
+  },
+  "rh_worked_more_less_1_year_company": {
+   "label": "O ex-colaborador trabalhou por mais ou menos de 1 ano na empresa?"
+  },
+  "rh_request_reason": {
+   "label": "Qual é o motivo da solicitação?"
+  },
+  "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+   "label": "Existe diferença de dissídio a ser paga?"
+  }
+ },
+ "remover": {
+  "rh_observation_ratify_process": "visual",
+  "rh_n2_call_answered_redline": "oferta_inativa",
+  "rh_account_bank": "oferta_inativa",
+  "rh_bank": "oferta_inativa",
+  "rh_observation": "visual",
+  "rh_observation_trct": "visual",
+  "rh_address_complete_update": "oferta_inativa",
+  "rh_observation_attachments": "visual",
+  "rh_agency": "oferta_inativa",
+  "rh_observation_trct_1": "visual"
+ },
+ "policies": {
+  "06bb2bfe1b0f2050eca40dcbe54bcbe7": "remover",
+  "20943eee1b87281032822170f54bcba1": "remover",
+  "60943eee1b87281032822170f54bcb98": "remover",
+  "60943eee1b87281032822170f54bcb9e": "remover",
+  "6c943eee1b87281032822170f54bcba9": "remover",
+  "75c1ded31bcb2450eca40dcbe54bcbd1": "remover",
+  "91feab3a1b4f2050eca40dcbe54bcb58": "remover",
+  "9c176f7e1bcb2050eca40dcbe54bcbd6": "remover",
+  "a0943eee1b87281032822170f54bcb9b": "remover",
+  "ac943eee1b87281032822170f54bcba6": "remover",
+  "ea75343e1bc7681032822170f54bcb59": "remover",
+  "ec943eee1b87281032822170f54bcba3": "remover"
+ },
+ "itens": [
+  {
+   "name": "Homologação não agendada no sindicato",
+   "short_description": "Informar que a homologação não foi agendada no sindicato",
+   "description": "Use quando a homologação de um ex-colaborador não foi agendada no sindicato. Corresponde à oferta Homologação não foi agendada no sindicato. Informe se o ex-colaborador trabalhou mais ou menos de 1 ano na empresa.",
+   "frases_exemplo": [
+    "a homologação não foi agendada no sindicato",
+    "o sindicato não marcou a homologação do ex-colaborador",
+    "preciso resolver homologação sem agendamento",
+    "homologação do desligado ficou sem data no sindicato",
+    "ex-funcionário sem homologação agendada"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_rescheduling_reason",
+    "rh_colaborador_foi_homologado",
+    "rh_date_termination",
+    "rh_request_reason",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "vars": {
+    "rh_worked_more_less_1_year_company": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Kit de homologação de ex-colaborador não localizado no ADP",
+   "short_description": "Solicitar kit de homologação de ex-colaborador não localizado no ADP",
+   "description": "Use quando precisar do kit de homologação de um ex-colaborador que não foi localizado no ADP. Corresponde à oferta Solicitação de kit de homologação de ex-colaborador não localizado no ADP. Informe a data de desligamento.",
+   "frases_exemplo": [
+    "preciso do kit de homologação de um ex-colaborador",
+    "ex-funcionário não aparece no ADP, preciso do kit",
+    "kit de homologação de desligado não localizado",
+    "não acho o ex-colaborador no ADP para homologar",
+    "solicitar kit homologação"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_rescheduling_reason",
+    "rh_colaborador_foi_homologado",
+    "rh_worked_more_less_1_year_company",
+    "rh_request_reason",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "vars": {
+    "rh_date_termination": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Pagamento de rescisão complementar de ex-colaborador",
+   "short_description": "Solicitar pagamento de rescisão complementar",
+   "description": "Use para pedir o pagamento de rescisão complementar para um ex-colaborador. Corresponde à oferta Solicitação de pagamento de rescisão complementar para ex-colaborador. Informe o centro de resultado, se o colaborador foi homologado e se há diferença de dissídio a pagar.",
+   "frases_exemplo": [
+    "preciso pagar rescisão complementar",
+    "complemento de rescisão de ex-colaborador",
+    "faltou pagar uma diferença da rescisão",
+    "pagamento complementar de rescisão",
+    "tem diferença de dissídio a pagar pro desligado"
+   ],
+   "sem_vars": [
+    "rh_rescheduling_reason",
+    "rh_date_termination",
+    "rh_worked_more_less_1_year_company",
+    "rh_request_reason"
+   ],
+   "vars": {
+    "rh_center_result_cost": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_colaborador_foi_homologado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Correção de dados no TRCT",
+   "short_description": "Solicitar correção de dados no TRCT",
+   "description": "Use quando o TRCT de um ex-colaborador tiver dados errados. Corresponde à oferta Solicitar correção de Dados no TRCT. Informe o motivo da solicitação.",
+   "frases_exemplo": [
+    "o TRCT saiu com dado errado",
+    "corrigir TRCT",
+    "preciso corrigir informação do termo de rescisão",
+    "erro no TRCT do ex-colaborador",
+    "TRCT com dados incorretos"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_rescheduling_reason",
+    "rh_colaborador_foi_homologado",
+    "rh_date_termination",
+    "rh_worked_more_less_1_year_company",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "vars": {
+    "rh_request_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reagendamento de homologação",
+   "short_description": "Solicitar reagendamento de homologação",
+   "description": "Use quando precisar remarcar uma homologação já agendada. Corresponde à oferta Solicitar reagendamento de homologação. Informe o motivo do reagendamento.",
+   "frases_exemplo": [
+    "preciso remarcar a homologação",
+    "reagendar homologação",
+    "mudar a data da homologação do ex-colaborador",
+    "não vai dar pra ir na homologação, quero outra data",
+    "reagendamento de homologação"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_colaborador_foi_homologado",
+    "rh_date_termination",
+    "rh_worked_more_less_1_year_company",
+    "rh_request_reason",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "vars": {
+    "rh_rescheduling_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "sys_id": "a5ee338a1bfc7910d1abda4ce54bcb53",
+ "title": "EY VS - Informaçoes/anexo",
+ "internal_name": "ey_vs_informa_oes_anexo",
+ "description": "Variable set destinada a variaveis informações adicionais/anexo",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Acompanhamento de Beneficio (Cartão de Vale Transporte)"
+ ],
+ "variaveis": [
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Somente leitura - Case/task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_additional_information: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

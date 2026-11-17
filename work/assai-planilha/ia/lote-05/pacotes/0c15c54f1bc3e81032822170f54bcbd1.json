@@ -1,0 +1,166 @@
+{
+ "sys_id": "0c15c54f1bc3e81032822170f54bcbd1",
+ "name": "Vale-compras Mamãe (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Vale-compras Mamãe",
+ "description": "Vale-Compras Mam&atilde;e",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios",
+    "item": "Vale-Compras Mamãe"
+   },
+   "ofertas": [
+    {
+     "name": "Não recebimento do crédito do Vale-Compras Mamãe",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Mamãe"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "there_was_a_removal",
+    "rh_reference_month",
+    "rh_absence_was_corrected_through_a_call_with_a_workday",
+    "reason_for_request",
+    "rh_full_name_child"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Número do chamado",
+     "quando": "rh_absence_was_corrected_through_a_call_with_a_workday=yes"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Não recebimento do crédito do vale-compras mamãe",
+     "description": "Use quando um colaborador não recebeu o crédito do vale-compras mamãe. Atende a oferta Não recebimento do crédito do Vale-Compras Mamãe, tratada pelo RH - Vale-Compras Mamãe. Você informa o motivo, o mês do crédito, o filho, se houve afastamento e se a falta foi corrigida via chamado."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "there_was_a_removal",
+   "type": "Sim/Não",
+   "question_text": "Houve afastamento?",
+   "choices": [],
+   "label_atual": "O colaborador teve afastamento?"
+  },
+  {
+   "name": "rh_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de concessão do crédito",
+   "choices": [
+    "Setembro",
+    "Fevereiro",
+    "Janeiro",
+    "Agosto",
+    "Outubro",
+    "Março",
+    "Junho",
+    "Dezembro",
+    "Abril",
+    "Maio",
+    "Julho",
+    "Novembro"
+   ],
+   "label_atual": "De qual mês é o crédito do vale-compras?"
+  },
+  {
+   "name": "rh_absence_was_corrected_through_a_call_with_a_workday",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve correção da falta via chamado?",
+   "choices": [
+    "Não",
+    "Sim"
+   ],
+   "label_atual": "A falta foi corrigida por chamado no Workday?"
+  },
+  {
+   "name": "reason_for_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Não recebimento do crédito",
+    "Divergência no valor recebido"
+   ],
+   "label_atual": "Qual é o motivo da solicitação?"
+  },
+  {
+   "name": "rh_full_name_child",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo e idade do filho (menor de 5 anos)",
+   "choices": [],
+   "label_atual": "Qual é o nome completo e a idade do filho (menor de 5 anos)?"
+  },
+  {
+   "name": "rh_request_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado do ajuste de ponto?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "69f1fd103b6b2a10b28dd047f4e45a66",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "9ef1f9103b6b2a10b28dd047f4e45a8a",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

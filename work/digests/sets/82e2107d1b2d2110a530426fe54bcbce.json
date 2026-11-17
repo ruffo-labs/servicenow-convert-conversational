@@ -1,0 +1,47 @@
+{
+ "sys_id": "82e2107d1b2d2110a530426fe54bcbce",
+ "title": "EY VS - Estorno de Lançamento Contábil",
+ "internal_name": "ey_vs_estorno_de_lan_amento_cont_bil",
+ "description": "Variable Set referente ao Form Estorno de Lançamento Contábil",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Estorno de Lançamento Contábil"
+ ],
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Request type"
+  },
+  {
+   "name": "v_what_is_the_withdrawal_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the withdrawal date?"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_withdrawal_date: readonly=true",
+    "v_request_type: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_withdrawal_date: mandatory=true",
+    "v_request_type: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,118 @@
+{
+ "sys_id": "3ac2b8cc1bbbb010a530426fe54bcbe6",
+ "name": "Solicitação de declaração",
+ "sys_name": "Claims on Demand",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Declarações e Documentos",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Se você precisa solicitar algum tipo de declaração, utilize este formulário.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "6",
+   "variaveis_ativas": "9",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "6"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 6 de 6 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "type_need",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Specify the type of complaint you need"
+  },
+  {
+   "name": "need_statement",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of statement do you need?",
+   "map_to_field": true,
+   "include_none": true,
+   "choices": [
+    "Change of work schedule [=change_work]",
+    "Declaration - Bank [=declatation_bank]",
+    "Declaration - Regional Council [=declaration_council]",
+    "Declaration - Consulate [=declaration_consulate]",
+    "Declaration - Dependent(s) [=declaration_dependent]",
+    "Declaration - Description of function/position [=declaration_function_position]",
+    "Declaration - Internship [=declaration_internship]",
+    "Declaration - FGTS Subsequent date of deposit [=declaration_FGTS]",
+    "Declaration - INSS [=declaration_INSS]",
+    "Declaration - IR [=declaration_IR]",
+    "Declaration - Medical plan [=medical_plan]",
+    "Declaration - Reinstatement [=declaration_reinstatement]",
+    "Declaration - Last day worked [=last_work]",
+    "Social Security Form - Benefit [=social_security]",
+    "OTHERS [=others]"
+   ]
+  },
+  {
+   "name": "formatter",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "If you selected others, specify the declaration type here"
+  },
+  {
+   "name": "information_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "What information do you need on the statement?"
+  },
+  {
+   "name": "formatter2",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "If you want to attach a complementary file to the opening of your ticket, use the clips icon at the end of the form."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "need_statement: mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: if is statement_need is others, shows is formatter ",
+   "when": "IO:need_statement=others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "formatter: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

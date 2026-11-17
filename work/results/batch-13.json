@@ -1,0 +1,1879 @@
+[
+  {
+    "sys_id": "a7790cb91be92110a530426fe54bcbf3",
+    "nome_atual": "Provisão de Estoque",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 325,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Item simples: além do set de empresa, só pede aprovador, descrição e um anexo. Não há bloqueadores; faltam conversational labels, uma descrição que diferencie de Provisões de Fatura e checar a policy Read-Only do set.",
+    "nome_sugerido": "Solicitar provisão de estoque",
+    "short_description_sugerida": "Peça o lançamento contábil de uma provisão de estoque (perdas, obsolescência, ajustes).",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) o lançamento de uma provisão de estoque, como provisão para perdas, obsolescência ou ajuste de valor de estoque. Você informa o aprovador, descreve a provisão e anexa a memória de cálculo. Não use para provisão de fatura de fornecedor (use \"Solicitar provisão de fatura\"), para ajuste físico de inventário ou para estornar um lançamento já feito.",
+    "frases_exemplo": [
+      "Preciso lançar uma provisão de estoque",
+      "quero provisionar perda de estoque obsoleto",
+      "Solicitar provisão para estoque parado",
+      "lançar provisão de obsolescência do mês",
+      "como peço provisão de estoque na contabilidade?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attach_file",
+        "problema": "Attachment obrigatório exige tratamento à parte na conversa.",
+        "acao": "Manter o Attachment OOB como última pergunta; a VA pede o upload no fim."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_select_approver",
+        "origem": "set:EY VS - Provisão de Estoque",
+        "acao": "manter",
+        "conversational_label": "Quem vai aprovar essa provisão?",
+        "obs": "Qualifier simples (membros de um grupo); lista curta, funciona em conversa."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_describe_the_information_you_need",
+        "origem": "set:EY VS - Provisão de Estoque",
+        "acao": "manter",
+        "conversational_label": "Descreva a provisão: tipo, valor, período e centro de custo.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_attach_file",
+        "origem": "set:EY VS - Provisão de Estoque",
+        "acao": "manter",
+        "conversational_label": "Anexe a memória de cálculo ou o relatório que embasa a provisão.",
+        "obs": "Anexo no final da conversa."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Read-Only (set Provisão de Estoque)",
+        "acao": "manter",
+        "substituicao": "Garantir que só se aplique ao registro destino (não à visão do item), senão aprovador e descrição são pulados."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Label das 3 perguntas do set"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item. UI Policies \"Read-Only\" dos variable sets RTR estão com condição (sempre): confirmar que valem só na visão do registro destino (Applies on Catalog Item view = false), senão a VA pula as perguntas por serem somente leitura."
+  },
+  {
+    "sys_id": "91f83d788747be10017d65790cbb3540",
+    "nome_atual": "Solicitação de Alteração de Custo Padrão (Materiais Produtivos)",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 3,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 35,
+    "justificativa": "Só 3 pedidos em 12 meses. O núcleo é uma tabela de até 10 materiais (set multilinha com 9 colunas de custo e variação), mais três aprovadores por área. Uma tabela assim não cabe numa conversa, então o item deve abrir como formulário; o ajuste se limita a nome e descrição para ser encontrado.",
+    "nome_sugerido": "Solicitar alteração de custo padrão de material produtivo",
+    "short_description_sugerida": "Peça a alteração do custo padrão de até 10 materiais produtivos por solicitação.",
+    "descricao_sugerida": "Use para pedir à Contabilidade de Custos a mudança do custo padrão de materiais produtivos (matéria-prima, embalagem, produção interna). Você informa os materiais (até 10 por pedido), o custo atual, o novo custo e o motivo, e indica os aprovadores de Marketing, Finanças de Inovação e, se for produção interna, Engenharia. Não use para provisão de estoque nem para lançamentos contábeis avulsos.",
+    "frases_exemplo": [
+      "Preciso alterar o custo padrão de um material",
+      "mudar custo standard de matéria-prima",
+      "atualizar custo padrão de embalagem",
+      "solicitar revisão de custo de material produtivo"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "set:Insira aqui os dados dos materiais a serem alterados",
+        "problema": "Set multilinha (tabela) de até 10 materiais com 9 colunas.",
+        "acao": "Manter como formulário; se um dia for conversar, trocar por anexo de planilha modelo."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_applicant_area",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De qual área você é?",
+        "obs": "Poderia ser derivada do departamento do usuário."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_important_warning_label",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Aviso de limite de 10 materiais vai para a descrição."
+      }
+    ],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA por conter tabela multilinha"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Volume muito baixo: vale avaliar com a área se o item continua necessário. Os aprovadores por referência a sys_user sem filtro de categoria dependem de conhecimento do solicitante."
+  },
+  {
+    "sys_id": "0892543d1b2d2110a530426fe54bcb68",
+    "nome_atual": "Estorno de Lançamento Contábil",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 1821,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Item de alto volume (1.821 em 12 meses) com uma intenção clara. Passa de 20 perguntas por causa do set de empresas e de dois sets multilinha de número de documento (um por empresa), controlados por 3 client scripts que repetem o que as UI policies já fazem. Com os sets multilinha trocados por perguntas simples e os scripts removidos, fica bom para conversa.",
+    "nome_sugerido": "Solicitar estorno de lançamento contábil",
+    "short_description_sugerida": "Peça o estorno (reversão) de um lançamento contábil já registrado no SAP.",
+    "descricao_sugerida": "Use quando um lançamento contábil já registrado precisa ser estornado (revertido), por erro de conta, valor, centro de custo ou período. Você informa a empresa, o número do documento (e o ano ou lote, conforme a empresa), o motivo, a data do estorno e anexa a aprovação. Não use para pedir um lançamento novo ou uma reclassificação (use \"Solicitar lançamento contábil\") nem para cancelar nota fiscal.",
+    "frases_exemplo": [
+      "Preciso estornar um lançamento contábil",
+      "estornar documento SAP 1900001234",
+      "lançaram na conta errada, quero reverter",
+      "reverter lançamento do mês passado",
+      "solicitar estorno de partida contábil Avon"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "document_number_to_be_reversed_natura_or_tbs / document_number_to_be_reversed_avon_latam",
+        "problema": "Sets multilinha (tabela) exibidos por empresa; tabela não conversa bem e soma perguntas acima do limite de 20.",
+        "acao": "Trocar por variáveis simples (novas) exibidas por UI policy sem script conforme a empresa; para vários documentos, pedir lista separada por vírgula ou planilha anexa."
+      },
+      {
+        "onde": "v_attach_approval",
+        "problema": "Attachment obrigatório e marcado read-only pela policy \"EY: Read-Only\" em todas as visões.",
+        "acao": "Limitar o read-only à visão do registro destino; deixar o anexo como última pergunta."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "nova_numero_documento",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Texto de Linha Única",
+        "conversational_label": "Qual o número do documento contábil a estornar? Se forem vários, separe por vírgula.",
+        "obs": "Substitui v_document_number_natura_tbs e v_document_number_avon_latam."
+      },
+      {
+        "ordem": 2,
+        "variavel": "nova_ano_documento",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Texto de Linha Única (Validation Regex ^\\d{4}$)",
+        "conversational_label": "De que ano é esse documento?",
+        "obs": "Visível só para Natura/TBS (UI policy sem script). Substitui v_document_year."
+      },
+      {
+        "ordem": 3,
+        "variavel": "nova_numero_lote",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Texto de Linha Única",
+        "conversational_label": "Qual o número do lote (batch)?",
+        "obs": "Visível só para Avon LATAM. Substitui v_batch_number."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_request_type",
+        "origem": "set:EY VS - Estorno de Lançamento Contábil",
+        "acao": "manter",
+        "conversational_label": "Por que o lançamento precisa ser estornado?",
+        "obs": "Label atual \"Request type\" não descreve o que se espera (é texto livre de motivo)."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_what_is_the_withdrawal_date",
+        "origem": "set:EY VS - Estorno de Lançamento Contábil",
+        "acao": "manter",
+        "conversational_label": "Em que data o estorno deve ser lançado?",
+        "obs": "Formato yyyy-mm-dd."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_attach_approval",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Anexe a aprovação do estorno (e-mail ou documento do aprovador).",
+        "obs": "Anexo ao final."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_additional_information",
+        "origem": "set:EY VS - Informaçoes/anexo",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação?",
+        "obs": "Opcional."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Set multirows invisible onLoad",
+        "acao": "remover",
+        "substituicao": "Visibilidade inicial via atributo da variável (visible=false) + UI policies já existentes."
+      },
+      {
+        "nome": "Show Multirow AVON LATAM OnChange",
+        "acao": "remover",
+        "substituicao": "Coberto pela UI policy \"EY: Show VS Avon Latam Multirow\" (sem script), apontando para nova_numero_lote."
+      },
+      {
+        "nome": "Hide Multirow VS - AVON LATAM",
+        "acao": "remover",
+        "substituicao": "Duplica o onLoad acima; desnecessário."
+      },
+      {
+        "nome": "EY: Show Multirow VS - Natura or TBS / EY: Show VS Avon Latam Multirow",
+        "acao": "converter",
+        "substituicao": "Reapontar para nova_ano_documento e nova_numero_lote e definir o atributo direto na variável em vez de on load."
+      },
+      {
+        "nome": "EY: Read-Only",
+        "acao": "converter",
+        "substituicao": "Aplicar só no registro destino (Applies on Catalog Item view = false)."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Após a troca dos sets multilinha, conferir que o total de perguntas visíveis fica abaixo de 20"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item. Ajustar o flow \"EY: RTR - Estorno de Lançamento Contábil\" e o mapeamento do caso se hoje leem as linhas dos sets multilinha."
+  },
+  {
+    "sys_id": "dd1feace1b2da590d1abda4ce54bcbcb",
+    "nome_atual": "Lançamento Contábil - Natura + TBS",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 13767,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 55,
+    "justificativa": "É o 2º item mais pedido do catálogo (13.767 em 12 meses) e não tem bloqueadores. O núcleo é aprovador + planilha modelo + documento de suporte. Os 3 rótulos rich text (links de repositório e instruções) não chegam ao LLM e o aprovador tem qualifier por script, por isso precisa de ajustes e teste.",
+    "nome_sugerido": "Solicitar lançamento contábil (Natura e TBS)",
+    "short_description_sugerida": "Peça um lançamento ou reclassificação contábil manual para Natura ou The Body Shop, com planilha modelo.",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) um lançamento contábil manual ou uma reclassificação entre contas/centros de custo nas empresas Natura ou The Body Shop (TBS). Você escolhe a empresa, indica o aprovador, anexa a planilha modelo de lançamento preenchida e o documento de suporte. O modelo está no repositório indicado no artigo de KB. Não use para empresas Avon (use \"Solicitar lançamento contábil Avon\"), para lançamentos intercompany ou de mercadoria/caixa em trânsito, para provisões ou para estornos.",
+    "frases_exemplo": [
+      "Preciso fazer um lançamento contábil na Natura",
+      "reclassificar despesa de centro de custo",
+      "lançamento manual TBS",
+      "quero corrigir a conta de uma despesa lançada errada",
+      "subir planilha de lançamento contábil",
+      "solicitar reclass contábil Natura"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "vs_attachment_information / vs_repository_pb / vs_repository_es",
+        "problema": "Rótulos rich text com instruções e links do repositório de templates; a mídia some e o LLM não lê.",
+        "acao": "Levar o link do modelo para a descrição e para um artigo de KB; remover da conversa (manter só no formulário)."
+      },
+      {
+        "onde": "vs_approver",
+        "problema": "Qualifier por script (FilterApproversUtils().validarRange a partir de v_opened_by) pode não resolver em conversa.",
+        "acao": "Garantir que v_opened_by tenha default do usuário logado antes da pergunta e testar; se falhar, trocar por qualifier de grupo de aprovadores."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_approver",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "manter",
+        "conversational_label": "Quem vai aprovar esse lançamento?",
+        "obs": "Depende de v_opened_by preenchido."
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_attachment",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de lançamento preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attachment_avon",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "manter",
+        "conversational_label": "Agora anexe o documento de suporte (nota, e-mail, relatório).",
+        "obs": "Nome da variável sugere Avon, mas é o anexo de suporte; renomear label."
+      },
+      {
+        "ordem": 4,
+        "variavel": "vs_attachment_information",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "ocultar_na_conversa",
+        "obs": "Conteúdo vai para a descrição/KB."
+      },
+      {
+        "ordem": 5,
+        "variavel": "vs_repository_pb",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "ocultar_na_conversa",
+        "obs": "Link do repositório (PT) na descrição."
+      },
+      {
+        "ordem": 6,
+        "variavel": "vs_repository_es",
+        "origem": "set:EY VS - Lancamento Contabil - Natura + TBS",
+        "acao": "ocultar_na_conversa",
+        "obs": "Link do repositório (ES) na descrição."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_additional_information",
+        "origem": "set:EY VS - Informaçoes/anexo",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação sobre o lançamento?",
+        "obs": "Opcional."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY - ReadOnly on Target Record (set Natura + TBS)",
+        "acao": "manter",
+        "substituicao": "Confirmar que não se aplica na visão do item; senão aprovador e anexo são pulados."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Limitar as opções de vs_which_company a Natura e TBS neste item (hoje o set traz todas)"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item. Avaliar no futuro unificar com \"Lançamento Contábil Avon\" num só item com a empresa como primeira pergunta; hoje flows, templates e público (Avon LATAM em espanhol) são diferentes, então a separação se mantém com descrições que se excluem."
+  },
+  {
+    "sys_id": "1c90d6121be12990d1abda4ce54bcbc2",
+    "nome_atual": "Lançamento Contábil Avon",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 481,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 30,
+    "justificativa": "Com 481 pedidos em 12 meses, o item fica bloqueado pela variável v_template_avon (Custom with Label, macro/widget), que só serve para oferecer o modelo. Trocando essa variável por um link na descrição/KB, o restante são duas perguntas de anexo e o set de empresa. A descrição atual em espanhol (\"Reclasificaciones contables\") é pobre e não diferencia do item Natura + TBS.",
+    "nome_sugerido": "Solicitar lançamento contábil Avon",
+    "short_description_sugerida": "Peça um lançamento ou reclassificação contábil manual para empresas Avon (Brasil e LATAM).",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) um lançamento contábil manual ou uma reclassificação contábil (reclasificación contable) nas empresas Avon, Brasil ou América Latina. Você informa a empresa e a sub-empresa, anexa a planilha modelo de lançamento Avon preenchida e o documento de suporte. O modelo está no artigo de KB. Não use para Natura ou The Body Shop (use \"Solicitar lançamento contábil (Natura e TBS)\"), para intercompany, provisões ou estornos.",
+    "frases_exemplo": [
+      "Preciso de um lançamento contábil na Avon",
+      "reclasificación contable Avon Perú",
+      "necesito un asiento contable manual",
+      "reclassificar conta Avon Brasil",
+      "subir template de lançamento Avon"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_template_avon",
+        "problema": "Custom with Label com UI Macro/widget de portal (template de lançamento Avon); não renderiza em conversa.",
+        "acao": "Remover a variável; publicar o template em KB e citar o link na descrição, ou trocar por Rich Text Label visível só no formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_attach_template_file",
+        "origem": "set:EY VS Lançamento Contabil AVON",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de lançamento Avon preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_attach_template_file2",
+        "origem": "set:EY VS Lançamento Contabil AVON",
+        "acao": "manter",
+        "conversational_label": "Agora anexe o documento de suporte do lançamento.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_template_avon",
+        "origem": "set:EY VS Lançamento Contabil AVON",
+        "acao": "remover",
+        "obs": "Bloqueador; link vai para a descrição/KB."
+      },
+      {
+        "ordem": 4,
+        "variavel": "vs_attachment_information_avon",
+        "origem": "set:EY VS Lançamento Contabil AVON",
+        "acao": "ocultar_na_conversa",
+        "obs": "Instrução rich text; vai para a descrição."
+      },
+      {
+        "ordem": 5,
+        "variavel": "vs_approver_avon",
+        "origem": "set:EY VS Lançamento Contabil AVON",
+        "acao": "ocultar_na_conversa",
+        "obs": "Já é hidden mas está mandatory pela policy \"EY - Mandatory on CatItem View\"; tirar o mandatory ou derivar o aprovador no flow, senão a submissão pode travar."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_additional_information",
+        "origem": "set:EY VS - Informaçoes/anexo",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação?",
+        "obs": "Opcional."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Campo company - Tirar natura/tbs",
+        "acao": "converter",
+        "substituicao": "O set \"EY VS - Empresas Avon - Lançamento Contábil Avon\" é exclusivo; remover as opções natura/tbs das choices do próprio set e apagar o script."
+      },
+      {
+        "nome": "EY - Mandatory on CatItem View",
+        "acao": "converter",
+        "substituicao": "Retirar vs_approver_avon (hidden) da lista de obrigatórios."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels (pt-BR; a VA responde no idioma do usuário)",
+        "Traduzir nome/descrição para espanhol via tradução de catálogo para o público LATAM"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Set de empresas Avon tratado na análise de sets. Ver observação de possível unificação no item Natura + TBS."
+  },
+  {
+    "sys_id": "7a4a85391ba16110a530426fe54bcb79",
+    "nome_atual": "Outros lançamentos contábeis - Intercompany, mercadoria e caixa em trânsito",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 644,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Com 644 pedidos em 12 meses, o item fica bloqueado só pela variável vs_rep_templates (Custom with Label), que exibe os templates. As três variações (intercompany, caixa em trânsito, mercadoria em trânsito) usam as mesmas perguntas, então não compensa dividir: basta o tipo como primeira pergunta, que o slot filling preenche quando o usuário já diz o tipo na frase.",
+    "nome_sugerido": "Solicitar lançamento intercompany ou em trânsito",
+    "short_description_sugerida": "Peça lançamentos contábeis intercompany, de caixa em trânsito ou de mercadoria em trânsito.",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) lançamentos entre empresas do grupo (intercompany), de caixa em trânsito ou de mercadoria em trânsito. Você escolhe o tipo, indica o aprovador e anexa a planilha modelo e o documento de suporte. Não use para lançamentos manuais comuns ou reclassificações (use \"Solicitar lançamento contábil\"), provisões ou estornos.",
+    "frases_exemplo": [
+      "Preciso de um lançamento intercompany",
+      "lançar mercadoria em trânsito entre empresas",
+      "ajustar caixa em trânsito",
+      "conciliação intercompany precisa de lançamento",
+      "lançamento entre Natura e Avon"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "vs_rep_templates",
+        "problema": "Custom with Label (repositório de templates) não renderiza em conversa.",
+        "acao": "Remover a variável; publicar os templates em KB com link na descrição (ou Rich Text Label só no formulário)."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_request_type",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "manter",
+        "conversational_label": "Que tipo de lançamento você precisa: intercompany, caixa em trânsito ou mercadoria em trânsito?",
+        "obs": "Mantém a policy Read-Only só no registro destino."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_select_approver",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "manter",
+        "conversational_label": "Quem vai aprovar esse lançamento?",
+        "obs": "Qualifier por script a partir de v_opened_by; testar em conversa."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_launch_template",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de lançamento preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_document_repository",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "manter",
+        "conversational_label": "Agora anexe o documento de suporte.",
+        "obs": "Label atual \"Document Repository\" confunde."
+      },
+      {
+        "ordem": 5,
+        "variavel": "vs_rep_templates",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "remover",
+        "obs": "Bloqueador."
+      },
+      {
+        "ordem": 6,
+        "variavel": "vs_repository_template",
+        "origem": "set:EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+        "acao": "ocultar_na_conversa",
+        "obs": "Link vai para a descrição."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_additional_information",
+        "origem": "set:EY VS - Informaçoes/anexo",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação?",
+        "obs": "Opcional."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Read-Only (set Intercompany)",
+        "acao": "converter",
+        "substituicao": "Aplicar só no registro destino; hoje tipo, aprovador e anexos seriam pulados na conversa."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item."
+  },
+  {
+    "sys_id": "ce21f4bd1bed2110a530426fe54bcba3",
+    "nome_atual": "Solicitação de Provisões de Fatura",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 4226,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Alto volume (4.226 em 12 meses). O bloqueio vem de v_template_provision_avon_natura (Custom with Label com macro/widget) e de um client script onLoad com GlideAjax que exibe aviso de janela de fechamento. Os dois só entregam informação, que pode ir para a descrição/KB. O resto é tipo, área, descrição e dois anexos.",
+    "nome_sugerido": "Solicitar provisão de fatura",
+    "short_description_sugerida": "Peça o lançamento de provisão de despesa para fatura de fornecedor ainda não recebida ou não lançada.",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) a provisão de uma despesa cuja fatura ou nota do fornecedor ainda não entrou no mês (serviço prestado sem nota, fatura atrasada). Você informa o tipo de provisão, a área solicitante e anexa a planilha modelo e o documento de suporte. Pedidos durante o fechamento contábil seguem o calendário de fechamento publicado. Não use para provisão de estoque (use \"Solicitar provisão de estoque\"), para lançamento contábil comum ou para estorno.",
+    "frases_exemplo": [
+      "Preciso provisionar uma fatura",
+      "provisão de despesa sem nota fiscal",
+      "fornecedor não mandou a nota, quero provisionar",
+      "lançar provisão de fatura do mês",
+      "accrual de serviço prestado"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_template_provision_avon_natura",
+        "problema": "Custom with Label com UI Macro/widget (template de provisão Avon & Natura).",
+        "acao": "Remover; publicar o template em KB e citar na descrição."
+      },
+      {
+        "onde": "v_informative_note_1",
+        "problema": "Rich text marcado como obrigatório; em conversa não é lido.",
+        "acao": "Tirar o mandatory; texto na descrição/KB."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_request_type",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "manter",
+        "conversational_label": "Que tipo de provisão você precisa?",
+        "obs": "Read-Only do set só no registro destino."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_request_description",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "manter",
+        "conversational_label": "Descreva o tipo de provisão.",
+        "obs": "Só quando v_request_type = outras (UI policy sem script já existe)."
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_requesting_area",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "manter",
+        "conversational_label": "Qual área está pedindo a provisão?",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_attach_template_file",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de provisão preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_document_repository",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "manter",
+        "conversational_label": "Agora anexe o documento de suporte (contrato, pedido, e-mail do fornecedor).",
+        "obs": ""
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_template_provision_avon_natura",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "remover",
+        "obs": "Bloqueador."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_informative_note_1",
+        "origem": "set:EY VS -  Solicitação de Provisões de Fatura",
+        "acao": "ocultar_na_conversa",
+        "obs": "Aviso do fechamento vai para a descrição."
+      },
+      {
+        "ordem": 8,
+        "variavel": "v_additional_information",
+        "origem": "set:EY VS - Informaçoes/anexo",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação?",
+        "obs": "Opcional."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Data fechamento onLoad",
+        "acao": "converter",
+        "substituicao": "Script só exibe aviso de janela de fechamento via GlideAjax. Mover a regra para o flow (avisar na resposta do caso quando aberto no fechamento) e deixar o aviso fixo na descrição; remover do item."
+      },
+      {
+        "nome": "EY: Mandatory (set Provisões)",
+        "acao": "converter",
+        "substituicao": "Tirar v_informative_note_1 e v_informative_note_2 (rótulos) da lista de obrigatórios."
+      },
+      {
+        "nome": "EY: Read-Only (set Provisões)",
+        "acao": "converter",
+        "substituicao": "Só no registro destino."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item. Item restrito por \"EY: Restricted access\": a VA respeita user criteria."
+  },
+  {
+    "sys_id": "9c5592d61be12990d1abda4ce54bcbb4",
+    "nome_atual": "Relatorios e consultas em geral",
+    "tabela": "x_nasm_rtr_case",
+    "volume_12m": 501,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Com 501 pedidos em 12 meses e perguntas simples (tipo, assunto, período, descrição), o item é bloqueado só pelo client script \"EY: Remove options information type\" (sem VA Supported), que monta as opções por sub-empresa e idioma via g_lang. A variável v_controle e o script que a preenche são apoio técnico sem pergunta.",
+    "nome_sugerido": "Solicitar relatório ou consulta contábil",
+    "short_description_sugerida": "Peça um relatório contábil ou tire uma dúvida sobre saldos, custos, ativo fixo e lançamentos.",
+    "descricao_sugerida": "Use para pedir à Contabilidade (RTR) um relatório (razão, balancete, saldo de contas, custos, ativo fixo) ou para fazer uma consulta sobre lançamentos e saldos contábeis. Informe o assunto, o período e descreva o que precisa. Não use para pedir um lançamento, estorno ou provisão; para esses há itens próprios.",
+    "frases_exemplo": [
+      "Preciso de um relatório contábil",
+      "me manda o razão da conta de despesas de junho",
+      "consulta de saldo de conta contábil",
+      "relatório de ativo fixo da unidade",
+      "tenho uma dúvida sobre um lançamento"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: Remove options information type",
+        "problema": "Client script onChange sem VA Supported, remove/recoloca opções de vs_information_type por sub-empresa (códigos 347, 305, 315, 331, 332) e traduz rótulos por g_lang.",
+        "acao": "Trocar por choices fixas com traduções em sys_choice (idioma nativo) e, se o filtro por sub-empresa for mesmo necessário, Lookup Select Box numa tabela de opções com reference qualifier simples; remover o script."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_request_type",
+        "origem": "set:EY VS - Relatorios e consultas em geral",
+        "acao": "manter",
+        "conversational_label": "Você precisa de um relatório ou quer fazer uma consulta?",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_information_type",
+        "origem": "set:EY VS - Relatorios e consultas em geral",
+        "acao": "manter",
+        "conversational_label": "Sobre qual assunto: custos, ativo fixo, contas contábeis ou outro?",
+        "obs": "Opções estáticas após remover o script."
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_report_start_date",
+        "origem": "set:EY VS - Relatorios e consultas em geral",
+        "acao": "manter",
+        "conversational_label": "A partir de que data?",
+        "obs": "Formato yyyy-mm-dd."
+      },
+      {
+        "ordem": 4,
+        "variavel": "vs_report_end_date",
+        "origem": "set:EY VS - Relatorios e consultas em geral",
+        "acao": "manter",
+        "conversational_label": "Até que data?",
+        "obs": ""
+      },
+      {
+        "ordem": 5,
+        "variavel": "vs_description",
+        "origem": "set:EY VS - Relatorios e consultas em geral",
+        "acao": "manter",
+        "conversational_label": "Descreva a informação que você precisa.",
+        "obs": ""
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_controle",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Hidden; valor calculado. Se nenhuma regra usar mais, remover junto com o script."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Remove options information type",
+        "acao": "remover",
+        "substituicao": "Choices estáticas traduzidas (ou Lookup Select Box com qualifier)."
+      },
+      {
+        "nome": "EY: Preencher variável controle",
+        "acao": "converter",
+        "substituicao": "Se v_controle continuar necessário, calcular no flow/producer script a partir de vs_which_company."
+      },
+      {
+        "nome": "EY - ReadOnly on Target Record (set Relatórios)",
+        "acao": "manter",
+        "substituicao": "Confirmar que não vale na visão do item."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Perguntas do set \"EY VS - Empresas Natura\" (empresa, sub-empresa com 9 variantes de referência, país, área) e do set SOX ficam para a análise de variable sets; aqui só se registra o que é específico do item."
+  },
+  {
+    "sys_id": "02733af71bb43910d1abda4ce54bcb4c",
+    "nome_atual": "Emissão de Notas Fiscais de Industrialização",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 975,
+    "recomendacao": "manter_formulario",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 25,
+    "justificativa": "Item público voltado a terceiros (industrializadores): o producer script grava todo caso no usuário externo genérico e pede nome, CPF/CNPJ, e-mail e telefone manualmente. O anexo é um widget público customizado com checkbox de confirmação. Conversa na VA exige usuário logado, e o público-alvo acessa sem login. Por isso fica como formulário, com nome e descrição melhores para achar e abrir o link.",
+    "nome_sugerido": "Solicitar nota fiscal de remessa para industrialização",
+    "short_description_sugerida": "Peça a emissão de nota fiscal de remessa para industrialização (cobertura) vinculada a uma nota de origem.",
+    "descricao_sugerida": "Use para pedir ao Fiscal a emissão da nota fiscal de remessa para industrialização por encomenda (cobertura), vinculada à nota de origem. Informe empresa, sub-empresa, número da nota a vincular, empresa de destino e anexe a planilha ou o PDF da nota. Não use para nota de venda, devolução, conserto ou outras saídas.",
+    "frases_exemplo": [
+      "Preciso de nota de industrialização",
+      "emitir nota de remessa para industrialização",
+      "nota de cobertura para terceirista",
+      "remessa para industrialização por encomenda"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attachment",
+        "problema": "Variável Custom com widget \"EY: Enable public attachment - TAX\".",
+        "acao": "Para uso interno, trocar por Attachment OOB; para público externo, manter no formulário."
+      },
+      {
+        "onde": "v_yes / v_attachment_confirmation",
+        "problema": "Checkbox obrigatório de confirmação de anexo; checkbox não agrupa bem em conversa.",
+        "acao": "Remover se o anexo virar Attachment OOB obrigatório."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_which_invoice_number_do_you_want_to_join",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o número da nota que deve ser vinculada?",
+        "obs": "Trocar regex por Validation Regex."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_which_sub_company_is_the_request_from",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Referência (core_company)",
+        "obs": "Hoje é texto com reference/ref_qual configurados, inconsistente."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_which_company_do_you_want_to_ship_to",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Referência (core_company)",
+        "obs": "Mesmo problema: texto com qualifier."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Regex Validation 9-1;3",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB na variável v_which_invoice_number_do_you_want_to_join (^\\d{9}-\\d{1,3}$) com mensagem \"Informe no formato 000000000-000\"; remover o client script."
+      },
+      {
+        "nome": "EY: Regex de Telefone / EY: Regex de E-mail / EY: Regex CPF/CNPJ",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB nas variáveis v_phone, v_email e v_cpf_cnpj."
+      },
+      {
+        "nome": "EY: Clear subcompany",
+        "acao": "manter",
+        "substituicao": "Compatível; alternativa é dependent value na referência."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA",
+        "Revisar o producer script: forçar o usuário externo mesmo para quem está logado apaga o solicitante real"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Se houver volume relevante de solicitantes internos (user criteria \"EY: User Natura\"), vale criar uma versão interna conversacional com: empresa, sub-empresa, nota a vincular, empresa de destino e Attachment OOB, com o solicitante tirado do usuário logado."
+  },
+  {
+    "sys_id": "e07accd81bcdb910a530426fe54bcbed",
+    "nome_atual": "Cadastro preço Brasil/Cadastro de preço exportação",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 680,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Item curto (5 perguntas) sem bloqueadores e com 680 pedidos em 12 meses. O nome junta duas variações (Brasil/exportação) que ficam bem resolvidas por uma pergunta de tipo com slot filling. Faltam descrição, labels, levar o link do template para a KB e corrigir a UI policy que aponta para variável inexistente.",
+    "nome_sugerido": "Solicitar cadastro de preço (Brasil ou exportação)",
+    "short_description_sugerida": "Peça o cadastro ou atualização de preço de produto para venda no Brasil ou para exportação.",
+    "descricao_sugerida": "Use para pedir ao Fiscal o cadastro ou a atualização da tabela de preço de produtos, para venda no mercado brasileiro ou para exportação, para um cliente específico. Informe a empresa, a sub-empresa, se o preço é Brasil ou exportação, o cliente e anexe a planilha modelo de preços. Não use para pedir emissão de nota fiscal.",
+    "frases_exemplo": [
+      "Preciso cadastrar preço de exportação",
+      "cadastro de preço para cliente no Brasil",
+      "atualizar tabela de preço do cliente",
+      "incluir preço de produto novo",
+      "cadastrar preço export"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_download_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_what_type_of_price_register",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "O cadastro de preço é para venda no Brasil ou para exportação?",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_which_company_is_the_request_for_customer",
+        "origem": "set:EY: Tax - Company (Customer code)",
+        "acao": "manter",
+        "conversational_label": "Para qual cliente é o preço? Pode informar o nome ou o código.",
+        "obs": "core_company é grande; conferir colunas de busca (nome e código)."
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de preços preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_download_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": "Link na descrição/KB."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory fields",
+        "acao": "converter",
+        "substituicao": "Trocar vs_which_company_is_the_request_for (não existe neste item) por vs_which_company_is_the_request_for_customer, ou marcar mandatory direto nas variáveis."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description (hoje vazia)"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "f43681331b38f510d1abda4ce54bcb5a",
+    "nome_atual": "Cancelar ou Corrigir Nota Fiscal",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 844,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Item curto (844 pedidos em 12 meses, crescendo: 220 nos últimos 90 dias) sem bloqueadores. Precisa trocar o regex em script por Validation Regex, tirar o mandatory do rótulo de template e perguntar se é cancelamento ou correção, que hoje só aparece no nome.",
+    "nome_sugerido": "Cancelar ou corrigir nota fiscal de saída",
+    "short_description_sugerida": "Peça o cancelamento ou a carta de correção de uma nota fiscal de saída já emitida.",
+    "descricao_sugerida": "Use quando uma nota fiscal de saída já emitida precisa ser cancelada ou corrigida (carta de correção eletrônica). Informe a empresa, a sub-empresa, o número da nota, se é cancelamento ou correção, e anexe a nota e a planilha modelo com o que deve mudar. Não use para devolução de mercadoria (use \"Emissão de nota fiscal de devolução\") nem para nota complementar.",
+    "frases_exemplo": [
+      "Preciso cancelar uma nota fiscal",
+      "emitir carta de correção da NF 000123456-1",
+      "a nota saiu com erro, quero corrigir",
+      "cancelar NF de saída",
+      "CC-e para nota emitida errada"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_click_here_to_download_the_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "nova_acao_nf",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Selecionar Caixa (Cancelar / Corrigir)",
+        "conversational_label": "Você quer cancelar ou corrigir a nota?",
+        "obs": "Ajuda a triagem; o usuário normalmente diz isso na primeira frase (slot filling)."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_which_invoice_number_do_you_want_to_cancel_or_correct",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o número da nota? (formato 000000000-000)",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_attach_outgoing_invoice",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Anexe a nota fiscal de saída.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Agora anexe a planilha modelo com o motivo e o que precisa mudar.",
+        "obs": ""
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_click_here_to_download_the_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": "Link na descrição/KB."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Regex Validation 9-1;3",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB na variável v_which_invoice_number_do_you_want_to_cancel_or_correct (^\\d{9}-\\d{1,3}$) com mensagem \"Informe no formato 000000000-000\"; remover o client script."
+      },
+      {
+        "nome": "EY: Mandatory Fields",
+        "acao": "converter",
+        "substituicao": "Remover o rótulo v_click_here_to_download_the_template da lista e marcar mandatory direto nas variáveis."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "af68d93f1b78f510d1abda4ce54bcb33",
+    "nome_atual": "Divergência entre Físico e Fiscal",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 15,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Baixo volume (15 em 12 meses), mas o item é curto e sem bloqueadores. Os ajustes são pequenos: labels, Validation Regex no lugar do script e o link do template na descrição.",
+    "nome_sugerido": "Informar divergência entre físico e fiscal no recebimento",
+    "short_description_sugerida": "Registre recebimento de mercadoria em que a quantidade física difere da nota fiscal.",
+    "descricao_sugerida": "Use quando a mercadoria recebida não bate com a nota fiscal do fornecedor (quantidade, item ou valor diferente) e o Fiscal precisa tratar o recebimento. Informe empresa, sub-empresa, o número da nota, o fornecedor e anexe a planilha modelo com a divergência. Não use para pedir devolução ao fornecedor (use \"Emissão de nota fiscal de devolução\") nem para nota complementar.",
+    "frases_exemplo": [
+      "Chegou mercadoria diferente da nota",
+      "divergência de quantidade no recebimento",
+      "físico não bate com o fiscal",
+      "recebi a menos do que está na NF"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_click_here_to_download_the_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_what_invoice_number_do_you_want_to_receive",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o número da nota recebida? (formato 000000000-000)",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_which_supplier",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o fornecedor?",
+        "obs": "core_company grande; conferir colunas de busca."
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo com a divergência encontrada.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_click_here_to_download_the_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Regex Validation 9-1;3",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB na variável v_what_invoice_number_do_you_want_to_receive (^\\d{9}-\\d{1,3}$) com mensagem \"Informe no formato 000000000-000\"; remover o client script."
+      },
+      {
+        "nome": "EY: Mandatory Fields",
+        "acao": "converter",
+        "substituicao": "Tirar o rótulo da lista de obrigatórios; mandatory direto nas variáveis."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "0a7fd2331b343910d1abda4ce54bcbc2",
+    "nome_atual": "Emissão de Notas de Venda de Mercadoria",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 1513,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "baixo",
+    "prontidao_atual": 65,
+    "justificativa": "Bom volume (1.513 em 12 meses) com só 4 perguntas e nenhum bloqueador. O nome diz \"mercadoria\" e a descrição diz \"matéria-prima\": unificar. O rótulo de template obrigatório vai para a KB.",
+    "nome_sugerido": "Solicitar nota fiscal de venda de mercadoria",
+    "short_description_sugerida": "Peça a emissão de nota fiscal de venda de mercadoria ou matéria-prima para outra empresa.",
+    "descricao_sugerida": "Use para pedir ao Fiscal a emissão de nota fiscal de venda de mercadoria ou matéria-prima para um cliente ou outra empresa. Informe empresa, sub-empresa, para quem vai a nota e anexe a planilha modelo com itens, quantidades e valores. Não use para venda ou doação de resíduos (use \"Resíduos\"), para remessas (conserto, comodato, industrialização) ou outras saídas.",
+    "frases_exemplo": [
+      "Preciso emitir nota de venda de matéria-prima",
+      "nota fiscal de venda para outra empresa",
+      "vender mercadoria para fornecedor",
+      "emitir NF de venda",
+      "faturar venda de insumo"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_click_here_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_which_company_do_you_want_to_ship_to",
+        "origem": "set:EY: Tax - Company want to ship",
+        "acao": "manter",
+        "conversational_label": "Para qual empresa vai a nota (destinatário)?",
+        "obs": "core_company grande; conferir colunas de busca."
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de venda preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_click_here_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory Fields",
+        "acao": "converter",
+        "substituicao": "Tirar v_click_here_template (rótulo) dos obrigatórios; mandatory direto em vs_which_company_do_you_want_to_ship_to."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "2d6ceef71b743910d1abda4ce54bcbfd",
+    "nome_atual": "Emissão de Notas Fiscais de Devolução",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 689,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Item curto com 689 pedidos em 12 meses (queda recente) e sem bloqueadores. O set tem um client script com sys_id cravado que esconde o destinatário para uma sub-empresa; convém virar UI policy do próprio item. Faltam Validation Regex e labels.",
+    "nome_sugerido": "Solicitar nota fiscal de devolução ao fornecedor",
+    "short_description_sugerida": "Peça a emissão de nota fiscal de devolução de mercadoria ao fornecedor.",
+    "descricao_sugerida": "Use para devolver mercadoria recebida ao fornecedor, pedindo ao Fiscal a nota de devolução vinculada à nota de entrada. Informe empresa, sub-empresa, o número da nota a devolver, o destinatário e anexe a planilha modelo com os itens. Não use para cancelar ou corrigir nota emitida pela empresa, para retorno de comodato/locação ou para remessa para conserto.",
+    "frases_exemplo": [
+      "Preciso devolver mercadoria para o fornecedor",
+      "emitir nota de devolução da NF 000123456-1",
+      "devolução de compra",
+      "material veio errado, quero devolver",
+      "nota de retorno ao fornecedor"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_download_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_which_invoice_number_do_you_want_to_return",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o número da nota que será devolvida? (formato 000000000-000)",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_which_company_do_you_want_to_ship_to",
+        "origem": "set:EY: Tax - Company want to ship",
+        "acao": "manter",
+        "conversational_label": "Para qual empresa vai a devolução?",
+        "obs": "Escondida para a sub-empresa 7900 pelo script do set."
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo de devolução com os itens.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_download_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Regex Validation 9-1;3",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB na variável v_which_invoice_number_do_you_want_to_return (^\\d{9}-\\d{1,3}$) com mensagem \"Informe no formato 000000000-000\"; remover o client script."
+      },
+      {
+        "nome": "EY: If company is 7900 onChange (set Tax Company)",
+        "acao": "converter",
+        "substituicao": "UI policy sem script no item: condição vs_which_sub_company_is_the_request_from = 7900 → vs_which_company_do_you_want_to_ship_to visible=false, mandatory=false."
+      },
+      {
+        "nome": "EY: Show field",
+        "acao": "manter",
+        "substituicao": "Só afeta o rótulo do template no formulário."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "c39b8a401bcd7910a530426fe54bcb12",
+    "nome_atual": "Impostos e Tributos de Serviços",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 159,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 15,
+    "justificativa": "Item público para fornecedores externos e internos, com 29 variáveis duplicadas por perfil (logado/guest), 18 client scripts (vários sem ser \"All\" UI type, com GlideAjax) e 10 UI policies. Tem 3 widgets de anexo público. Volume modesto (159 em 12 meses). A conversão exigiria refazer o item, então fica como formulário com nome e descrição melhores.",
+    "nome_sugerido": "Tirar dúvida ou pedir comprovante de impostos retidos sobre serviços",
+    "short_description_sugerida": "Dúvidas, comprovantes e carta de cancelamento de NFS-e sobre impostos retidos na fonte em serviços.",
+    "descricao_sugerida": "Use para tirar dúvidas sobre impostos e tributos retidos na fonte em notas de serviço (ISS, IR, PIS/COFINS/CSLL, INSS), pedir comprovante de retenção ou enviar carta de cancelamento de NFS-e (nota fiscal de serviço eletrônica). Informe o fornecedor, a nota e anexe o PDF da nota ou a declaração do município. Não use para informe de rendimentos anual (use \"Informe de rendimentos\") nem para pedir outros documentos fiscais.",
+    "frases_exemplo": [
+      "Por que retiveram ISS na minha nota?",
+      "preciso do comprovante de retenção de IR",
+      "dúvida sobre imposto retido na NFS-e",
+      "enviar carta de cancelamento de nota de serviço",
+      "retenção de INSS na nota de serviço"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attach_pdf / v_attach_1 / v_attach_2",
+        "problema": "Variáveis Custom com widget \"EY: Enable public attachment - TAX\".",
+        "acao": "Manter no formulário; numa versão interna futura, trocar por um único Attachment OOB."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Hide field on resolver view",
+        "acao": "converter",
+        "substituicao": "Limpar o código comentado e as linhas de teste (\"//test\")."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA",
+        "Mais de 20 perguntas: a VA já abriria janela"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Se o público interno for relevante, criar uma versão interna conversacional com cerca de 7 perguntas: tipo de pedido, imposto, fornecedor (código e CNPJ derivados via script include no flow), número da nota, data de emissão, valor e um anexo OOB."
+  },
+  {
+    "sys_id": "f7edb1321bb8b110d1abda4ce54bcb26",
+    "nome_atual": "Nota Fiscal Complementar",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 33,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 45,
+    "justificativa": "Baixo volume (33 em 12 meses). Exige 3 anexos obrigatórios distintos (aprovação GFA, nota complementar, planilha de notas) além do fornecedor e da quantidade de notas. Com esse padrão de vários anexos obrigatórios, o formulário é mais prático que a conversa.",
+    "nome_sugerido": "Registrar recebimento de nota fiscal complementar",
+    "short_description_sugerida": "Envie ao Fiscal notas complementares de fornecedor para recebimento, com aprovação GFA.",
+    "descricao_sugerida": "Use para pedir ao Fiscal o recebimento de nota fiscal complementar de fornecedor (complemento de preço, imposto ou quantidade). Informe o fornecedor, a quantidade de notas e anexe a aprovação GFA, a nota complementar e a planilha com a lista de notas. Não use para divergência física no recebimento nem para cancelar ou corrigir nota.",
+    "frases_exemplo": [
+      "Recebi uma nota complementar do fornecedor",
+      "lançar NF complementar de preço",
+      "nota complementar de imposto",
+      "enviar nota complementar para o fiscal"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_attach_a_spreadsheet_with_a_list_of_grades",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha com a lista de notas.",
+        "obs": "Label em inglês traduzido errado (\"grades\"); corrigir para \"notas fiscais\"."
+      }
+    ],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "bc3db2bb1bf43910d1abda4ce54bcb55",
+    "nome_atual": "Nota Fiscal Outras Saídas",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 3046,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 50,
+    "justificativa": "Alto volume (3.046 em 12 meses). As operações (teste, transferência, eventos, armazenagem, outras) mudam só uma pergunta condicional, então não precisa dividir; a descrição deve listar as operações para o LLM achar o item. O client script \"EY: Tax Operation\" (sys_ids cravados) só controla rótulos de conformidade e links de template, que não chegam ao LLM.",
+    "nome_sugerido": "Solicitar nota fiscal de outras saídas (teste, transferência, evento, armazenagem)",
+    "short_description_sugerida": "Peça nota fiscal de saída para testes, transferência entre unidades, eventos, armazenagem e outras saídas.",
+    "descricao_sugerida": "Use para pedir ao Fiscal a emissão de nota fiscal de saída que não seja venda: remessa para teste, transferência entre unidades, envio para eventos e feiras, remessa para armazenagem ou outra saída não listada. Informe empresa, sub-empresa, o tipo de operação, o destinatário e anexe a planilha modelo. Não use para venda de mercadoria, resíduos/doação, conserto, troca em garantia, comodato/locação, industrialização ou devolução, que têm itens próprios.",
+    "frases_exemplo": [
+      "Preciso de nota para mandar material para um evento",
+      "nota de transferência entre filiais",
+      "remessa para teste de produto",
+      "enviar produtos para armazém",
+      "nota fiscal para feira",
+      "NF de outras saídas"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "legal_conformity_text / v_click_here_to_download_the_template* ",
+        "problema": "4 rótulos rich text (conformidade legal e links de template por tipo de evento); não chegam ao LLM.",
+        "acao": "Links na descrição/KB. Se a ciência da conformidade legal for exigida, criar pergunta Yes/No nova para essa condição."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_what_is_the_tax_operation",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é a operação: teste, transferência, evento, armazenagem ou outra?",
+        "obs": "Slot filling costuma preencher pela primeira frase."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_what_is_the_test_operation",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Que tipo de teste é?",
+        "obs": "Só quando operação = teste (UI policy sem script já existe)."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_what_are_the_other_exits",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Descreva que tipo de saída é essa.",
+        "obs": "Só quando operação = outras."
+      },
+      {
+        "ordem": 4,
+        "variavel": "vs_which_company_is_the_request_for_customer",
+        "origem": "set:EY: Tax - Company (Customer code)",
+        "acao": "manter",
+        "conversational_label": "Para qual empresa ou cliente vai a nota?",
+        "obs": "Conferir colunas de busca em core_company."
+      },
+      {
+        "ordem": 5,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo com os itens da remessa.",
+        "obs": ""
+      },
+      {
+        "ordem": 6,
+        "variavel": "nova_ciencia_conformidade",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Sim/Não (Include None)",
+        "conversational_label": "Você confirma que a operação segue as regras de conformidade legal descritas no artigo?",
+        "obs": "Só se a área exigir ciência; exibir nas mesmas condições do script."
+      },
+      {
+        "ordem": 7,
+        "variavel": "what_is_the_tax_operation_comercial",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Duplicata hidden; usada só pelo script. Avaliar remoção junto com o script."
+      },
+      {
+        "ordem": 8,
+        "variavel": "legal_conformity_text",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Tax Operation",
+        "acao": "converter",
+        "substituicao": "UI policies sem script por condição (sub-empresa + operação) para exibir os rótulos no formulário; remover sys_ids cravados."
+      },
+      {
+        "nome": "EY: Mandatory Fields",
+        "acao": "converter",
+        "substituicao": "Remover a ação vazia sobre o rótulo de template."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\"). Se o volume por operação mostrar uma dominante (ex.: eventos), avaliar item próprio para ela."
+  },
+  {
+    "sys_id": "0af68d3f1b7cf510a530426fe54bcb35",
+    "nome_atual": "Remessa para Conserto",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 340,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 65,
+    "justificativa": "Item curto (4 perguntas) com 340 pedidos em 12 meses e sem bloqueadores. Os ajustes são labels, descrição e o rótulo de template obrigatório, que vai para a KB.",
+    "nome_sugerido": "Solicitar nota fiscal de remessa para conserto",
+    "short_description_sugerida": "Peça a nota fiscal para enviar equipamento ou material para conserto em fornecedor.",
+    "descricao_sugerida": "Use para enviar um equipamento, peça ou material para conserto ou manutenção em fornecedor, pedindo ao Fiscal a nota de remessa para conserto. Informe empresa, sub-empresa, o fornecedor que fará o conserto e anexe a planilha modelo com os itens. Não use para troca em garantia (use \"Remessa para troca em garantia\"), devolução de compra ou retorno de comodato.",
+    "frases_exemplo": [
+      "Preciso mandar um equipamento para conserto",
+      "nota de remessa para manutenção",
+      "enviar máquina para reparo no fornecedor",
+      "remessa para conserto de peça"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_return_issue_template",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_which_company_is_the_request_for",
+        "origem": "set:EY: Tax - Company (Supplier code)",
+        "acao": "manter",
+        "conversational_label": "Para qual fornecedor vai o conserto? Pode informar nome ou código.",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo com os itens a consertar.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_return_issue_template",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory items",
+        "acao": "converter",
+        "substituicao": "Tirar v_return_issue_template (rótulo) dos obrigatórios; manter o fornecedor obrigatório direto na variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\"). Ver possível consolidação com \"Remessa para Troca em Garantia\"."
+  },
+  {
+    "sys_id": "f228b1371b743910a530426fe54bcbcd",
+    "nome_atual": "Remessa para Troca em Garantia",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 16,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Volume muito baixo (16 em 12 meses), mas o item é curto e sem bloqueadores. A policy de obrigatórios aponta para variável inexistente (v_which_company_is_the_request_for, sem o prefixo vs_). As perguntas são quase idênticas às de Remessa para Conserto.",
+    "nome_sugerido": "Solicitar nota fiscal de remessa para troca em garantia",
+    "short_description_sugerida": "Peça a nota fiscal para devolver ao fornecedor um item com defeito coberto por garantia.",
+    "descricao_sugerida": "Use para enviar ao fornecedor um item com defeito coberto por garantia, para troca, pedindo ao Fiscal a nota de remessa em garantia. Informe empresa, sub-empresa, o fornecedor, anexe a nota de recebimento do item e a planilha modelo. Não use para conserto pago (use \"Remessa para conserto\") nem para devolução de compra.",
+    "frases_exemplo": [
+      "Preciso trocar um equipamento na garantia",
+      "remessa para troca em garantia",
+      "produto com defeito, fornecedor vai trocar",
+      "nota para envio em garantia"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attached_template_guarantee",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_which_company_is_the_request_for",
+        "origem": "set:EY: Tax - Company (Supplier code)",
+        "acao": "manter",
+        "conversational_label": "Qual fornecedor vai fazer a troca?",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_attach_nf_receipt_of_items",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Anexe a nota fiscal de recebimento do item.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Agora anexe a planilha modelo de garantia preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_attached_template_guarantee",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory",
+        "acao": "converter",
+        "substituicao": "Corrigir para vs_which_company_is_the_request_for ou marcar mandatory direto na variável."
+      },
+      {
+        "nome": "EY: Template",
+        "acao": "remover",
+        "substituicao": "Rótulo não deve ser obrigatório."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Pelo volume, avaliar consolidar com \"Remessa para Conserto\" num item \"Remessa ao fornecedor para conserto ou troca em garantia\", com a finalidade como primeira pergunta e o anexo da nota de recebimento só para garantia. Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "05c76e3f1bb83910a530426fe54bcb71",
+    "nome_atual": "Resíduos",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 4903,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "8º item mais pedido (4.903 em 12 meses), com só 4 perguntas e sem bloqueadores. O nome \"Resíduos\" sozinho não casa com o que o usuário pede, e a descrição fala em \"vendas e remessas (doação)\". O ganho está em nome, descrição e labels, com esforço baixo.",
+    "nome_sugerido": "Solicitar nota fiscal de venda ou doação de resíduos",
+    "short_description_sugerida": "Peça a nota fiscal para venda, remessa ou doação de resíduos e sucata.",
+    "descricao_sugerida": "Use para pedir ao Fiscal a nota fiscal de saída de resíduos: venda de sucata ou recicláveis, remessa para descarte/tratamento ou doação. Informe empresa, sub-empresa, o cliente ou destinatário e anexe a planilha modelo com materiais, quantidades e valores. Não use para venda de mercadoria ou matéria-prima nem para outras saídas (testes, eventos, transferência).",
+    "frases_exemplo": [
+      "Preciso de nota para vender sucata",
+      "emitir nota de doação de resíduos",
+      "remessa de resíduos para reciclagem",
+      "nota fiscal de venda de papelão",
+      "descarte de resíduos precisa de NF"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_template_other_outputs",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_which_company_is_the_request_for_customer",
+        "origem": "set:EY: Tax - Company (Customer code)",
+        "acao": "manter",
+        "conversational_label": "Para quem vão os resíduos (comprador ou destinatário)? Pode informar nome ou código.",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Anexe a planilha modelo com os resíduos, quantidades e valores.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_template_other_outputs",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": "Label fala em \"other outputs\"; conferir se o template é mesmo o de resíduos."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory fields",
+        "acao": "converter",
+        "substituicao": "Tirar o rótulo dos obrigatórios."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "8ac6d2bf1b383910a530426fe54bcb4e",
+    "nome_atual": "Retorno Comodato/Locação",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 380,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Item curto com 380 pedidos em 12 meses, sem bloqueadores. Pede fornecedor, nota de recebimento e planilha modelo. Os ajustes são labels, descrição e o rótulo de template obrigatório.",
+    "nome_sugerido": "Solicitar nota fiscal de retorno de comodato ou locação",
+    "short_description_sugerida": "Peça a nota fiscal para devolver ao dono um equipamento recebido em comodato ou locação.",
+    "descricao_sugerida": "Use para devolver ao proprietário um equipamento ou bem recebido em comodato (empréstimo) ou locação, pedindo ao Fiscal a nota de retorno. Informe empresa, sub-empresa, o fornecedor/proprietário, anexe a nota de recebimento do bem e a planilha modelo. Não use para devolução de compra, conserto ou troca em garantia.",
+    "frases_exemplo": [
+      "Preciso devolver um equipamento de comodato",
+      "nota de retorno de locação",
+      "fim do contrato de aluguel de máquina, devolver",
+      "retorno de bem em comodato"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attached_template_return",
+        "problema": "Rótulo de Rich Text com link de template marcado como obrigatório/visível; em conversa a mídia é removida e o LLM não lê o conteúdo.",
+        "acao": "Tirar o mandatory do rótulo, publicar o template em artigo de KB e citar o link na descrição do item; manter o rótulo só na visão de formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "vs_which_company_is_the_request_for",
+        "origem": "set:EY: Tax - Company (Supplier code)",
+        "acao": "manter",
+        "conversational_label": "Para qual empresa (proprietária) o bem será devolvido?",
+        "obs": ""
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_attach_nf_receipt_of_items",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Anexe a nota fiscal de recebimento do bem.",
+        "obs": ""
+      },
+      {
+        "ordem": 3,
+        "variavel": "vs_attach_template",
+        "origem": "set:EY: Tax - Attachments",
+        "acao": "manter",
+        "conversational_label": "Agora anexe a planilha modelo de retorno preenchida.",
+        "obs": ""
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_attached_template_return",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Mandatory fields",
+        "acao": "converter",
+        "substituicao": "Tirar o rótulo dos obrigatórios; manter v_attach_nf_receipt_of_items obrigatório direto na variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Preencher Conversational Labels",
+        "Preencher short_description"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Empresa e sub-empresa vêm do set \"EY: Tax - Company Avon/Natura - Subcompany\", tratado na análise de sets (sugestão geral: \"Para qual empresa é a solicitação: Natura ou Avon?\" e \"De qual unidade (sub-empresa) sai a nota?\")."
+  },
+  {
+    "sys_id": "aafb4cdc1bcdb910a530426fe54bcb0d",
+    "nome_atual": "Solicitação de documentos",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 33,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 30,
+    "justificativa": "Item público com baixo volume (33 em 12 meses), campos duplicados para logado e guest (sub-empresa em referência e em texto, anexo OOB e widget público) e checkbox de confirmação de anexo. Sem ganho que justifique reescrever; fica como formulário com nome e descrição claros.",
+    "nome_sugerido": "Solicitar cópia de documentos e notas fiscais",
+    "short_description_sugerida": "Peça ao Fiscal cópias de notas fiscais e documentos fiscais de um período.",
+    "descricao_sugerida": "Use para pedir ao Fiscal cópias de notas fiscais (XML/PDF) ou outros documentos fiscais de um período. Informe a empresa, a sub-empresa, o documento, o período, a quantidade aproximada e anexe a planilha com a lista. Não use para informe de rendimentos nem para dúvidas sobre impostos retidos.",
+    "frases_exemplo": [
+      "Preciso de cópia de notas fiscais",
+      "solicitar XML das notas de março",
+      "me envia os documentos fiscais do período",
+      "segunda via de nota fiscal"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attachment",
+        "problema": "Variável Custom com widget de anexo público.",
+        "acao": "Manter no formulário; numa versão interna, usar só v_attach_spreadsheet (Attachment OOB)."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_which_period",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De qual período você precisa dos documentos?",
+        "obs": ""
+      }
+    ],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O digest registra o producer script como \"Informe de Rendimentos\" (script copiado entre itens); conferir se o comentário/nome está correto."
+  },
+  {
+    "sys_id": "aa6c0c401b8d3910d1abda4ce54bcb8a",
+    "nome_atual": "Solicitação e Dúvidas sobre Informe de Rendimentos",
+    "tabela": "x_nasm_tax_case",
+    "volume_12m": 33,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 25,
+    "justificativa": "Baixo volume (33 em 12 meses). O item é público e duplica 5 campos para usuário externo, com GlideAjax para buscar código e CNPJ do fornecedor e um widget de anexo público. O público (fornecedores PJ/MEI) em geral não está logado, e sem login não há conversa na VA.",
+    "nome_sugerido": "Solicitar informe de rendimentos (fornecedor PJ/MEI)",
+    "short_description_sugerida": "Peça ou tire dúvidas sobre o informe de rendimentos anual de fornecedor PJ ou MEI.",
+    "descricao_sugerida": "Use para pedir o informe de rendimentos anual (comprovante de rendimentos pagos e impostos retidos) de fornecedor pessoa jurídica ou MEI (microempreendedor individual), ou tirar dúvidas sobre ele. Informe empresa, sub-empresa, o fornecedor, o ano-calendário e descreva o pedido. Não use para comprovante de retenção de uma nota específica (use \"Impostos e tributos de serviços\"); informe de rendimentos de funcionário é assunto de RH.",
+    "frases_exemplo": [
+      "Preciso do informe de rendimentos de 2025",
+      "sou MEI e não recebi o informe de rendimentos",
+      "dúvida sobre valor no informe de rendimentos",
+      "segunda via do informe de rendimentos PJ"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attach_2",
+        "problema": "Variável Custom com widget de anexo público.",
+        "acao": "Manter no formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_calendar_year",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De qual ano-calendário é o informe?",
+        "obs": "Trocar o script \"EY: Regex Year\" por Validation Regex ^\\d{4}$."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Regex Year / EY: Validate phone / EY: Validate email",
+        "acao": "converter",
+        "substituicao": "Validation Regex OOB nas variáveis."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Abrir como formulário (link) na VA"
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Se houver demanda interna relevante, uma versão só para logados teria 5 perguntas: fornecedor, ano, descrição, anexo OOB e empresa, com código/CNPJ derivados no flow."
+  }
+]

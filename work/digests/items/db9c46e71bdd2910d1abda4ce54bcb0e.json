@@ -1,0 +1,1294 @@
+{
+ "sys_id": "db9c46e71bdd2910d1abda4ce54bcb0e",
+ "name": "Solicitar Criação de Pedido de Compra, Folha de Serviço e Aceite de Folha de Serviço",
+ "sys_name": "FORM0000482",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Formulário para Solicitar Criação de Pedido de Compra (Coupa e Linx), Folha de Serviço e Aceite de Folha de Serviço (Compras Transgressoras)",
+ "description": "Formulário para Solicitar Criação de Pedido de Compra (Ariba e Linx), Folha de Serviço e Aceite de Folha de Serviço",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "65",
+   "variaveis_ativas": "79",
+   "bloqueadores": "0",
+   "avisos": "34",
+   "perguntas_sem_conversational_label": "65"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @creation_service_description: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @creation_order: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_template_natura_decentralized: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @accept_service_sheet: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_template_natura_transgressor: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @creation_additional_information: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_template_natura_centralized: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @pr_template_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @accept_purchase_order: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @creation_value: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @creation_provider_cnpj: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @diretoria_venda_attach: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @pr_template_natura_competition: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_nm_2041_3_0: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @accept_value: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_template_natura_cataloged: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @creation_confirmation: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @pr_template_natura_subcontracting: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @pr_template_natura_allowed_by_standard: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @creation_provider_sap_code: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_attach: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @sheet_download_provision_location: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @sheet_download_provision_location: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @sheet_service_delivery_location: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @creation_order_line: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @pr_template_natura_zout: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcategory2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 65 de 65 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 65 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 39 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "pr_template_natura_competition",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "pr_template_natura_decentralized",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "diretoria_venda_attach",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the form with your request here",
+   "include_none": true
+  },
+  {
+   "name": "v_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of request?",
+   "include_none": true,
+   "choices": [
+    "Creating a Coupa Request [=pr_creation]",
+    "Creation and acceptance of service sheet [=service_sheet_creation]",
+    "Order creation Ariba [=pedido_ariba]",
+    "Order creation Linx [=pedido_linx]"
+   ]
+  },
+  {
+   "name": "v_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "pr_type_of_purchase",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of purchase?",
+   "include_none": true,
+   "choices": [
+    "Cataloged [=cataloged]",
+    "Centralized [=centralized]",
+    "Decentralized [=decentralized]",
+    "Allowed by the Standard - Hiring without involving supplies and that does not fit as a transgressor [=allowed_by_standard]",
+    "Subcontracting [=subcontracting]",
+    "Transgressor [=transgressor]",
+    "ZOUT - Supplier without registration on Ariba [=zout]"
+   ]
+  },
+  {
+   "name": "v_hiring_types",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Hiring Types",
+   "include_none": true,
+   "choices": [
+    "Recurring Purchase (with operational contract) [=recurring_purchase]",
+    "Spot purchase [=spot_purchase]",
+    "Import [=import]",
+    "Inclusion of Balance (operating contract) [=inclusion_balance]",
+    "Readjustment and Contract Renewal [=readjust_contract_renew]",
+    "Retail [=retail]"
+   ]
+  },
+  {
+   "name": "pr_template_natura_transgressor",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_natura_centralized",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_natura_cataloged",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_natura_subcontracting",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_natura_allowed_by_standard",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_template_natura_zout",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "",
+   "include_none": true
+  },
+  {
+   "name": "pr_attach",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the form with your request here",
+   "include_none": true
+  },
+  {
+   "name": "v_tax_information",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Tax information"
+  },
+  {
+   "name": "v_will_payment_be_made_in_reais_or_foreign_currency",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will payment be made in local currency or foreign currency?",
+   "include_none": true,
+   "choices": [
+    "Payment in local currency [=real]",
+    "Payment in Foreign Currency [=foreign]"
+   ]
+  },
+  {
+   "name": "v_type_of_service",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the type of service",
+   "include_none": true,
+   "choices": [
+    "Real estate services [=real state]",
+    "Provision of food and beverages and accommodation services [=provision]",
+    "Recreational, cultural and sporting services [=recreational]",
+    "Construction Services [=construction]",
+    "Professional, technical and business services (except research and development) [=professional]",
+    "Personal Services [=personal]",
+    "Electricity transmission and distribution services; gas distribution services and water [=electricity]",
+    "Publishing, printing and reproduction services [=publishing]",
+    "Legal and accounting services [=legal]",
+    "Cargo transportation services [=cargo]",
+    "Postal services; collection, shipping or delivery services for documents or parcels; [=postal]",
+    "Services related to human health and social assistance [=health]",
+    "Support services for agriculture, livestock, forestry, fishing, aquaculture, mineral extraction [=agro]",
+    "Sewage and waste collection, treatment and disposal services and other services [=sewage]",
+    "Passenger transport services [=passenger]",
+    "Research and development services [=research]",
+    "Information technology services [=it]",
+    "Educational Services [=educational]",
+    "Financial services and related services [=financial]",
+    "Intermediation services in the distribution of goods; dispatch services customs [=intermediation]",
+    "Operating lease, intellectual property, franchises and other rights [=lease]",
+    "Maintenance, repair and installation services (except construction) [=maintenance]",
+    "Telecommunications services, dissemination and provision of information [=telecomm]",
+    "Transport support services [=transport]",
+    "Support services for business activities [=business]",
+    "Import of Carbon Credit [=import_carbon_credit]",
+    "Royalties [=royalties]",
+    "Contributions [=contributions]",
+    "Policy [=policy]",
+    "Reserved for possible future use [=reserved_possible_future_use]"
+   ]
+  },
+  {
+   "name": "v_service_royalties",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "92 - Royalties [=92]"
+   ]
+  },
+  {
+   "name": "v_service_provision",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "9 – Services relating to accommodation, tourism, travel and the like [=9]"
+   ]
+  },
+  {
+   "name": "v_service_financial",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "15 – Services related to the banking or financial sector, including those provided by financial institutions authorized … [=15]",
+    "17 – Technical, administrative, legal, accounting, commercial and similar support services [=17]"
+   ]
+  },
+  {
+   "name": "v_service_electricity",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "90 - Purchase of Energy Credit [=90]"
+   ]
+  },
+  {
+   "name": "v_service_contributions",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "88 - Contributions not related to previous services. [=contributions]"
+   ]
+  },
+  {
+   "name": "v_service_passenger",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "16 – Transport services of a municipal nature. [=16]"
+   ]
+  },
+  {
+   "name": "v_service_construction",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "7 – Services relating to engineering, architecture, geology, urban planning, civil construction, maintenance, cleaning, … [=7]"
+   ]
+  },
+  {
+   "name": "v_service_maintenance",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "14 – Services relating to third party goods [=14]"
+   ]
+  },
+  {
+   "name": "v_service_recreational",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "39 – Goldsmithing and cutting services. [=39]",
+    "19 – Distribution and sale services of tickets and other lottery products, bingos, cards, betting slips or coupons, draw… [=19]",
+    "12 – Amusement, leisure, entertainment and similar services. [=12]",
+    "38 – Museology services. [=38]",
+    "37 – Services for artists, athletes, models and mannequins. [=37]",
+    "36 – Meteorological services. [=36]"
+   ]
+  },
+  {
+   "name": "v_service_policy",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "89 - Insurance Services [=89]"
+   ]
+  },
+  {
+   "name": "v_service_agro",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true
+  },
+  {
+   "name": "v_service_real_state",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "18 – Claims adjustment services linked to insurance contracts; inspection and risk assessment for coverage of insurance … [=18]",
+    "28 – Valuation services for goods and services of any nature. [=28]"
+   ]
+  },
+  {
+   "name": "v_service_business",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "14 – Services relating to third party goods [=14]",
+    "17 – Technical, administrative, legal, accounting, commercial and similar support services [=17]"
+   ]
+  },
+  {
+   "name": "v_service_transport",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "20 – Port, airport, railway, road terminal, railway and metro services. [=20]",
+    "22 – Highway exploration services. [=22]",
+    "11 – Guard, parking, storage, surveillance and similar services. [=11]",
+    "16 – Transport services of a municipal nature. [=16]"
+   ]
+  },
+  {
+   "name": "v_service_health",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "4 – Health services, medical assistance and similar services. [=4]",
+    "5 – Medicine and veterinary assistance services and similar services. [=5]",
+    "30 - Biology, biotechnology and chemistry services [=30]"
+   ]
+  },
+  {
+   "name": "v_service_telecomm",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "31 – Technical services in buildings, electronics, electrical engineering, mechanics, telecommunications and the like. [=31]"
+   ]
+  },
+  {
+   "name": "v_service_publishing",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "40 – Services relating to commissioned works of art. [=40]",
+    "13 – Services relating to phonography, photography, cinematography and reprography [=13]",
+    "35 – Reporting, press advisory, journalism and public relations services. [=35]",
+    "21 – Public records, notary and notary services. [=21]"
+   ]
+  },
+  {
+   "name": "v_service_research",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "2 – Research and development services of any nature [=2]"
+   ]
+  },
+  {
+   "name": "v_service_intermediation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "10 – Intermediation and similar services. [=10]",
+    "33 – Customs clearance services, commission agents, brokers and similar services. [=33]"
+   ]
+  },
+  {
+   "name": "v_service_postal",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "26 – Collection, shipping or delivery services for correspondence, documents, objects, goods or valuables, including thr… [=26]"
+   ]
+  },
+  {
+   "name": "v_service_personal",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "25 - Funeral services. [=25]",
+    "6 – Personal care, beauty, physical activity and similar services. [=6]",
+    "34 – Private investigation, detective and similar services. [=34]"
+   ]
+  },
+  {
+   "name": "v_service_cargo",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "16 – Transport services of a municipal nature. [=16]"
+   ]
+  },
+  {
+   "name": "v_service_professional",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "27 – Social assistance services. [=27]",
+    "7 – Services related to engineering, architecture, geology, urban planning, civil construction, maintenance, cleaning, e… [=7]",
+    "5 – Medicine and veterinary assistance services and similar services [=5]",
+    "29 – Library services [=29]",
+    "28 – Valuation services for goods and services of any nature [=28]",
+    "8 – Education, teaching, pedagogical and educational guidance, instruction, training and personal assessment services of… [=8]",
+    "13 – Services relating to phonography, photography, cinematography and reprography [=13]"
+   ]
+  },
+  {
+   "name": "v_service_legal",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "30 – Biology, biotechnology and chemistry services. [=17]"
+   ]
+  },
+  {
+   "name": "v_service_it",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "1 – IT services and similar services. [=1]",
+    "2 - Off-the-Shelf Software License (Non-customizable) [=2]",
+    "3 - Software License (Custom). [=3]"
+   ]
+  },
+  {
+   "name": "v_service_educational",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "8 – Education, teaching, pedagogical and educational guidance, instruction, training and personal assessment services of… [=8]"
+   ]
+  },
+  {
+   "name": "v_service_sewage",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "7 – Services related to engineering, architecture, geology, urban planning, civil construction, maintenance, cleaning, e… [=7]"
+   ]
+  },
+  {
+   "name": "v_service_carbon",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "41 - Carbon Credit [=41]"
+   ]
+  },
+  {
+   "name": "v_service_lease",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the classification of the contract service according to complementary law 116/2003.",
+   "include_none": true,
+   "choices": [
+    "40 – Services relating to commissioned works of art. [=40]",
+    "24 – Locksmith services, production of stamps, signs, visual signage, banners, stickers and the like [=24]",
+    "32 – Technical drawing services. [=32]",
+    "35 – Reporting, press advisory, journalism and public relations services. [=35]",
+    "23 – Programming and visual communication services, industrial design and similar services. [=23]",
+    "31 – Technical services in buildings, electronics, electrical engineering, mechanics, telecommunications and the like. [=31]",
+    "3 – Services provided through rental, assignment of right of use and the like. [=3]"
+   ]
+  },
+  {
+   "name": "summary_of_the_contracted_service",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Summary of the contracted service"
+  },
+  {
+   "name": "what_is_the_tax_benefit_linked_to_the_service",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the Tax Benefit linked to the service?",
+   "include_none": true,
+   "choices": [
+    "Reduction to zero of the IRRF Rate (Art. 17 of law 11,196/05). [=reduction_to_zero_rate]",
+    "Normal IRRF rate [=normal_rate]"
+   ]
+  },
+  {
+   "name": "v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will this service provided abroad bring economic results to Natura Brasil?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Explain why the results of the service provided will not have economic results for Natura BR"
+  },
+  {
+   "name": "v_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The taxes levied on this contract will be paid by: Natura or Supplier?",
+   "include_none": true,
+   "choices": [
+    "Natura - With Gross up; [=natura_with_gross_up]",
+    "Supplier - Without Gross up [=supplier_without_gross_up]"
+   ]
+  },
+  {
+   "name": "v_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will values exceed those stipulated in standard NM-2041.3.0 contracts?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_download_nm_2041_3_0",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_suppliers_bank_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Supplier's bank details"
+  },
+  {
+   "name": "creation_provider_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Provider's name",
+   "reference": "core_company",
+   "include_none": true
+  },
+  {
+   "name": "creation_provider_sap_code",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Provider's SAP code",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_vendor_id='+ current.variables.creation_provider_name.u_vendor_id"
+  },
+  {
+   "name": "creation_provider_cnpj",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Provider's CNPJ",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "creation_order",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Order",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "creation_order_line",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Order line",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "accept_purchase_order",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purchase order",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj",
+   "include_none": true
+  },
+  {
+   "name": "accept_service_sheet",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Service Sheet",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj",
+   "include_none": true
+  },
+  {
+   "name": "accept_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value",
+   "example": "Use o formato 9999,99",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj",
+   "include_none": true
+  },
+  {
+   "name": "sheet_download_provision_location",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Order line",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "sheet_service_delivery_location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Service delivery location",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "creation_service_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Service description",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "creation_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj"
+  },
+  {
+   "name": "creation_confirmation",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Can we confirm the provision of the service?",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "creation_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.creation_provider_name.u_cnpj",
+   "include_none": true
+  },
+  {
+   "name": "e_mail_do_fornecedor",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "E-mail do fornecedor"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "b6290e291b19e110d1abda4ce54bcb04",
+   "name": "EY: Company: NTCO - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "v_country (Texto de Linha Única): Country",
+    "vs_which_company (Selecionar Caixa): The request is for which company?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "called_area_others (Texto de Linha Única): Add Area Name",
+    "vs_responsible_area2 (Selecionar Caixa): Indicate the area responsible for hiring",
+    "vs_subcategory2 (Referência): Subcategory",
+    "vs_which_sub_company (Referência): The request is for which sub-company?",
+    "vs_which_sub_company_2 (Referência): The request is for which sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only Case - Generic Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "called_area: readonly=true",
+    "vs_which_company: readonly=true",
+    "vs_which_sub_company: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Decentralized - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=decentralized^NQIO:called_area=diretoria_vendas_jornada_brasil^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_decentralized: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Attachment Mandatory - Diretoria de Vendas & Jornada Brasil",
+   "when": "IO:called_area=diretoria_vendas_jornada_brasil^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "diretoria_venda_attach: visible=true,mandatory=true",
+    "pr_template_natura_competition: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Service Sheet Acceptance - Catalog Item View",
+   "when": "IO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "accept_service_sheet: visible=true,mandatory=true",
+    "accept_purchase_order: visible=true,mandatory=true",
+    "accept_value: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Criação de PR",
+   "when": "IO:v_type_of_requestINpr_creation,pedido_ariba,pedido_linx^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_will_payment_be_made_in_reais_or_foreign_currency: visible=true,mandatory=true",
+    "v_tax_information: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Make visible and mandatory de \"Centro Natura\" field",
+   "when": "IO:vs_which_companyANYTHING^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "centro_natura: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hiring Types Readononly - Resolver view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "e_mail_do_fornecedor: visible=true,readonly=true",
+    "v_hiring_types: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: If No benefits for Natura",
+   "when": "IO:v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Subcontracting - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=subcontracting^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_subcontracting: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Service Sheet Acceptance - Resolver View",
+   "when": "IO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "accept_purchase_order: visible=true,readonly=true",
+    "accept_service_sheet: visible=true,readonly=true",
+    "accept_value: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Zout - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=zout^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_zout: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Service Sheet - Catalog Item View",
+   "when": "IO:v_type_of_request=service_sheet_creation^ORIO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sheet_download_provision_location: visible=true",
+    "sheet_service_delivery_location: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: IF PR Creation + Foreign Currency",
+   "when": "IO:v_type_of_request=pr_creation^IO:v_will_payment_be_made_in_reais_or_foreign_currency=foreign^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier: visible=true,mandatory=true",
+    "what_is_the_tax_benefit_linked_to_the_service: visible=true,mandatory=true",
+    "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br: visible=true",
+    "summary_of_the_contracted_service: visible=true,mandatory=true",
+    "v_download_nm_2041_3_0: visible=true",
+    "v_type_of_service: visible=true,mandatory=true",
+    "v_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts: visible=true,mandatory=true",
+    "v_suppliers_bank_details: visible=true,mandatory=true",
+    "v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Allowed by Standard - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=allowed_by_standard^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_allowed_by_standard: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Service Sheet Creation - Catalog Item View",
+   "when": "IO:v_type_of_request=service_sheet_creation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "creation_additional_information: visible=true",
+    "creation_provider_cnpj: visible=true,readonly=true",
+    "creation_order_line: visible=true,mandatory=true",
+    "creation_order: visible=true,mandatory=true",
+    "creation_service_description: visible=true,mandatory=true",
+    "creation_provider_sap_code: visible=true,readonly=true",
+    "creation_provider_name: visible=true,mandatory=true",
+    "creation_value: visible=true,mandatory=true",
+    "creation_confirmation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Service Sheet Creation - Resolver View",
+   "when": "IO:v_type_of_request=service_sheet_creation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "creation_order: visible=true,readonly=true",
+    "creation_additional_information: visible=true,readonly=true",
+    "creation_provider_cnpj: visible=true,readonly=true",
+    "creation_provider_sap_code: visible=true,readonly=true",
+    "creation_confirmation: visible=true,readonly=true",
+    "creation_value: visible=true,readonly=true",
+    "creation_order_line: visible=true,readonly=true",
+    "creation_service_description: visible=true,readonly=true",
+    "creation_provider_name: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Attachment Mandatory - Diretoria de Vendas & Jornada Brasil - Resolver View",
+   "when": "IO:called_area=diretoria_vendas_jornada_brasil^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "diretoria_venda_attach: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Cataloged - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=cataloged^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_cataloged: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Service Sheet - Provider's Email - Resolver View",
+   "when": "IO:v_type_of_request=service_sheet_creation^IO:creation_confirmation=yes^NQIO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sheet_provider_email: visible=true,readonly=true",
+    "e_mail_do_fornecedor: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields If REAL - Case",
+   "when": "IO:v_will_payment_be_made_in_reais_or_foreign_currency=real^ORIO:v_will_payment_be_made_in_reais_or_foreign_currency=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts: visible=false",
+    "v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil: visible=false",
+    "v_download_nm_2041_3_0: visible=false",
+    "v_suppliers_bank_details: visible=false",
+    "v_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier: visible=false",
+    "v_type_of_service: visible=false",
+    "what_is_the_tax_benefit_linked_to_the_service: visible=false",
+    "summary_of_the_contracted_service: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Avon - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_avon: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Catalog Item View",
+   "when": "IO:v_type_of_requestINpr_creation,pedido_ariba,pedido_linx^IO:vs_which_company!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_attach: visible=true,mandatory=true",
+    "pr_type_of_purchase: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only Case - Other Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_service_recreational: readonly=true",
+    "v_service_real_state: readonly=true",
+    "e_mail_do_fornecedor: readonly=true",
+    "v_service_telecomm: readonly=true",
+    "v_suppliers_bank_details: readonly=true",
+    "v_service_business: readonly=true",
+    "v_service_health: readonly=true",
+    "v_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts: readonly=true",
+    "v_service_publishing: readonly=true",
+    "v_service_transport: readonly=true",
+    "called_area_others: readonly=true",
+    "v_service_educational: readonly=true",
+    "v_service_sewage: readonly=true",
+    "what_is_the_tax_benefit_linked_to_the_service: readonly=true",
+    "v_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier: readonly=true",
+    "v_service_lease: readonly=true",
+    "v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil: readonly=true",
+    "summary_of_the_contracted_service: readonly=true",
+    "v_service_passenger: readonly=true",
+    "v_service_cargo: readonly=true",
+    "v_will_payment_be_made_in_reais_or_foreign_currency: readonly=true",
+    "v_service_professional: readonly=true",
+    "v_service_it: readonly=true",
+    "v_service_personal: readonly=true",
+    "v_service_electricity: readonly=true",
+    "v_service_postal: readonly=true",
+    "v_service_contributions: readonly=true",
+    "v_service_maintenance: readonly=true",
+    "v_service_legal: readonly=true",
+    "v_service_construction: readonly=true",
+    "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br: readonly=true",
+    "v_type_of_service: readonly=true",
+    "v_service_financial: readonly=true",
+    "v_service_research: readonly=true",
+    "v_service_intermediation: readonly=true",
+    "v_service_provision: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Service Sheet - Resolver View",
+   "when": "IO:v_type_of_request=service_sheet_creation^ORIO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sheet_download_provision_location: visible=true",
+    "sheet_service_delivery_location: visible=true,readonly=true",
+    "e_mail_do_fornecedor: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Transgressor - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=transgressor^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_transgressor: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show link if type of request is 'Linx'",
+   "when": "IO:v_type_of_request=pedido_linx^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_link: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Catalog Item View",
+   "when": "IO:called_area!=diretoria_vendas_jornada_brasil^IO:called_area!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "e_mail_do_fornecedor: visible=true,mandatory=true",
+    "v_type_of_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Hiring Types",
+   "when": "IO:pr_type_of_purchase=centralized^IO:vs_which_company=Natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_hiring_types: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: if No Economical results",
+   "when": "IO:v_will_this_service_provided_abroad_bring_economic_results_to_natura_brasil=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - PR Creation - Natura - Centralized - Catalog Item View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company=Natura^IO:pr_type_of_purchase=centralized^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_template_natura_centralized: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - Resolver View",
+   "when": "IO:called_area!=diretoria_vendas_jornada_brasil^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "centro_natura: visible=true,readonly=true",
+    "e_mail_do_fornecedor: visible=true,readonly=true",
+    "v_type_of_request: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory FIelds - Service Sheet - Provider's Email - Catalog Item View",
+   "when": "IO:v_type_of_request=service_sheet_creation^IO:creation_confirmation=yes^NQIO:v_type_of_request=service_sheet_acceptance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sheet_provider_email: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only FIelds - PR Creation - Resolver View",
+   "when": "IO:v_type_of_request=pr_creation^IO:vs_which_company!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pr_type_of_purchase: visible=true,readonly=true",
+    "pr_attach: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Remove Tipo de Solicitaçãol",
+   "type": "onChange",
+   "on": "be1f796c1bdc8a10a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, quando a área é 'varejo', acrescenta a opção 'Criar pedido Linx' à lista de tipos de solicitação."
+  },
+  {
+   "name": "EY: Clear field on change company",
+   "type": "onChange",
+   "on": "d938bbdc1be9ed90a530426fe54bcb7f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de criação de fornecedor quando a empresa muda: tipo de compra, nome do fornecedor, código SAP e campos relacionados."
+  },
+  {
+   "name": "EY: Clear field on change company",
+   "type": "onChange",
+   "on": "d9490e291b19e110d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do anterior que limpa também o tipo de solicitação antes do bloco de fornecedor."
+  },
+  {
+   "name": "EY: Type of purchase - Company",
+   "type": "onChange",
+   "on": "d9490e291b19e110d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que reconstrói a lista de tipos de compra conforme a empresa. Para 'Avon LATAM' zera as opções com clearOptions, recoloca a opção vazia traduzida via getMessage e monta a lista específica daquela empresa."
+  },
+  {
+   "name": "EY: Máscara de Valor - accept_value",
+   "type": "onChange",
+   "on": "944e18e01bad21d0a530426fe54bcb9b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'accept_value' como moeda. Variante da série formatarMoeda."
+  },
+  {
+   "name": "EY: Clear Fields when Currency Changes",
+   "type": "onChange",
+   "on": "de3cde551bb57510a530426fe54bcba8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 3,3 KB que, ao mudar a moeda, esconde e desobriga toda a lista de tipos de serviço (prestação, financeiro, elétrico, construção, passageiro e demais) para serem reexibidos conforme a nova seleção."
+  },
+  {
+   "name": "EY: Máscara de Valor - creation_value",
+   "type": "onChange",
+   "on": "6babd02c1b2d21d0a530426fe54bcb2c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'creation_value' como moeda. Variante da série formatarMoeda."
+  },
+  {
+   "name": "EY: Hide Fields OnLoad Case",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad de 3,5 KB que esconde cada campo de tipo de serviço APENAS se ele estiver vazio — assim um caso reaberto mantém visíveis os serviços já preenchidos. Versão 'Case' (visão do registro criado)."
+  },
+  {
+   "name": "EY: Clear field Hiring Types",
+   "type": "onChange",
+   "on": "0a79bbd01b2ded90a530426fe54bcb81",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_hiring_types'."
+  },
+  {
+   "name": "EY: Dynamic Service Classification",
+   "type": "onChange",
+   "on": "90dc9ad51bb57510a530426fe54bcb57",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 8,4 KB — o motor de classificação de serviço. Para cada tipo escolhido (construção, contribuições, intermediação, prestação, passageiro e outros) exibe e torna obrigatório o campo correspondente e esconde os demais. Bloco if repetido dezenas de vezes, um por tipo."
+  },
+  {
+   "name": "EY: Hide Fields OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde todos os campos de tipo de serviço na abertura, deixando-os ocultos até o script de classificação revelar o correto."
+  },
+  {
+   "name": "EY: If Type of request is 'Ariba'",
+   "type": "onChange",
+   "on": "d938bbdc1be9ed90a530426fe54bcb7f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, quando o tipo de solicitação é 'pedido_ariba', exibe e torna obrigatória a sub-empresa."
+  },
+  {
+   "name": "EY: Remove type of request Options",
+   "type": "onChange",
+   "on": "d9490e291b19e110d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que monta as opções de tipo de solicitação com rótulos traduzidos via getMessage ('PR Creation', 'Criação e aceite de folha de serviço', '--none--'). Uma terceira opção ('Service Sheet Acceptance') está comentada."
+  },
+  {
+   "name": "EY: Validate supplier email",
+   "type": "onChange",
+   "on": "e795d8a81b7dc290a530426fe54bcb62",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o e-mail do fornecedor por regex. Inválido: limpa 'e_mail_do_fornecedor' e mostra erro. Observação: o nome da variável está em português, fora do padrão v_/vs_ do resto do catálogo."
+  }
+ ]
+}

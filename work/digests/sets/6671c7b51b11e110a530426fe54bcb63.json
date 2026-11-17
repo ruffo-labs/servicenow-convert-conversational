@@ -1,0 +1,77 @@
+{
+ "sys_id": "6671c7b51b11e110a530426fe54bcb63",
+ "title": "EY VS - Notificação de pagamentos incorretos ou duplicados",
+ "internal_name": "ey_vs_notifica_o_de_pagamentos_incorretos_ou_duplicados",
+ "description": "Variable Set referente ao Form Notificação de pagamentos incorretos ou duplicados",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Notificação de Pagamentos Incorretos e/ou Duplicados"
+ ],
+ "variaveis": [
+  {
+   "name": "v_tipo_de_notifica_o",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Notification Type",
+   "include_none": true,
+   "choices": [
+    "Incorrect [=v_incorrect]",
+    "Duplicate [=v_duplicated]"
+   ]
+  },
+  {
+   "name": "v_document_number_invoice",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document Number (Invoice)"
+  },
+  {
+   "name": "v_due_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Due Date"
+  },
+  {
+   "name": "v_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Somente leitura",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number_invoice: readonly=true",
+    "v_due_date: readonly=true",
+    "v_amount: readonly=true",
+    "v_tipo_de_notifica_o: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_amount: mandatory=true",
+    "v_document_number_invoice: mandatory=true",
+    "v_tipo_de_notifica_o: mandatory=true",
+    "v_due_date: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "cbc28b3d1b11e110a530426fe54bcb4f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'v_amount' como moeda. Variante da série formatarMoeda."
+  }
+ ]
+}

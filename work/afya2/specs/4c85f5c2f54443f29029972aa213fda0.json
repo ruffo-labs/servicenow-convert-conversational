@@ -1,0 +1,141 @@
+{
+ "sys_id": "4c85f5c2f54443f29029972aa213fda0",
+ "status": "dividido",
+ "motivo": "Avaliar migração pede inventário, dependências, criticidade e janela disponível; executar migração pede plano aprovado, janela de execução, plano de retorno e critério de aceite. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_inventario_do_workload": {
+   "label": "Qual o inventário do workload a migrar?"
+  },
+  "v_dependencias": {
+   "label": "Quais as dependências do ambiente?"
+  },
+  "v_criticidade": {
+   "label": "Qual a criticidade do ambiente?"
+  },
+  "v_plano_de_testes": {
+   "label": "Qual o plano de testes?"
+  },
+  "v_janela_disponivel": {
+   "label": "Qual a janela disponível para a migração?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_plano_aprovado_anexar": {
+   "label": "Envie o plano aprovado."
+  },
+  "v_inventario_do_ambiente": {
+   "label": "Qual o inventário do ambiente a migrar?"
+  },
+  "v_janela_de_execucao": {
+   "label": "Qual a janela de execução da migração?"
+  },
+  "v_plano_de_retorno": {
+   "label": "Qual o plano de retorno se algo der errado?"
+  },
+  "v_criterio_de_aceite": {
+   "label": "Qual o critério de aceite da migração?"
+  }
+ },
+ "policies": {
+  "7229feabcb864ed686b23eaf87d6135d": "remover",
+  "027f28cb70e24ccf8bd7fb1f712b4779": "remover"
+ },
+ "itens": [
+  {
+   "name": "Avaliar a migração de um ambiente para o Azure",
+   "short_description": "Pedir análise de viabilidade e abordagem para migrar para o Azure.",
+   "description": "Use quando quiser saber como e se um ambiente pode ir para o Azure. A opção atendida é Avaliar migração para Azure. Informe o inventário, as dependências, a criticidade, o plano de testes e a janela disponível.",
+   "frases_exemplo": [
+    "Quero avaliar a migração de um sistema para o Azure",
+    "Podemos levar esse ambiente para a nuvem?",
+    "Preciso de um estudo de migração para o Azure",
+    "Quero estimar o esforço para migrar os servidores",
+    "Pedido de avaliação de migração"
+   ],
+   "sem_vars": [
+    "v_plano_aprovado_anexar",
+    "v_inventario_do_ambiente",
+    "v_janela_de_execucao",
+    "v_plano_de_retorno",
+    "v_criterio_de_aceite"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Avaliar migração para Azure"
+   },
+   "vars": {
+    "v_inventario_do_workload": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dependencias": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_criticidade": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_disponivel": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Executar a migração de um ambiente para o Azure",
+   "short_description": "Pedir a execução de uma migração com plano já aprovado.",
+   "description": "Use quando o plano de migração já existe e está aprovado. A opção atendida é Executar migração de ambiente. Informe o plano aprovado, o inventário, a janela, o plano de retorno e o critério de aceite.",
+   "frases_exemplo": [
+    "O plano está aprovado, podem executar a migração",
+    "Quero agendar a migração do ambiente",
+    "Vamos migrar o sistema no fim de semana",
+    "Solicito a execução da migração com plano de retorno",
+    "Preciso executar a migração do ambiente para o Azure"
+   ],
+   "sem_vars": [
+    "v_inventario_do_workload",
+    "v_dependencias",
+    "v_criticidade",
+    "v_janela_disponivel"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Executar migração de ambiente"
+   },
+   "vars": {
+    "v_plano_aprovado_anexar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_inventario_do_ambiente": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_execucao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_retorno": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_criterio_de_aceite": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

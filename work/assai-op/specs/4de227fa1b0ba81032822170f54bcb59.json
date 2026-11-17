@@ -1,0 +1,515 @@
+{
+ "sys_id": "4de227fa1b0ba81032822170f54bcb59",
+ "status": "dividido",
+ "motivo": "Cada oferta de apoio do NAC mostra só o campo de motivo da sua área (admissão, benefícios, férias, folha, licenças, rescisão); crachá/remuneração, jornada e vale transporte não têm motivo específico.",
+ "vars": {
+  "reason_request_vacation_others": {
+   "label": "Qual é o motivo da solicitação sobre férias?"
+  },
+  "rh_number_called_portal": {
+   "label": "Qual é o número do chamado aberto anteriormente?"
+  },
+  "reason_request_admission_others": {
+   "label": "Qual é o motivo da solicitação sobre admissão?"
+  },
+  "reason_request_termination_others": {
+   "label": "Qual é o motivo da solicitação sobre rescisão?"
+  },
+  "reason_request_licences": {
+   "label": "Qual é o motivo da solicitação de licença?"
+  },
+  "reason_request_benefits_others": {
+   "label": "Qual é o motivo da solicitação sobre benefícios?"
+  },
+  "reason_request_termination": {
+   "label": "Qual é o motivo da solicitação de rescisão?"
+  },
+  "reason_request_payroll": {
+   "label": "Qual é o motivo da solicitação de folha de pagamento?"
+  },
+  "rh_manager_regional": {
+   "label": "Qual é o grupo aprovador regional?"
+  },
+  "reason_request_vacation": {
+   "label": "Qual é o motivo da solicitação de férias?"
+  },
+  "reason_request_payroll_others": {
+   "label": "Qual é o motivo da solicitação sobre folha de pagamento?"
+  },
+  "reason_request_benefits": {
+   "label": "Qual é o benefício da solicitação?"
+  },
+  "reason_request_admission": {
+   "label": "Qual é o motivo da solicitação de admissão?"
+  },
+  "reason_request_licences_others": {
+   "label": "Qual é o motivo da solicitação sobre licenças?"
+  }
+ },
+ "remover": {
+  "formatter2": "visual",
+  "formatter": "visual",
+  "rh_container_init": "visual"
+ },
+ "policies": {
+  "389e83ff87052e10182a0d440cbb3509": "remover",
+  "421badfc1b877410eca40dcbe54bcb2d": "remover",
+  "533ae17c1b877410eca40dcbe54bcbc0": "remover",
+  "57224e7f874dea10182a0d440cbb35c9": "remover",
+  "82e9e23f87412e10182a0d440cbb3592": "remover",
+  "92a9a6fb87412e10182a0d440cbb35e5": "remover",
+  "9e660bb387052e10182a0d440cbb3555": "remover",
+  "a0128a7f874dea10182a0d440cbb35fb": "remover",
+  "a4e52e3787412e10182a0d440cbb354e": "remover",
+  "b1baa1fc1b877410eca40dcbe54bcb7d": "remover",
+  "bf4a3dbf870dea10182a0d440cbb3520": "remover",
+  "d10e800c1b828254347221bbe54bcbd0": "remover",
+  "e017c7f387052e10182a0d440cbb356a": "remover",
+  "eea4a2f387412e10182a0d440cbb35da": "remover",
+  "f49871fb870dea10182a0d440cbb357f": "remover",
+  "f7ee033387452e10182a0d440cbb3573": "remover",
+  "nova_g0_1": {
+   "short_description": "CSA - Motivo da Solicitação (Admissão) Outros",
+   "conditions": "reason_request_admission=outros_admissão",
+   "actions": {
+    "reason_request_admission_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_1": {
+   "short_description": "CSA - Motivo da Solicitação (Benefícios) Outros",
+   "conditions": "reason_request_benefits=outros_beneficios",
+   "actions": {
+    "reason_request_benefits_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g3_1": {
+   "short_description": "CSA - Motivo da Solicitação (Férias) Outros",
+   "conditions": "reason_request_vacation=outros_ferias",
+   "actions": {
+    "reason_request_vacation_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g4_1": {
+   "short_description": "CSA - Motivo da Solicitação (Folha de Pagamento) Outros",
+   "conditions": "reason_request_payroll=outros_folha_pagamento",
+   "actions": {
+    "reason_request_payroll_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g6_1": {
+   "short_description": "CSA - Motivo da Solicitação (Licenças) Outros",
+   "conditions": "reason_request_licences=outros_licencas",
+   "actions": {
+    "reason_request_licences_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g7_1": {
+   "short_description": "CSA - Motivo da Solicitação (Rescisão) Outros",
+   "conditions": "reason_request_termination=outros_rescisao",
+   "actions": {
+    "reason_request_termination_others": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Apoio do NAC em admissão",
+   "short_description": "Pedir apoio ao RH em processos de admissão",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em processos de admissão (oferta \"Apoio aos processos de atendimento - Admissão\"). Informe o motivo da solicitação. Atendimento do RH - Admissão, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de apoio com uma admissão",
+    "Tenho problema no processo de admissão de um novo colaborador",
+    "Quero ajuda do NAC com admissão",
+    "A admissão do meu contratado travou no sistema",
+    "Abrir apoio de admissão"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reason_request_admission": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em benefícios",
+   "short_description": "Pedir apoio ao RH em questões de benefícios",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em benefícios (oferta \"Apoio aos processos de atendimento - Benefícios\"). Informe o benefício envolvido. Atendimento do RH - Benefícios N2, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de ajuda com vale refeição de um colaborador",
+    "Quero apoio do NAC sobre benefícios",
+    "Tenho dúvida de auxílio creche de um funcionário",
+    "Problema com assistência médica de um colaborador",
+    "Abrir apoio de benefícios"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reason_request_benefits": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em crachá ou remuneração",
+   "short_description": "Pedir apoio ao RH em crachá ou remuneração e estrutura",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em crachá ou em remuneração e estrutura (ofertas \"Apoio aos processos de atendimento - Crachá\" e \"- Remuneração\"). O atendimento é do RH - Crachá ou do RH - Remuneração e Estrutura, conforme a oferta, com SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de crachá novo para um colaborador",
+    "Quero apoio do NAC com remuneração",
+    "Tenho problema com crachá de funcionário",
+    "Preciso de ajuda com estrutura e remuneração da equipe",
+    "Abrir apoio de crachá"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em férias",
+   "short_description": "Pedir apoio ao RH em questões de férias",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em férias (oferta \"Apoio aos processos de atendimento - Férias\"). Informe o motivo, como cálculo, pagamento ou inclusão e alteração. Atendimento do RH - Férias, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de ajuda com férias de um colaborador",
+    "Quero cancelar as férias de um funcionário",
+    "O cálculo das férias está errado",
+    "Apoio do NAC para férias",
+    "Tem problema sistêmico nas férias da minha equipe"
+   ],
+   "sem_vars": [
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reason_request_vacation": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em folha de pagamento",
+   "short_description": "Pedir apoio ao RH em questões de folha de pagamento",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em folha de pagamento (oferta \"Apoio aos processos de atendimento - Folha de Pagamento\"). Informe o motivo, como adiantamento, pensão ou PPR. Atendimento do RH - Pagamento Mensal, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de apoio com folha de pagamento",
+    "Quero pedir adiantamento salarial para um colaborador",
+    "Tem problema com pensão alimentícia na folha",
+    "Ajuda do NAC com pagamento mensal",
+    "Abrir apoio de folha"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_vacation",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "reason_request_payroll": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em jornada de trabalho",
+   "short_description": "Pedir apoio ao RH em jornada de trabalho",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em jornada de trabalho (oferta \"Apoio aos processos de atendimento - Jornada de Trabalho\"). Atendimento do RH - Jornada de Trabalho, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de apoio com jornada de trabalho",
+    "Quero ajuda do NAC com escala de um colaborador",
+    "Problema com a jornada de um funcionário",
+    "Abrir apoio de jornada",
+    "Dúvida sobre jornada da minha equipe"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em licenças",
+   "short_description": "Pedir apoio ao RH em questões de licenças",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em licenças (oferta \"Apoio aos processos de atendimento - Licenças\"). Informe o tipo de licença, como maternidade, paternidade ou alistamento militar. Atendimento do RH - Licenças, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso cadastrar licença maternidade",
+    "Quero apoio do NAC com licença paternidade",
+    "Colaborador vai entrar em licença",
+    "Ajuda com extensão de licença maternidade",
+    "Abrir apoio de licenças"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission"
+   ],
+   "vars": {
+    "reason_request_licences": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g7_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em rescisão",
+   "short_description": "Pedir apoio ao RH em desligamento e rescisão",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em rescisão (oferta \"Apoio aos processos de atendimento - Rescisão\"). Informe o motivo, como homologação, pagamento rescisório ou desligamento. Atendimento do RH - Rescisão, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de apoio com rescisão",
+    "Quero saber do pagamento rescisório de um ex-colaborador",
+    "Ajuda do NAC com desligamento",
+    "Dúvida sobre homologação",
+    "Abrir apoio de rescisão"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "reason_request_termination": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Apoio do NAC em vale transporte",
+   "short_description": "Pedir apoio ao RH em questões de vale transporte",
+   "description": "Use para pedir apoio do Núcleo de Apoio ao Coordenador em vale transporte (oferta \"Apoio aos processos de atendimento - Vale Transporte\"). Atendimento do RH - Vale-Transporte, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso de apoio com vale transporte",
+    "Colaborador não recebeu o vale transporte",
+    "Ajuda do NAC com VT",
+    "Quero alterar o vale transporte de um funcionário",
+    "Abrir apoio de vale transporte"
+   ],
+   "sem_vars": [
+    "reason_request_vacation_others",
+    "reason_request_admission_others",
+    "reason_request_termination_others",
+    "reason_request_licences",
+    "reason_request_benefits_others",
+    "reason_request_termination",
+    "reason_request_payroll",
+    "reason_request_vacation",
+    "reason_request_payroll_others",
+    "reason_request_benefits",
+    "reason_request_admission",
+    "reason_request_licences_others"
+   ],
+   "vars": {
+    "rh_manager_regional": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "nova_g3_1",
+    "nova_g4_1",
+    "nova_g6_1",
+    "nova_g7_1"
+   ]
+  }
+ ]
+}

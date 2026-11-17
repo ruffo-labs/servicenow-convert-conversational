@@ -1,0 +1,525 @@
+{
+ "sys_id": "3e7cb3041bf821d0a530426fe54bcb90",
+ "name": "Solicitar aprovações para prêmios e comissões",
+ "sys_name": "Request approvals for awards and commissions",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Suporte à força de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar aprovação de valores para prêmios e comissões",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "55",
+   "variaveis_ativas": "56",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "55"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_payment_sheet_in_question_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_payment_sheet_in_question_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_payment_sheet_in_question_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_payment_sheet_in_question: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_payment_sheet_in_question_2: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 55 de 55 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 55 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 22 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_called_for_premium_or_commission_payment_approval",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Called for premium or commission payment approval?",
+   "include_none": true,
+   "choices": [
+    "Commission [=commission]",
+    "Awards [=awards]"
+   ]
+  },
+  {
+   "name": "v_quantity_of_loads",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Quantity of loads",
+   "include_none": true,
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  {
+   "name": "v_inform_the_cycle",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cycle"
+  },
+  {
+   "name": "v_inform_the_block",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the processing date"
+  },
+  {
+   "name": "v_enter_the_number_of_leaders",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of leaders"
+  },
+  {
+   "name": "v_enter_the_number_of_employees",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of employees"
+  },
+  {
+   "name": "v_attach_the_payment_sheet_in_question",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the payment sheet in question"
+  },
+  {
+   "name": "v_commission_payment_availability_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Commission payment availability date"
+  },
+  {
+   "name": "v_inform_the_cycle_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cycle"
+  },
+  {
+   "name": "v_inform_the_block_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the processing date"
+  },
+  {
+   "name": "v_enter_the_number_of_leaders_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of leaders"
+  },
+  {
+   "name": "v_enter_the_number_of_employees_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of employees"
+  },
+  {
+   "name": "v_attach_the_payment_sheet_in_question_2",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the payment sheet in question"
+  },
+  {
+   "name": "v_commission_payment_availability_date_2",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Commission payment availability date"
+  },
+  {
+   "name": "v_inform_the_cycle_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cycle"
+  },
+  {
+   "name": "v_inform_the_block_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the processing date"
+  },
+  {
+   "name": "v_enter_the_number_of_leaders_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of leaders"
+  },
+  {
+   "name": "v_enter_the_number_of_employees_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of employees"
+  },
+  {
+   "name": "v_attach_the_payment_sheet_in_question_3",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the payment sheet in question"
+  },
+  {
+   "name": "v_commission_payment_availability_date_3",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Commission payment availability date"
+  },
+  {
+   "name": "v_inform_the_cycle_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cycle"
+  },
+  {
+   "name": "v_inform_the_block_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the processing date"
+  },
+  {
+   "name": "v_enter_the_number_of_leaders_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of leaders"
+  },
+  {
+   "name": "v_enter_the_number_of_employees_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of employees"
+  },
+  {
+   "name": "v_attach_the_payment_sheet_in_question_4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the payment sheet in question"
+  },
+  {
+   "name": "v_commission_payment_availability_date_4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Commission payment availability date"
+  },
+  {
+   "name": "v_inform_the_cycle_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cycle"
+  },
+  {
+   "name": "v_inform_the_block_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the processing date"
+  },
+  {
+   "name": "v_enter_the_number_of_leaders_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of leaders"
+  },
+  {
+   "name": "v_enter_the_number_of_employees_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the number of employees"
+  },
+  {
+   "name": "v_attach_the_payment_sheet_in_question_5",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the payment sheet in question"
+  },
+  {
+   "name": "v_commission_payment_availability_date_5",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Commission payment availability date"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+   "name": "EY: Company  - Avon/Natura and Sub Company",
+   "order": "100",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): For which company is the service being requested?",
+    "vs_sub_company (Referência): Which sub-company is the service for?"
+   ]
+  },
+  {
+   "sys_id": "fcb6085c1bbc21d0a530426fe54bcbec",
+   "name": "Resumo do pagamento de comissão",
+   "order": "700",
+   "perguntas": [
+    "v_type (Selecionar Caixa): Type",
+    "v_value (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "401798181b3461d0a530426fe54bcba3",
+   "name": "Resumo do pagamento de prêmio",
+   "order": "800",
+   "perguntas": [
+    "v_type_award (Selecionar Caixa): Type",
+    "v_value_award (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "04372ac81bed2590a530426fe54bcb02",
+   "name": "Resumo do pagamento de comissão",
+   "order": "1500",
+   "perguntas": [
+    "v_type_2 (Selecionar Caixa): Type",
+    "v_value_2 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "9e119bc81b69a590a530426fe54bcb55",
+   "name": "Resumo do pagamento de prêmio",
+   "order": "1600",
+   "perguntas": [
+    "v_type_award_2 (Selecionar Caixa): Type",
+    "v_value_award_2 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "49f436881be56590a530426fe54bcbb5",
+   "name": "Resumo do pagamento de comissão",
+   "order": "2300",
+   "perguntas": [
+    "v_type_3 (Selecionar Caixa): Type",
+    "v_value_3 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "ca9913841be5a910d1abda4ce54bcbb3",
+   "name": "Resumo do pagamento de prêmio",
+   "order": "2400",
+   "perguntas": [
+    "v_type_award_3 (Selecionar Caixa): Type",
+    "v_value_award_3 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "701db6801bad6590a530426fe54bcb13",
+   "name": "Resumo do pagamento de comissão",
+   "order": "3100",
+   "perguntas": [
+    "v_type_4 (Selecionar Caixa): Type",
+    "v_value_4 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "35cb53801b29a910d1abda4ce54bcb9a",
+   "name": "Resumo do pagamento de prêmio",
+   "order": "3200",
+   "perguntas": [
+    "v_type_award_4 (Selecionar Caixa): Type",
+    "v_value_award_4 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "b1afbe841bed6590a530426fe54bcb1f",
+   "name": "Resumo do pagamento de comissão",
+   "order": "3900",
+   "perguntas": [
+    "v_type_5 (Selecionar Caixa): Type",
+    "v_value_5 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "3e4f5f441b69a910d1abda4ce54bcba5",
+   "name": "Resumo do pagamento de prêmio",
+   "order": "4000",
+   "perguntas": [
+    "v_type_award_5 (Selecionar Caixa): Type",
+    "v_value_award_5 (Texto de Linha Única): Value"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "4300",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "4400",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "If it is \"commissions\" and loads is \"4\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=commission^IO:v_quantity_of_loadsIN4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_commission_payment_availability_date_4: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_4: visible=true,mandatory=true",
+    "v_inform_the_cycle_4: visible=true,mandatory=true",
+    "v_enter_the_number_of_leaders_4: visible=true,mandatory=true",
+    "v_inform_the_block_4: visible=true,mandatory=true",
+    "commission_payment_summary_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"Awards\" and loads is \"3\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=awards^IO:v_quantity_of_loadsIN3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_number_of_employees_3: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_3: visible=true,mandatory=true",
+    "v_inform_the_cycle_3: visible=true,mandatory=true",
+    "award_payment_summary_3: visible=true,mandatory=true",
+    "v_inform_the_block_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"commissions\" and loads is \"5\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=commission^IO:v_quantity_of_loads=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_commission_payment_availability_date_5: visible=true,mandatory=true",
+    "v_inform_the_block_5: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_5: visible=true,mandatory=true",
+    "commission_payment_summary_5: visible=true,mandatory=true",
+    "v_enter_the_number_of_leaders_5: visible=true,mandatory=true",
+    "v_inform_the_cycle_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"commissions\" and loads is \"3\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=commission^IO:v_quantity_of_loadsIN3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "commission_payment_summary_3: visible=true,mandatory=true",
+    "v_inform_the_cycle_3: visible=true,mandatory=true",
+    "v_inform_the_block_3: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_3: visible=true,mandatory=true",
+    "v_commission_payment_availability_date_3: visible=true,mandatory=true",
+    "v_enter_the_number_of_leaders_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"commissions\" and loads is \"1\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=commission^IO:v_quantity_of_loadsIN1,2,3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "commission_payment_summary: visible=true,mandatory=true",
+    "v_inform_the_block: visible=true,mandatory=true",
+    "v_enter_the_number_of_leaders: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question: visible=true,mandatory=true",
+    "v_inform_the_cycle: visible=true,mandatory=true",
+    "v_commission_payment_availability_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"commissions\" and loads is \"2\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=commission^IO:v_quantity_of_loadsIN2,3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_payment_sheet_in_question_2: visible=true,mandatory=true",
+    "v_inform_the_block_2: visible=true,mandatory=true",
+    "commission_payment_summary_2: visible=true,mandatory=true",
+    "v_inform_the_cycle_2: visible=true,mandatory=true",
+    "v_enter_the_number_of_leaders_2: visible=true,mandatory=true",
+    "v_commission_payment_availability_date_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"Awards\" and loads is \"5\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=awards^IO:v_quantity_of_loads=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_payment_sheet_in_question_5: visible=true,mandatory=true",
+    "v_inform_the_cycle_5: visible=true,mandatory=true",
+    "v_inform_the_block_5: visible=true,mandatory=true",
+    "award_payment_summary_5: visible=true,mandatory=true",
+    "v_enter_the_number_of_employees_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"Awards\" and loads is \"2\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=awards^IO:v_quantity_of_loadsIN2,3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_the_cycle_2: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_2: visible=true,mandatory=true",
+    "award_payment_summary_2: visible=true,mandatory=true",
+    "v_enter_the_number_of_employees_2: visible=true,mandatory=true",
+    "v_inform_the_block_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"Awards\" and loads is \"1\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=awards^IO:v_quantity_of_loadsIN1,2,3,4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_payment_sheet_in_question: visible=true,mandatory=true",
+    "v_enter_the_number_of_employees: visible=true,mandatory=true",
+    "v_inform_the_block: visible=true,mandatory=true",
+    "v_inform_the_cycle: visible=true,mandatory=true",
+    "award_payment_summary: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "If it is \"Awards\" and loads is \"4\"",
+   "when": "IO:v_called_for_premium_or_commission_payment_approval=awards^IO:v_quantity_of_loadsIN4,5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_number_of_employees_4: visible=true,mandatory=true",
+    "v_inform_the_cycle_4: visible=true,mandatory=true",
+    "v_inform_the_block_4: visible=true,mandatory=true",
+    "v_attach_the_payment_sheet_in_question_4: visible=true,mandatory=true",
+    "award_payment_summary_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Initial",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_quantity_of_loads: visible=true,mandatory=true",
+    "v_called_for_premium_or_commission_payment_approval: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "f611c85c1b3c21d0a530426fe54bcb77",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de limpeza ampla do bloco de cargas: quantidade de cargas, ciclo, bloco, número de líderes, número de colaboradores e os anexos associados. Um dos maiores scripts de limpeza em cascata do catálogo."
+  },
+  {
+   "name": "EY: Clear Field loads",
+   "type": "onChange",
+   "on": "a5630c581b7c21d0a530426fe54bcb0b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange, variante do anterior, que limpa ciclo, bloco, número de líderes, número de colaboradores e anexos — sem limpar a quantidade de cargas, que é o campo que o dispara."
+  }
+ ]
+}

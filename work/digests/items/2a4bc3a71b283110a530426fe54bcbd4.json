@@ -1,0 +1,198 @@
+{
+ "sys_id": "2a4bc3a71b283110a530426fe54bcbd4",
+ "name": "Adicionar ou Remover  membros em Grupos",
+ "sys_name": "Add or Remove members in Groups ",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Outros",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Esse formulário é exclusivo para resolvedores e aprovadores do CSC",
+ "description": "Esse formulário é exclusivo para resolvedores e aprovadores do CSC",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "8",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_tower: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @group: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_user: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_group_members: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de adicionar/remover membros em grupos. Faz só o mínimo: grava item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type",
+   "include_none": true,
+   "choices": [
+    "Add [=add]",
+    "Remove [=remove]"
+   ]
+  },
+  {
+   "name": "v_tower",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Tower",
+   "reference": "sys_user_group_type",
+   "ref_qual": "nameLIKE-^ORname=Governança^ORname=Virtual Agent^ORnameLIKESPM^ORnameLIKETDG^name!=VRM - Vendor Risk Management^EQ"
+  },
+  {
+   "name": "group",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Group",
+   "reference": "sys_user_group",
+   "ref_qual": "javascript: 'manager!=NULL^typeLIKE'+current.variables.v_tower"
+  },
+  {
+   "name": "manager",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Group approver"
+  },
+  {
+   "name": "v_requests_for_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Requests for whom?",
+   "choices": [
+    "For me [=forme]",
+    "For someone else [=someone]"
+   ]
+  },
+  {
+   "name": "v_user",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "User",
+   "reference": "sys_user",
+   "ref_qual": "active=true^nameISNOTEMPTY^first_nameISNOTEMPTY^sso_sourceISNOTEMPTY^EQ"
+  },
+  {
+   "name": "v_group_members",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Group members",
+   "reference": "sys_user",
+   "ref_qual": "javascript: new x_nasm_hr.EY_CR18().getMembers(current.variables.group)"
+  },
+  {
+   "name": "v_justify_your_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Justify your request"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Required fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_tower: mandatory=true",
+    "v_justify_your_request: mandatory=true",
+    "v_type: mandatory=true",
+    "group: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show/Hide - Type None/Add",
+   "when": "IO:v_type=^ORIO:v_type=add^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_group_members: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Show/Hide - Type Add or requests for whom is for me/ for someone else",
+   "when": "IO:v_type=add^IO:v_requests_for_whom=forme^ORIO:v_requests_for_whom=someone^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_user: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show/Hide - Type Remove",
+   "when": "IO:v_type=remove^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_requests_for_whom: visible=false",
+    "v_user: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Show/Hide - Type None",
+   "when": "IO:v_type=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_user: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Check - User",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que verifica se a solicitação é para o próprio usuário ('forme') e ajusta o formulário conforme isso."
+  },
+  {
+   "name": "EY: Populate Group Members ",
+   "type": "onChange",
+   "on": "84ad4be71b283110a530426fe54bcbf0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera 'group_members' quando o grupo muda."
+  },
+  {
+   "name": "EY: Check and Clear Values - Groups",
+   "type": "onChange",
+   "on": "25fc4b2b1b283110a530426fe54bcb5a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trava o campo de grupo como somente leitura quando o valor fica vazio, e o libera com os valores corretos quando há seleção."
+  },
+  {
+   "name": "EY: Check and Clear Values - User",
+   "type": "onChange",
+   "on": "121e4beb1b283110a530426fe54bcb0e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que lê 'v_requests_for_whom' e limpa os campos conforme a escolha. Tem uma linha de depuração comentada."
+  },
+  {
+   "name": "EY: HTR Manager group",
+   "type": "onChange",
+   "on": "84ad4be71b283110a530426fe54bcbf0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que resolve o grupo do gestor de RH. É um dos poucos scripts do levantamento envolvido em try/catch — trata erro em vez de quebrar silenciosamente. Tem uma linha de depuração com addInfoMessage comentada."
+  }
+ ]
+}

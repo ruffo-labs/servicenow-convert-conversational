@@ -1,0 +1,143 @@
+{
+ "sys_id": "e7356b279a8a4abb8bb5ce551f1a4ce2",
+ "status": "dividido",
+ "motivo": "Analisar contratos pede o CNPJ do fornecedor; analisar documentos pede produto, lançamento e dados pessoais; elaborar documento pede lançamento, dados pessoais e informações do produto. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_qual_o_cnpj_do_fornecedor": {
+   "label": "Qual o CNPJ do fornecedor?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_qual_o_produto_ou_servico_que_sera_vin": {
+   "label": "A qual produto ou serviço isso se relaciona?"
+  },
+  "v_qual_a_previsao_de_lancamento": {
+   "label": "Qual a previsão de lançamento?"
+  },
+  "v_quais_dados_pessoais_serao_tratados_ne": {
+   "label": "Quais dados pessoais serão tratados?"
+  },
+  "v_quais_as_informacoes_sobre_o_produto_o": {
+   "label": "Que informações você tem sobre o produto ou serviço?"
+  }
+ },
+ "remover": {
+  "v_anexar_contrato_e_documentos_do_fornec": "visual",
+  "v_incluir_o_documento_anterior_que_sera_": "visual"
+ },
+ "policies": {
+  "f8280f1fafc746feaf606ce1b1ac99eb": "remover",
+  "329f496eec0e4a6c9f94be3f6985dd74": "remover",
+  "eb2b25c9e2d54e23ad0b22cb87f05473": "remover",
+  "7a1224cbdd9a434681cc0202b07c7c2e": "remover"
+ },
+ "itens": [
+  {
+   "name": "Analisar contrato sob a ótica de privacidade",
+   "short_description": "Peça a análise de privacidade de um contrato.",
+   "description": "Use para revisar contratos quanto à proteção de dados. Corresponde à opção Analisar Contratos. Informe o CNPJ do fornecedor e descreva o pedido.",
+   "frases_exemplo": [
+    "Preciso que analisem um contrato",
+    "Quero revisão de privacidade num contrato de fornecedor",
+    "Pode ver as cláusulas de LGPD de um contrato?",
+    "Tenho um contrato novo para revisar",
+    "Preciso de análise de contrato com um fornecedor"
+   ],
+   "sem_vars": [
+    "v_qual_o_produto_ou_servico_que_sera_vin",
+    "v_qual_a_previsao_de_lancamento",
+    "v_quais_dados_pessoais_serao_tratados_ne",
+    "v_quais_as_informacoes_sobre_o_produto_o"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Analisar Contratos"
+   },
+   "vars": {
+    "v_qual_o_cnpj_do_fornecedor": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Analisar documento de privacidade (políticas, termos)",
+   "short_description": "Peça a análise de um documento de privacidade já existente.",
+   "description": "Use para analisar documentos como políticas de privacidade, termos de uso ou cookies. Corresponde à opção Analisar documentos. Informe o produto ou serviço relacionado, a previsão de lançamento e os dados pessoais tratados.",
+   "frases_exemplo": [
+    "Preciso revisar uma política de privacidade",
+    "Quero análise de um termo de uso",
+    "Pode analisar nossa política de cookies?",
+    "Tenho um documento de privacidade para revisar",
+    "Preciso validar um documento antes do lançamento"
+   ],
+   "sem_vars": [
+    "v_qual_o_cnpj_do_fornecedor",
+    "v_quais_as_informacoes_sobre_o_produto_o"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Analisar documentos"
+   },
+   "vars": {
+    "v_qual_o_produto_ou_servico_que_sera_vin": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_a_previsao_de_lancamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_quais_dados_pessoais_serao_tratados_ne": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Elaborar documento de privacidade",
+   "short_description": "Peça a elaboração de um documento de privacidade ou conformidade.",
+   "description": "Use para criar um documento novo, como política de privacidade, termos de uso ou política de cookies. Corresponde à opção Elaborar documento. Informe previsão de lançamento, dados pessoais tratados e informações do produto ou serviço.",
+   "frases_exemplo": [
+    "Preciso criar uma política de privacidade",
+    "Quero que elaborem um termo de uso",
+    "Preciso de uma política de cookies nova",
+    "Vamos lançar um produto e falta o documento de privacidade",
+    "Pode redigir um documento de privacidade para mim?"
+   ],
+   "sem_vars": [
+    "v_qual_o_cnpj_do_fornecedor",
+    "v_qual_o_produto_ou_servico_que_sera_vin"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Elaborar documento"
+   },
+   "vars": {
+    "v_qual_a_previsao_de_lancamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_quais_dados_pessoais_serao_tratados_ne": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_quais_as_informacoes_sobre_o_produto_o": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

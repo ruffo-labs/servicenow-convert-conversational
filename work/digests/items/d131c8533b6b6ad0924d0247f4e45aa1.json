@@ -1,0 +1,238 @@
+{
+ "sys_id": "d131c8533b6b6ad0924d0247f4e45aa1",
+ "name": "Beneficiamento, Sucatas e Resíduos: Envio de informações, solicitações e dúvidas de clientes",
+ "sys_name": "Processing, Scrap and Waste: Submission of information, requests, and inquiries from clients",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Serviços Administrativos",
+ "catalogs": "OTC Serviços de Suporte Administrativo, Virtual Agent Search",
+ "short_description": "Sou cliente, tenho débitos a pagar para Natura e desejo contatar o contas a receber",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "13",
+   "variaveis_ativas": "15",
+   "bloqueadores": "2",
+   "avisos": "2",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_add_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_add_attachment"
+   }
+  ],
+  "avisos": [
+   "sem_conversational_label: 12 de 13 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Beneficiamento, Sucatas e Resíduos. Grava x_nasm_hr_item com o sysparm_id da URL e força tanto requested_for quanto opened_by para o usuário genérico lido da system property 'acn_guest_user'. Guarda o e-mail real do solicitante em requested_for_email. Ou seja: o chamado consta aberto pelo usuário genérico, e o contato real fica só no campo de e-mail — formulário voltado a cliente externo.",
+ "variaveis": [
+  {
+   "name": "company_name",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Company name",
+   "choices": [
+    "Natura [=natura]"
+   ]
+  },
+  {
+   "name": "country",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Country",
+   "choices": [
+    "Brasil [=brasil]"
+   ]
+  },
+  {
+   "name": "cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ"
+  },
+  {
+   "name": "email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "E-mail"
+  },
+  {
+   "name": "name_requester",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name of the Requester"
+  },
+  {
+   "name": "name_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name of your company"
+  },
+  {
+   "name": "select_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the category",
+   "include_none": true,
+   "choices": [
+    "Sending information [=sending_information]",
+    "Requests and inquiries [=requests_inquiries]"
+   ]
+  },
+  {
+   "name": "type_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Proof of payment [=comprovante_pagamento]",
+    "Change of contact information [=alteracao_dados]",
+    "Returns [=devolucoes]",
+    "Partial payments [=pagamentos_parciais]",
+    "Cancellation of notes [=cancelamemento_notas]",
+    "Open position of titles [=posicao_titulos_aberto]",
+    "Others [=outros]"
+   ]
+  },
+  {
+   "name": "type_request_2",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Change of contact information [=alteracao_dados_2]",
+    "Proof of payment [=comprovante_pagamento_2]"
+   ]
+  },
+  {
+   "name": "describe_your_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe your email",
+   "conversational_label": "describe_your_email"
+  },
+  {
+   "name": "describe_your_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe your phone"
+  },
+  {
+   "name": "describe_your_order",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe your order in detail"
+  },
+  {
+   "name": "legenda_notas",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Report paid invoices/bills"
+  },
+  {
+   "name": "v_add_attachment_label",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Add the payment receipts and/or documents"
+  },
+  {
+   "name": "v_add_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Add the payment receipts and/or documents",
+   "widget": "EY: Enable public attachment"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: If \"Type of request\" is 'change of contact'",
+   "when": "IO:type_request=alteracao_dados^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "describe_your_email: visible=true,mandatory=true",
+    "describe_your_phone: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If category is \"Solicitações e dúvidas\"",
+   "when": "IO:select_category=requests_inquiries^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "describe_your_order: mandatory=true",
+    "country: mandatory=true,readonly=true",
+    "company_name: mandatory=true,readonly=true",
+    "name_requester: mandatory=true",
+    "cnpj: mandatory=true",
+    "select_category: mandatory=true",
+    "name_company: mandatory=true",
+    "email: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: if \"Type of request\" is \"Comprovante; Devoluções; Pagamentos parciais; cancelamento notas;outros\"",
+   "when": "IO:type_requestINcomprovante_pagamento,devolucoes,pagamentos_parciais,cancelamemento_notas,outros^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_notas: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If category is \"Envio de informações\"",
+   "when": "IO:select_category=sending_information^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_request_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read only fields ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_request_2: readonly=true",
+    "type_request: readonly=true",
+    "describe_your_phone: readonly=true",
+    "cnpj: readonly=true",
+    "name_requester: readonly=true",
+    "attach_comprovantes: readonly=true",
+    "email: readonly=true",
+    "describe_your_order: readonly=true",
+    "country: readonly=true",
+    "describe_your_email: readonly=true",
+    "select_category: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

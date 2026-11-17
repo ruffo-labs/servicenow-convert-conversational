@@ -1,0 +1,174 @@
+{
+ "sys_id": "117393421b605a10514cbaef4b4bcba5",
+ "name": "Solicitação de apólice de seguro / seguro de vida",
+ "sys_name": "Application for Insurance Policy / Life Insurance",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Política/ Seguro de vida",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Use este formulário para fazer solicitações relacionadas ao registro e/ou modificação do serviço.",
+ "description": "Use este formulário para fazer solicitações relacionadas ao registro e/ou modificação do serviço.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "25",
+   "bloqueadores": "0",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_legend_two_arg_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legent_two_peru: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_life_insurance_form: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legent_two_chile: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legend_document: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legend_two_arg_new: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+ "variaveis": [
+  {
+   "name": "v_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "High Benefit [=high_benefit]",
+    "Coverage Modification [=coverage_modification]",
+    "Modification Beneficiaries [=modification_beneficiaries]"
+   ]
+  },
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legend_two_arg_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legend_two_arg_new",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legent_two_peru",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legent_two_chile",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_life_insurance_form",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Life Insurance Form"
+  },
+  {
+   "name": "v_checkbox_contractual",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I have prior and express knowledge of the contractual terms and conditions of the request made."
+  },
+  {
+   "name": "v_legend_document",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_life_insurance_form: visible=true,mandatory=true",
+    "v_checkbox_contractual: visible=true,mandatory=true",
+    "v_type_of_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY : Show Forms PER",
+   "when": "IO:v_country=PER^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legent_two_peru: visible=true"
+   ]
+  },
+  {
+   "name": "EY : Show Forms CHI",
+   "when": "IO:v_countrySTARTSWITHCHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legent_two_chile: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY : Show Forms ARG",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que decide quais formulários exibir para usuários da Argentina. Chama o Script Include EYHispanic_Employee_Information, método getUserInformation, via GlideAjax, e usa os dados do colaborador retornados para mostrar ou esconder blocos do formulário."
+  },
+  {
+   "name": "EY : Show Forms ARG",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Versão onLoad do script anterior. Sai cedo se 'v_employee' estiver vazio, senão faz a mesma chamada a EYHispanic_Employee_Information.getUserInformation para montar o formulário já no estado correto na abertura."
+  }
+ ]
+}

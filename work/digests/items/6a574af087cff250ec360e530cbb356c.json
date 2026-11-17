@@ -1,0 +1,264 @@
+{
+ "sys_id": "6a574af087cff250ec360e530cbb356c",
+ "name": "Solicitações Workday Learning",
+ "sys_name": "FORM0000732",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços de Ações de Aprendizagem",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search, Catálogo hispânico",
+ "short_description": "Este caminho é para cadastro de conteúdo, registro de presenças e outras dúvidas relacionadas à Workday Learning",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @anexo_conteudo_carregado_lista_presenca: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @download_the_form_compaing_here: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "what_is_the_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the request?",
+   "include_none": true,
+   "choices": [
+    "Cadastro de conteúdo no Workday Learning [=cadastro_conteudo_workday_learning]",
+    "Workday Learning Questions or Requests [=duvidas_workday_learning]"
+   ]
+  },
+  {
+   "name": "categoria_de_aprendizagem",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Categoria de Aprendizagem",
+   "include_none": true,
+   "choices": [
+    "Núcleo [=nucleo]",
+    "HUB [=hub]",
+    "Células [=celulas]",
+    "Portas de Entrada [=portas_entrada]"
+   ]
+  },
+  {
+   "name": "seleciona_o_hub",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Selecione o HUB",
+   "include_none": true,
+   "choices": [
+    "Essence, Brands, Products, and Customers [=essence_brands_products_customers]",
+    "Data, AI, and Agility [=data_ai_agility]",
+    "Business, Markets & Channels, and Execution [=business_markets_channels_execution]",
+    "Soft Skills, Compliance, and Mandatory Training [=softskills_compliance_mandatory_training]"
+   ]
+  },
+  {
+   "name": "nome_da_celula",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nome da Célula"
+  },
+  {
+   "name": "acao_obrigatoria",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Ação obrigatória?",
+   "include_none": true
+  },
+  {
+   "name": "training_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training Title"
+  },
+  {
+   "name": "training_objective",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Course description"
+  },
+  {
+   "name": "responsible_for_content",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Responsible for content"
+  },
+  {
+   "name": "data_horario_inicio",
+   "type": "Data/Hora",
+   "type_code": "10",
+   "label": "Data e horário de início"
+  },
+  {
+   "name": "insert_link_Customer_satisfaction_survey_form",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Insert the link to the Customer Satisfaction Survey form."
+  },
+  {
+   "name": "enter_the_link_to_the_content_to_be_loaded",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the link to the content to be loaded."
+  },
+  {
+   "name": "do_you_wish_to_perform_a_bulk_enrollment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Do you wish to perform a bulk enrollment or create a campaign for this course?",
+   "include_none": true,
+   "choices": [
+    "Bulk Registration [=bulk_registration]",
+    "Campaign [=campaign]",
+    "Not applicable [= not_applicable]"
+   ]
+  },
+  {
+   "name": "link_eligibles_database_collaborator_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the link to the Eligibles database (The database must contain the collaborator ID)."
+  },
+  {
+   "name": "download_the_form_compaing_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Fill out the form and attach it."
+  },
+  {
+   "name": "anexo_conteudo_carregado_lista_presenca",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach cover image"
+  },
+  {
+   "name": "additional_information",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Additional information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+   "name": "EY: Informação do solicitante",
+   "order": "100",
+   "perguntas": [
+    "opened_by (Referência, default, ro): Opened By",
+    "request_for_who (Selecionar Caixa): Request for who?",
+    "employee (Referência): Employee's name"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Nome da célula",
+   "when": "IO:what_is_the_request=cadastro_conteudo_workday_learning^IO:categoria_de_aprendizagem=celulas^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "nome_da_celula: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "what_is_the_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Dúvidas de Workday Learning",
+   "when": "IO:what_is_the_request=duvidas_workday_learning^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "additional_information: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Cadastro de conteúdo no Workday Learning",
+   "when": "IO:what_is_the_request=cadastro_conteudo_workday_learning^ORIO:what_is_the_request=add_another_course^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "enter_the_link_to_the_content_to_be_loaded: visible=true,mandatory=true",
+    "do_you_wish_to_perform_a_bulk_enrollment: visible=true,mandatory=true",
+    "data_horario_inicio: visible=true,mandatory=true",
+    "categoria_de_aprendizagem: visible=true,mandatory=true",
+    "training_objective: visible=true,mandatory=true",
+    "training_name: visible=true,mandatory=true",
+    "total_workload: visible=true,mandatory=true",
+    "anexo_conteudo_carregado_lista_presenca: visible=true,mandatory=true",
+    "acao_obrigatoria: visible=true,mandatory=true",
+    "insert_link_Customer_satisfaction_survey_form: visible=true",
+    "data_horario_termino: visible=true,mandatory=true",
+    "responsible_for_content: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Inscricao  Massiva",
+   "when": "IO:do_you_wish_to_perform_a_bulk_enrollment=bulk_registration^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_eligibles_database_collaborator_id: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Criar Campanha",
+   "when": "IO:do_you_wish_to_perform_a_bulk_enrollment=campaign^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "download_the_form_compaing_here: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Request for who",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "request_for_who: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Selecione o HUB",
+   "when": "IO:what_is_the_request=cadastro_conteudo_workday_learning^IO:categoria_de_aprendizagem=hub^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "seleciona_o_hub: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear when request changes",
+   "type": "onChange",
+   "on": "8068067887cff250ec360e530cbb3562",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o formulário quando a solicitação muda, por uma função interna clearForm documentada em comentário."
+  }
+ ]
+}

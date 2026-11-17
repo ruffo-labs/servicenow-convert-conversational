@@ -1,0 +1,103 @@
+{
+ "sys_id": "a2267f7d3b90de50924d0247f4e45ae3",
+ "title": "Your children's data",
+ "internal_name": "dados_dos_seus_filhos",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Reembolso de Kit Escolar"
+ ],
+ "variaveis": [
+  {
+   "name": "employee_reference",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee Name",
+   "hidden": true,
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_child_name_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Child name",
+   "reference": "x_nasm_hr_beneficiary",
+   "lookup": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Beneficiary().getEmployeeBeneficiariesSchoolKit(current.variables.employee_reference);",
+   "include_none": true
+  },
+  {
+   "name": "v_total_amount_of_expenses_new",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total amount of expenses"
+  },
+  {
+   "name": "v_tope",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Tope",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide tope",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_tope: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_child_name_new: mandatory=true",
+    "v_total_amount_of_expenses_new: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Count number of children",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que conta o número de filhos lendo a lista do sessionStorage ('children_list_2')."
+  },
+  {
+   "name": "EY: Get tope to apply in amount OnLoad",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que calcula o teto de reembolso aplicável ao valor, lendo o colaborador do formulário pai e montando a data de referência com o dia fixado em '01'."
+  },
+  {
+   "name": "EY: Get tope to apply in amount OnChange",
+   "type": "onChange",
+   "on": "eae9c8023b54de50924d0247f4e45aea",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Par onChange do cálculo de teto. Observação: a linha `g_form.clearMessages;` está SEM os parênteses — referencia a função em vez de executá-la, então as mensagens não são limpas."
+  },
+  {
+   "name": "EY: Set employee",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que copia o colaborador do formulário PAI (g_service_catalog.parent) para 'employee_reference' e trava o campo — roda dentro de um multi-row variable set."
+  },
+  {
+   "name": "EY: Set amount regex",
+   "type": "onChange",
+   "on": "eae9c8023b54de50924d0247f4e45aea",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o valor no formato brasileiro/hispânico (milhar com ponto, decimais com vírgula)."
+  }
+ ]
+}

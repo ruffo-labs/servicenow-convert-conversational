@@ -1,0 +1,87 @@
+{
+ "sys_id": "2579a7048707f610ec360e530cbb35cb",
+ "title": "EY: Basic collaborator Info",
+ "internal_name": "ey_basic_collaborator_info",
+ "description": "for who, Select Colaborator, name, Global ID, Email, public",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Informações ou dúvidas relacionadas à frota",
+  "Indicadores"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_for_who",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request for whom?",
+   "include_none": true,
+   "choices": [
+    "For me [=for_me]",
+    "For another collaborator [=another_user]"
+   ]
+  },
+  {
+   "name": "vs_select_the_collaborator",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the collaborator",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_select_collaborators_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Collaborator's Name",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_collaborator_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator's name",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_collaborato_global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator's Global ID"
+  },
+  {
+   "name": "vs_collaborator_e_mail",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Corporate Email"
+  },
+  {
+   "name": "vs_public",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Public"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set Collaborators Name Visible off",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_collaborators_name: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Populate collaboratos name",
+   "type": "onChange",
+   "on": "956aa38c8707f610ec360e530cbb35fa",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche dados do colaborador. Chama o Script Include EY_HTRUtils, método getEmployeeGlobalIdAndPublic, via GlideAjax, e usa o retorno para preencher ID global e público. Duplicata de outro script do mesmo conjunto."
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "sys_id": "8486edc11b549250514cbaef4b4bcb28",
+ "status": "conversacional",
+ "motivo": "Intenção única (relatório ou saque de cesantías) com uma escolha de categoria e uma descrição. A obrigatoriedade fixa vira prop e a checagem de 30 caracteres vira validation_regex. O script que fixa e trava o país de residência como Colômbia continua como está: é VA supported (já funciona na conversa), então não precisa de conversão nem de policy.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_category": {
+   "label": "Você quer o extrato ou o saque das cesantías?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_details": {
+   "label": "Descreva o seu pedido (por exemplo, o motivo do saque).",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{30,}$"
+   }
+  },
+  "v_attachment": {
+   "label": "Envie o documento que comprova o uso do saque das cesantías."
+  }
+ },
+ "remover": {
+  "v_minimun_characters": "visual",
+  "v_download_document": "visual"
+ },
+ "policies": {
+  "a1c074dd3b581a50924d0247f4e45a72": "remover",
+  "07213cdd3b581a50924d0247f4e45a24": {
+   "conditions": "v_category=severance_pay_withdrawal",
+   "actions": {
+    "v_attachment": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "1a8238913b981a50924d0247f4e45a03": {
+   "remover": "sem_efeito"
+  },
+  "1f32bc513b981a50924d0247f4e45a0c": {
+   "converter": "regex"
+  },
+  "58823c913b981a50924d0247f4e45a99": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "name": "Solicitar extrato ou saque de cesantías (indenização por rescisão)",
+   "short_description": "Peça o extrato ou o saque das suas cesantías / indenização por rescisão (Colômbia).",
+   "description": "Use, na Colômbia, para pedir o extrato (relatório) das suas cesantías ou para solicitar o saque parcial dessa indenização (por exemplo, para moradia ou educação). No saque, anexe o documento que comprova o uso. Não use para dúvidas sobre sua rescisão de contrato ou desligamento.",
+   "frases_exemplo": [
+    "quero sacar minhas cesantías",
+    "necesito el certificado de cesantías",
+    "retiro parcial de cesantías para vivienda",
+    "preciso do extrato da indenização por rescisão"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "sys_id": "046b58fc1bb71114d1abda4ce54bcbbc",
+ "name": "Prorrogação de título",
+ "sys_name": "FORM0000336",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar prorrogação em massa de títulos",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "9",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_template_natura: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^user.active=true^EQ"
+  },
+  {
+   "name": "v_template_natura",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach template with titles to be extended"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "651fea191b331d14a530426fe54bcb2a",
+   "name": "EY: Opened by - Company:Avon/Natura - Describe",
+   "order": "10",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_which_company (Selecionar Caixa): Which company is your request for?",
+    "vs_sub_company (Referência): Which sub-company is the service for?",
+    "vs_describe_request (Texto de Várias Linhas): Describe the request"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "900",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_template: mandatory=true",
+    "v_select_the_approver: visible=true,mandatory=true",
+    "v_attach_approval: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show template Natura",
+   "when": "IO:vs_which_company=Natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_natura: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show template Avon",
+   "when": "IO:vs_which_company=Avon Latam^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_avon: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

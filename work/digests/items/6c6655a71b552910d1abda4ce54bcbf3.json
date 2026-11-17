@@ -1,0 +1,92 @@
+{
+ "sys_id": "6c6655a71b552910d1abda4ce54bcbf3",
+ "name": "Capitalização de Gastos",
+ "sys_name": "Capitalization of Expenses",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Ativo Fixo",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite reclassificação para o ativo fixo",
+ "description": "Solicite reclassificação para o ativo fixo",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "17",
+   "variaveis_ativas": "20",
+   "bloqueadores": "1",
+   "avisos": "15",
+   "perguntas_sem_conversational_label": "17"
+  },
+  "bloqueadores": [
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "v_template_capitalization_expenses"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_informative_note: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_accounting_entry_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_capitalization_expenses: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_file: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 17 de 17 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "aba7d12f1b552910d1abda4ce54bcb3f",
+   "name": "EY VS - Capitalização de Gastos",
+   "order": "200",
+   "perguntas": [
+    "v_release_date (Data): Release date",
+    "v_describe_the_information_you_need (Texto de Várias Linhas): Describe your request",
+    "v_informative_note (Rótulo de Rich Text): ",
+    "v_attach_file (Anexo): Attach template",
+    "v_template_capitalization_expenses (Rótulo de Rich Text): TEMPLATE",
+    "v_template_accounting_entry_avon (Rótulo de Rich Text): Template - Accounting Entry - Avon"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

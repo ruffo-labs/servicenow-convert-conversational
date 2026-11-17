@@ -26,7 +26,7 @@ const apresentacao = (v) => naoColetaDado(v) || PRESENT.has(String(v.type)) || t
 
 // Listas fechadas. Todo campo aceita também {"outro": "<texto curto>"}.
 const CODIGOS = {
-  remover_var: ['visual', 'texto_movido_descricao', 'sem_uso_conversa'], // + {substituida_por}, {duplicada_no_set}
+  remover_var: ['visual', 'texto_movido_descricao', 'sem_uso_conversa', 'oferta_inativa'], // + {substituida_por}, {duplicada_no_set}. oferta_inativa: variável de dado que só existia para ofertas não operacionais
   converter: ['props', 'regex', 'default', 'auto_populate'], // + "policy:<chave>"
   remover_script: ['sem_efeito'], // + {substituido_por}
   ajustar: ['va_supported', 'remover_dom', 'ui_type_all'],

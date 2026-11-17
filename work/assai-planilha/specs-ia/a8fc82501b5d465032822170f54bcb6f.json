@@ -1,0 +1,95 @@
+{
+ "sys_id": "a8fc82501b5d465032822170f54bcb6f",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Gestor - RH Ponta > Rescisão > PPR (ex-colaborador), 1 item em Preciso reportar um problema (1 oferta) e 1 em Preciso de um serviço de RH (1 oferta).",
+ "vars": {
+  "reference_year": {
+   "label": "De que ano é o PPR?"
+  },
+  "request_call_number": {
+   "label": "Qual é o número do chamado da solicitação anterior?"
+  },
+  "answer_email": {
+   "label": "Para qual e-mail devemos responder?"
+  },
+  "inform_the_former_collaborator_email": {
+   "label": "Qual é o e-mail do ex-colaborador?"
+  }
+ },
+ "remover": {
+  "observation": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "166f4a941b5d465032822170f54bcb58": "remover",
+  "32914252872aaa10182a0d440cbb351b": "remover",
+  "34141a101b9d465032822170f54bcb7e": "remover",
+  "50b904fe1bf5061432822170f54bcbec": "remover",
+  "696ec03a1b39061432822170f54bcb23": "remover",
+  "adedf7f787375290182a0d440cbb35e3": "remover",
+  "eeebd6b23b1f5e50b28dd047f4e45a2b": "remover",
+  "f3c85efa3bdb5e50b28dd047f4e45a11": "remover"
+ },
+ "itens": [
+  {
+   "name": "PPR (ex-colaborador) (problema)",
+   "short_description": "Reportar divergência no PPR já pago a ex-colaborador.",
+   "description": "Use para reportar que o PPR já pago a um ex-colaborador está com divergência (oferta Divergência do pagamento do PPR para Ex colaborador - PPR (Ex Colaborador)). Informe o ano de referência. Atendimento do RH - Complemento de Rescisão N3, SLA de 56h.",
+   "frases_exemplo": [
+    "O PPR do ex-colaborador foi pago com valor errado",
+    "Ex-funcionário reclamou do valor do PPR",
+    "Quero reportar divergência no PPR de quem saiu",
+    "O PPR que pagamos ao desligado está divergente",
+    "Preciso corrigir PPR de ex-colaborador"
+   ],
+   "sem_vars": [
+    "reference_year",
+    "phone_of_former_collaborator"
+   ],
+   "vars": {
+    "request_call_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "inform_the_former_collaborator_email": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "PPR (ex-colaborador) (serviço)",
+   "short_description": "Pedir pagamento de PPR a ex-colaborador que não recebeu.",
+   "description": "Use para solicitar o pagamento do PPR a um ex-colaborador que ainda não o recebeu (oferta Solicitação de pagamento de PPR para Ex-colaborador - PPR (Ex Colaborador)). Informe o ano de referência e o e-mail do ex-colaborador. Atendimento do RH - PPR, SLA de 80h.",
+   "frases_exemplo": [
+    "Ex-colaborador não recebeu o PPR, quero pedir o pagamento",
+    "Preciso pagar PPR de quem foi desligado",
+    "Como solicito PPR para um ex-funcionário?",
+    "O desligado tem direito a PPR e ainda não recebeu",
+    "Quero solicitar PPR de ex-colaborador"
+   ],
+   "sem_vars": [
+    "request_call_number"
+   ],
+   "vars": {
+    "reference_year": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "inform_the_former_collaborator_email": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "phone_of_former_collaborator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

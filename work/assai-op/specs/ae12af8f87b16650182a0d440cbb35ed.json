@@ -1,0 +1,196 @@
+{
+ "sys_id": "ae12af8f87b16650182a0d440cbb35ed",
+ "status": "dividido",
+ "motivo": "Divergência de desconto pede demonstrativo; não recebimento pede extrato e chamado do reembolso; solicitação de reembolso pede cargo, dados bancários e comprovantes.",
+ "vars": {
+  "v_role": {
+   "label": "Qual é o seu cargo?"
+  },
+  "bank": {
+   "label": "Qual é o seu banco?"
+  },
+  "observacao": {
+   "label": "Há alguma observação sobre o reembolso?"
+  },
+  "bank_extract": {
+   "label": "Envie o extrato bancário."
+  },
+  "agency": {
+   "label": "Qual é a agência?"
+  },
+  "checking_account": {
+   "label": "Qual é a conta corrente, com dígito se houver?"
+  },
+  "comprovante_de_pagamento": {
+   "label": "Envie o comprovante de pagamento da vacina."
+  },
+  "comprovante_de_endereco": {
+   "label": "Envie o comprovante de endereço."
+  },
+  "demonstrativo_de_pagamento": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "nota_fiscal_da_compra": {
+   "label": "Envie a nota fiscal da compra."
+  },
+  "refund_request_call_number": {
+   "label": "Qual é o número do chamado em que você pediu o reembolso?"
+  },
+  "comprovante_dos_dados_bancarios": {
+   "label": "Envie o comprovante dos dados bancários."
+  }
+ },
+ "remover": {
+  "observacao1": "visual",
+  "observacao_its_necessary_attach_bank_proof": "visual",
+  "formatter": "visual",
+  "formatter3": "visual",
+  "formatter2": "visual",
+  "formatter4": "visual",
+  "cont_start": "visual",
+  "cont_start_01": "visual"
+ },
+ "policies": {
+  "070717b087362e50182a0d440cbb35b1": "remover",
+  "1ce41b7c87f22e50182a0d440cbb3567": "remover",
+  "487188c5877a2e50182a0d440cbb35b5": "remover",
+  "4dc59ffc87f22e50182a0d440cbb35d6": "remover",
+  "5b451b7c87f22e50182a0d440cbb3564": "remover",
+  "77265f3087362e50182a0d440cbb3598": "remover",
+  "7ce7aa138739a650182a0d440cbb3512": "remover",
+  "83e188c5877a2e50182a0d440cbb35d6": "remover",
+  "a7f5973087362e50182a0d440cbb3560": "remover",
+  "c481dbb487f22e50182a0d440cbb35e8": "remover",
+  "c4ade8b087feaa50182a0d440cbb3593": "remover",
+  "c4e6d3b087362e50182a0d440cbb3587": "remover",
+  "ce70bac63beb2650b28dd047f4e45a4c": "remover",
+  "d866177087362e50182a0d440cbb355f": "remover",
+  "ff861b7087362e50182a0d440cbb3518": "remover"
+ },
+ "itens": [
+  {
+   "name": "Desconto da vacina com valor errado",
+   "short_description": "Divergência no valor do desconto da vacina",
+   "description": "Use quando o desconto da vacina vier com valor divergente. Anexe o demonstrativo de pagamento.",
+   "frases_exemplo": [
+    "Descontaram a vacina errado",
+    "Valor do desconto da vacina divergente",
+    "Desconto da campanha de vacinação veio errado",
+    "Não concordo com o desconto da vacina"
+   ],
+   "sem_vars": [
+    "v_role",
+    "bank",
+    "bank_extract",
+    "agency",
+    "checking_account",
+    "comprovante_de_pagamento",
+    "comprovante_de_endereco",
+    "nota_fiscal_da_compra",
+    "refund_request_call_number",
+    "comprovante_dos_dados_bancarios"
+   ],
+   "vars": {
+    "demonstrativo_de_pagamento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reembolso da vacina não recebido",
+   "short_description": "Não recebimento de reembolso da vacina",
+   "description": "Use quando não recebeu o reembolso da vacina. Informe o número do chamado do pedido e anexe o extrato bancário.",
+   "frases_exemplo": [
+    "Não recebi o reembolso da vacina",
+    "Cadê meu reembolso da vacina?",
+    "Reembolso da vacina não caiu",
+    "Pedi reembolso da vacina e nada"
+   ],
+   "sem_vars": [
+    "v_role",
+    "bank",
+    "observacao",
+    "agency",
+    "checking_account",
+    "comprovante_de_pagamento",
+    "comprovante_de_endereco",
+    "demonstrativo_de_pagamento",
+    "nota_fiscal_da_compra",
+    "comprovante_dos_dados_bancarios"
+   ],
+   "vars": {
+    "bank_extract": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "refund_request_call_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reembolso da vacina da gripe",
+   "short_description": "Solicitação de reembolso - vacina da gripe",
+   "description": "Use para solicitar o reembolso da vacina da gripe. Informe cargo e dados bancários e anexe os comprovantes de pagamento, endereço, nota fiscal e dados bancários.",
+   "frases_exemplo": [
+    "Quero reembolso da vacina da gripe",
+    "Tomei vacina por fora e quero reembolso",
+    "Como peço reembolso da vacina?",
+    "Reembolso de vacina da gripe"
+   ],
+   "sem_vars": [
+    "observacao",
+    "bank_extract",
+    "demonstrativo_de_pagamento",
+    "refund_request_call_number"
+   ],
+   "vars": {
+    "v_role": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "bank": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "agency": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "checking_account": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "comprovante_de_pagamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "comprovante_de_endereco": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "nota_fiscal_da_compra": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "comprovante_dos_dados_bancarios": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

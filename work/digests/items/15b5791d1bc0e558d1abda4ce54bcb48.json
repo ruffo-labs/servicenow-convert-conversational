@@ -1,0 +1,248 @@
+{
+ "sys_id": "15b5791d1bc0e558d1abda4ce54bcb48",
+ "name": "Admissão e Movimentação Internacional",
+ "sys_name": "International Admission and Movement",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Gestão de Pessoas e Estrutura",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Solicitar Admissão - Movimentação Internacional, Admissão Exterior (Estados Unidos e França) , Expatriação e Repatriação",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "12",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_completed_template_here: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_name_other: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_template_abroad: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_templates: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_expatriation: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_text_start: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_international: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_text_start",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_select_your_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select your option",
+   "include_none": true,
+   "choices": [
+    "Admission - International Movement [=v_admission_international_movement]",
+    "Admission - Abroad (United States and France) [=v_admission _abroad]",
+    "Expatriation [=v_expatriation]",
+    "Repatriation [=v_repatriation]"
+   ]
+  },
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_name_other",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name",
+   "reference": "sys_user",
+   "ref_qual": "active=true^locked_out=false^EQ"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global"
+  },
+  {
+   "name": "v_start_date_in_brazil",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start date in Brazil"
+  },
+  {
+   "name": "v_text_templates",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_international",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_expatriation",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_abroad",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_the_completed_template_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the completed template here"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY:  id",
+   "when": "IO:v_select_your_option=v_admission_international_movement^ORIO:v_select_your_option=v_expatriation^ORIO:v_select_your_option=v_repatriation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_id: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Name Control",
+   "when": "IO:v_select_your_option=v_admission _abroad^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Start Date in Brazil Field",
+   "when": "IO:v_select_your_option=v_repatriation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_start_date_in_brazil: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_id: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Field mandatory if abroad",
+   "when": "IO:v_select_your_option=v_admission _abroad^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_abroad: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Text mandatory when option != none",
+   "when": "IO:v_select_your_option=v_expatriation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_templates: visible=true"
+   ]
+  },
+  {
+   "name": "EY: File attachment",
+   "when": "IO:v_select_your_option!=v_repatriation^EQ",
+   "on_load": false,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_completed_template_here: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Fields mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_your_option: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: field mandatory if Expatriation or Repatriation",
+   "when": "IO:v_select_your_option=v_expatriation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_expatriation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field mandatory if International",
+   "when": "IO:v_select_your_option=v_admission_international_movement^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_international: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Name Other Control",
+   "when": "IO:v_select_your_optionINv_admission_international_movement,v_expatriation,v_repatriation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name_other: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear values",
+   "type": "onChange",
+   "on": "a87735d11b04e558d1abda4ce54bcb97",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_name_other' e campos relacionados."
+  },
+  {
+   "name": "EY: Fill Global Id",
+   "type": "onChange",
+   "on": "1bc82c291b05e914a530426fe54bcb98",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o ID global a partir do solicitante selecionado, via GlideAjax."
+  },
+  {
+   "name": "EY: Clear Values OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que esconde o campo de anexo do template preenchido na abertura."
+  }
+ ]
+}

@@ -1,0 +1,1034 @@
+{
+ "sys_id": "42785fd61bac9a10514cbaef4b4bcbf3",
+ "name": "Solicitações de licença maternidade",
+ "sys_name": "Maternity Leave Applications",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licença Maternidade",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar Licença Maternidade",
+ "description": "Utilize este formulário para solicitar Licença Maternidade",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "62",
+   "variaveis_ativas": "74",
+   "bloqueadores": "1",
+   "avisos": "37",
+   "perguntas_sem_conversational_label": "62"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Hide Notificar Embarazo option, EY: Show Soft Landing options"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attachment_17_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_7_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_10_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_6_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_10_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_19_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_awareness_salary_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_2_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_6_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_4_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_1_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_16_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_2_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_15_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_11_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_4_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_form_2_55_below_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_14_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_3_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_7_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_9_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_9_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_which_maternity_leave: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment_18_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_1_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_11_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_12_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_13_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_5_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_8_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_5_v4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_8_v4: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 62 de 62 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 62 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 44 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de licença maternidade. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Versão sem a atribuição dupla que os irmãos têm.",
+ "variaveis": [
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_which_maternity_leave",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "What is the Maternity leave you want to request?",
+   "lookup": "x_nasm_hr_rules_hispanic_licencia_maternidad_solicitud",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true
+  },
+  {
+   "name": "v_which_license_do_you_want_to_inform_request_v4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which license do you want to inform/request?",
+   "include_none": true,
+   "choices": [
+    "Prenatal License [=prenatal_license]",
+    "Postnatal License [=postnatal_license]"
+   ]
+  },
+  {
+   "name": "v_what_do_you_want_to_inform_request_v4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What do you want to inform/request?",
+   "include_none": true,
+   "choices": [
+    "Notify Pregnancy [=notify_pregnancy]",
+    "Request signature of form 2.55 [=request_signature_of_form_2_55]",
+    "Report Maternity Leave [=report_maternity_leave]"
+   ]
+  },
+  {
+   "name": "v_what_is_the_type_of_soft_landing_you_want_to_request_v4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the type of Soft Landing you want to request?",
+   "map_to_field": true,
+   "include_none": true,
+   "choices": [
+    "Home office 100% [=home_office_100]",
+    "With reduced hours [=with_reduced_hours]"
+   ]
+  },
+  {
+   "name": "v_actual_date_of_birth_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Actual date of birth"
+  },
+  {
+   "name": "v_expected_delivery_date_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Expected delivery date"
+  },
+  {
+   "name": "v_attachment_1_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the license form below"
+  },
+  {
+   "name": "v_attachment_2_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the Medical Certificate with the probable date of Delivery"
+  },
+  {
+   "name": "v_where_do_you_need_to_receive_your_form_v4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Where do you need to receive your form?",
+   "include_none": true,
+   "choices": [
+    "At my Home [=at_my_home]",
+    "In the Office [=in_the_ffice]"
+   ]
+  },
+  {
+   "name": "v_where_do_you_need_to_receive_your_form_operarios",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Where do you need to receive your form?",
+   "include_none": true,
+   "choices": [
+    "In the Office [=in_the_office_operarios]"
+   ]
+  },
+  {
+   "name": "v_where_do_you_need_to_receive_your_form_2_v4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Where do you need to receive your form?",
+   "include_none": true,
+   "choices": [
+    "In the Office [=in_the_office]",
+    "At my home (only for those who live in the interior of the country) [=at_my_home]"
+   ]
+  },
+  {
+   "name": "v_awareness_salary_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "I am aware that if I opt for the soft landing benefit with reduced hours to 4 hours per day, my salary will be reduced by 35%."
+  },
+  {
+   "name": "v_label_1_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_2_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Your form will be available to be picked up by Surveillance, from the date indicated to you."
+  },
+  {
+   "name": "v_address_v4",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Address"
+  },
+  {
+   "name": "v_attach_form_2_55_below_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach form 2.55 below"
+  },
+  {
+   "name": "v_license_start_date_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "License start date"
+  },
+  {
+   "name": "v_license_end_date_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "License End Date"
+  },
+  {
+   "name": "v_number_of_days_of_your_license_v4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your License"
+  },
+  {
+   "name": "v_maternity_leave_start_date_anses_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Maternity Leave start date (ANSES)"
+  },
+  {
+   "name": "end_date_of_maternity_leave_anses_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of Maternity Leave (ANSES)"
+  },
+  {
+   "name": "v_number_of_days_of_your_maternity_leave_anses_v4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your Maternity Leave (ANSES)"
+  },
+  {
+   "name": "v_start_date_of_leave_of_absence_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start date of Leave of Absence"
+  },
+  {
+   "name": "v_end_date_of_leave_of_absence_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of Leave of Absence"
+  },
+  {
+   "name": "v_number_of_days_of_your_leave_of_absence_v4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your Leave of Absence"
+  },
+  {
+   "name": "v_start_date_of_natura_benefit_license_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start date of Natura Benefit License"
+  },
+  {
+   "name": "v_fecha_de_fin_de_licencia_beneficio_natura_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of Natura Benefit License"
+  },
+  {
+   "name": "v_number_of_days_of_your_natura_benefit_license_v4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your Natura Benefit License"
+  },
+  {
+   "name": "v_label_4_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_5_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Remember that the term of the legal license is up to 84 days and that of the Natura license is up to 36 days, being able to enjoy a maximum of 120 calendar days."
+  },
+  {
+   "name": "v_label_6_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_7_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment_3_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Telegram below"
+  },
+  {
+   "name": "v_attachment_4_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the certificate issued by ANSES"
+  },
+  {
+   "name": "v_attachment_5_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the medical certificate or the BPS form with the probable date of delivery"
+  },
+  {
+   "name": "v_attachment_6_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the half-hour license application document, granted by BPS"
+  },
+  {
+   "name": "v_attachment_7_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the document that supports the adoption"
+  },
+  {
+   "name": "v_label_8_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment_8_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below, before delivery, the medical certificate"
+  },
+  {
+   "name": "v_attachment_9_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below, before delivery, the attachment 18"
+  },
+  {
+   "name": "v_attachment_10_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attached below, before delivery, the last recorded ultrasound"
+  },
+  {
+   "name": "v_i_request_an_extension_of_the_maternity_benefit_of_30_calendar_days_v4",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I request an extension of the maternity benefit of 30 calendar days"
+  },
+  {
+   "name": "v_label_9_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment_11_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your manager's approval below"
+  },
+  {
+   "name": "v_natura_license_start_date_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Natura License start date"
+  },
+  {
+   "name": "v_end_date_of_natura_license_v4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of Natura License"
+  },
+  {
+   "name": "v_number_of_days_of_your_natura_license_v4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your Natura License"
+  },
+  {
+   "name": "v_label_10_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_11_v4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment_12_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the minor's civil registry"
+  },
+  {
+   "name": "v_attachment_13_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the medical documentation with the clinical history"
+  },
+  {
+   "name": "v_attachment_14_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the license certificate below"
+  },
+  {
+   "name": "v_attachment_15_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the bank certification below"
+  },
+  {
+   "name": "v_attachment_16_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your manager's approval below"
+  },
+  {
+   "name": "v_attachment_17_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the maternity certificate sealed by the Ecuadorian Social Security Institute (IESS)"
+  },
+  {
+   "name": "v_attachment_18_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below notarized testimony of the decree issued by the competent Judge"
+  },
+  {
+   "name": "v_attachment_19_v4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below proof issued by the INAU or in case of adoption by notarial testimony of the respective public deed"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Field Rules v_label_5",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_5_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_1",
+   "when": "IO:v_where_do_you_need_to_receive_your_form_v4=in_the_ffice^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^IO:v_public!=Operations Associate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_1_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_15",
+   "when": "IO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_15_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_address",
+   "when": "IO:v_where_do_you_need_to_receive_your_form_2_v4=at_my_home^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_address_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_16",
+   "when": "IO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_16_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_12",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^NQIO:v_which_maternity_leave!=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_12_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Maternity Leave Options",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_maternity_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_i_request_an_extension_of_the_maternity_benefit_of_30_calendar_days",
+   "when": "IO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^IO:v_country=PER^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_i_request_an_extension_of_the_maternity_benefit_of_30_calendar_days_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_7",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_country=ARG^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_7_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_1",
+   "when": "IO:v_which_license_do_you_want_to_inform_request_v4=postnatal_license^ORIO:v_which_license_do_you_want_to_inform_request_v4=prenatal_license^IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_1_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_where_do_you_need_to_receive_your_form",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=request_signature_of_form_2_55^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^IO:v_public!=Operations Associate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_where_do_you_need_to_receive_your_form_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_natura_license_start_date / v_end_date_of_natura_license / v_number_of_days_of_your_natura_license / v_label_11",
+   "when": "IO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^ORIO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_11_v4: visible=true",
+    "v_end_date_of_natura_license_v4: visible=true,mandatory=true",
+    "v_number_of_days_of_your_natura_license_v4: visible=true",
+    "v_natura_license_start_date_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_awareness_salary",
+   "when": "IO:v_what_is_the_type_of_soft_landing_you_want_to_request_v4=with_reduced_hours^IO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_awareness_salary_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_start_date_of_natura_benefit_license / etc",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_start_date_of_natura_benefit_license_v4: visible=true,mandatory=true",
+    "v_fecha_de_fin_de_licencia_beneficio_natura_v4: visible=true,mandatory=true",
+    "v_label_4_v4: visible=true",
+    "v_number_of_days_of_your_natura_benefit_license_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_expected_delivery_date / v_attachment_2",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=notify_pregnancy^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKEavon^ORIO:v_companyLIKENatura^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_expected_delivery_date_v4: visible=true,mandatory=true",
+    "v_attachment_2_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_start_date_of_leave_of_absence_v4",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_end_date_of_leave_of_absence_v4: visible=true,mandatory=true",
+    "v_number_of_days_of_your_leave_of_absence_v4: visible=true",
+    "v_start_date_of_leave_of_absence_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_11",
+   "when": "IO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^IO:v_country=PER^NQIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^NQIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_11_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_3",
+   "when": "IO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^NQIO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_3_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_8 / v_attachment_8 / v_attachment_9 / v_attachment_10",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^IO:v_country=PER^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_9_v4: visible=true,mandatory=true",
+    "v_attachment_8_v4: visible=true,mandatory=true",
+    "v_attachment_10_v4: visible=true,mandatory=true",
+    "v_label_8_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_18 / v_attachment_19",
+   "when": "IO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=URU^ORIO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_18_v4: visible=true,mandatory=true",
+    "v_attachment_19_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_17",
+   "when": "IO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_17_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_actual_date_of_birth",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=COL^NQIO:v_which_license_do_you_want_to_inform_request_v4=postnatal_license^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_actual_date_of_birth_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_7",
+   "when": "IO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^ORIO:v_country=PER^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKEavon^ORIO:v_companyLIKENatura^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^NQIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_7_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attach_form_2_55_below",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=request_signature_of_form_2_55^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_form_2_55_below_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_6",
+   "when": "IO:v_which_maternity_leave=4929d4321b645e10514cbaef4b4bcbe6^IO:v_country=URU^ORIO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_6_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_where_do_you_need_to_receive_your_form_operarios",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=request_signature_of_form_2_55^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^IO:v_public=Operations Associate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_where_do_you_need_to_receive_your_form_operarios: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_what_do_you_want_to_inform_request",
+   "when": "IO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^NQIO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^NQIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^IO:v_country=ARG^IO:v_companyLIKEAVON^ORIO:v_companyLIKEavon^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_do_you_want_to_inform_request_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_6",
+   "when": "IO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_6_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_10",
+   "when": "IO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_10_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_number_of_days_of_your_license",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^IO:v_country=ECU^NQIO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^NQIO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^NQIO:v_which_maternity_leave=8529d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=4929d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=URY^ORIO:v_country=URU^NQIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^NQIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=PER^NQIO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_locationLIKEnatura^ORIO:v_locationLIKENatura^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_number_of_days_of_your_license_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_5",
+   "when": "IO:v_which_maternity_leave=8529d4321b645e10514cbaef4b4bcbe6^IO:v_country=URU^ORIO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_5_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_address",
+   "when": "IO:v_where_do_you_need_to_receive_your_form_v4=at_my_home^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_address_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_4",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^IO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^NQIO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_4_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_9",
+   "when": "IO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_9_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_attachment_13 / v_attachment_14",
+   "when": "IO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^NQIO:v_which_maternity_leave!=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=COL^IO:v_which_maternity_leave!=0529d4321b645e10514cbaef4b4bcbe5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_14_v4: visible=true,mandatory=true",
+    "v_attachment_13_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_license_start_date",
+   "when": "IO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^NQIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^IO:v_country=COL^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^IO:v_country=ECU^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^NQIO:v_which_maternity_leave=8529d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=4929d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=URU^ORIO:v_country=URY^NQIO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^NQIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=4129d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=PER^NQIO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_license_start_date_v4: visible=true,mandatory=true",
+    "v_license_end_date_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_where_do_you_need_to_receive_your_form_2",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=request_signature_of_form_2_55^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^IO:v_public!=Operations Associate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_where_do_you_need_to_receive_your_form_2_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_which_license_do_you_want_to_inform_request",
+   "when": "IO:v_which_maternity_leave=8529d4321b645e10514cbaef4b4bcbe6^IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_license_do_you_want_to_inform_request_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_2",
+   "when": "IO:v_where_do_you_need_to_receive_your_form_2_v4=in_the_office^IO:v_country=ARG^IO:v_companyLIKEavon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^NQIO:v_where_do_you_need_to_receive_your_form_operarios=in_the_office_operarios^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAVON^ORIO:v_companyLIKEAvon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_2_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_label_7",
+   "when": "IO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=CHL^NQIO:v_which_maternity_leave=8529d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=4929d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=URU^ORIO:v_country=URY^NQIO:v_which_maternity_leave=0529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKENatura^ORIO:v_companyLIKEnatura^NQIO:v_which_maternity_leave=c929d4321b645e10514cbaef4b4bcbe3^ORIO:v_which_maternity_leave=0129d4321b645e10514cbaef4b4bcbe6^ORIO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=COL^NQIO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_which_maternity_leave=73abd4f21b645e10514cbaef4b4bcb49^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_7_v4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_what_is_the_type_of_soft_landing_you_want_to_request",
+   "when": "IO:v_which_maternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEAVON^ORIO:v_companyLIKEavon^ORIO:v_companyLIKEAvon^ORIO:v_companyLIKEAvon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_type_of_soft_landing_you_want_to_request_v4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field Rules v_maternity_leave_start_date_anses / etc",
+   "when": "IO:v_what_do_you_want_to_inform_request_v4=report_maternity_leave^IO:v_which_maternity_leave=4d29d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:v_companyLIKEnatura^ORIO:v_companyLIKENatura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_maternity_leave_start_date_anses_v4: visible=true,mandatory=true",
+    "v_number_of_days_of_your_maternity_leave_anses_v4: visible=true",
+    "v_start_date_of_leave_of_absence_v4: visible=true,mandatory=true",
+    "end_date_of_maternity_leave_anses_v4: visible=true,mandatory=true",
+    "v_end_date_of_leave_of_absence_v4: visible=true,mandatory=true",
+    "v_number_of_days_of_your_leave_of_absence_v4: visible=true",
+    "v_label_3_v4: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill number of days License Absence",
+   "type": "onChange",
+   "on": "083b80361be05e10514cbaef4b4bcb2f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula o número de dias da licença por ausência. Valida a data com regex antes de calcular e só recalcula quando o valor realmente mudou."
+  },
+  {
+   "name": "EY: Fill number of days License Benefit",
+   "type": "onChange",
+   "on": "fd6c88b61be05e10514cbaef4b4bcbbf",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula os dias da licença de benefício Natura (2,3 KB). Limpa o campo de dias quando o valor fica vazio e recalcula apenas em mudança efetiva."
+  },
+  {
+   "name": "EY: Clear All Fields On Change Maternity",
+   "type": "onChange",
+   "on": "c82d97521bec9a10514cbaef4b4bcbd4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 3,2 KB que faz o reset completo do formulário de maternidade quando o tipo de licença muda: limpa a licença escolhida e toda a cadeia de campos dependentes."
+  },
+  {
+   "name": "EY: Fill number of days License Natura",
+   "type": "onChange",
+   "on": "7ec210761b245e10514cbaef4b4bcb89",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula os dias da licença Natura. Um dos oito scripts de cálculo de dias de licença deste formulário, cada um para um tipo (Natura, benefício Natura, ANSES, ausência, genérica)."
+  },
+  {
+   "name": "EY: Hide Notificar Embarazo option",
+   "type": "onChange",
+   "on": "c82d97521bec9a10514cbaef4b4bcbd4",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que esconde a opção 'notify_pregnancy'. Observação: faz a remoção DENTRO do bloco `if (isLoading)`, ou seja, age justamente durante o carregamento e não na mudança — comportamento invertido em relação ao padrão dos demais scripts."
+  },
+  {
+   "name": "EY: Fill number of days License ANSES",
+   "type": "onChange",
+   "on": "e938043e1ba05e10514cbaef4b4bcb4a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula os dias da licença maternidade ANSES (órgão previdenciário argentino), limpando o campo quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Fill number of days License ANSES",
+   "type": "onChange",
+   "on": "ba188cfa1ba05e10514cbaef4b4bcbef",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior (2,2 KB) do cálculo de dias da licença ANSES, com mais casos tratados que o irmão."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "8e8740ba1ba05e10514cbaef4b4bcb24",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula os dias da licença genérica ('v_number_of_days_of_your_license_v4')."
+  },
+  {
+   "name": "EY: Fill number of days License Natura",
+   "type": "onChange",
+   "on": "0e231c361b245e10514cbaef4b4bcbc1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias da licença Natura, com validação de data por regex antes de calcular."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "cd5748ba1ba05e10514cbaef4b4bcb62",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior (2,1 KB) do cálculo de dias da licença genérica."
+  },
+  {
+   "name": "EY: Show Soft Landing options",
+   "type": "onChange",
+   "on": "c82d97521bec9a10514cbaef4b4bcbd4",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que monta as opções de 'soft landing' (retorno gradual ao trabalho). Como o script da opção de gravidez, faz a remoção de opções dentro do bloco `if (isLoading)`."
+  },
+  {
+   "name": "EY: Fill number of days License ANSES",
+   "type": "onChange",
+   "on": "c6888c3e1ba05e10514cbaef4b4bcb58",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias da licença ANSES, com validação de data por regex e recálculo apenas em mudança efetiva."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "1ad708fa1ba05e10514cbaef4b4bcb0b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula os dias da licença. Valida a data com regex e só recalcula quando o valor mudou de fato. Um dos muitos scripts de cálculo de dias de licença deste catálogo."
+  },
+  {
+   "name": "EY: Fill number of days License Absence",
+   "type": "onChange",
+   "on": "20ba48721be05e10514cbaef4b4bcbd3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias para licença por ausência, limpando 'v_number_of_days_of_your_leave_of_absence_v4' quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Fill number of days License Benefit",
+   "type": "onChange",
+   "on": "11ac043a1be05e10514cbaef4b4bcba9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias para licença de benefício, com validação de data por regex."
+  },
+  {
+   "name": "EY: Fill number of days License Natura",
+   "type": "onChange",
+   "on": "8cf25c761b245e10514cbaef4b4bcbad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias para licença Natura, limpando o campo de dias quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Hide Fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad de 9,1 KB — o maior do catálogo. Zera e esconde toda a cadeia de campos do formulário de licenças na abertura: limpa a licença escolhida, desobriga e esconde cada campo dependente, um bloco por campo. É o reset inicial de um formulário muito grande."
+  },
+  {
+   "name": "EY: Fill number of days License Absence",
+   "type": "onChange",
+   "on": "3e2a08321be05e10514cbaef4b4bcbe8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior (2,2 KB) do cálculo de dias para licença por ausência."
+  },
+  {
+   "name": "EY: Fill number of days License Benefit",
+   "type": "onChange",
+   "on": "738cc8b61be05e10514cbaef4b4bcb17",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias para a licença de benefício Natura."
+  }
+ ]
+}

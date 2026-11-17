@@ -1,0 +1,183 @@
+{
+ "sys_id": "9b4f69b31b851250514cbaef4b4bcb0f",
+ "name": "Solicitar cadastro de novo CNPJ/Estabelecimento (Especifico para HRBPs e RT)",
+ "sys_name": "Solicitar cadastro de novo CNPJ/Estabelecimento (Especifico para HRBPs e RT)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relações Trabalhistas, Sindicais,  Atualização de CCT e Novos Estabelecimentos (CNPJ)",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Este formulário é especifico para cadastro de novo CNPJ/estabelecimento",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_collective_agreement: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_state_registration_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_fill_request: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_which_sub_company_is_the_service_for: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_cnpj_card: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de troca de escala coletiva. Lê o perfil de RH mas define requested_for como o usuário logado — mesma inconsistência do script de Rescisão Complementar.",
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_which_sub_company_is_the_service_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "u_brand=Natura^country=Brazil^EQ"
+  },
+  {
+   "name": "v_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ"
+  },
+  {
+   "name": "v_state_registration",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "State Registration"
+  },
+  {
+   "name": "v_cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Center Name"
+  },
+  {
+   "name": "v_cost_center_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Center Number"
+  },
+  {
+   "name": "v_category_union",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Category union"
+  },
+  {
+   "name": "v_cnpj_union_of_the_category",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CNPJ Union of the category"
+  },
+  {
+   "name": "v_label_fill_request",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_cnpj_card",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "CNPJ Card"
+  },
+  {
+   "name": "v_state_registration_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "State Registration"
+  },
+  {
+   "name": "v_collective_agreement",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Collective agreement"
+  },
+  {
+   "name": "v_additional_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Comments"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_sub_company_is_the_service_for: mandatory=false,readonly=true",
+    "v_opened_by: readonly=true",
+    "v_cost_center_number: mandatory=false,readonly=true",
+    "v_additional_comments: readonly=true",
+    "v_state_registration_attachment: mandatory=false,readonly=true",
+    "v_cnpj_union_of_the_category: mandatory=false,readonly=true",
+    "v_collective_agreement: mandatory=false,readonly=true",
+    "v_cnpj: mandatory=false,readonly=true",
+    "v_cost_center: mandatory=false,readonly=true",
+    "v_state_registration: mandatory=false,readonly=true",
+    "v_category_union: readonly=true",
+    "v_cnpj_card: mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_cnpj_union_of_the_category: mandatory=true",
+    "v_state_registration: mandatory=true",
+    "v_collective_agreement: mandatory=true",
+    "v_cost_center: mandatory=true",
+    "v_cost_center_number: mandatory=true",
+    "v_cnpj_card: mandatory=true",
+    "v_opened_by: mandatory=true",
+    "v_state_registration_attachment: mandatory=true",
+    "v_which_sub_company_is_the_service_for: mandatory=true",
+    "v_cnpj: mandatory=true",
+    "v_category_union: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Filling the Opened By",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que preenche 'v_opened_by' com o usuário logado e trava o campo."
+  },
+  {
+   "name": "EY: State Registration Regex",
+   "type": "onChange",
+   "on": "32e504f41b559650514cbaef4b4bcb6e",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida a inscrição estadual por regex."
+  }
+ ]
+}

@@ -1,0 +1,176 @@
+{
+ "sys_id": "dc72049a872faa10182a0d440cbb3582",
+ "name": "Pagamento Mensal (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Pagamento mensal",
+ "description": "Pagamento mensal",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "VS - Atenção",
+   "perguntas": []
+  },
+  {
+   "title": "VS - Anexo",
+   "perguntas": [
+    "vs_anexo_opcional"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no pagamento mensal",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    }
+   ],
+   "sai_do_formulario": [
+    "mes_nao_recebimento",
+    "mes_ano_referencia"
+   ],
+   "passa_a_obrigatoria": [
+    "informe_mes_divergencia",
+    "demonstrativo_divergencia"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Não recebimento do pagamento mensal",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Pagamento Mensal"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_mes_divergencia",
+    "demonstrativo_divergencia",
+    "mes_ano_referencia"
+   ],
+   "passa_a_obrigatoria": [
+    "mes_nao_recebimento"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de demonstrativo de pagamento",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Cópia de Documentos"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "mes_ano_referencia"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "Show - VS - Anexo Opcional",
+     "quando": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "informe_mes_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Janeiro",
+    "Junho",
+    "Abril",
+    "Maio",
+    "Fevereiro",
+    "Setembro",
+    "Dezembro",
+    "Março",
+    "Outubro",
+    "Agosto",
+    "Julho",
+    "Novembro"
+   ]
+  },
+  {
+   "name": "mes_nao_recebimento",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês do não recebimento",
+   "choices": [
+    "Outubro",
+    "Abril",
+    "Dezembro",
+    "Junho",
+    "Janeiro",
+    "Maio",
+    "Novembro",
+    "Setembro",
+    "Março",
+    "Agosto",
+    "Fevereiro",
+    "Julho"
+   ]
+  },
+  {
+   "name": "demonstrativo_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com a divergência",
+   "choices": []
+  },
+  {
+   "name": "mes_ano_referencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês/ano de referência",
+   "choices": [
+    "Novembro/2025",
+    "Outubro/2025",
+    "Maio/2025",
+    "Maio/2026",
+    "Janeiro/2026",
+    "Dezembro/2025",
+    "Março/2026",
+    "Agosto/2025",
+    "Fevereiro/2026",
+    "Junho/2025",
+    "Julho/2025",
+    "Abril/2026",
+    "Setembro/2025"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

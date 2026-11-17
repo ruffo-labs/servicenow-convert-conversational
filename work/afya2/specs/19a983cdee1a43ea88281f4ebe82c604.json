@@ -1,0 +1,410 @@
+{
+ "sys_id": "19a983cdee1a43ea88281f4ebe82c604",
+ "status": "dividido",
+ "motivo": "Cada operação pede campos próprios: registro pede finalidade e anos, DNS pede tipo de registro e destino, desativação pede dependências, renovação pede vencimento e transferência pede registrador e código EPP. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_dominio_desejado": {
+   "label": "Qual domínio você deseja registrar?"
+  },
+  "v_finalidade_sistema_associado": {
+   "label": "Para que finalidade ou sistema será o domínio?"
+  },
+  "v_periodo_de_registro_anos": {
+   "label": "Por quantos anos será o registro?"
+  },
+  "v_centro_de_custo": {
+   "label": "Qual o centro de custo responsável?"
+  },
+  "v_responsavel_tecnico": {
+   "label": "Quem é o responsável técnico?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_dominio_zona": {
+   "label": "Em qual domínio ou zona será o apontamento?"
+  },
+  "v_tipo_de_registro": {
+   "label": "Qual o tipo de registro DNS?"
+  },
+  "v_nome_host": {
+   "label": "Qual o nome do host do apontamento?"
+  },
+  "v_valor_de_destino": {
+   "label": "Para qual valor o apontamento deve apontar?"
+  },
+  "v_ttl": {
+   "label": "Qual o TTL desejado?"
+  },
+  "v_ambiente": {
+   "label": "Para qual ambiente é o apontamento?"
+  },
+  "v_dominio_a_desativar": {
+   "label": "Qual domínio deve ser desativado?"
+  },
+  "v_justificativa": {
+   "label": "Qual o motivo da desativação?"
+  },
+  "v_dependencias_mapeadas_sistemas_e_mails": {
+   "label": "Quais sistemas e e-mails dependem desse domínio?"
+  },
+  "v_retencao_necessaria": {
+   "label": "É necessário reter o domínio?"
+  },
+  "v_data_de_desativacao": {
+   "label": "Em que data o domínio deve ser desativado?"
+  },
+  "v_dominio_a_renovar": {
+   "label": "Qual domínio deve ser renovado?"
+  },
+  "v_data_de_vencimento": {
+   "label": "Qual a data de vencimento atual?"
+  },
+  "v_periodo_de_renovacao_anos": {
+   "label": "Por quantos anos será a renovação?"
+  },
+  "v_dominio_a_transferir": {
+   "label": "Qual domínio deve ser transferido?"
+  },
+  "v_registrador_de_origem": {
+   "label": "Qual o registrador atual do domínio?"
+  },
+  "v_registrador_de_destino": {
+   "label": "Para qual registrador o domínio vai?"
+  },
+  "v_codigo_de_autorizacao_epp": {
+   "label": "Qual o código de autorização (EPP) do domínio?"
+  },
+  "v_janela_desejada": {
+   "label": "Qual a janela desejada para a transferência?"
+  }
+ },
+ "policies": {
+  "f371ef62f23c4ff09291003dbba9aa64": "remover",
+  "088e4f59adc64c3ebdd6421048e698f2": "remover",
+  "0dd9fcdf058a4f87951d1a6165902535": "remover",
+  "0dc9f4a78f3941daadcf627aae9f84d5": "remover",
+  "60dbcc6795e1455bbf59248cef770ceb": "remover",
+  "fbb237eb687644628c995ca098c5c0b8": "remover"
+ },
+ "itens": [
+  {
+   "name": "Comprar ou registrar um domínio",
+   "short_description": "Pedir o registro de um domínio novo.",
+   "description": "Use quando a empresa precisa de um domínio novo. A opção atendida é Comprar/registrar domínio. Informe o domínio desejado, a finalidade, o período, o centro de custo e o responsável técnico.",
+   "frases_exemplo": [
+    "Quero registrar um domínio novo para a campanha",
+    "Preciso comprar um domínio .com.br",
+    "Como faço para registrar o domínio do novo site?",
+    "Solicito o registro de um domínio por 2 anos",
+    "Vamos lançar um produto e precisamos de um domínio"
+   ],
+   "sem_vars": [
+    "v_dominio_zona",
+    "v_tipo_de_registro",
+    "v_nome_host",
+    "v_valor_de_destino",
+    "v_ttl",
+    "v_ambiente",
+    "v_dominio_a_desativar",
+    "v_justificativa",
+    "v_dependencias_mapeadas_sistemas_e_mails",
+    "v_retencao_necessaria",
+    "v_data_de_desativacao",
+    "v_dominio_a_renovar",
+    "v_data_de_vencimento",
+    "v_periodo_de_renovacao_anos",
+    "v_dominio_a_transferir",
+    "v_registrador_de_origem",
+    "v_registrador_de_destino",
+    "v_codigo_de_autorizacao_epp",
+    "v_janela_desejada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Comprar/registrar domínio"
+   },
+   "vars": {
+    "v_dominio_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_finalidade_sistema_associado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_periodo_de_registro_anos": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_tecnico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_centro_de_custo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar ou alterar apontamento DNS",
+   "short_description": "Pedir criação ou mudança de um registro DNS.",
+   "description": "Use quando um nome precisa apontar para outro destino ou um registro DNS deve mudar. A opção atendida é Criar/alterar apontamento DNS. Informe domínio, tipo de registro, host, valor de destino, TTL e ambiente.",
+   "frases_exemplo": [
+    "Preciso criar um CNAME para o novo site",
+    "Quero apontar o host app para outro IP",
+    "Alterar o registro DNS do ambiente de homologação",
+    "Preciso adicionar um registro TXT para validar o domínio",
+    "Como peço um apontamento DNS novo?"
+   ],
+   "sem_vars": [
+    "v_dominio_desejado",
+    "v_finalidade_sistema_associado",
+    "v_periodo_de_registro_anos",
+    "v_centro_de_custo",
+    "v_responsavel_tecnico",
+    "v_dominio_a_desativar",
+    "v_justificativa",
+    "v_dependencias_mapeadas_sistemas_e_mails",
+    "v_retencao_necessaria",
+    "v_data_de_desativacao",
+    "v_dominio_a_renovar",
+    "v_data_de_vencimento",
+    "v_periodo_de_renovacao_anos",
+    "v_dominio_a_transferir",
+    "v_registrador_de_origem",
+    "v_registrador_de_destino",
+    "v_codigo_de_autorizacao_epp",
+    "v_janela_desejada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar/alterar apontamento DNS"
+   },
+   "vars": {
+    "v_dominio_zona": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_tipo_de_registro": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_nome_host": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_valor_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ttl": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ambiente": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Desativar ou cancelar um domínio",
+   "short_description": "Pedir o cancelamento de um domínio que não será mais usado.",
+   "description": "Use quando um domínio deve deixar de existir. A opção atendida é Desativar/cancelar domínio. Informe o domínio, o motivo, as dependências de sistemas e e-mails, a retenção e a data.",
+   "frases_exemplo": [
+    "Quero cancelar um domínio que não usamos mais",
+    "Preciso desativar o domínio da campanha antiga",
+    "Posso cancelar esse domínio? Não tem mais sistema usando",
+    "Solicito a desativação de um domínio",
+    "Não vamos renovar o domínio, como cancelo?"
+   ],
+   "sem_vars": [
+    "v_dominio_desejado",
+    "v_finalidade_sistema_associado",
+    "v_periodo_de_registro_anos",
+    "v_centro_de_custo",
+    "v_responsavel_tecnico",
+    "v_dominio_zona",
+    "v_tipo_de_registro",
+    "v_nome_host",
+    "v_valor_de_destino",
+    "v_ttl",
+    "v_ambiente",
+    "v_dominio_a_renovar",
+    "v_data_de_vencimento",
+    "v_periodo_de_renovacao_anos",
+    "v_dominio_a_transferir",
+    "v_registrador_de_origem",
+    "v_registrador_de_destino",
+    "v_codigo_de_autorizacao_epp",
+    "v_janela_desejada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Desativar/cancelar domínio"
+   },
+   "vars": {
+    "v_dominio_a_desativar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dependencias_mapeadas_sistemas_e_mails": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_retencao_necessaria": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_de_desativacao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Renovar um domínio",
+   "short_description": "Pedir a renovação de um domínio perto do vencimento.",
+   "description": "Use quando um domínio está perto de vencer e deve continuar ativo. A opção atendida é Renovar domínio. Informe o domínio, a data de vencimento, o período de renovação e o centro de custo.",
+   "frases_exemplo": [
+    "O domínio do site vence logo, preciso renovar",
+    "Quero renovar um domínio por mais 3 anos",
+    "Como faço para renovar o domínio da empresa?",
+    "Solicito a renovação do domínio antes do vencimento",
+    "Chegou aviso de vencimento do domínio"
+   ],
+   "sem_vars": [
+    "v_dominio_desejado",
+    "v_finalidade_sistema_associado",
+    "v_periodo_de_registro_anos",
+    "v_responsavel_tecnico",
+    "v_dominio_zona",
+    "v_tipo_de_registro",
+    "v_nome_host",
+    "v_valor_de_destino",
+    "v_ttl",
+    "v_ambiente",
+    "v_dominio_a_desativar",
+    "v_justificativa",
+    "v_dependencias_mapeadas_sistemas_e_mails",
+    "v_retencao_necessaria",
+    "v_data_de_desativacao",
+    "v_dominio_a_transferir",
+    "v_registrador_de_origem",
+    "v_registrador_de_destino",
+    "v_codigo_de_autorizacao_epp",
+    "v_janela_desejada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Renovar domínio"
+   },
+   "vars": {
+    "v_centro_de_custo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dominio_a_renovar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_de_vencimento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_periodo_de_renovacao_anos": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Transferir um domínio para outro registrador",
+   "short_description": "Pedir a transferência de um domínio entre registradores.",
+   "description": "Use quando o domínio deve mudar de registrador. A opção atendida é Transferir domínio (registrador). Informe o domínio, os registradores de origem e destino, o código de autorização (EPP) e a janela desejada.",
+   "frases_exemplo": [
+    "Preciso transferir o domínio para outro registrador",
+    "Quero mudar o domínio de registrador",
+    "Tenho o código EPP, como faço a transferência?",
+    "Solicito a transferência do domínio para o novo provedor",
+    "Vamos migrar os domínios para outro registrador"
+   ],
+   "sem_vars": [
+    "v_dominio_desejado",
+    "v_finalidade_sistema_associado",
+    "v_periodo_de_registro_anos",
+    "v_centro_de_custo",
+    "v_responsavel_tecnico",
+    "v_dominio_zona",
+    "v_tipo_de_registro",
+    "v_nome_host",
+    "v_valor_de_destino",
+    "v_ttl",
+    "v_ambiente",
+    "v_dominio_a_desativar",
+    "v_justificativa",
+    "v_dependencias_mapeadas_sistemas_e_mails",
+    "v_retencao_necessaria",
+    "v_data_de_desativacao",
+    "v_dominio_a_renovar",
+    "v_data_de_vencimento",
+    "v_periodo_de_renovacao_anos"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Transferir domínio (registrador)"
+   },
+   "vars": {
+    "v_dominio_a_transferir": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_registrador_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_registrador_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_codigo_de_autorizacao_epp": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

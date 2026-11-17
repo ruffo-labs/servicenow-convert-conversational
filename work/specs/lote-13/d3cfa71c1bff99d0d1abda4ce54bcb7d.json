@@ -1,0 +1,55 @@
+{
+ "sys_id": "d3cfa71c1bff99d0d1abda4ce54bcb7d",
+ "status": "conversacional",
+ "motivo": "Intenção única (localizar/consultar e aplicar pagamento de um título) com perguntas objetivas sobre o título e o comprovante. A policy 'Mandatory fields' vira prop nas variáveis; o label instrutivo v_mandatory_attach (tipo 11) é removido por ser só texto de apoio. v_status_title é mantida porque coleta dado e não há substituta ou set duplicado (a 1ª análise pedia removê-la). Policies com pendência humana (Franchisee/Representative/Consultant) e os client scripts do variable set de empresa/colaborador seguem como no original.",
+ "divergencias": [
+  "erro_1a_analise"
+ ],
+ "vars": {
+  "v_claim_number": {
+   "label": "Qual é o número do título pago?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_what_installment": {
+   "label": "Qual é a parcela?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_value_installment": {
+   "label": "Qual é o valor da parcela?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_maturity_bond": {
+   "label": "Qual era o vencimento do título?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_status_title": {
+   "label": "Qual é o status atual do título (em aberto, pago, etc.)?"
+  },
+  "v_what_request": {
+   "label": "O que você precisa: só consultar ou aplicar o pagamento?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_payment": {
+   "label": "Anexe o comprovante de pagamento e, se tiver, o boleto.",
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_mandatory_attach": "visual"
+ },
+ "policies": {
+  "3e3d186c1b3fd9d0d1abda4ce54bcbde": "remover"
+ }
+}

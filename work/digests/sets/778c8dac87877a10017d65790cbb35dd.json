@@ -1,0 +1,59 @@
+{
+ "sys_id": "778c8dac87877a10017d65790cbb35dd",
+ "title": "EY: Training Info M2M",
+ "internal_name": "ey_training_info_m2m",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Treinamentos Normativos"
+ ],
+ "variaveis": [
+  {
+   "name": "enter_employee_name_m2m",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee (Search by ID, Name, or Email)",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "id_number_m2m",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Registration",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "indicate_training_m2m",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Indicate the training",
+   "reference": "sys_user",
+   "ref_qual": "question=0e775a231b4f3c10a530426fe54bcb2a"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Training Info M2M Default",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "indicate_training_m2m: mandatory=true",
+    "enter_employee_name_m2m: mandatory=true",
+    "id_number_m2m: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Populate ID",
+   "type": "onChange",
+   "on": "85ac0dac87877a10017d65790cbb358b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o ID do usuário via GlideAjax."
+  }
+ ]
+}

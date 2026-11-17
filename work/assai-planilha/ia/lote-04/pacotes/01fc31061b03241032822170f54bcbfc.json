@@ -1,0 +1,290 @@
+{
+ "sys_id": "01fc31061b03241032822170f54bcbfc",
+ "name": "Processo de Admissão",
+ "category": "Admissão",
+ "short_description": "Processo de Admissão",
+ "description": "Processo de Admissão",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Informações do colaborador",
+   "perguntas": [
+    "vs_matricula_do_colaborador",
+    "vs_data_de_admissao",
+    "vs_nome_do_colaborador",
+    "vs_cpf_do_colaborador",
+    "vs_motivo_do_cancelamento"
+   ]
+  },
+  {
+   "title": "Informações do candidato",
+   "perguntas": [
+    "vs_candidate_position",
+    "vs_candidate_name",
+    "vs_candidate_cpf",
+    "vs_candidate_establishment"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Admissão",
+    "item": "Processo de Admissão"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de alteração de data de admissão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    },
+    {
+     "name": "Solicitação de correção de dados do contrato",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "sai_do_formulario": [
+    "rfb_registration_status",
+    "ra_number",
+    "registration",
+    "admission_date",
+    "reason",
+    "what_is_the_documentary_discrepancy",
+    "cpf"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Alterar data de admissão",
+     "description": "Use para pedir mudança da data de admissão de um candidato. Corresponde à oferta Solicitação de alteração de data de admissão."
+    },
+    {
+     "name": "Corrigir dados do contrato de admissão",
+     "description": "Use quando há dado incorreto no contrato de um recém-admitido. Corresponde à oferta Solicitação de correção de dados do contrato."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Admissão",
+    "item": "Processo de Admissão"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de cancelamento de admissão",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Admissão"
+    },
+    {
+     "name": "Solicitação de validação de documentação - Admissão digital",
+     "sla": "SLA - GESTÃO DE GENTE - 04H",
+     "grupo_suporte": "RH - Admissão"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 32H",
+     "SLA - GESTÃO DE GENTE - 04H"
+    ],
+    "u_user_criteria": [
+     "",
+     "ALP - Alpar Users, Integration RPA"
+    ]
+   },
+   "sai_do_formulario": [
+    "new_admission_date",
+    "rh_info_incorrect",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "Attachment"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Cancelar admissão",
+     "description": "Use para cancelar uma admissão em andamento. Corresponde à oferta Solicitação de cancelamento de admissão."
+    },
+    {
+     "name": "Validar documentação da admissão digital",
+     "description": "Use para pedir a validação da documentação de uma admissão digital, como pendências de regularização na Receita Federal. Corresponde à oferta Solicitação de validação de documentação - Admissão digital."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rfb_irregularity_detail",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Detalhamento da Irregularidade RFB",
+   "choices": [],
+   "label_atual": "Qual é o detalhe da irregularidade na Receita Federal?"
+  },
+  {
+   "name": "rfb_registration_status",
+   "type": "Selecionar Caixa",
+   "question_text": "Situação cadastral RFB",
+   "choices": [
+    "Irregular",
+    "Regular"
+   ],
+   "label_atual": "Qual é a situação cadastral do CPF na Receita Federal?"
+  },
+  {
+   "name": "new_admission_date",
+   "type": "Data",
+   "question_text": "Nova data para admissão",
+   "choices": [],
+   "label_atual": "Qual é a nova data de admissão?"
+  },
+  {
+   "name": "rh_info_incorrect",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Dado incorreto",
+   "choices": [],
+   "label_atual": "Qual dado está incorreto?"
+  },
+  {
+   "name": "ra_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do RA",
+   "choices": [],
+   "label_atual": "Qual é o número do RA?"
+  },
+  {
+   "name": "registration",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula",
+   "choices": [],
+   "label_atual": "Qual é a matrícula do colaborador?"
+  },
+  {
+   "name": "rh_registration_newly_admitted",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula do recém-admitido",
+   "choices": [],
+   "label_atual": "Qual é a matrícula do recém-admitido?"
+  },
+  {
+   "name": "rh_full_name_newly_admitted",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo do recém-admitido",
+   "choices": [],
+   "label_atual": "Qual é o nome completo do recém-admitido?"
+  },
+  {
+   "name": "admission_date",
+   "type": "Data",
+   "question_text": "Data de admissão",
+   "choices": [],
+   "label_atual": "Qual é a data de admissão atual?"
+  },
+  {
+   "name": "reason",
+   "type": "Texto de Linha Única",
+   "question_text": "Motivo",
+   "choices": [],
+   "label_atual": "Qual é o motivo do cancelamento?"
+  },
+  {
+   "name": "what_is_the_documentary_discrepancy",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual é a divergência documental?",
+   "choices": [],
+   "label_atual": "Qual é a divergência na documentação?"
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF",
+   "choices": [],
+   "label_atual": "Qual é o CPF do colaborador?"
+  },
+  {
+   "name": "Attachment",
+   "type": "Anexo",
+   "question_text": "Anexo",
+   "choices": [],
+   "label_atual": "Envie o anexo da solicitação."
+  }
+ ],
+ "tecnicas_ocultas": [
+  "u_hide_impactado_on_ritm"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "ec38e1d43be72a10b28dd047f4e45a2d",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "ec647b8e877c4310182a0d440cbb35d5",
+   "name": "ALP - Set fixed description",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange da oferta, chama global.GetPropertiesAjax.getProperty para ler o sys_id da oferta de validação de documentação de admissão digital. Se a oferta escolhida for essa, desobriga e bloqueia rh_description e a preenche com um texto padrão do RH sobre pendência de documentação/regularização cadastral na Receita Federal; senão, obriga, libera e limpa a descrição."
+  },
+  {
+   "sys_id": "ef28e9943be72a10b28dd047f4e45aac",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

@@ -1,0 +1,483 @@
+{
+ "sys_id": "e7c6a4311bffd154d1abda4ce54bcb54",
+ "title": "EY: Company:Natura/Avon/TBS - Collaborator - Code",
+ "internal_name": "ey_company_natura_avon_tbs_collaborator_code",
+ "description": "Company:Natura/Avon/TBS - Collaborator - Code",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Consulta/aplicação de pagamento",
+  "Solicitar Estorno por Fraude - Cartão e Pix"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon Latam [=Avon LATAM]",
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "vs_subcompany",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_company + '^nameNOT LIKE331'"
+  },
+  {
+   "name": "vs_data_search",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What data do you want to search for?",
+   "include_none": true,
+   "choices": [
+    "Name [=name]",
+    "CPF/CNPJ [=u_cnpj]",
+    "Code [=u_vendor_id]",
+    "Email [=u_email]"
+   ]
+  },
+  {
+   "name": "vs_consultant_name_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Consultant's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "v_pesquisar_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Search by CPF/CNPJ"
+  },
+  {
+   "name": "vs_consultant_cnpj_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Consultant's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_consultant_code_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Consultant's code search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_consultant_email_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Consultant's email search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_name_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Representative's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=BIDs^customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_cnpj_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Representative's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=BIDs^customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_code_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Representative's code search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=BIDs^customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_email_new_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Representative's email search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=BIDs^customer=true^EQ"
+  },
+  {
+   "name": "vs_franchisee_name_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Franchisee's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_franchisee_cnpj_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Franchisee's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_franchisee_code_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Franchisee's code search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_franchisee_email_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Franchisee's email search",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_franchisee_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Franchisee Code",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show sub-company",
+   "when": "IO:vs_company!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_subcompany: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Franchisee CPF/CNPJ",
+   "when": "IO:vs_company=TBS^IO:vs_data_search=u_cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_franchisee_cnpj_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Consultant Email",
+   "when": "IO:vs_company=Natura^IO:vs_data_search=u_email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_email_new: visible=true,mandatory=true",
+    "vs_consultant_email_new_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Franchisee Email",
+   "when": "IO:vs_company=TBS^IO:vs_data_search=u_email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_franchisee_email_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Representative Email",
+   "when": "IO:vs_company=Avon LATAM^IO:vs_data_search=u_email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_email_new: visible=true,mandatory=true",
+    "vs_representative_email_new_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Representative CPF/CNPJ",
+   "when": "IO:vs_company=Avon LATAM^IO:vs_data_search=u_cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_cnpj_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Franchisee fields",
+   "when": "IO:vs_company=TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_franchisee: visible=true,mandatory=true",
+    "vs_franchisee_code: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_company: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Consultant fields",
+   "when": "IO:vs_company=Natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_code: visible=true",
+    "vs_consultant: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Consultant Code",
+   "when": "IO:vs_company=Natura^IO:vs_data_search=u_vendor_id^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_code_new_2: visible=true,mandatory=true",
+    "vs_consultant_code_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Consultant CPF/CNPJ",
+   "when": "IO:vs_company=Natura^IO:vs_data_search=u_cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_cnpj_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Representative Code",
+   "when": "IO:vs_company=Avon LATAM^IO:vs_data_search=u_vendor_id^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_code_new_2: visible=true,mandatory=true",
+    "vs_representative_code_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Franchisee Name",
+   "when": "IO:vs_company=TBS^IO:vs_data_search=name^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_franchisee_name_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Data Search",
+   "when": "IO:vs_subcompany!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_data_search: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Representative Name",
+   "when": "IO:vs_company=Avon LATAM^IO:vs_data_search=name^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_name_new: visible=true,mandatory=true",
+    "vs_representative_name_new_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Search CPF/CNPJ",
+   "when": "IO:vs_data_search=u_cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_pesquisar_cpf: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Representative fields",
+   "when": "IO:vs_company=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_code: visible=true",
+    "vs_representative: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Consultant Name",
+   "when": "IO:vs_company=Natura^IO:vs_data_search=name^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_name_new_2: visible=true,mandatory=true",
+    "vs_consultant_name_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Franchisee Code",
+   "when": "IO:vs_company=TBS^IO:vs_data_search=u_vendor_id^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_franchisee_code_new: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get Global ID Consultant Code",
+   "type": "onChange",
+   "on": "bbe3f0131bd26d50a530426fe54bcb25",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca dados do cliente pelo código de consultor. Chama x_nasm_finance.EY_DataFinanceUtils, método getClientData, via GlideAjax, e preenche os campos com o JSON retornado."
+  },
+  {
+   "name": "EY: Get Global ID Franchisee CPF/CNPJ",
+   "type": "onChange",
+   "on": "94c6bc971bd26d50a530426fe54bcbe0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData do irmão, disparada pelo CPF/CNPJ do franqueado."
+  },
+  {
+   "name": "EY: Get Global ID Representative Code",
+   "type": "onChange",
+   "on": "760638171bd26d50a530426fe54bcb67",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData dos irmãos, disparada pelo código do representante."
+  },
+  {
+   "name": "EY: Get Global ID Franchisee Email",
+   "type": "onChange",
+   "on": "d0d6fcd71bd26d50a530426fe54bcb22",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData do irmão, disparada pelo CPF/CNPJ do franqueado."
+  },
+  {
+   "name": "EY: Get consultant CPF/CNPJ",
+   "type": "onChange",
+   "on": "03ba6e871bd43d90d1abda4ce54bcb5f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca CPF/CNPJ do consultor via x_nasm_finance.EY_DataFinanceUtils, método getCPFCompany, com GlideAjax."
+  },
+  {
+   "name": "EY: Get Global ID Franchisee Code",
+   "type": "onChange",
+   "on": "16c6fcd71bd26d50a530426fe54bcb06",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData do irmão, disparada pelo CPF/CNPJ do franqueado."
+  },
+  {
+   "name": "EY: Get Global ID Consultant Name",
+   "type": "onChange",
+   "on": "37d33cdf1b926d50a530426fe54bcbc2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca dados do cliente pelo código de consultor. Chama x_nasm_finance.EY_DataFinanceUtils, método getClientData, via GlideAjax, e preenche os campos com o JSON retornado."
+  },
+  {
+   "name": "EY: Get franchisee CPF/CNPJ",
+   "type": "onChange",
+   "on": "03ba6e871bd43d90d1abda4ce54bcb5f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca CPF/CNPJ do franqueado. Chama x_nasm_finance.EY_DataFinanceUtils, método getCPFCompany, via GlideAjax, e preenche o campo com o retorno."
+  },
+  {
+   "name": "EY: Clear fields 1",
+   "type": "onChange",
+   "on": "5427ac311bffd154d1abda4ce54bcb9a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de limpeza que zera sub-empresa, campo de busca e todo o bloco de dados do consultor (selecionado, nome novo, CNPJ novo, código novo) e equivalentes."
+  },
+  {
+   "name": "EY: Get Global ID Consultant Email",
+   "type": "onChange",
+   "on": "79f3b4131bd26d50a530426fe54bcbc8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca dados do cliente pelo código de consultor. Chama x_nasm_finance.EY_DataFinanceUtils, método getClientData, via GlideAjax, e preenche os campos com o JSON retornado."
+  },
+  {
+   "name": "EY: Get Global ID Consultant CPF/CNPJ",
+   "type": "onChange",
+   "on": "f5e3b4131bd26d50a530426fe54bcba0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca dados do cliente pelo código de consultor. Chama x_nasm_finance.EY_DataFinanceUtils, método getClientData, via GlideAjax, e preenche os campos com o JSON retornado."
+  },
+  {
+   "name": "EY: Get Global ID Representative Name",
+   "type": "onChange",
+   "on": "7bb5f8171bd26d50a530426fe54bcbe8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData dos irmãos, disparada pelo código do representante."
+  },
+  {
+   "name": "EY: Clear fields 3",
+   "type": "onChange",
+   "on": "0ec2745f1b926d50a530426fe54bcb27",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de consultor: consultor selecionado, nome novo, CNPJ novo e código novo, além dos campos equivalentes das demais categorias."
+  },
+  {
+   "name": "EY: Get Global ID Franchisee Name",
+   "type": "onChange",
+   "on": "a1b6b8d71bd26d50a530426fe54bcb1c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData do irmão, disparada pelo CPF/CNPJ do franqueado."
+  },
+  {
+   "name": "EY: Get Global ID Representative Email",
+   "type": "onChange",
+   "on": "70467c571bd26d50a530426fe54bcb59",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData dos irmãos, disparada pelo código do representante."
+  },
+  {
+   "name": "EY: Get representative CPF/CNPJ",
+   "type": "onChange",
+   "on": "03ba6e871bd43d90d1abda4ce54bcb5f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca CPF/CNPJ do representante via x_nasm_finance.EY_DataFinanceUtils, método getCPFCompany, com GlideAjax."
+  },
+  {
+   "name": "EY: Get Global ID Representative CNPJ",
+   "type": "onChange",
+   "on": "3ce538171bd26d50a530426fe54bcb3c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma chamada a getClientData dos irmãos, disparada pelo código do representante."
+  },
+  {
+   "name": "EY: Clear fields 2",
+   "type": "onChange",
+   "on": "cea764351bffd154d1abda4ce54bcb06",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange, variante do anterior, que limpa também o campo de busca ('vs_data_search') antes dos dados de consultor."
+  }
+ ]
+}

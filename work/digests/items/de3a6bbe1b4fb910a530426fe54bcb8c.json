@@ -1,0 +1,1679 @@
+{
+ "sys_id": "de3a6bbe1b4fb910a530426fe54bcb8c",
+ "name": "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica",
+ "sys_name": "Adhesion, inclusion or exclusion from Medical and Dental Assistance Benefits",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Assistência médica e odontológica",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Com este formulário você pode solicitar adesão dos seus benefícios de assistência médica e odontológica e assim como incluir ou excluir dependentes de seus convênios.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "142",
+   "variaveis_ativas": "163",
+   "bloqueadores": "8",
+   "avisos": "80",
+   "perguntas_sem_conversational_label": "142"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "mrv_macro_widget"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "mrv_macro_widget"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "HTML (type 23 / HTML)",
+    "onde": "benefit_description_value3"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "HTML (type 23 / HTML)",
+    "onde": "benefit_description_value2"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "HTML (type 23 / HTML)",
+    "onde": "benefit_description_value"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Check mandatory checkbox"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @assist_odonto_title: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @delete_beneficiary: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sim_nao_sem_include_none @executar_validacoes_mrv: Sim/Nao sem \"Include None\" marcado",
+   "tipo_com_limitacao @dependent_update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @plano_elegivel_inclusao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_for_complete_exclusion_form: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @dependete_inclusion_rule: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @texto_plano_eleg_odonto: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @add_beneficiary: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @plans_odonto: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @texto_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @texto_tempo_inclusao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_the_completed_form_here: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @text_faq2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_comprovante_universitario_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_5: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @beneficiary_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_doc_cpf_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_casamento_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_escritura_publica_uniao_estavel_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_comprovante_universitario_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_termo_guarda_adocao_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_certidao_nascimento_10: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @cpf: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 142 de 142 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 142 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 95 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de adesão/inclusão/exclusão de Assistência Médica e Odontológica. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "mrv_macro_widget",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "MRV macro widget",
+   "default": "0",
+   "widget": "MRV Macro widget"
+  },
+  {
+   "name": "executar_validacoes_mrv",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "perform MRV validations",
+   "hidden": true,
+   "read_only": true,
+   "default": "No"
+  },
+  {
+   "name": "v_range",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Range",
+   "hidden": true
+  },
+  {
+   "name": "v_contador_de_dependetes",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Dependent counter",
+   "hidden": true,
+   "read_only": true
+  },
+  {
+   "name": "requester_candidate",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is requester candidate?",
+   "hidden": true,
+   "include_none": true,
+   "choices": [
+    "Sim [=1]",
+    "Não [=2]"
+   ]
+  },
+  {
+   "name": "registration_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select an option",
+   "include_none": true,
+   "choices": [
+    "Adhesion [=1]",
+    "Dependent inclusion [=2]",
+    "Dependent exclusion [=3]"
+   ]
+  },
+  {
+   "name": "v_label_for_complete_exclusion_form",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_the_completed_form_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the completed form here"
+  },
+  {
+   "name": "plano_elegivel_inclusao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_produto_saude",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Product",
+   "read_only": true
+  },
+  {
+   "name": "fill_request",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Fill your request"
+  },
+  {
+   "name": "assistance_type",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Assistance Types"
+  },
+  {
+   "name": "health_care",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Health Care"
+  },
+  {
+   "name": "dental_care",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Dental Care"
+  },
+  {
+   "name": "texto_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "text_faq2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "- Para obter mais informações e esclarecer dúvidas, acesse o material de apoio disponível no portal do candidato ou entre em contato através do e-mail atendimentosaude@natura.net"
+  },
+  {
+   "name": "texto_plano_eleg_odonto",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_produto_odonto",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Product",
+   "read_only": true
+  },
+  {
+   "name": "benefit_description_value2",
+   "type": "HTML",
+   "type_code": "23",
+   "label": ">>"
+  },
+  {
+   "name": "assist_odonto_title",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "plans_odonto",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Dental Care Plan Option",
+   "lookup": "x_nasm_hr_eligibility",
+   "ref_qual": "javascript:new x_nasm_hr.IntegraAdp_utils().ReturnDentalCareLines(current.variables.employee);"
+  },
+  {
+   "name": "benefit_description_value3",
+   "type": "HTML",
+   "type_code": "23",
+   "label": "."
+  },
+  {
+   "name": "operator_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Operator Option",
+   "include_none": true,
+   "choices": [
+    "Amil [=1]",
+    "Unimed [=2]"
+   ]
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "want_insert_dependents",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to insert your dependents?",
+   "include_none": true
+  },
+  {
+   "name": "texto_tempo_inclusao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "formatter3",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "add_beneficiary",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Add Beneficiary"
+  },
+  {
+   "name": "delete_beneficiary",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "dependent_update_information_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "info_comp_dependent",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Anexe aqui os documentos obrigatórios para adesão do(s) seu(s) dependentes."
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "formatter4",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "dependete_inclusion_rule",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "responsability_terms",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Termos de responsabilidade"
+  },
+  {
+   "name": "declare_accuracy",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I assume full responsibility for the accuracy of the information contained in this form."
+  },
+  {
+   "name": "authorization_discount",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware and authorize the company to make discounts relating to the Medical Assistance and Dental Assistance Plan."
+  },
+  {
+   "name": "authorization_medical_discount",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware and authorize the company to make discounts relating to the Medical Assistance Plan."
+  },
+  {
+   "name": "authorization_dental_discount",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware and authorize the company to make discounts relating to the Dental Assistance Plan."
+  },
+  {
+   "name": "dependent_exclusion_science",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that if a dependent is excluded, for reinclusion it will be necessary to comply with the plan's shortcomings."
+  },
+  {
+   "name": "dependent_exclusion_science_medical_assistance",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that if a dependent is excluded from medical assistance, for reinclusion it will be necessary to comply with the plan's shortcomings.",
+   "hidden": true
+  },
+  {
+   "name": "dependent_exclusion_science_dental_plan",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware that, if a dependent is excluded from the Dental Plan, the same dependent will not be allowed to be re-included.",
+   "hidden": true
+  },
+  {
+   "name": "verifica_odonto",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "verifica_odonto",
+   "hidden": true
+  },
+  {
+   "name": "verifica_medico",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "verifica_medico",
+   "hidden": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+   "name": "Suas informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "company (Texto de Linha Única, ro): Company",
+    "company_cnpj (Texto de Linha Única, ro): Company CNPJ",
+    "location (Texto de Linha Única, ro): Location",
+    "id_global (Texto de Linha Única, ro): ID Global",
+    "registration (Texto de Linha Única, ro): Registration",
+    "mobile_phone (Texto de Linha Única, ro): Mobile Phone",
+    "employee_start_date (Data, ro): Employment start date",
+    "cpf (Texto de Linha Única, ro): CPF",
+    "marital_status (Texto de Linha Única, ro): Marital Status",
+    "birth_date (Data, ro): Birth date",
+    "mother_name (Texto de Linha Única, ro): Mother name",
+    "title (Texto de Linha Única, ro): Title",
+    "pis (Texto de Linha Única, ro): PIS",
+    "home_address (Texto de Linha Única, ro): Home Address",
+    "home_address_n (Texto de Linha Única, ro): Home Address Nº",
+    "complementary_residential_address (Texto de Linha Única, ro): Complementary Residential Address",
+    "residential_address_neighborhood (Texto de Linha Única, ro): Residential Address Neighborhood",
+    "residential_address_city (Texto de Linha Única, ro): Residential Address City",
+    "residential_address_uf (Texto de Linha Única, ro): Residential Address UF",
+    "residential_address_cep (Texto de Linha Única, ro): Residential Address CEP"
+   ]
+  },
+  {
+   "sys_id": "5659d1691b000510d1abda4ce54bcb2f",
+   "name": "Eligibilities Informative",
+   "order": "340",
+   "perguntas": [
+    "benefit_description (Personalizado): Benefit description",
+    "benefit_description_value (HTML): Plan details"
+   ]
+  },
+  {
+   "sys_id": "887c66921baeb810d1abda4ce54bcb34",
+   "name": "Informação de Reembolso ",
+   "order": "420",
+   "perguntas": [
+    "bank_refund (Texto de Linha Única): Bank For Refund",
+    "agency_refund (Texto de Linha Única): Agency For Refund",
+    "checking_account_refund (Texto de Linha Única): Checking Account For Refund"
+   ]
+  },
+  {
+   "sys_id": "374a53851b550510d1abda4ce54bcb1c",
+   "name": "Dados dos dependentes",
+   "order": "900",
+   "perguntas": [
+    "beneficiary_name (Referência): Beneficiary Name",
+    "plan_options (Selecionar Caixa): Plan options",
+    "dependent_live_birth_certificate (Texto de Linha Única): Dependents Live Birth Certificate",
+    "rg (Texto de Linha Única, ro): RG",
+    "ssn (Texto de Linha Única, ro): SSN",
+    "dependentes_id (Texto de Linha Única, ro): Dependent ID",
+    "marital_status2 (Texto de Linha Única, ro): Marital Status",
+    "relationship (Texto de Linha Única, ro): Relationship",
+    "genero (Texto de Linha Única, ro): Gende",
+    "date_of_birth (Data, ro): Date of Birth",
+    "mother_name2 (Texto de Linha Única, ro): Mother's Name"
+   ]
+  },
+  {
+   "sys_id": "d5955e191b6bb5d0d1abda4ce54bcb77",
+   "name": "Seção 1",
+   "order": "905",
+   "perguntas": [
+    "dependente_1 (Referência, ro): Dependente:",
+    "relacionamento_1 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_1 (Anexo): Documento com CPF",
+    "v_certidao_nascimento_1 (Anexo): Certidão de nascimento",
+    "v_comprovante_universitario_1 (Anexo): Comprovante universitário",
+    "v_certidao_casamento_1 (Anexo): Certidão de casamento",
+    "v_escritura_publica_uniao_estavel_1 (Anexo): Escritura pública de uniâo estável",
+    "v_termo_guarda_adocao_1 (Anexo): Termo de Guarda/Adoção"
+   ]
+  },
+  {
+   "sys_id": "d5a2ddb21bef7510a530426fe54bcbc8",
+   "name": "Seção 2",
+   "order": "910",
+   "perguntas": [
+    "dependente_2 (Referência, ro): Dependente:",
+    "relacionamento_2 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_2 (Anexo): Documento com CPF",
+    "v_certidao_nascimento_2 (Anexo): Certidão de nascimento",
+    "v_comprovante_universitario_2 (Anexo): Comprovante universitário",
+    "v_certidao_casamento_2 (Anexo): Certidão de Casamento",
+    "v_escritura_publica_uniao_estavel_2 (Anexo): Escritura pública de uniâo estável",
+    "v_termo_guarda_adocao_2 (Anexo): Termo de Guarda/Adoção"
+   ]
+  },
+  {
+   "sys_id": "b8d8904b1b2bf510a530426fe54bcb42",
+   "name": "Seção 3",
+   "order": "915",
+   "perguntas": [
+    "dependente_3 (Referência, ro): Dependent:",
+    "relacionamento_3 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_3 (Anexo): Document with CPF",
+    "v_certidao_nascimento_3 (Anexo): Birth Certificate",
+    "v_comprovante_universitario_3 (Anexo): University voucher",
+    "v_certidao_casamento_3 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_3 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_3 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "aca924831bebf510a530426fe54bcbfd",
+   "name": "Seção 4",
+   "order": "920",
+   "perguntas": [
+    "dependente_4 (Referência, ro): Dependent",
+    "relacionamento_4 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_4 (Anexo): Document with CPF",
+    "v_certidao_nascimento_4 (Anexo): Birth certificate",
+    "v_comprovante_universitario_4 (Anexo): University voucher",
+    "v_certidao_casamento_4 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_4 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_4 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "1ede6c0f1bebf510a530426fe54bcb77",
+   "name": "Seção  5",
+   "order": "925",
+   "perguntas": [
+    "dependente_5 (Referência, ro): Dependent",
+    "relacionamento_5 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_5 (Anexo): Document with CPF",
+    "v_certidao_nascimento_5 (Anexo): Birth certificate",
+    "v_comprovante_universitario_5 (Anexo): University voucher",
+    "v_certidao_casamento_5 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_5 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_5 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "2f333cc71b2ff510a530426fe54bcb65",
+   "name": "Seção 6",
+   "order": "930",
+   "perguntas": [
+    "dependente_6 (Referência, ro): Dependent",
+    "relacionamento_6 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_6 (Anexo): Document with CPF",
+    "v_certidao_nascimento_6 (Anexo): Birth certificate",
+    "v_comprovante_universitario_6 (Anexo): University voucher",
+    "v_certidao_casamento_6 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_6 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_6 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "4cc5304f1b2ff510a530426fe54bcb33",
+   "name": "Seção 7",
+   "order": "935",
+   "perguntas": [
+    "dependente_7 (Referência, ro): Dependent",
+    "relacionamento_7 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_7 (Anexo): Document with CPF",
+    "v_certidao_nascimento_7 (Anexo): Birth certificate",
+    "v_comprovante_universitario_7 (Anexo): University voucher",
+    "v_certidao_casamento_7 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_7 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_7 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "4f57fc031b6ff510a530426fe54bcb9f",
+   "name": "Seção 8",
+   "order": "940",
+   "perguntas": [
+    "dependente_8 (Referência, ro): Dependent",
+    "relacionamento_8 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_8 (Anexo): Document with CPF",
+    "v_certidao_nascimento_8 (Anexo): Birth certificate",
+    "v_comprovante_universitario_8 (Anexo): University voucher",
+    "v_certidao_casamento_8 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_8 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_8 (Anexo): Custody/Adoption Term"
+   ]
+  },
+  {
+   "sys_id": "836ab40b1b6ff510a530426fe54bcb94",
+   "name": "Seção 9",
+   "order": "945",
+   "perguntas": [
+    "dependente_9 (Referência, ro): Dependent",
+    "relacionamento_9 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_9 (Anexo): Document with CPF",
+    "v_certidao_nascimento_9 (Anexo): Birth certificate",
+    "v_comprovante_universitario_9 (Anexo): University voucher",
+    "v_certidao_casamento_9 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_9 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_9 (Anexo): Public deed of stable union"
+   ]
+  },
+  {
+   "sys_id": "aaac788f1b6ff510a530426fe54bcb21",
+   "name": "Seção 10",
+   "order": "950",
+   "perguntas": [
+    "dependente_10 (Referência, ro): Dependent",
+    "relacionamento_10 (Texto de Linha Única, hidden): Relationship",
+    "v_doc_cpf_10 (Anexo): Document with CPF",
+    "v_certidao_nascimento_10 (Anexo): Birth certificate",
+    "v_comprovante_universitario_10 (Anexo): University voucher",
+    "v_certidao_casamento_10 (Anexo): Wedding certificate",
+    "v_escritura_publica_uniao_estavel_10 (Anexo): Public deed of stable union",
+    "v_termo_guarda_adocao_10 (Anexo): Custody/Adoption Term"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Show Refund information",
+   "when": "IO:registration_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "want_insert_dependents: visible=true,mandatory=true",
+    "refund_information: visible=true,mandatory=true",
+    "enter_dependent: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 5",
+   "when": "IO:dependente_5ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 3",
+   "when": "IO:dependente_3ISNOTEMPTY^IO:relacionamento_3=Child^ORIO:relacionamento_3=Son^ORIO:relacionamento_3=Daughter^ORIO:relacionamento_3=Filho^ORIO:relacionamento_3=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_nascimento_3: visible=true,mandatory=true",
+    "v_comprovante_universitario_3: "
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 9",
+   "when": "IO:dependente_9ISNOTEMPTY^IO:relacionamento_9=Partner^ORIO:relacionamento_9=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_9: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 3",
+   "when": "IO:dependente_3ISNOTEMPTY^IO:relacionamento_3=Partner^ORIO:relacionamento_3=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 3",
+   "when": "IO:dependente_3ISNOTEMPTY^IO:relacionamento_3=Legal Custody^ORIO:relacionamento_3=Recognized Child^ORIO:relacionamento_3=Legal ward^ORIO:relacionamento_3=Guardianship^ORIO:relacionamento_3STARTSWITHStepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 8",
+   "when": "IO:dependente_8ISEMPTY^NQIO:registration_option=3^IO:dependente_8ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_8: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 2",
+   "when": "IO:dependente_2ISNOTEMPTY^IO:relacionamento_2=Child^ORIO:relacionamento_2=Son^ORIO:relacionamento_2=Daughter^ORIO:relacionamento_2=Filho^ORIO:relacionamento_2=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_2: ",
+    "v_certidao_nascimento_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 3",
+   "when": "IO:dependente_3ISEMPTY^NQIO:registration_option=3^IO:dependente_3ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_3: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 2",
+   "when": "IO:dependente_2ISNOTEMPTY^IO:relacionamento_2=Partner^ORIO:relacionamento_2=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Cancellation",
+   "when": "IO:registration_option=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "delete_beneficiary: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 10",
+   "when": "IO:dependente_10ISNOTEMPTY^IO:relacionamento_10=Spouse^ORIO:relacionamento_10=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_10: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 10",
+   "when": "IO:dependente_10ISEMPTY^NQIO:registration_option=3^IO:dependente_10ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_10: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 5",
+   "when": "IO:dependente_5ISNOTEMPTY^IO:relacionamento_5=Spouse^ORIO:relacionamento_5=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 5",
+   "when": "IO:dependente_5ISEMPTY^NQIO:registration_option=3^IO:dependente_5ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_5: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 1",
+   "when": "IO:dependente_1ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Ocultar dados do colaborador - Item view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "container_colab: visible=false"
+   ]
+  },
+  {
+   "name": "Seleção de apenas adesao",
+   "when": "IO:registration_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "benefit_description_value3: visible=true"
+   ]
+  },
+  {
+   "name": "Solicitante candidato = Nao",
+   "when": "IO:requester_candidate=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "texto_faq: visible=true"
+   ]
+  },
+  {
+   "name": "Regra Registration_Option exclusão checkbox",
+   "when": "IO:registration_option=3^IO:benefit_description_value2NOT LIKEPlano Care Plus^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependent_exclusion_science: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 5",
+   "when": "IO:dependente_5ISNOTEMPTY^IO:relacionamento_5=Partner^ORIO:relacionamento_5=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 10",
+   "when": "IO:dependente_10ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_10: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 4",
+   "when": "IO:dependente_4ISNOTEMPTY^IO:relacionamento_4=Partner^ORIO:relacionamento_4=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 7",
+   "when": "IO:dependente_7ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 1",
+   "when": "IO:dependente_1ISNOTEMPTY^IO:registration_option!=3^IO:relacionamento_1=Spouse^ORIO:relacionamento_1=Cônjuge^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 9",
+   "when": "IO:dependente_9ISNOTEMPTY^IO:relacionamento_9=Child^ORIO:relacionamento_9=Son^ORIO:relacionamento_9=Daughter^ORIO:relacionamento_9=Filho^ORIO:relacionamento_9=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_9: ",
+    "v_certidao_nascimento_9: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 4",
+   "when": "IO:dependente_4ISNOTEMPTY^IO:relacionamento_4=Spouse^ORIO:relacionamento_4=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Regra Registration_Option adesão médico dependentes",
+   "when": "IO:verifica_medico=true^IO:verifica_odonto=false^IO:registration_option=2^NQIO:registration_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "authorization_medical_discount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 2",
+   "when": "IO:dependente_2ISNOTEMPTY^IO:relacionamento_2=Spouse^ORIO:relacionamento_2=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 1",
+   "when": "IO:dependente_1ISNOTEMPTY^IO:relacionamento_1=Child^ORIO:relacionamento_1=Son^ORIO:relacionamento_1=Daughter^ORIO:relacionamento_1=Filho^ORIO:relacionamento_1=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_1: ",
+    "v_certidao_nascimento_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 9",
+   "when": "IO:dependente_9ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_9: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN when the varibale set Dependent Data is show",
+   "when": "IO:registration_option=2^ORIO:registration_option=3^NQIO:registration_option=1^IO:want_insert_dependents=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependent_data: visible=true,mandatory=true",
+    "dependent_update_information_link: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 7",
+   "when": "IO:dependente_7ISNOTEMPTY^IO:relacionamento_7=Legal Custody^ORIO:relacionamento_7=Recognized Child^ORIO:relacionamento_7=Legal ward^ORIO:relacionamento_7=Guardianship^ORIO:relacionamento_7=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 1",
+   "when": "IO:dependente_1ISNOTEMPTY^IO:relacionamento_1STARTSWITHLegal Custody^ORIO:relacionamento_1STARTSWITHRecognized Child^ORIO:relacionamento_1STARTSWITHLegal ward^ORIO:relacionamento_1STARTSWITHGuardianship^ORIO:relacionamento_1STARTSWITHStepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show dependents rule, when is dental care",
+   "when": "IO:dental_care=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "rule_inclusion_dependent: visible=true",
+    "rule_inclusion_dependent_odont: visible=true"
+   ]
+  },
+  {
+   "name": "Default",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "veracity_information: mandatory=true",
+    "request_date: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 6",
+   "when": "IO:dependente_6ISNOTEMPTY^IO:relacionamento_6=Legal Custody^ORIO:relacionamento_6=Recognized Child^ORIO:relacionamento_6=Legal ward^ORIO:relacionamento_6=Guardianship^ORIO:relacionamento_6=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_6: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 8",
+   "when": "IO:dependente_8ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 10",
+   "when": "IO:dependente_10ISNOTEMPTY^IO:relacionamento_10=Child^ORIO:relacionamento_10=Son^ORIO:relacionamento_10=Daughter^ORIO:relacionamento_10=Filho^ORIO:relacionamento_10=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_nascimento_10: visible=true,mandatory=true",
+    "v_comprovante_universitario_10: "
+   ]
+  },
+  {
+   "name": "Show IS candidate",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "requester_candidate: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 2",
+   "when": "IO:dependente_2ISNOTEMPTY^IO:relacionamento_2=Legal Custody^ORIO:relacionamento_2=Recognized Child^ORIO:relacionamento_2=Legal ward^ORIO:relacionamento_2=Guardianship^ORIO:relacionamento_2=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If benefit_description_value2 contains 'Plano Care Plus'",
+   "when": "IO:benefit_description_value2LIKEPlano Care Plus^IO:registration_option=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependent_exclusion_science_dental_plan: visible=true,mandatory=true",
+    "dependent_exclusion_science_medical_assistance: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 6",
+   "when": "IO:dependente_6ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_6: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Regra Registration_Option adesão odontológico dependentes",
+   "when": "IO:verifica_odonto=true^IO:verifica_medico=false^IO:registration_option=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "authorization_dental_discount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 8",
+   "when": "IO:dependente_8ISNOTEMPTY^IO:relacionamento_8=Partner^ORIO:relacionamento_8=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 4",
+   "when": "IO:dependente_4ISNOTEMPTY^IO:relacionamento_4=Legal Custody^ORIO:relacionamento_4=Recognized Child^ORIO:relacionamento_4=Legal ward^ORIO:relacionamento_4=Guardianship^ORIO:relacionamento_4=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 8",
+   "when": "IO:dependente_8ISNOTEMPTY^IO:relacionamento_8=Spouse^ORIO:relacionamento_8=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Ocultar dados do colaborador - Task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "container_colab: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Texto de elegibilidade odonto -  inclusao de depen",
+   "when": "IO:registration_optionIN2,3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "benefit_description_value2: visible=true",
+    "texto_plano_eleg_odonto: visible=true",
+    "v_produto_odonto: "
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 4",
+   "when": "IO:dependente_4ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 2",
+   "when": "IO:dependente_2ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Texto de elegibilidade - adesao | inclusao de depen",
+   "when": "IO:registration_optionIN1,2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "plano_elegivel_inclusao: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: registration option is change",
+   "when": "IO:registration_option=1^ORIO:registration_option=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "auth_discount: ",
+    "plans_odonto: visible=true",
+    "plans_medica: visible=true",
+    "plans_odonto: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Show fields \"Registration Option  =  Change of Plan (Sales Force exclusively AVON)\"",
+   "when": "IO:registration_option=4^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "operator_option: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 4",
+   "when": "IO:dependente_4ISNOTEMPTY^IO:relacionamento_4=Child^ORIO:relacionamento_4=Son^ORIO:relacionamento_4=Daughter^ORIO:relacionamento_4=Filho^ORIO:relacionamento_4=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_4: ",
+    "v_certidao_nascimento_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 5",
+   "when": "IO:dependente_5ISNOTEMPTY^IO:relacionamento_5=Child^ORIO:relacionamento_5=Son^ORIO:relacionamento_5=Daughter^ORIO:relacionamento_5=Filho^ORIO:relacionamento_5=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_5: ",
+    "v_certidao_nascimento_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 8",
+   "when": "IO:dependente_8ISNOTEMPTY^IO:relacionamento_8=Child^ORIO:relacionamento_8=Son^ORIO:relacionamento_8=Daughter^ORIO:relacionamento_8=Filho^ORIO:relacionamento_8=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_8: ",
+    "v_certidao_nascimento_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show info_comp_dependent",
+   "when": "IO:registration_option=1^IO:want_insert_dependents=Yes^NQIO:registration_option=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependete_inclusion_rule: visible=true",
+    "info_comp_dependent: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 3",
+   "when": "IO:dependente_3ISNOTEMPTY^IO:relacionamento_3=Spouse^ORIO:relacionamento_3=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: show benefit description when \"assistance type is marked\" -",
+   "when": "IO:dental_care=true^ORIO:health_care=true^ORIO:registration_optionIN1,2,3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_produto_saude: ",
+    "benefit_description_value: visible=true"
+   ]
+  },
+  {
+   "name": "Solicitante candidato = SIM",
+   "when": "IO:requester_candidate=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "text_faq2: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 7",
+   "when": "IO:dependente_7ISNOTEMPTY^IO:relacionamento_7=Partner^ORIO:relacionamento_7=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 9",
+   "when": "IO:dependente_9ISNOTEMPTY^IO:relacionamento_9=Legal Custody^ORIO:relacionamento_9=Recognized Child^ORIO:relacionamento_9=Legal ward^ORIO:relacionamento_9=Guardianship^ORIO:relacionamento_9=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_9: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Medical Assistence Title",
+   "when": "IO:registration_option=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "plano_elegivel_inclusao: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 6",
+   "when": "IO:dependente_6ISNOTEMPTY^IO:relacionamento_6=Child^ORIO:relacionamento_6=Son^ORIO:relacionamento_6=Daughter^ORIO:relacionamento_6=Filho^ORIO:relacionamento_6=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_nascimento_6: visible=true,mandatory=true",
+    "v_comprovante_universitario_6: "
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 9",
+   "when": "IO:dependente_9ISEMPTY^NQIO:registration_option=3^IO:dependente_9ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_9: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "declare_accuracy: mandatory=true",
+    "auth_discount: ",
+    "health_care: ",
+    "registration_option: mandatory=true",
+    "dental_care: "
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 6",
+   "when": "IO:dependente_6ISNOTEMPTY^IO:relacionamento_6=Spouse^ORIO:relacionamento_6=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_6: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: OCULTAR  choices - dantal care e health care",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "health_care: visible=false",
+    "v_produto_saude: visible=false",
+    "v_produto_odonto: visible=false",
+    "dental_care: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 8",
+   "when": "IO:dependente_8ISNOTEMPTY^IO:relacionamento_8=Legal Custody^ORIO:relacionamento_8=Recognized Child^ORIO:relacionamento_8=Legal ward^ORIO:relacionamento_8=Guardianship^ORIO:relacionamento_8=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 7",
+   "when": "IO:dependente_7ISEMPTY^NQIO:registration_option=3^IO:dependente_7ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_7: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 10",
+   "when": "IO:dependente_10ISNOTEMPTY^IO:relacionamento_10=Partner^ORIO:relacionamento_10=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_10: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN If   registration_option is cancelation,  want to insert dependents is no show",
+   "when": "IO:registration_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependent_update_information_link: ",
+    "auth_discount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - dependente 1",
+   "when": "IO:dependente_1ISEMPTY^NQIO:registration_option=3^IO:dependente_1ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_1: visible=false"
+   ]
+  },
+  {
+   "name": "Show texto_tempo_inclusao",
+   "when": "IO:registration_option=1^ORIO:registration_option=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "texto_tempo_inclusao: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 6",
+   "when": "IO:dependente_6ISNOTEMPTY^IO:relacionamento_6=Partner^ORIO:relacionamento_6=Domestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_6: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show fields \"want_insert_dependents  = yes\"",
+   "when": "IO:registration_option=1^IO:want_insert_dependents=Yes^NQIO:registration_option=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "adicionar_novo_dependente: visible=true",
+    "add_beneficiary: visible=true"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 9",
+   "when": "IO:dependente_9ISNOTEMPTY^IO:relacionamento_9=Spouse^ORIO:relacionamento_9=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_9: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Pasta 2",
+   "when": "IO:dependente_2ISEMPTY^NQIO:registration_option=3^IO:dependente_2ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_2: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Casamento PATH 7",
+   "when": "IO:dependente_7ISNOTEMPTY^IO:relacionamento_7=Spouse^ORIO:relacionamento_7=Cônjuge^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_certidao_casamento_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 6",
+   "when": "IO:dependente_6ISEMPTY^NQIO:registration_option=3^IO:dependente_6ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_6: visible=false"
+   ]
+  },
+  {
+   "name": "DOC - Certidão Nasc/Comprovante Uni PATH 7",
+   "when": "IO:dependente_7ISNOTEMPTY^IO:relacionamento_7=Child^ORIO:relacionamento_7=Son^ORIO:relacionamento_7=Daughter^ORIO:relacionamento_7=Filho^ORIO:relacionamento_7=Filha^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comprovante_universitario_7: ",
+    "v_certidao_nascimento_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show dependents rule, when is health care",
+   "when": "IO:health_care=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "rule_inclusion_dependent: visible=true",
+    "rule_inclusion_dependent_medical: visible=true"
+   ]
+  },
+  {
+   "name": "Ocultar variables sets - Seção 4",
+   "when": "IO:dependente_4ISEMPTY^NQIO:registration_option=3^IO:dependente_4ISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pasta_4: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_for_complete_exclusion_form: readonly=true",
+    "v_attach_the_completed_form_here: readonly=true"
+   ]
+  },
+  {
+   "name": "Regra Registration_Option adesão médico e odontológico dependentes",
+   "when": "IO:verifica_medico=true^IO:verifica_odonto=true^IO:registration_option=2^NQIO:registration_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "authorization_discount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 10",
+   "when": "IO:dependente_10ISNOTEMPTY^IO:relacionamento_10=Legal Custody^ORIO:relacionamento_10=Recognized Child^ORIO:relacionamento_10=Legal ward^ORIO:relacionamento_10=Guardianship^ORIO:relacionamento_10=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_10: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - União Estável PATH 1",
+   "when": "IO:dependente_1ISNOTEMPTY^IO:relacionamento_1STARTSWITHPartner^ORIO:relacionamento_1STARTSWITHDomestic_Partner_Adult^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_escritura_publica_uniao_estavel_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - CPF PATH 3",
+   "when": "IO:dependente_3ISNOTEMPTY^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doc_cpf_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "DOC - Guarda/Adoção PATH 5",
+   "when": "IO:dependente_5ISNOTEMPTY^IO:relacionamento_5=Legal Custody^ORIO:relacionamento_5=Recognized Child^ORIO:relacionamento_5=Legal ward^ORIO:relacionamento_5=Guardianship^ORIO:relacionamento_5=Stepchild^IO:registration_option!=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_termo_guarda_adocao_5: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill and validate user range",
+   "type": "onChange",
+   "on": "3e3aebbe1b4fb910a530426fe54bcb1d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche e valida a faixa (range) do colaborador consultando o servidor."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 2",
+   "type": "onChange",
+   "on": "d2b211be1baf7510a530426fe54bcb89",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de nascimento do dependente 2 e decide se o comprovante universitário passa a ser obrigatório — regra típica de dependente maior de idade ainda estudante. Um de dez scripts idênticos, um por dependente."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 1",
+   "type": "onChange",
+   "on": "0e8912111babb5d0d1abda4ce54bcb83",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma validação de data de nascimento e comprovante universitário, para o dependente 1."
+  },
+  {
+   "name": "EY: Clear MRV",
+   "type": "onChange",
+   "on": "f23aebbe1b4fb910a530426fe54bcb26",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o multi-row quando a resposta é 'No'."
+  },
+  {
+   "name": "EY: Hidden label and attach on load",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda e o campo de anexo do formulário de exclusão na abertura."
+  },
+  {
+   "name": "EY: Clean HTML when Change Plan",
+   "type": "onChange",
+   "on": "c33aebbe1b4fb910a530426fe54bcb8f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa e trava a descrição do benefício quando o plano muda."
+  },
+  {
+   "name": "EY: Show Dental Title",
+   "type": "onChange",
+   "on": "3e3aebbe1b4fb910a530426fe54bcb1d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe o título da seção odontológica conforme o plano escolhido."
+  },
+  {
+   "name": "Apresentar documentos",
+   "type": "onChange",
+   "on": "2de1883d1b6b79d0d1abda4ce54bcbf4",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange de 9,8 KB — o maior deste catálogo. Controla a apresentação de documentos usando um array de variáveis (documentado em comentário) para decidir quais campos de anexo exibir conforme a escolha do usuário."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 7",
+   "type": "onChange",
+   "on": "c506308f1b2ff510a530426fe54bcb60",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 7."
+  },
+  {
+   "name": "EY: Is requester candidate",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que verifica se o solicitante é candidato, chamando EY_HTRUtils, método checkCandidate, via GlideAjax."
+  },
+  {
+   "name": "ACN: Verifying if employee is range H",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que verifica se o colaborador é da faixa H, chamando x_nasm_hr.ACN_ValidateUtils via GlideAjax."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 6",
+   "type": "onChange",
+   "on": "5ec3304b1b2ff510a530426fe54bcb60",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 6."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 5",
+   "type": "onChange",
+   "on": "c73fa0cf1bebf510a530426fe54bcb82",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 5."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 8",
+   "type": "onChange",
+   "on": "3ad738431b6ff510a530426fe54bcbcf",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 8."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 9",
+   "type": "onChange",
+   "on": "d1aa384b1b6ff510a530426fe54bcbca",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 9."
+  },
+  {
+   "name": "EY: Hide Dental Title",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde o título odontológico. BUG: passa a STRING 'false' em vez do booleano para setDisplay — string não vazia é verdadeira, então o título pode acabar EXIBIDO. Terceira ocorrência desse mesmo erro no levantamento."
+  },
+  {
+   "name": "ACN: Verifying if employee is AVON",
+   "type": "onChange",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que verifica se o colaborador é da Avon, chamando x_nasm_hr.ACN_ValidateUtils via GlideAjax. Observação: não tem a guarda `if (isLoading)` — dispara também durante o carregamento."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 3",
+   "type": "onChange",
+   "on": "ac29dccb1b2bf510a530426fe54bcb19",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 3."
+  },
+  {
+   "name": "EY: Check mandatory checkbox",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit de 2,5 KB que confere a marcação dos checkboxes obrigatórios conforme a opção de registro e o benefício odontológico escolhidos."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 10",
+   "type": "onChange",
+   "on": "d1cdb8031baff510a530426fe54bcb85",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 10."
+  },
+  {
+   "name": "Ey: Validar data de nascimento dep 4",
+   "type": "onChange",
+   "on": "923ae4c31bebf510a530426fe54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Validação de data de nascimento e comprovante universitário, para o dependente 4."
+  }
+ ]
+}

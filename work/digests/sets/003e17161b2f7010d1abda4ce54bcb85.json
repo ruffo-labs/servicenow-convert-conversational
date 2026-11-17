@@ -1,0 +1,97 @@
+{
+ "sys_id": "003e17161b2f7010d1abda4ce54bcb85",
+ "title": "Beneficiary(ies) data",
+ "internal_name": "beneficiaries_information",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Designação de beneficiários do seguro de vida"
+ ],
+ "variaveis": [
+  {
+   "name": "full_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name"
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "affinity",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Affinity"
+  },
+  {
+   "name": "birth_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Birth Date"
+  },
+  {
+   "name": "participation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Participation",
+   "example": "Entre 1% e 100%"
+  },
+  {
+   "name": "lembre_se",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Lembre-se:",
+   "default": "A soma do % de designação de todos os beneficiários deverá ser de 100%"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: A date later than the current date cannot be entered",
+   "when": "IO:birth_date>javascript:gs.endOfToday()^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Campos Obrigatorios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "birth_date: mandatory=true",
+    "full_name: mandatory=true",
+    "cpf: mandatory=true",
+    "affinity: mandatory=true",
+    "participation: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: If Beneficiary designation form",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que compara o 'form_identifier' do formulário PAI com um sys_id fixo para saber se está no formulário de designação de beneficiário. Usa a variável que outro script preenche com o sys_id do item."
+  },
+  {
+   "name": "Aoop: Validate Percentage",
+   "type": "onChange",
+   "on": "94c9f39e1b6f7010d1abda4ce54bcb05",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o percentual informado, normalizando o valor antes de testar."
+  },
+  {
+   "name": "ACN Validate CPF Beneficiary -",
+   "type": "onChange",
+   "on": "a173985d1b058110d1abda4ce54bcb1e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o CPF do beneficiário com máscara, documentado por comentário."
+  }
+ ]
+}

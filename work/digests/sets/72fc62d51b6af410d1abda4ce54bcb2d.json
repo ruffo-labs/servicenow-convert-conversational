@@ -1,0 +1,96 @@
+{
+ "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+ "title": "Personal information",
+ "internal_name": "personal_information",
+ "description": "",
+ "usado_por": 6,
+ "itens_exemplo": [
+  "Solicitação de Licença Maternidade",
+  "Solicitação de declaração",
+  "Solicitação de Licença Paternidade",
+  "Solicitação de cadastro de pensão alimentícia",
+  "Lançamento de Atestados",
+  "Logística de Ações de Aprendizagem"
+ ],
+ "variaveis": [
+  {
+   "name": "solicitation_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation to whom?",
+   "include_none": true,
+   "choices": [
+    "My request [=my_request]",
+    "Request for another employee [=another_employee]"
+   ]
+  },
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "update_information_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Aoop: Show fields after select who will be request",
+   "when": "IO:solicitation_whom!=^IO:employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "global_id: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Solicitation to whom",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "solicitation_whom: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Employee visible and madatory",
+   "when": "IO:solicitation_whom=my_request^ORIO:solicitation_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field update information link visible",
+   "when": "IO:solicitation_whom=my_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "update_information_link: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Employee OnChanged",
+   "type": "onChange",
+   "on": "bf8b88331b077c10a530426fe54bcb20",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que reage à mudança do colaborador, consultando o servidor para atualizar os campos dependentes."
+  }
+ ]
+}

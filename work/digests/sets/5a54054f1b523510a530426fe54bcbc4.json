@@ -1,0 +1,139 @@
+{
+ "sys_id": "5a54054f1b523510a530426fe54bcbc4",
+ "title": "Add more",
+ "internal_name": "adicione_aqui_os_itens_que_deseja_solicitar",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de RPE"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_sales_code_mr",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Sales Code",
+   "reference": "x_nasm_finance_products_rpe",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_did_you_find_the_sales_code_mr",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Did you find the sales code?",
+   "include_none": true
+  },
+  {
+   "name": "vs_sales_code_mr2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter sales code here"
+  },
+  {
+   "name": "vs_material_code_mr",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Material Code"
+  },
+  {
+   "name": "vs_product_description_mr",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Product description"
+  },
+  {
+   "name": "vs_quantity_required_mr",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Quantity required"
+  },
+  {
+   "name": "vs_this_product_a_sample",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this product a sample?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_quantity_required_mr: mandatory=true",
+    "vs_did_you_find_the_sales_code_mr: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Sales code required",
+   "when": "IO:vs_did_you_find_the_sales_code_mr=^ORIO:vs_did_you_find_the_sales_code_mr=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_sales_code_mr: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: \"Did you find the sales code?\" is \"No\"",
+   "when": "IO:vs_did_you_find_the_sales_code_mr=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_product_description_mr: mandatory=true,readonly=false",
+    "vs_sales_code_mr2: visible=true,mandatory=true",
+    "vs_material_code_mr: mandatory=true,readonly=false",
+    "vs_sales_code_mr: visible=false"
+   ]
+  },
+  {
+   "name": "EY: \"Did you find the sales code?\" is \"Yes\"",
+   "when": "IO:vs_did_you_find_the_sales_code_mr=Yes^ORIO:vs_did_you_find_the_sales_code_mr=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_product_description_mr: visible=true",
+    "vs_material_code_mr: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Auto Fill Fields Based on Sales Code",
+   "type": "onChange",
+   "on": "7019890b1b923510a530426fe54bcbba",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche dados do produto a partir do código de vendas. Limpa código de material e descrição do produto, depois usa g_form.getReference no campo de código de vendas e, no callback, preenche os campos com os dados do registro referenciado. Usa getReference (carrega o registro inteiro) em vez de GlideAjax."
+  },
+  {
+   "name": "EY: Over 1000 products",
+   "type": "onChange",
+   "on": "6babc54b1b923510a530426fe54bcb6f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que trata pedidos acima de 1000 unidades. Se a quantidade requerida for maior ou igual a 1000, exibe mensagem de atenção avisando que será preciso anexar a aprovação do operador logístico, e exibe/torna obrigatório o campo que pergunta se o produto é amostra."
+  },
+  {
+   "name": "EY: Show or Hide Product a Sample",
+   "type": "onLoad",
+   "on": "6babc54b1b923510a530426fe54bcb6f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad, par do anterior. Na abertura, exibe e torna obrigatório o campo 'é amostra' quando a quantidade já está em 1000 ou mais, e esconde/desobriga quando está abaixo — para o formulário reabrir no estado correto."
+  },
+  {
+   "name": "EY: Clear sales code",
+   "type": "onChange",
+   "on": "b5bac5cb1b923510a530426fe54bcb0c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que libera o preenchimento manual quando o código de vendas não foi encontrado. Se a resposta for 'No', limpa o código de material e destrava os campos de material e descrição para digitação. Compara com 'No' de N maiúsculo."
+  }
+ ]
+}

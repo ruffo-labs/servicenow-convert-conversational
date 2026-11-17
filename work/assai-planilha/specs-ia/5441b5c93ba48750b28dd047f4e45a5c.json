@@ -1,0 +1,127 @@
+{
+ "sys_id": "5441b5c93ba48750b28dd047f4e45a5c",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Acessos Portal da Nossa Gente (1 oferta(s)); Gestor - RH Ponta > Preciso de um serviço de RH > Acessos Portal da Nossa Gente (2 oferta(s)).",
+ "vars": {
+  "v_name_collaborator_impacted": {
+   "label": "Quem é o usuário impactado?"
+  },
+  "v_access_profile_to_grant": {
+   "label": "Qual perfil de acesso deve ser concedido?"
+  },
+  "v_number_collaborator_impacted": {
+   "label": "Qual é a matrícula do usuário impactado?"
+  },
+  "v_request_type": {
+   "label": "O que você quer fazer: conceder, revogar ou trocar o perfil de acesso?"
+  },
+  "anexo": {
+   "label": "Envie um anexo que mostre o problema."
+  },
+  "informe_o_erro_problema": {
+   "label": "Que tipo de problema você está tendo?"
+  },
+  "matr_cula_do_colaborador_impactado": {
+   "label": "Quem é o colaborador impactado?"
+  },
+  "nome_do_colaborador_impactado": {
+   "label": "Qual é a matrícula do colaborador impactado?"
+  },
+  "v_keep_current_access_profile": {
+   "label": "Você quer manter o perfil de acesso que já possui?"
+  }
+ },
+ "remover": {
+  "v_observation": "visual"
+ },
+ "policies": {
+  "1676348a3b8dcf14b28dd047f4e45a60": "remover",
+  "283365bd3bbccb10b28dd047f4e45ace": "remover",
+  "2916340a3b8dcf14b28dd047f4e45a7a": "remover",
+  "3e8265f93bbccb10b28dd047f4e45a90": "remover",
+  "47fa95753b7ccb10b28dd047f4e45a2f": "remover",
+  "85385d3d3b3ccb10b28dd047f4e45ace": "remover",
+  "8a49ddfd3b3ccb10b28dd047f4e45a7a": "remover",
+  "8e8a51353b7ccb10b28dd047f4e45ad0": "remover",
+  "b3a6388a3b8dcf14b28dd047f4e45a52": "remover",
+  "ff95fcc63b8dcf14b28dd047f4e45a3a": "remover",
+  "nova_g1_1": {
+   "short_description": "ALP - Deseja manter o perfil de acesso que já possui?",
+   "conditions": "v_request_type=grant_access",
+   "actions": {
+    "v_keep_current_access_profile": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_2": {
+   "short_description": "ALP - Perfil a ser concedido",
+   "conditions": "v_request_type=grant_access^ORv_request_type=change_access_profile",
+   "actions": {
+    "v_access_profile_to_grant": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Acessos Portal da Nossa Gente (problemas de acesso)",
+   "short_description": "Reporte de problema para acessar o Portal da Nossa Gente.",
+   "description": "Use quando o Portal da Nossa Gente apresentar erro, falta de visibilidade ou estiver fora do ar. Atende a oferta de problemas ao acessar o Portal da Nossa Gente.",
+   "frases_exemplo": [
+    "O Portal da Nossa Gente não abre",
+    "Não estou conseguindo entrar no portal",
+    "Aparece erro quando acesso o Portal da Nossa Gente",
+    "Não vejo as informações do meu time no portal"
+   ],
+   "sem_vars": [
+    "v_name_collaborator_impacted",
+    "v_access_profile_to_grant",
+    "v_number_collaborator_impacted",
+    "v_request_type",
+    "v_keep_current_access_profile"
+   ],
+   "vars": {
+    "anexo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "informe_o_erro_problema": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_2"
+   ]
+  },
+  {
+   "name": "Acessos Portal da Nossa Gente (perfil de acesso)",
+   "short_description": "Pedido de concessão, revogação ou troca de perfil de acesso ao Portal da Nossa Gente.",
+   "description": "Use para conceder, revogar ou trocar o perfil de acesso de um colaborador ou de um prestador de serviço no Portal da Nossa Gente. Atende as ofertas de concessão, revogação ou troca de perfil, para colaborador e para prestador de serviço.",
+   "frases_exemplo": [
+    "Preciso liberar acesso ao portal para um colaborador",
+    "Quero trocar o perfil de acesso dele",
+    "Como tiro o acesso de um prestador ao portal?",
+    "Preciso dar acesso ao Portal da Nossa Gente"
+   ],
+   "sem_vars": [
+    "anexo",
+    "informe_o_erro_problema"
+   ],
+   "vars": {
+    "v_request_type": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,69 @@
+{
+ "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+ "title": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+ "internal_name": "ey_company_natura_avon_tbs_aesop_subcompany",
+ "description": "Company: Natura/Avon/TBS/Aesop - Subcompany",
+ "usado_por": 8,
+ "itens_exemplo": [
+  "Solicitação de alteração de limite do Cartão Corporativo",
+  "Solicitação de emissão do cartão corporativo",
+  "Informar orçamentos de viagens e suplementação orçamentaria para Centro de Custo ou PEP",
+  "Informações sobre Cartão Corporativo",
+  "Dúvidas sobre Reembolso Corporativo e Prestação de Contas",
+  "Solicitar cadastro e reativação de app de Táxi e Viagens Corporativas",
+  "Informações de Táxis e Viagens Corporativas",
+  "Solicitação de Desbloqueio ou Cancelamento de Cartão Corporativo"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company?",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "vs_subcompany",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "What is the sub-company?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_company + '^nameNOT LIKE331'"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_company: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show sub-company",
+   "when": "IO:vs_companyINAvon LATAM,Natura,TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_subcompany: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear sub-company",
+   "type": "onChange",
+   "on": "dc58e5d71b2c61d0d1abda4ce54bcb4d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_subcompany' quando a empresa muda."
+  }
+ ]
+}

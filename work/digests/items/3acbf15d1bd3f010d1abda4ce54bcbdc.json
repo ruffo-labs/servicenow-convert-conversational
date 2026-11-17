@@ -1,0 +1,385 @@
+{
+ "sys_id": "3acbf15d1bd3f010d1abda4ce54bcbdc",
+ "name": "Solicitação de Licença Paternidade",
+ "sys_name": "Paternity Leave Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Minha Família",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Você poderá solicitar o cadastro da sua licença paternidade através deste formulário.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "35",
+   "bloqueadores": "3",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "benefit_description"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "HTML (type 23 / HTML)",
+    "onde": "benefit_description_value"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @include_dependent_life_insurance: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @remuneration_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @informative_register_paternity: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @information_start_date: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @term_liability: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_definitive_judicial_custody: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_birth_certificate: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "about_paternity_leave",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "About Paternity Leave:"
+  },
+  {
+   "name": "type_license",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of license are you going to register?",
+   "include_none": true,
+   "choices": [
+    "Paternity leave [=paternity_leave]",
+    "Paternity Leave by Adoption [=paternity_leave_adoption]"
+   ]
+  },
+  {
+   "name": "start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform the start date of Paternity Leave"
+  },
+  {
+   "name": "information_start_date",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "desired_period",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the desired period",
+   "include_none": true,
+   "choices": [
+    "5",
+    "20",
+    "40"
+   ]
+  },
+  {
+   "name": "attach_definitive_judicial_custody",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "attach_birth_certificate",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "You must attach your birth certificate at the end of this form."
+  },
+  {
+   "name": "informative_register_paternity",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "container_end",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "dependent_update_benefits",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "To add the new dependent and update benefits:"
+  },
+  {
+   "name": "include_dependent_income_tax",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to include your new dependent on Income Tax?",
+   "include_none": true
+  },
+  {
+   "name": "include_dependent_health_care",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to include the new dependent in Health Care?",
+   "include_none": true
+  },
+  {
+   "name": "include_dependent_dental_care",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Do you want to include the new dependent in Dental Care?",
+   "include_none": true
+  },
+  {
+   "name": "mother_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full Name of Mother of New Dependent"
+  },
+  {
+   "name": "employee_home_address",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee home address",
+   "reference": "x_nasm_hr_employee_address"
+  },
+  {
+   "name": "bank_code_refund",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank code for refund"
+  },
+  {
+   "name": "reimbursement_agency",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Reimbursement agency"
+  },
+  {
+   "name": "checking_account_reimbursement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Checking account for reimbursement"
+  },
+  {
+   "name": "dependent_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name of new dependent"
+  },
+  {
+   "name": "dependent_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF of the new dependent"
+  },
+  {
+   "name": "dependent_gender",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Gender of the New Dependent",
+   "include_none": true,
+   "choices": [
+    "Feminine [=feminine]",
+    "Masculine [=masculine]"
+   ]
+  },
+  {
+   "name": "date_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  },
+  {
+   "name": "alive_birth_certificate",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Alive Birth Certificate (This information is on the Birth Certificate)"
+  },
+  {
+   "name": "declaration",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I am aware that the co-payment on the value of the services will be charged, whenever me or my dependents make use of consultations, emergency room, exams and therapies."
+  },
+  {
+   "name": "remuneration_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "declaration_term_liability",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "By this TERM OF LIABILITY, I declare that I am aware that I shall immediately communicate the occurrence of the following facts or occurrences that determine the loss of the right to the family allowance:"
+  },
+  {
+   "name": "term_liability",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "include_dependent_life_insurance",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Do you want to include the new dependent on Life Insurance?",
+   "include_none": true
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  },
+  {
+   "sys_id": "5659d1691b000510d1abda4ce54bcb2f",
+   "name": "Eligibilities Informative",
+   "order": "1950",
+   "perguntas": [
+    "benefit_description (Personalizado): Benefit description",
+    "benefit_description_value (HTML): Plan details"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN -  If request for is for another employee, the adress field is no show",
+   "when": "IO:solicitation_whom=my_request^IO:include_dependent_dental_care=Yes^ORIO:include_dependent_health_care=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_home_address: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "include_dependent_health_care: mandatory=true",
+    "desired_period: mandatory=true",
+    "mother_name: mandatory=true",
+    "include_dependent_life_insurance: mandatory=true",
+    "dependent_gender: mandatory=true",
+    "include_dependent_income_tax: mandatory=true",
+    "declaration_term_liability: mandatory=true",
+    "include_dependent_dental_care: mandatory=true",
+    "type_license: mandatory=true",
+    "declaration: mandatory=true",
+    "start_date: mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show \"Attach definitive judicial custody\" when \"Type of license\" is \"Paternity leave by adoption\"",
+   "when": "IO:type_license=paternity_leave_adoption^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_definitive_judicial_custody: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Show \"Dependent informations\" when \"Paternity leave continue\" is \"Yes\" AND \"Life insurance\" is \"Yes\"",
+   "when": "IO:alive_birth_certificate=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "life_insurance_form: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Show \"Attach birth certificate\" when \"Type of license\" is \"Paternity leave\"",
+   "when": "IO:type_license=paternity_leave^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_birth_certificate: visible=true"
+   ]
+  },
+  {
+   "name": "ACN Elegibility is show when  \"paternity_leave_continue\" is yes and dental or health is yes",
+   "when": "IO:include_dependent_health_care=Yes^ORIO:include_dependent_dental_care=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "eligibilities_informative: visible=true"
+   ]
+  },
+  {
+   "name": "ACN: Show \"Dependent informations\" when \"Paternity leave continue\" is \"Yes\" AND \"Healh OR Dental Care\" is \"Yes\"",
+   "when": "IO:include_dependent_dental_care=Yes^ORIO:include_dependent_health_care=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "checking_account_reimbursement: visible=true",
+    "dependent_cpf: visible=true,mandatory=true",
+    "bank_code_refund: visible=true",
+    "date_birth: visible=true,mandatory=true",
+    "reimbursement_agency: visible=true",
+    "alive_birth_certificate: visible=true,mandatory=true",
+    "dependent_gender: visible=true,mandatory=true",
+    "dependent_name: visible=true,mandatory=true",
+    "declaration: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN Validate Fax",
+   "type": "onChange",
+   "on": "42eee1f61b840910a530426fe54bcb0c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número de fax, normalizando o valor antes de testar."
+  },
+  {
+   "name": "ACN: Validate CPF",
+   "type": "onChange",
+   "on": "8ed9579d1bd7f010d1abda4ce54bcbdc",
+   "va_supported": "true",
+   "ui_type": "0",
+   "what": "Catalog Client Script onChange que valida CPF com máscara, com comentário explicando a intenção. Versão 'ACN' do validador."
+  },
+  {
+   "name": "ACN: Add \"Employee home address\" details",
+   "type": "onChange",
+   "on": "168d2ad51b6af410d1abda4ce54bcb70",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o endereço residencial do colaborador via GlideAjax e preenche os campos do formulário."
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "sys_id": "ab9d37c11b0d5ad0514cbaef4b4bcb23",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir reembolso mensal de creche/berço). O widget mrv_monitor e as legendas country-specific são só exibição e saem; os três anexos por país viram um único anexo com instruções que cobrem todos os casos; os client scripts de validação/histórico do item viram regex e busca automática. As variáveis dos variable sets (nome do filho, tipo de reembolso, fatura, recibo, valor, data de nascimento do dependente) são compartilhadas e não são alteradas por esta spec; a lista de anos de v_report_the_year é montada por script onLoad sem condição de bloqueio e continua ativa, pois o formato não permite fixar 'choices' em variável existente.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_report_the_month": {
+   "label": "De que mês é o reembolso?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_report_the_year": {
+   "label": "E de que ano?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_first_time": {
+   "label": "É a primeira vez que você pede reembolso para essa instituição ou cuidadora?"
+  },
+  "v_use_the_following_field_to_detail_your_need": {
+   "label": "Quer acrescentar algum detalhe?",
+   "props": {
+    "validation_regex": "^.{10,}$"
+   }
+  },
+  "nova_anexo_comprovantes": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe a fatura ou recibo e, se for o primeiro pedido, a habilitação da instituição ou o registro da cuidadora.",
+    "mandatory": true,
+    "order": 700
+   }
+  }
+ },
+ "remover": {
+  "mrv_monitor": "visual",
+  "v_faq": "visual",
+  "v_label_2": "visual",
+  "v_label_3": "visual",
+  "v_label_4": "visual",
+  "v_label_5": "visual",
+  "v_label_6": "visual",
+  "v_label_7": "visual",
+  "v_label_8": "visual",
+  "v_label_9": "visual",
+  "v_label_10": "visual",
+  "v_label_11": "visual",
+  "v_attach_your_documents_below": "visual",
+  "v_attachment_1": {
+   "substituida_por": "nova_anexo_comprovantes"
+  },
+  "v_attachment_2": {
+   "substituida_por": "nova_anexo_comprovantes"
+  },
+  "v_attachment_3": {
+   "substituida_por": "nova_anexo_comprovantes"
+  }
+ },
+ "policies": {
+  "0b86f89d1b0d9ad0514cbaef4b4bcb9f": "remover",
+  "138378951b0d9ad0514cbaef4b4bcb50": "remover",
+  "2bd434991b0d9ad0514cbaef4b4bcba4": "remover",
+  "52a2f0151b0d9ad0514cbaef4b4bcb12": "remover",
+  "abe3fcd51b0d9ad0514cbaef4b4bcb9d": "remover",
+  "ba56749d1b0d9ad0514cbaef4b4bcbae": "remover",
+  "baf4bc991b0d9ad0514cbaef4b4bcb79": "remover",
+  "c39725251be5da50514cbaef4b4bcb44": "remover",
+  "d15470591b0d9ad0514cbaef4b4bcb1a": "remover",
+  "d9b4f0591b0d9ad0514cbaef4b4bcbf4": "remover",
+  "e1843c591b0d9ad0514cbaef4b4bcb5e": "remover"
+ },
+ "scripts": {
+  "1e00345d1bc99ad0514cbaef4b4bcbfb": {
+   "converter": "regex"
+  },
+  "320bacd51b899ad0514cbaef4b4bcb7c": {
+   "remover": "sem_efeito"
+  },
+  "5b9285661b015610514cbaef4b4bcb58": {
+   "converter": "auto_populate"
+  }
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "sys_id": "ce192c6933bc471098331c07ee5c7b3a",
+ "name": "Informações ou dúvidas relacionadas à Relações Trabalhista",
+ "sys_name": "Information or questions related to Labor Relations",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relações Trabalhistas, Sindicais,  Atualização de CCT e Novos Estabelecimentos (CNPJ)",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Este formulário é especifico para solicitações diversas para Relações de Trabalho/Sindicais",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "5",
+   "variaveis_ativas": "6",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "5"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 5 de 5 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_subcompany",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "u_brand=Natura^country=Brazil^EQ"
+  },
+  {
+   "name": "v_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Inquiries/Questions [=inquiries_questions]",
+    "Complaints [=complaints]",
+    "Suggestions [=suggestions]"
+   ]
+  },
+  {
+   "name": "v_subject_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please specify the subject of your request:",
+   "include_none": true,
+   "choices": [
+    "Union Information [=union_information]",
+    "Salary Information [=salary_information]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_describe_the_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the request"
+  },
+  {
+   "name": "v_attach_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_request: mandatory=true",
+    "v_describe_the_request: mandatory=true",
+    "v_opened_by: mandatory=true",
+    "v_subject_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_opened_by: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

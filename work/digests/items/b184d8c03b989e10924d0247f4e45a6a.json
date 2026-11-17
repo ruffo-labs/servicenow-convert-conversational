@@ -1,0 +1,150 @@
+{
+ "sys_id": "b184d8c03b989e10924d0247f4e45a6a",
+ "name": "Solicitações de relatório",
+ "sys_name": "Report Requests",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relatórios",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar relatórios de folha de pagamento, headcount, entre outros",
+ "description": "Relatórios de folha de pagamento, headcount, entre outros",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "18",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "18"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 18 de 18 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_report_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Report type",
+   "include_none": true,
+   "choices": [
+    "Payroll [=payroll]",
+    "HeadCount [=headcount]",
+    "License [=license]",
+    "Hours [=hours]",
+    "Band report [=band]",
+    "Manager Reports [=manager]",
+    "Workflow Report for Approvals [=workflow_approval]",
+    "Other Reports [=other]"
+   ]
+  },
+  {
+   "name": "v_field_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use this field to detail the purpose of your request and also the type of information required for the report, such as: emails, receipt date, cost center, band, etc."
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "You must enter more than 40 characters in your description detail"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields - Catalog view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_field_detail: mandatory=true",
+    "v_report_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide target fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_reason_on_behalf: visible=false",
+    "v_who_is_this_request_for: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "3ed7544c3bd89e10924d0247f4e45afa",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do par onChange de validação de tamanho mínimo, sobre 'v_field_detail'."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'v_field_detail' tem menos de 40 caracteres."
+  },
+  {
+   "name": "EY: Hide/Show options on report type",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que reconstrói a lista de tipos de relatório: limpa o campo e remove opções como 'band' conforme o contexto."
+  },
+  {
+   "name": "EY: Hide/Show options - On load",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Versão onLoad do anterior, aplicando as mesmas remoções na abertura."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."
+  }
+ ]
+}

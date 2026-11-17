@@ -1,0 +1,308 @@
+{
+ "sys_id": "4b499a951b84a558a530426fe54bcb84",
+ "name": "Solicitação para tratativa de pagamentos Varejo",
+ "sys_name": "Request for handling Retail payments",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Varejo e Fechamento de Caixa",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitação de pagamentos Varejo",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "24",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select request type",
+   "include_none": true,
+   "choices": [
+    "OP Request (SAC Payment Order) [=op]",
+    "Initial store balance request (without withdrawal card) [=balance]"
+   ]
+  },
+  {
+   "name": "v_request_type_tbs",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select request type",
+   "include_none": true,
+   "choices": [
+    "OP Request (SAC Payment Order) [=op]",
+    "TBS Franchise Return Request [=tbs]",
+    "Initial store balance request (without withdrawal card) [=balance]"
+   ]
+  },
+  {
+   "name": "v_label_payment",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "To facilitate the payment flow, please fill in all the fields listed below:"
+  },
+  {
+   "name": "v_collaborator_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Collaborator name"
+  },
+  {
+   "name": "v_franchise_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Franchise Name"
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the CPF",
+   "example": "000.000.000-00"
+  },
+  {
+   "name": "v_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the CNPJ",
+   "example": "00.000.000/0000-00"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the value (R$)"
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "v_bank_details",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Inform bank details"
+  },
+  {
+   "name": "v_account_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Account Type",
+   "include_none": true,
+   "choices": [
+    "Current account [=current]",
+    "Savings account [=savings]",
+    "Mix [=mix]"
+   ]
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "v_accounting",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform accounting account"
+  },
+  {
+   "name": "v_cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Cost Center"
+  },
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "País"
+  },
+  {
+   "name": "v_attach_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the approval of the person in charge"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+   "name": "EY: Opened by",
+   "order": "10",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by"
+   ]
+  },
+  {
+   "sys_id": "b9d4b5991bc86558a530426fe54bcba7",
+   "name": "EY: Company: Natura/TBS/Aesop",
+   "order": "20",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company is your request for?"
+   ]
+  },
+  {
+   "sys_id": "cb0cb5d91b4c6558a530426fe54bcb70",
+   "name": "EY: Store",
+   "order": "30",
+   "perguntas": [
+    "vs_store (Texto de Linha Única): Which store is your request for?"
+   ]
+  },
+  {
+   "sys_id": "95cc20de1b44a598a530426fe54bcb9c",
+   "name": "EY: Bank data",
+   "order": "160",
+   "perguntas": [
+    "vs_bank (Texto de Linha Única): Bank",
+    "vs_agency (Texto de Linha Única): Agency",
+    "vs_account (Texto de Linha Única): Bank account",
+    "vs_digit (Texto de Linha Única): Digit"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "900",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show fields when Request type TBS IS op or balance",
+   "when": "IO:v_request_type_tbsINop,balance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_collaborator_name: visible=true,mandatory=true",
+    "v_cpf: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields when tbs",
+   "when": "IO:v_request_type_tbs=tbs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_franchise_name: visible=true,mandatory=true",
+    "v_cnpj: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields when Request type IS op or balance ",
+   "when": "IO:v_request_typeINop,balance^IO:vs_companyINaesop,natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_collaborator_name: visible=true,mandatory=true",
+    "v_cpf: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Natura and Aesop request type",
+   "when": "IO:vs_companyINnatura,aesop^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_cost_center: mandatory=true",
+    "v_accounting: mandatory=true",
+    "v_account_type: mandatory=true",
+    "v_attach_approval: mandatory=true",
+    "v_value: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide Country",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Make Visible Inform bank details IF TBS Franchise Return Request IS SELECTED",
+   "when": "IO:v_request_type_tbs=tbs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_accounting: visible=true,mandatory=true",
+    "v_bank_details: visible=true,mandatory=true",
+    "vs_agency: visible=true,mandatory=true",
+    "vs_digit: visible=true,mandatory=true",
+    "v_account_type: visible=true,mandatory=true",
+    "v_cost_center: visible=true,mandatory=true",
+    "vs_account: visible=true,mandatory=true",
+    "vs_bank: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: TBS request type",
+   "when": "IO:vs_company=tbs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type_tbs: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate CPF",
+   "type": "onChange",
+   "on": "ae2182e11b48a958a530426fe54bcb19",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF por formato (com máscara ou 11 dígitos corridos) em 'v_cpf'. Inválido: limpa e mostra erro. Duplicata do outro validador de CPF do catálogo. Não confere dígitos verificadores."
+  },
+  {
+   "name": "EY: Validate value",
+   "type": "onChange",
+   "on": "83d18aa51b48a958a530426fe54bcb7a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'v_value'. Inválido: limpa o campo e mostra 'Valor inválido'. Observação: o script se chama 'Number Regex' mas valida moeda, não número simples."
+  },
+  {
+   "name": "EY: Validade CNPJ",
+   "type": "onChange",
+   "on": "cb5106e11b48a958a530426fe54bcbe4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CNPJ por formato (com máscara ou 14 dígitos corridos). Duplicata praticamente idêntica ao outro validador de CNPJ do mesmo catálogo, com hash diferente por variação de espaçamento. Também não confere dígitos verificadores."
+  }
+ ]
+}

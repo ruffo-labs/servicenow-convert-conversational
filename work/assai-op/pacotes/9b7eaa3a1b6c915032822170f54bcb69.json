@@ -1,0 +1,111 @@
+{
+ "sys_id": "9b7eaa3a1b6c915032822170f54bcb69",
+ "name": "Solicitação de avaliações de Recrutamento e Seleção para regionais",
+ "category": "Recrutamento e Seleção",
+ "short_description": "Solicitação de avaliações de Recrutamento e Seleção para regionais",
+ "description": "Solicita&ccedil;&atilde;o de avalia&ccedil;&otilde;es de Recrutamento e Sele&ccedil;&atilde;o para regionais",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Envio da avaliação PIR",
+     "sla": "SLA - GESTÃO DE GENTE - 64H",
+     "grupo_suporte": "RH - Atratividade e Seleção"
+    },
+    {
+     "name": "Envio do mapeamento Disc",
+     "sla": "SLA - GESTÃO DE GENTE - 64H",
+     "grupo_suporte": "RH - Atratividade e Seleção"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "candidate_email",
+    "candidate_name",
+    "intended_charge"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "candidate_email",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail do Candidado",
+   "choices": []
+  },
+  {
+   "name": "candidate_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do Candidato",
+   "choices": []
+  },
+  {
+   "name": "intended_charge",
+   "type": "Texto de Linha Única",
+   "question_text": "Cargo pretendido",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "3052f5903b6b2a10b28dd047f4e45acb",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "3742f1903b6b2a10b28dd047f4e45aa6",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

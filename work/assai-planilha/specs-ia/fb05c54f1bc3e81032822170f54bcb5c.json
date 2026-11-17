@@ -1,0 +1,159 @@
+{
+ "sys_id": "fb05c54f1bc3e81032822170f54bcb5c",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios (1 oferta(s)); Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios (2 oferta(s)).",
+ "vars": {
+  "qual_operadora": {
+   "label": "Qual é a operadora da academia?"
+  },
+  "nome_do_a_dependente": {
+   "label": "Qual é o nome do dependente?"
+  },
+  "attachment": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "titular_ou_dependente": {
+   "label": "O caso é do titular ou do dependente?"
+  },
+  "attachment_print_error": {
+   "label": "Envie um print do erro."
+  },
+  "evidencia_da_operadora": {
+   "label": "Envie a evidência da operadora."
+  },
+  "motivo_da_solicitacao": {
+   "label": "Qual é o problema que o beneficiário está tendo?"
+  },
+  "v_mes_referencia": {
+   "label": "De qual mês é a divergência?"
+  },
+  "collaborator_email": {
+   "label": "Qual é o novo e-mail do colaborador?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "formatter2": "visual",
+  "container_a": "visual",
+  "observacao_wellhub": "visual",
+  "v_qual_plano_2": "oferta_inativa",
+  "observacao_totalpass": "visual",
+  "v_observacao_2": "visual",
+  "observacao_total_pass_block": "visual"
+ },
+ "policies": {
+  "024de5931bfb199032822170f54bcb1c": "remover",
+  "3d2976431bb3d59032822170f54bcb14": "remover",
+  "bbf067a1877bae50182a0d440cbb35d1": "remover",
+  "c2bb465087bba650182a0d440cbb3513": "remover",
+  "f8cc42d087bba650182a0d440cbb35ac": "remover",
+  "nova_g0_1": {
+   "short_description": "ALP - E-mail colaborador",
+   "conditions": "qual_operadora=3",
+   "actions": {
+    "collaborator_email": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_2": {
+   "short_description": "CSA - Hide Description",
+   "conditions": "qual_operadora=2",
+   "actions": {
+    "rh_description": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "nova_g0_3": {
+   "short_description": "CSA - Qual operadora para as ofertas de serviço Visão Resolvedora",
+   "conditions": "qual_operadora=2^ORqual_operadora=3",
+   "actions": {
+    "qual_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Academia (atualização de e-mail)",
+   "short_description": "Pedido para atualizar o e-mail do colaborador cadastrado na academia.",
+   "description": "Use para solicitar a atualização do e-mail cadastrado na operadora da academia para um colaborador. Atende a oferta de solicitação de atualização do e-mail cadastrado na academia.",
+   "frases_exemplo": [
+    "Preciso trocar o e-mail da academia de um colaborador",
+    "Quero atualizar o e-mail dele no Wellhub",
+    "O e-mail da academia do meu colaborador está errado",
+    "Como mudo o e-mail cadastrado na academia?"
+   ],
+   "sem_vars": [
+    "attachment",
+    "titular_ou_dependente",
+    "attachment_print_error",
+    "evidencia_da_operadora",
+    "motivo_da_solicitacao",
+    "v_mes_referencia",
+    "start",
+    "formatter5",
+    "formatter6"
+   ],
+   "vars": {
+    "qual_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "22547ac71b73d59032822170f54bcb28",
+    "2c1f61f987193650182a0d440cbb3538",
+    "36951ad487fba650182a0d440cbb35ed",
+    "467c1fa9873bae50182a0d440cbb3581",
+    "509f25bd87193650182a0d440cbb3556",
+    "5106db7287025210182a0d440cbb354c",
+    "65c9c29c877ba650182a0d440cbb357d",
+    "691e8e2b877baa10182a0d440cbb35ff",
+    "78090bb81b064610347221bbe54bcbbd",
+    "7a8ece6b877baa10182a0d440cbb358c",
+    "8242569c87bba650182a0d440cbb35ed",
+    "9bed07341b464610347221bbe54bcbb9",
+    "a8fc53e9873bae50182a0d440cbb35c5",
+    "bafc82a7877baa10182a0d440cbb3547",
+    "bed1de2387bbaa10182a0d440cbb3578",
+    "e98d0ee7877baa10182a0d440cbb3592",
+    "c857d29887fba650182a0d440cbb3541"
+   ]
+  },
+  {
+   "name": "Academia (problemas e divergências)",
+   "short_description": "Reporte de problema no uso da academia ou de divergência no desconto do colaborador.",
+   "description": "Use quando um colaborador tiver problema para usar a academia, como bloqueio ou falha de cadastro, ou divergência no valor descontado em folha. Atende as ofertas de problemas ao utilizar a academia e de divergência nos valores descontados.",
+   "frases_exemplo": [
+    "Um colaborador está com a academia bloqueada",
+    "Ele não consegue se inscrever na academia",
+    "O desconto da academia dele veio errado",
+    "Houve divergência no valor da academia",
+    "O colaborador não consegue acessar o cadastro da academia"
+   ],
+   "sem_vars": [
+    "collaborator_email"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "nova_g0_3",
+    "78090bb81b064610347221bbe54bcbbd"
+   ]
+  }
+ ],
+ "scripts": {
+  "546a92d0873fa650182a0d440cbb35e4": {
+   "remover": {
+    "outro": "limpa campos conforme a oferta; coberto pela estrutura do derivado"
+   }
+  }
+ }
+}

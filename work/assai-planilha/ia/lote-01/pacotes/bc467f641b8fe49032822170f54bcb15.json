@@ -1,0 +1,142 @@
+{
+ "sys_id": "bc467f641b8fe49032822170f54bcb15",
+ "name": "Apoio aos sistemas de R&S",
+ "category": "Recrutamento e Seleção",
+ "short_description": "Apoio nos processos de Recrutamento e Seleção",
+ "description": "Apoio nos processos Gupy",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Recrutamento e Seleção",
+    "item": "Apoio nos processos Gupy"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de apoio aos Sistemas de Recrutamento e Seleção",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Recrutamento e Seleção Processos Gupy"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_number_personal_request",
+    "rh_name_candidate",
+    "rh_cpf_cadidate",
+    "rh_code_gupy"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Apoio aos sistemas de Recrutamento e Seleção (Gupy)",
+     "description": "Use para pedir apoio do RH nos sistemas de Recrutamento e Seleção, pela oferta Solicitação de apoio aos Sistemas de Recrutamento e Seleção. Informe a requisição de pessoal, o candidato e a vaga na Gupy. SLA de 24h."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_number_personal_request",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da Requisição de Pessoal (RP)",
+   "choices": [],
+   "label_atual": "Qual é o número da Requisição de Pessoal (RP)?"
+  },
+  {
+   "name": "rh_name_candidate",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do candidato",
+   "choices": [],
+   "label_atual": "Qual é o nome do candidato?"
+  },
+  {
+   "name": "rh_cpf_cadidate",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do candidato",
+   "choices": [],
+   "label_atual": "Qual é o CPF do candidato?"
+  },
+  {
+   "name": "rh_code_gupy",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da vaga na Gupy",
+   "choices": [],
+   "label_atual": "Qual é o código da vaga na Gupy?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "2632b9503b6b2a10b28dd047f4e45a7e",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "a732f1903b6b2a10b28dd047f4e45ae9",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "c98f1de21b5be810eca40dcbe54bcba5",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF aplicada a rh_cpf_cadidate (candidato; o nome do campo no script tem essa grafia). Contém um console.log de depuração."
+  }
+ ]
+}

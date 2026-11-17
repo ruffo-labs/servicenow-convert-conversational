@@ -1,0 +1,122 @@
+{
+ "sys_id": "dc72049a872faa10182a0d440cbb3582",
+ "status": "dividido",
+ "motivo": "Três ofertas com formulários diferentes: divergência pede mês e demonstrativo, não recebimento pede o mês, demonstrativo pede mês/ano de referência.",
+ "vars": {
+  "informe_mes_divergencia": {
+   "label": "Em qual mês houve a divergência?"
+  },
+  "mes_nao_recebimento": {
+   "label": "De qual mês é o pagamento não recebido?"
+  },
+  "demonstrativo_divergencia": {
+   "label": "Envie o demonstrativo de pagamento com a divergência."
+  },
+  "mes_ano_referencia": {
+   "label": "De qual mês e ano você quer o demonstrativo?"
+  }
+ },
+ "policies": {
+  "26f0ff60874d4790182a0d440cbb35da": "remover",
+  "3b58041a876faa10182a0d440cbb3585": "remover",
+  "6757ffa4878d4790182a0d440cbb3506": "remover",
+  "76f8e02a87157210182a0d440cbb355d": "remover",
+  "99eecb088705cf50182a0d440cbb350b": "remover",
+  "c95a14608781c390182a0d440cbb35cf": "remover",
+  "e0a6b324878d4790182a0d440cbb359f": "remover",
+  "efb8805a876faa10182a0d440cbb3509": "remover",
+  "nova_g2_1": {
+   "short_description": "Show - VS - Anexo Opcional",
+   "conditions": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026",
+   "actions": {
+    "vs_anexo_opcional": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Divergência no pagamento mensal",
+   "short_description": "Reportar divergência no valor do pagamento mensal",
+   "description": "Use quando o pagamento mensal veio com valor diferente do esperado (oferta \"Divergência no pagamento mensal\"). Informe o mês da divergência e anexe o demonstrativo. Atendimento do RH - Atendimento Matriz, SLA de 32h.",
+   "frases_exemplo": [
+    "Meu pagamento veio com valor errado",
+    "Tem divergência no meu salário deste mês",
+    "Recebi a menos no pagamento mensal",
+    "Quero reportar diferença no contracheque",
+    "Abrir divergência de pagamento"
+   ],
+   "sem_vars": [
+    "mes_nao_recebimento",
+    "mes_ano_referencia"
+   ],
+   "vars": {
+    "informe_mes_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "demonstrativo_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g2_1"
+   ]
+  },
+  {
+   "name": "Não recebimento do pagamento mensal",
+   "short_description": "Reportar que o pagamento mensal não foi recebido",
+   "description": "Use quando o pagamento mensal não caiu na conta (oferta \"Não recebimento do pagamento mensal\"). Informe o mês do não recebimento. Atendimento do RH - Pagamento Mensal, SLA de 24h.",
+   "frases_exemplo": [
+    "Meu salário não caiu",
+    "Não recebi o pagamento deste mês",
+    "O pagamento mensal não foi depositado",
+    "Cadê meu salário?",
+    "Abrir chamado de salário não recebido"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "demonstrativo_divergencia",
+    "mes_ano_referencia"
+   ],
+   "vars": {
+    "mes_nao_recebimento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g2_1"
+   ]
+  },
+  {
+   "name": "Demonstrativo de pagamento",
+   "short_description": "Pedir cópia do demonstrativo de pagamento",
+   "description": "Use para pedir o demonstrativo (contracheque) de um mês (oferta \"Solicitação de demonstrativo de pagamento\"). Informe o mês e ano de referência. Atendimento do RH - Cópia de Documentos, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso do meu contracheque",
+    "Quero o demonstrativo de pagamento",
+    "Pode me mandar o holerite de um mês?",
+    "Solicitar cópia do demonstrativo",
+    "Preciso do comprovante de pagamento"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "vars": {
+    "mes_ano_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

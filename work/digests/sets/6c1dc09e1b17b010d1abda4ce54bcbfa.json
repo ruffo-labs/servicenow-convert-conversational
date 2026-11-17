@@ -1,0 +1,52 @@
+{
+ "sys_id": "6c1dc09e1b17b010d1abda4ce54bcbfa",
+ "title": "Employee Infos ",
+ "internal_name": "employee_infos",
+ "description": "Adicionar colaboradores",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Rotinas de Folha de Pagamento"
+ ],
+ "variaveis": [
+  {
+   "name": "Employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^EQ"
+  },
+  {
+   "name": "global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Global ID",
+   "read_only": true
+  },
+  {
+   "name": "codigo_adp",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Código ADP",
+   "read_only": true
+  },
+  {
+   "name": "Value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value",
+   "example": "0.00"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "ACN: GetUserGlobalID",
+   "type": "onChange",
+   "on": "6dfdc0de1b17b010d1abda4ce54bcbd2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior do script que busca o ID global via ACN_ValidateUtils."
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+{
+ "sys_id": "5659d1691b000510d1abda4ce54bcb2f",
+ "title": "Eligibilities Informative",
+ "internal_name": "eligibilities_informative",
+ "description": "",
+ "usado_por": 4,
+ "itens_exemplo": [
+  "Solicitação de Licença Maternidade",
+  "Solicitação de Licença Paternidade",
+  "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica",
+  "Reembolso Auxílio Creche ou Babá"
+ ],
+ "variaveis": [
+  {
+   "name": "benefit_description",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Benefit description",
+   "widget": "ACN: Eligibilities Informative"
+  },
+  {
+   "name": "benefit_description_value",
+   "type": "HTML",
+   "type_code": "23",
+   "label": "Plan details",
+   "include_none": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: Show \"benefit description\"",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "ACN: Show \"benefit description\"",
+   "when": "IO:benefit_description_valueANYTHING^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  }
+ ],
+ "client_scripts": []
+}

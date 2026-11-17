@@ -1,0 +1,125 @@
+{
+ "sys_id": "bcb96c711b942550d1abda4ce54bcbce",
+ "name": "Informações ou dúvidas relacionadas à Dados Pessoais",
+ "sys_name": "Generic Personal Data",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Dados Pessoais",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Este é um formulário genérico para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre dados pessoais.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "3",
+   "variaveis_ativas": "5",
+   "bloqueadores": "5",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "3"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @Info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 3 de 3 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "Info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "v_description_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe what you need in this field"
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Contextual Search Results",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Show kb link",
+   "when": "IO:v_have_you_tried_searching_the_knowledge_base=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_kb: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_details: mandatory=true",
+    "v_have_you_already_searched_the_portals_search_engine: mandatory=true",
+    "v_have_you_tried_searching_the_knowledge_base: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: minimum caracter",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."
+  }
+ ]
+}

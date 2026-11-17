@@ -1,0 +1,193 @@
+{
+ "sys_id": "18ac98eb3bb30250924d0247f4e45ac5",
+ "name": "Dúvidas, consultas, reclamações ou sugestões sobre licenças",
+ "sys_name": "Questions, inquiries, complaints, or suggestions related to licenses",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Dúvidas, dúvidas, reclamações ou sugestões",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Use este formulário para expressar suas perguntas, dúvidas, sugestões ou reclamações",
+ "description": "Use este formulário para expressar suas perguntas, dúvidas, sugestões ou reclamações",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "22",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @select_the_license_type: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @select_the_category_as_appropriate: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+ "variaveis": [
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Puedes usar este formulario si la temática que buscas no está disponible en \"FAQS de Licencia POR PAÍS\""
+  },
+  {
+   "name": "reason_for_contact",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for contact:",
+   "include_none": true,
+   "choices": [
+    "Queries/Doubts [=queries]",
+    "Complaints [=complaints]",
+    "Suggestions [=sugestions]"
+   ]
+  },
+  {
+   "name": "select_the_license_type",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Select the license type:",
+   "reference": "x_nasm_hr_hispanic_categories",
+   "lookup": "x_nasm_hr_rules_hispanic_licencias_questions",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true
+  },
+  {
+   "name": "select_the_category_as_appropriate",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Select the category as appropriate:",
+   "reference": "x_nasm_hr_hispanic_categories",
+   "lookup": "x_nasm_hr_rules_hispanic_licencias_questions",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilitySubCategory(current.variables.v_employee, current.variables.select_the_license_ty",
+   "include_none": true
+  },
+  {
+   "name": "v_detail_field",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "1",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide fields if employee is me",
+   "when": "IO:v_who_is_this_request_for=for_me^ORIO:v_who_is_this_request_for=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee: visible=false",
+    "why_are_you_opening_on_behalf_of: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide v_minimun_characters onLoad",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_minimun_characters: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "reason_for_contact: mandatory=true",
+    "v_corporate_e_mail: mandatory=true",
+    "v_detail_field: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: View category ",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_license_type: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide subcat onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde e desobriga o campo de categoria na abertura, até que outro script o revele conforme o colaborador."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que BLOQUEIA o envio quando a descrição tem menos de 40 caracteres. Exibe a legenda de mínimo de caracteres e retorna false. Validação de qualidade de conteúdo, não de formato."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "df5149ec1bc89250514cbaef4b4bcb44",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange do anterior: enquanto o usuário digita, exibe a legenda de mínimo de caracteres se o texto tiver entre 1 e 39 caracteres, e esconde quando atinge 40."
+  },
+  {
+   "name": "EY: Check if Subcat exists",
+   "type": "onChange",
+   "on": "4d9cfc281bc89250514cbaef4b4bcb0e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que verifica se existe subcategoria para a categoria escolhida. Consulta o Script Include de categorias hispânicas via GlideAjax com categoria, colaborador e sys_id do item, e exibe o campo de subcategoria só quando há opções."
+  },
+  {
+   "name": "EY: Show error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."
+  }
+ ]
+}

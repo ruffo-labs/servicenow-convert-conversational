@@ -1,0 +1,263 @@
+{
+ "sys_id": "9e05bc511b38a514a530426fe54bcbdf",
+ "name": "Dúvidas sobre Reembolso Corporativo e Prestação de Contas",
+ "sys_name": "Questions about Corporate Reimbursement and Accounting",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Reembolso e prestação de contas",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "Este formulário destina-se para dúvidas sobre reembolso de viagens corporativas, apoio a força de vendas, informações sobre adiantamento administrativo e dúvidas de prestação de contas.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "24",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_if_you_have_questions_about: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_you_have_questions_about",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_questions_about_reimbursement",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Questions about reimbursement, rendering of accounts and deposits"
+  },
+  {
+   "name": "v_which_audience_do_you_belong_to",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which audience do you belong to?",
+   "include_none": true,
+   "choices": [
+    "Administrative [=administrative]",
+    "Sales force [=sales_force]",
+    "Operational [=operational]",
+    "Retail [=retail]"
+   ]
+  },
+  {
+   "name": "v_doubt_about_which_process",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Doubt about which process?",
+   "include_none": true,
+   "choices": [
+    "Advance [=advance]",
+    "Bank reconciliation [=bank_reconciliation]",
+    "Accountability [=accountability]",
+    "Reimbursement [=reimbursement]",
+    "Expense report by Cost Center [=v_expense_report]",
+    "Others"
+   ]
+  },
+  {
+   "name": "v_what_type_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "Batch Cover Cancellation [=batch_cover_cancellation]",
+    "Bank Details for Returns [=bank_details_for_returns]",
+    "Expenses in Foreign Currency [=expenses_in_foreign_currency]",
+    "Necessary documents [=necessary_documents]",
+    "Corporate Card Invoice [=corporate_card_invoice]",
+    "Reasons for Return (Rejected) [=reasons_for_return_rejected]",
+    "Others [=others]",
+    "Deadlines [=deadlines]",
+    "Status [=status]"
+   ]
+  },
+  {
+   "name": "v_what_type_of_doubt_Reimbursement",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "How to Request a Refund [=how_to_request_a_refund]",
+    "Expenses in Foreign Currency [=expenses_in_foreign_currency]",
+    "Allowable Expenses [=allowable_expenses]",
+    "Others [=others]",
+    "Deadlines [=deadlines]",
+    "Spending Limit Amount [=spending_limit_amount]"
+   ]
+  },
+  {
+   "name": "v_what_type_of_doubt_Advance",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "Initial Advance [=initial_advance]",
+    "How to Request Advance [=how_to_request_advance]",
+    "Application Criteria [=application_criteria]",
+    "Bank Details for Returns [=bank_details_for_returns]",
+    "Others [=others]",
+    "Deadlines [=deadlines]",
+    "Status [=status]",
+    "Limit Value [=limit_value]"
+   ]
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "v_budget_reference_month",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Budget reference month",
+   "example": "MM/AAAA"
+  },
+  {
+   "name": "v_describe_your_question",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your question"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "bc6bd86d1b34e554d1abda4ce54bcbfa",
+   "name": "Informe os dados do depósito",
+   "order": "900",
+   "perguntas": [
+    "v_depositor (Texto de Linha Única): Depositor",
+    "v_date (Data): Date",
+    "v_value (Texto de Linha Única): Value",
+    "v_accounting_document_batch (Texto de Linha Única): Accounting document/Batch"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If \"Doubt about which process?\" for \"Accountability\"",
+   "when": "IO:v_doubt_about_which_process=accountability^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_do_you_have: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Doubt about which process?\" for \"Bank Reconciliation\"",
+   "when": "IO:v_doubt_about_which_process=bank_reconciliation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "enter_deposit_details: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: See \"Question about which process?\" to \"Advance\"",
+   "when": "IO:v_doubt_about_which_process=advance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_Advance: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"What kind of doubt do you have?\" for \"Batch Cover Cancellation\"",
+   "when": "IO:v_what_type_of_doubt_do_you_have=batch_cover_cancellation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_budget_reference_month: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Doubt about which process?",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_doubt_about_which_process: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Doubt about which process?\" for \"Reimbursement\"",
+   "when": "IO:v_doubt_about_which_process=reimbursement^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_type_of_doubt_Reimbursement: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Which audience do you belong to?",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_audience_do_you_belong_to: visible=true,mandatory=true",
+    "v_describe_your_question: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "d89a3c9d1b78a514a530426fe54bcb33",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de dúvidas: descrição da pergunta, tipo de dúvida, mês de referência do orçamento e os campos específicos de reembolso e adiantamento."
+  },
+  {
+   "name": "EY: Date MM/AAAA",
+   "type": "onChange",
+   "on": "3070eca51bb4e554d1abda4ce54bcb40",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o mês de referência do orçamento. Aceita MM/AAAA e, em segunda tentativa, seis dígitos corridos (MMAAAA). Não casando nenhum dos dois, limpa 'v_budget_reference_month' e mostra erro."
+  }
+ ]
+}

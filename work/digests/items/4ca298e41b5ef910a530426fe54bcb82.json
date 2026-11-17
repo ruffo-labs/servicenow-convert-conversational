@@ -1,0 +1,202 @@
+{
+ "sys_id": "4ca298e41b5ef910a530426fe54bcb82",
+ "name": "Solicitação de RPE",
+ "sys_name": "RPE request",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "RPE",
+ "catalogs": {
+  "_display_value": "OTC Serviços de Suporte Administrativo",
+  "__text": "925117101be86914a530426fe54bcbf6"
+ },
+ "short_description": "Este formulário é necessário para criação de Solicitações de Produtos Acabados em Estoque (RPE)",
+ "description": "This form is required for creating Finished Goods Requests (FPR)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "24",
+   "variaveis_ativas": "25",
+   "bloqueadores": "2",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "24"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "attach_mandatory_widget"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "attach_mandatory_widget"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_label_attach: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_sales_code_mr: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_recipient_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_cost_center: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_label_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 24 de 24 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 24 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 16 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_attach_mandatory",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Attach mandatory",
+   "hidden": true
+  },
+  {
+   "name": "attach_mandatory_widget",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach mandatory widget",
+   "widget": "Attach mandatory"
+  },
+  {
+   "name": "vs_delivery_location",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Delivery location",
+   "include_none": true,
+   "choices": [
+    "Cabreúva [=cabreuva]",
+    "NASP [=nasp]",
+    "Cajamar [=cajamar]",
+    "Ecoparque [=ecoparque]"
+   ]
+  },
+  {
+   "name": "v_label_attach",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach approval from the logistics operator here for items over 1000 units"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "f563d0e81b5ef910a530426fe54bcbd9",
+   "name": "EY VS - Solicitação de RPE",
+   "order": "100",
+   "perguntas": [
+    "vs_requester_name (Referência, default): Requester name",
+    "vs_approver_user (Referência): Approver",
+    "vs_recipient_name (Referência): Recipient's name",
+    "vs_recipient_cpf (Texto de Linha Única, ro): Recipient's CPF",
+    "vs_recipient_email (Texto de Linha Única, ro): Recipient's Email",
+    "vs_label_2 (Rótulo de Rich Text): ",
+    "vs_company (Referência): Company",
+    "vs_cost_center (Referência): Cost Center",
+    "vs_cost_center_name (Texto de Linha Única, ro): Cost Center name",
+    "vs_did_you_find_the_cost_center (Sim/Não): Did you find the Cost center?",
+    "vs_cost_class (Texto de Linha Única): Cost Class",
+    "vs_purpose (Texto de Linha Única): Purpose",
+    "vs_justification (Texto de Linha Única): Justification",
+    "vs_center_cd (Selecionar Caixa): Center / CD"
+   ]
+  },
+  {
+   "sys_id": "5a54054f1b523510a530426fe54bcbc4",
+   "name": "Adicione aqui os itens que deseja solicitar",
+   "order": "200",
+   "perguntas": [
+    "vs_sales_code_mr (Referência): Sales Code",
+    "vs_did_you_find_the_sales_code_mr (Sim/Não): Did you find the sales code?",
+    "vs_sales_code_mr2 (Texto de Linha Única): Enter sales code here",
+    "vs_material_code_mr (Texto de Linha Única): Material Code",
+    "vs_product_description_mr (Texto de Linha Única): Product description",
+    "vs_quantity_required_mr (Texto de Linha Única): Quantity required",
+    "vs_this_product_a_sample (Selecionar Caixa): Is this product a sample?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Remove attach when not find CC",
+   "when": "IO:vs_did_you_find_the_cost_center=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_attach: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: if attach not mandatory hide attach variable",
+   "when": "IO:v_attach_mandatoryISEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_attach: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Make Multirow Add More Mandatory",
+   "when": "IO:vs_did_you_find_the_cost_center=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "adicione_aqui_os_itens_que_deseja_solicitar: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide approver variable",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_approver_user: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Hide Label and Attachment over 1000 products",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_attach: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: If it is not found CC will not open",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que BLOQUEIA o envio. Se a resposta a 'encontrou o centro de custo' for 'No', exibe mensagem dizendo que não é possível enviar sem o centro de custo cadastrado e retorna false, impedindo a submissão. Observação: compara com 'No' com N maiúsculo, enquanto outro script do mesmo formulário compara o mesmo campo com 'no' minúsculo — se o valor real for minúsculo, esta trava não pega."
+  },
+  {
+   "name": "EY: Mandat attach over 100 products",
+   "type": "onChange",
+   "on": "277ce6ff1b110610d1abda4ce54bcb9f",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange sobre um multi-row variable set. Faz parse do JSON das linhas e percorre cada uma verificando quantidade requerida maior ou igual a 1000 com o produto não marcado como amostra. Havendo alguma linha nessa condição, marca a necessidade de anexo obrigatório."
+  },
+  {
+   "name": "EY: Clear value of Attach mandatory",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que limpa 'v_attach_mandatory' no momento do envio. Como roda no submit, o valor do campo não chega a ser gravado no registro — é uma variável de controle usada só durante o preenchimento."
+  },
+  {
+   "name": "EY: Read only",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que chama g_form.setVariablesReadOnly(true), tornando TODAS as variáveis do formulário somente leitura na abertura. Efeito amplo: o formulário inteiro fica não editável, a menos que outro script reverta."
+  }
+ ]
+}

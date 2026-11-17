@@ -1,0 +1,197 @@
+{
+ "sys_id": "36c4ff5b1ba93990d1abda4ce54bcba9",
+ "title": "EY VS: Repayment of title",
+ "internal_name": "ey_vs_repayment_of_title",
+ "description": "VS do item Repayment of title",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Reparcelamento de título"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_order_individual_or_batch",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The order is: (individual or batch)",
+   "include_none": true,
+   "choices": [
+    "Individual [=individual]",
+    "Batch [=batch]"
+   ]
+  },
+  {
+   "name": "vs_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^EQ"
+  },
+  {
+   "name": "vs_describe_reason_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the reason for your request"
+  },
+  {
+   "name": "vs_annex_credit_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach completed template"
+  },
+  {
+   "name": "vs_data_search",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What data do you want to search for?",
+   "include_none": true,
+   "choices": [
+    "Name [=name]",
+    "CPF/CNPJ [=cpf_cnpj]",
+    "Code [=code]",
+    "Email [=email]"
+   ]
+  },
+  {
+   "name": "vs_consultant_name_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Consultant's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "v_search_cpf_cnpj",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Search by CPF/CNPJ",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_code",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Representative's code search",
+   "reference": "core_company",
+   "ref_qual": "customer=true^EQ"
+  },
+  {
+   "name": "vs_representative_email_new",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Representative's email search",
+   "reference": "core_company",
+   "ref_qual": "customer=true^u_source_system=BIDs^EQ"
+  },
+  {
+   "name": "vs_number_bond",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the number of the bond to be rescheduled?"
+  },
+  {
+   "name": "vs_maturity_bond",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the maturity of the bond?"
+  },
+  {
+   "name": "vs_many_parcels",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "How many parcels",
+   "include_none": true,
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+   ]
+  },
+  {
+   "name": "vs_describe_the_reason_for_your_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the reason for your request"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show Fields for Individual Order",
+   "when": "IO:vs_order_individual_or_batch=individual^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_many_parcels: visible=true,mandatory=true",
+    "vs_describe_the_reason_for_your_request: visible=true,mandatory=true",
+    "vs_maturity_bond: visible=true,mandatory=true",
+    "vs_data_search: visible=true,mandatory=true",
+    "vs_number_bond: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Fields Code Search",
+   "when": "IO:vs_order_individual_or_batch=individual^IO:vs_data_search=code^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_code: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_the_approver: mandatory=true",
+    "vs_order_individual_or_batch: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Fields for Batch Order",
+   "when": "IO:vs_order_individual_or_batch=batch^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_describe_reason_request: visible=true,mandatory=true",
+    "vs_annex_credit_approval: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Fields CPF Search",
+   "when": "IO:vs_order_individual_or_batch=individual^IO:vs_data_search=cpf_cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_search_cpf_cnpj: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Fields Email Search",
+   "when": "IO:vs_order_individual_or_batch=individual^IO:vs_data_search=email^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_representative_email_new: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Fields Name Search",
+   "when": "IO:vs_order_individual_or_batch=individual^IO:vs_data_search=name^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_consultant_name_new: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,309 @@
+{
+ "sys_id": "90fbc7543bb09e50924d0247f4e45a7a",
+ "name": "Solicitações relacionadas a Alívio Fiscal, Contribuições Voluntárias e Liberações",
+ "sys_name": "Requests related to Tax Relief, Voluntary Contributions and Releases",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Isenção fiscal e outras contribuições",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar, modificar ou enviar suporte para diminuir a retenção",
+ "description": "Utilize este formulário para solicitar, modificar ou enviar suporte para diminuir a retenção",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "21",
+   "variaveis_ativas": "28",
+   "bloqueadores": "1",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "21"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Load options OnChange"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_document: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_legenda_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_5: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 21 de 21 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 21 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "APV - Voluntary Pensions [=voluntary_persons]",
+    "AFC - Construction Promotion Savings [=promotion_savings]",
+    "Payroll deductions [=payroll]",
+    "Other tax reliefs [=other]"
+   ]
+  },
+  {
+   "name": "v_what_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What request do you want to make?",
+   "include_none": true,
+   "choices": [
+    "Inclusion/Registration [=inclusion]",
+    "Contribution modification [=modification]",
+    "I no longer wish to make contributions [=cancelation]"
+   ]
+  },
+  {
+   "name": "v_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_5",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Amount",
+   "include_none": true
+  },
+  {
+   "name": "v_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request",
+   "include_none": true
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach document",
+   "include_none": true
+  },
+  {
+   "name": "v_attach_document",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach document",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show legenda 1",
+   "when": "IO:v_category=voluntary_persons^IO:v_what_request=inclusion^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_1: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show attahcment",
+   "when": "IO:v_category!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_document: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 3",
+   "when": "IO:v_category=payroll^IO:v_what_request=cancelation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Set amaount Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_amount: visible=true,mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 5",
+   "when": "IO:v_category=promotion_savings^IO:v_what_request=inclusion^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 4",
+   "when": "IO:v_category=other^IO:v_what_request=inclusion^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 2",
+   "when": "IO:v_category=payroll^IO:v_what_request=inclusion^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_2: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Set Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_detail: mandatory=true",
+    "v_category: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory attachment",
+   "when": "IO:v_category=voluntary_persons^ORIO:v_category=promotion_savings^ORIO:v_category=other^NQIO:v_category=payroll^IO:v_what_request=cancelation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_document: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set Read Only fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country_of_residence: visible=true,mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show amount field",
+   "when": "IO:v_categoryINvoluntary_persons,promotion_savings,payroll^IO:v_what_request!=cancelation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_amount: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Load options OnChange",
+   "type": "onChange",
+   "on": "80e2ef943bb89e50924d0247f4e45a00",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que monta as opções de 'v_what_request', desobrigando e escondendo o campo quando o valor anterior fica vazio."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'v_detail' tem menos de 30 caracteres."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "3887a7143b3c9e50924d0247f4e45a33",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange da validação de 30 caracteres sobre 'v_detail'."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."
+  },
+  {
+   "name": "EY: Set numeric field regex",
+   "type": "onChange",
+   "on": "fed66bdc3bf89e50924d0247f4e45a96",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita apenas dígitos no campo. Inválido: limpa o valor."
+  }
+ ]
+}

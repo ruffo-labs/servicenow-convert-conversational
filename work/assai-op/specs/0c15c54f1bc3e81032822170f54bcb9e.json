@@ -1,0 +1,85 @@
+{
+ "sys_id": "0c15c54f1bc3e81032822170f54bcb9e",
+ "status": "dividido",
+ "motivo": "Não recebimento pede nome do dependente e mês de referência; reembolso do Instituto pede nome dos dependentes e boleto ou nota fiscal.",
+ "vars": {
+  "rh_child_name": {
+   "label": "Qual é o nome do(a) dependente?"
+  },
+  "rh_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "rh_inform_dependents_full_name": {
+   "label": "Qual é o nome completo do(a) dependente?"
+  },
+  "rh_attach_billet_proof_of_payment": {
+   "label": "Envie o boleto ou a nota fiscal."
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_container_init": "visual"
+ },
+ "policies": {
+  "6d350d8f1bc3e81032822170f54bcb5e": "remover",
+  "b175fdf81bdfe110347221bbe54bcb0f": "remover",
+  "b995f53c1bdfe110347221bbe54bcb0d": "remover",
+  "caa8163d871d3650182a0d440cbb35e3": "remover"
+ },
+ "itens": [
+  {
+   "name": "Auxílio creche não recebido ou com valor errado",
+   "short_description": "Não recebimento ou divergência no valor do auxílio creche",
+   "description": "Use quando não recebeu o auxílio creche ou o valor veio divergente. Informe o nome do(a) dependente e o mês de referência.",
+   "frases_exemplo": [
+    "Não recebi meu auxílio creche",
+    "O valor do auxílio creche veio errado",
+    "Auxílio creche divergente no meu pagamento",
+    "Cadê o auxílio creche deste mês?"
+   ],
+   "sem_vars": [
+    "rh_inform_dependents_full_name",
+    "rh_attach_billet_proof_of_payment"
+   ],
+   "vars": {
+    "rh_child_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reembolso de auxílio creche - Instituto",
+   "short_description": "Solicitação de reembolso de auxílio creche - Instituto",
+   "description": "Use para solicitar o reembolso de auxílio creche do Instituto. Informe o nome do(a) dependente e anexe o boleto ou a nota fiscal.",
+   "frases_exemplo": [
+    "Quero reembolso da creche do instituto",
+    "Pedir reembolso do auxílio creche",
+    "Tenho o boleto da creche para reembolsar",
+    "Reembolso de creche"
+   ],
+   "sem_vars": [
+    "rh_child_name",
+    "rh_reference_month"
+   ],
+   "vars": {
+    "rh_inform_dependents_full_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_attach_billet_proof_of_payment": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

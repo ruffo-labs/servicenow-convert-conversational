@@ -1,0 +1,51 @@
+{
+ "sys_id": "bc6bd86d1b34e554d1abda4ce54bcbfa",
+ "title": "Enter deposit details",
+ "internal_name": "enter_deposit_details",
+ "description": "Enter deposit details",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Dúvidas sobre Reembolso Corporativo e Prestação de Contas"
+ ],
+ "variaveis": [
+  {
+   "name": "v_depositor",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Depositor"
+  },
+  {
+   "name": "v_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value"
+  },
+  {
+   "name": "v_accounting_document_batch",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Accounting document/Batch"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: deposit details",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_value: visible=true,mandatory=true",
+    "v_depositor: visible=true,mandatory=true",
+    "v_accounting_document_batch: visible=true,mandatory=true",
+    "v_date: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

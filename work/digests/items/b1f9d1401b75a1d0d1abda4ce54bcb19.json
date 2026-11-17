@@ -1,0 +1,348 @@
+{
+ "sys_id": "b1f9d1401b75a1d0d1abda4ce54bcb19",
+ "name": "Jurídico",
+ "sys_name": "Legal",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços Externos",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Serviços para Solicitações Jurídica",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "26",
+   "variaveis_ativas": "27",
+   "bloqueadores": "7",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "26"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   }
+  ],
+  "avisos": [
+   "sem_conversational_label: 26 de 26 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 26 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Ex-Colaboradores ou Colaboradores Afastados. Grava current.item com o sysparm_id e força requested_for e opened_by para o usuário genérico da system property 'acn_guest_user'. Padrão de atendimento a quem não tem mais acesso à plataforma.",
+ "variaveis": [
+  {
+   "name": "v_cont_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request Data:"
+  },
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "CTPS Digital [=ctps]",
+    "GFIP [=gfip]"
+   ]
+  },
+  {
+   "name": "v_claimant_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Claimant's name"
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "v_period_of_bond",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Period of bond"
+  },
+  {
+   "name": "v_gfip_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "GFIP value"
+  },
+  {
+   "name": "v_name_ctps",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  },
+  {
+   "name": "v_rg",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "RG"
+  },
+  {
+   "name": "v_cpf_ctps",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "v_pis",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "PIS"
+  },
+  {
+   "name": "v_ctps_serie",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CTPS/Série"
+  },
+  {
+   "name": "v_mother_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mother's name"
+  },
+  {
+   "name": "v_complete_address",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Complete address"
+  },
+  {
+   "name": "v_company_ctps",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_admission_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Admission date"
+  },
+  {
+   "name": "v_job_role",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Job Role"
+  },
+  {
+   "name": "v_remuneration",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Remuneration"
+  },
+  {
+   "name": "v_contract_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Contract end date"
+  },
+  {
+   "name": "v_describe",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request here."
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Contextual Search Results",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "vs_add_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Add attachment",
+   "widget": "EY: Enable public attachment"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name: visible=true,mandatory=true",
+    "v_company: visible=true,mandatory=true",
+    "v_category: visible=true,mandatory=true",
+    "v_email: visible=true,mandatory=true",
+    "v_phone: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If CTPS",
+   "when": "IO:v_category=ctps^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_remuneration: visible=true,mandatory=true",
+    "v_complete_address: visible=true,mandatory=true",
+    "v_date_of_birth: visible=true,mandatory=true",
+    "v_ctps_serie: visible=true,mandatory=true",
+    "v_cpf_ctps: visible=true,mandatory=true",
+    "v_name_ctps: visible=true,mandatory=true",
+    "v_mother_name: visible=true,mandatory=true",
+    "v_company_ctps: visible=true,mandatory=true",
+    "v_rg: visible=true,mandatory=true",
+    "v_admission_date: visible=true,mandatory=true",
+    "v_job_role: visible=true,mandatory=true",
+    "v_pis: visible=true,mandatory=true",
+    "v_contract_end_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:  IF GFIP",
+   "when": "IO:v_category=gfip^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_gfip_value: visible=true,mandatory=true",
+    "v_period_of_bond: visible=true,mandatory=true",
+    "v_cpf: visible=true,mandatory=true",
+    "v_claimant_name: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate PIS",
+   "type": "onChange",
+   "on": "641029401bb5a1d0d1abda4ce54bcbd2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o PIS por formato com máscara (000.00000.00-0)."
+  },
+  {
+   "name": "EY:CPF",
+   "type": "onChange",
+   "on": "366dd1481b75a1d0d1abda4ce54bcb27",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF por formato. Repete o defeito do irmão: usa ponto sem escape na regex, que casa qualquer caractere no lugar dos separadores."
+  },
+  {
+   "name": "EY: Validate Currency",
+   "type": "onChange",
+   "on": "b53e110c1b75a1d0d1abda4ce54bcb50",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário aceitando inteiro com até duas casas decimais após vírgula, SEM separador de milhar — mais restrito que os validadores dos outros catálogos."
+  },
+  {
+   "name": "EY: Validate Email",
+   "type": "onChange",
+   "on": "deda55801b75a1d0d1abda4ce54bcb47",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail por regex padrão. Inválido: limpa o campo e mostra erro."
+  },
+  {
+   "name": "EY: Validate remuneration",
+   "type": "onChange",
+   "on": "8371e1c41bb5a1d0d1abda4ce54bcba2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Gêmeo do anterior, validando o campo de remuneração com a mesma regra."
+  },
+  {
+   "name": "EY: CPF CTPS",
+   "type": "onChange",
+   "on": "70ff51401bb5a1d0d1abda4ce54bcb37",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o CPF da CTPS. Repete o defeito da família: ponto sem escape na regex, que casa qualquer caractere no lugar dos separadores."
+  },
+  {
+   "name": "EY: Validate Phone",
+   "type": "onChange",
+   "on": "b3eadd801b75a1d0d1abda4ce54bcb73",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone aceitando de 9 a 18 dígitos, sem máscara. Mais permissivo que os validadores de telefone dos outros catálogos."
+  }
+ ]
+}

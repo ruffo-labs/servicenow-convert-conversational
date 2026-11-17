@@ -1,0 +1,62 @@
+{
+ "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+ "title": "EY: Company: Natura/TBS/Aesop - Subcompany",
+ "internal_name": "ey_company_natura_tbs_aesop_subcompany",
+ "description": "Company: Natura/TBS/Aesop - Subcompany",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Realizar reembolso e prestação de contas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company?",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "vs_subcompany",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "What is the sub-company?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_company + '^nameNOT LIKE331'"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_company: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show sub-company",
+   "when": "IO:vs_companyINAvon LATAM,Natura,TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_subcompany: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear sub-company",
+   "type": "onChange",
+   "on": "b12e3cfb1bfca990a530426fe54bcb6c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_subcompany'. Duplicata do irmão, com diferença apenas de espaçamento."
+  }
+ ]
+}

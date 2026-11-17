@@ -1,0 +1,225 @@
+{
+ "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+ "title": "My personal Information",
+ "internal_name": "my_personal_information_amom",
+ "description": "",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Adesão, Alteração ou Cancelamento do Vale Transporte",
+  "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica"
+ ],
+ "variaveis": [
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "default": "javascript: gs.getUserID();",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^EQ"
+  },
+  {
+   "name": "container_colab",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company",
+   "read_only": true
+  },
+  {
+   "name": "company_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company CNPJ",
+   "read_only": true
+  },
+  {
+   "name": "location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Location",
+   "read_only": true
+  },
+  {
+   "name": "id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global",
+   "read_only": true
+  },
+  {
+   "name": "registration",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Registration",
+   "read_only": true
+  },
+  {
+   "name": "mobile_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mobile Phone",
+   "read_only": true
+  },
+  {
+   "name": "employee_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Employment start date",
+   "read_only": true
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF",
+   "read_only": true,
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "ssnISNOTEMPTY^EQ"
+  },
+  {
+   "name": "marital_status",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Marital Status",
+   "read_only": true
+  },
+  {
+   "name": "birth_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Birth date",
+   "read_only": true
+  },
+  {
+   "name": "mother_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mother name",
+   "read_only": true
+  },
+  {
+   "name": "title",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Title",
+   "read_only": true
+  },
+  {
+   "name": "pis",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "PIS",
+   "read_only": true
+  },
+  {
+   "name": "home_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Home Address",
+   "read_only": true
+  },
+  {
+   "name": "home_address_n",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Home Address Nº",
+   "read_only": true
+  },
+  {
+   "name": "complementary_residential_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complementary Residential Address",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address Neighborhood",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address City",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_uf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address UF",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_cep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address CEP",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide In Portal",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "residential_address_uf: visible=false",
+    "marital_status: visible=false",
+    "birth_date: visible=false",
+    "cpf: visible=false",
+    "registration: visible=false",
+    "pis: visible=false",
+    "title: visible=false",
+    "company_cnpj: visible=false",
+    "residential_address_city: visible=false",
+    "home_address: visible=false",
+    "id_global: visible=false",
+    "home_address_n: visible=false",
+    "company: visible=false",
+    "mobile_phone: visible=false",
+    "employee_start_date: visible=false",
+    "residential_address_cep: visible=false",
+    "residential_address_neighborhood: visible=false",
+    "mother_name: visible=false",
+    "location: visible=false",
+    "complementary_residential_address: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: fill \"My personal Information\"",
+   "type": "onLoad",
+   "on": "d272dc081b190110d1abda4ce54bcbfc",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad de 1,6 KB que preenche o bloco 'Minhas informações pessoais' chamando um Script Include, conforme documentado em comentário."
+  }
+ ]
+}

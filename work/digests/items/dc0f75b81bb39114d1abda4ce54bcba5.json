@@ -1,0 +1,183 @@
+{
+ "sys_id": "dc0f75b81bb39114d1abda4ce54bcba5",
+ "name": "Relatar erros ou ajustes no acesso ADP",
+ "sys_name": "Relatar erros ou ajustes no acesso ADP",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Suporte de acesso ao sistema ADP",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário apenas para registrar erros ou ajustes de acesso no sistema ADP",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "17",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_phone_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_phone_natura_tbs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_csc_will_be_able_to_support_with: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_here_the_evidence_with_your_adp_system_error: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de erros/ajustes no acesso ADP. Grava item com o sysparm_id e delega a definição do solicitante a x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company",
+   "hidden": true
+  },
+  {
+   "name": "v_adp_access_maintenance",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Report errors or adjustments to ADP access"
+  },
+  {
+   "name": "v_select_the_desired_support",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the desired support:",
+   "include_none": true,
+   "choices": [
+    "Access error (federation) [=access_error]",
+    "Inclusion of cost center (process assistant) [=inclusion_cost_center]",
+    "Timesheet justification list [=timesheet_justification_list]",
+    "ADP access maintenance [=adp_access_maintenance]"
+   ]
+  },
+  {
+   "name": "v_csc_will_be_able_to_support_with",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_phone_natura_tbs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_phone_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_here_the_evidence_with_your_adp_system_error",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here a screenshot of the error screen or management approval email for cost center inclusion."
+  },
+  {
+   "name": "v_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request in detail."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: When asked \"Select the desired support\" for any",
+   "when": "IO:v_select_the_desired_supportINaccess_error,inclusion_cost_center,timesheet_justification_list,adp_access_maintenance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_here_the_evidence_with_your_adp_system_error: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Select the desired support",
+   "when": "IO:vs_solicitation_to_whom=my_request^ORIO:vs_solicitation_to_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_desired_support: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When the employee is Avon",
+   "when": "IO:v_companyLIKEAvon^IO:v_is_your_problem_exclusively_in_accessing_the_adp_system=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_phone_avon: visible=true"
+   ]
+  },
+  {
+   "name": "EY: When \"your problem is in ADP\" is Avon",
+   "when": "IO:v_companyLIKEAvon^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY - Comments - Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comments: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: When \"your problem is in ADP\" for Natura, TBS and Aesop",
+   "when": "IO:v_companyLIKENatura^ORIO:v_companyLIKEAesop^IO:v_is_your_problem_exclusively_in_accessing_the_adp_system=No^NQIO:v_companyLIKETBS^ORIO:v_companyLIKEThe Body Shop^IO:v_is_your_problem_exclusively_in_accessing_the_adp_system=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_csc_will_be_able_to_support_with: visible=true,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: When the employee is Natura or TBS",
+   "when": "IO:v_companyLIKENatura^ORIO:v_companyLIKETbs^ORIO:v_companyLIKEthebodyshop^IO:v_is_your_problem_exclusively_in_accessing_the_adp_system=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_phone_natura_tbs: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get User Company",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando o valor fica vazio."
+  }
+ ]
+}

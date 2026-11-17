@@ -1,0 +1,135 @@
+{
+ "sys_id": "c67133c73b01b610b28dd047f4e45aea",
+ "name": "Vale-compras Mamãe (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Vale-compras Mamãe",
+ "description": "Vale-compras Mam&atilde;e",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no valor recebido do vale-compras mamãe",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Mamãe"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_ticket_number"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_for_request",
+    "Month_loan_was_granted",
+    "name",
+    "was_there_separation"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de reembolso de vale-compras mamãe (falta injustificada) - Vale-compras Mamãe",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Mamãe"
+    }
+   ],
+   "sai_do_formulario": [
+    "Month_loan_was_granted",
+    "name",
+    "was_there_separation"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "reason_for_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Divergência no valor recebido",
+    "Não recebimento do crédito"
+   ]
+  },
+  {
+   "name": "Month_loan_was_granted",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de concessão do crédito",
+   "choices": [
+    "Março",
+    "Janeiro",
+    "Maio",
+    "Abril",
+    "Dezembro",
+    "Setembro",
+    "Novembro",
+    "Outubro",
+    "Julho",
+    "Agosto",
+    "Junho",
+    "Fevereiro"
+   ]
+  },
+  {
+   "name": "v_ticket_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado",
+   "choices": []
+  },
+  {
+   "name": "name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo e idade do filho (menor de 5 anos)",
+   "choices": []
+  },
+  {
+   "name": "was_there_separation",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve afastamento?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "93fe06333bcdba10b28dd047f4e45a7a",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa name, Month_loan_was_granted, reason_for_request e was_there_separation (sempre). Bloco de empréstimo/consignado."
+  }
+ ]
+}

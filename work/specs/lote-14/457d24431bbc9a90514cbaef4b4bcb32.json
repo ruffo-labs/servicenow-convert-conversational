@@ -1,0 +1,103 @@
+{
+ "sys_id": "457d24431bbc9a90514cbaef4b4bcb32",
+ "status": "conversacional",
+ "motivo": "Intenção única de reembolso de energia com perguntas sequenciais (frequência, número, mês, ano, valor, comprovante). Legendas e o pseudo-anexo tipo 32 são visuais e saem; criamos nova_anexo_fatura (tipo 33) para coletar o comprovante de fato. v_year não pode ganhar choices fixas no formato da spec (só variável nova aceita choices), então mantém as opções originais e o script que as monta segue rodando (va_supported). v_month_year é preenchida automaticamente pelos scripts a partir de mês/ano; vira somente leitura com label, mantendo a policy condicional original que já a ocultava quando vazia. Os scripts de checagem de duplicidade (GlideAjax) seguem funcionando sem alteração, pois criar uma Business Rule está fora do formato desta spec.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_frequency_of_your_invoice": {
+   "label": "Sua fatura de energia é mensal ou bimestral?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_invoice_number": {
+   "label": "Qual o número da fatura?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_month": {
+   "label": "Em que mês a fatura vence?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_year": {
+   "label": "E em que ano?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_month_year": {
+   "label": "Qual é a data completa da fatura?",
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_electricity_amount": {
+   "label": "Qual o valor da fatura?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[0-9]+([.,][0-9]{1,2})?$"
+   }
+  },
+  "nova_anexo_fatura": {
+   "nova": {
+    "type": "33",
+    "question_text": "Anexe a fatura de energia (PDF ou foto).",
+    "mandatory": true,
+    "order": 1200
+   }
+  }
+ },
+ "remover": {
+  "v_legenda_1": "visual",
+  "v_legenda_2": "visual",
+  "v_legenda_3": "visual",
+  "v_legenda_4": "visual",
+  "v_attachment": "visual"
+ },
+ "policies": {
+  "7cd974cf1bfc9a90514cbaef4b4bcbc8": "remover",
+  "f73a70431b30da90514cbaef4b4bcb68": "remover"
+ },
+ "scripts": {
+  "00cdbc8b1b30da90514cbaef4b4bcbaf": {
+   "converter": "auto_populate"
+  },
+  "84f28c9b3b8d9a10924d0247f4e45a97": {
+   "converter": "auto_populate"
+  },
+  "17c90c573bcd9a10924d0247f4e45af2": {
+   "converter": "auto_populate"
+  },
+  "a41eb4cb1b30da90514cbaef4b4bcb99": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "c4b7ecd91bad1a50514cbaef4b4bcbdf": {
+   "converter": "regex"
+  },
+  "0e8f348f1b30da90514cbaef4b4bcbbe": {
+   "remover": "sem_efeito"
+  },
+  "020a23873b0d9a10924d0247f4e45a6b": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "0b1248d73b8d9a10924d0247f4e45ab9": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "b327102f3bcd1e10924d0247f4e45a80": {
+   "ajustar": [
+    "va_supported"
+   ]
+  }
+ }
+}

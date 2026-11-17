@@ -1,0 +1,145 @@
+{
+ "sys_id": "33f3cde33bc53a10b28dd047f4e45a1d",
+ "status": "dividido",
+ "motivo": "Item da planilha: Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente (1 oferta(s)); Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente (2 oferta(s)).",
+ "vars": {
+  "new_email": {
+   "label": "Qual é o novo e-mail para cadastrar na academia?"
+  },
+  "reason_for_request": {
+   "label": "Qual é o motivo da solicitação?"
+  },
+  "reference_month": {
+   "label": "De qual mês é o desconto com divergência?"
+  },
+  "evidence_of_the_error": {
+   "label": "Envie uma evidência do erro, como print da tela."
+  },
+  "policyholder_or_dependent": {
+   "label": "O problema é com o titular ou com o dependente?"
+  },
+  "which_operator": {
+   "label": "Qual é a operadora da academia?"
+  },
+  "payment_statement": {
+   "label": "Envie o demonstrativo de pagamento do mês."
+  },
+  "carrier_evidence": {
+   "label": "Envie a evidência da operadora, como a cobrança ou fatura."
+  },
+  "dependent_name": {
+   "label": "Qual é o nome do dependente?"
+  }
+ },
+ "remover": {
+  "observation": "visual",
+  "attention": "visual",
+  "observation_1": "visual",
+  "observation_2": "visual"
+ },
+ "policies": {
+  "73aaeb773bc9fa10b28dd047f4e45ac1": {
+   "conditions": "service_offering=c6774deb3bc53a10b28dd047f4e45a7a^which_operator=10",
+   "actions": {
+    "description": {
+     "mandatory": false
+    }
+   }
+  },
+  "80876bbf3b89fa10b28dd047f4e45a4e": "remover",
+  "c50627bb3b89fa10b28dd047f4e45ac9": "remover",
+  "e7882fff3b89fa10b28dd047f4e45a1c": {
+   "conditions": "service_offering=cce6c52b3bc53a10b28dd047f4e45a34",
+   "actions": {
+    "reason_for_request": {
+     "visible": true,
+     "mandatory": true
+    },
+    "evidence_of_the_error": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_1": {
+   "short_description": "APL - Solicitação de atualização do e-mail cadastrado na academia -totalpass",
+   "conditions": "which_operator=10",
+   "actions": {
+    "description": {
+     "mandatory": false
+    }
+   }
+  },
+  "nova_g0_2": {
+   "short_description": "APL - Solicitação de atualização do e-mail cadastrado na academia - Wellhub (Gympass)",
+   "conditions": "which_operator=20",
+   "actions": {
+    "new_email": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Academia (atualização de e-mail)",
+   "short_description": "Pedido para atualizar o e-mail cadastrado na academia.",
+   "description": "Use para solicitar a atualização do e-mail cadastrado na operadora da academia (Wellhub/Gympass ou TotalPass). Atende a oferta de solicitação de atualização do e-mail cadastrado na academia.",
+   "frases_exemplo": [
+    "Preciso trocar meu e-mail da academia",
+    "Quero atualizar o e-mail no Wellhub",
+    "Meu e-mail da academia está errado",
+    "Como mudo o e-mail cadastrado no TotalPass?"
+   ],
+   "sem_vars": [
+    "reason_for_request",
+    "reference_month",
+    "evidence_of_the_error",
+    "policyholder_or_dependent",
+    "payment_statement",
+    "carrier_evidence",
+    "dependent_name",
+    "container_start",
+    "formatter",
+    "formatter2"
+   ],
+   "vars": {
+    "which_operator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1c080dc03b553e10b28dd047f4e45ac8",
+    "73aaeb773bc9fa10b28dd047f4e45ac1",
+    "7a8a2b373bc9fa10b28dd047f4e45a56",
+    "99c86bff3b89fa10b28dd047f4e45aef",
+    "d41a27373bc9fa10b28dd047f4e45a5b",
+    "e7882fff3b89fa10b28dd047f4e45a1c",
+    "f2656fbb3b89fa10b28dd047f4e45a1a"
+   ]
+  },
+  {
+   "name": "Academia (problemas e divergências)",
+   "short_description": "Reporte de problema no uso da academia ou de divergência no desconto em folha.",
+   "description": "Use quando tiver problema para usar o benefício de academia, como bloqueio ou falha de acesso, ou quando o valor descontado em folha estiver diferente do esperado. Atende as ofertas de problemas ao utilizar a academia e de divergência nos valores descontados.",
+   "frases_exemplo": [
+    "Minha academia está bloqueada",
+    "Não consigo acessar o app da academia",
+    "O desconto da academia veio errado",
+    "Foi descontado mais do que devia na academia",
+    "Estou com problema pra usar o Gympass"
+   ],
+   "sem_vars": [
+    "new_email"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "7a8a2b373bc9fa10b28dd047f4e45a56"
+   ]
+  }
+ ]
+}

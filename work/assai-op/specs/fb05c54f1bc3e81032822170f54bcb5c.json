@@ -1,0 +1,318 @@
+{
+ "sys_id": "fb05c54f1bc3e81032822170f54bcb5c",
+ "status": "dividido",
+ "motivo": "Cada oferta de academia pede dados diferentes: divergência de desconto pede demonstrativo e mês; problema de uso pede motivo, titular/dependente e evidência do erro; troca de e-mail pede só o novo e-mail. Pendências: Operadora TotalPass: a oferta de troca de e-mail é exclusiva da Wellhub (Gympass). Definir o que a conversa deve responder quando a pessoa escolher TotalPass.",
+ "vars": {
+  "qual_operadora": {
+   "label": "Qual é a operadora da academia?"
+  },
+  "nome_do_a_dependente": {
+   "label": "Qual é o nome do dependente?"
+  },
+  "attachment": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "titular_ou_dependente": {
+   "label": "O caso é do titular ou do dependente?"
+  },
+  "attachment_print_error": {
+   "label": "Envie um print do erro."
+  },
+  "evidencia_da_operadora": {
+   "label": "Envie a evidência da operadora."
+  },
+  "motivo_da_solicitacao": {
+   "label": "Qual é o problema que o beneficiário está tendo?"
+  },
+  "v_mes_referencia": {
+   "label": "De qual mês é a divergência?"
+  },
+  "collaborator_email": {
+   "label": "Qual é o novo e-mail do colaborador?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "start": "visual",
+  "formatter4": "visual",
+  "formatter2": "visual",
+  "container_a": "visual",
+  "observacao_wellhub": "visual",
+  "divergencia": "visual",
+  "v_qual_plano_2": "oferta_inativa",
+  "observacao_totalpass": "visual",
+  "v_observacao_2": "visual",
+  "observacao_total_pass_block": "visual",
+  "formatter3": "visual",
+  "formatter5": "visual",
+  "formatter6": "visual"
+ },
+ "policies": {
+  "024de5931bfb199032822170f54bcb1c": "remover",
+  "22547ac71b73d59032822170f54bcb28": "remover",
+  "2c1f61f987193650182a0d440cbb3538": "remover",
+  "36951ad487fba650182a0d440cbb35ed": "remover",
+  "3d2976431bb3d59032822170f54bcb14": "remover",
+  "467c1fa9873bae50182a0d440cbb3581": "remover",
+  "509f25bd87193650182a0d440cbb3556": "remover",
+  "5106db7287025210182a0d440cbb354c": "remover",
+  "65c9c29c877ba650182a0d440cbb357d": "remover",
+  "691e8e2b877baa10182a0d440cbb35ff": "remover",
+  "78090bb81b064610347221bbe54bcbbd": "remover",
+  "7a8ece6b877baa10182a0d440cbb358c": "remover",
+  "8242569c87bba650182a0d440cbb35ed": "remover",
+  "9bed07341b464610347221bbe54bcbb9": "remover",
+  "a8fc53e9873bae50182a0d440cbb35c5": "remover",
+  "bafc82a7877baa10182a0d440cbb3547": "remover",
+  "bbf067a1877bae50182a0d440cbb35d1": "remover",
+  "bed1de2387bbaa10182a0d440cbb3578": "remover",
+  "c2bb465087bba650182a0d440cbb3513": "remover",
+  "e98d0ee7877baa10182a0d440cbb3592": "remover",
+  "f8cc42d087bba650182a0d440cbb35ac": "remover",
+  "nova_g0_1": {
+   "short_description": "CSA - Evidência da operadora  Visão Resolvedora",
+   "conditions": "evidencia_da_operadoraISNOTEMPTY",
+   "actions": {
+    "evidencia_da_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "nova_g0_2": {
+   "short_description": "CSA - Qual operadora para as ofertas de serviço Visão Resolvedora",
+   "conditions": "qual_operadora=2^ORqual_operadora=3",
+   "actions": {
+    "qual_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "nova_g0_4": {
+   "short_description": "CSA - Attachment para as ofertas de serviço Visão Resolvedora",
+   "conditions": "attachmentISNOTEMPTY",
+   "actions": {
+    "attachment": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g1_1": {
+   "short_description": "CSA - Titular ou dependente? Portal",
+   "conditions": "qual_operadora=2^motivo_da_solicitacaoIN1,2,3",
+   "actions": {
+    "titular_ou_dependente": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_2": {
+   "short_description": "CSA - Motivo da solicitação  Visão Resolvedora",
+   "conditions": "qual_operadoraIN2,3^motivo_da_solicitacaoIN1,2,3",
+   "actions": {
+    "motivo_da_solicitacao": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "nova_g1_3": {
+   "short_description": "CSA - Motivo da solicitação  Portal",
+   "conditions": "qual_operadoraIN2,3",
+   "actions": {
+    "motivo_da_solicitacao": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_4": {
+   "short_description": "CSA - Qual operadora para as ofertas de serviço Visão Resolvedora",
+   "conditions": "qual_operadora=2^ORqual_operadora=3",
+   "actions": {
+    "qual_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "nova_g1_5": {
+   "short_description": "CSA - Titular ou dependente? Visão resolvedora",
+   "conditions": "qual_operadora=2^motivo_da_solicitacaoIN1,2,3",
+   "actions": {
+    "titular_ou_dependente": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "nova_g2_1": {
+   "short_description": "ALP - E-mail colaborador",
+   "conditions": "qual_operadora=3",
+   "actions": {
+    "collaborator_email": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_2": {
+   "short_description": "CSA - Hide Description",
+   "conditions": "qual_operadora=2",
+   "actions": {
+    "rh_description": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "nova_g2_3": {
+   "short_description": "CSA - Qual operadora para as ofertas de serviço Visão Resolvedora",
+   "conditions": "qual_operadora=2^ORqual_operadora=3",
+   "actions": {
+    "qual_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Divergência nos valores descontados da academia",
+   "short_description": "Reclamar de valor descontado errado da academia",
+   "description": "Use quando o valor descontado em folha pela academia não confere. Corresponde à oferta Divergência nos valores descontados de academia, atendida pelo RH - Academia N3. Tenha em mãos o demonstrativo de pagamento e a evidência da operadora.",
+   "frases_exemplo": [
+    "O desconto da academia veio errado",
+    "Estou pagando a mais pela academia",
+    "Cobrança da Wellhub diferente do combinado",
+    "Descontaram valor errado da academia no meu contracheque",
+    "Quero contestar o desconto da TotalPass"
+   ],
+   "sem_vars": [
+    "titular_ou_dependente",
+    "attachment_print_error",
+    "motivo_da_solicitacao",
+    "collaborator_email"
+   ],
+   "vars": {
+    "qual_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "attachment": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "evidencia_da_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_mes_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_2",
+    "nova_g1_3",
+    "nova_g1_4",
+    "nova_g1_5",
+    "nova_g2_1",
+    "nova_g2_2",
+    "nova_g2_3",
+    "c857d29887fba650182a0d440cbb3541"
+   ]
+  },
+  {
+   "name": "Problemas ao utilizar a academia",
+   "short_description": "Resolver problema de acesso, inscrição ou bloqueio na academia",
+   "description": "Use quando o beneficiário não consegue acessar o cadastro, fazer a inscrição ou está com o benefício bloqueado. Corresponde à oferta Problemas ao utilizar academia, atendida pelo RH - Academia N3.",
+   "frases_exemplo": [
+    "Não consigo entrar no app da academia",
+    "Minha inscrição na Wellhub não funciona",
+    "Meu benefício da academia está bloqueado",
+    "Meu dependente não consegue usar a TotalPass",
+    "Deu erro ao me cadastrar na academia"
+   ],
+   "sem_vars": [
+    "attachment",
+    "evidencia_da_operadora",
+    "v_mes_referencia",
+    "collaborator_email"
+   ],
+   "vars": {
+    "qual_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "attachment_print_error": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "nova_g0_4",
+    "nova_g2_1",
+    "nova_g2_2",
+    "nova_g2_3"
+   ]
+  },
+  {
+   "name": "Atualizar o e-mail cadastrado na academia",
+   "short_description": "Trocar o e-mail do cadastro da academia",
+   "description": "Use para atualizar o e-mail cadastrado na operadora da academia. Corresponde à oferta Solicitação de atualização do e-mail cadastrado na academia, atendida pelo RH - Academia N3.",
+   "frases_exemplo": [
+    "Preciso trocar o e-mail da academia",
+    "Meu e-mail na Wellhub está errado",
+    "Quero atualizar o e-mail do Gympass",
+    "Mudei de e-mail e preciso atualizar na academia",
+    "Como altero o e-mail do cadastro da academia?"
+   ],
+   "sem_vars": [
+    "attachment",
+    "titular_ou_dependente",
+    "attachment_print_error",
+    "evidencia_da_operadora",
+    "motivo_da_solicitacao",
+    "v_mes_referencia"
+   ],
+   "vars": {
+    "qual_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "nova_g0_4",
+    "nova_g1_1",
+    "nova_g1_2",
+    "nova_g1_3",
+    "nova_g1_4",
+    "nova_g1_5",
+    "c857d29887fba650182a0d440cbb3541"
+   ]
+  }
+ ],
+ "scripts": {
+  "546a92d0873fa650182a0d440cbb35e4": {
+   "remover": {
+    "outro": "limpa campos conforme a oferta; coberto pela estrutura do derivado"
+   }
+  }
+ }
+}

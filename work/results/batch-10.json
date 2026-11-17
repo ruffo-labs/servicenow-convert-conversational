@@ -1,0 +1,833 @@
+[
+  {
+    "sys_id": "6a574af087cff250ec360e530cbb356c",
+    "nome_atual": "Solicitações Workday Learning",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 117,
+    "recomendacao": "dividir",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "O item junta duas intenções bem diferentes no select what_is_the_request: cadastrar um curso/conteúdo no Workday Learning (cerca de 13 perguntas, 2 anexos e lógica de inscrição em massa ou campanha) e tirar dúvidas (só uma pergunta aberta). Não há bloqueador duro, mas todos os labels estão em inglês ou genéricos, e o client script de limpeza só existe por causa do select de tipo. Separar dá um item de cadastro com nome que casa com o pedido e um item de dúvidas bem leve.",
+    "nome_sugerido": "Solicitações de cursos no Workday Learning",
+    "short_description_sugerida": "Cadastrar cursos e conteúdos ou tirar dúvidas sobre o Workday Learning",
+    "descricao_sugerida": "Use para pedidos à equipe de Aprendizagem sobre a plataforma Workday Learning: cadastrar um curso, treinamento ou conteúdo novo (incluindo inscrição em massa ou campanha) e tirar dúvidas de uso da plataforma. Não use para treinamentos obrigatórios por Norma Regulamentadora (NR), que têm item próprio (Treinamentos Normativos).",
+    "frases_exemplo": [
+      "preciso cadastrar um curso no Workday Learning",
+      "quero subir um treinamento novo na plataforma de aprendizagem",
+      "como faço inscrição em massa num curso do Workday?",
+      "tenho uma dúvida sobre o Workday Learning",
+      "quero criar uma campanha para um curso"
+    ],
+    "bloqueadores": [
+      { "onde": "anexo_conteudo_carregado_lista_presenca / download_the_form_compaing_here", "problema": "Variáveis Attachment exigem tratamento à parte na conversa.", "acao": "Manter como Attachment OOB só no item derivado de cadastro, perguntadas no fim da conversa, com conversational label claro." },
+      { "onde": "client script EY: Clear when request changes", "problema": "Só existe para limpar o formulário quando what_is_the_request muda.", "acao": "Remover nos itens derivados, já que o tipo passa a ser fixo." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory Fields", "acao": "remover", "substituicao": "what_is_the_request vira default value e fica oculta em cada item derivado." },
+      { "nome": "EY: Cadastro de conteúdo no Workday Learning", "acao": "converter", "substituicao": "Marcar as variáveis como mandatory direto na variável do item de cadastro, sem policy onLoad." },
+      { "nome": "EY: Dúvidas de Workday Learning", "acao": "remover", "substituicao": "additional_information fica visível e obrigatória direto no item de dúvidas." },
+      { "nome": "EY: Nome da célula / EY: Selecione o HUB", "acao": "manter", "substituicao": "UI Policy sem script, compatível; desmarcar On load onde der." },
+      { "nome": "EY: Inscricao  Massiva / EY: Criar Campanha", "acao": "manter", "substituicao": "UI Policy sem script, compatível com a conversa." },
+      { "nome": "EY: Clear when request changes", "acao": "remover", "substituicao": "Não é mais preciso com o tipo fixo." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Desativar o item atual depois de publicar os derivados, ou mantê-lo oculto só para histórico/relatórios."]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Cadastrar curso no Workday Learning",
+        "short_description": "Cadastre um curso, treinamento ou conteúdo novo no Workday Learning",
+        "descricao": "Use para pedir o cadastro de um curso, treinamento ou conteúdo novo (ou de mais uma turma) no Workday Learning, com a opção de inscrição em massa ou campanha. Não use para tirar dúvidas sobre a plataforma nem para treinamentos obrigatórios por NR.",
+        "frases_exemplo": [
+          "quero cadastrar um curso no Workday Learning",
+          "preciso publicar um treinamento novo",
+          "adicionar mais uma turma de um curso",
+          "subir conteúdo na plataforma de aprendizagem e inscrever o time todo"
+        ],
+        "fixar": "what_is_the_request = cadastro_conteudo_workday_learning (default/hidden). Se 'add_another_course' tiver fluxo diferente, virar a pergunta nova_novo_ou_nova_turma.",
+        "perguntas": [
+          { "ordem": 1, "variavel": "training_name", "conversational_label": "Qual é o nome do curso?" },
+          { "ordem": 2, "variavel": "training_objective", "conversational_label": "Descreva o curso em poucas palavras." },
+          { "ordem": 3, "variavel": "categoria_de_aprendizagem", "conversational_label": "Qual é a categoria de aprendizagem do curso?" },
+          { "ordem": 4, "variavel": "seleciona_o_hub", "conversational_label": "Para qual HUB é o curso?" },
+          { "ordem": 5, "variavel": "nome_da_celula", "conversational_label": "Qual é o nome da célula?" },
+          { "ordem": 6, "variavel": "acao_obrigatoria", "conversational_label": "O curso é obrigatório?" },
+          { "ordem": 7, "variavel": "responsible_for_content", "conversational_label": "Quem é o responsável pelo conteúdo?" },
+          { "ordem": 8, "variavel": "data_horario_inicio", "conversational_label": "Qual é a data e o horário de início?" },
+          { "ordem": 9, "variavel": "enter_the_link_to_the_content_to_be_loaded", "conversational_label": "Qual é o link do conteúdo que vamos cadastrar?" },
+          { "ordem": 10, "variavel": "insert_link_Customer_satisfaction_survey_form", "conversational_label": "Tem link da pesquisa de satisfação? Se tiver, informe." },
+          { "ordem": 11, "variavel": "do_you_wish_to_perform_a_bulk_enrollment", "conversational_label": "Quer fazer inscrição em massa ou criar uma campanha para o curso?" },
+          { "ordem": 12, "variavel": "link_eligibles_database_collaborator_id", "conversational_label": "Qual é o link da base de elegíveis (com a matrícula de cada colaborador)?" },
+          { "ordem": 13, "variavel": "download_the_form_compaing_here", "conversational_label": "Anexe o formulário da campanha preenchido." },
+          { "ordem": 14, "variavel": "anexo_conteudo_carregado_lista_presenca", "conversational_label": "Anexe a imagem de capa do curso." }
+        ]
+      },
+      {
+        "nome": "Tirar dúvida sobre o Workday Learning",
+        "short_description": "Envie dúvidas sobre o uso do Workday Learning",
+        "descricao": "Use para dúvidas sobre a plataforma Workday Learning: como acessar, encontrar ou concluir um curso, registro de presença, certificado e outras questões de uso. Não use para cadastrar curso novo.",
+        "frases_exemplo": [
+          "não estou conseguindo acessar meu curso no Workday",
+          "dúvida no Workday Learning",
+          "minha presença não foi registrada no treinamento",
+          "como emito o certificado do curso?"
+        ],
+        "fixar": "what_is_the_request = duvidas_workday_learning (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "additional_information", "conversational_label": "Qual é a sua dúvida sobre o Workday Learning?" }
+        ]
+      }
+    ],
+    "observacoes": "A UI policy de cadastro cita total_workload e data_horario_termino, que não aparecem entre as variáveis ativas. Confirmar se estão inativas (senão entram no item de cadastro como 'Qual é a carga horária total?' e 'Qual é a data e o horário de término?'). A short description atual cita 'registro de presenças', mas nenhuma opção visível trata disso; conferir as opções de what_is_the_request. O set 'EY: Informação do solicitante' segue a recomendação geral dos sets. Labels em inglês devem ganhar tradução ou conversational label em pt-BR (e em espanhol, já que o item está no Catálogo hispânico)."
+  },
+  {
+    "sys_id": "0d5a7420874f3a10017d65790cbb354e",
+    "nome_atual": "Treinamentos Normativos",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 132,
+    "recomendacao": "dividir",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "O select what_is_the_request mistura três intenções: mapear treinamento normativo para colaboradores, desmapear, e pedir relatório/certificado. Cada uma usa perguntas e sets diferentes, com dois modos de mapeamento (um para muitos e muitos para muitos). As instruções estão em Rich Text Labels, que não chegam ao LLM, e há List Collector e referências com qualificador. Separar deixa cada pedido curto e com nome reconhecível.",
+    "nome_sugerido": "Treinamentos normativos (NR)",
+    "short_description_sugerida": "Pedidos sobre treinamentos obrigatórios por Norma Regulamentadora (NR)",
+    "descricao_sugerida": "Use para pedidos sobre treinamentos obrigatórios por lei, exigidos pelas Normas Regulamentadoras (NRs) do Ministério do Trabalho: mapear ou desmapear treinamentos de NR para colaboradores e pedir relatórios ou certificados. Não use para cadastrar cursos comuns no Workday Learning.",
+    "frases_exemplo": [
+      "preciso mapear o treinamento de NR-35 para meu time",
+      "tirar a NR-10 de um colaborador",
+      "quero o relatório dos treinamentos normativos",
+      "preciso do certificado da NR"
+    ],
+    "bloqueadores": [
+      { "onde": "label_training, label_training_2, label_training_3", "problema": "Rich Text Labels com instruções que não chegam ao LLM.", "acao": "Levar o conteúdo para a descrição de cada item derivado ou para um artigo de KB com link." },
+      { "onde": "indicate_training_m2m (set EY: Informações do treinamento M2M)", "problema": "List Collector com qualificador sobre question_choice; pode não resolver na conversa.", "acao": "No item de mapeamento, usar um único List Collector com qualificador simples e estático (question=...), ou trocar por Select Box quando for um treinamento só." },
+      { "onde": "client script EY: Clear if request changes", "problema": "Só existe por causa do select de tipo.", "acao": "Remover nos derivados." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Request is Mapping / EY: Request is Unmapping / EY: Request is Certificate OR Report", "acao": "remover", "substituicao": "Cada item derivado já tem só as suas perguntas visíveis por padrão." },
+      { "nome": "EY: Multirow One to Many / EY: Multirow Many to Many", "acao": "converter", "substituicao": "Unificar num só modo no item de mapeamento: um treinamento (select_which_trainings_should_be_mapped) + um ou mais colaboradores (List Collector de sys_user). Tirar select_mapping_type." },
+      { "nome": "EY: Mandatory", "acao": "converter", "substituicao": "Mandatory direto na variável." },
+      { "nome": "EY: Clear if request changes", "acao": "remover", "substituicao": "Não é mais preciso com o tipo fixo." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Se o mapeamento muitos-para-muitos com vários colaboradores e vários treinamentos continuar necessário, manter essa variante como formulário (link) ou receber uma planilha anexa."]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Mapear treinamento normativo (NR) para colaborador",
+        "short_description": "Inclua um treinamento de NR na trilha obrigatória de um ou mais colaboradores",
+        "descricao": "Use para pedir que um treinamento obrigatório de Norma Regulamentadora (NR) seja atribuído a um ou mais colaboradores. Não use para retirar treinamento (use Desmapear) nem para pedir relatório.",
+        "frases_exemplo": [
+          "mapear NR-35 para três pessoas do meu time",
+          "incluir treinamento de NR para um colaborador novo",
+          "o colaborador precisa fazer a NR-10"
+        ],
+        "fixar": "what_is_the_request = solicitacao_mapeamento (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "select_which_trainings_should_be_mapped", "conversational_label": "Qual treinamento de NR você quer mapear?" },
+          { "ordem": 2, "variavel": "enter_employee_name", "conversational_label": "Para quais colaboradores? Pode informar nome, matrícula ou e-mail." },
+          { "ordem": 3, "variavel": "vs_additional_information", "conversational_label": "Quer acrescentar alguma informação?" }
+        ]
+      },
+      {
+        "nome": "Desmapear treinamento normativo (NR) de colaborador",
+        "short_description": "Retire um treinamento de NR da trilha obrigatória de colaboradores",
+        "descricao": "Use para pedir a retirada de treinamentos de NR que foram atribuídos a colaboradores por engano ou que deixaram de se aplicar (por exemplo, mudança de função). Não use para incluir treinamento.",
+        "frases_exemplo": [
+          "tirar a NR-35 de um colaborador",
+          "esse treinamento de NR não se aplica mais à função dele",
+          "desmapear treinamento obrigatório"
+        ],
+        "fixar": "what_is_the_request = solicitacao_desmapeamento (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "enter_employee_name_m2m", "conversational_label": "De qual colaborador você quer retirar o treinamento?" },
+          { "ordem": 2, "variavel": "indicate_training_m2m", "conversational_label": "Quais treinamentos de NR devem ser retirados?" },
+          { "ordem": 3, "variavel": "vs_additional_information", "conversational_label": "Qual é o motivo da retirada?" }
+        ]
+      },
+      {
+        "nome": "Solicitar relatório ou certificado de treinamento normativo (NR)",
+        "short_description": "Peça relatórios ou certificados de treinamentos de NR",
+        "descricao": "Use para pedir relatório de situação dos treinamentos normativos ou o certificado de um treinamento de NR já concluído.",
+        "frases_exemplo": [
+          "preciso do certificado da NR-35",
+          "relatório de treinamentos normativos do meu time",
+          "quero comprovar que fiz a NR-10"
+        ],
+        "fixar": "what_is_the_request = solicitacao_relatorios (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "request_for_who", "conversational_label": "O pedido é para você ou para outra pessoa?" },
+          { "ordem": 2, "variavel": "employee", "conversational_label": "Para qual colaborador?" },
+          { "ordem": 3, "variavel": "vs_additional_information", "conversational_label": "Qual relatório ou certificado você precisa?" }
+        ]
+      }
+    ],
+    "observacoes": "id_number e id_number_m2m são preenchidos por script a partir do colaborador e ficam read-only, então a conversa pula essas perguntas. A policy 'EY: Multirow Many to Many' tem condição com NQ (select_mapping_type=2 OU tipo=desmapeamento), o que confirma que o desmapeamento reaproveita o set M2M. Os sets de solicitante e de informação adicional seguem a análise geral de sets."
+  },
+  {
+    "sys_id": "0d09683e1bada510a530426fe54bcbdd",
+    "nome_atual": "Ex Colaboradores ou Colaboradores Afastados",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 4380,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Item de alto volume (rank 10) e bloqueado: três variáveis Custom com widget (pesquisa contextual, AI Search Assist e anexo público), um client script sem VA Supported que abre spModal, cinco onSubmit que checam anexo pelo DOM, 25 perguntas e 23 policies onLoad. Ele junta dois públicos (ex-colaborador e colaborador afastado), cada um com árvore própria de categoria e subcategoria, além de um caso com regras específicas (extensão do auxílio berçário). Dividir por público e isolar o berçário deixa cada ramo com menos de 10 perguntas.",
+    "nome_sugerido": "Atendimento de RH para ex-colaboradores e colaboradores afastados",
+    "short_description_sugerida": "Pedidos de RH de quem saiu da empresa ou está afastado e sem acesso aos canais internos",
+    "descricao_sugerida": "Use se você não trabalha mais na empresa ou está afastado (licença, auxílio-doença, licença-maternidade) e precisa de algo do RH: declarações e documentos, informe de rendimentos, dúvidas de folha, férias, benefícios, controle de jornada, licenças e ausências. Colaboradores ativos devem usar os itens específicos de cada assunto.",
+    "frases_exemplo": [
+      "saí da empresa e preciso do informe de rendimentos",
+      "sou ex-colaborador e quero uma declaração de tempo de serviço",
+      "estou afastado e tenho dúvida no meu holerite",
+      "estou de licença-maternidade e preciso mandar um atestado",
+      "quero estender o auxílio berçário depois do desligamento"
+    ],
+    "bloqueadores": [
+      { "onde": "contextual_search_results", "problema": "Custom com UI Macro e widget de pesquisa contextual; não renderiza na conversa.", "acao": "Remover do item. A busca de KB já é feita pelo próprio VA/AI Search antes de abrir o pedido." },
+      { "onde": "ai_search_assist", "problema": "Custom com widget de AI Search Assist.", "acao": "Remover." },
+      { "onde": "vs_add_attachment", "problema": "Custom com widget 'EY: Enable public attachment'.", "acao": "Trocar por variável Attachment OOB (nova_anexo) perguntada no fim, obrigatória por UI Policy sem script nas subcategorias que exigem documento." },
+      { "onde": "client script EY: Modal IR ExColaboradores", "problema": "Abre spModal e não tem VA Supported.", "acao": "Remover. Colocar a orientação do informe de rendimentos na descrição do item ou em KB." },
+      { "onde": "client scripts Attach mandatory (leaves, benefits, Previdenc, Data, Journey Ctrl)", "problema": "Checam anexo inspecionando o DOM por classe CSS; não funcionam na conversa.", "acao": "Substituir pela variável Attachment OOB com mandatory via UI Policy sem script, por subcategoria." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Validate CPF / EY: Validate Email / EY: Validate Phone", "acao": "converter", "substituicao": "Usar Validation Regex na variável. Corrigir a regex de CPF (escapar o ponto): ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$." },
+      { "nome": "EY: Modal IR ExColaboradores / EY SHow message IR - OnLoad", "acao": "remover", "substituicao": "Mensagem do informe de rendimentos vai para a descrição do item de ex-colaborador." },
+      { "nome": "Ey: Attach mandatory * (5 scripts onSubmit)", "acao": "converter", "substituicao": "Variável Attachment OOB + UI Policy sem script (mandatory=true) para as subcategorias que exigem anexo." },
+      { "nome": "EY: IF Just Cause is No, cannot submit", "acao": "converter", "substituicao": "No item de berçário, deixar a regra de elegibilidade na descrição e na pergunta. Se a resposta for 'não', o flow encerra o caso com a mensagem, ou o script é mantido (já tem VA Supported)." },
+      { "nome": "EY: Berçário - Validar data / EY: Validate ate_quando_manter_beneficio", "acao": "converter", "substituicao": "Mover a validação de datas para o flow ou para uma Validation no servidor. O segundo script declara uma função interna que parece nunca ser chamada; revisar." },
+      { "nome": "EY: Clear Category and Subcategory", "acao": "remover", "substituicao": "Não é preciso com o público fixo em cada derivado." },
+      { "nome": "Policies de Rich Text (EY: If adiant.prev, EY: If compl.prev., EY: Day Care / Babysitter, etc.)", "acao": "remover", "substituicao": "O conteúdo dos rótulos vai para a descrição ou para KB. Na conversa só chega a URL." },
+      { "nome": "Policies de categoria e subcategoria (If collaborator on leave, If ex collaborator, If sub category is *)", "acao": "manter", "substituicao": "Compatíveis. Desmarcar On load e simplificar tirando a condição de v_what_situation, que passa a ser fixa." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "O item é Public e grava requested_for como usuário genérico (acn_guest_user). A conversa só funciona se houver VA disponível para usuário não autenticado. Sem isso, os derivados continuam abrindo como formulário público.",
+        "Dados pessoais sensíveis (CPF) passam pelo LLM; validar com Privacidade/Jurídico se é aceitável ou se é preciso ligar Turn off Now Assist."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Atendimento de RH para ex-colaboradores",
+        "short_description": "Declarações, informe de rendimentos e outros pedidos de quem já saiu da empresa",
+        "descricao": "Use se você já saiu da empresa e precisa de declaração, documento, informe de rendimentos, dúvida sobre PLR (participação nos lucros) ou serviços comerciais e corporativos. Para estender o auxílio berçário, use o item específico. Colaboradores afastados usam o item de afastados.",
+        "frases_exemplo": [
+          "saí da empresa e preciso do informe de rendimentos",
+          "quero uma declaração de vínculo, já fui desligado",
+          "dúvida sobre a PLR depois do desligamento",
+          "preciso de um documento da época em que trabalhei aí"
+        ],
+        "fixar": "v_what_situation = ex_colab (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_category_ex_colab", "conversational_label": "Sobre qual assunto é o seu pedido?" },
+          { "ordem": 2, "variavel": "v_subcategory_declar_doc", "conversational_label": "Qual declaração ou documento você precisa?" },
+          { "ordem": 3, "variavel": "v_subcategory_serv_comerc", "conversational_label": "Qual serviço comercial ou corporativo você precisa?" },
+          { "ordem": 4, "variavel": "v_describe", "conversational_label": "Conte com detalhes o que você precisa." },
+          { "ordem": 5, "variavel": "v_name", "conversational_label": "Qual é o seu nome completo?" },
+          { "ordem": 6, "variavel": "v_cpf", "conversational_label": "Qual é o seu CPF?" },
+          { "ordem": 7, "variavel": "v_email", "conversational_label": "Qual e-mail podemos usar para responder?" },
+          { "ordem": 8, "variavel": "v_phone", "conversational_label": "Qual é o seu telefone com DDD?" },
+          { "ordem": 9, "variavel": "nova_anexo", "conversational_label": "Quer anexar algum documento?" }
+        ]
+      },
+      {
+        "nome": "Estender auxílio berçário após desligamento",
+        "short_description": "Peça a extensão do auxílio berçário ou creche depois de ser desligado sem justa causa",
+        "descricao": "Use se você foi desligado sem justa causa e quer manter o auxílio berçário do seu filho pelo prazo previsto no informativo de desligamento. A extensão não vale para desligamento por justa causa.",
+        "frases_exemplo": [
+          "fui desligado e quero manter o berçário do meu filho",
+          "extensão do auxílio creche depois da demissão",
+          "posso continuar com o berçário depois que saí?"
+        ],
+        "fixar": "v_what_situation = ex_colab; v_category_ex_colab = extensao_bercario (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "dispensa_justa_causa", "conversational_label": "Seu desligamento foi sem justa causa?" },
+          { "ordem": 2, "variavel": "data_do_desligamento", "conversational_label": "Qual foi a data do desligamento?" },
+          { "ordem": 3, "variavel": "nome_completo_crianca", "conversational_label": "Qual é o nome completo da criança?" },
+          { "ordem": 4, "variavel": "data_de_nascimento", "conversational_label": "Qual é a data de nascimento da criança?" },
+          { "ordem": 5, "variavel": "localidade_do_bercario", "conversational_label": "Em qual localidade fica o berçário?" },
+          { "ordem": 6, "variavel": "ate_quando_manter_beneficio", "conversational_label": "Até quando você quer manter o benefício?" },
+          { "ordem": 7, "variavel": "v_name", "conversational_label": "Qual é o seu nome completo?" },
+          { "ordem": 8, "variavel": "v_cpf", "conversational_label": "Qual é o seu CPF?" },
+          { "ordem": 9, "variavel": "v_email", "conversational_label": "Qual e-mail podemos usar para responder?" },
+          { "ordem": 10, "variavel": "v_phone", "conversational_label": "Qual é o seu telefone com DDD?" }
+        ]
+      },
+      {
+        "nome": "Atendimento de RH para colaboradores afastados",
+        "short_description": "Folha, férias, benefícios, jornada, licenças e documentos para quem está afastado",
+        "descricao": "Use se você está afastado (auxílio-doença, licença-maternidade ou paternidade, outros afastamentos) e precisa de ajuda do RH com folha de pagamento, pensão alimentícia, férias, benefícios (creche, babá), controle de jornada (atestado, reembolso), licenças e ausências (complementação ou adiantamento previdenciário), dados cadastrais ou declarações. Ex-colaboradores usam o item de ex-colaboradores.",
+        "frases_exemplo": [
+          "estou afastado e tenho dúvida no holerite",
+          "estou de licença-maternidade e preciso lançar um atestado",
+          "quero pedir o adiantamento previdenciário",
+          "preciso atualizar meus dados cadastrais, estou afastada",
+          "reembolso de creche durante o afastamento"
+        ],
+        "fixar": "v_what_situation = colab_afast (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_category_afastados", "conversational_label": "Sobre qual assunto é o seu pedido?" },
+          { "ordem": 2, "variavel": "v_subcategory_fopag", "conversational_label": "Qual é a sua dúvida de folha de pagamento?" },
+          { "ordem": 3, "variavel": "v_subcategory_vacation", "conversational_label": "O que você precisa sobre férias?" },
+          { "ordem": 4, "variavel": "v_subcategory_benefits", "conversational_label": "Sobre qual benefício?" },
+          { "ordem": 5, "variavel": "v_subcategory_journey_control", "conversational_label": "O que você precisa sobre controle de jornada?" },
+          { "ordem": 6, "variavel": "v_subcategory_lic_ausenc", "conversational_label": "Qual licença ou ausência?" },
+          { "ordem": 7, "variavel": "v_subcategory_declar_doc", "conversational_label": "Qual declaração ou documento você precisa?" },
+          { "ordem": 8, "variavel": "v_describe", "conversational_label": "Conte com detalhes o que você precisa." },
+          { "ordem": 9, "variavel": "v_name", "conversational_label": "Qual é o seu nome completo?" },
+          { "ordem": 10, "variavel": "v_cpf", "conversational_label": "Qual é o seu CPF?" },
+          { "ordem": 11, "variavel": "v_email", "conversational_label": "Qual e-mail podemos usar para responder?" },
+          { "ordem": 12, "variavel": "v_phone", "conversational_label": "Qual é o seu telefone com DDD?" },
+          { "ordem": 13, "variavel": "nova_anexo", "conversational_label": "Anexe o documento (atestado, formulário ou comprovante)." }
+        ]
+      }
+    ],
+    "observacoes": "Remover v_has_attachment (Yes/No oculta, sem Include None), que só apoiava os scripts de anexo. Os 12 Rich Text Labels (v_text_*, v_download_*) têm instruções e formulários para baixar; publicar em KB e citar o link na descrição do derivado. As policies 'EY: If maternity' e 'EY: If paternity' apontam para variáveis (v_text_lic_mat, v_download_lic_pat etc.) que não estão ativas no item. As subcategorias só aparecem conforme a categoria (UI Policy sem script), então cada conversa faz no máximo 1 pergunta de subcategoria. Os derivados de ex-colaborador podem virar mais itens por categoria se o volume por categoria justificar; conferir no relatório de casos."
+  },
+  {
+    "sys_id": "b1f9d1401b75a1d0d1abda4ce54bcb19",
+    "nome_atual": "Jurídico",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 43,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 20,
+    "justificativa": "Item público e de baixo volume (43 em 12 meses), usado por terceiros (escritórios, empresas) para pedidos jurídicos ligados a vínculo trabalhista. O ramo CTPS (Carteira de Trabalho) pede 13 dados cadastrais e contratuais de uma vez, e o ramo GFIP pede valores e períodos. É um formulário de coleta de dados, não uma conversa. Vale remover os widgets Custom e melhorar nome e descrição para ser encontrado e aberto como link.",
+    "nome_sugerido": "Solicitações jurídicas trabalhistas (CTPS, GFIP)",
+    "short_description_sugerida": "Pedidos de terceiros sobre anotação de Carteira de Trabalho (CTPS), GFIP e outros assuntos jurídicos trabalhistas",
+    "descricao_sugerida": "Use se você representa uma empresa, escritório de advocacia ou órgão e precisa de informações jurídicas trabalhistas sobre um ex-colaborador ou colaborador: anotação ou retificação de Carteira de Trabalho e Previdência Social (CTPS), valores de Guia de Recolhimento do FGTS e Informações à Previdência Social (GFIP) ou outros pedidos jurídicos. Colaboradores e ex-colaboradores com pedidos próprios de RH devem usar os itens de RH.",
+    "frases_exemplo": [
+      "preciso de informação para anotação na carteira de trabalho de um ex-funcionário",
+      "solicitação jurídica sobre GFIP",
+      "sou advogado e preciso de dados do vínculo de um reclamante",
+      "retificar CTPS de ex-colaborador"
+    ],
+    "bloqueadores": [
+      { "onde": "contextual_search_results", "problema": "Custom com UI Macro e widget.", "acao": "Remover." },
+      { "onde": "ai_search_assist", "problema": "Custom com widget.", "acao": "Remover." },
+      { "onde": "vs_add_attachment", "problema": "Custom com widget de anexo público.", "acao": "Trocar por Attachment OOB, se o item voltar a ser avaliado para conversa." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "contextual_search_results", "origem": "item", "acao": "remover", "obs": "Widget de pesquisa contextual sem uso na conversa." },
+      { "ordem": 2, "variavel": "ai_search_assist", "origem": "item", "acao": "remover", "obs": "Widget sem uso na conversa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY:CPF / EY: CPF CTPS", "acao": "converter", "substituicao": "Validation Regex na variável, com o ponto escapado." },
+      { "nome": "EY: Validate PIS / EY: Validate Currency / EY: Validate remuneration / EY: Validate Email / EY: Validate Phone", "acao": "converter", "substituicao": "Validation Regex na própria variável (no-code)." },
+      { "nome": "EY: Mandatory fields / EY: If CTPS / EY:  IF GFIP", "acao": "manter", "substituicao": "Sem mudança enquanto for formulário." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Público externo (Public, acn_guest_user). O VA só mostra o link para o formulário."]
+    },
+    "itens_derivados": [],
+    "observacoes": "Há rótulos duplicados ('Name', 'CPF', 'Company' aparecem duas vezes: dados do solicitante e dados da CTPS). Se um dia virar conversa, renomear para 'Nome do colaborador na CTPS', 'CPF do colaborador' etc. O producer_script do digest descreve 'Ex-Colaboradores', mas é o mesmo padrão genérico de guest user."
+  },
+  {
+    "sys_id": "65fcbbf71b6961d0d1abda4ce54bcbb1",
+    "nome_atual": "Sindicato",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 77,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 35,
+    "justificativa": "Item simples (contato, categoria, subcategoria, descrição e anexo) e só está bloqueado pelos três widgets Custom. Tirando esses widgets, trocando o anexo por Attachment OOB e escrevendo labels em pt-BR, fica um fluxo de 7 a 8 perguntas bem adequado à conversa.",
+    "nome_sugerido": "Solicitações de sindicatos",
+    "short_description_sugerida": "Pedidos de sindicatos sobre pagamentos, contribuições e assuntos sindicais",
+    "descricao_sugerida": "Use se você representa um sindicato e precisa falar com o RH da empresa sobre pagamentos e repasses de contribuição sindical, listas de associados, acordos e convenções coletivas ou outros assuntos sindicais. Colaboradores com dúvidas sobre desconto sindical no próprio holerite devem usar os itens de folha de pagamento.",
+    "frases_exemplo": [
+      "sou do sindicato e quero consultar o repasse da contribuição",
+      "o pagamento da mensalidade sindical não caiu",
+      "preciso enviar a convenção coletiva para o RH",
+      "solicitação sindical"
+    ],
+    "bloqueadores": [
+      { "onde": "contextual_search_results", "problema": "Custom com UI Macro e widget.", "acao": "Remover." },
+      { "onde": "ai_search_assist", "problema": "Custom com widget.", "acao": "Remover." },
+      { "onde": "vs_add_attachment", "problema": "Custom com widget de anexo público.", "acao": "Trocar por variável Attachment OOB (nova_anexo), obrigatória por UI Policy sem script nas subcategorias de pagamento que exigem comprovante." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_category", "origem": "item", "acao": "manter", "conversational_label": "O pedido é sobre pagamentos ou sobre outro assunto sindical?" },
+      { "ordem": 2, "variavel": "v_subcategory_payments", "origem": "item", "acao": "manter", "conversational_label": "Qual é o assunto do pagamento?" },
+      { "ordem": 3, "variavel": "v_subcategory_syndicate", "origem": "item", "acao": "manter", "conversational_label": "Qual é o assunto sindical?" },
+      { "ordem": 4, "variavel": "v_describe", "origem": "item", "acao": "manter", "conversational_label": "Descreva o seu pedido com detalhes." },
+      { "ordem": 5, "variavel": "v_company", "origem": "item", "acao": "manter", "conversational_label": "Qual sindicato ou entidade você representa?" },
+      { "ordem": 6, "variavel": "v_name", "origem": "item", "acao": "manter", "conversational_label": "Qual é o seu nome?" },
+      { "ordem": 7, "variavel": "v_email", "origem": "item", "acao": "manter", "conversational_label": "Qual e-mail podemos usar para responder?" },
+      { "ordem": 8, "variavel": "v_phone", "origem": "item", "acao": "manter", "conversational_label": "Qual é o seu telefone com DDD?" },
+      { "ordem": 9, "variavel": "nova_anexo", "origem": "item", "acao": "nova", "tipo_sugerido": "Attachment", "conversational_label": "Anexe o comprovante ou documento, se tiver.", "obs": "Substitui vs_add_attachment." },
+      { "ordem": 10, "variavel": "v_has_attachment", "origem": "item", "acao": "remover", "obs": "Yes/No oculta sem Include None; só apoiava o script de anexo." },
+      { "ordem": 11, "variavel": "contextual_search_results", "origem": "item", "acao": "remover" },
+      { "ordem": 12, "variavel": "ai_search_assist", "origem": "item", "acao": "remover" },
+      { "ordem": 13, "variavel": "vs_add_attachment", "origem": "item", "acao": "remover", "obs": "Troca por nova_anexo." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Validate email / EY: Validate Phone", "acao": "converter", "substituicao": "Validation Regex na variável." },
+      { "nome": "EY: Attach mandatory if payments", "acao": "converter", "substituicao": "UI Policy sem script: nova_anexo mandatory=true nas subcategorias de pagamento que exigem comprovante." },
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; tirar a ação sobre v_has_attachment." },
+      { "nome": "EY: If payments / EY: If syndicate", "acao": "manter", "substituicao": "UI Policy sem script, compatível; desmarcar On load." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Item Public com guest user: a conversa depende de VA disponível para usuário não autenticado."]
+    },
+    "itens_derivados": [],
+    "observacoes": "Conferir o label de v_company: para sindicato, 'Company' deve significar a entidade sindical. Se for a empresa do grupo, perguntar 'Para qual empresa do grupo é o pedido?'."
+  },
+  {
+    "sys_id": "2d0389321b40d210514cbaef4b4bcbda",
+    "nome_atual": "Solicitação de serviços funerários",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 14,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 30,
+    "justificativa": "Volume muito baixo (14 em 12 meses) e público restrito (operários da Argentina). O formulário tem 29 perguntas, bloco de beneficiários (lista de pessoas com nome, DNI, parentesco e endereço), dois aceites longos de desconto em folha e retirada de beneficiários e seis Rich Text Labels de orientação. A lista de beneficiários e os aceites jurídicos funcionam melhor como formulário. Converter não compensa o esforço.",
+    "nome_sugerido": "Serviço funerário: adesão, cancelamento ou beneficiários",
+    "short_description_sugerida": "Aderir ou cancelar o serviço funerário e alterar beneficiários (Argentina)",
+    "descricao_sugerida": "Use se você é colaborador na Argentina e quer aderir ao serviço funerário, cancelar a adesão ou incluir, alterar ou retirar beneficiários do grupo familiar. A adesão tem desconto mensal proporcional em folha. Não use para outros benefícios ou seguros de vida.",
+    "frases_exemplo": [
+      "quero aderir ao serviço funerário",
+      "cancelar o serviço funerário",
+      "incluir meu pai como beneficiário do serviço funerário",
+      "quiero dar de baja el servicio de sepelio"
+    ],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Show Beneficiaries Data OnChange", "acao": "converter", "substituicao": "Trocar por UI Policy sem script (type_of_request = registration_adhesion_benefit → beneficiaries_data visible). Revisar o valor com espaço 'registration _adhesion_benefit', que pode nunca casar." },
+      { "nome": "EY: Hide Beneficiaries Data OnLoad", "acao": "remover", "substituicao": "Deixar beneficiaries_data oculto por padrão e mostrar via UI Policy." },
+      { "nome": "EY: Clear fields when request type chang", "acao": "manter", "substituicao": "Aceitável enquanto for formulário." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Traduzir nome, descrição e frases de exemplo para espanhol, já que o item é do Catálogo hispânico."]
+    },
+    "itens_derivados": [],
+    "observacoes": "date_of_birth está como Single Line Text com referência a x_nasm_hr_profile, o que é inconsistente; trocar para Date. As policies citam consent, check_compliance e remember_beneficiaries, que não aparecem entre as variáveis ativas. Os Rich Text Labels children_age, children_age_mod_benefities e attention_beneficiaries têm label 'District' (copiado); corrigir. Se o volume crescer, dá para dividir em 'Aderir ao serviço funerário', 'Cancelar serviço funerário' e 'Alterar beneficiários', com o cancelamento sendo bem conversacional (1 aceite)."
+  },
+  {
+    "sys_id": "4aacc9fa1be90a50a530426fe54bcb0f",
+    "nome_atual": "Solicitação de 2ª via de crachá",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 275,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "A intenção é única e clara, sem bloqueadores. O que atrapalha: 28 perguntas (acima do limite de 20 para conversa inline), porque o set de dados pessoais pede 10 dados que dá pra tirar do perfil; três checkboxes de aceite de desconto (um por tipo de crachá); um checkbox 'não encontrei a localidade' que controla o endereço; e comentário obrigatório. Derivando os dados pessoais e simplificando localidade e aceite, a conversa fica com umas 8 perguntas.",
+    "nome_sugerido": "Solicitar 2ª via de crachá",
+    "short_description_sugerida": "Peça uma nova via do seu crachá em caso de perda, roubo ou dano",
+    "descricao_sugerida": "Use para pedir a segunda via do crachá de identificação (cartão impresso, smart card ou os dois) em caso de perda, roubo, furto, dano ou desgaste. A 2ª via tem desconto em folha, que pode ser dispensado se houver boletim de ocorrência de roubo ou furto. Você vai precisar de uma foto 3x4. Para o primeiro crachá de colaborador novo, não use este item.",
+    "frases_exemplo": [
+      "perdi meu crachá",
+      "preciso de uma segunda via do crachá",
+      "roubaram minha carteira com o crachá",
+      "meu crachá quebrou, como peço outro?",
+      "quero um novo smart card"
+    ],
+    "bloqueadores": [
+      { "onde": "attach_3x4_photo / anexo_BO", "problema": "Attachment exige tratamento à parte na conversa.", "acao": "Manter como Attachment OOB, perguntando no fim. Levar as orientações da foto (photo_instructions) para o conversational label ou para a descrição." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "reason_for_requesting_a_2nd_copy_of_the_badge", "origem": "item", "acao": "manter", "conversational_label": "O que aconteceu com o seu crachá?" },
+      { "ordem": 2, "variavel": "made_a_police_report", "origem": "item", "acao": "manter", "conversational_label": "Você fez boletim de ocorrência?", "obs": "O label atual 'Attach a police report' não é uma pergunta de sim/não." },
+      { "ordem": 3, "variavel": "anexo_BO", "origem": "item", "acao": "manter", "conversational_label": "Anexe o boletim de ocorrência. Ele pode dispensar o desconto." },
+      { "ordem": 4, "variavel": "request_type", "origem": "item", "acao": "manter", "conversational_label": "Qual crachá você precisa: cartão impresso, smart card ou os dois?" },
+      { "ordem": 5, "variavel": "aceite_for_discount_4_65", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você concorda com o desconto de R$ 4,65 na folha pela 2ª via?" },
+      { "ordem": 6, "variavel": "aceite_for_salary_discount_17_75", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você concorda com o desconto de R$ 17,75 na folha pela 2ª via?" },
+      { "ordem": 7, "variavel": "aceite_for_discount_22_40", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você concorda com o desconto de R$ 22,40 na folha pela 2ª via?" },
+      { "ordem": 8, "variavel": "location_sent_badge", "origem": "item", "acao": "manter", "conversational_label": "Para qual unidade devemos enviar o crachá?", "obs": "Incluir a opção 'Outro endereço' na lista." },
+      { "ordem": 9, "variavel": "i_didnt_find_the_desired_location", "origem": "item", "acao": "remover", "obs": "Substituir pela opção 'Outro endereço' em location_sent_badge; a policy de endereço passa a olhar essa opção." },
+      { "ordem": 10, "variavel": "zip_code", "origem": "set:EY: Address to sent the badge", "acao": "manter", "conversational_label": "Qual é o CEP do endereço de entrega?", "obs": "Só quando location_sent_badge = Outro endereço. Os demais campos do set (logradouro, número, complemento, bairro, cidade, UF) seguem na mesma condição, com labels em pergunta." },
+      { "ordem": 11, "variavel": "attach_3x4_photo", "origem": "item", "acao": "manter", "conversational_label": "Anexe uma foto 3x4 recente, com o rosto visível e fundo claro." },
+      { "ordem": 12, "variavel": "use_this_field_to_add_comments", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar algum comentário?", "obs": "Tirar a obrigatoriedade." },
+      { "ordem": 13, "variavel": "employee_name / id_global / position_title / company / workplace / cpf / rg / date_of_birth / address / telephone", "origem": "set:EY: Personal Informations Crachá", "acao": "derivar", "obs": "Auto-populate a partir do perfil do colaborador (x_nasm_hr_profile / sys_user) e read-only, para a conversa pular. Específico deste item porque o set só é usado aqui." },
+      { "ordem": 14, "variavel": "photo_instructions / text_solicitar_cordao / police_report_will_analyzed", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Labels informativos. O texto vai para a descrição e para os conversational labels." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Clear location if user dont find any", "acao": "remover", "substituicao": "Sem o checkbox não é mais preciso." },
+      { "nome": "Show or hidden the address datas / When the 'I didn't find the location' field is true...", "acao": "converter", "substituicao": "Uma UI Policy sem script: location_sent_badge = outro_endereco → set de endereço visível e obrigatório." },
+      { "nome": "Mandatory Fields", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; use_this_field_to_add_comments opcional." },
+      { "nome": "When the chosen option is cartao_impresso / smart_card / smart_card_e_cartao_impresso", "acao": "manter", "substituicao": "UI Policy sem script, compatível; desmarcar On load." },
+      { "nome": "Handling the display of the police report field / attachment field", "acao": "manter", "substituicao": "Compatível." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "text_solicitar_cordao sugere que o cordão também é pedido aqui. Se for uma opção de request_type, incluir 'cordão' nas frases de exemplo. Os valores de desconto nos labels vão precisar de manutenção quando mudarem; outra opção é um único Yes/No com label genérico ('Você concorda com o desconto em folha informado na descrição?') e a tabela de valores na descrição."
+  },
+  {
+    "sys_id": "dc0f75b81bb39114d1abda4ce54bcba5",
+    "nome_atual": "Relatar erros ou ajustes no acesso ADP",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 359,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Item enxuto (tipo de suporte, evidência anexa e descrição) sem bloqueadores. Mas tem um defeito que quebra a conversa: a policy 'EY - Comments - Read Only' deixa v_comments sempre read-only, então o VA pula a descrição do problema. As policies de telefone dependem de uma variável que não existe (v_is_your_problem_exclusively_in_accessing_the_adp_system), e a descrição atual é só um ponto.",
+    "nome_sugerido": "Relatar erro ou pedir ajuste de acesso no ADP",
+    "short_description_sugerida": "Erros de acesso, inclusão de centro de custo e ajustes de perfil no sistema ADP",
+    "descricao_sugerida": "Use para relatar erro ao acessar ou usar o sistema ADP (ponto e folha) ou pedir ajuste de acesso: erro de login ou tela, inclusão de centro de custo para gestor, lista de justificativas de ponto e manutenção de perfil de acesso. Tenha em mãos um print do erro ou o e-mail de aprovação do gestor. Para dúvidas de ponto ou de pagamento que não sejam de acesso, use os itens de Controle de Jornada ou Folha.",
+    "frases_exemplo": [
+      "não consigo entrar no ADP",
+      "o ADP está dando erro na tela",
+      "preciso incluir um centro de custo no meu acesso do ADP",
+      "meu perfil no ADP está errado",
+      "não aparece a lista de justificativas do ponto no ADP"
+    ],
+    "bloqueadores": [
+      { "onde": "policy EY - Comments - Read Only", "problema": "v_comments fica read-only sempre; pergunta read-only é pulada na conversa e o caso chega sem descrição.", "acao": "Restringir a policy à visão do atendente (Applies on Requested Item/Target Record, desmarcando Catalog Item view) ou removê-la." },
+      { "onde": "v_attach_here_the_evidence_with_your_adp_system_error", "problema": "Attachment exige tratamento à parte na conversa.", "acao": "Manter Attachment OOB no fim da conversa com label curto." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_select_the_desired_support", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de ajuda você precisa no ADP?" },
+      { "ordem": 2, "variavel": "v_comments", "origem": "item", "acao": "manter", "conversational_label": "Descreva o problema ou o ajuste que você precisa.", "obs": "Tirar o read-only da policy." },
+      { "ordem": 3, "variavel": "v_attach_here_the_evidence_with_your_adp_system_error", "origem": "item", "acao": "manter", "conversational_label": "Anexe um print do erro ou o e-mail de aprovação do gestor." },
+      { "ordem": 4, "variavel": "v_company", "origem": "item", "acao": "derivar", "obs": "Hoje é preenchida por client script (Get User Company). Trocar por auto-populate a partir de vs_employee (dot-walk para company)." },
+      { "ordem": 5, "variavel": "v_csc_will_be_able_to_support_with / v_phone_natura_tbs / v_phone_avon", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Rich Text com telefones do Centro de Serviços Compartilhados (CSC). Levar para a descrição ou KB, já que só a URL chega à conversa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY - Comments - Read Only", "acao": "remover", "substituicao": "Ou limitar à visão do atendente. Na visão do catálogo, v_comments deve ser editável e obrigatória." },
+      { "nome": "EY: Get User Company", "acao": "converter", "substituicao": "Auto-populate de v_company a partir de vs_employee.company." },
+      { "nome": "EY: When the employee is Avon / Natura or TBS / When 'your problem is in ADP' ...", "acao": "remover", "substituicao": "Dependem de v_is_your_problem_exclusively_in_accessing_the_adp_system, que não existe. Os telefones vão para a descrição." },
+      { "nome": "EY: When asked 'Select the desired support' for any", "acao": "manter", "substituicao": "Compatível: anexo obrigatório para os tipos listados." },
+      { "nome": "EY: Select the desired support", "acao": "converter", "substituicao": "Deixar v_select_the_desired_support visível e obrigatória direto na variável, sem depender do set." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "O set 'EY: Requester Data' (para quem, status, colaborador, ID, e-mail pessoal) segue a recomendação geral. Há uma policy vazia ('When your problem is in ADP is Avon', sem ações) que pode ser apagada."
+  },
+  {
+    "sys_id": "247c37d53be81610924d0247f4e45af9",
+    "nome_atual": "Serviço de transporte para ir ao trabalho",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 78,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Intenção única e poucas perguntas próprias (categoria, detalhe e declaração), mas a lista de categorias é montada por um client script de 3,8 KB com ui_type mobile/portal, que remove e recoloca opções conforme o perfil. Na conversa isso é frágil. A declaração é um checkbox solto e o FAQ está em Rich Text. Com as opções controladas sem script e a declaração como Yes/No, vira uma conversa curta.",
+    "nome_sugerido": "Solicitar transporte para o trabalho",
+    "short_description_sugerida": "Pedidos de transporte corporativo, como Cabify ou traslado, para ir ao trabalho",
+    "descricao_sugerida": "Use para pedir ou tirar dúvidas sobre o transporte para ir e voltar do trabalho oferecido pela empresa nos países hispânicos: corridas por aplicativo corporativo (Cabify), traslado ou fretado. O custo da viagem é debitado do seu centro de custo. Não use para viagens a negócios nem para reembolso de despesas.",
+    "frases_exemplo": [
+      "preciso de Cabify para ir ao trabalho",
+      "quero usar o traslado da empresa",
+      "como peço transporte para chegar na fábrica?",
+      "necesito transporte para ir a trabajar"
+    ],
+    "bloqueadores": [
+      { "onde": "client script EY: Conditions for the Category Field", "problema": "Script de 3,8 KB que manipula opções da Select Box com removeOption/addOption conforme o perfil; ui_type 1, então não roda em todos os canais.", "acao": "Trocar por opções estáticas com a lógica no servidor: filtrar as opções com Choice Qualifier (Lookup Select Box sobre question_choice com qualificador por país e perfil) ou criar user criteria por categoria em itens separados, se a regra for por país." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "category", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de transporte você precisa?" },
+      { "ordem": 2, "variavel": "detail_request", "origem": "item", "acao": "manter", "conversational_label": "Conte os detalhes: trajeto, dias e horários." },
+      { "ordem": 3, "variavel": "checkbox_declaracao", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você está ciente e concorda que o custo das viagens será do seu centro de custo?" },
+      { "ordem": 4, "variavel": "FAQs", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Rich Text de FAQ (Argentina). Publicar em KB e citar na descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Conditions for the Category Field", "acao": "converter", "substituicao": "Choice Qualifier ou Lookup Select Box com qualificador simples, ou opções estáticas mais a validação no flow." },
+      { "nome": "EY: Show category", "acao": "converter", "substituicao": "Deixar category sempre visível e obrigatória direto na variável; v_employee já é preenchido por padrão." },
+      { "nome": "EY: Visibility checkbox", "acao": "manter", "substituicao": "UI Policy sem script, compatível (país Argentina/Chile e category = cabify)." },
+      { "nome": "EY: Country is Argentina", "acao": "remover", "substituicao": "O FAQ sai do formulário." },
+      { "nome": "EY: Hide unfilled fields / EY: Hide fields > for me", "acao": "manter", "substituicao": "Pertencem ao set; tratar na análise geral do set Hispana Personal Information." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Traduzir nome, descrição e labels para espanhol (Catálogo hispânico)."]
+    },
+    "itens_derivados": [],
+    "observacoes": "O set 'EY: Hispana Personal Information' tem 16 perguntas e define a maior parte do tamanho da conversa; a recomendação geral é derivar tudo do perfil. O producer_script descrito no digest fala em 'apólice de seguro', mas é o script padrão hispânico (getUserRequestedFor) com atribuição dupla sem efeito."
+  },
+  {
+    "sys_id": "d9a39a1e1b2ab810d1abda4ce54bcb4b",
+    "nome_atual": "Alteração de Vale Refeição - VR, Alimentação - VA",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1173,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Volume alto (1.173 em 12 meses) e poucas perguntas reais: tipo de operação, opção desejada e dois aceites. Está bloqueado por dois client scripts sem VA Supported: um detecta o portal e o outro esconde os ícones do List Collector pelo DOM. Há também um onLoad com GlideAjax para o ADP que preenche os benefícios atuais. Sem os scripts de interface e com os checkboxes virando Yes/No, a conversa fica com 4 perguntas.",
+    "nome_sugerido": "Alterar Vale-Refeição ou Vale-Alimentação",
+    "short_description_sugerida": "Troque a divisão entre Vale-Refeição (VR) e Vale-Alimentação (VA) ou mude a sua opção do benefício",
+    "descricao_sugerida": "Use para alterar o seu benefício de Vale-Refeição (VR) ou Vale-Alimentação (VA): trocar de VR para VA ou o contrário, mudar a proporção entre os dois ou aderir ao benefício. O benefício tem desconto em folha conforme a política. Não use para Vale-Transporte, problemas com o cartão ou saldo (use o item do fornecedor do cartão) nem para reembolso de refeição.",
+    "frases_exemplo": [
+      "quero trocar meu VR por VA",
+      "mudar meu vale-refeição para vale-alimentação",
+      "quero colocar mais valor no vale-alimentação",
+      "como altero meu benefício de alimentação?",
+      "quero aderir ao vale-refeição"
+    ],
+    "bloqueadores": [
+      { "onde": "client script ACN_form_on_catalog", "problema": "onLoad sem VA Supported que testa o contexto do Service Portal com 'if (this)'.", "acao": "Remover. O teste não diferencia os contextos e não tem função na conversa." },
+      { "onde": "client script ACN: Hide \"Remove All\" and \"X\" icons", "problema": "Manipula o DOM para esconder ícones do controle; sem VA Supported.", "acao": "Remover. Se o objetivo é impedir limpar a seleção, deixar a variável read-only por UI Policy sem script." },
+      { "onde": "client script ACN: Lookup benefits - Food Voucher", "problema": "onLoad com GlideAjax para IntegraAdp_utils preenche o set 'Benefícios do colaborador'; VA Supported, mas depende de execução no cliente.", "acao": "Manter, validando na conversa, ou mover a consulta ao ADP para o flow (dado só informativo para o atendente)." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "option_type", "origem": "set:Plan requests", "acao": "manter", "conversational_label": "Você quer aderir ao benefício ou alterar a sua opção atual?" },
+      { "ordem": 2, "variavel": "desired_joining_option", "origem": "set:Plan requests", "acao": "manter", "conversational_label": "Qual opção você quer passar a ter (só VR, só VA ou dividido)?" },
+      { "ordem": 3, "variavel": "payroll_deduction_awareness", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você está ciente de que o benefício tem desconto em folha?" },
+      { "ordem": 4, "variavel": "information_accuracy_responsibility", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Yes/No (Include None, mandatory)", "conversational_label": "Você confirma que as informações estão corretas?" },
+      { "ordem": 5, "variavel": "employee", "origem": "set:Suas informações pessoais", "acao": "derivar", "obs": "Já tem default; manter read-only para a conversa pular." },
+      { "ordem": 6, "variavel": "benefit_option_date", "origem": "set:Plan requests", "acao": "derivar", "obs": "Default e read-only; a conversa pula." },
+      { "ordem": 7, "variavel": "info_maia / update_information_link", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Rich Text informativo; o conteúdo vai para a descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "ACN_form_on_catalog", "acao": "remover", "substituicao": "Nenhuma." },
+      { "nome": "ACN: Hide \"Remove All\" and \"X\" icons", "acao": "remover", "substituicao": "UI Policy sem script com readonly=true, se precisar travar a seleção." },
+      { "nome": "ACN: Lookup benefits - Food Voucher", "acao": "manter", "substituicao": "Testar na conversa; se falhar, mover para o flow." },
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto nas duas declarações. Tirar address_delivery, number_vt, city, x_state e zip_code, que vieram do item de Vale-Transporte e não existem aqui." },
+      { "nome": "ACN: Option Type is Accession", "acao": "manter", "substituicao": "Compatível (mostra employee_benefits read-only)." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "O set 'Benefícios do colaborador' (employee_id, benefit_code, product, option_date) é informativo e preenchido pela integração. Precisa ficar read-only ou oculto para não virar pergunta. O set 'ACN: Candidate' está vazio. Se option_type tiver só adesão e alteração, avaliar se a adesão tem item irmão; se tiver, fixar option_type = change aqui."
+  },
+  {
+    "sys_id": "1ccb68a91bdf0a10d1abda4ce54bcb5c",
+    "nome_atual": "Consulta de Fornecedores",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 1557,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Versão interna (colaborador abrindo em nome de fornecedor) com volume alto. Tem 53 perguntas, 43 policies onLoad e 3 client scripts sem VA Supported (opções traduzidas por g_lang e texto-modelo de instruções). O item repete 5 blocos numerados de nota fiscal (pedido, documento, valor, pagamento, data, pedido de compra), e o v_type_of_query junta intenções com dados diferentes. Dividir em 3 itens por grupo de dados e trocar os 5 blocos por um campo de lista resolve o volume de perguntas. Uma policy 'sempre' deixa quase tudo read-only, o que faria a conversa pular tudo.",
+    "nome_sugerido": "Consulta de pagamento a fornecedor (uso interno)",
+    "short_description_sugerida": "Colaboradores consultam status, comprovante, composição ou lançamento de pagamentos a fornecedores",
+    "descricao_sugerida": "Use se você é colaborador e precisa consultar, em nome de um fornecedor, o status de pagamento de uma nota fiscal, pedir o comprovante ou a composição de um pagamento, ou verificar ou corrigir um lançamento. Se você é o próprio fornecedor, sem acesso interno, use a Consulta de Fornecedores externa.",
+    "frases_exemplo": [
+      "a nota fiscal do fornecedor já foi paga?",
+      "preciso do comprovante de pagamento de um fornecedor",
+      "o fornecedor quer saber a composição do pagamento",
+      "tem divergência no lançamento da nota",
+      "quando vai ser pago o fornecedor X?"
+    ],
+    "bloqueadores": [
+      { "onde": "client scripts EY: Show Var prod, improd, serv / EY: Show Var prod, improd, serv 2", "problema": "Sem VA Supported; adicionam a opção 'Comprovante de Retenção' traduzida por g_lang.", "acao": "Remover. Cadastrar a opção direto na Select Box com tradução OOB (sys_translated/choice por idioma) e controlar a visibilidade por UI Policy sem script, ou virar o 4º item derivado 'Solicitar comprovante de retenção'." },
+      { "onde": "client script Auto Populate Infos", "problema": "Sem VA Supported; grava texto-modelo de instruções no formulário.", "acao": "Remover. As instruções vão para a descrição de cada derivado." },
+      { "onde": "policy EY: Read Only Variables", "problema": "Condição 'sempre' deixa read-only o tipo de consulta, a quantidade de registros, a descrição etc.; na conversa essas perguntas são puladas.", "acao": "Aplicar só na visão do atendente (desmarcar Applies on Catalog Item view)." },
+      { "onde": "v_request_number..._5, v_document_number_invoice..._5, v_invoice_amount_*, v_payment_amount_*, v_payment_receipt_date_*, v_purchase_order_number_*", "problema": "30 variáveis em 5 blocos numerados, controladas por v_how_many_records_do_you_want_to_insert.", "acao": "Trocar por uma variável multilinha nova_lista_notas ('Liste as notas: número, valor e data, uma por linha') ou por um anexo de planilha para lotes." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "Policies numeradas 1 a 5 (Número do pedido, documento, valor, data, pedido de compra visible)", "acao": "remover", "substituicao": "Sem os blocos numerados, não são mais precisas." },
+      { "nome": "EY: Read Only Variables", "acao": "converter", "substituicao": "Só na visão do atendente." },
+      { "nome": "Variaveis Obrigatorias", "acao": "converter", "substituicao": "Mandatory direto nas variáveis que existem no derivado; tirar as referências a variáveis que não existem neste item (v_invoice_send_date, v_invoice_issuance_date, v_vendor_s_name etc.)." },
+      { "nome": "EY: Show Var Produtivo/Improdutivo/Servicos", "acao": "manter", "substituicao": "UI Policy sem script, compatível." },
+      { "nome": "EY: onChange Type of Query / EY: Clear records", "acao": "remover", "substituicao": "Não são mais precisos com o tipo fixo em cada derivado." },
+      { "nome": "EY: Show country by company / EY: When country is Colombia / Clear country / Clear Info Company ID", "acao": "converter", "substituicao": "Ficam no set 'EY VS - Empresas Natura' (análise geral). O ideal é um Lookup Select Box de país com qualificador pela empresa em vez de removeOption." },
+      { "nome": "EY: Validate e-mail", "acao": "converter", "substituicao": "Validation Regex." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["Manter os mesmos flows (EY: PTP - INTERNO Consulta de Fornecedores v1) nos derivados, com v_type_of_query fixo para não quebrar o roteamento."]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Consultar status ou comprovante de pagamento de nota fiscal (interno)",
+        "short_description": "Saiba se a nota fiscal de um fornecedor foi paga ou peça o comprovante",
+        "descricao": "Use, como colaborador, para saber se uma nota fiscal de fornecedor já foi paga, quando será paga, ou para pedir o comprovante do pagamento. Não use para composição de pagamento nem para divergência de lançamento.",
+        "frases_exemplo": [
+          "a nota do fornecedor já foi paga?",
+          "previsão de pagamento de uma NF",
+          "preciso do comprovante de pagamento da nota 12345",
+          "status de pagamento do fornecedor"
+        ],
+        "fixar": "v_type_of_query = invoice_payment_status ou request_receipt_of_payment (perguntar só esta escolha)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_type_of_query", "conversational_label": "Você quer saber o status do pagamento ou receber o comprovante?" },
+          { "ordem": 2, "variavel": "v_supplier", "conversational_label": "Qual é o fornecedor?" },
+          { "ordem": 3, "variavel": "nova_lista_notas", "conversational_label": "Informe o número e o valor de cada nota fiscal (até 5, uma por linha)." },
+          { "ordem": 4, "variavel": "additional_information_2", "conversational_label": "Quer acrescentar alguma informação?" }
+        ]
+      },
+      {
+        "nome": "Solicitar composição de pagamento a fornecedor (interno)",
+        "short_description": "Entenda quais notas e descontos compõem um pagamento feito ao fornecedor",
+        "descricao": "Use, como colaborador, quando o fornecedor recebeu um pagamento e quer saber quais notas, descontos ou retenções o compõem.",
+        "frases_exemplo": [
+          "o fornecedor recebeu um valor e não sabe a que se refere",
+          "composição do pagamento de ontem",
+          "quais notas entraram nesse pagamento?"
+        ],
+        "fixar": "v_type_of_query = request_composition_of_payment (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_supplier", "conversational_label": "Qual é o fornecedor?" },
+          { "ordem": 2, "variavel": "nova_lista_notas", "conversational_label": "Informe o valor e a data de cada pagamento recebido (até 5, um por linha)." },
+          { "ordem": 3, "variavel": "additional_information_2", "conversational_label": "Quer acrescentar alguma informação?" }
+        ]
+      },
+      {
+        "nome": "Consultar ou corrigir lançamento de nota fiscal de fornecedor (interno)",
+        "short_description": "Verifique se a nota foi lançada ou peça a correção de um lançamento divergente",
+        "descricao": "Use, como colaborador, para saber se a nota fiscal de um fornecedor foi lançada no sistema ou para pedir a correção de um lançamento com divergência (valor, pedido de compra, dados da nota).",
+        "frases_exemplo": [
+          "a nota do fornecedor foi lançada?",
+          "lançaram a NF com valor errado",
+          "divergência entre a nota e o pedido de compra"
+        ],
+        "fixar": "v_type_of_query = entry_consultation ou divergence_releases (perguntar só esta escolha)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_type_of_query", "conversational_label": "Você quer consultar o lançamento ou corrigir uma divergência?" },
+          { "ordem": 2, "variavel": "v_supplier", "conversational_label": "Qual é o fornecedor?" },
+          { "ordem": 3, "variavel": "nova_lista_notas", "conversational_label": "Informe o número de cada nota fiscal e o pedido de compra (até 5, uma por linha)." },
+          { "ordem": 4, "variavel": "v_what_needs_to_be_fixed", "conversational_label": "O que precisa ser corrigido?" },
+          { "ordem": 5, "variavel": "v_add_attachment", "conversational_label": "Quer anexar a nota ou algum documento?" }
+        ]
+      }
+    ],
+    "observacoes": "O producer_script grava v_your_e_mail em requested_for_email, mas essa variável não está no item interno; revisar. Os 14 campos do set 'EY VS - Empresas Natura' (8 variações de sub-empresa por país) ficam para a análise geral de sets e são o próximo maior peso da conversa. v_how_many_records_do_you_want_to_insert e os blocos numerados saem de todos os derivados. Se o flow ou os relatórios dependem dos campos numerados, o flow pode separar nova_lista_notas ou manter os campos ocultos."
+  },
+  {
+    "sys_id": "a837052d1b99e510a530426fe54bcbe5",
+    "nome_atual": "Consulta de Fornecedores \"Externo\"",
+    "tabela": "x_nasm_ptp_case",
+    "volume_12m": 12153,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Item de volume muito alto (rank 5), público e usado pelo próprio fornecedor. Tem 44 perguntas, 37 policies onLoad, widget Custom de anexo público e 3 client scripts sem VA Supported. A estrutura é a do item interno: 5 blocos numerados de nota fiscal e um tipo de consulta que junta intenções com dados diferentes. Dividir nos mesmos 3 grupos do interno, com dados do fornecedor antes, reduz a conversa para umas 10 perguntas. A policy 'sempre' de read-only também tem que sair da visão do catálogo.",
+    "nome_sugerido": "Consulta de pagamento para fornecedores",
+    "short_description_sugerida": "Fornecedores consultam status, comprovante, composição ou lançamento dos seus pagamentos",
+    "descricao_sugerida": "Use se você é fornecedor e quer saber se a sua nota fiscal foi paga ou quando será paga, pedir o comprovante ou a composição de um pagamento recebido, ou verificar ou corrigir o lançamento de uma nota. Colaboradores que consultam em nome de um fornecedor usam a Consulta de Fornecedores interna.",
+    "frases_exemplo": [
+      "sou fornecedor e quero saber se minha nota foi paga",
+      "preciso do comprovante de pagamento da minha NF",
+      "recebi um pagamento e não sei a que notas se refere",
+      "minha nota foi lançada com valor errado",
+      "quiero saber el estado de pago de mi factura"
+    ],
+    "bloqueadores": [
+      { "onde": "vs_add_attachment", "problema": "Custom com widget 'EY: Enable public attachment'.", "acao": "Trocar por Attachment OOB (nova_anexo) no fim da conversa. Validar que anexo por usuário guest funciona no canal público." },
+      { "onde": "client scripts EY: Show Var prod, improd, serv / EY: Show Var prod, improd, serv 2", "problema": "Sem VA Supported; opção 'Comprovante de Retenção' traduzida por g_lang.", "acao": "Cadastrar a opção direto na Select Box com tradução OOB e visibilidade por UI Policy sem script." },
+      { "onde": "client script Auto Populate Infos", "problema": "Sem VA Supported; texto-modelo de instruções.", "acao": "Remover; as instruções vão para a descrição." },
+      { "onde": "policy EY: Read Only Variables", "problema": "'Sempre' deixa read-only v_type_of_query, v_buying_company, v_your_e_mail, additional_information_2 e outros; a conversa pularia essas perguntas.", "acao": "Aplicar só na visão do atendente." },
+      { "onde": "30 variáveis dos blocos numerados 1 a 5", "problema": "Grade disfarçada de formulário; gera dezenas de perguntas.", "acao": "Trocar por nova_lista_notas (multilinha) ou anexo de planilha." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "Policies numeradas 1 a 5", "acao": "remover", "substituicao": "Sem os blocos numerados, não são mais precisas." },
+      { "nome": "EY: Read Only Variables", "acao": "converter", "substituicao": "Só na visão do atendente." },
+      { "nome": "Variaveis Obrigatorias", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; tirar referências a variáveis que não existem no item (v_opened_by, v_invoice_send_date, v_invoice_issuance_date)." },
+      { "nome": "EY: Show country by company", "acao": "converter", "substituicao": "Lookup Select Box de país com qualificador pela empresa compradora, ou UI Policy sem script. As linhas de remoção estão comentadas, então hoje não filtra nada." },
+      { "nome": "EY: When country is Colombia", "acao": "converter", "substituicao": "Opções fixas com visibilidade por UI Policy sem script; hoje compara pela sigla 'col', diferente do gêmeo interno." },
+      { "nome": "Clear Info Company ID / EY: Clear country / EY: Clear records", "acao": "remover", "substituicao": "Na conversa, as respostas são dadas em sequência e o tipo fica fixo." },
+      { "nome": "EY: Show Var Produtivo/Improdutivo/Servicos", "acao": "manter", "substituicao": "UI Policy sem script, compatível." },
+      { "nome": "EY: Validate e-mail", "acao": "converter", "substituicao": "Validation Regex." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Item Public com guest user (acn_guest_user). Os derivados só ficam conversacionais se houver VA público para fornecedor não autenticado; sem isso, continuam como formulário público com os novos nomes e descrições.",
+        "Os 3 flows públicos (incluindo Avon Equador/México/Uruguai) devem receber v_type_of_query fixo em cada derivado.",
+        "Traduzir nomes e descrições para espanhol e inglês (público LATAM)."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Consultar status ou comprovante de pagamento (fornecedor)",
+        "short_description": "Saiba se sua nota fiscal foi paga, quando será paga, ou peça o comprovante",
+        "descricao": "Use, como fornecedor, para consultar o status ou a previsão de pagamento das suas notas fiscais ou pedir o comprovante de um pagamento. Não use para composição de pagamento nem para lançamento divergente.",
+        "frases_exemplo": [
+          "minha nota fiscal já foi paga?",
+          "quando vou receber pela NF 4567?",
+          "preciso do comprovante de pagamento",
+          "estado de pago de mi factura"
+        ],
+        "fixar": "v_type_of_query = invoice_payment_status ou request_receipt_of_payment (perguntar só esta escolha)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_type_of_query", "conversational_label": "Você quer saber o status do pagamento ou receber o comprovante?" },
+          { "ordem": 2, "variavel": "v_buying_company", "conversational_label": "Para qual empresa do grupo você vendeu?" },
+          { "ordem": 3, "variavel": "v_buying_company_country", "conversational_label": "Em qual país fica essa empresa?" },
+          { "ordem": 4, "variavel": "v_produtivo_improdutivo_servicos", "conversational_label": "Você fornece produtos diretos (insumos, produto acabado) ou indiretos e serviços?" },
+          { "ordem": 5, "variavel": "v_vendor_s_name", "conversational_label": "Qual é o nome da sua empresa?" },
+          { "ordem": 6, "variavel": "v_your_fiscal_id", "conversational_label": "Qual é o CNPJ (ou identificação fiscal) da sua empresa?" },
+          { "ordem": 7, "variavel": "nova_lista_notas", "conversational_label": "Informe o número e o valor de cada nota fiscal (até 5, uma por linha)." },
+          { "ordem": 8, "variavel": "v_requestor_s_name", "conversational_label": "Qual é o seu nome?" },
+          { "ordem": 9, "variavel": "v_your_e_mail", "conversational_label": "Qual e-mail podemos usar para responder?" }
+        ]
+      },
+      {
+        "nome": "Solicitar composição de pagamento (fornecedor)",
+        "short_description": "Entenda quais notas e descontos compõem um pagamento que você recebeu",
+        "descricao": "Use, como fornecedor, quando recebeu um pagamento e quer saber quais notas fiscais, descontos ou retenções fazem parte dele.",
+        "frases_exemplo": [
+          "recebi um depósito e não sei a que se refere",
+          "quero a composição do pagamento",
+          "quais notas foram pagas nesse valor?"
+        ],
+        "fixar": "v_type_of_query = request_composition_of_payment (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_buying_company", "conversational_label": "Qual empresa do grupo fez o pagamento?" },
+          { "ordem": 2, "variavel": "v_buying_company_country", "conversational_label": "Em qual país fica essa empresa?" },
+          { "ordem": 3, "variavel": "v_vendor_s_name", "conversational_label": "Qual é o nome da sua empresa?" },
+          { "ordem": 4, "variavel": "v_your_fiscal_id", "conversational_label": "Qual é o CNPJ (ou identificação fiscal) da sua empresa?" },
+          { "ordem": 5, "variavel": "nova_lista_notas", "conversational_label": "Informe o valor e a data de cada pagamento recebido (até 5, um por linha)." },
+          { "ordem": 6, "variavel": "v_requestor_s_name", "conversational_label": "Qual é o seu nome?" },
+          { "ordem": 7, "variavel": "v_your_e_mail", "conversational_label": "Qual e-mail podemos usar para responder?" }
+        ]
+      },
+      {
+        "nome": "Consultar ou corrigir lançamento de nota fiscal (fornecedor)",
+        "short_description": "Verifique se sua nota foi lançada ou peça a correção de um lançamento",
+        "descricao": "Use, como fornecedor, para saber se a sua nota fiscal foi registrada ou para pedir a correção de um lançamento com divergência de valor, pedido de compra ou dados da nota.",
+        "frases_exemplo": [
+          "minha nota foi lançada?",
+          "lançaram minha NF com valor errado",
+          "a nota não bate com o pedido de compra"
+        ],
+        "fixar": "v_type_of_query = entry_consultation ou divergence_releases (perguntar só esta escolha)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_type_of_query", "conversational_label": "Você quer consultar o lançamento ou corrigir uma divergência?" },
+          { "ordem": 2, "variavel": "v_buying_company", "conversational_label": "Para qual empresa do grupo é a nota?" },
+          { "ordem": 3, "variavel": "v_buying_company_country", "conversational_label": "Em qual país fica essa empresa?" },
+          { "ordem": 4, "variavel": "v_vendor_s_name", "conversational_label": "Qual é o nome da sua empresa?" },
+          { "ordem": 5, "variavel": "v_your_fiscal_id", "conversational_label": "Qual é o CNPJ (ou identificação fiscal) da sua empresa?" },
+          { "ordem": 6, "variavel": "nova_lista_notas", "conversational_label": "Informe o número de cada nota fiscal e o pedido de compra (até 5, uma por linha)." },
+          { "ordem": 7, "variavel": "v_what_needs_to_be_fixed", "conversational_label": "O que precisa ser corrigido?" },
+          { "ordem": 8, "variavel": "nova_anexo", "conversational_label": "Quer anexar a nota ou algum documento?" },
+          { "ordem": 9, "variavel": "v_requestor_s_name", "conversational_label": "Qual é o seu nome?" },
+          { "ordem": 10, "variavel": "v_your_e_mail", "conversational_label": "Qual e-mail podemos usar para responder?" }
+        ]
+      }
+    ],
+    "observacoes": "v_buying_company_id e v_vendor_s_registration_code são obrigatórios ou existem no item, mas o fornecedor dificilmente sabe o código interno da empresa compradora. Sugiro derivar v_buying_company_id de v_buying_company (default por empresa e país) e deixar v_vendor_s_registration_code opcional. v_document_number_invoice está marcada hidden mas é tornada visível por policy; na lista única isso some. O item interno (1ccb68a91bdf0a10d1abda4ce54bcb5c) recebe a mesma divisão; manter nomes com '(fornecedor)' e '(interno)' para o LLM não confundir os dois."
+  }
+]

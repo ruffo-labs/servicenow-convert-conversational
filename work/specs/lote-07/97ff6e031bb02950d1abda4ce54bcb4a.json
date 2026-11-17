@@ -1,0 +1,232 @@
+{
+ "sys_id": "97ff6e031bb02950d1abda4ce54bcb4a",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas controladas por v_what_is_the_demand_for_the_call: pedir apoio logístico da transferência ou tirar dúvida sobre o processo; a variável vira valor fixo em cada derivado. O endereço de origem foi unificado em nova_origin_address; a 1ª análise citava também um endereço de destino e uma variável de novo setor que não existem neste pacote, então tratamos só os dados realmente presentes.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_inform_the_target_market": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_the_new_sales_management": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_if_you_cannot_find_the_new_sector": {
+   "label": "Qual é o novo setor?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_area_hr_hr_bp_responsible_for_the_employee": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_transportation_required_by_personal_vehicle": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_license_plate": {
+   "props": {
+    "validation_regex": "^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$"
+   }
+  },
+  "v_transportation_required_for_corporate_vehicle": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_is_a_trailer_required_for_moving": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_proof_of_approval_from_your_area_hr": {
+   "label": "Envie o comprovante de aprovação do RH da sua área.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_attach_1st_quotation": {
+   "label": "Envie a 1ª cotação de frete."
+  },
+  "v_attach_2st_quotation": {
+   "label": "Envie a 2ª cotação de frete."
+  },
+  "v_attach_3st_quotation": {
+   "label": "Envie a 3ª cotação de frete."
+  },
+  "v_type_of_doubt_do_you_have": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_your_doubt": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_origin_address": {
+   "nova": {
+    "type": "2",
+    "question_text": "Qual é o endereço de origem completo (CEP, rua, número, complemento, bairro, cidade e estado)?",
+    "mandatory": true,
+    "order": 1200
+   }
+  }
+ },
+ "remover": {
+  "v_if_have_questions_about": "visual",
+  "v_transfer_logistics_natura_sales_force": "visual",
+  "v_enter_your_origin_address_below": "visual",
+  "v_zip_code": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_street_av_park": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_number": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_complement": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_neighborhood": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_city": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_state": {
+   "substituida_por": "nova_origin_address"
+  },
+  "v_destination_address_below": "visual",
+  "v_the_quote_for_the_corporate_vehicle": "visual",
+  "v_3_different_quotes_for_shipping": "visual",
+  "v_attention": "visual"
+ },
+ "policies": {
+  "3bd171d41b196518a530426fe54bcbc9": {
+   "conditions": "v_is_a_trailer_required_for_moving=Yes",
+   "actions": {
+    "v_attach_1st_quotation": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_2st_quotation": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_attach_3st_quotation": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "50f071901b196518a530426fe54bcb04": {
+   "conditions": "v_transportation_required_for_corporate_vehicle=Yes",
+   "actions": {
+    "v_corporate_vehicle_supplier": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "745b61d41b956518a530426fe54bcb61": "remover",
+  "797f6d181bd56518a530426fe54bcb63": "remover",
+  "90ab2d181b956518a530426fe54bcbd8": "remover"
+ },
+ "scripts": {
+  "0a9ed4181b5de118a530426fe54bcba4": {
+   "converter": "regex"
+  },
+  "24d02b461bd56910d1abda4ce54bcbad": {
+   "remover": "sem_efeito"
+  },
+  "3f11674a1bd56910d1abda4ce54bcb88": {
+   "remover": "sem_efeito"
+  },
+  "6303e3c61b196910d1abda4ce54bcb41": {
+   "remover": "sem_efeito"
+  },
+  "6348ef821bd96910d1abda4ce54bcbe8": {
+   "remover": "sem_efeito"
+  },
+  "67e7af4e1b996910d1abda4ce54bcb14": {
+   "remover": "sem_efeito"
+  },
+  "7aab970a1b556910d1abda4ce54bcb14": {
+   "remover": "sem_efeito"
+  },
+  "8381a30e1bd56910d1abda4ce54bcb33": {
+   "remover": "sem_efeito"
+  },
+  "8f709f1a1be92990d1abda4ce54bcb66": {
+   "remover": "sem_efeito"
+  },
+  "a297630e1b996910d1abda4ce54bcbdb": {
+   "remover": "sem_efeito"
+  },
+  "bee0939a1be92990d1abda4ce54bcba3": {
+   "remover": "sem_efeito"
+  },
+  "bef36b8e1b196910d1abda4ce54bcbce": {
+   "remover": "sem_efeito"
+  },
+  "db372b4a1b996910d1abda4ce54bcb29": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "request_assistance_in_sector_transfer"
+   },
+   "sem_vars": [
+    "v_type_of_doubt_do_you_have",
+    "v_inform_your_doubt"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_what_is_the_demand_for_the_call": "ask_questions_about_transfer"
+   },
+   "sem_vars": [
+    "v_inform_the_target_market",
+    "v_inform_the_new_sales_management",
+    "v_if_you_cannot_find_the_new_sales_management",
+    "v_if_you_cannot_find_the_new_sector",
+    "v_area_hr_hr_bp_responsible_for_the_employee",
+    "nova_origin_address",
+    "v_transportation_required_by_personal_vehicle",
+    "v_inform_vehicle_brand",
+    "v_inform_vehicle_model",
+    "v_enter_the_year_of_the_vehicle",
+    "v_license_plate",
+    "v_transportation_required_for_corporate_vehicle",
+    "v_corporate_vehicle_supplier",
+    "v_is_a_trailer_required_for_moving",
+    "v_attach_1st_quotation",
+    "v_attach_2st_quotation",
+    "v_attach_3st_quotation",
+    "v_proof_of_approval_from_your_area_hr"
+   ],
+   "sem_policies": [
+    "0173fd5c1b196518a530426fe54bcb11",
+    "3bd171d41b196518a530426fe54bcbc9",
+    "4ae2bd581b196518a530426fe54bcbc1",
+    "50f071901b196518a530426fe54bcb04",
+    "ffefedd81bd56518a530426fe54bcba5"
+   ]
+  }
+ ]
+}

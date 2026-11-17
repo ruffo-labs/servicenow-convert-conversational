@@ -1,0 +1,39 @@
+{
+ "sys_id": "25806b821bd56910d1abda4ce54bcb22",
+ "title": "EY VS - Envio de Informações para o Contas à Pagar",
+ "internal_name": "ey_vs_envio_de_informa_es_para_o_contas_pagar",
+ "description": "Variable Set referente ao form Envio de Informações para o Contas a Pagar",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Envio de Informações para Contas a Pagar"
+ ],
+ "variaveis": [
+  {
+   "name": "v_report_information",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Report Information"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_report_information: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Somente leitura",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_report_information: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

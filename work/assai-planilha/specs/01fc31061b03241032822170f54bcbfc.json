@@ -1,0 +1,131 @@
+{
+ "sys_id": "01fc31061b03241032822170f54bcbfc",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Desconto indevido de INSS na admissão; ALP - Solicitação de correção de dados cadastrais.",
+ "vars": {
+  "rfb_irregularity_detail": {
+   "label": "Detalhamento da Irregularidade RFB"
+  },
+  "rfb_registration_status": {
+   "label": "Situação cadastral RFB"
+  },
+  "new_admission_date": {
+   "label": "Nova data para admissão"
+  },
+  "rh_info_incorrect": {
+   "label": "Dado incorreto"
+  },
+  "ra_number": {
+   "label": "Número do RA"
+  },
+  "registration": {
+   "label": "Matrícula"
+  },
+  "rh_registration_newly_admitted": {
+   "label": "Matrícula do recém-admitido"
+  },
+  "rh_full_name_newly_admitted": {
+   "label": "Nome completo do recém-admitido"
+  },
+  "admission_date": {
+   "label": "Data de admissão"
+  },
+  "reason": {
+   "label": "Motivo"
+  },
+  "what_is_the_documentary_discrepancy": {
+   "label": "Qual é a divergência documental?"
+  },
+  "cpf": {
+   "label": "CPF"
+  },
+  "Attachment": {
+   "label": "Anexo"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_alert_4": "visual",
+  "rh_alert_1": "visual",
+  "formatter2": "visual",
+  "rh_month_undue_discount": "oferta_inativa",
+  "start": "visual",
+  "rh_alert_2": "visual",
+  "rh_alert_3": "visual",
+  "rh_alert_5": "visual"
+ },
+ "policies": {
+  "7bfc79061b03241032822170f54bcbac": "remover",
+  "7d3500453b02d210b28dd047f4e45a24": "remover",
+  "91ba7fb43b8e9210b28dd047f4e45a7b": "remover",
+  "bbfc79061b03241032822170f54bcba9": "remover",
+  "fbfc79061b03241032822170f54bcba6": {
+   "conditions": "service_offering=11d16f541b47649032822170f54bcb2e",
+   "actions": {
+    "rh_full_name_newly_admitted": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_registration_newly_admitted": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_info_incorrect": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Processo de Admissão (Admissão - problema)",
+   "short_description": "Processo de Admissão",
+   "description": "Processo de Admissão",
+   "frases_exemplo": [
+    "Solicitação de alteração de data de admissão",
+    "Solicitação de correção de dados do contrato"
+   ],
+   "sem_vars": [
+    "rfb_registration_status",
+    "ra_number",
+    "registration",
+    "admission_date",
+    "reason",
+    "what_is_the_documentary_discrepancy",
+    "cpf"
+   ],
+   "sem_policies": [
+    "5938f73c3b4e9210b28dd047f4e45a2b",
+    "61cd2bc6873c4310182a0d440cbb3538",
+    "65873fb83b4e9210b28dd047f4e45aba",
+    "c1087ff83b4e9210b28dd047f4e45ab3",
+    "de6d6bc6873c4310182a0d440cbb35be",
+    "f13e3b343bce9210b28dd047f4e45ac7",
+    "f3deb7b43bce9210b28dd047f4e45a17",
+    "3d2e238a873c4310182a0d440cbb352f"
+   ]
+  },
+  {
+   "name": "Processo de Admissão (Admissão - servico)",
+   "short_description": "Processo de Admissão",
+   "description": "Processo de Admissão",
+   "frases_exemplo": [
+    "Solicitação de cancelamento de admissão",
+    "Solicitação de validação de documentação - Admissão digital"
+   ],
+   "sem_vars": [
+    "new_admission_date",
+    "rh_info_incorrect",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "Attachment"
+   ],
+   "sem_policies": [
+    "90d890893b06d210b28dd047f4e45aca",
+    "969718053b06d210b28dd047f4e45ad0",
+    "fbfc79061b03241032822170f54bcba6"
+   ]
+  }
+ ]
+}

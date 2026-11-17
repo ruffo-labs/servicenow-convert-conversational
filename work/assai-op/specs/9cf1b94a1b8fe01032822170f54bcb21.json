@@ -1,0 +1,468 @@
+{
+ "sys_id": "9cf1b94a1b8fe01032822170f54bcb21",
+ "status": "dividido",
+ "motivo": "Cada oferta pede um conjunto diferente de dados: beneficiário, e-mail de envio, empresas, centro de custo, mês/ano de referência ou loja. Por isso cada documento vira um derivado; PCMSO e PPRA compartilham o mesmo formulário. 1 policy(ies) com condição em variável inexistente (nunca disparavam) foram descartadas.",
+ "vars": {
+  "rh_cpf_beneficiary": {
+   "label": "Qual é o CPF do beneficiário?"
+  },
+  "rh_beneficiary_name": {
+   "label": "Qual é o nome completo do beneficiário?"
+  },
+  "rh_rescission_date": {
+   "label": "Qual foi a data da rescisão?"
+  },
+  "rh_store_name": {
+   "label": "De qual loja é o documento?"
+  },
+  "informar_email_ex_colaborador": {
+   "label": "Qual é o e-mail do ex-colaborador?"
+  },
+  "rh_email_for_document": {
+   "label": "Para qual e-mail devemos enviar o documento?"
+  },
+  "rh_document_detailing": {
+   "label": "Descreva o documento que você precisa."
+  },
+  "rh_companies_name": {
+   "label": "Em quais empresas você já trabalhou?"
+  },
+  "rh_request_reason": {
+   "label": "Qual é o motivo do pedido?"
+  },
+  "answer_email": {
+   "label": "Qual e-mail devemos usar para responder?"
+  },
+  "rh_phone": {
+   "label": "Qual é o telefone para contato?"
+  },
+  "rh_cost_center": {
+   "label": "Qual é o centro de custo?"
+  },
+  "ano_de_referencia": {
+   "label": "Qual é o ano de referência?"
+  },
+  "colaborador_ativo_ou_ex_colaborador": {
+   "label": "A pessoa é colaboradora ativa ou ex-colaboradora?"
+  },
+  "telefone_ex_colaborador": {
+   "label": "Qual é o telefone do ex-colaborador?"
+  },
+  "rh_corresponding_month": {
+   "label": "De qual mês é o documento?"
+  },
+  "rh_store_cost_center": {
+   "label": "Qual é o centro de custo da loja?"
+  }
+ },
+ "remover": {
+  "rh_observation_send_statement_signed": "visual",
+  "rh_resignation_date": "oferta_inativa",
+  "rh_observation_cnis_ctps": "visual",
+  "rh_corresponding_year": "oferta_inativa",
+  "rh_termination_date": "oferta_inativa",
+  "rh_cost_center_active": "oferta_inativa",
+  "rh_observation_inss": "visual",
+  "rh_termination_reason": "oferta_inativa"
+ },
+ "policies": {
+  "0e1eacba1b8ae11032822170f54bcbd5": "remover",
+  "1a33c44b1b8e0510347221bbe54bcbcc": "remover",
+  "364afd0e1bcfe01032822170f54bcbd1": "remover",
+  "3a4afd0e1bcfe01032822170f54bcbc5": "remover",
+  "3e4afd0e1bcfe01032822170f54bcbb9": "remover",
+  "468216971bcb2450eca40dcbe54bcbb1": "remover",
+  "4d0199f41b63e090eca40dcbe54bcb01": "remover",
+  "5ef307471bd3605032822170f54bcbc0": "remover",
+  "764afd0e1bcfe01032822170f54bcbce": "remover",
+  "7a4afd0e1bcfe01032822170f54bcbb0": "remover",
+  "7a4afd0e1bcfe01032822170f54bcbc2": "remover",
+  "7e4afd0e1bcfe01032822170f54bcbb6": "remover",
+  "86c4e8753b2352d0b28dd047f4e45a53": "remover",
+  "be4afd0e1bcfe01032822170f54bcbb3": "remover",
+  "eaac606e1bdba81032822170f54bcb00": "remover",
+  "f24afd0e1bcfe01032822170f54bcbd4": "remover",
+  "f325112e87575650182a0d440cbb35d4": "remover",
+  "f64afd0e1bcfe01032822170f54bcbc8": "remover",
+  "fa4afd0e1bcfe01032822170f54bcbbc": "remover",
+  "nova_g4_2": {
+   "short_description": "CSA - Informar e-mail do ex-colaborador",
+   "conditions": "colaborador_ativo_ou_ex_colaborador=2",
+   "actions": {
+    "informar_email_ex_colaborador": {
+     "visible": true,
+     "mandatory": true,
+     "readonly": false
+    },
+    "telefone_ex_colaborador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Declaração de vínculo Colaborador x Cargo Público",
+   "short_description": "Pedir declaração de vínculo entre colaborador e cargo público",
+   "description": "Use para pedir o envio da declaração Colaborador x Cargo Público. Corresponde à oferta Envio de declaração - Colaborador x Cargo Público, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso da declaração de cargo público",
+    "Como peço a declaração colaborador x cargo público?",
+    "Quero a declaração de vínculo com cargo público",
+    "Preciso de uma declaração para cargo público",
+    "Pode me enviar a declaração de cargo público?"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_rescission_date",
+    "rh_store_name",
+    "informar_email_ex_colaborador",
+    "rh_email_for_document",
+    "rh_document_detailing",
+    "rh_companies_name",
+    "rh_request_reason",
+    "answer_email",
+    "rh_phone",
+    "rh_cost_center",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_corresponding_month",
+    "rh_store_cost_center"
+   ],
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  },
+  {
+   "name": "Solicitar CAGED (Cadastro Geral de Empregados e Desempregados)",
+   "short_description": "Pedir cópia do CAGED",
+   "description": "Use para solicitar o CAGED (Cadastro Geral de Empregados e Desempregados). Corresponde à oferta Solicitação de CAGED, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso do CAGED",
+    "Quero pedir o CAGED de um período",
+    "Como solicito o cadastro geral de empregados?",
+    "Me envia o CAGED, por favor",
+    "Preciso de uma cópia do CAGED"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_store_name",
+    "informar_email_ex_colaborador",
+    "rh_document_detailing",
+    "answer_email",
+    "rh_phone",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_store_cost_center"
+   ],
+   "vars": {
+    "rh_rescission_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_companies_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_request_reason": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_corresponding_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  },
+  {
+   "name": "Comprovação de recolhimento de INSS (DCTFWeb/SEFIP/GFIP)",
+   "short_description": "Pedir comprovação de recolhimento de INSS",
+   "description": "Use para pedir a comprovação de recolhimento de INSS (DCTFWeb, SEFIP ou GFIP). Corresponde à oferta Solicitação de comprovação de recolhimento de INSS, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso do comprovante de recolhimento do INSS",
+    "Quero a GFIP de um mês",
+    "Como peço a SEFIP?",
+    "Preciso da DCTFWeb",
+    "Me manda a comprovação do INSS"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_store_name",
+    "informar_email_ex_colaborador",
+    "rh_document_detailing",
+    "answer_email",
+    "rh_phone",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_store_cost_center"
+   ],
+   "vars": {
+    "rh_rescission_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_companies_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_request_reason": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_corresponding_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  },
+  {
+   "name": "Ficha de registro do colaborador",
+   "short_description": "Pedir cópia da ficha de registro",
+   "description": "Use para solicitar a ficha de registro de um colaborador. Corresponde à oferta Solicitação de ficha de registro do colaborador, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso da ficha de registro",
+    "Quero uma cópia da ficha de registro do colaborador",
+    "Como peço a ficha de registro?",
+    "Me envia a ficha de registro, por favor",
+    "Preciso da ficha cadastral de um funcionário"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_rescission_date",
+    "rh_store_name",
+    "informar_email_ex_colaborador",
+    "rh_request_reason",
+    "answer_email",
+    "rh_phone",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_corresponding_month",
+    "rh_store_cost_center"
+   ],
+   "vars": {
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_document_detailing": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_companies_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  },
+  {
+   "name": "Informe de rendimentos",
+   "short_description": "Pedir o informe de rendimentos",
+   "description": "Use para pedir o informe de rendimentos de um ano de referência, para colaborador ativo ou ex-colaborador. Corresponde à oferta Solicitação de Informe de rendimentos, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso do informe de rendimentos",
+    "Cadê meu informe de rendimentos do ano passado?",
+    "Quero o informe para o imposto de renda",
+    "Como peço o informe de rendimentos?",
+    "Preciso do informe de rendimentos de um ex-colaborador"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_rescission_date",
+    "rh_store_name",
+    "rh_email_for_document",
+    "rh_document_detailing",
+    "rh_request_reason",
+    "rh_phone",
+    "rh_cost_center",
+    "rh_corresponding_month",
+    "rh_store_cost_center"
+   ],
+   "vars": {
+    "answer_email": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "ano_de_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "colaborador_ativo_ou_ex_colaborador": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Informe de rendimentos de beneficiário de pensão alimentícia",
+   "short_description": "Pedir informe de rendimentos de beneficiário de pensão alimentícia",
+   "description": "Use para pedir o informe de rendimentos de um beneficiário de pensão alimentícia. Corresponde à oferta Solicitação de Informe de rendimentos de beneficiário pensão alimentícia, atendida pelo RH - Cópia de Documentos.",
+   "frases_exemplo": [
+    "Preciso do informe de rendimentos da pensão alimentícia",
+    "O beneficiário da pensão precisa do informe",
+    "Como peço o informe de quem recebe pensão?",
+    "Quero o informe de rendimentos do beneficiário da pensão",
+    "Informe de pensão alimentícia para o imposto de renda"
+   ],
+   "sem_vars": [
+    "rh_rescission_date",
+    "rh_store_name",
+    "informar_email_ex_colaborador",
+    "rh_document_detailing",
+    "rh_request_reason",
+    "answer_email",
+    "rh_cost_center",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_corresponding_month",
+    "rh_store_cost_center"
+   ],
+   "vars": {
+    "rh_cpf_beneficiary": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_beneficiary_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_companies_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  },
+  {
+   "name": "PCMSO ou PPRA",
+   "short_description": "Pedir cópia do PCMSO ou do PPRA",
+   "description": "Use para solicitar o PCMSO ou o PPRA de uma loja. Corresponde às ofertas Solicitação de PCMSO (RH - Saúde e Medicina 1) e Solicitação de PPRA (RH - Segurança).",
+   "frases_exemplo": [
+    "Preciso do PCMSO da loja",
+    "Quero o PPRA da loja",
+    "Como peço o PCMSO?",
+    "Me envia o PPRA, por favor",
+    "Preciso do programa de saúde ocupacional da loja"
+   ],
+   "sem_vars": [
+    "rh_cpf_beneficiary",
+    "rh_beneficiary_name",
+    "rh_rescission_date",
+    "informar_email_ex_colaborador",
+    "rh_document_detailing",
+    "rh_companies_name",
+    "answer_email",
+    "rh_phone",
+    "rh_cost_center",
+    "ano_de_referencia",
+    "colaborador_ativo_ou_ex_colaborador",
+    "telefone_ex_colaborador",
+    "rh_corresponding_month"
+   ],
+   "vars": {
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_email_for_document": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_request_reason": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_cost_center": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "d5c300cb1b8e0510347221bbe54bcb7f"
+   ]
+  }
+ ]
+}

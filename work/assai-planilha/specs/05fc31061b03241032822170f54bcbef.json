@@ -1,0 +1,76 @@
+{
+ "sys_id": "05fc31061b03241032822170f54bcbef",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "rh_request_number_rp": {
+   "label": "Número da Requisição de Pessoal (RP)"
+  },
+  "rh_admission_request_number_ra": {
+   "label": "Número da Requisição de Admissão (RA)"
+  },
+  "what_stage_is_admission_at": {
+   "label": "Em que fase a admissão está?"
+  }
+ },
+ "remover": {
+  "rh_ra_number": "oferta_inativa",
+  "rh_alert_2": "visual",
+  "rh_request_number": "oferta_inativa",
+  "rh_alert_1": "visual",
+  "rh_request_number_adp": "oferta_inativa"
+ },
+ "policies": {
+  "26fe0c651b1a069032822170f54bcbf5": "remover",
+  "8f893c381b6fa090eca40dcbe54bcb04": "remover",
+  "b066a12a1b8fe41032822170f54bcb25": "remover",
+  "e84f85e21b0fe41032822170f54bcbbd": "remover",
+  "fe5e0d621b0fe41032822170f54bcb19": "remover"
+ },
+ "itens": [
+  {
+   "name": "Problema sistêmico (Admissão)",
+   "short_description": "Problema sistêmico",
+   "description": "Problema sist mico (Admiss o ADP)",
+   "frases_exemplo": [
+    "Problema no processo admissional  - Novo fluxo de admissão"
+   ],
+   "vars": {
+    "rh_request_number_rp": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_admission_request_number_ra": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "what_stage_is_admission_at": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "b06e94251b9a069032822170f54bcbcc",
+    "cbd465e51b52469032822170f54bcb74"
+   ]
+  },
+  {
+   "name": "Problema sistêmico (Férias)",
+   "short_description": "Problema sistêmico",
+   "description": "Problema sist mico (Admiss o ADP)",
+   "frases_exemplo": [
+    "eXpert - Não consegue imprimir kit admissional",
+    "Kit admissional com erro"
+   ],
+   "sem_vars": [
+    "what_stage_is_admission_at"
+   ],
+   "sem_policies": [
+    "cbd465e51b52469032822170f54bcb74"
+   ]
+  }
+ ]
+}

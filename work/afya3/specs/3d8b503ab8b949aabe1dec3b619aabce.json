@@ -1,0 +1,123 @@
+{
+ "sys_id": "3d8b503ab8b949aabe1dec3b619aabce",
+ "status": "dividido",
+ "motivo": "O grupo geral pergunta apenas qual equipamento; entrega, movimentação e recolhimento pedem periférico ou equipamento de rede, origem e destino; manutenção preventiva não pede equipamento. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_qual_e_o_equipamento": {
+   "label": "Qual é o equipamento?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_qual_e_o_periferico": {
+   "label": "Qual é o periférico?"
+  },
+  "v_qual_e_o_equipamento_de_rede": {
+   "label": "Qual é o equipamento de rede?"
+  },
+  "v_local_de_origem": {
+   "label": "De onde o equipamento sai?"
+  },
+  "v_local_de_destino": {
+   "label": "Para onde o equipamento vai?"
+  }
+ },
+ "policies": {
+  "78fabc9342b7447bbdf98c7f591a02d6": "remover",
+  "0655edc8a3df4ece91d0b2006291a93f": "remover"
+ },
+ "itens": [
+  {
+   "name": "Solicitar, instalar ou configurar computador e periféricos",
+   "short_description": "Peça equipamento, instalação, configuração, laudo, upgrade ou ajuste no Intune.",
+   "description": "Use para pedidos gerais de equipamento. Cobre as opções Adicionar, Alterar e Remover Equipamento no Microsoft Intune, Configurar Equipamento, Disponibilizar Informações, Elaborar Laudo Técnico, Instalar Equipamento, Reservar Equipamento, Solicitar Equipamento e Solicitar Upgrade de Hardware.",
+   "frases_exemplo": [
+    "Preciso de um notebook novo",
+    "Quero reservar um computador",
+    "Preciso instalar e configurar um equipamento",
+    "Quero um upgrade de memória no meu computador",
+    "Preciso incluir um equipamento no Intune"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_periferico",
+    "v_qual_e_o_equipamento_de_rede",
+    "v_local_de_origem",
+    "v_local_de_destino"
+   ],
+   "vars": {
+    "v_qual_e_o_equipamento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Entregar, movimentar ou recolher equipamento",
+   "short_description": "Peça a entrega, movimentação ou recolhimento de um equipamento.",
+   "description": "Use para mover equipamentos entre locais. Cobre as opções Entregar Equipamento, Movimentar Equipamento e Recolher Equipamento. Informe equipamento, local de origem e local de destino.",
+   "frases_exemplo": [
+    "Preciso mudar um computador de sala",
+    "Quero que recolham um equipamento",
+    "Entreguem um notebook na filial",
+    "Preciso movimentar periféricos para outro andar",
+    "Pode retirar um equipamento do setor?"
+   ],
+   "vars": {
+    "v_qual_e_o_equipamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_e_o_periferico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_e_o_equipamento_de_rede": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_local_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_local_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar manutenção preventiva de equipamento",
+   "short_description": "Peça uma manutenção preventiva em computadores e periféricos.",
+   "description": "Use para agendar manutenção preventiva. Corresponde à opção Solicitar Manutenção Preventiva. Basta descrever o pedido.",
+   "frases_exemplo": [
+    "Quero uma manutenção preventiva nos computadores",
+    "Preciso de uma limpeza preventiva nas máquinas",
+    "Pode agendar manutenção preventiva do setor?",
+    "Os equipamentos precisam de revisão preventiva",
+    "Quero fazer a manutenção periódica dos notebooks"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_equipamento",
+    "v_qual_e_o_periferico",
+    "v_qual_e_o_equipamento_de_rede",
+    "v_local_de_origem",
+    "v_local_de_destino"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar Manutenção Preventiva"
+   }
+  }
+ ]
+}

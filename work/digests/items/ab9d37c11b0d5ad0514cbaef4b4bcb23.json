@@ -1,0 +1,417 @@
+{
+ "sys_id": "ab9d37c11b0d5ad0514cbaef4b4bcb23",
+ "name": "Solicitação de reembolso de creche ou berço",
+ "sys_name": "Daycare or Crib Room Reimbursement Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Reembolsos",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar reembolso de creche ou berço",
+ "description": "Utilize este formulário para solicitar reembolso de creche ou berço",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "32",
+   "variaveis_ativas": "44",
+   "bloqueadores": "3",
+   "avisos": "20",
+   "perguntas_sem_conversational_label": "32"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "mrv_monitor"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "mrv_monitor"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "5 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show error message, EY: Show error message, EY: Get Invoice History Info, EY: Validate Fiels, EY: Set employee"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_label_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_9: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_7: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_5: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_10: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_your_documents_below: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_6: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_8: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_11: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_your_child_s_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 32 de 32 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 32 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 19 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de licença maternidade. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Versão sem a atribuição dupla que os irmãos têm.",
+ "variaveis": [
+  {
+   "name": "mrv_monitor",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "MRV Monitor",
+   "widget": "EY: MRV Monitor widget Daycare/Crib Room"
+  },
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_report_the_month",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Report the month",
+   "include_none": true,
+   "choices": [
+    "January [=01]",
+    "February [=02]",
+    "March [=03]",
+    "April [=04]",
+    "May [=05]",
+    "June [=06]",
+    "July [=07]",
+    "August [=08]",
+    "September [=09]",
+    "October [=10]",
+    "November [=11]",
+    "December [=12]"
+   ]
+  },
+  {
+   "name": "v_label_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_report_the_year",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Report the year",
+   "include_none": true
+  },
+  {
+   "name": "v_label_5",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_6",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_7",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_first_time",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this the first time you are requesting this reimbursement for this nanny or this institution?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_attachment_1",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "You must attach the authorization of the institution in the case of Daycare or the AFIP registration in case of caring for people."
+  },
+  {
+   "name": "v_attachment_2",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "You must attach the institution's authorization in the case of Daycare or the BPS registration in the case of caring for people."
+  },
+  {
+   "name": "v_attachment_3",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "If you requested Home Care, attach below the report where the doctor indicates that the minor cannot attend the Nursery Room given the special care conditions that the child must have."
+  },
+  {
+   "name": "v_label_8",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_9",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_10",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_11",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_use_the_following_field_to_detail_your_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  },
+  {
+   "name": "v_attach_your_documents_below",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach your documents below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  },
+  {
+   "sys_id": "85c518911bc19ad0514cbaef4b4bcb8b",
+   "name": "Dados para fazer seu reembolso",
+   "order": "600",
+   "perguntas": [
+    "v_attention (Texto de Várias Linhas, default, ro): Attention",
+    "v_employee_name (Referência, hidden): Employee Name",
+    "v_your_child_s_name (Referência): Your child's name",
+    "dependent_date_birth (Data): Dependent's Date of Birth",
+    "v_what_type_of_refund_are_you_requesting (Selecionar Caixa): What type of refund are you requesting?",
+    "v_invoice_number (Texto de Linha Única): Invoice Number",
+    "v_salary_receipt_number (Texto de Linha Única): Salary Receipt Number",
+    "v_refund_amount (Texto de Linha Única): Refund amount"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show MRVS",
+   "when": "IO:v_report_the_month!=^IO:v_report_the_year!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "data_to_make_your_refund: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_attachment_2",
+   "when": "IO:v_country=URY^ORIO:v_country=URU^IO:v_first_time=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_5",
+   "when": "IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_10",
+   "when": "IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_10: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_report_the_year: mandatory=true",
+    "v_report_the_month: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_6",
+   "when": "IO:v_country=ECU^ORIO:v_country=COL^IO:v_public!=Operations Associate^NQIO:v_country=CHL^ORIO:v_country=PER^ORIO:v_country=URU^ORIO:v_country=URY^NQIO:v_country=ARG^IO:v_unionized_employee=false^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_6: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_first_time",
+   "when": "IO:v_country=ARG^ORIO:v_country=URY^ORIO:v_country=URU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_first_time: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_attachment_1",
+   "when": "IO:v_country=ARG^IO:v_first_time=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_11",
+   "when": "IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_11: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attachment_3",
+   "when": "IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_7",
+   "when": "IO:v_country=ECU^ORIO:v_country=COL^IO:v_public=Operations Associate^NQIO:v_country=ARG^IO:v_unionized_employee=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_7: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_9",
+   "when": "IO:v_country=ARG^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_9: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Variable v_label_8",
+   "when": "IO:v_country=URY^ORIO:v_country=URU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_8: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message",
+   "type": "onChange",
+   "on": "2c66e4951b499ad0514cbaef4b4bcbe7",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que monta a mensagem de erro de tamanho mínimo traduzida conforme o idioma do usuário."
+  },
+  {
+   "name": "EY: Show error message",
+   "type": "onSubmit",
+   "on": "2c66e4951b499ad0514cbaef4b4bcbe7",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Par onSubmit do anterior, validando o campo de detalhamento da necessidade com mensagem por idioma."
+  },
+  {
+   "name": "EY: Get Invoice History Info",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que busca o histórico de faturas. Antes de consultar, limpa as chaves de histórico guardadas no sessionStorage do navegador — o formulário usa armazenamento de sessão como cache entre interações."
+  },
+  {
+   "name": "EY: Show Year Options",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que monta a lista de anos com o ano atual e o anterior, calculados em tempo de execução."
+  },
+  {
+   "name": "EY: If Year Changes",
+   "type": "onChange",
+   "on": "3ca398d11b819ad0514cbaef4b4bcb59",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que recompõe a data quando o ano muda."
+  },
+  {
+   "name": "EY: If Month Changes",
+   "type": "onChange",
+   "on": "80b21cdd1b419ad0514cbaef4b4bcbea",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Gêmeo do anterior, disparado pela mudança do mês."
+  }
+ ]
+}

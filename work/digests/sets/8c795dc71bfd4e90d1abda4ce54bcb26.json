@@ -1,0 +1,138 @@
+{
+ "sys_id": "8c795dc71bfd4e90d1abda4ce54bcb26",
+ "title": "Initial Data",
+ "internal_name": "initial_data",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de compras descentralizadas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_in_the_name_of",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "In the name of",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^user.location.country=BRA^user.nameISNOTEMPTY^EQ"
+  },
+  {
+   "name": "vs_which_company_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The request is for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "vs_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Sub-company?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand=' + current.variables.vs_which_company_request_for + '^nameNOT LIKE331'"
+  },
+  {
+   "name": "vs_select_physical_center",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the physical center",
+   "include_none": true,
+   "choices": [
+    "1300 - HUB - SP [=hub_sp]",
+    "1350 - HUB - Latam [=hub_latam]",
+    "1360 - HUB - França [=hub_franca]",
+    "1390 - HUB - Duty Free [=hub_duty_free]",
+    "2700 - CD Matias Barbosa [=cd_matias_barbosa]",
+    "2800 - CD Simões Filho [=cd_simoes_filho]",
+    "5100 - CD Murici [=cd_murici]",
+    "5150 - CD Maceió [=cd_maceio]",
+    "5300 - CD Bahia [=cd_bahia]",
+    "5400 - CD Rio Grande do Sul [=cd_rio_grande_do_sul]",
+    "5500 - CD Castanhal [=cd_castanhal]",
+    "5600 - CD Uberlândia [=cd_uberlandia]",
+    "5700 - CD Cabreúva [=cd_cabreuva]",
+    "5800 - Nasp [=nasp]",
+    "5900 - Inovação [=inovacao]",
+    "3400 - (HUB Brasil (Cabreúva) - Natura) [=hub_brasil_cabreuva_natura]",
+    "3100 - (Fábrica Ecoparque) [=fabrica_ecoparque]",
+    "2000 Natura Cosméticos S/A (Brazil) [=2000_natura_cosmeticos]",
+    "3000 Ind. Com. Cosm. Natura Ltda. (Brazil) [=3000_ind_natura]",
+    "8000 Instituto Natura (Brazil) [=8000_instituto_natura]",
+    "9000 Natura Biosphera (Brazil) [=9000_natura_biosphera]"
+   ]
+  },
+  {
+   "name": "vs_area_will_call_opened",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which area will the call be opened?",
+   "include_none": true,
+   "choices": [
+    "Legal [=juridico]",
+    "Corporate HR [=rh_corporativo]",
+    "Investor relations [=relacao_investidores]",
+    "CSC [=csc]",
+    "Avon Industrial [=avon_industrial]",
+    "Controladoria [=controladoria]",
+    "Desenvolvimento de Produto [=desenvolvimento_produto]",
+    "Força de Vendas [=forca_vendas]",
+    "Instituto Natura [=instituto_natura]",
+    "Inteligência de Mercado [=inteligencia_mercado]",
+    "Internacionalização [=internacionalizacao]",
+    "Natura Pay [=natura_pay]",
+    "O&L [=oel]",
+    "Omnicanal [=omnicanal]",
+    "Proativa [=proativa]",
+    "Seguros [=seguros]",
+    "Serviços Comerciais CSC [=servicos_comerciais_csc]",
+    "VP&MI [=vpemi]",
+    "Carteira de RH Benefícios [=carteira_rh_beneficios]",
+    "Outros [=outros]"
+   ]
+  },
+  {
+   "name": "vs_add_area_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Add area name"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Name of area mandatory if area is others",
+   "when": "IO:vs_area_will_call_opened=outros^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_add_area_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_area_will_call_opened: mandatory=true",
+    "vs_which_company_request_for: mandatory=true",
+    "vs_select_physical_center: mandatory=true",
+    "vs_in_the_name_of: mandatory=true",
+    "vs_sub_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear value",
+   "type": "onChange",
+   "on": "a78264cc1b0aced0a530426fe54bcbe0",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa 'vs_select_physical_center'."
+  }
+ ]
+}

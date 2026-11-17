@@ -1,0 +1,272 @@
+{
+ "sys_id": "4aacc9fa1be90a50a530426fe54bcb0f",
+ "name": "Solicitação de 2ª via de crachá",
+ "sys_name": "Request for a 2nd copy of badge",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Solicitação de Crachá",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Neste formulário você poderá solicitar a 2ª via do seu crachá de identificação.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "28",
+   "variaveis_ativas": "33",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "28"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @text_solicitar_cordao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @photo_instructions: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_3x4_photo: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @anexo_BO: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 28 de 28 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 28 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de 2ª via de crachá. Lê o perfil em x_nasm_hr_profile e usa o campo 'user' como requested_for — o padrão correto, diferente do irmão anterior.",
+ "variaveis": [
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Smart Card + Cartão impresso - R$22,40 [=smart_card_e_cartao_impresso]"
+   ]
+  },
+  {
+   "name": "text_solicitar_cordao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "reason_for_requesting_a_2nd_copy_of_the_badge",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for requesting a 2nd copy of the badge",
+   "include_none": true,
+   "choices": [
+    "Damaged badge [=damaged_badge]",
+    "Robbery or Theft [=robbery_or_theft]",
+    "Loss [=loss]"
+   ]
+  },
+  {
+   "name": "made_a_police_report",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Attach a police report",
+   "include_none": true
+  },
+  {
+   "name": "anexo_BO",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your police report here"
+  },
+  {
+   "name": "attach_3x4_photo",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach 3x4 Photo"
+  },
+  {
+   "name": "photo_instructions",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Certifique-se de que seu rosto esteja claramente visível, sem óculos de sol, chapéus, bonés, máscaras ou qualquer adereço que obstrua a visão completa do rosto.\r\nEvite fundos que contenham paisagens, figuras ou objetos distrativos. O plano de fundo deve ser uniforme e de preferência claro."
+  },
+  {
+   "name": "location_sent_badge",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "To which location would you like the second copy of your badge to be sent?",
+   "include_none": true,
+   "choices": [
+    "Avon Industrial Interlagos [=interlagos]",
+    "Benevides (N) [=benevides]",
+    "Canoas (N) [=canoas]",
+    "Castanhal (N) [=castanhal]",
+    "Simões Filho (N) [=simoes_filho]",
+    "Cajamar [=cajamar]",
+    "Itupeva (N) [=itupeva]",
+    "Cabreuva (N) [=cabreuva]",
+    "Instituto Natura - São Paulo (N) [=instituto_natura_sp]",
+    "Jaboatão Dos Guararapes (N) [=jaboatao_dos_guararapes]",
+    "Matias Barbosa (N) [=matias_barbosa]",
+    "NASP [=nasp]",
+    "Murici (N) [=murici]",
+    "Uberlândia (N) [=uberlandia]"
+   ]
+  },
+  {
+   "name": "i_didnt_find_the_desired_location",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I didn't find the desired location"
+  },
+  {
+   "name": "aceite_for_salary_discount_17_75",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware of and agree to the discount on my payroll of R$17.75 for the second copy of the badge."
+  },
+  {
+   "name": "aceite_for_discount_4_65",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware of and agree to the discount on my payroll of R$4.65 for the second copy of the badge."
+  },
+  {
+   "name": "aceite_for_discount_22_40",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I am aware of and agree to the discount on my payroll of R$22.40 for the second copy of the badge."
+  },
+  {
+   "name": "police_report_will_analyzed",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "The police report will be analyzed and may result in the charge being waived."
+  },
+  {
+   "name": "use_this_field_to_add_comments",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Use this field to add comments"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "417b19f61bad0a50a530426fe54bcbff",
+   "name": "EY: Personal Informations Crachá",
+   "order": "100",
+   "perguntas": [
+    "employee_name (Referência): Employee name",
+    "id_global (Texto de Linha Única): Id Global:",
+    "position_title (Texto de Linha Única): Position",
+    "company (Texto de Linha Única): Company",
+    "workplace (Texto de Linha Única): Workplace",
+    "cpf (Texto de Linha Única): CPF",
+    "rg (Texto de Linha Única): RG",
+    "date_of_birth (Data): Date of birth",
+    "address (Texto de Várias Linhas): Address",
+    "telephone (Texto de Linha Única): Telephone"
+   ]
+  },
+  {
+   "sys_id": "ba61aeba1ba94a50a530426fe54bcb7d",
+   "name": "EY: Address to sent the badge",
+   "order": "700",
+   "perguntas": [
+    "zip_code (Texto de Linha Única): Zip code",
+    "public_place (Texto de Linha Única): Public place:",
+    "number_house (Texto de Linha Única): Number",
+    "complement (Texto de Linha Única): Complement",
+    "neighborhood (Texto de Linha Única): Neighborhood",
+    "city (Texto de Linha Única): City",
+    "uf (Texto de Linha Única): UF"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "When the chosen option is cartao_impresso",
+   "when": "IO:request_type=cartao_impresso^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "aceite_for_discount_4_65: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "use_this_field_to_add_comments: mandatory=true",
+    "reason_for_requesting_a_2nd_copy_of_the_badge: mandatory=true",
+    "attach_3x4_photo: mandatory=true",
+    "request_type: mandatory=true",
+    "location_sent_badge: mandatory=true"
+   ]
+  },
+  {
+   "name": "Show or hidden the address datas",
+   "when": "IO:i_didnt_find_the_desired_location=false^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "ey_address_to_sent_the_badge: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "When the chosen option is smart_card",
+   "when": "IO:request_type=smart_card^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "aceite_for_salary_discount_17_75: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Handling the display of the police report field",
+   "when": "IO:reason_for_requesting_a_2nd_copy_of_the_badge=robbery_or_theft^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "made_a_police_report: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "When the chosen option is smart_card_e_cartao_impresso",
+   "when": "IO:request_type=smart_card_e_cartao_impresso^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "aceite_for_discount_22_40: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "When the 'I didn't find the location' field is true, the location field does not appear in the resolver view",
+   "when": "IO:i_didnt_find_the_desired_location=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "location_sent_badge: visible=false,mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "Handling the display of the police report attachment field",
+   "when": "IO:made_a_police_report=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "anexo_BO: visible=true,mandatory=true",
+    "police_report_will_analyzed: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear location if user dont find any",
+   "type": "onChange",
+   "on": "51c06a7a1ba94a50a530426fe54bcb8c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a localização quando o usuário marca que não encontrou a desejada."
+  }
+ ]
+}

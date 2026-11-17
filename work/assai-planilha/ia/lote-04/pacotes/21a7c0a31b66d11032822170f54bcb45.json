@@ -1,0 +1,103 @@
+{
+ "sys_id": "21a7c0a31b66d11032822170f54bcb45",
+ "name": "PPR  (colaborador ativo)",
+ "category": "Folha de pagamento",
+ "short_description": "Solicitações relacionadas a PPR",
+ "description": "Solicita&ccedil;&otilde;es relacionadas a PPR",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Folha de Pagamento",
+    "item": "PPR (colaborador ativo)"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência do pagamento do PPR",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - PPR"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "reference_year"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência no pagamento do PPR",
+     "description": "Use quando o colaborador ativo percebe diferença no pagamento do PPR. Corresponde à oferta Divergência do pagamento do PPR, atendida pelo RH - PPR."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "reference_year",
+   "type": "Texto de Linha Única",
+   "question_text": "Ano de referência",
+   "choices": [],
+   "label_atual": "De que ano é o PPR?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "7c2bad9c3be72a10b28dd047f4e45ad9",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "c22b65dc3be72a10b28dd047f4e45aff",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

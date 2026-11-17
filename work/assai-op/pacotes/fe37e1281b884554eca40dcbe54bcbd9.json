@@ -1,0 +1,178 @@
+{
+ "sys_id": "fe37e1281b884554eca40dcbe54bcbd9",
+ "name": "SOC (Medicina do Trabalho)",
+ "category": "Medicina do Trabalho",
+ "short_description": "Solicitação de atendimento relacionados ao SOC.",
+ "description": "Solicita&ccedil;&atilde;o de atendimento relacionados ao SOC.",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Auditoria de vidas",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - SOC"
+    },
+    {
+     "name": "Reset de Senha",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - SOC"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "u_user_criteria": [
+     "ALP - Auditoria de vidas",
+     ""
+    ]
+   },
+   "sai_do_formulario": [
+    "what_is_the_operator",
+    "candidate_cpf",
+    "candidate_name",
+    "exam_data"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Mudança de Exames",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - SOC"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "what_is_the_operator",
+    "candidate_cpf",
+    "candidate_name",
+    "exam_data"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "what_is_the_operator",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a operadora?",
+   "choices": [
+    "Bencorp",
+    "Nexus"
+   ]
+  },
+  {
+   "name": "candidate_cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do candidato",
+   "choices": []
+  },
+  {
+   "name": "service_offering",
+   "type": "Referência",
+   "question_text": "O que você deseja?",
+   "reference": "service_offering",
+   "choices": [
+    "Reclamação da Clínica de não pagamento",
+    "Clínica não realiza exame específico",
+    "Mau atendimento da Clínica",
+    "Cadastro do Médico",
+    "Cadastro de Exames Médicos",
+    "Inclusão de Funções",
+    "Clínica reprovou o exame",
+    "Mudança de Exames",
+    "Liberação de Acesso ",
+    "Emissão de ASO",
+    "Clínica não faz laudo de PCD",
+    "Cadastro de Clínicas Prestadoras ",
+    "Mudança de Funções",
+    "Emissão de Guia de Encaminhamento para exames ",
+    "Atendimento Médico"
+   ]
+  },
+  {
+   "name": "candidate_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do candidato",
+   "choices": []
+  },
+  {
+   "name": "business_service",
+   "type": "Referência",
+   "question_text": "Business Service",
+   "default": "e0bc3b0d1b00499432822170f54bcb01",
+   "reference": "cmdb_ci_server",
+   "choices": []
+  },
+  {
+   "name": "exam_data",
+   "type": "Data",
+   "question_text": "Data do exame",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "18ce09af1b4a865032822170f54bcb45",
+   "name": "CSA - Validação CPF Candidato",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange de candidate_cpf, só age se o valor mudou. Tenta limpar uma lista de campos com fields.forEach, mas a variável fields não está declarada no script (o trecho lido não mostra a declaração), o que tende a gerar erro de execução. Depois valida CPF (11 dígitos) ou CNPJ (14 dígitos), rejeita sequências repetidas e confere os dígitos verificadores do CPF; inválido limpa e mostra 'CPF inválido!'; válido formata (máscara de CPF ou CNPJ)."
+  },
+  {
+   "sys_id": "9b00f5d83b2b2a10b28dd047f4e45a34",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "a010f5983b2b2a10b28dd047f4e45a09",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

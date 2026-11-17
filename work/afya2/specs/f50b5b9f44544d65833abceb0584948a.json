@@ -1,0 +1,120 @@
+{
+ "sys_id": "f50b5b9f44544d65833abceb0584948a",
+ "status": "dividido",
+ "motivo": "Indicador suspeito pede tipo e valor do IOC, contexto e urgência; extração de logs do SIEM pede sistema, período, tipo de evento e justificativa. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_tipo_de_ioc": {
+   "label": "Que tipo de indicador você quer analisar?"
+  },
+  "v_valor_do_ioc": {
+   "label": "Qual é o valor do indicador (IP, domínio, hash)?"
+  },
+  "v_contexto_do_evento": {
+   "label": "Em que contexto você encontrou esse indicador?"
+  },
+  "v_anexo_de_evidencias_attachment": {
+   "label": "Envie as evidências, se tiver."
+  },
+  "v_urgencia_da_analise": {
+   "label": "Qual a urgência da análise?"
+  },
+  "v_sistema_ou_aplicacao": {
+   "label": "De qual sistema ou aplicação são os logs?"
+  },
+  "v_periodo_de_coleta": {
+   "label": "Qual o período dos logs?"
+  },
+  "v_tipo_de_evento": {
+   "label": "Que tipo de evento você quer extrair?"
+  },
+  "v_justificativa_da_solicitacao": {
+   "label": "Qual o motivo do pedido?"
+  }
+ },
+ "policies": {
+  "b8ae7b14415941648d0de21759ca2bd8": "remover",
+  "c26355451d6e4d61b69b0f8723677789": "remover"
+ },
+ "itens": [
+  {
+   "name": "Analisar indicador suspeito com Threat Intelligence",
+   "short_description": "Peça à equipe de Threat Intelligence que analise um IP, domínio ou amostra suspeita.",
+   "description": "Use ao encontrar um indicador suspeito de comprometimento. Corresponde à opção Solicitar apoio da equipe de Threat Intelligence na análise de um indicador suspeito. Informe tipo e valor do IOC, contexto, evidências e urgência.",
+   "frases_exemplo": [
+    "Achei um domínio suspeito, podem analisar?",
+    "Preciso verificar um IP estranho",
+    "Recebi um arquivo suspeito e quero analisar o hash",
+    "Quero investigar um indicador de comprometimento",
+    "Pode checar se esse link é malicioso?"
+   ],
+   "sem_vars": [
+    "v_sistema_ou_aplicacao",
+    "v_periodo_de_coleta",
+    "v_tipo_de_evento",
+    "v_justificativa_da_solicitacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar apoio da equipe de Threat Intelligence na análise de um indicador suspeito"
+   },
+   "vars": {
+    "v_tipo_de_ioc": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_valor_do_ioc": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_contexto_do_evento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar logs do SIEM para investigação ou auditoria",
+   "short_description": "Peça a extração de logs monitorados pelo SIEM.",
+   "description": "Use para obter logs do SIEM para investigação, auditoria ou compliance. Corresponde à opção Solicitar logs específicos do SIEM para investigação, apoio a auditoria ou compliance. Informe sistema, período, tipo de evento e justificativa.",
+   "frases_exemplo": [
+    "Preciso dos logs de um sistema para uma auditoria",
+    "Quero extrair logs do SIEM de uma semana",
+    "Preciso de logs para investigar um incidente",
+    "Pode me enviar os eventos de login de um sistema?",
+    "Quero logs para compliance"
+   ],
+   "sem_vars": [
+    "v_tipo_de_ioc",
+    "v_valor_do_ioc",
+    "v_contexto_do_evento",
+    "v_anexo_de_evidencias_attachment",
+    "v_urgencia_da_analise"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar logs específicos do SIEM para investigação, apoio a auditoria ou compliance"
+   },
+   "vars": {
+    "v_sistema_ou_aplicacao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_periodo_de_coleta": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_tipo_de_evento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

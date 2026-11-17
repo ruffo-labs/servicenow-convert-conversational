@@ -1,0 +1,72 @@
+{
+ "sys_id": "d8bdaaa21b87281032822170f54bcb05",
+ "status": "dividido",
+ "motivo": "Divergência no cálculo não pede dados extras; faltas indevidas pede período de gozo e data da falta justificada.",
+ "vars": {
+  "rh_benefit_period_start": {
+   "label": "Quando começa o período de gozo das férias?"
+  },
+  "rh_justified_absence": {
+   "label": "Qual é a data da falta justificada?"
+  },
+  "rh_benefit_period_end": {
+   "label": "Quando termina o período de gozo das férias?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_observation_info": "visual",
+  "rh_container_init": "visual"
+ },
+ "policies": {
+  "34bdeaa21b87281032822170f54bcbe2": "remover",
+  "74bdeaa21b87281032822170f54bcbdf": "remover",
+  "b8f6b4ee1b5fa81032822170f54bcb30": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no cálculo das férias",
+   "short_description": "Divergência no cálculo das férias",
+   "description": "Use quando o cálculo das férias estiver divergente.",
+   "frases_exemplo": [
+    "Meu cálculo de férias está errado",
+    "Valor das férias divergente",
+    "Férias calculadas incorretamente",
+    "Conferir o cálculo das minhas férias"
+   ],
+   "sem_vars": [
+    "rh_benefit_period_start",
+    "rh_justified_absence",
+    "rh_benefit_period_end"
+   ]
+  },
+  {
+   "name": "Faltas indevidas descontadas nas férias",
+   "short_description": "Faltas indevidas descontadas no recibo de férias",
+   "description": "Use quando faltas indevidas foram descontadas no recibo de férias. Informe o período de gozo e a data da falta justificada.",
+   "frases_exemplo": [
+    "Descontaram falta indevida nas férias",
+    "Falta justificada descontada no recibo de férias",
+    "Recibo de férias com falta errada",
+    "Desconto de falta nas férias está errado"
+   ],
+   "vars": {
+    "rh_benefit_period_start": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_justified_absence": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_period_end": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

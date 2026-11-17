@@ -1,0 +1,2614 @@
+[
+ {
+  "sys_id": "96ae57af1b9c61d0d1abda4ce54bcbe7",
+  "nome_atual": "Informações sobre Cartão Corporativo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 464,
+  "recomendacao": "dividir",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 50,
+  "justificativa": "O item mistura duas intenções sem relação: tirar dúvida sobre cartão corporativo e informar viagem internacional (aviso prévio ao banco). Cada ramo tem perguntas próprias controladas por UI policy e por uma variável de demanda (v_what_is_the_demand_for_the_call) que nem aparece mais entre as variáveis ativas, o que deixa a lógica inconsistente. Separar em dois itens enxutos melhora o match de intenção e elimina os scripts de limpeza.",
+  "nome_sugerido": "Informações sobre Cartão Corporativo (dividir em 2)",
+  "short_description_sugerida": "Tirar dúvidas sobre cartão corporativo ou avisar sobre viagem internacional.",
+  "descricao_sugerida": "Item a ser substituído por dois itens: \"Tirar dúvida sobre cartão corporativo\" e \"Avisar viagem internacional com cartão corporativo\". Para pedir emissão, alteração de limite, desbloqueio ou cancelamento do cartão, use os itens específicos.",
+  "frases_exemplo": [
+   "tenho uma dúvida sobre o cartão corporativo",
+   "vou viajar para fora do país com o cartão da empresa"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "ui_policy EY: Call Demand",
+    "problema": "Referencia v_what_is_the_demand_for_the_call, que não está entre as variáveis ativas; a policy \"Clarify Doubts\" usa vs_company como condição, ou seja, a separação entre ramos está quebrada.",
+    "acao": "Com a divisão, cada item fixa sua intenção e essas policies são removidas."
+   },
+   {
+    "onde": "v_if_you_have_questions_about_the_process",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Colocar o link da FAQ na descrição dos itens derivados."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Call Demand",
+    "acao": "remover",
+    "substituicao": "Intenção passa a ser o próprio item."
+   },
+   {
+    "nome": "EY: If \"What is the demand for the call?\" for \"Clarify Doubts\"",
+    "acao": "remover",
+    "substituicao": "No item de dúvida, v_what_type_of_doubt_do_you_have e v_describe_your_question ficam mandatory direto na variável."
+   },
+   {
+    "nome": "EY: If \"What is the demand for the call?\" for \"Report International Travel\"",
+    "acao": "remover",
+    "substituicao": "No item de viagem, público, destino e datas ficam mandatory direto na variável."
+   },
+   {
+    "nome": "EY: Clear Fields",
+    "acao": "remover",
+    "substituicao": "Sem troca de ramo não há o que limpar."
+   },
+   {
+    "nome": "EY: Destination - Only letters",
+    "acao": "converter",
+    "substituicao": "Validation Regex na variável v_what_is_the_destination_of_the_international_trip (letras e espaços), sem client script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Desativar o item atual após publicar os dois derivados (ou mantê-lo oculto só para links antigos)."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Tirar dúvida sobre cartão corporativo",
+    "short_description": "Esclarecer dúvidas sobre uso, fatura, regras e políticas do cartão corporativo.",
+    "descricao": "Use para tirar dúvidas sobre o cartão corporativo: uso, fatura, gastos permitidos, regras e política. Não use para pedir emissão, alteração de limite, desbloqueio ou cancelamento do cartão, nem para prestar contas de despesas; esses pedidos têm itens próprios. FAQ: consulte a base de conhecimento antes de abrir.",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre o cartão corporativo",
+     "posso usar o cartão da empresa para pagar combustível?",
+     "não entendi um lançamento na fatura do cartão corporativo",
+     "qual a política de uso do cartão corporativo?",
+     "dúvida cartão corp"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = clarify_doubts (default/hidden), se a variável for reativada; caso contrário o flow identifica pelo producer",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_what_type_of_doubt_do_you_have",
+      "conversational_label": "Sobre qual assunto é a sua dúvida?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_describe_your_question",
+      "conversational_label": "Conte qual é a sua dúvida."
+     }
+    ]
+   },
+   {
+    "nome": "Avisar viagem internacional com cartão corporativo",
+    "short_description": "Informar destino e período de viagem internacional para liberar o cartão corporativo no exterior.",
+    "descricao": "Use para avisar a área de cartão corporativo que você vai viajar para o exterior e vai usar o cartão, informando destino e datas. Não use para tirar dúvidas gerais sobre o cartão nem para pedir aumento de limite para a viagem (use \"Alterar limite do cartão corporativo\").",
+    "frases_exemplo": [
+     "vou viajar para o exterior e quero usar o cartão corporativo",
+     "avisar viagem internacional",
+     "preciso liberar meu cartão da empresa para uso fora do Brasil",
+     "vou para o México semana que vem a trabalho",
+     "informar viagem internacional cartão corporativo"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = inform_international_travel (default/hidden), se a variável for reativada",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_what_is_the_destination_of_the_international_trip",
+      "conversational_label": "Para qual país ou cidade você vai viajar?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_what_is_the_start_date_of_the_trip",
+      "conversational_label": "Em que data a viagem começa?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_what_is_the_end_date_of_the_trip",
+      "conversational_label": "E em que data termina?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_which_audience_do_you_belong_to",
+      "conversational_label": "Você é do administrativo, operacional, varejo ou força de vendas?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Confirmar se v_what_is_the_demand_for_the_call foi desativada de propósito. Validar no flow \"EY: Corporate Card Information\" como cada ramo é roteado antes de criar dois producers (ou apontar os dois para o mesmo flow com valor fixo). Se possível, derivar v_which_audience_do_you_belong_to do perfil do usuário. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "0aa214221bf06d10d1abda4ce54bcb82",
+  "nome_atual": "Solicitação de alteração de limite do Cartão Corporativo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 80,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Intenção única e clara, mas com três anexos condicionais, país preenchido por GlideAjax e vários scripts de limpeza. Sem bloqueador real: com labels em pt-BR, país derivado e validação por regex, a conversa fica com cerca de 8 perguntas. Volume baixo, por isso prioridade baixa.",
+  "nome_sugerido": "Alterar limite do cartão corporativo",
+  "short_description_sugerida": "Pedir aumento ou redução do limite do cartão corporativo, permanente ou por um período.",
+  "descricao_sugerida": "Use para pedir alteração do limite de crédito do cartão corporativo, para você ou para um grupo de colaboradores, de forma permanente ou só por um período (ex.: viagem). É preciso ter a aprovação do gestor (ou da Adm. de Vendas / Finanças de Vendas para força de vendas). Não use para emitir, desbloquear ou cancelar o cartão, nem para avisar viagem internacional.",
+  "frases_exemplo": [
+   "preciso aumentar o limite do meu cartão corporativo",
+   "quero alterar o limite do cartão da empresa só durante a viagem",
+   "aumentar limite cartão corp da minha equipe",
+   "meu limite do cartão corporativo não é suficiente",
+   "reduzir limite do cartão corporativo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_request_template_for_changing_the_corporate_card_limit / v_attach_the_manager_s_proof_of_approval / v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force",
+    "problema": "Três variáveis Attachment condicionais: anexo exige tratamento à parte na conversa.",
+    "acao": "Manter como Attachment OOB (suportado com ressalva) e deixar os anexos para o fim da conversa; avaliar unificar os dois comprovantes de aprovação numa só variável \"comprovante de aprovação\" com label dinâmico pelo público."
+   },
+   {
+    "onde": "client script EY: Get Country",
+    "problema": "GlideAjax em cascata a partir da empresa para preencher v_country.",
+    "acao": "Derivar o país no flow/servidor a partir de vs_company e ocultar v_country na conversa."
+   },
+   {
+    "onde": "v_label_template_download / v_label_if_have_questions_click_here",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link do template e da FAQ na descrição do item."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "A alteração é para uma pessoa ou para um grupo de colaboradores?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_which_audience_does_the_card_holder_have",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O titular do cartão é do administrativo, operacional, varejo ou força de vendas?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_type_of_change_to_make",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "A alteração é permanente ou só por um período?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_value_of_the_new_requested_limit",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor do novo limite?",
+    "obs": "Trocar o client script por Validation Regex de valor monetário."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_what_is_the_start_date_for_the_new_limit",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "A partir de que data o novo limite deve valer?",
+    "obs": "Só quando o tipo for por período."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_what_is_the_end_date_for_the_new_limit",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Até que data?",
+    "obs": "Só quando o tipo for por período."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_enter_the_reason_for_the_limit_change_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo da alteração?"
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_attach_the_request_template_for_changing_the_corporate_card_limit",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a planilha modelo preenchida com os colaboradores do grupo.",
+    "obs": "Só para grupo. Link do template na descrição."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_attach_the_manager_s_proof_of_approval",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a aprovação do gestor.",
+    "obs": "Só para administrativo, operacional e varejo."
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a aprovação da Administração de Vendas ou de Finanças de Vendas.",
+    "obs": "Só para força de vendas."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   },
+   {
+    "ordem": 12,
+    "variavel": "v_country",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Read-only e derivado da empresa; preencher no servidor."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Make fields Visible and Mandatory ON LOAD",
+    "acao": "converter",
+    "substituicao": "Marcar mandatory direto nas variáveis e read-only em v_country."
+   },
+   {
+    "nome": "EY: Make fields Visible and Mandatory IF \"Type of change to make\" IS \"Limit change for given period\"",
+    "acao": "manter",
+    "substituicao": "Policy sem script, compatível."
+   },
+   {
+    "nome": "EY: Make fields Visible and Mandatory IF \"Which audience...\" IS \"Administrative\" OR \"Operational\" OR \"Retail\"",
+    "acao": "manter",
+    "substituicao": "Compatível."
+   },
+   {
+    "nome": "EY: Make fields Visible and Mandatory IF \"Which audience...\" IS \"Sales Force\"",
+    "acao": "manter",
+    "substituicao": "Compatível."
+   },
+   {
+    "nome": "EY: Make fields Visible and Mandatory IF \"...Employee Group or Individual\" IS \"Employee Group\"",
+    "acao": "manter",
+    "substituicao": "Compatível; o rótulo do template sai da conversa."
+   },
+   {
+    "nome": "EY: Hide Country if Aesop",
+    "acao": "remover",
+    "substituicao": "v_country fica oculto sempre na conversa."
+   },
+   {
+    "nome": "EY: Get Country",
+    "acao": "converter",
+    "substituicao": "Preencher país no servidor (flow ou producer script) a partir de vs_company."
+   },
+   {
+    "nome": "EY: Validate value",
+    "acao": "converter",
+    "substituicao": "Validation Regex na variável (ex.: ^\\d{1,3}(\\.\\d{3})*,\\d{2}$)."
+   },
+   {
+    "nome": "EY: Clear field type of change / EY: Clear Field card holder / EY: Clear Fields",
+    "acao": "remover",
+    "substituicao": "Na conversa as perguntas dependentes só aparecem conforme a resposta; limpeza desnecessária."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Para Aesop o país é oculto; confirmar se o flow depende de v_country. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "e85928f31b94e1d0d1abda4ce54bcb4c",
+  "nome_atual": "Solicitação de Desbloqueio ou Cancelamento de Cartão Corporativo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 217,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Formulário curto (4 perguntas próprias) com duas opções simples (desbloqueio ou cancelamento). Não vale dividir: o LLM preenche o tipo pela frase do usuário (\"meu cartão bloqueou\"). Basta nome/descrição com as duas palavras, labels em pt-BR e remover os scripts de limpeza.",
+  "nome_sugerido": "Desbloquear ou cancelar cartão corporativo",
+  "short_description_sugerida": "Pedir desbloqueio ou cancelamento do cartão corporativo.",
+  "descricao_sugerida": "Use quando o seu cartão corporativo estiver bloqueado e você precisar desbloquear, ou quando quiser cancelar o cartão (desligamento, troca de função, não uso). Para desbloqueio é preciso anexar a aprovação do gestor por e-mail. Não use para pedir um cartão novo, alterar o limite ou tirar dúvidas.",
+  "frases_exemplo": [
+   "meu cartão corporativo foi bloqueado",
+   "preciso desbloquear o cartão da empresa",
+   "quero cancelar meu cartão corporativo",
+   "cartão corp bloqueado, não passa",
+   "cancelar cartão corporativo de colaborador desligado"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_proof_of_approval_by_email_from_your_manager",
+    "problema": "Attachment: anexo exige tratamento à parte na conversa.",
+    "acao": "Manter Attachment OOB, perguntado só no desbloqueio e no fim da conversa."
+   },
+   {
+    "onde": "v_if_you_have_questions_about_the_process",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link da FAQ na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_enter_the_type_of_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você quer desbloquear ou cancelar o cartão?",
+    "obs": "Vem primeiro: normalmente já sai da frase do usuário (slot filling)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_which_audience_do_you_belong_to",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você é do administrativo, operacional, varejo ou força de vendas?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_specify_the_reason",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo do pedido?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_attach_proof_of_approval_by_email_from_your_manager",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe o e-mail de aprovação do seu gestor.",
+    "obs": "Só para desbloqueio."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Which audience do you belong to?",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas três variáveis."
+   },
+   {
+    "nome": "EY: If \"Enter the type of request\" is \"Card Unblocking\"",
+    "acao": "manter",
+    "substituicao": "Policy sem script, compatível."
+   },
+   {
+    "nome": "EY: Clear Fields audience / EY: Clear Fields",
+    "acao": "remover",
+    "substituicao": "Limpeza desnecessária na conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Nova ordem: tipo de pedido antes do público. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "3b4e97ec1becad14a530426fe54bcb14",
+  "nome_atual": "Solicitação de emissão do cartão corporativo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 263,
+  "recomendacao": "dividir",
+  "prioridade": "media",
+  "esforco": "alto",
+  "prontidao_atual": 30,
+  "justificativa": "São 34 perguntas (acima do limite de 20, abre janela) e dois produtos diferentes: cartão corporativo (exige dados pessoais completos, endereço e termo de responsabilidade) e cartão saque (exige cadastro prévio no LINX). Metade das perguntas (matrícula, área, e-mail, centro de custo, grade) pode ser derivada do usuário. Dividindo por tipo de cartão e derivando os dados do colaborador, cada item fica abaixo de 20 perguntas.",
+  "nome_sugerido": "Solicitação de emissão do cartão corporativo (dividir em 2)",
+  "short_description_sugerida": "Pedir emissão de cartão corporativo ou de cartão saque.",
+  "descricao_sugerida": "Item a ser substituído por \"Solicitar cartão corporativo\" e \"Solicitar cartão saque\". Para alterar limite, desbloquear ou cancelar, use os itens específicos.",
+  "frases_exemplo": [
+   "quero um cartão corporativo",
+   "preciso de cartão saque"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "perguntas",
+    "problema": "34 perguntas; acima de 20 a VA abre janela em vez de conversar.",
+    "acao": "Dividir por tipo de cartão e derivar dados do colaborador (v_registration, v_inform_the_area, v_inform_the_email, v_inform_your_grade, v_enter_your_cost_center)."
+   },
+   {
+    "onde": "client scripts EY: Get Data of Requested for (onLoad e onChange)",
+    "problema": "GlideAjax para preencher matrícula, área e e-mail.",
+    "acao": "Auto-populate a partir de vs_requested_for (dot-walk para employee_number, department, email, cost_center) ou preencher no producer script."
+   },
+   {
+    "onde": "v_have_you_read_and_accept_the_terms_and_conditions",
+    "problema": "Checkbox mandatory: não agrupa bem na conversa.",
+    "acao": "Trocar por Yes/No com \"Include None\" (ou Select Box \"Sim, li e aceito\") e colocar o link do termo na descrição."
+   },
+   {
+    "onde": "v_attach_approval_manager_director_or_sales / v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user",
+    "problema": "Attachment: exige tratamento à parte.",
+    "acao": "Manter Attachment OOB no fim da conversa."
+   },
+   {
+    "onde": "v_label_attention / v_label_responsability_term_card_corporate / v_if_have_doubts",
+    "problema": "Rich Text Label: só a URL sobrevive; o aviso sobre cadastro no LINX e o termo não chegam ao LLM.",
+    "acao": "Levar o aviso do LINX e o link do termo para a descrição dos itens derivados."
+   },
+   {
+    "onde": "dados pessoais (CPF, RG, data de nascimento, filiação, endereço)",
+    "problema": "Dados pessoais sensíveis enviados ao LLM.",
+    "acao": "Validar com Privacidade/Jurídico; se não for permitido, marcar Turn off Now Assist no derivado de cartão corporativo (VA mostra o link do formulário)."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Make fields Visible and Mandatory IF Withdrawal Card",
+    "acao": "remover",
+    "substituicao": "Nome invertido (a condição é v_corporate card). No derivado de cartão corporativo, mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: Make field Visible and Mandatory IF Selected Type of Card IS \"Corporate Card\" AND Which audience IS \"Retail\"",
+    "acao": "remover",
+    "substituicao": "Aviso do LINX vai para a descrição do item de cartão saque."
+   },
+   {
+    "nome": "EY: Make Mandatory Fields On Load",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis que continuam."
+   },
+   {
+    "nome": "EY: Make field Registration Read Only",
+    "acao": "remover",
+    "substituicao": "v_registration passa a ser derivado e oculto."
+   },
+   {
+    "nome": "EY: Make field Visible and Mandatory IF Inform the motive of request of card IS Others",
+    "acao": "manter",
+    "substituicao": "Compatível."
+   },
+   {
+    "nome": "EY: Get Data of Requested for on change / on load",
+    "acao": "converter",
+    "substituicao": "Auto-populate por dot-walk de vs_requested_for ou preenchimento no servidor."
+   },
+   {
+    "nome": "EY: Clear Value Type of Card / EY: Clear Value Which Audience Belong",
+    "acao": "remover",
+    "substituicao": "Sem troca de ramo após a divisão."
+   },
+   {
+    "nome": "EY: CEP Regex / EY: Regex Cell Phone number / EY: Regex Bussiness Telephone number / EY: Regex CPF",
+    "acao": "converter",
+    "substituicao": "Validation Regex nas variáveis (CEP ^\\d{5}-?\\d{3}$, telefone BR, CPF ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$)."
+   },
+   {
+    "nome": "EY: Only Text Naturalness / Name Printed on Card / Mothers Name / Father's Name",
+    "acao": "converter",
+    "substituicao": "Validation Regex só letras e espaços, sem client script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Desativar o item atual após publicar os derivados.",
+    "Avaliar turn_off_nowassist_conversation = true no derivado de cartão corporativo se a política de privacidade não permitir CPF/RG/filiação no LLM."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar cartão corporativo",
+    "short_description": "Pedir a emissão de um cartão corporativo de crédito para você ou outro colaborador.",
+    "descricao": "Use para pedir um cartão corporativo novo (primeira via ou reemissão), para você ou para outra pessoa. São pedidos dados pessoais do titular, endereço de entrega, o motivo e a aprovação do gestor, diretor ou Adm. de Vendas. Se o pedido for para outra pessoa, anexe o Termo de Responsabilidade assinado pelo titular (link na base de conhecimento). Não use para cartão saque, alteração de limite, desbloqueio ou cancelamento.",
+    "frases_exemplo": [
+     "quero solicitar um cartão corporativo",
+     "preciso de um cartão da empresa para viagens",
+     "pedir cartão corporativo para um colaborador novo da minha equipe",
+     "como faço para ter cartão corp?",
+     "emissão de cartão corporativo"
+    ],
+    "fixar": "v_select_card_type = v_corporate card (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "vs_requested_for",
+      "conversational_label": "O cartão é para você ou para outra pessoa? Se for outra, qual o nome?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_which_audience_do_you_belong_to",
+      "conversational_label": "O titular é do administrativo, operacional, varejo ou força de vendas?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_reason_requesting_card",
+      "conversational_label": "Qual o motivo do pedido do cartão?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_specify_the_reason",
+      "conversational_label": "Descreva o motivo."
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_name_printed_on_card",
+      "conversational_label": "Qual nome deve ser impresso no cartão?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_inform_the_cpf",
+      "conversational_label": "Qual o CPF do titular?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_inform_the_rg",
+      "conversational_label": "E o RG?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_date_of_birth",
+      "conversational_label": "Qual a data de nascimento?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_gender",
+      "conversational_label": "Qual o gênero do titular?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_naturalness",
+      "conversational_label": "Qual a naturalidade (cidade onde nasceu)?"
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_mother_s_name",
+      "conversational_label": "Qual o nome da mãe?"
+     },
+     {
+      "ordem": 12,
+      "variavel": "v_father_s_name",
+      "conversational_label": "E o nome do pai? (opcional)"
+     },
+     {
+      "ordem": 13,
+      "variavel": "v_inform_your_postal_code",
+      "conversational_label": "Qual o CEP do endereço de entrega?"
+     },
+     {
+      "ordem": 14,
+      "variavel": "v_street_av_street",
+      "conversational_label": "Qual a rua ou avenida?"
+     },
+     {
+      "ordem": 15,
+      "variavel": "v_number",
+      "conversational_label": "Qual o número?"
+     },
+     {
+      "ordem": 16,
+      "variavel": "v_complemento",
+      "conversational_label": "Tem complemento?"
+     },
+     {
+      "ordem": 17,
+      "variavel": "v_neighborhood",
+      "conversational_label": "Qual o bairro?"
+     },
+     {
+      "ordem": 18,
+      "variavel": "v_city",
+      "conversational_label": "Qual a cidade?"
+     },
+     {
+      "ordem": 19,
+      "variavel": "v_state",
+      "conversational_label": "E o estado?"
+     },
+     {
+      "ordem": 20,
+      "variavel": "v_inform_the_cell_phone",
+      "conversational_label": "Qual o celular do titular?"
+     },
+     {
+      "ordem": 21,
+      "variavel": "v_have_you_read_and_accept_the_terms_and_conditions",
+      "conversational_label": "Você leu e aceita o termo de uso do cartão corporativo?"
+     },
+     {
+      "ordem": 22,
+      "variavel": "v_attach_approval_manager_director_or_sales",
+      "conversational_label": "Anexe a aprovação do gestor, diretor ou Adm. de Vendas."
+     },
+     {
+      "ordem": 23,
+      "variavel": "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user",
+      "conversational_label": "Se o pedido é para outra pessoa, anexe o termo de responsabilidade assinado por ela."
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar cartão saque",
+    "short_description": "Pedir a emissão de cartão saque (retirada de dinheiro) para despesas operacionais.",
+    "descricao": "Use para pedir um cartão saque. Antes, o titular precisa ter cadastro ativo no LINX com o time de Cadastro de Clientes e Fornecedores (abra esse chamado primeiro; o acesso ao LINX exige VPN). Não use para cartão corporativo de crédito, alteração de limite, desbloqueio ou cancelamento.",
+    "frases_exemplo": [
+     "preciso de um cartão saque",
+     "quero cartão para saque de dinheiro da loja",
+     "solicitar cartão de saque para o varejo",
+     "pedir cartão saque para colaborador",
+     "cartão de retirada"
+    ],
+    "fixar": "v_select_card_type = v_withdrawal_card (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "vs_requested_for",
+      "conversational_label": "O cartão é para você ou para outra pessoa? Se for outra, qual o nome?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_which_audience_do_you_belong_to",
+      "conversational_label": "O titular é do administrativo, operacional, varejo ou força de vendas?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_reason_requesting_card",
+      "conversational_label": "Qual o motivo do pedido do cartão?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_specify_the_reason",
+      "conversational_label": "Descreva o motivo."
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_inform_the_cpf",
+      "conversational_label": "Qual o CPF do titular?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_date_of_birth",
+      "conversational_label": "Qual a data de nascimento?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_gender",
+      "conversational_label": "Qual o gênero do titular?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_inform_the_cell_phone",
+      "conversational_label": "Qual o celular do titular?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_attach_approval_manager_director_or_sales",
+      "conversational_label": "Anexe a aprovação do gestor, diretor ou Adm. de Vendas."
+     }
+    ]
+   }
+  ],
+  "observacoes": "Derivar e ocultar em ambos: v_registration, v_inform_the_area, v_inform_the_email, v_inform_your_grade, v_enter_your_cost_center e v_enter_business_phone_number (se existir no sys_user). O rótulo das policies está trocado em relação aos valores (v_corporate card x v_withdrawal_card); confirmar com o negócio qual cartão exige dados completos antes de separar. vs_requested_for tem reference qualifier avançado: testar em conversa. Flow \"EY: Desativado- Corporate card issuance request\" ainda associado: limpar. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "da29efb81b08ad18a530426fe54bcb42",
+  "nome_atual": "Dúvidas sobre veículo corporativo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 48,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Item de dúvida com um processo principal e quatro select boxes de subtipo, todas com o mesmo label \"What type of doubt do you have?\", o que confunde a conversa. Sem scripts e sem bloqueadores. Basta dar labels distintos, deixar o processo como primeira pergunta e ajustar a descrição.",
+  "nome_sugerido": "Tirar dúvida sobre veículo corporativo",
+  "short_description_sugerida": "Dúvidas sobre multas, manutenção, devolução, elegibilidade, upgrade e desconto em folha do carro da empresa.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre o veículo corporativo (carro da frota): multas, manutenção, devolução do veículo, quem tem direito, upgrade de modelo e descontos em folha. Não use para informar que um colaborador passou a ter direito a veículo (use \"Informar direito a veículo corporativo\") nem para dúvidas sobre cartão combustível.",
+  "frases_exemplo": [
+   "recebi uma multa com o carro da empresa, o que faço?",
+   "como agendo a manutenção do carro corporativo?",
+   "vou sair da empresa, como devolvo o carro?",
+   "tenho direito a carro da empresa?",
+   "por que descontaram o carro na minha folha?",
+   "dúvida upgrade veículo frota"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_faq / v_suppliers_info",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link da FAQ e contatos de fornecedores na descrição ou em artigo de KB."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_doubts",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sua dúvida é sobre multa, manutenção, devolução, elegibilidade ou outro assunto?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_doubt_fines",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre multas, qual é a dúvida?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_doubt_maintenance",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre manutenção, qual é a dúvida?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_doubt_return",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre devolução do veículo, qual é a dúvida?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_doubt_eligibility",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre elegibilidade, qual é a dúvida?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_inform_doubt",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte com detalhes qual é a sua dúvida."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_doubts e v_inform_doubt."
+   },
+   {
+    "nome": "EY: Show maintenance / fines / eligibility / vehicle return options",
+    "acao": "manter",
+    "substituicao": "Policies sem script, compatíveis; cada uma mostra só uma das subperguntas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "User criteria só \"EY: Terceiros V2\": confirmar se o item deveria estar disponível também para colaboradores. Avaliar consolidar as quatro select boxes de subtipo numa só com opções filtradas por dependência (dependent value), reduzindo manutenção. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "215957c71b08a5d8a530426fe54bcbf1",
+  "nome_atual": "Informações de cartão combustível e redes credenciadas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 26,
+  "recomendacao": "dividir",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 35,
+  "justificativa": "Com 33 perguntas o item passa do limite de 20 e abre como janela. Ele junta três intenções distintas via v_what_is_the_demand_of_the_call: tirar dúvida, pedir relatório/estudo (uso do cartão, rede credenciada, capilaridade) e indicar um posto para a rede. Cada ramo tem sentido próprio e poucas perguntas. O volume é baixo, então a prioridade é baixa.",
+  "nome_sugerido": "Informações de cartão combustível e redes credenciadas (dividir em 3)",
+  "short_description_sugerida": "Dúvidas, relatórios e indicação de postos do cartão combustível.",
+  "descricao_sugerida": "Item a ser substituído por \"Tirar dúvida sobre cartão combustível\", \"Solicitar relatório de cartão combustível ou rede credenciada\" e \"Indicar posto para a rede credenciada do cartão combustível\".",
+  "frases_exemplo": [
+   "dúvida cartão combustível",
+   "relatório de abastecimento"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "perguntas",
+    "problema": "33 perguntas; acima de 20 a VA abre janela.",
+    "acao": "Dividir por demanda."
+   },
+   {
+    "onde": "client script EY: Get Matriculation",
+    "problema": "GlideAjax para preencher a matrícula do colaborador consultado.",
+    "acao": "Auto-populate por dot-walk de v_enter_the_full_name_of_the_user_contributor (employee_number) e ocultar v_enter_collaborater_registration_number."
+   },
+   {
+    "onde": "v_template_frota_download / v_label_acesse / v_tell_place_capilarity",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Links e instruções na descrição dos derivados."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Demand of call Mandatory / EY: If What is the demand is ...",
+    "acao": "remover",
+    "substituicao": "A demanda passa a ser o próprio item."
+   },
+   {
+    "nome": "EY: If Enter the type of report or study is ... (5 policies)",
+    "acao": "manter",
+    "substituicao": "No derivado de relatórios, sem a condição de demanda; policies sem script são compatíveis."
+   },
+   {
+    "nome": "EY: Start Date before End Date",
+    "acao": "converter",
+    "substituicao": "Manter como client script marcado VA Supported (não usa DOM) ou validar no flow; alternativa no-code: não há, então manter."
+   },
+   {
+    "nome": "EY: Get Matriculation",
+    "acao": "converter",
+    "substituicao": "Auto-populate por dot-walk."
+   },
+   {
+    "nome": "EY: Validation Fuel Station Phone / EY: CEP Validation",
+    "acao": "converter",
+    "substituicao": "Validation Regex nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Desativar o item atual após publicar os derivados."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Tirar dúvida sobre cartão combustível",
+    "short_description": "Dúvidas sobre uso, bloqueio, senha e regras do cartão combustível da frota.",
+    "descricao": "Use para tirar dúvidas sobre o cartão combustível do veículo corporativo: como usar, senha, bloqueio, limite, regras. Não use para pedir relatórios nem para indicar postos; e para dúvidas sobre o carro em si (multa, manutenção) use \"Tirar dúvida sobre veículo corporativo\".",
+    "frases_exemplo": [
+     "meu cartão combustível não passou no posto",
+     "esqueci a senha do cartão combustível",
+     "qual o limite do cartão de abastecimento?",
+     "dúvida sobre cartão combustível da frota",
+     "posso abastecer em qualquer posto?"
+    ],
+    "fixar": "v_what_is_the_demand_of_the_call = v_remove_questions (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_what_kind_of_doubt_do_you_have",
+      "conversational_label": "Sobre qual assunto é a sua dúvida?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_enter_your_question_",
+      "conversational_label": "Conte qual é a sua dúvida."
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar relatório de cartão combustível ou rede credenciada",
+    "short_description": "Pedir relatório de uso do cartão combustível, relatório de rede credenciada ou estudo de capilaridade.",
+    "descricao": "Use para pedir relatório de uso do cartão combustível (por colaborador ou centro de custo), relatório de postos credenciados numa região ou estudo de capilaridade (se há postos suficientes num local). Não use para indicar um posto específico para credenciamento.",
+    "frases_exemplo": [
+     "preciso do relatório de abastecimento do meu centro de custo",
+     "quero o extrato do cartão combustível de um colaborador",
+     "quais postos credenciados tem em Campinas?",
+     "pedir estudo de capilaridade para a região de Uberlândia",
+     "relatório de uso do cartão combustível do mês passado"
+    ],
+    "fixar": "v_what_is_the_demand_of_the_call = v_request_reports_studies (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_enter_the_type_of_report_or_study_you_want_to_request",
+      "conversational_label": "Qual relatório você precisa: uso do cartão, rede credenciada, estudo de capilaridade ou outro?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_request_for_what_type_of_query",
+      "conversational_label": "O relatório de uso é por colaborador ou por centro de custo?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_the_full_name_of_the_user_contributor",
+      "conversational_label": "Qual o nome do colaborador?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_enter_the_cost_center_number",
+      "conversational_label": "Qual o número do centro de custo?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_inform_start_date",
+      "conversational_label": "Qual a data inicial do período?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_inform_end_date",
+      "conversational_label": "E a data final?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_inform_the_state",
+      "conversational_label": "Em qual estado?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_inform_the_municipality",
+      "conversational_label": "Em qual cidade?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_if_you_wish_specify_the_neighborhood",
+      "conversational_label": "Quer informar um bairro específico?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_describe_desired_report",
+      "conversational_label": "Descreva o relatório que você precisa."
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_additional_information_",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   },
+   {
+    "nome": "Indicar posto para a rede credenciada do cartão combustível",
+    "short_description": "Sugerir um posto de combustível para ser credenciado no cartão da frota.",
+    "descricao": "Use para indicar um posto de combustível que ainda não aceita o cartão combustível da frota, para que o fornecedor avalie o credenciamento. Informe nome, endereço e contato do posto. Não use para consultar a rede já credenciada (use \"Solicitar relatório de cartão combustível ou rede credenciada\").",
+    "frases_exemplo": [
+     "quero indicar um posto para aceitar o cartão combustível",
+     "o posto perto de casa não aceita o cartão da frota, dá pra credenciar?",
+     "indicar novo posto credenciado",
+     "sugerir posto para a rede do cartão combustível"
+    ],
+    "fixar": "v_what_is_the_demand_of_the_call = v_indicate_accredited_network (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_fuel_station",
+      "conversational_label": "Qual o nome do posto?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_zip_code_",
+      "conversational_label": "Qual o CEP do posto?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_street_av_st",
+      "conversational_label": "Qual a rua ou avenida?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_number",
+      "conversational_label": "Qual o número?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_complement_",
+      "conversational_label": "Tem complemento?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_neighborhood_",
+      "conversational_label": "Qual o bairro?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_city_",
+      "conversational_label": "Qual a cidade?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_state_",
+      "conversational_label": "E o estado?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_fuel_station_contact_name",
+      "conversational_label": "Com quem falar no posto?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_inform_phone_post",
+      "conversational_label": "Qual o telefone do posto?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Flow \"Copy of EY: Fuel card information and accredited networks\" associado: verificar se é resíduo. v_inform_the_state e v_inform_the_municipality são texto com include_none (resquício de select); avaliar Select Box de UF. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "8efadce81b54215cd1abda4ce54bcbee",
+  "nome_atual": "Informar direito a solicitar novo veículo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 9,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Item simples: faixa e cargo (preenchidos por GlideAjax a partir do solicitante) e a carta de promoção em anexo. Derivando faixa e cargo, a conversa fica com o anexo e informações adicionais. Volume muito baixo, prioridade baixa.",
+  "nome_sugerido": "Informar direito a veículo corporativo",
+  "short_description_sugerida": "Avisar que um colaborador passou a ter direito a carro da empresa (promoção ou contratação).",
+  "descricao_sugerida": "Use para informar a área de Frotas que um colaborador passou a ter direito a veículo corporativo, por promoção ou contratação, anexando a carta de promoção ou documento que comprove o direito. Não use para tirar dúvidas sobre elegibilidade, upgrade ou devolução (use \"Tirar dúvida sobre veículo corporativo\").",
+  "frases_exemplo": [
+   "fui promovido e agora tenho direito a carro da empresa",
+   "quero solicitar meu veículo corporativo",
+   "colaborador novo tem direito a carro, como aviso?",
+   "informar direito a veículo da frota",
+   "recebi carta de promoção com carro"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Get Range and Title",
+    "problema": "GlideAjax para preencher faixa e cargo; se o valor fica vazio ele limpa vs_requested_for e dispara a chamada mesmo assim.",
+    "acao": "Auto-populate por dot-walk de vs_requested_for ou preencher no producer script; ocultar v_range e v_office na conversa."
+   },
+   {
+    "onde": "v_attach",
+    "problema": "Attachment: anexo exige tratamento à parte.",
+    "acao": "Manter Attachment OOB, perguntado no fim."
+   },
+   {
+    "onde": "v_start_text / v_text_attention",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link da FAQ e o aviso na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_range",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Faixa do colaborador vem do cadastro (sys_user/RH). Se não houver no cadastro, perguntar: \"Qual a faixa do colaborador?\""
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_office",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Cargo vem do cadastro (title). Se não houver: \"Qual o cargo do colaborador?\""
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a carta de promoção ou documento que mostre o direito ao veículo."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_attach; v_range e v_office deixam de ser perguntados."
+   },
+   {
+    "nome": "EY: Get Range and Title",
+    "acao": "converter",
+    "substituicao": "Auto-populate ou preenchimento no servidor."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "6de79cf73387369098331c07ee5c7b68",
+  "nome_atual": "Pré-edição e Reembolso - Cliente Final",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 4,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Formulário curto (7 perguntas, sem scripts), mas o nome (\"Pré-edição\") e a falta de descrição impedem o LLM de achar o item. Basta nome e descrição claros e labels em pt-BR. Volume muito baixo (4 em 12 meses): se continuar assim, avaliar desativação.",
+  "nome_sugerido": "Pedir reembolso de pré-pedido cancelado para cliente final",
+  "short_description_sugerida": "Devolver ao cliente final o valor pago num pré-pedido que foi cancelado.",
+  "descricao_sugerida": "Use quando um cliente final pagou um pré-pedido e o pedido foi cancelado, e é preciso devolver o valor a ele. Informe o código Natura, os dados do cliente, o valor, o número da ocorrência e anexe o comprovante. Não use para reembolso de despesas de colaborador ou de força de vendas (use \"Solicitar reembolso de despesas\").",
+  "frases_exemplo": [
+   "cliente pagou o pré-pedido e o pedido foi cancelado",
+   "preciso devolver o dinheiro de uma cliente",
+   "reembolso para cliente final",
+   "estorno de pré-pedido cancelado",
+   "minha cliente quer o dinheiro de volta do pedido cancelado"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_any_evidence",
+    "problema": "Attachment: anexo exige tratamento à parte.",
+    "acao": "Manter Attachment OOB, perguntado no fim."
+   },
+   {
+    "onde": "descrição",
+    "problema": "Descrição vazia; o LLM só tem o nome e a short description.",
+    "acao": "Preencher a descrição sugerida."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_natura_code",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o seu código Natura?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "vs_client_name",
+    "origem": "set:EY - Dados Básicos do Cliente",
+    "acao": "manter",
+    "conversational_label": "Qual o nome do cliente?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "vs_client_cpf",
+    "origem": "set:EY - Dados Básicos do Cliente",
+    "acao": "manter",
+    "conversational_label": "Qual o CPF do cliente?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_occurrence_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o número da ocorrência do pedido cancelado?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_refund_amount",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor a ser devolvido?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_reason_for_the_refund",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o motivo do reembolso?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_attach_any_evidence",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe o comprovante de pagamento ou outra evidência."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY - Set fields to Mandatory",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Adicionar o item ao catálogo Virtual Agent Search (hoje só está em OTC Suporte à Força de Vendas e Recebíveis)."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Confirmar com o negócio se \"Pré-edição\" é \"Pré-pedido\" (sys_name \"Pre-order\"). v_natura_code pode ser derivado se o solicitante for a própria consultora com código no cadastro. Volume de 4 em 12 meses: rever em 6 meses."
+ },
+ {
+  "sys_id": "249ca6031b702950d1abda4ce54bcb63",
+  "nome_atual": "Realizar reembolso e prestação de contas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 1027,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "alto",
+  "prontidao_atual": 25,
+  "justificativa": "Item de alto volume com 34 perguntas, 18 UI policies e 9 scripts de limpeza. Ele junta processos diferentes por público: administrativo (adiantamento, cartão corporativo, reembolso) e força de vendas (cartão corporativo, verba evento, verba mês, verba mês GV, reembolso de despesas de transferência). Separando por processo, cada item fica com 6 a 14 perguntas e o LLM acerta a intenção pela frase do usuário.",
+  "nome_sugerido": "Realizar reembolso e prestação de contas (dividir em 4)",
+  "short_description_sugerida": "Prestação de contas de cartão corporativo, adiantamento e verbas, e pedido de reembolso de despesas.",
+  "descricao_sugerida": "Item a ser substituído por \"Prestar contas de cartão corporativo\", \"Prestar contas de adiantamento\", \"Solicitar reembolso de despesas\" e \"Prestar contas de verba evento ou verba mês (força de vendas)\". Para dúvidas, use \"Tirar dúvida sobre reembolso e prestação de contas\". Para LATAM, use \"Prestar contas - LATAM\".",
+  "frases_exemplo": [
+   "preciso prestar contas",
+   "quero pedir reembolso de despesas"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "perguntas",
+    "problema": "34 perguntas; acima de 20 a VA abre janela.",
+    "acao": "Dividir por processo."
+   },
+   {
+    "onde": "9 anexos (v_attach_*)",
+    "problema": "Attachment: tratamento à parte; em alguns ramos há 3 ou 4 anexos.",
+    "acao": "Manter Attachment OOB só no ramo que precisa, no fim da conversa."
+   },
+   {
+    "onde": "v_inform_the_management / v_inform_the_sector",
+    "problema": "Lookup Select Box com reference qualifier dinâmico em cascata (mercado > gerência > setor).",
+    "acao": "Testar em conversa; se não resolver, trocar por Reference com qualificador simples ou derivar gerência e setor do cadastro do colaborador de força de vendas."
+   },
+   {
+    "onde": "ui_policy EY: Which audience do you belong to?",
+    "problema": "Referencia v_attach_proof_of_accountability_here, que não está entre as variáveis ativas.",
+    "acao": "Remover a ação órfã."
+   },
+   {
+    "onde": "v_if_you_have_questions / v_attached_file",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Links na descrição dos derivados."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Which audience do you belong to? / EY: Accountability on which process? / EY: Accountability of the Sales Force on which process?",
+    "acao": "remover",
+    "substituicao": "Processo fixado por item; público vira pergunta simples só onde muda o fluxo."
+   },
+   {
+    "nome": "EY: If \"Are there any expense disputes on the invoice?\" / \"Is there any credit\" / \"Are there any refunds?\"",
+    "acao": "manter",
+    "substituicao": "Policies sem script, compatíveis, no derivado de cartão corporativo e nos de adiantamento/verba."
+   },
+   {
+    "nome": "Demais policies por processo (13)",
+    "acao": "converter",
+    "substituicao": "Viram mandatory direto nas variáveis de cada derivado."
+   },
+   {
+    "nome": "EY: Date MM/AAAA / EY: Date MM/AAAA - budget month",
+    "acao": "converter",
+    "substituicao": "Validation Regex ^(0[1-9]|1[0-2])/?\\d{4}$ nas variáveis de mês."
+   },
+   {
+    "nome": "EY: Clear Fields / Clear field accountability / Clear Field sales force / Clear field Market / Clear fields Refunds / Clear field credit invoice / Clear field expense claims",
+    "acao": "remover",
+    "substituicao": "Limpeza em cascata desnecessária na conversa e com a divisão."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Desativar o item atual após publicar os derivados, mantendo redirecionamento dos links do portal.",
+    "Os quatro derivados podem apontar para o mesmo flow \"EY: Perform reimbursement and accountability\" com o processo fixado por default value."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Prestar contas de cartão corporativo",
+    "short_description": "Enviar a prestação de contas mensal da fatura do cartão corporativo.",
+    "descricao": "Use para prestar contas dos gastos do cartão corporativo de um mês: número do relatório de despesas gerado no Trip/Linx/Sharepoint, valor, capa do relatório e, se for força de vendas, a fatura e eventuais contestações ou créditos. Não use para tirar dúvidas (use \"Tirar dúvida sobre reembolso e prestação de contas\") nem para desbloquear ou alterar o limite do cartão.",
+    "frases_exemplo": [
+     "preciso prestar contas do cartão corporativo",
+     "enviar a prestação de contas da fatura de março",
+     "fechar a fatura do cartão corp",
+     "tenho uma despesa não reconhecida na fatura e preciso prestar contas",
+     "prestação de contas cartão corporativo força de vendas"
+    ],
+    "fixar": "v_accountability_on_which_process = corporate_card ou v_accountability_of_the_sales_force_on_what_process = corporate_card, conforme v_which_audience_do_you_belong_to (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_which_audience_do_you_belong_to",
+      "conversational_label": "Você é do administrativo, operacional, varejo ou força de vendas?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_invoice_reference_month",
+      "conversational_label": "De qual mês é a fatura? (MM/AAAA)"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_the_expense_report_number_generated",
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_value_of_accountability",
+      "conversational_label": "Qual o valor da prestação de contas?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "conversational_label": "Anexe a capa do relatório exportada do sistema."
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_attach_corporate_card_invoice",
+      "conversational_label": "Anexe a fatura do cartão corporativo. (força de vendas)"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_are_there_any_expense_claims_on_the_invoice",
+      "conversational_label": "Tem alguma despesa contestada nessa fatura? (força de vendas)"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_enter_the_disputed_amount_on_the_invoice",
+      "conversational_label": "Qual o valor contestado?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_attach_the_claim_form_for_unrecognized_expenses",
+      "conversational_label": "Anexe o formulário de contestação já enviado ao banco."
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_is_there_any_credit_on_that_invoice",
+      "conversational_label": "Tem algum crédito nessa fatura? (força de vendas)"
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_existing_credit_amount_on_the_invoice",
+      "conversational_label": "Qual o valor do crédito?"
+     },
+     {
+      "ordem": 12,
+      "variavel": "v_are_there_any_refunds",
+      "conversational_label": "Houve devolução de valor à empresa?"
+     },
+     {
+      "ordem": 13,
+      "variavel": "v_return_value",
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "ordem": 14,
+      "variavel": "v_return_date",
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "ordem": 15,
+      "variavel": "v_attach_proof_of_return",
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "ordem": 16,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   },
+   {
+    "nome": "Prestar contas de adiantamento",
+    "short_description": "Prestar contas de um adiantamento de viagem ou despesas recebido.",
+    "descricao": "Use para prestar contas de um adiantamento que você recebeu (viagem ou despesas), informando o relatório gerado no Trip/Linx/Sharepoint, o valor e eventuais devoluções. Não use para pedir reembolso de despesas pagas do seu bolso (use \"Solicitar reembolso de despesas\") nem para LATAM (use \"Prestar contas - LATAM\").",
+    "frases_exemplo": [
+     "preciso prestar contas do adiantamento de viagem",
+     "recebi adiantamento e quero fazer a prestação de contas",
+     "devolver sobra de adiantamento",
+     "prestação de contas de adiantamento administrativo",
+     "fechar adiantamento"
+    ],
+    "fixar": "v_accountability_on_which_process = advance (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_enter_the_expense_report_number_generated",
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_value_of_accountability",
+      "conversational_label": "Qual o valor da prestação de contas?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "conversational_label": "Anexe a capa do relatório exportada do sistema."
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_are_there_any_refunds",
+      "conversational_label": "Sobrou valor que você devolveu à empresa?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_return_value",
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_return_date",
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_attach_proof_of_return",
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar reembolso de despesas",
+    "short_description": "Pedir reembolso de despesas corporativas pagas com dinheiro próprio.",
+    "descricao": "Use para pedir reembolso de despesas de trabalho que você pagou do próprio bolso (viagem, transporte, refeição) ou, para força de vendas, reembolso de despesas de transferência. Não use para cartão corporativo nem adiantamento (há itens próprios de prestação de contas) e não use para reembolso de cliente final.",
+    "frases_exemplo": [
+     "quero pedir reembolso de uma despesa",
+     "paguei o táxi do meu bolso e quero reembolso",
+     "reembolso de despesas de viagem",
+     "reembolso de despesa de transferência força de vendas",
+     "como sou reembolsado de um gasto da empresa?"
+    ],
+    "fixar": "v_accountability_on_which_process = reimbursement ou v_accountability_of_the_sales_force_on_what_process = reimbursement_transfer_expenses, conforme o público (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_which_audience_do_you_belong_to",
+      "conversational_label": "Você é do administrativo, operacional, varejo ou força de vendas?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_refund_amount",
+      "conversational_label": "Qual o valor do reembolso?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_the_expense_report_number_generated",
+      "conversational_label": "Qual o número do relatório de despesas gerado no Trip, Linx ou Sharepoint? (administrativo)"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_attach_cover_document_exported_from_trip_linx_sharepoint",
+      "conversational_label": "Anexe a capa do relatório exportada do sistema. (administrativo)"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_inform_the_market",
+      "conversational_label": "De qual mercado você é? (força de vendas)"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_inform_the_management",
+      "conversational_label": "Qual a sua gerência?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_inform_the_sector",
+      "conversational_label": "Qual o seu setor?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_attach_expense_template",
+      "conversational_label": "Anexe a planilha de despesas preenchida. (força de vendas)"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   },
+   {
+    "nome": "Prestar contas de verba evento ou verba mês (força de vendas)",
+    "short_description": "Prestar contas da verba evento, verba mês ou verba mês GV recebida pela força de vendas.",
+    "descricao": "Use, se você é da força de vendas, para prestar contas de uma verba evento, verba mês ou verba mês GV já recebida. Não use para pedir a verba (use \"Solicitar verba evento ou verba mês\") nem para dúvidas.",
+    "frases_exemplo": [
+     "prestar contas da verba evento",
+     "preciso enviar a prestação de contas da verba mês",
+     "fechar verba mês GV",
+     "prestação de contas de verba do encontro de consultoras",
+     "enviar capa de lote da verba evento"
+    ],
+    "fixar": "v_which_audience_do_you_belong_to = sales_force (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_accountability_of_the_sales_force_on_what_process",
+      "conversational_label": "É verba evento, verba mês ou verba mês GV?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_budget_reference_month",
+      "conversational_label": "De qual mês é a verba? (MM/AAAA)"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_total_amount_of_accountability",
+      "conversational_label": "Qual o valor total da prestação de contas?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_inform_the_market",
+      "conversational_label": "De qual mercado você é?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_inform_the_management",
+      "conversational_label": "Qual a sua gerência?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_inform_the_sector",
+      "conversational_label": "Qual o seu setor?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_attach_cover_document_batch_report_cover",
+      "conversational_label": "Anexe a capa do lote ou do relatório."
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_are_there_any_refunds",
+      "conversational_label": "Houve devolução de valor à empresa?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_return_value",
+      "conversational_label": "Qual o valor devolvido?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_return_date",
+      "conversational_label": "Em que data foi a devolução?"
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_attach_proof_of_return",
+      "conversational_label": "Anexe o comprovante da devolução."
+     },
+     {
+      "ordem": 12,
+      "variavel": "v_additional_information",
+      "conversational_label": "Quer acrescentar alguma informação?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Item disponível para Brasil, Uruguai e Equador, enquanto existe o irmão \"Realizar Prestação de Contas - LATAM\"; alinhar user criteria para não haver dois itens concorrendo para o mesmo usuário. Descrição atual cita só Natura e The Body Shop, mas o set de empresa inclui Aesop. Mercado/gerência/setor poderiam ser derivados do cadastro da força de vendas. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "3d34417b1bdce1d0d1abda4ce54bcbbd",
+  "nome_atual": "Solicitação de Verba Evento e Verba Mês - Força de Vendas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 492,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Intenção única (pedir verba) com duas variações triviais (evento ou mês), que o LLM preenche pela frase. Não há bloqueador; o trabalho é levar os links dos templates para a descrição, labels em pt-BR e deixar claro que prestação de contas da verba é outro item.",
+  "nome_sugerido": "Solicitar verba evento ou verba mês (força de vendas)",
+  "short_description_sugerida": "Pedir adiantamento de verba evento ou verba mês para a força de vendas.",
+  "descricao_sugerida": "Use, se você é da força de vendas, para pedir o adiantamento de verba evento (encontros, eventos com consultoras) ou verba mês. É preciso anexar a base de adiantamento preenchida no modelo (links na base de conhecimento) e, para força de vendas, as aprovações. Não use para prestar contas de uma verba já recebida (use \"Prestar contas de verba evento ou verba mês\").",
+  "frases_exemplo": [
+   "preciso solicitar verba evento",
+   "quero pedir a verba mês",
+   "adiantamento de verba para o encontro de consultoras",
+   "solicitar verba para evento da minha gerência",
+   "pedido de verba mês força de vendas"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_event_fund_advance_base / v_attach_the_monthly_budget_advance_base / v_attach_advance_approvals",
+    "problema": "Attachment: tratamento à parte.",
+    "acao": "Manter Attachment OOB, no fim da conversa, só o do tipo escolhido."
+   },
+   {
+    "onde": "v_template_verba_evento / v_template_verba_mes",
+    "problema": "Rich Text Label com link do modelo: só a URL sobrevive.",
+    "acao": "Colocar os links dos modelos na descrição do item."
+   },
+   {
+    "onde": "vs_sub_company",
+    "problema": "Reference qualifier dinâmico.",
+    "acao": "Testar em conversa (recomendação geral do set em análise separada)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_application_for_what_type_of_funding",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você quer pedir verba evento ou verba mês?",
+    "obs": "Primeira pergunta, normalmente vem da frase do usuário."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_which_audience_do_you_belong_to",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você é da força de vendas ou de outra área?",
+    "obs": "Se o item é só para força de vendas, avaliar default sales_force e ocultar."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_the_event_fund_advance_base",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a base de adiantamento da verba evento preenchida no modelo."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_attach_the_monthly_budget_advance_base",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a base de adiantamento da verba mês preenchida no modelo."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_attach_advance_approvals",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe as aprovações do adiantamento."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_document_repository",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label informativo sem função na conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Which audience do you belong to? / EY: type of funding",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: If \"Request for what type of grant?\" for \"Month Budget\" / \"Event Verb\"",
+    "acao": "manter",
+    "substituicao": "Compatíveis; os rótulos de template saem da conversa."
+   },
+   {
+    "nome": "EY: If \"Which audience do you belong to?\" for \"Sales Force\"",
+    "acao": "manter",
+    "substituicao": "Compatível."
+   },
+   {
+    "nome": "EY: clear type of event / EY: Clear field",
+    "acao": "remover",
+    "substituicao": "Limpeza desnecessária na conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Disponível também para Argentina e Equador: o sys_name está em espanhol; prever conversational label em espanhol para esses usuários. Nova ordem: tipo de verba antes do público. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "9e05bc511b38a514a530426fe54bcbdf",
+  "nome_atual": "Dúvidas sobre Reembolso Corporativo e Prestação de Contas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 1038,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 55,
+  "justificativa": "Alto volume e intenção única (tirar dúvida), com um processo principal e três select boxes de subtipo com o mesmo label. Não há bloqueador. Com labels distintos, a descrição preenchida (hoje vazia) e remoção dos scripts, fica bem conversacional. O ramo de conciliação bancária (dados de depósito) é quase um \"informar depósito\", mas pode ficar aqui.",
+  "nome_sugerido": "Tirar dúvida sobre reembolso e prestação de contas",
+  "short_description_sugerida": "Dúvidas sobre reembolso de viagem, adiantamento, prestação de contas e identificação de depósitos.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre reembolso de despesas corporativas, adiantamento administrativo, prestação de contas (inclusive cancelamento de capa de lote da força de vendas) ou para identificar um depósito/devolução feito à empresa (conciliação bancária). Não use para enviar a prestação de contas ou pedir o reembolso em si; para isso use \"Prestar contas de cartão corporativo\", \"Prestar contas de adiantamento\", \"Solicitar reembolso de despesas\" ou \"Prestar contas de verba evento ou verba mês\".",
+  "frases_exemplo": [
+   "meu reembolso ainda não caiu, o que aconteceu?",
+   "tenho dúvida sobre a prestação de contas",
+   "como funciona o adiantamento de viagem?",
+   "fiz um depósito devolvendo o adiantamento, como identifico?",
+   "preciso cancelar a capa do lote",
+   "dúvida reembolso"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_if_you_have_questions_about",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link da FAQ na descrição."
+   },
+   {
+    "onde": "descrição",
+    "problema": "Descrição vazia; o texto está só na short description.",
+    "acao": "Preencher a descrição sugerida."
+   },
+   {
+    "onde": "ui_policy EY: If \"Doubt about which process?\" for \"Bank Reconciliation\"",
+    "problema": "Mostra enter_deposit_details (o variable set \"Informe os dados do depósito\") como mandatory.",
+    "acao": "Compatível, mas conferir se o set aparece na conversa; senão, marcar mandatory nas variáveis v_depositor, v_date, v_value, v_accounting_document_batch."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_doubt_about_which_process",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sua dúvida é sobre reembolso, adiantamento, prestação de contas ou identificação de depósito?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_what_type_of_doubt_Reimbursement",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre reembolso, qual é a dúvida?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_what_type_of_doubt_Advance",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre adiantamento, qual é a dúvida?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_what_type_of_doubt_do_you_have",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre prestação de contas, qual é a dúvida?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_budget_reference_month",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual mês é o lote? (MM/AAAA)",
+    "obs": "Só para cancelamento de capa de lote; trocar o client script por Validation Regex."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_depositor",
+    "origem": "set:Informe os dados do depósito",
+    "acao": "manter",
+    "conversational_label": "Quem fez o depósito?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_date",
+    "origem": "set:Informe os dados do depósito",
+    "acao": "manter",
+    "conversational_label": "Em que data foi o depósito?"
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_value",
+    "origem": "set:Informe os dados do depósito",
+    "acao": "manter",
+    "conversational_label": "Qual o valor depositado?"
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_accounting_document_batch",
+    "origem": "set:Informe os dados do depósito",
+    "acao": "manter",
+    "conversational_label": "Tem o número do documento contábil ou lote?"
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_which_audience_do_you_belong_to",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você é do administrativo, operacional, varejo ou força de vendas?",
+    "obs": "Avaliar derivar do perfil; se não, manter depois do processo."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_describe_your_question",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte qual é a sua dúvida."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Doubt about which process? / EY: Which audience do you belong to?",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: If \"Doubt about which process?\" for Accountability / Bank Reconciliation / Advance / Reimbursement",
+    "acao": "manter",
+    "substituicao": "Policies sem script, compatíveis."
+   },
+   {
+    "nome": "EY: If \"What kind of doubt do you have?\" for \"Batch Cover Cancellation\"",
+    "acao": "manter",
+    "substituicao": "Compatível."
+   },
+   {
+    "nome": "EY: Clear Fields",
+    "acao": "remover",
+    "substituicao": "Limpeza desnecessária na conversa."
+   },
+   {
+    "nome": "EY: Date MM/AAAA",
+    "acao": "converter",
+    "substituicao": "Validation Regex ^(0[1-9]|1[0-2])/?\\d{4}$."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Disponível para vários países LATAM: prever labels em espanhol. Nova ordem: processo antes do público. Se o volume de conciliação bancária for relevante, avaliar um item próprio \"Identificar depósito ou devolução feita à empresa\". Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "bd575a8f1bb8e550d1abda4ce54bcb1d",
+  "nome_atual": "Realizar Prestação de Contas - LATAM",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 413,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Formulário curto (tipo, quantidade, valor, moeda e dois anexos), sem lógica condicional relevante. Ajustes: ocultar v_opened_by, trocar a validação de valor (hoje no formato brasileiro, inadequado para moedas LATAM) e deixar a descrição e os labels claros, com versão em espanhol.",
+  "nome_sugerido": "Prestar contas - LATAM",
+  "short_description_sugerida": "Prestação de contas para colaboradores da Argentina, Chile, Colômbia, Peru e México.",
+  "descricao_sugerida": "Use se você trabalha na Argentina, Chile, Colômbia, Peru ou México e precisa fazer uma prestação de contas (rendición de cuentas), informando quantidade de baixas, valor total, moeda e anexando o modelo preenchido e a aprovação. Não use para anular, reclassificar ou legalizar adiantamentos (use \"Reclassificar ou legalizar adiantamento - LATAM\") e não use se você é do Brasil.",
+  "frases_exemplo": [
+   "necesito hacer una rendición de cuentas",
+   "quero prestar contas, sou da Argentina",
+   "rendir gastos de viaje Chile",
+   "prestação de contas Colômbia",
+   "enviar rendición de cuentas con la plantilla"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_template / v_attach_approval",
+    "problema": "Attachment: tratamento à parte.",
+    "acao": "Manter Attachment OOB, no fim da conversa."
+   },
+   {
+    "onde": "v_click_here_to_download_the_template_that_should_be_used_in_the_field_below",
+    "problema": "Rich Text Label com link do modelo, marcado como mandatory pela policy.",
+    "acao": "Remover o mandatory e levar o link do modelo para a descrição."
+   },
+   {
+    "onde": "client script EY: Validate Value",
+    "problema": "Valida valor no formato brasileiro (milhar com ponto, vírgula decimal), que não serve para todas as moedas LATAM.",
+    "acao": "Trocar por Validation Regex numérica genérica ou remover."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_kind_of_accountability",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Que tipo de prestação de contas você vai fazer?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_how_many_accountability_write_downs_are_being_requested",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quantas baixas de prestação de contas são?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_what_is_the_total_amount_being_held_accountable",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor total da prestação de contas?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_what_currency_is_used",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual moeda?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_attach_the_template",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe o modelo preenchido."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_attach_approval",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a aprovação."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_opened_by",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Default gs.getUserID() e read-only; não perguntar."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_attach_the_support_documents_for_accountability_below",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label informativo; a instrução vai para o label do anexo."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Make fields Visible and Mandatory On Load",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis e read-only em v_opened_by; tirar o mandatory do rich text label e a referência a v_which_country (não existe no item)."
+   },
+   {
+    "nome": "EY: Validate Value",
+    "acao": "converter",
+    "substituicao": "Validation Regex numérica independente de moeda."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Cadastrar conversational labels também em espanhol (público LATAM)."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script igual ao de RPE (sem regra VIP) e comentário \"Solicitação de RPE\": confirmar se foi copiado por engano. Moeda poderia ter default pelo país do usuário."
+ },
+ {
+  "sys_id": "b2fc94b81b09a5d0d1abda4ce54bcb5e",
+  "nome_atual": "Reclassificação e Legalização de Adiantamentos a Colaboradores – LATAM",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 303,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 50,
+  "justificativa": "Uma intenção de negócio (tratar adiantamento de colaborador LATAM) com quatro processos (anulação, reclassificação, reintegração de depósitos, legalização de pagamentos) que só mudam poucas perguntas. Não compensa dividir: com o processo como primeira pergunta e policies sem script, a conversa fica com 8 a 11 perguntas. Há dois campos de valor sobrepostos e validação monetária brasileira que precisam de revisão.",
+  "nome_sugerido": "Reclassificar ou legalizar adiantamento - LATAM",
+  "short_description_sugerida": "Anular, reclassificar, reintegrar depósito ou legalizar adiantamento de colaborador na LATAM.",
+  "descricao_sugerida": "Use se você trabalha na Argentina, Chile, Colômbia, Peru ou México e precisa anular um documento de adiantamento, reclassificar lançamentos, reintegrar depósitos ou legalizar pagamentos de adiantamento a colaboradores. Não use para a prestação de contas comum (use \"Prestar contas - LATAM\") e não use se você é do Brasil.",
+  "frases_exemplo": [
+   "necesito anular un anticipo",
+   "reclasificar anticipo de empleado",
+   "legalizar pagos de anticipo en Colombia",
+   "reintegro de depósito de anticipo",
+   "quero anular o documento de adiantamento no México"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_report_or_detail_of_the_request / v_attach_approval / v_attach_the_claim_vouchers",
+    "problema": "Attachment: tratamento à parte.",
+    "acao": "Manter Attachment OOB no fim; v_attach_the_claim_vouchers só aparece (não é obrigatório) em reclassificação e reintegração."
+   },
+   {
+    "onde": "v_click_here_to_download_the_template",
+    "problema": "Rich Text Label com link, marcado mandatory pela policy.",
+    "acao": "Remover o mandatory e levar o link para a descrição."
+   },
+   {
+    "onde": "v_enter_the_total_amount_of_the_accounting x v_enter_the_total_amount_of_legalization_requested",
+    "problema": "Dois valores totais: um sempre mandatory e outro condicional; o usuário pode achar que é a mesma pergunta.",
+    "acao": "Confirmar com o negócio; se for o mesmo dado, manter um só com label pelo processo."
+   },
+   {
+    "onde": "client script EY: Validate value",
+    "problema": "Validação monetária no formato brasileiro.",
+    "acao": "Trocar por Validation Regex numérica independente de moeda."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_process_is_the_request_for",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O que você precisa: anular, reclassificar, reintegrar depósito ou legalizar pagamento?",
+    "obs": "Primeira pergunta; normalmente vem da frase."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_which_country",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual país?",
+    "obs": "Avaliar default pelo país do usuário."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_what_audience_is_question",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual público é o colaborador?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "vs_document_number",
+    "origem": "set:Informe o número do documento a ser anulado",
+    "acao": "manter",
+    "conversational_label": "Qual o número do documento a ser anulado?",
+    "obs": "Só anulação."
+   },
+   {
+    "ordem": 5,
+    "variavel": "vs_document_year",
+    "origem": "set:Informe o número do documento a ser anulado",
+    "acao": "manter",
+    "conversational_label": "De que ano é esse documento?",
+    "obs": "Só anulação."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_what_month",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual mês são os lançamentos? (MM/AAAA)"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_enter_the_total_amount_of_the_accounting",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor total contábil?",
+    "obs": "Só legalização, reclassificação e reintegração."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_enter_the_total_amount_of_legalization_requested",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o valor total a legalizar?",
+    "obs": "Rever sobreposição com o anterior."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_what_currency_is_used",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual moeda?"
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_attach_the_report_or_detail_of_the_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe o relatório ou detalhamento do pedido."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_attach_the_claim_vouchers",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Se tiver, anexe os comprovantes."
+   },
+   {
+    "ordem": 12,
+    "variavel": "v_attach_approval",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a aprovação."
+   },
+   {
+    "ordem": 13,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   },
+   {
+    "ordem": 14,
+    "variavel": "v_opened_by",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Default gs.getUserID() e read-only."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Make fields Visible and Mandatory On Load",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis; tirar o mandatory do rich text label."
+   },
+   {
+    "nome": "EY: Make field Visible and Mandatory IF ... \"Aborts\" / \"Reclassification\" OR \"Reintegrating\" / \"Legalization...\"",
+    "acao": "manter",
+    "substituicao": "Policies sem script, compatíveis."
+   },
+   {
+    "nome": "EY: Validate value",
+    "acao": "converter",
+    "substituicao": "Validation Regex numérica."
+   },
+   {
+    "nome": "EY: Validate date 2",
+    "acao": "converter",
+    "substituicao": "Validation Regex ^(0[1-9]|1[0-2])/?\\d{4}$ em v_what_month."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Cadastrar conversational labels também em espanhol (público LATAM)."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Nova ordem: processo antes de país e público. Producer script comentado como \"Solicitação de RPE\" (sem regra VIP): confirmar se é cópia."
+ },
+ {
+  "sys_id": "2d4edf611b042d58a530426fe54bcb87",
+  "nome_atual": "Dúvidas no processo de RPE",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 83,
+  "recomendacao": "conversacional",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 70,
+  "justificativa": "Item de dúvida com só duas perguntas próprias (tipo de dúvida e descrição), sem bloqueador. Falta apenas explicar a sigla RPE na descrição, cadastrar conversational labels e remover o script de limpeza.",
+  "nome_sugerido": "Tirar dúvida sobre RPE (solicitação de produtos acabados do estoque)",
+  "short_description_sugerida": "Dúvidas sobre o processo de RPE, a solicitação de produtos acabados do estoque.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre o RPE (Solicitação de Produtos Acabados em Estoque): como pedir, aprovação, prazos, centro de custo, status do pedido. Não use para fazer o pedido de produtos em si (use \"Solicitar produtos acabados do estoque (RPE)\").",
+  "frases_exemplo": [
+   "tenho dúvida sobre RPE",
+   "como funciona a solicitação de produtos do estoque?",
+   "meu RPE ainda não foi aprovado",
+   "onde acompanho meu pedido de RPE?",
+   "não achei o centro de custo no RPE"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_faq_doubts_in_the_rpe_process",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Link da FAQ na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_type_of_doubt_do_you_have",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual assunto é a sua dúvida de RPE?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_report_your_query",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte qual é a sua dúvida."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: mandatory fields for Catalog Item \"Doubts in the RPE process\"",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas duas variáveis."
+   },
+   {
+    "nome": "EY: Clear field",
+    "acao": "remover",
+    "substituicao": "Limpeza desnecessária."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Containers com ordem estranha (formatter2 antes do Container Start): arrumar o layout, sem impacto na conversa. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "4ca298e41b5ef910a530426fe54bcb82",
+  "nome_atual": "Solicitação de RPE",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 3033,
+  "recomendacao": "manter_formulario",
+  "prioridade": "alta",
+  "esforco": "baixo",
+  "prontidao_atual": 15,
+  "justificativa": "Item de maior volume do lote, mas bloqueado: variável Custom com widget de anexo obrigatório, multi-row variable set com a lista de produtos (grid), client script onChange que percorre as linhas do MRVS para exigir anexo acima de 1000 unidades, onSubmit que trava o envio e onLoad que deixa tudo read-only. É um formulário de pedido com tabela de itens, que não cabe em conversa. Manter como formulário e investir em nome e descrição para a VA encontrar e oferecer o link.",
+  "nome_sugerido": "Solicitar produtos acabados do estoque (RPE)",
+  "short_description_sugerida": "Pedir produtos acabados do estoque (RPE) para eventos, amostras ou uso interno, com centro de custo.",
+  "descricao_sugerida": "Use para fazer uma Solicitação de Produtos Acabados em Estoque (RPE): pedir produtos do estoque para eventos, ações, amostras ou uso interno, informando destinatário, centro de custo, finalidade e a lista de produtos (código de venda e quantidade). Pedidos acima de 1000 unidades (exceto amostra) exigem aprovação do operador logístico em anexo. É preciso ter o centro de custo cadastrado. Para dúvidas sobre o processo, use \"Tirar dúvida sobre RPE\". O pedido é feito no formulário.",
+  "frases_exemplo": [
+   "quero fazer um RPE",
+   "preciso pedir produtos do estoque para um evento",
+   "solicitar produtos acabados para amostra",
+   "abrir RPE para o meu centro de custo",
+   "pedido de produto do estoque para ação de marketing",
+   "como peço produtos Natura para uso interno?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "attach_mandatory_widget",
+    "problema": "Variável Custom (type 14) com widget de portal \"Attach mandatory\": não renderiza em conversa.",
+    "acao": "Se um dia for convertido: trocar por Attachment OOB com UI policy; enquanto isso, manter formulário."
+   },
+   {
+    "onde": "set:Adicione aqui os itens que deseja solicitar",
+    "problema": "Multi-row variable set (lista de produtos com quantidade): grid não é conduzido bem em conversa.",
+    "acao": "Manter formulário."
+   },
+   {
+    "onde": "client script EY: Mandat attach over 100 products",
+    "problema": "onChange sobre o MRVS com parse de JSON (ui_type 1).",
+    "acao": "Manter no formulário."
+   },
+   {
+    "onde": "client script EY: Read only",
+    "problema": "onLoad com g_form.setVariablesReadOnly(true): na conversa perguntas read-only são puladas.",
+    "acao": "Revisar: parece resíduo; confirmar se deveria existir."
+   },
+   {
+    "onde": "client script EY: If it is not found CC will not open",
+    "problema": "onSubmit que bloqueia envio comparando \"No\" (maiúsculo) enquanto outra lógica usa \"no\".",
+    "acao": "Corrigir a comparação; alternativa no-code: Validation na pergunta vs_did_you_find_the_cost_center."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read only",
+    "acao": "remover",
+    "substituicao": "Avaliar remoção: deixa o formulário inteiro somente leitura na abertura."
+   },
+   {
+    "nome": "EY: If it is not found CC will not open",
+    "acao": "manter",
+    "substituicao": "Corrigir a comparação de caixa (\"No\" x \"no\")."
+   },
+   {
+    "nome": "EY: Hide Label and Attachment over 1000 products",
+    "acao": "manter",
+    "substituicao": "Formulário."
+   },
+   {
+    "nome": "EY: Mandat attach over 100 products / EY: Clear value of Attach mandatory",
+    "acao": "manter",
+    "substituicao": "Formulário."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Adicionar o item ao catálogo Virtual Agent Search (hoje só está em OTC Serviços de Suporte Administrativo) para a VA encontrar e oferecer o link.",
+    "Corrigir a descrição em inglês (\"Finished Goods Requests (FPR)\") para pt-BR."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Sem user criteria de disponibilidade (disponivel_para vazio): confirmar se está aberto a todos de propósito. Em uma fase futura, avaliar redesenho: item conversacional para pedido de um único produto e formulário só para listas."
+ },
+ {
+  "sys_id": "d131c8533b6b6ad0924d0247f4e45aa1",
+  "nome_atual": "Beneficiamento, Sucatas e Resíduos: Envio de informações, solicitações e dúvidas de clientes",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 8,
+  "recomendacao": "manter_formulario",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 20,
+  "justificativa": "Formulário público para cliente externo (aberto com usuário genérico), com variável Custom de anexo público (widget) e uma policy que deixa quase todas as perguntas read-only, o que faria a conversa pular tudo. O público não é colaborador do VA interno e o volume é muito baixo. Manter formulário e só corrigir nome e descrição.",
+  "nome_sugerido": "Contas a receber: beneficiamento, sucatas e resíduos (clientes)",
+  "short_description_sugerida": "Canal para clientes de beneficiamento, sucata e resíduos falarem com o contas a receber da Natura.",
+  "descricao_sugerida": "Formulário para empresas clientes de beneficiamento, sucatas e resíduos que têm débitos com a Natura e precisam enviar comprovantes de pagamento, pedir segunda via, devoluções, pagamentos parciais, cancelamento de notas, alteração de dados de contato ou tirar dúvidas com o contas a receber. Não é para colaboradores.",
+  "frases_exemplo": [
+   "sou cliente de sucata e quero enviar o comprovante de pagamento",
+   "preciso falar com o contas a receber sobre resíduos",
+   "alterar contato da empresa compradora de sucata",
+   "dúvida sobre boleto de beneficiamento"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_add_attachment",
+    "problema": "Variável Custom (type 14) com widget \"EY: Enable public attachment\": não renderiza em conversa.",
+    "acao": "Manter formulário (anexo público para usuário não autenticado)."
+   },
+   {
+    "onde": "ui_policy EY: Read only fields",
+    "problema": "Deixa read-only quase todas as perguntas sempre (inclusive e-mail, categoria e descrição); na conversa seriam puladas, e no formulário parece erro.",
+    "acao": "Revisar a policy; provavelmente deveria valer só na visualização do caso."
+   },
+   {
+    "onde": "describe_your_email",
+    "problema": "Conversational label preenchido com o nome técnico \"describe_your_email\".",
+    "acao": "Trocar por \"Qual o novo e-mail de contato?\" ou limpar."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read only fields",
+    "acao": "converter",
+    "substituicao": "Revisar condição; hoje sempre ativa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Short description atual (\"Sou cliente, tenho débitos a pagar...\") não bate com o nome: usar a sugerida."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script força opened_by/requested_for para o usuário genérico (acn_guest_user). Com 8 casos em 12 meses, avaliar se o canal ainda é necessário."
+ },
+ {
+  "sys_id": "f96c20891b606554a530426fe54bcb0f",
+  "nome_atual": "Informações de motoboy, correios e malotes corporativos",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 16,
+  "recomendacao": "conversacional",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 65,
+  "justificativa": "Duas perguntas próprias (tipo de dúvida e descrição), sem scripts e sem bloqueador. A descrição atual promete \"solicitar serviços\", mas o formulário só registra dúvida (o pedido de serviço é feito pelo portal linkado no rótulo); basta alinhar nome e descrição e cadastrar os labels.",
+  "nome_sugerido": "Tirar dúvida sobre motoboy, correios e malote",
+  "short_description_sugerida": "Dúvidas sobre envio por motoboy, correios e malote corporativo.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre envio de documentos e objetos por motoboy, correios ou malote corporativo: prazos, rastreio, como pedir, custos. O pedido do serviço em si é feito no portal de serviços indicado na base de conhecimento. Não use para serviços de cartório.",
+  "frases_exemplo": [
+   "como faço para mandar um documento por motoboy?",
+   "meu malote não chegou",
+   "qual o prazo do malote para a fábrica?",
+   "dúvida sobre envio pelos correios",
+   "preciso rastrear uma correspondência"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_faq / v_portal",
+    "problema": "Rich Text Label com links da FAQ e do portal de pedido: só a URL sobrevive.",
+    "acao": "Levar os links para a descrição do item."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_doubt",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sua dúvida é sobre motoboy, correios ou malote?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_describe_your_doubt",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte qual é a sua dúvida."
+   },
+   {
+    "ordem": 3,
+    "variavel": "vs_additional_information",
+    "origem": "set:EY: Additional information",
+    "acao": "remover",
+    "obs": "Redundante com v_describe_your_doubt; remover o set \"EY: Additional information\" deste item."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas duas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ },
+ {
+  "sys_id": "ad8d410d1ba42910d1abda4ce54bcb20",
+  "nome_atual": "Solicitação de pagamento de fornecedor",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 35,
+  "justificativa": "Nenhum chamado desde a criação (total 0). O item é restrito à célula de Remuneração e Pagamentos e tem 22 perguntas, busca de fornecedor por GlideAjax e anexo obrigatório. Não vale converter; confirmar com o dono se o processo ainda existe ou migrou para outro canal (ex.: Ariba) antes de desativar.",
+  "nome_sugerido": "Solicitar pagamento de fornecedor",
+  "short_description_sugerida": "Pedir pagamento de fornecedor fora do fluxo padrão (uso da célula de Remuneração e Pagamentos).",
+  "descricao_sugerida": "Uso interno da célula de Remuneração e Pagamentos para registrar pedido de pagamento de fornecedor com dados fiscais, centro de custo/PEP e checklist de conferência.",
+  "frases_exemplo": [
+   "preciso pagar um fornecedor",
+   "solicitar pagamento de nota de fornecedor"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se desativado, remover do catálogo Virtual Agent Search."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Se o item for mantido, ele passa do limite de 20 perguntas: derivar dados do fornecedor (código, CNPJ, e-mail) a partir de v_supplier_name no servidor e considerar manter como formulário."
+ },
+ {
+  "sys_id": "d00642bf1bc8a11ca530426fe54bcbb0",
+  "nome_atual": "Solicitar serviços e informações de cartório",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 2,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Mistura pedido de serviço de cartório e dúvida, mas com 2 chamados em 12 meses não compensa dividir. O total passa de 20 perguntas por causa do set de dados do solicitante; com policies sem script e os dados do solicitante derivados, a conversa fica abaixo do limite. Esforço médio pelo número de ajustes, prioridade baixa pelo volume.",
+  "nome_sugerido": "Solicitar serviço de cartório ou tirar dúvida",
+  "short_description_sugerida": "Pedir reconhecimento de firma, autenticação e outros serviços de cartório, ou tirar dúvidas sobre o processo.",
+  "descricao_sugerida": "Use para pedir um serviço de cartório para a empresa ou para você (reconhecimento de firma, autenticação de cópia, procuração e outros), informando o escritório, se é pessoa física ou jurídica, o centro de custo ou PEP e se é preciso retirar o documento; ou para tirar dúvidas sobre o processo de cartório. Não use para envio de documentos por motoboy ou malote.",
+  "frases_exemplo": [
+   "preciso reconhecer firma de um documento",
+   "autenticar cópia em cartório",
+   "quero pedir um serviço de cartório para a empresa",
+   "dúvida sobre como funciona o cartório",
+   "preciso de uma procuração registrada em cartório"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "perguntas",
+    "problema": "21 perguntas no total (acima de 20).",
+    "acao": "Derivar do usuário os dados do set de solicitante e remover o set \"EY: Additional information\", redundante com v_doubt/v_service."
+   },
+   {
+    "onde": "v_faq / v_notary_info",
+    "problema": "Rich Text Label com link de FAQ: mover o link para a descrição do item ou artigo de KB; na conversa só a URL sobrevive.",
+    "acao": "Links e informações do cartório na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_demand",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você quer pedir um serviço de cartório ou tirar uma dúvida?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_service_notary",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual serviço de cartório você precisa?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_service",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Descreva o serviço.",
+    "obs": "Só quando for \"Outros\"."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_office",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual escritório é o pedido?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_privy_or_corporate",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É um pedido pessoal ou da empresa?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_individuals_or_legal_entities",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É para pessoa física ou jurídica?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_cpf",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o CPF?",
+    "obs": "Validation Regex no lugar do client script."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_cnpj",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o CNPJ?",
+    "obs": "Validation Regex no lugar do client script."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_cost_center_or_pep",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o centro de custo ou PEP (elemento PEP do projeto)?"
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_withdraw_document",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Vai ser preciso retirar o documento em algum lugar?"
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_withdrawal_address",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual o endereço de retirada?"
+   },
+   {
+    "ordem": 12,
+    "variavel": "v_doubt",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "conversational_label": "Conte qual é a sua dúvida.",
+    "obs": "Trocar Single Line por Multi Line Text.",
+    "tipo_sugerido": "Texto de Várias Linhas"
+   },
+   {
+    "ordem": 13,
+    "variavel": "vs_additional_information",
+    "origem": "set:EY: Additional information",
+    "acao": "remover",
+    "obs": "Redundante; remover o set deste item."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_demand."
+   },
+   {
+    "nome": "EY: Show fields when Request notary service / Show CPF / Show CNPJ / Show field when Others / when necessary to withdraw / when service is anything / when Doubts in the process",
+    "acao": "manter",
+    "substituicao": "Policies sem script, compatíveis."
+   },
+   {
+    "nome": "EY: Validade CNPJ / EY: Validate CPF",
+    "acao": "converter",
+    "substituicao": "Validation Regex nas variáveis (CNPJ ^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$, CPF ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$)."
+   },
+   {
+    "nome": "EY: Clear values demand / EY: Clear values individual or legal ent",
+    "acao": "remover",
+    "substituicao": "Limpeza desnecessária na conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Valores de choice em texto livre com acento (\"Solicitar serviço de cartório\", \"Pessoa Física\") usados nas condições das policies: padronizar os values sem acento. Com 2 chamados/ano, avaliar se vale o esforço antes de converter. Producer script (x_nasm_hr_item + EY_ProducerUtils) continua valendo na conversa; nenhuma ação necessária."
+ }
+]

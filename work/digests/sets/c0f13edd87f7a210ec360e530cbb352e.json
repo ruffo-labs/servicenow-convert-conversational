@@ -1,0 +1,33 @@
+{
+ "sys_id": "c0f13edd87f7a210ec360e530cbb352e",
+ "title": "EY: Store (Reference)",
+ "internal_name": "ey_store_reference",
+ "description": "Store utilizando campo de referência",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Solicitar tratativa da loja",
+  "Solicitação para tratativa de caixa Lojas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_store_reference",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which store is your request for?",
+   "reference": "cmn_location",
+   "ref_qual": "nameISNOTEMPTY^company.x_nasm_hr_code=7900^EQ"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_store_reference: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,122 @@
+{
+ "sys_id": "dc72049a872faa10182a0d440cbb3582",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): Show opções - Solicitação de demonstrativo de pagamento; Show - VS - Anexo Opcional.",
+ "vars": {
+  "informe_mes_divergencia": {
+   "label": "Informe o mês da divergência"
+  },
+  "mes_nao_recebimento": {
+   "label": "Informe o mês do não recebimento"
+  },
+  "demonstrativo_divergencia": {
+   "label": "Demonstrativo de pagamento com a divergência"
+  },
+  "mes_ano_referencia": {
+   "label": "Informe o mês/ano de referência"
+  }
+ },
+ "policies": {
+  "nova_g0_1": {
+   "short_description": "Show - VS - Anexo Opcional",
+   "conditions": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026",
+   "actions": {
+    "vs_anexo_opcional": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g1_1": {
+   "short_description": "Show - VS - Anexo Opcional",
+   "conditions": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026",
+   "actions": {
+    "vs_anexo_opcional": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Folha de Pagamento",
+   "short_description": "Pagamento mensal",
+   "description": "Pagamento mensal",
+   "frases_exemplo": [
+    "Solicitação de demonstrativo de pagamento"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "vars": {
+    "mes_ano_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "26f0ff60874d4790182a0d440cbb35da",
+    "3b58041a876faa10182a0d440cbb3585",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "76f8e02a87157210182a0d440cbb355d",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf",
+    "e0a6b324878d4790182a0d440cbb359f",
+    "efb8805a876faa10182a0d440cbb3509"
+   ]
+  },
+  {
+   "name": "Pagamento Mensal (Autoatendimento - Gestão de Gente - servico)",
+   "short_description": "Pagamento mensal",
+   "description": "Pagamento mensal",
+   "frases_exemplo": [
+    "Solicitação de demonstrativo de pagamento"
+   ],
+   "sem_vars": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "vars": {
+    "mes_ano_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g0_1",
+    "26f0ff60874d4790182a0d440cbb35da",
+    "3b58041a876faa10182a0d440cbb3585",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "76f8e02a87157210182a0d440cbb355d",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf",
+    "e0a6b324878d4790182a0d440cbb359f",
+    "efb8805a876faa10182a0d440cbb3509"
+   ]
+  },
+  {
+   "name": "Pagamento Mensal (Autoatendimento - Gestão de Gente - problema)",
+   "short_description": "Pagamento mensal",
+   "description": "Pagamento mensal",
+   "frases_exemplo": [
+    "Divergência no pagamento mensal",
+    "Não recebimento do pagamento mensal"
+   ],
+   "sem_vars": [
+    "mes_ano_referencia"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g1_1",
+    "6757ffa4878d4790182a0d440cbb3506",
+    "99eecb088705cf50182a0d440cbb350b",
+    "c95a14608781c390182a0d440cbb35cf"
+   ]
+  }
+ ]
+}

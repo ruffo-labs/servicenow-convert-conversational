@@ -1,0 +1,163 @@
+{
+ "sys_id": "439f2ae9879fe210182a0d440cbb35b8",
+ "name": "Imposto de Renda",
+ "category": "Folha de Pagamento",
+ "short_description": "Imposto de renda",
+ "description": "D&uacute;vidas referentes ao imposto de renda",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no desconto de Imposto de Renda - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Imposto de Renda"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_de_rendimento_com_a_divergencia",
+    "notificacao_da_receita_federal_se_houver",
+    "informe_o_ano_da_divergencia",
+    "ano_de_referencia"
+   ],
+   "passa_a_obrigatoria": [
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de análise de Informe de Rendimentos com divergência - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Imposto de Renda"
+    }
+   ],
+   "sai_do_formulario": [
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "ano_de_referencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "informe_de_rendimento_com_a_divergencia",
+    "informe_o_ano_da_divergencia"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de informe de rendimentos - Imposto de renda",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Cópia de Documentos"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_de_rendimento_com_a_divergencia",
+    "notificacao_da_receita_federal_se_houver",
+    "informe_o_ano_da_divergencia",
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "ano_de_referencia"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "informe_de_rendimento_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Informe de Rendimento com a divergência",
+   "choices": []
+  },
+  {
+   "name": "notificacao_da_receita_federal_se_houver",
+   "type": "Anexo",
+   "question_text": "Notificação da Receita Federal (se houver)",
+   "choices": []
+  },
+  {
+   "name": "informe_o_ano_da_divergencia",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o ano da divergência",
+   "choices": []
+  },
+  {
+   "name": "demonstrativo_de_pagamento_o_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento o com a divergência",
+   "choices": []
+  },
+  {
+   "name": "informe_em_qual_pagamento_esta_a_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe em qual pagamento está a divergência",
+   "choices": [
+    "Pagamento mensal",
+    "Adiantamento salarial"
+   ]
+  },
+  {
+   "name": "ano_de_referencia",
+   "type": "Texto de Linha Única",
+   "question_text": "Ano de referência",
+   "choices": []
+  },
+  {
+   "name": "informe_o_mes_da_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Abril",
+    "Dezembro",
+    "Janeiro",
+    "Junho",
+    "Agosto",
+    "Novembro",
+    "Outubro",
+    "Maio",
+    "Março",
+    "Fevereiro",
+    "Setembro",
+    "Julho"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

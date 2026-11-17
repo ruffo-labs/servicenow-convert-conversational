@@ -1,0 +1,167 @@
+{
+ "sys_id": "1415094f1bc3e81032822170f54bcb1e",
+ "status": "dividido",
+ "motivo": "Saldo não pede nada extra; não recebimento pede chamado e extrato; solicitação pede orçamento, recibo e valor.",
+ "vars": {
+  "rh_number_called_reimbursement": {
+   "label": "Qual é o número do chamado do pedido de reembolso?"
+  },
+  "rh_budget_value": {
+   "label": "O valor do orçamento ou declaração passa de R$ 1.200,00?"
+  },
+  "att_comprovante_de_pagamento": {
+   "label": "Envie o comprovante de pagamento."
+  },
+  "rh_dependent_complete_name": {
+   "label": "Qual é o nome completo do dependente?"
+  },
+  "rh_extrato_bancario": {
+   "label": "Envie o extrato bancário."
+  },
+  "rh_orcamento_declaracao": {
+   "label": "Envie o orçamento ou a declaração."
+  },
+  "rh_receipt_title": {
+   "label": "O recibo está no nome do titular?"
+  }
+ },
+ "remover": {
+  "container_start": "visual",
+  "formatter": "visual",
+  "rh_observacao_nao_reembolso": "visual",
+  "rh_observation_reembolso": "visual",
+  "rh_observation": "visual"
+ },
+ "policies": {
+  "0934c3f587517650182a0d440cbb35df": "remover",
+  "79350d8f1bc3e81032822170f54bcb9c": "remover",
+  "8ce343b587517650182a0d440cbb35f4": "remover",
+  "9456350b1bc3a050eca40dcbe54bcb11": "remover",
+  "98058b3987517650182a0d440cbb35a3": "remover",
+  "a4d6bd0b1bc3a050eca40dcbe54bcb60": "remover",
+  "b9350d8f1bc3e81032822170f54bcb99": "remover",
+  "nova_g2_1": {
+   "short_description": "ALP - Anexo (Resolvedora)",
+   "conditions": "rh_budget_value=yes",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g2_2": {
+   "short_description": "ALP - Recibo do Titular",
+   "conditions": "rh_receipt_title=no",
+   "actions": {
+    "rh_dependent_complete_name": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_3": {
+   "short_description": "ALP - Anexo",
+   "conditions": "rh_budget_value=yes",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Consultar saldo do reembolso odontológico",
+   "short_description": "Consultar saldo do reembolso odontológico",
+   "description": "Use para saber quanto ainda há disponível de reembolso odontológico. Corresponde à oferta Consulta de Saldo.",
+   "frases_exemplo": [
+    "Quanto tenho de reembolso odontológico?",
+    "Ver saldo do plano odontológico",
+    "Consultar saldo de reembolso do dentista",
+    "Qual meu saldo odontológico?"
+   ],
+   "sem_vars": [
+    "rh_number_called_reimbursement",
+    "rh_budget_value",
+    "att_comprovante_de_pagamento",
+    "rh_dependent_complete_name",
+    "rh_extrato_bancario",
+    "rh_orcamento_declaracao",
+    "rh_receipt_title"
+   ],
+   "sem_policies": [
+    "nova_g2_1",
+    "nova_g2_2",
+    "nova_g2_3"
+   ]
+  },
+  {
+   "name": "Reembolso odontológico não recebido",
+   "short_description": "Reportar não recebimento de reembolso odontológico",
+   "description": "Use quando já pediu reembolso odontológico e não recebeu. Corresponde à oferta Não recebimento de reembolso odontológico.",
+   "frases_exemplo": [
+    "Meu reembolso do dentista não caiu",
+    "Não recebi o reembolso odontológico",
+    "Reembolso odontológico atrasado",
+    "Pedi reembolso e não foi pago"
+   ],
+   "sem_vars": [
+    "rh_budget_value",
+    "att_comprovante_de_pagamento",
+    "rh_dependent_complete_name",
+    "rh_orcamento_declaracao",
+    "rh_receipt_title"
+   ],
+   "vars": {
+    "rh_number_called_reimbursement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_extrato_bancario": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g2_1",
+    "nova_g2_2",
+    "nova_g2_3"
+   ]
+  },
+  {
+   "name": "Solicitar reembolso odontológico",
+   "short_description": "Solicitar reembolso odontológico",
+   "description": "Use para pedir reembolso de despesa odontológica, com orçamento ou declaração e recibo. Corresponde à oferta Solicitação de reembolso odontológico.",
+   "frases_exemplo": [
+    "Quero reembolso do dentista",
+    "Pedir reembolso de tratamento odontológico",
+    "Solicitar reembolso do orçamento do dentista",
+    "Reembolso odontológico do meu dependente"
+   ],
+   "sem_vars": [
+    "rh_number_called_reimbursement",
+    "rh_extrato_bancario"
+   ],
+   "vars": {
+    "rh_budget_value": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_orcamento_declaracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_receipt_title": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

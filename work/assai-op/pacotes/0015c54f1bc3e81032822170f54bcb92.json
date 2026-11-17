@@ -1,0 +1,430 @@
+{
+ "sys_id": "0015c54f1bc3e81032822170f54bcb92",
+ "name": "Assistência Odontológica (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Assistência Odontológica",
+ "description": "Assist&ecirc;ncia Odontol&oacute;gica",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Beneficiário(a) não consegue ser atendido(a)",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "att_comprovante_extensao",
+    "v_email_ex_colaborador",
+    "v_chamado_ex_colaborador",
+    "v_nome_da_operadora",
+    "v_informe_operadora_extensao",
+    "rh_reference_month",
+    "v_nome_dependente",
+    "v_informe_operadora",
+    "v_telefone_ex_colaborador",
+    "att_comprovante_operadora",
+    "att_demonstrativo_pagamento",
+    "v_qual_solicitacao",
+    "v_nome_operadora_extensao",
+    "att_formulario_extensao",
+    "v_titular_dependente"
+   ],
+   "passa_a_obrigatoria": [
+    "v_motivo_atendimento_beneficiario",
+    "v_titular_dependente_beneficiario",
+    "v_nome_operadora_beneficiario"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Observação InterOdonto/MaisOdonto (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiarioIN1,2"
+    },
+    {
+     "policy": "CSA - Informe motivo (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=10000"
+    },
+    {
+     "policy": "CSA - Informe dependente (Beneficiario)",
+     "quando": "v_titular_dependente_beneficiarioIN2,3"
+    },
+    {
+     "policy": "CSA - Observação Odontolive (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiario=3"
+    },
+    {
+     "policy": "CSA - Informe operadora (Beneficiario)",
+     "quando": "v_nome_operadora_beneficiario=10000"
+    },
+    {
+     "policy": "CSA - Observação Samp Odonto (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiario=5"
+    },
+    {
+     "policy": "CSA - Esconder \"Descrição\"",
+     "quando": "v_nome_operadora_beneficiarioIN1,2,3,5^v_motivo_atendimento_beneficiario=4"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Envio de declaração de reembolso de coparticipação de assistência odontológica",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "att_comprovante_extensao",
+    "v_email_ex_colaborador",
+    "v_motivo_atendimento_beneficiario",
+    "v_chamado_ex_colaborador",
+    "v_titular_dependente_beneficiario",
+    "v_informe_operadora_extensao",
+    "v_nome_dependente_beneficiario",
+    "v_informe_motivo_beneficiario",
+    "v_informe_operadora_beneficiario",
+    "v_nome_operadora_beneficiario",
+    "v_telefone_ex_colaborador",
+    "v_qual_solicitacao",
+    "v_nome_operadora_extensao",
+    "att_formulario_extensao"
+   ],
+   "passa_a_obrigatoria": [
+    "v_nome_da_operadora",
+    "rh_reference_month",
+    "att_comprovante_operadora",
+    "att_demonstrativo_pagamento",
+    "v_titular_dependente"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Informe nome operadora",
+     "quando": "v_nome_da_operadora=10000"
+    },
+    {
+     "policy": "CSA - Informe nome dependente",
+     "quando": "v_titular_dependenteIN2,3"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de extensão de assistência odontológica",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_motivo_atendimento_beneficiario",
+    "v_nome_da_operadora",
+    "v_titular_dependente_beneficiario",
+    "v_nome_dependente_beneficiario",
+    "v_informe_motivo_beneficiario",
+    "rh_reference_month",
+    "v_informe_operadora_beneficiario",
+    "v_nome_operadora_beneficiario",
+    "v_nome_dependente",
+    "v_informe_operadora",
+    "att_comprovante_operadora",
+    "att_demonstrativo_pagamento",
+    "v_titular_dependente"
+   ],
+   "passa_a_obrigatoria": [
+    "v_qual_solicitacao"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Extensão de assistência odontálgica",
+     "quando": "v_qual_solicitacao=2"
+    },
+    {
+     "policy": "CSA - Informe operadora (Extensão)",
+     "quando": "v_qual_solicitacao!=^v_nome_operadora_extensao=10000"
+    },
+    {
+     "policy": "CSA - Extensão de assistência odontálgica (Resolvedora)",
+     "quando": "v_qual_solicitacao=2"
+    },
+    {
+     "policy": "CSA - Qual a solicitação",
+     "quando": "v_qual_solicitacao!="
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "att_comprovante_extensao",
+   "type": "Anexo",
+   "question_text": "Comprovante de residência",
+   "choices": []
+  },
+  {
+   "name": "v_email_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail do(a) ex-colaborador(a)",
+   "choices": []
+  },
+  {
+   "name": "v_motivo_atendimento_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do atendimento não realizado",
+   "choices": [
+    "Problemas para acessar o APP",
+    "Beneficiário(a) inativo(a) na operadora",
+    "Outros",
+    "Beneficiário(a) com carência",
+    "Beneficiário(a) com divergência nos dados"
+   ]
+  },
+  {
+   "name": "v_chamado_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do chamado solicitando o formulário",
+   "choices": []
+  },
+  {
+   "name": "v_nome_da_operadora",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "Primavida",
+    "Outros",
+    "MaisOdonto",
+    "Samp Odonto",
+    "Odontolive",
+    "InterOdonto"
+   ]
+  },
+  {
+   "name": "v_titular_dependente_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Ambos",
+    "Dependente",
+    "Titular"
+   ]
+  },
+  {
+   "name": "v_informe_operadora_extensao",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": []
+  },
+  {
+   "name": "v_nome_dependente_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_informe_motivo_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o motivo do atendimento não realizado",
+   "choices": []
+  },
+  {
+   "name": "rh_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Fevereiro",
+    "Junho",
+    "Agosto",
+    "Outubro",
+    "Abril",
+    "Dezembro",
+    "Janeiro",
+    "Março",
+    "Novembro",
+    "Maio",
+    "Julho",
+    "Setembro"
+   ]
+  },
+  {
+   "name": "v_informe_operadora_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": []
+  },
+  {
+   "name": "v_nome_operadora_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "InterOdonto",
+    "Samp Odonto",
+    "Outros",
+    "Primavida",
+    "Odontolive",
+    "MaisOdonto"
+   ]
+  },
+  {
+   "name": "v_nome_dependente",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "v_informe_operadora",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": []
+  },
+  {
+   "name": "v_telefone_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do(a) ex-colaborador(a)",
+   "choices": []
+  },
+  {
+   "name": "att_comprovante_operadora",
+   "type": "Anexo",
+   "question_text": "Comprovante da operadora",
+   "choices": []
+  },
+  {
+   "name": "att_demonstrativo_pagamento",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": []
+  },
+  {
+   "name": "v_qual_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Extensão de assistência odontológica",
+    "Formulário para solicitar extensão de assistência odontológica"
+   ]
+  },
+  {
+   "name": "v_nome_operadora_extensao",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "MaisOdonto",
+    "InterOdonto",
+    "Samp Odonto",
+    "Outros",
+    "Odontolive",
+    "Primavida"
+   ]
+  },
+  {
+   "name": "att_formulario_extensao",
+   "type": "Anexo",
+   "question_text": "Formulário de opção de continuidade",
+   "choices": []
+  },
+  {
+   "name": "v_titular_dependente",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Ambos",
+    "Dependente",
+    "Titular"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0d1bfab11bfbec1032822170f54bcb91",
+   "name": "ALP - OnChange validate Phone Contact",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_contact."
+  },
+  {
+   "sys_id": "3541a7e4877f2a50182a0d440cbb355e",
+   "name": "CSA - Impedir abertura de chamado ",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se a operadora do beneficiário for '1', '2', '3' ou '5' e o motivo for '4', mostra 'Favor seguir com a orientação da observação do formulário!' e bloqueia o envio."
+  },
+  {
+   "sys_id": "cc3b3eb11bfbec1032822170f54bcba5",
+   "name": "ALP - OnChange validate Impacted Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_impacted_phone."
+  },
+  {
+   "sys_id": "eb01f19c3b2b2a10b28dd047f4e45afa",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "f011319c3b2b2a10b28dd047f4e45afb",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

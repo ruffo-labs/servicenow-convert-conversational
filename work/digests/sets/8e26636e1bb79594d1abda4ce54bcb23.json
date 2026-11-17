@@ -1,0 +1,44 @@
+{
+ "sys_id": "8e26636e1bb79594d1abda4ce54bcb23",
+ "title": "EY: Payment method - Order",
+ "internal_name": "ey_payment_method_order",
+ "description": "Payment method - Order",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Regularização de Título em aberto/duplicidade - Cartão ou Pix",
+  "Solicitar Estorno por Fraude - Cartão e Pix"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_payment_method",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the payment method?",
+   "include_none": true,
+   "choices": [
+    "Credit card [=credit_card]",
+    "Debit card [=debit_card]",
+    "Pix [=pix]"
+   ]
+  },
+  {
+   "name": "vs_order_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the order number?"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_payment_method: mandatory=true",
+    "vs_order_number: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

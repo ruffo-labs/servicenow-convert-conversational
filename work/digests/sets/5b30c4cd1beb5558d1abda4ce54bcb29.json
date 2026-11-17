@@ -1,0 +1,55 @@
+{
+ "sys_id": "5b30c4cd1beb5558d1abda4ce54bcb29",
+ "title": "EY: Basic data manager ",
+ "internal_name": "vs_basic_data_manager",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Programa de Estágio"
+ ],
+ "variaveis": [
+  {
+   "name": "manager_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Manager Name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "manager_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager ID Global",
+   "reference": "sys_user"
+  },
+  {
+   "name": "manager_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager Email",
+   "reference": "sys_user"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read only fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "manager_email: readonly=true",
+    "manager_id: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get data manager",
+   "type": "onChange",
+   "on": "70b0c0c11b2f5558d1abda4ce54bcb48",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do gestor quando há valor selecionado. Variante do irmão 'Get data manager1'."
+  }
+ ]
+}

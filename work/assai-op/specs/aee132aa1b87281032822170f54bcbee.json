@@ -1,0 +1,119 @@
+{
+ "sys_id": "aee132aa1b87281032822170f54bcbee",
+ "status": "dividido",
+ "motivo": "Falta injustificada pergunta se reembolsa o vale-compras Assaí e Mamãe; as demais ofertas não perguntam.",
+ "vars": {
+  "refund_the_assai_shopping_voucher_credit": {
+   "label": "Deseja reembolsar o crédito do vale-compras Assaí?"
+  },
+  "refund_mom_gift_card_credit": {
+   "label": "Deseja reembolsar o crédito do vale-compras Mamãe?"
+  }
+ },
+ "remover": {
+  "cont_start": "visual",
+  "formatter2": "visual",
+  "observation_30_rows": "visual",
+  "rh_observation_2": "visual",
+  "observation_10_rows": "visual",
+  "rh_initial_period_occurrence": "oferta_inativa",
+  "rh_final_period_occurrence": "oferta_inativa",
+  "formatter": "visual",
+  "observation_31_rows": "visual",
+  "rh_observation": "visual",
+  "rh_month": "oferta_inativa"
+ },
+ "policies": {
+  "33e136aa1b87281032822170f54bcb45": "remover",
+  "75b8212e1b97e81032822170f54bcbdb": "remover",
+  "7b1d6b2e1b87ac10eca40dcbe54bcb90": "remover",
+  "a5e1fb673b5c0710b28dd047f4e45a7a": "remover",
+  "ae32bba73b5c0710b28dd047f4e45aec": "remover",
+  "b6f26ca31b0ac650347221bbe54bcbaf": "remover",
+  "c0dec1341beb609032822170f54bcba3": "remover",
+  "c3da1fc387d44fd0182a0d440cbb3552": "remover",
+  "fda228a31b0ac650347221bbe54bcb0a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Correção de atraso injustificado no ponto",
+   "short_description": "Correção de atraso injustificado - divergência no ponto.",
+   "description": "Use para corrigir atrasos lançados como injustificados no ponto. Corresponde à oferta \"Solicitação de correção de atraso injustificado - Divergência no Ponto\".",
+   "frases_exemplo": [
+    "Meu atraso foi lançado errado",
+    "Preciso justificar um atraso no ponto",
+    "Corrigir atraso injustificado de colaborador",
+    "Atraso indevido no ponto"
+   ],
+   "sem_vars": [
+    "refund_the_assai_shopping_voucher_credit",
+    "refund_mom_gift_card_credit"
+   ]
+  },
+  {
+   "name": "Correção de banco de horas",
+   "short_description": "Correção de banco de horas - divergência no ponto.",
+   "description": "Use para corrigir saldo ou lançamentos do banco de horas. Corresponde à oferta \"Solicitação de correção de banco de horas - Divergência no Ponto\".",
+   "frases_exemplo": [
+    "Meu banco de horas está errado",
+    "Saldo de banco de horas divergente",
+    "Corrigir banco de horas do colaborador",
+    "O banco de horas não bate"
+   ],
+   "sem_vars": [
+    "refund_the_assai_shopping_voucher_credit",
+    "refund_mom_gift_card_credit"
+   ]
+  },
+  {
+   "name": "Correção de falta injustificada no ponto",
+   "short_description": "Correção de falta injustificada, com opção de reembolso de vale-compras.",
+   "description": "Use para corrigir faltas lançadas como injustificadas no ponto, indicando se o crédito dos vale-compras Assaí e Mamãe deve ser reembolsado. Corresponde à oferta \"Solicitação de correção de falta injustificada - Divergência no Ponto\".",
+   "frases_exemplo": [
+    "Uma falta foi lançada errado",
+    "Preciso justificar falta de colaborador",
+    "Corrigir falta injustificada e reembolsar vale-compras",
+    "Falta indevida no ponto"
+   ],
+   "vars": {
+    "refund_the_assai_shopping_voucher_credit": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "refund_mom_gift_card_credit": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Pagamento de hora extra ou adicional noturno (gestor)",
+   "short_description": "Pagamento de horas extras, adicional noturno ou hora extra de feriado.",
+   "description": "Use para solicitar o pagamento de horas extras, adicional noturno ou hora extra de feriado não pagos. Corresponde à oferta \"Solicitação de pagamento de horas extras/adicional noturno/hora extra feriado - Divergência no Ponto\".",
+   "frases_exemplo": [
+    "Colaborador não recebeu hora extra",
+    "Faltou adicional noturno",
+    "Hora extra de feriado não paga",
+    "Preciso pagar horas extras da equipe"
+   ],
+   "sem_vars": [
+    "refund_the_assai_shopping_voucher_credit",
+    "refund_mom_gift_card_credit"
+   ]
+  }
+ ],
+ "scripts": {
+  "4bb6dd7e1b7bed10347221bbe54bcb5c": {
+   "remover": {
+    "outro": "só troca label; coberto pelo derivado"
+   }
+  },
+  "63ab77711b91a11032822170f54bcb76": {
+   "remover": {
+    "outro": "limpa campos ao trocar oferta; coberto pelo derivado"
+   }
+  }
+ }
+}

@@ -1,0 +1,234 @@
+{
+ "sys_id": "2fbbb06a1ba79550a530426fe54bcbc8",
+ "name": "MyPerformance",
+ "sys_name": "MyPerformance",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Aprendizagem, Desenvolvimento e Desempenho",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Este caminho é sobre o processo MyPerformance onde o objetivo de desempenho é focado em dar clareza sobre o impacto e a contribuição de cada indivíduo para a estratégia Natura Latam.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "15",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "15"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @faq_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_your_evidence: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_kb_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 15 de 15 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 14 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_myperformace",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "MyPerformance"
+  },
+  {
+   "name": "faq_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_choose_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose your request",
+   "include_none": true,
+   "choices": [
+    "Finish Step",
+    "Talk Step",
+    "Match Step"
+   ]
+  },
+  {
+   "name": "v_choose_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose request type",
+   "include_none": true,
+   "choices": [
+    "Question about the MyPerformance process",
+    "System error",
+    "General requests about MyPerformance"
+   ]
+  },
+  {
+   "name": "v_describe",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your need in this field"
+  },
+  {
+   "name": "v_attach_your_evidence",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your evidence here"
+  },
+  {
+   "name": "v_classify_the_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Classify the request type",
+   "include_none": true,
+   "choices": [
+    "Other Requests",
+    "Report"
+   ]
+  },
+  {
+   "name": "v_description_report",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Detail what information you need in this report and possible filters such as: Brands, Country, Management Level, Grade, Position and Period."
+  },
+  {
+   "name": "v_description_for_other",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your need in this field"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  },
+  {
+   "sys_id": "98a054933bff4e10924d0247f4e45ad8",
+   "name": "EY: Request Hispana",
+   "order": "100",
+   "perguntas": [
+    "vs_country_of_the_request (Selecionar Caixa): País del solicitante",
+    "vs_kb_text (Rótulo de Rich Text): "
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_choose_request_type: mandatory=true",
+    "v_choose_your_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If classify is report",
+   "when": "IO:v_choose_request_type=General requests about MyPerformance^IO:v_classify_the_request_type=Report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_report: visible=true,mandatory=true",
+    "v_attach_your_file: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If Type = General and Classify is Other",
+   "when": "IO:v_choose_request_type=General requests about MyPerformance^IO:v_classify_the_request_type=Other Requests^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_for_other: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Description for error or question",
+   "when": "IO:v_choose_request_type=Question about the MyPerformance process^ORIO:v_choose_request_type=System error^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  error",
+   "when": "IO:v_choose_request_type=System error^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_evidence: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide country in catalog item view ",
+   "when": "IO:vs_country_of_the_request=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_country_of_the_request: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: If type =General Requests about MyPerformance",
+   "when": "IO:v_choose_request_type=General requests about MyPerformance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_classify_the_request_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If question",
+   "when": "IO:v_choose_request_type=Question about the MyPerformance process^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_file: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill employee ",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do colaborador, limpando os campos quando o valor fica vazio."
+  },
+  {
+   "name": "EY:  View fields Hispana",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe os campos do fluxo hispânico conforme o colaborador em 'vs_employee'. Variante quase idêntica a outro script do mesmo lote."
+  },
+  {
+   "name": "EY: hide fields onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde 'vs_country_of_the_request' e 'vs_kb_text' na abertura."
+  }
+ ]
+}

@@ -1,0 +1,200 @@
+{
+ "sys_id": "63abf873b1534ddfa1bfc88b22d733ca",
+ "status": "dividido",
+ "motivo": "Lentidão pede período, processo lento, impacto e evidências; revisão de SQL pede a consulta, o plano de execução e o volume; índices e estatísticas pedem período, problema e crescimento dos dados. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_banco_de_dados": {
+   "label": "Qual banco de dados está com problema?"
+  },
+  "v_periodo_de_ocorrencia": {
+   "label": "Quando a lentidão acontece?"
+  },
+  "v_consulta_processo_lento": {
+   "label": "Qual consulta ou processo está lento?"
+  },
+  "v_impacto_no_negocio": {
+   "label": "Qual o impacto no negócio?"
+  },
+  "v_evidencias_logs_prints": {
+   "label": "Envie logs ou prints que mostrem o problema."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_consulta_sql_anexar_ou_colar": {
+   "label": "Envie ou cole a consulta SQL."
+  },
+  "v_plano_de_execucao_atual": {
+   "label": "Envie o plano de execução atual da consulta."
+  },
+  "v_volume_de_execucoes": {
+   "label": "Quantas vezes a consulta roda?"
+  },
+  "v_objetivo_da_revisao": {
+   "label": "O que você espera da revisão?"
+  },
+  "v_periodo_de_analise": {
+   "label": "Qual período deve ser analisado?"
+  },
+  "v_problema_identificado": {
+   "label": "Qual problema você já identificou?"
+  },
+  "v_crescimento_de_dados": {
+   "label": "Como os dados vêm crescendo?"
+  },
+  "v_janela_de_manutencao": {
+   "label": "Qual a janela disponível para manutenção?"
+  }
+ },
+ "policies": {
+  "e24c2626e741471c867b426b0dc9139c": "remover",
+  "93bb8a42925b45f0b0680fc594f8aec8": "remover",
+  "f57766ab035a40b19adccf383ced7e2a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Analisar lentidão de um banco de dados",
+   "short_description": "Pedir análise de lentidão em um banco, com período, impacto e evidências.",
+   "description": "Use quando o banco está lento e a causa é desconhecida. A opção atendida é Analisar lentidão de banco. Informe o banco, quando ocorre, a consulta ou processo lento, o impacto no negócio e as evidências.",
+   "frases_exemplo": [
+    "O banco está muito lento desde ontem",
+    "Preciso de análise de lentidão no banco de produção",
+    "O sistema trava e acho que é o banco",
+    "Tem uma rotina demorando muito no banco, podem analisar?",
+    "O relatório antes rodava rápido e agora demora"
+   ],
+   "sem_vars": [
+    "v_consulta_sql_anexar_ou_colar",
+    "v_plano_de_execucao_atual",
+    "v_volume_de_execucoes",
+    "v_objetivo_da_revisao",
+    "v_periodo_de_analise",
+    "v_problema_identificado",
+    "v_crescimento_de_dados",
+    "v_janela_de_manutencao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Analisar lentidão de banco"
+   },
+   "vars": {
+    "v_periodo_de_ocorrencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_consulta_processo_lento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_no_negocio": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_evidencias_logs_prints": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Revisar uma consulta SQL lenta",
+   "short_description": "Pedir a revisão e otimização de uma consulta SQL.",
+   "description": "Use quando uma consulta específica precisa ser otimizada. A opção atendida é Revisar consulta SQL. Informe o banco, a consulta, o plano de execução, o volume de execuções e o objetivo da revisão.",
+   "frases_exemplo": [
+    "Tenho uma query lenta e quero que revisem",
+    "Preciso otimizar uma consulta SQL",
+    "Podem olhar o plano de execução dessa consulta?",
+    "Essa consulta roda milhares de vezes e está pesada",
+    "Quero revisar um SELECT que demora demais"
+   ],
+   "sem_vars": [
+    "v_periodo_de_ocorrencia",
+    "v_consulta_processo_lento",
+    "v_impacto_no_negocio",
+    "v_evidencias_logs_prints",
+    "v_periodo_de_analise",
+    "v_problema_identificado",
+    "v_crescimento_de_dados",
+    "v_janela_de_manutencao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Revisar consulta SQL"
+   },
+   "vars": {
+    "v_consulta_sql_anexar_ou_colar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_execucao_atual": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_volume_de_execucoes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetivo_da_revisao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Revisar índices e estatísticas de um banco",
+   "short_description": "Pedir revisão de índices e estatísticas para melhorar o desempenho.",
+   "description": "Use quando suspeitar de índices ou estatísticas desatualizadas. A opção atendida é Revisar índices e estatísticas. Informe o banco, o período, o problema identificado, o crescimento dos dados e a janela de manutenção.",
+   "frases_exemplo": [
+    "Preciso revisar os índices do banco",
+    "Acho que as estatísticas estão desatualizadas",
+    "Os dados cresceram muito e o banco piorou",
+    "Pedido de manutenção de índices no banco",
+    "Quero uma análise de índices para ganhar desempenho"
+   ],
+   "sem_vars": [
+    "v_periodo_de_ocorrencia",
+    "v_consulta_processo_lento",
+    "v_impacto_no_negocio",
+    "v_evidencias_logs_prints",
+    "v_consulta_sql_anexar_ou_colar",
+    "v_plano_de_execucao_atual",
+    "v_volume_de_execucoes",
+    "v_objetivo_da_revisao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Revisar índices e estatísticas"
+   },
+   "vars": {
+    "v_periodo_de_analise": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_problema_identificado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_crescimento_de_dados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_manutencao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

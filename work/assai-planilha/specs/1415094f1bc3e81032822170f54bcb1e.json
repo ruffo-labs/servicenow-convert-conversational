@@ -1,0 +1,167 @@
+{
+ "sys_id": "1415094f1bc3e81032822170f54bcb1e",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Não recebimento de reembolso odontológico; ALP - Não recebimento de reembolso odontológico (Resolvedora).",
+ "vars": {
+  "rh_number_called_reimbursement": {
+   "label": "Número do chamado da solicitação de reembolso"
+  },
+  "rh_budget_value": {
+   "label": "Valor do orçamento/declaração é superior ao valor de R$ 1.200,00?"
+  },
+  "att_comprovante_de_pagamento": {
+   "label": "Comprovante de pagamento"
+  },
+  "rh_dependent_complete_name": {
+   "label": "Informar nome completo do dependente"
+  },
+  "rh_extrato_bancario": {
+   "label": "Extrato bancário"
+  },
+  "rh_orcamento_declaracao": {
+   "label": "Orçamento ou Declaração"
+  },
+  "rh_receipt_title": {
+   "label": "Recibo é do Titular?"
+  }
+ },
+ "remover": {
+  "container_start": "visual",
+  "formatter": "visual",
+  "rh_observacao_nao_reembolso": "visual",
+  "rh_observation_reembolso": "visual",
+  "rh_observation": "visual"
+ },
+ "policies": {
+  "0934c3f587517650182a0d440cbb35df": {
+   "conditions": "service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "rh_orcamento_declaracao": {
+     "visible": true
+    },
+    "rh_receipt_title": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_budget_value": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "79350d8f1bc3e81032822170f54bcb9c": {
+   "conditions": "service_offering=87d163941b47649032822170f54bcb87",
+   "actions": {
+    "rh_extrato_bancario": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_number_called_reimbursement": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8ce343b587517650182a0d440cbb35f4": {
+   "conditions": "rh_budget_value=yes^service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true
+    }
+   }
+  },
+  "98058b3987517650182a0d440cbb35a3": {
+   "conditions": "service_offering=87d163941b47649032822170f54bcb87",
+   "actions": {
+    "rh_extrato_bancario": {
+     "visible": true
+    },
+    "rh_number_called_reimbursement": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "a4d6bd0b1bc3a050eca40dcbe54bcb60": {
+   "conditions": "rh_budget_value=yes^service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "att_comprovante_de_pagamento": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "b9350d8f1bc3e81032822170f54bcb99": {
+   "conditions": "service_offering=34d12f541b47649032822170f54bcb68",
+   "actions": {
+    "rh_receipt_title": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_orcamento_declaracao": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_budget_value": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Reembolso Odontológico (Operação de Benefícios - problema)",
+   "short_description": "Reembolso Odontológico",
+   "description": "Reembolso Odontológico",
+   "frases_exemplo": [
+    "Não recebimento de reembolso odontológico"
+   ],
+   "sem_vars": [
+    "rh_budget_value",
+    "att_comprovante_de_pagamento",
+    "rh_dependent_complete_name",
+    "rh_orcamento_declaracao",
+    "rh_receipt_title"
+   ],
+   "vars": {
+    "rh_number_called_reimbursement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_extrato_bancario": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "0934c3f587517650182a0d440cbb35df",
+    "79350d8f1bc3e81032822170f54bcb9c",
+    "8ce343b587517650182a0d440cbb35f4",
+    "9456350b1bc3a050eca40dcbe54bcb11",
+    "98058b3987517650182a0d440cbb35a3",
+    "a4d6bd0b1bc3a050eca40dcbe54bcb60",
+    "b9350d8f1bc3e81032822170f54bcb99"
+   ]
+  },
+  {
+   "name": "Reembolso Odontológico (Operação de Benefícios - servico)",
+   "short_description": "Reembolso Odontológico",
+   "description": "Reembolso Odontológico",
+   "frases_exemplo": [
+    "Consulta de Saldo",
+    "Solicitação de reembolso odontológico"
+   ],
+   "sem_vars": [
+    "rh_number_called_reimbursement",
+    "rh_extrato_bancario"
+   ],
+   "sem_policies": [
+    "79350d8f1bc3e81032822170f54bcb9c",
+    "98058b3987517650182a0d440cbb35a3"
+   ]
+  }
+ ]
+}

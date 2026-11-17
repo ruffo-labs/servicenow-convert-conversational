@@ -1,0 +1,75 @@
+{
+ "sys_id": "474b44b81b99165007caeca12b4bcb80",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios e Preciso de um serviço de RH > Operação de Benefícios, com 2 ofertas no total.",
+ "vars": {
+  "request_number": {
+   "label": "Qual é o número do chamado em que você pediu o kit material escolar?"
+  },
+  "descricao_2": {
+   "label": "O que aconteceu com o cartão do kit material escolar?"
+  }
+ },
+ "remover": {
+  "v_atencao": "visual",
+  "observation": "visual"
+ },
+ "policies": {
+  "8f7da0b0871d9650182a0d440cbb3522": "remover",
+  "9b5a814587dd1a50182a0d440cbb3582": "remover",
+  "e880f438871d9650182a0d440cbb357f": "remover",
+  "6c0273963b153e50b28dd047f4e45aa9": "remover"
+ },
+ "itens": [
+  {
+   "name": "Kit Material Escolar (problemas)",
+   "short_description": "Reportar cartão do Kit Material Escolar não recebido.",
+   "description": "Use quando o cartão do Kit Material Escolar já foi solicitado e não chegou. Informe o número do chamado da solicitação e descreva o ocorrido. Atende a oferta \"Cartão Kit Material Escolar não recebido\".",
+   "frases_exemplo": [
+    "O cartão do kit escolar não chegou",
+    "Pedi o Kit Material Escolar e nada do cartão",
+    "Colaborador não recebeu o cartão do material escolar",
+    "Cadê o cartão do kit escolar?",
+    "O cartão do material escolar não veio"
+   ],
+   "sem_vars": [
+    "colaborador_elegivel_ao_beneficio"
+   ],
+   "vars": {
+    "request_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "descricao_2": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Kit Material Escolar (serviços)",
+   "short_description": "Solicitar o benefício Kit Material Escolar.",
+   "description": "Use para solicitar o benefício Kit Material Escolar para os dependentes do colaborador, informando os dados dos dependentes. Existe prazo para fazer a solicitação. Atende a oferta \"Solicitação de Kit Material Escolar\".",
+   "frases_exemplo": [
+    "Quero pedir o Kit Material Escolar",
+    "Como solicito o material escolar dos filhos?",
+    "Preciso do kit escolar para os dependentes",
+    "Ainda dá tempo de pedir o kit escolar?",
+    "Quero o benefício de material escolar"
+   ],
+   "sem_vars": [
+    "request_number",
+    "descricao_2"
+   ]
+  }
+ ],
+ "scripts": {
+  "6660d06b3b00b290b28dd047f4e45a37": {
+   "remover": {
+    "outro": "limpa oferta e dependentes conforme a oferta; coberto pela estrutura do derivado"
+   }
+  }
+ }
+}

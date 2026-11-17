@@ -1,0 +1,158 @@
+{
+ "sys_id": "daebc4ad3b001290924d0247f4e45a0c",
+ "name": "Solicitar pagamento de Aluguel e Condomínio Varejo\t\t\t\t\t\t\t",
+ "sys_name": "Request payment for Rent and Retail Condominium",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Solicite pagamentos relacionados a boletos de aluguel, condomínios e contas de consumo das lojas de varejo",
+ "description": "Solicite pagamentos relacionados a boletos de aluguel, condomínios e contas de consumo das lojas de varejo",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_label_others_store: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_allowed_format: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_others_cnpj: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_bill: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_requesters_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Requester's name:",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_which_company_is_you_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is you request for?",
+   "include_none": true,
+   "choices": [
+    "The Body Shop [=tbs]",
+    "Natura [=natura]"
+   ]
+  },
+  {
+   "name": "v_store_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Store's Name",
+   "reference": "x_nasm_ptp_store_name_rent"
+  },
+  {
+   "name": "v_label_others_store",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "In case you don't find the store you are searching for, select \"Others\" in the field above"
+  },
+  {
+   "name": "v_store_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Store's CNPJ"
+  },
+  {
+   "name": "v_others_cnpj",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Center"
+  },
+  {
+   "name": "v_bill_expiration_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Bill expiration date"
+  },
+  {
+   "name": "v_allowed_format",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_bill",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach bill"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_others_cnpj: mandatory=true",
+    "v_allowed_format: mandatory=true",
+    "v_store_cnpj: mandatory=true",
+    "v_attach_bill: mandatory=true",
+    "v_requesters_name: mandatory=true",
+    "v_bill_expiration_date: mandatory=true",
+    "v_cost_center: mandatory=true",
+    "v_store_name: mandatory=true",
+    "v_which_company_is_you_request_for: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Readonly Variables Resolver",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_store_name: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get Store CNPJ",
+   "type": "onChange",
+   "on": "166f44293b801290924d0247f4e45af3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o CNPJ da loja. Limpa o campo e, para uma loja específica identificada por sys_id fixo no código, trava o campo como somente leitura. Regra cravada por sys_id."
+  },
+  {
+   "name": "EY: onChange only number CC",
+   "type": "onChange",
+   "on": "1ae1d0693bc01290924d0247f4e45a80",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita apenas dígitos no centro de custo. Inválido: limpa o campo. Observação: diferente dos irmãos, não mostra mensagem de erro — o valor some sem explicação para o usuário."
+  },
+  {
+   "name": "EY: Fill Form Information ",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche 'v_requesters_name' com o usuário logado e trava o campo como somente leitura."
+  }
+ ]
+}

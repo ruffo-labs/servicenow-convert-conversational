@@ -1,0 +1,618 @@
+{
+ "sys_id": "b9acbcd8d2d14f0eac2ed2cef9e56532",
+ "status": "dividido",
+ "motivo": "Cada oferta pede dados distintos: alteração de integração pede o item afetado e impacto; pipeline pede destino, SQL e recorrência; criar API pede direção, volume e frequência; deploy pede ambiente e build; relatório pede período e formato. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_qual_e_o_modulo": {
+   "label": "De qual módulo é o pedido?"
+  },
+  "v_integracao_endpoint_afetado": {
+   "label": "Qual integração ou endpoint será alterado?"
+  },
+  "v_descricao_da_alteracao": {
+   "label": "Descreva o que precisa mudar."
+  },
+  "v_impacto_esperado": {
+   "label": "Qual impacto você espera com essa mudança?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_nome_de_sistema_de_destino": {
+   "label": "Para qual sistema a pipeline envia os dados?"
+  },
+  "v_regra_consulta_sql_para_alteracao": {
+   "label": "Qual regra ou consulta SQL deve ser alterada?"
+  },
+  "v_recorrencia_de_carga": {
+   "label": "Com que recorrência a carga deve rodar?"
+  },
+  "v_objetivo_da_mudanca": {
+   "label": "Qual o objetivo dessa mudança na pipeline?"
+  },
+  "v_nome_do_sistema_de_origem": {
+   "label": "Qual o sistema de origem da integração?"
+  },
+  "v_nome_do_sistema_de_destino": {
+   "label": "Qual o sistema de destino da integração?"
+  },
+  "v_objetivo_da_integracao": {
+   "label": "Qual o objetivo dessa integração?"
+  },
+  "v_o_que_deseja_criar": {
+   "label": "Que tipo de API ou endpoint você quer criar?"
+  },
+  "v_direcao_da_integracao": {
+   "label": "Em que direção os dados vão fluir?"
+  },
+  "v_que_dado_informacao_vai_trafegar": {
+   "label": "Que dados ou informações vão trafegar?"
+  },
+  "v_frequencia_gatilho_esperado": {
+   "label": "Com que frequência ou gatilho os dados serão enviados?"
+  },
+  "v_volume_estimado": {
+   "label": "Qual o volume estimado de requisições?"
+  },
+  "v_ha_documentacao_contrato_da_api_do_out": {
+   "label": "O outro lado tem documentação da API?"
+  },
+  "v_objetivo_do_endpoint": {
+   "label": "Qual o objetivo desse endpoint?"
+  },
+  "v_nome_de_sistema_de_origem": {
+   "label": "De qual sistema a pipeline vai buscar os dados?"
+  },
+  "v_regra_consulta_sql": {
+   "label": "Qual regra ou consulta SQL a pipeline deve usar?"
+  },
+  "v_objetivo_da_pipeline": {
+   "label": "Qual o objetivo dessa pipeline?"
+  },
+  "v_integracao_pipeline": {
+   "label": "Sobre qual integração ou pipeline é a dúvida?"
+  },
+  "v_duvida_consulta": {
+   "label": "Qual a sua dúvida?"
+  },
+  "v_endpoint_api": {
+   "label": "Qual endpoint ou API será publicado?"
+  },
+  "v_ambiente": {
+   "label": "Em qual ambiente será o deploy?"
+  },
+  "v_referencia_do_artefato_build": {
+   "label": "Qual a referência do artefato ou build?"
+  },
+  "v_integracao_sistema": {
+   "label": "De qual integração ou sistema são os dados?"
+  },
+  "v_dados_periodo_desejado": {
+   "label": "Quais dados e de qual período você precisa?"
+  },
+  "v_formato": {
+   "label": "Em que formato você quer receber?"
+  }
+ },
+ "policies": {
+  "f5f900bd866144a98368cba52725c36e": "remover",
+  "aed41588d596437197f6093783198ca2": "remover",
+  "7af6306ee52f4574a81459f2a3014797": "remover",
+  "1b013ee50fad4fcba32b93ec5a61868e": "remover",
+  "8e1f46ab98964a74aeb187b7a576219a": "remover",
+  "c0118b11bd9647918b753708f84233d6": "remover",
+  "1bffd0844c5a431392e6b0f33efb6cd1": "remover",
+  "607f165dfc0f4a3a8b3238ddbea4bb2c": "remover",
+  "e4e2b37303ae4df79cce3e2ba1f336dc": "remover",
+  "fedcec3c81904019968cbf73dda0fcb4": "remover"
+ },
+ "itens": [
+  {
+   "name": "Alterar integração ou endpoint existente",
+   "short_description": "Peça uma mudança em uma integração ou endpoint que já existe entre aplicações.",
+   "description": "Use quando precisar mudar uma integração ou endpoint já em funcionamento. Corresponde à opção Alterar Integração / Endpoint existente. Informe qual integração é afetada, o que deve mudar e o impacto esperado.",
+   "frases_exemplo": [
+    "Preciso alterar uma integração que já existe",
+    "Quero mudar um endpoint que está em produção",
+    "Tem como ajustar a integração do módulo educacional?",
+    "Preciso de uma alteração na API que já temos",
+    "Quero pedir mudança em um endpoint existente"
+   ],
+   "sem_vars": [
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar Integração / Endpoint existente"
+   },
+   "vars": {
+    "v_integracao_endpoint_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao_da_alteracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_esperado": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Alterar pipeline de dados existente",
+   "short_description": "Peça mudança em uma pipeline de dados já existente entre sistemas.",
+   "description": "Use quando uma pipeline de dados já em operação precisa ser modificada. Corresponde à opção Alterar Pipeline de Dados. Informe o sistema de destino, a regra ou consulta SQL a alterar, a recorrência da carga e o objetivo da mudança.",
+   "frases_exemplo": [
+    "Preciso alterar uma pipeline de dados",
+    "Quero mudar a consulta SQL de uma carga que já roda",
+    "Dá pra trocar a recorrência da pipeline para diária?",
+    "Preciso ajustar a pipeline que envia dados pro sistema de destino",
+    "Quero modificar uma carga de dados existente"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar Pipeline de Dados"
+   },
+   "vars": {
+    "v_nome_de_sistema_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_recorrencia_de_carga": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_regra_consulta_sql_para_alteracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetivo_da_mudanca": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Analisar viabilidade de uma integração",
+   "short_description": "Peça uma análise de viabilidade para integrar dois sistemas.",
+   "description": "Use quando quiser saber se é possível integrar um sistema de origem com um de destino. Corresponde à opção Analisar viabilidade de integração. Informe os dois sistemas e o objetivo da integração.",
+   "frases_exemplo": [
+    "Quero saber se dá pra integrar dois sistemas",
+    "Preciso de uma análise de viabilidade de integração",
+    "Será que é possível conectar o sistema A com o B?",
+    "Pode avaliar se essa integração é viável?",
+    "Tenho uma ideia de integração e quero ver se funciona"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Analisar viabilidade de integração"
+   },
+   "vars": {
+    "v_nome_do_sistema_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_nome_do_sistema_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetivo_da_integracao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar API ou endpoint de integração",
+   "short_description": "Solicite a criação de uma nova API ou endpoint entre sistemas.",
+   "description": "Use quando precisar de uma nova API ou endpoint. Corresponde à opção Criar API / endpoint. Informe origem e destino, o que será criado, direção, dado trafegado, frequência, volume e se existe documentação da API do outro lado.",
+   "frases_exemplo": [
+    "Preciso criar uma API nova",
+    "Quero um endpoint para enviar dados a outro sistema",
+    "Dá pra criar uma integração via API entre os dois sistemas?",
+    "Preciso de um endpoint novo para o módulo comercial",
+    "Quero abrir pedido de criação de API"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_objetivo_da_integracao",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar API / endpoint"
+   },
+   "vars": {
+    "v_nome_do_sistema_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_nome_do_sistema_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_o_que_deseja_criar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_direcao_da_integracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_que_dado_informacao_vai_trafegar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_frequencia_gatilho_esperado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_volume_estimado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ha_documentacao_contrato_da_api_do_out": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetivo_do_endpoint": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar pipeline de dados",
+   "short_description": "Solicite a criação de uma nova pipeline de dados entre sistemas.",
+   "description": "Use quando precisar de uma nova carga de dados entre sistemas. Corresponde à opção Criar Pipeline de Dados. Informe origem, destino, regra ou consulta SQL, recorrência e objetivo da pipeline.",
+   "frases_exemplo": [
+    "Preciso criar uma pipeline de dados",
+    "Quero uma carga automática entre dois sistemas",
+    "Dá pra montar uma pipeline com carga diária?",
+    "Preciso de uma extração periódica de dados para outro sistema",
+    "Quero pedir uma pipeline nova"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_objetivo_da_mudanca",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar Pipeline de Dados"
+   },
+   "vars": {
+    "v_nome_de_sistema_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_recorrencia_de_carga": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_nome_de_sistema_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_regra_consulta_sql": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetivo_da_pipeline": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Tirar dúvida sobre integração ou pipeline",
+   "short_description": "Esclareça uma dúvida ou faça uma consulta sobre integrações e pipelines.",
+   "description": "Use quando só precisar de um esclarecimento sobre uma integração ou pipeline existente. Corresponde à opção Esclarecimento / Consulta. Informe qual integração ou pipeline e a dúvida.",
+   "frases_exemplo": [
+    "Tenho uma dúvida sobre uma integração",
+    "Quero entender como funciona uma pipeline",
+    "Preciso de um esclarecimento sobre um endpoint",
+    "Pode me explicar o que essa integração faz?",
+    "Tenho uma consulta sobre uma carga de dados"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Esclarecimento / Consulta"
+   },
+   "vars": {
+    "v_integracao_pipeline": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_duvida_consulta": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Executar deploy avulso ou republicar integração",
+   "short_description": "Peça um deploy avulso ou a republicação de um endpoint/API.",
+   "description": "Use quando precisar executar um deploy fora do fluxo normal ou republicar algo. Corresponde à opção Executar deploy avulso / republicar. Informe o endpoint ou API, o ambiente (Homologação ou Produção) e a referência do artefato ou build.",
+   "frases_exemplo": [
+    "Preciso republicar uma API",
+    "Quero um deploy avulso em homologação",
+    "Dá pra fazer o deploy desse build em produção?",
+    "Preciso republicar um endpoint",
+    "Pode executar um deploy do artefato que gerei?"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_integracao_sistema",
+    "v_dados_periodo_desejado",
+    "v_formato"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Executar deploy avulso / republicar"
+   },
+   "vars": {
+    "v_endpoint_api": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ambiente": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_referencia_do_artefato_build": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Gerar relatório ou extração de dados de integração",
+   "short_description": "Peça um relatório ou extração de dados de uma integração ou sistema.",
+   "description": "Use quando precisar de dados extraídos de uma integração ou sistema. Corresponde à opção Gerar relatório / extração. Informe a integração ou sistema, o período desejado e o formato (CSV, Excel ou outro).",
+   "frases_exemplo": [
+    "Preciso de uma extração de dados de uma integração",
+    "Quero um relatório em Excel dos dados do mês passado",
+    "Dá pra gerar um CSV com os dados da integração?",
+    "Preciso de um relatório de um período específico",
+    "Pode extrair os dados desse sistema para mim?"
+   ],
+   "sem_vars": [
+    "v_integracao_endpoint_afetado",
+    "v_descricao_da_alteracao",
+    "v_impacto_esperado",
+    "v_nome_de_sistema_de_destino",
+    "v_regra_consulta_sql_para_alteracao",
+    "v_recorrencia_de_carga",
+    "v_objetivo_da_mudanca",
+    "v_nome_do_sistema_de_origem",
+    "v_nome_do_sistema_de_destino",
+    "v_objetivo_da_integracao",
+    "v_o_que_deseja_criar",
+    "v_direcao_da_integracao",
+    "v_que_dado_informacao_vai_trafegar",
+    "v_frequencia_gatilho_esperado",
+    "v_volume_estimado",
+    "v_ha_documentacao_contrato_da_api_do_out",
+    "v_objetivo_do_endpoint",
+    "v_nome_de_sistema_de_origem",
+    "v_regra_consulta_sql",
+    "v_objetivo_da_pipeline",
+    "v_integracao_pipeline",
+    "v_duvida_consulta",
+    "v_endpoint_api",
+    "v_ambiente",
+    "v_referencia_do_artefato_build"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Gerar relatório / extração"
+   },
+   "vars": {
+    "v_integracao_sistema": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dados_periodo_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_formato": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+ "sys_id": "f12b20081b482dd4a530426fe54bcb40",
+ "name": "Solicitar Cancelamento de Férias Programadas",
+ "sys_name": "Request Cancellation of Scheduled Vacations",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Férias",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicitar cancelamento de férias programadas e aprovadas no portal ADP, permitindo realizar uma nova programação.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "13",
+   "variaveis_ativas": "14",
+   "bloqueadores": "1",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "13"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Attach mandatory"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_vacation: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_name_addcolab: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 13 de 13 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Cancelamento de Férias Programadas. Grava item com o sysparm_id e define requested_for como o usuário logado. Há um bloco comentado logo abaixo com a versão que usaria o Script Include EY_ProducerUtils — o padrão foi substituído por atribuição direta.",
+ "variaveis": [
+  {
+   "name": "v_solicitation_to_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation to Whom?",
+   "include_none": true,
+   "choices": [
+    "My request [=my_request]",
+    "My team [=my_team]"
+   ]
+  },
+  {
+   "name": "v_employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_current_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Current date",
+   "read_only": true,
+   "default": "javascript:new GlideDateTime().getDisplayValue()"
+  },
+  {
+   "name": "v_vacation_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Scheduled Vacation Start Date"
+  },
+  {
+   "name": "v_comment_vacation",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comment"
+  },
+  {
+   "name": "v_attach_vacation",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach manager approval below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+   "name": "EY: Opened by",
+   "order": "100",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by"
+   ]
+  },
+  {
+   "sys_id": "3affe4401bc82dd4a530426fe54bcb81",
+   "name": "(+) Adicionar Colaborador",
+   "order": "650",
+   "perguntas": [
+    "v_name_addcolab (Referência): Name",
+    "v_id_addcolab (Texto de Linha Única, ro): ID Global",
+    "v_company_addcolab (Texto de Linha Única, ro): Company",
+    "v_current_date_addcolab (Data, default): Current date",
+    "v_start_date_addcolab (Data): Scheduled Vacation Start Date"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If my team",
+   "when": "IO:v_solicitation_to_whom=my_team^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "add_collaborator: visible=true,mandatory=true",
+    "vs_add_contributor1: visible=true",
+    "vs_opened_by: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Field personal information",
+   "when": "IO:v_solicitation_to_whom=my_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_current_date: visible=true,readonly=true",
+    "v_company: visible=true,readonly=true",
+    "v_vacation_start_date: visible=true,mandatory=true",
+    "v_id: visible=true,readonly=true",
+    "v_employee: visible=true,readonly=true",
+    "v_cont_satrt_cancellation_vacations: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Attach",
+   "when": "IO:v_solicitation_to_whom=my_request^ORIO:v_solicitation_to_whom=my_team^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_vacation: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY:My request",
+   "type": "onChange",
+   "on": "2b1113331b452dd4a530426fe54bcbac",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta o formulário quando a solicitação é para o próprio usuário. Uma linha de limpeza está comentada."
+  },
+  {
+   "name": "EY: Attach mandatory",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando a solicitação é 'my_request'. Usa inspeção de DOM por classe CSS."
+  },
+  {
+   "name": "EY: Autofill data",
+   "type": "onChange",
+   "on": "cc029bf71b452dd4a530426fe54bcbbb",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche automaticamente os dados a partir do valor escolhido, limpando quando vazio."
+  },
+  {
+   "name": "EY: Block befor 40 days",
+   "type": "onChange",
+   "on": "2dbea8881b882dd4a530426fe54bcbd3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que bloqueia datas com menos de 40 dias de antecedência — regra de prazo mínimo para a solicitação."
+  }
+ ]
+}

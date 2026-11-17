@@ -1,0 +1,175 @@
+{
+ "sys_id": "ba93972d1b002d58a530426fe54bcbfe",
+ "status": "dividido",
+ "motivo": "O item mistura três intenções (cancelar venda, confirmar depósito de venda corporativa e ajustar caixa/nota falsa/prestação de contas) controladas por v_request_type e payment_method. Dividido em 3 conforme a 1ª análise, com fixação de v_request_type nos dois primeiros. No 3º derivado o formato não permite restringir as opções de v_request_type às 3 relevantes (só é possível editar opções de variável nova); mantidas as 5 opções originais. Scripts de validação de CNPJ e valor viram regex; script de limpeza em cascata é removido; policy incondicional de obrigatoriedade vira prop. A 1ª análise agrupava os anexos finais num único passo textual, mas são variáveis distintas com condições diferentes (débito/crédito vs. Pix), então cada uma recebeu label própria.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "v_select_the_approving_supervisor": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_select_the_approver": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cnpj_store": {
+   "props": {
+    "validation_regex": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$"
+   }
+  },
+  "v_value": {
+   "props": {
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$"
+   }
+  },
+  "v_value_cancel": {
+   "props": {
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$"
+   }
+  },
+  "v_attach_comprovante": {
+   "label": "Anexe o comprovante do pagamento via Pix."
+  },
+  "v_attach_print_dtef": {
+   "label": "Anexe o print do D-TEF da transação."
+  },
+  "v_attach_completed_template": {
+   "label": "Anexe o modelo de prestação de contas preenchido."
+  },
+  "v_attach_proof_retention": {
+   "label": "Anexe o comprovante de retenção da nota falsa pelo banco."
+  }
+ },
+ "remover": {
+  "v_template_accountability": "visual"
+ },
+ "policies": {
+  "20b7d83e1b982990a530426fe54bcb9f": "remover",
+  "ce6ebaf11b402198a530426fe54bcbbd": {
+   "conditions": "v_request_type=account",
+   "actions": {
+    "v_attach_completed_template": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "10a8d4321bd82990a530426fe54bcbcc": {
+   "converter": "regex"
+  },
+  "4104d9961b112d10d1abda4ce54bcba5": {
+   "converter": "regex"
+  },
+  "4ea319161b112d10d1abda4ce54bcb21": {
+   "converter": "regex"
+  },
+  "eb718edf1ba0a1d0d1abda4ce54bcb29": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_request_type": "cancel_sale"
+   },
+   "sem_vars": [
+    "value",
+    "v_data_of_box_adjustment",
+    "v_attach_proof_sale",
+    "v_attach_completed_template",
+    "v_attach_proof_retention"
+   ],
+   "sem_sets": [
+    "cec8dff71b04251ca530426fe54bcb76"
+   ],
+   "sem_policies": [
+    "41de3a751b402198a530426fe54bcba3",
+    "5ebfdc243386475098331c07ee5c7bb8",
+    "903fbab51b402198a530426fe54bcb9f",
+    "ce6ebaf11b402198a530426fe54bcbbd",
+    "fdfb50e33b6b2ed0924d0247f4e45a68"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_request_type": "corp_sale"
+   },
+   "sem_vars": [
+    "payment_method",
+    "v_date",
+    "v_value",
+    "v_value_cancel",
+    "v_cnpj_store",
+    "v_nsu",
+    "v_aut",
+    "v_pos",
+    "customer_name",
+    "customer_cpf",
+    "bank",
+    "agency",
+    "account",
+    "v_attach_comprovante",
+    "v_attach_print_dtef",
+    "v_data_of_box_adjustment",
+    "v_attach_completed_template",
+    "v_attach_proof_retention"
+   ],
+   "sem_sets": [
+    "cec8dff71b04251ca530426fe54bcb76"
+   ],
+   "sem_policies": [
+    "2e88bad187bba210ec360e530cbb35f7",
+    "52a3c18f877b2a10ec360e530cbb3550",
+    "8dd0b30787a7ee90ec360e530cbb353d",
+    "a68d36311b402198a530426fe54bcb68",
+    "c9890bc78763ee90ec360e530cbb35df",
+    "5ebfdc243386475098331c07ee5c7bb8",
+    "903fbab51b402198a530426fe54bcb9f",
+    "ce6ebaf11b402198a530426fe54bcbbd"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "sem_vars": [
+    "payment_method",
+    "v_date",
+    "v_value",
+    "v_value_cancel",
+    "v_cnpj_store",
+    "v_nsu",
+    "v_aut",
+    "v_pos",
+    "customer_name",
+    "customer_cpf",
+    "bank",
+    "agency",
+    "account",
+    "v_attach_comprovante",
+    "v_attach_print_dtef",
+    "v_attach_proof_sale"
+   ],
+   "sem_policies": [
+    "2e88bad187bba210ec360e530cbb35f7",
+    "41de3a751b402198a530426fe54bcba3",
+    "52a3c18f877b2a10ec360e530cbb3550",
+    "8dd0b30787a7ee90ec360e530cbb353d",
+    "a68d36311b402198a530426fe54bcb68",
+    "c9890bc78763ee90ec360e530cbb35df"
+   ]
+  }
+ ]
+}

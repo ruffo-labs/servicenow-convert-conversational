@@ -1,0 +1,713 @@
+{
+ "sys_id": "0415c54f1bc3e81032822170f54bcb85",
+ "name": "Assistência Médica (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Assistência Médica",
+ "description": "Assist&ecirc;ncia M&eacute;dica",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Require Attachments2",
+   "perguntas": []
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Beneficiário(a) não consegue ser atendido(a)",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Assistência Médica"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_telefone_ex_colaborador",
+    "rh_dem_pagamento",
+    "rh_comprovante_residencia",
+    "rh_motivo_da_solicitacao",
+    "rh_form_request_number",
+    "rh_nome_dependente_2",
+    "rh_qual_solicitacao",
+    "rh_cpf_dependente",
+    "rh_relat_med",
+    "rh_optical_card_holder_dependent",
+    "rh_data_est_parto",
+    "rh_telefone_titular",
+    "rh_n_carteirinha",
+    "rh_motivo_solicitacao",
+    "rh_email_ex_colaborador",
+    "rh_isencao_dependente",
+    "rh_form_opcao_continuidade",
+    "rh_comp_operadora",
+    "rh_dependent_cpf",
+    "rh_doc_dependente",
+    "rh_dependent_full_name"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_motivo_atendimento_nao_realizado",
+    "rh_nome_operadora",
+    "rh_cover_information",
+    "rh_titular_dependente"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Observação (rh_label_saofrancisco_hapvida)",
+     "quando": "rh_motivo_atendimento_nao_realizado=problemas_acessar_app^rh_nome_operadoraINhapvida,sao_francisco"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_unimed)",
+     "quando": "rh_motivo_atendimento_nao_realizado=problemas_acessar_app^rh_nome_operadora=unimed"
+    },
+    {
+     "policy": "CSA - Informe o motivo do atendimento não realizado",
+     "quando": "rh_motivo_atendimento_nao_realizado=outros"
+    },
+    {
+     "policy": "ALP - Require Attachments",
+     "quando": "rh_adesao_solicitada=No^NQrh_desconto_indevido=Yes"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_bradesco)",
+     "quando": "rh_motivo_atendimento_nao_realizado=problemas_acessar_app^rh_nome_operadora=bradesco_saude"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_samp)",
+     "quando": "rh_motivo_atendimento_nao_realizado=problemas_acessar_app^rh_nome_operadora=samp"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_notredame)",
+     "quando": "rh_motivo_atendimento_nao_realizado=problemas_acessar_app^rh_nome_operadora=notredame_intermedica"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de 2ª via da carteirinha Bradesco Saúde",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Assistência Médica N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_motivo_atendimento_nao_realizado",
+    "rh_telefone_ex_colaborador",
+    "rh_dem_pagamento",
+    "rh_comprovante_residencia",
+    "rh_motivo_da_solicitacao",
+    "rh_form_request_number",
+    "rh_nome_dependente_2",
+    "rh_qual_solicitacao",
+    "rh_cpf_dependente",
+    "rh_relat_med",
+    "rh_optical_card_holder_dependent",
+    "rh_data_est_parto",
+    "rh_telefone_titular",
+    "rh_n_carteirinha",
+    "rh_motivo_solicitacao",
+    "rh_email_ex_colaborador",
+    "rh_nome_operadora",
+    "rh_isencao_dependente",
+    "rh_form_opcao_continuidade",
+    "rh_cover_information",
+    "rh_comp_operadora",
+    "rh_dependent_cpf",
+    "rh_doc_dependente",
+    "rh_informe_motivo_atendimento_nao_realizado",
+    "rh_dependent_full_name"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_titular_dependente"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Require Attachments",
+     "quando": "rh_adesao_solicitada=No^NQrh_desconto_indevido=Yes"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de extensão de assistência médica",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Assistência Médica"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_motivo_atendimento_nao_realizado",
+    "rh_dem_pagamento",
+    "rh_motivo_da_solicitacao",
+    "rh_nome_dependente_2",
+    "rh_cpf_dependente",
+    "rh_relat_med",
+    "rh_optical_card_holder_dependent",
+    "rh_data_est_parto",
+    "rh_telefone_titular",
+    "rh_n_carteirinha",
+    "rh_motivo_solicitacao",
+    "rh_isencao_dependente",
+    "rh_cover_information",
+    "rh_titular_dependente",
+    "rh_comp_operadora",
+    "rh_dependent_cpf",
+    "rh_doc_dependente",
+    "rh_informe_motivo_atendimento_nao_realizado",
+    "rh_dependent_full_name"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_qual_solicitacao"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Comprovante de residência",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Formulário de opção de continuidade (Resolvedora)",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Nº do chamado solicitando o formulário",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "ALP - Require Attachments",
+     "quando": "rh_adesao_solicitada=No^NQrh_desconto_indevido=Yes"
+    },
+    {
+     "policy": "CSA - Nome da operadora",
+     "quando": "rh_qual_solicitacaoINformulario_solicitar_extensao_assistencia_medica,extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_form_continuidade_residencia)",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - E-mail do(a) ex-colaborador(a)",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Telefone do(a) ex-colaborador(a)",
+     "quando": "rh_qual_solicitacaoINformulario_solicitar_extensao_assistencia_medica,extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Comprovante de residência (Resolvedora)",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    },
+    {
+     "policy": "CSA - Formulário de opção de continuidade",
+     "quando": "rh_qual_solicitacao=extensao_assistencia_medica"
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Solicitação de isenção de coparticipação",
+     "sla": "SLA - GESTÃO DE GENTE - 48H",
+     "grupo_suporte": "RH - Isenção de Coparticipação"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_motivo_atendimento_nao_realizado",
+    "rh_telefone_ex_colaborador",
+    "rh_dem_pagamento",
+    "rh_comprovante_residencia",
+    "rh_form_request_number",
+    "rh_qual_solicitacao",
+    "rh_email_ex_colaborador",
+    "rh_form_opcao_continuidade",
+    "rh_cover_information",
+    "rh_titular_dependente",
+    "rh_comp_operadora",
+    "rh_informe_motivo_atendimento_nao_realizado"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_motivo_solicitacao",
+    "rh_nome_operadora",
+    "rh_isencao_dependente"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Motivo da solicitação",
+     "quando": "rh_motivo_solicitacao=outros"
+    },
+    {
+     "policy": "CSA - Relatório médico (Resolvedora)",
+     "quando": "rh_isencao_dependenteINYes,No"
+    },
+    {
+     "policy": "CSA - Nome completo do dependente",
+     "quando": "rh_description=yes"
+    },
+    {
+     "policy": "CSA - CPF do dependente",
+     "quando": "rh_description=yes"
+    },
+    {
+     "policy": "ALP - Require Attachments",
+     "quando": "rh_adesao_solicitada=No^NQrh_desconto_indevido=Yes"
+    },
+    {
+     "policy": "CSA - Documento do(a) dependente",
+     "quando": "rh_isencao_dependente=Yes"
+    },
+    {
+     "policy": "CSA - Relatório médico",
+     "quando": "rh_isencao_dependenteINYes,No"
+    },
+    {
+     "policy": "CSA - Data estimada do parto",
+     "quando": "rh_motivo_solicitacao=gestacao"
+    },
+    {
+     "policy": "CSA - CPF do(a) dependente",
+     "quando": "rh_isencao_dependente=Yes"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_relat_med_dependente)",
+     "quando": "rh_isencao_dependente=Yes"
+    },
+    {
+     "policy": "CSA - Observação (rh_observation_7)",
+     "quando": "rh_description=yes"
+    },
+    {
+     "policy": "CSA - Nome do(a) dependente",
+     "quando": "rh_isencao_dependente=Yes"
+    },
+    {
+     "policy": "CSA - Documento do(a) dependente (Resolvedora)",
+     "quando": "rh_isencao_dependente=Yes"
+    },
+    {
+     "policy": "CSA - Nº da carteirinha do(a) dependente",
+     "quando": "rh_isencao_dependenteINYes,No"
+    },
+    {
+     "policy": "CSA - Observação (rh_label_relat_med_dependente_2)",
+     "quando": "rh_isencao_dependente=No"
+    },
+    {
+     "policy": "CSA - Nº marca ótica da carteirinha do dependente",
+     "quando": "rh_description=yes"
+    },
+    {
+     "policy": "CSA - Telefone do(a) titular",
+     "quando": "rh_isencao_dependenteINYes,No"
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Solicitação de reembolso de coparticipação de assistência médica",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Assistência Médica"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_motivo_atendimento_nao_realizado",
+    "rh_telefone_ex_colaborador",
+    "rh_comprovante_residencia",
+    "rh_motivo_da_solicitacao",
+    "rh_form_request_number",
+    "rh_nome_dependente_2",
+    "rh_qual_solicitacao",
+    "rh_cpf_dependente",
+    "rh_relat_med",
+    "rh_optical_card_holder_dependent",
+    "rh_data_est_parto",
+    "rh_telefone_titular",
+    "rh_n_carteirinha",
+    "rh_motivo_solicitacao",
+    "rh_email_ex_colaborador",
+    "rh_isencao_dependente",
+    "rh_form_opcao_continuidade",
+    "rh_cover_information",
+    "rh_dependent_cpf",
+    "rh_doc_dependente",
+    "rh_informe_motivo_atendimento_nao_realizado",
+    "rh_dependent_full_name"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_dem_pagamento",
+    "rh_nome_operadora",
+    "rh_titular_dependente",
+    "rh_comp_operadora"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Require Attachments",
+     "quando": "rh_adesao_solicitada=No^NQrh_desconto_indevido=Yes"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_motivo_atendimento_nao_realizado",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do atendimento não realizado",
+   "choices": [
+    "Problemas para acessar o APP",
+    "Beneficiário(a) com carência",
+    "Beneficiário(a) inativo(a) na operadora",
+    "Beneficiário(a) com divergência nos dados",
+    "Outros"
+   ]
+  },
+  {
+   "name": "rh_telefone_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do(a) ex-colaborador(a)",
+   "choices": []
+  },
+  {
+   "name": "rh_dem_pagamento",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de Pagamento",
+   "choices": []
+  },
+  {
+   "name": "rh_comprovante_residencia",
+   "type": "Anexo",
+   "question_text": "Comprovante de residência",
+   "choices": []
+  },
+  {
+   "name": "rh_motivo_da_solicitacao",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Motivo da solicitação",
+   "choices": []
+  },
+  {
+   "name": "rh_form_request_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do chamado solicitando o formulário",
+   "reference": "sc_req_item",
+   "choices": []
+  },
+  {
+   "name": "rh_nome_dependente_2",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_nome_da_operadora",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": []
+  },
+  {
+   "name": "rh_qual_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Formulário para solicitar extensão de assistência médica",
+    "Extensão de assistência médica"
+   ]
+  },
+  {
+   "name": "rh_cpf_dependente",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_relat_med",
+   "type": "Anexo",
+   "question_text": "Relatório médico",
+   "choices": []
+  },
+  {
+   "name": "rh_optical_card_holder_dependent",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº marca ótica da carteirinha do dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_data_est_parto",
+   "type": "Data",
+   "question_text": "Data estimada do parto",
+   "choices": []
+  },
+  {
+   "name": "rh_telefone_titular",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do(a) titular",
+   "choices": []
+  },
+  {
+   "name": "rh_n_carteirinha",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº da carteirinha",
+   "choices": []
+  },
+  {
+   "name": "rh_motivo_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Outros",
+    "Gestação",
+    "Doença crônica"
+   ]
+  },
+  {
+   "name": "rh_email_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail do(a) ex-colaborador(a)",
+   "choices": []
+  },
+  {
+   "name": "rh_nome_operadora",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "Outros",
+    "Samp",
+    "Bradesco Saúde",
+    "Usisaúde",
+    "Unimed",
+    "Best Saúde",
+    "NotreDame Intermédica",
+    "Hapvida",
+    "São Francisco"
+   ]
+  },
+  {
+   "name": "rh_isencao_dependente",
+   "type": "Sim/Não",
+   "question_text": "A isenção é para o dependente?",
+   "choices": []
+  },
+  {
+   "name": "rh_form_opcao_continuidade",
+   "type": "Anexo",
+   "question_text": "Formulário de opção de continuidade",
+   "choices": []
+  },
+  {
+   "name": "rh_cover_information",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o nome da clínica/hospital que o(a) beneficiário(a) não conseguiu ser atendido?",
+   "choices": []
+  },
+  {
+   "name": "rh_titular_dependente",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Dependente",
+    "Titular",
+    "Ambos"
+   ]
+  },
+  {
+   "name": "rh_comp_operadora",
+   "type": "Anexo",
+   "question_text": "Comprovante da Operadora",
+   "choices": []
+  },
+  {
+   "name": "rh_nome_dependente",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_dependent_cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_doc_dependente",
+   "type": "Anexo",
+   "question_text": "Documento do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "rh_informe_motivo_atendimento_nao_realizado",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o motivo do atendimento não realizado",
+   "choices": []
+  },
+  {
+   "name": "rh_dependent_full_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo do dependente",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "block"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "1bf0719c3b2b2a10b28dd047f4e45ac8",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "2a41b6e63b9f6a10b28dd047f4e45a90",
+   "name": "CSA - OnChange ServiceOffering",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da oferta, troca o rótulo de Attachments conforme a oferta: 'Formulário de inclusão' (adesão à assistência médica para dependentes), 'Evidência da solicitação' (adesão não processada), 'Demonstrativo de pagamento' (cancelamento associado indevidamente) e 'Formulário de cancelamento' (cancelamento de assistência médica)."
+  },
+  {
+   "sys_id": "39687b54873be650182a0d440cbb35cc",
+   "name": "CSA - Block Submit OnChange2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se a matrícula do impactado (rh_user_id_impacted) está vazia, limpa service_offering e rh_qual_solicitacao e mostra 'Preencha a matrícula do impactado antes.'. Se a oferta for 'Beneficiário(a) não consegue ser atendido(a)', o motivo for 'problemas_acessar_app' e a admissão for posterior a 28/02/2013, agenda dois setTimeout de 500 ms, um gravando block='true' e outro block='false'; como ambos disparam no mesmo instante, o valor final tende a ser 'false' (o bloqueio por esse caminho pode não valer)."
+  },
+  {
+   "sys_id": "41aafab11bfbec1032822170f54bcb99",
+   "name": "ALP - OnChange validate Collab Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_collaborator_phone."
+  },
+  {
+   "sys_id": "630361ee1b5be810eca40dcbe54bcb83",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF (11 dígitos, sequências repetidas, dois dígitos verificadores, formatação), aplicada a rh_dependent_cpf."
+  },
+  {
+   "sys_id": "674b315e879f2a10182a0d440cbb35e2",
+   "name": "CSA - Block submitt",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se o motivo for 'problemas_acessar_app' e a operadora diferente de 'outros', mostra 'Favor, entrar em contato com a operadora pelos canais informados' e bloqueia o envio. Para a oferta 'Solicitação de extensão de assistência médica' com as solicitações de extensão, se a admissão for posterior a 28/02/2013, mostra mensagem de que só colaboradores admitidos até essa data (com participação fixa mensal no plano, desligados por...) podem pedir e bloqueia. O bloco de bloqueio do cancelamento Unimed FESP está comentado."
+  },
+  {
+   "sys_id": "735a25e21bdbe810eca40dcbe54bcb54",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF aplicada a rh_dependent_cpf_2."
+  },
+  {
+   "sys_id": "8bc96ad087bfa650182a0d440cbb35c3",
+   "name": "CSA - A isenção é para o dependente?",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de rh_isencao_dependente, muda o rótulo de rh_n_carteirinha para 'Nº da carteirinha do(a) titular' ou 'do(a) dependente'. Detalhe: a condição é escrita como dependente == ('No' || 'Não'), que em JavaScript avalia só 'No'; se o valor vier em português ('Não'), cai no ramo de dependente."
+  },
+  {
+   "sys_id": "936a25e21bdbe810eca40dcbe54bcb5a",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF aplicada a rh_dependent_cpf_3."
+  },
+  {
+   "sys_id": "9523a5ee1b5be810eca40dcbe54bcb53",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF aplicada a rh_dependent_cpf_1."
+  },
+  {
+   "sys_id": "c11d57948737e650182a0d440cbb35cb",
+   "name": "CSA - Block Submit OnChange",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, compara a data de admissão (rh_date_entry) com o limite fixo de 28/02/2013. Para a oferta 'Solicitação de extensão de assistência médica' e as solicitações de extensão de assistência médica (rh_qual_solicitacao), se a admissão for posterior ao limite, limpa service_offering e rh_qual_solicitacao e mostra mensagem de que só colaboradores admitidos até 28/02/2013 podem pedir a extensão. Há uma versão antiga do script comentada no final."
+  },
+  {
+   "sys_id": "cf5430da877db610182a0d440cbb35a1",
+   "name": "CSA - Limpar Variáveis (ServiceOffering)",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da oferta, limpa um grande bloco de variáveis do pedido de benefícios: block, rh_qual_solicitacao, nome da operadora, cover information, titular/dependente, motivo de atendimento não realizado, adesão solicitada, desconto indevido, cancelamento por óbito, e-mail e telefone de ex-colaborador, número do formulário, convenção da operadora, titular do cartão óptico e endereço de contato, entre outras."
+  },
+  {
+   "sys_id": "d9e9fe311bfbec1032822170f54bcb23",
+   "name": "ALP - OnChange validate Phone Contact",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_contact."
+  },
+  {
+   "sys_id": "dc01b19c3b2b2a10b28dd047f4e45a5f",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

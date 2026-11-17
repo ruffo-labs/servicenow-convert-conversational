@@ -1,0 +1,240 @@
+{
+ "sys_id": "4f068894002b444a93f685a62d2e115d",
+ "status": "dividido",
+ "motivo": "Alterar permissão pede acesso atual, desejado e validade, criar banco pede tecnologia, nome e capacidade, e criar usuário técnico pede aplicação, permissões e cofre de credencial. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_ambiente": {
+   "label": "Em qual ambiente?"
+  },
+  "v_banco_de_dados": {
+   "label": "Em qual banco de dados?"
+  },
+  "v_identidade_usuario_servico": {
+   "label": "Qual usuário ou serviço terá o acesso?"
+  },
+  "v_acesso_atual": {
+   "label": "Qual é o acesso atual?"
+  },
+  "v_acesso_desejado": {
+   "label": "Qual acesso você precisa?"
+  },
+  "v_justificativa": {
+   "label": "Por que você precisa dessa mudança?"
+  },
+  "v_validade": {
+   "label": "Até quando o acesso deve valer?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_tecnologia": {
+   "label": "Qual tecnologia de banco você quer?"
+  },
+  "v_nome_do_banco": {
+   "label": "Que nome o banco deve ter?"
+  },
+  "v_capacidade_estimada": {
+   "label": "Qual a capacidade estimada de armazenamento?"
+  },
+  "v_responsavel_tecnico": {
+   "label": "Quem é o responsável técnico?"
+  },
+  "v_backup_necessario": {
+   "label": "Precisa de backup?"
+  },
+  "v_aplicacao_sistema": {
+   "label": "Qual aplicação usará esse usuário?"
+  },
+  "v_permissoes_necessarias": {
+   "label": "Quais permissões o usuário precisa ter?"
+  },
+  "v_validade_do_acesso": {
+   "label": "Por quanto tempo esse usuário deve existir?"
+  },
+  "v_armazenar_credencial_em_cofre": {
+   "label": "A credencial deve ser guardada em cofre?"
+  }
+ },
+ "policies": {
+  "9be4b0834fae4eb286f0a71205f31430": "remover",
+  "f2e4515820894e0e985a441d2903dd13": "remover",
+  "64d7ed2084df460494a9cab8a7d5bbf5": "remover",
+  "78a64cfb5a074cee842f62a9d0ddef81": "remover",
+  "8f7a4a2465614af8ba4fa7b8e0b2a59e": "remover"
+ },
+ "itens": [
+  {
+   "name": "Alterar permissão de acesso a um banco de dados",
+   "short_description": "Pedir mudança de permissão de um usuário ou serviço em um banco.",
+   "description": "Use quando alguém ou um serviço precisa de mais ou menos acesso a um banco. A opção atendida é Alterar permissão de banco. Informe ambiente, banco, identidade, acesso atual e desejado, justificativa e validade.",
+   "frases_exemplo": [
+    "Preciso de acesso de escrita no banco de homologação",
+    "Quero mudar a permissão de um usuário no banco",
+    "Pedido para dar leitura a um serviço no banco de produção",
+    "Preciso reduzir o acesso de um usuário ao banco",
+    "Como peço mais permissão num banco de dados?"
+   ],
+   "sem_vars": [
+    "v_tecnologia",
+    "v_nome_do_banco",
+    "v_capacidade_estimada",
+    "v_responsavel_tecnico",
+    "v_backup_necessario",
+    "v_aplicacao_sistema",
+    "v_permissoes_necessarias",
+    "v_validade_do_acesso",
+    "v_armazenar_credencial_em_cofre"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar permissão de banco"
+   },
+   "vars": {
+    "v_banco_de_dados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_identidade_usuario_servico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_acesso_atual": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_acesso_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_validade": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar um novo banco de dados",
+   "short_description": "Pedir a criação de um banco com tecnologia e capacidade definidas.",
+   "description": "Use quando precisar de um banco novo. A opção atendida é Criar banco de dados. Informe ambiente, tecnologia (SQL Server, Oracle, MySQL ou outra), nome, capacidade estimada, responsável técnico e necessidade de backup.",
+   "frases_exemplo": [
+    "Preciso de um banco SQL Server novo",
+    "Quero criar um banco MySQL para a aplicação",
+    "Solicito um banco de dados em homologação",
+    "Como peço a criação de um banco Oracle?",
+    "Preciso de um banco novo com backup"
+   ],
+   "sem_vars": [
+    "v_banco_de_dados",
+    "v_identidade_usuario_servico",
+    "v_acesso_atual",
+    "v_acesso_desejado",
+    "v_justificativa",
+    "v_validade",
+    "v_aplicacao_sistema",
+    "v_permissoes_necessarias",
+    "v_validade_do_acesso",
+    "v_armazenar_credencial_em_cofre"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar banco de dados"
+   },
+   "vars": {
+    "v_tecnologia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_nome_do_banco": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_capacidade_estimada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_backup_necessario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_tecnico": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar usuário técnico de banco de dados",
+   "short_description": "Pedir um usuário técnico para uma aplicação acessar um banco.",
+   "description": "Use quando uma aplicação precisa de um usuário próprio no banco. A opção atendida é Criar usuário técnico de banco. Informe ambiente, banco, aplicação, permissões, validade, responsável técnico e se a credencial vai para o cofre.",
+   "frases_exemplo": [
+    "Preciso de um usuário de banco para a aplicação",
+    "Quero criar um usuário técnico para o sistema acessar o banco",
+    "Solicito um usuário de serviço no banco de produção",
+    "A integração precisa de um login no banco, como peço?",
+    "Preciso de um usuário com acesso temporário ao banco"
+   ],
+   "sem_vars": [
+    "v_identidade_usuario_servico",
+    "v_acesso_atual",
+    "v_acesso_desejado",
+    "v_justificativa",
+    "v_validade",
+    "v_tecnologia",
+    "v_nome_do_banco",
+    "v_capacidade_estimada",
+    "v_backup_necessario"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar usuário técnico de banco"
+   },
+   "vars": {
+    "v_banco_de_dados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_tecnico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_aplicacao_sistema": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_permissoes_necessarias": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_validade_do_acesso": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_armazenar_credencial_em_cofre": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

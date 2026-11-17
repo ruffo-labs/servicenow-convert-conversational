@@ -1,0 +1,208 @@
+{
+ "sys_id": "07048e2622fd489c94f478af82acc9b5",
+ "status": "dividido",
+ "motivo": "Alterar responsável ou associar chip pedem dados do funcionário e descrição; solicitar aparelho, chip ou relatório não tem campos extras; recolher equipamento pede qual equipamento e centro de custo; trocar aparelho pede centro de custo. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_nome_do_funcionario": {
+   "label": "Qual o nome do funcionário?"
+  },
+  "v_cpf": {
+   "label": "Qual o CPF do funcionário?"
+  },
+  "v_e_mail": {
+   "label": "Qual o e-mail do funcionário?"
+  },
+  "v_coligada": {
+   "label": "A qual coligada o funcionário pertence?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_qual_e_o_equipamento": {
+   "label": "O pedido é para aparelho, linha ou ambos?"
+  },
+  "v_centro_de_custo": {
+   "label": "Qual o centro de custo?"
+  }
+ },
+ "policies": {
+  "e396c8f850fe4d0891814409d57fd1c6": "remover",
+  "65381e22015641678d6f2a7a5539bef5": "remover",
+  "979783681c22443797586e47bec4d3b4": "remover"
+ },
+ "itens": [
+  {
+   "name": "Alterar responsável da linha ou associar linha a chip",
+   "short_description": "Pedir troca de titular de uma linha móvel ou associação de linha a um chip.",
+   "description": "Use quando a linha precisa mudar de responsável ou ser ligada a um chip. As opções atendidas são Alterar responsável da Linha e Associar Linha ao Chip. Informe nome, CPF, e-mail e coligada do funcionário.",
+   "frases_exemplo": [
+    "Quero passar a linha para outro funcionário",
+    "Preciso mudar o responsável da linha",
+    "Associar a linha ao chip novo",
+    "O chip chegou, preciso vincular à linha",
+    "Trocar o titular do celular corporativo"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_equipamento",
+    "v_centro_de_custo"
+   ],
+   "vars": {
+    "v_nome_do_funcionario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_cpf": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_e_mail": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_coligada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitar celular, chip ou relatório de telefonia",
+   "short_description": "Pedir aparelho, chip, aparelho com chip ou relatório de telefonia móvel.",
+   "description": "Use para pedir um recurso novo de telefonia. As opções atendidas são Solicitar Aparelho Celular, Solicitar Chip, Solicitar Aparelho Celular + Chip e Disponibilizar Relatório. Não há campos adicionais, descreva o pedido na conversa.",
+   "frases_exemplo": [
+    "Preciso de um celular corporativo",
+    "Quero um chip novo",
+    "Solicito um aparelho com chip para o novo colaborador",
+    "Podem disponibilizar o relatório de uso das linhas?",
+    "Preciso de um celular e um chip"
+   ],
+   "sem_vars": [
+    "v_nome_do_funcionario",
+    "v_cpf",
+    "v_e_mail",
+    "v_coligada",
+    "v_descricao",
+    "v_anexos",
+    "v_qual_e_o_equipamento",
+    "v_centro_de_custo"
+   ]
+  },
+  {
+   "name": "Recolher um equipamento de telefonia móvel",
+   "short_description": "Pedir o recolhimento de aparelho ou linha de um funcionário.",
+   "description": "Use quando um aparelho ou linha deve ser devolvido, por exemplo em desligamento. A opção atendida é Recolher Equipamento. Informe os dados do funcionário, qual é o equipamento (aparelho, linha ou ambos) e o centro de custo.",
+   "frases_exemplo": [
+    "Preciso recolher o celular de um funcionário desligado",
+    "Quero devolver o aparelho corporativo",
+    "Recolher a linha e o aparelho do colaborador",
+    "O funcionário saiu, podem pegar o celular?",
+    "Pedido de recolhimento de equipamento"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Recolher Equipamento"
+   },
+   "vars": {
+    "v_nome_do_funcionario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_cpf": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_e_mail": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_coligada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_e_o_equipamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_centro_de_custo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Trocar aparelho celular corporativo",
+   "short_description": "Pedir a troca de um aparelho celular de um funcionário.",
+   "description": "Use quando o aparelho precisa ser substituído. A opção atendida é Trocar Aparelho. Informe os dados do funcionário e o centro de custo.",
+   "frases_exemplo": [
+    "Meu celular quebrou, preciso trocar",
+    "Quero trocar o aparelho corporativo",
+    "O celular está velho, dá pra trocar?",
+    "Pedido de troca de aparelho",
+    "Preciso de um celular novo no lugar do atual"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_equipamento"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Trocar Aparelho"
+   },
+   "vars": {
+    "v_nome_do_funcionario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_cpf": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_e_mail": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_coligada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_centro_de_custo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

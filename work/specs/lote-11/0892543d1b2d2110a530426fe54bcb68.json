@@ -1,0 +1,61 @@
+{
+ "sys_id": "0892543d1b2d2110a530426fe54bcb68",
+ "status": "conversacional",
+ "motivo": "Intenção única (estornar um lançamento contábil). A 1ª análise sugeria substituir os campos de número de documento/ano/lote (que pertencem a variable sets) por 3 variáveis novas, mas isso exigiria remover variáveis de set, o que o formato não permite (set é compartilhado). Mantivemos as variáveis originais dos dois sets de número de documento e criamos duas policies do item, condicionadas à empresa (vs_which_company), para mostrar só o bloco relevante — substituindo os scripts que faziam isso via onLoad/onChange. A policy que só tornava o anexo obrigatório virou prop.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_attach_approval": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "policies": {
+  "49ad6f641bbd2950a530426fe54bcbed": "remover",
+  "nova_mostrar_natura_tbs": {
+   "short_description": "Mostrar número do documento e ano (Natura ou TBS)",
+   "conditions": "vs_which_company=natura^ORvs_which_company=tbs",
+   "actions": {
+    "v_document_number_natura_tbs": {
+     "visible": true
+    },
+    "v_document_year": {
+     "visible": true
+    }
+   },
+   "origem": "a9f3e64e873d9210ec360e530cbb350d"
+  },
+  "nova_mostrar_avon_latam": {
+   "short_description": "Mostrar número do lote e do documento (Avon LATAM)",
+   "conditions": "vs_which_company=Avon LATAM",
+   "actions": {
+    "v_batch_number": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_document_number_avon_latam": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "df2f8c6a1be16990d1abda4ce54bcb30"
+  }
+ },
+ "scripts": {
+  "a9f3e64e873d9210ec360e530cbb350d": {
+   "remover": {
+    "substituido_por": "nova_mostrar_natura_tbs"
+   }
+  },
+  "df2f8c6a1be16990d1abda4ce54bcb30": {
+   "converter": "policy:nova_mostrar_avon_latam"
+  },
+  "eed2d4221b256990d1abda4ce54bcb42": {
+   "remover": {
+    "substituido_por": "nova_mostrar_avon_latam"
+   }
+  }
+ }
+}

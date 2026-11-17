@@ -1,0 +1,37 @@
+{
+ "sys_id": "c560f35f1bf8a190a530426fe54bcbe2",
+ "title": "Inform the leader's cycle and block",
+ "internal_name": "inform_the_leader_s_cycle_and_block",
+ "description": "Inform the leader's cycle and block (an advance of up to 3 cycles can be request)",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de adiantamento de comissão - líderes"
+ ],
+ "variaveis": [
+  {
+   "name": "v_cycle",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cycle"
+  },
+  {
+   "name": "v_block",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Block"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Cycle leader",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_block: visible=true,mandatory=true",
+    "v_cycle: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

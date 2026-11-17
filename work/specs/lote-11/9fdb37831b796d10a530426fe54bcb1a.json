@@ -1,0 +1,104 @@
+{
+ "sys_id": "9fdb37831b796d10a530426fe54bcb1a",
+ "status": "conversacional",
+ "motivo": "Formulário único para o gestor liberar um terceiro como solicitante na Plataforma. Segue a 1ª análise: labels herdados onde existiam, escritos para as demais variáveis derivadas. Scripts e policies que só fixavam obrigatoriedade/leitura viram props diretas nas variáveis do item; as que agem em variáveis do set (v_opened_by, vs_which_company) continuam via policy, sem alterar o set.",
+ "vars": {
+  "v_selecionar_usuario": {
+   "label": "Qual terceiro você quer liberar? (nome ou e-mail corporativo)",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cpf_do_terceiro": {
+   "label": "Qual o CPF (Cadastro de Pessoa Física) do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cargo": {
+   "label": "Qual o cargo ou função do terceiro?"
+  },
+  "v_declaracao_de_veracidade": {
+   "label": "Você confirma que as informações do terceiro são verdadeiras?",
+   "props": {
+    "type": "1",
+    "include_none": true,
+    "mandatory": true
+   }
+  },
+  "v_e_mail_do_terceiro": {
+   "label": "Qual é o e-mail corporativo do terceiro (Natura, Avon ou TBS)?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\w.+-]+@(natura\\.net|avon\\.com|thebodyshop\\.com)$"
+   }
+  },
+  "v_nome_completo": {
+   "label": "Qual é o nome completo do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_setor": {
+   "label": "Qual é o setor do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_centro_de_custo": {
+   "label": "Qual é o centro de custo do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_local_de_trabalho": {
+   "label": "Qual é o local de trabalho do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_id_do_terceiro_network_id": {
+   "label": "Qual é o Network ID do terceiro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_login_do_terceiro": {
+   "label": "Qual é o login do terceiro na plataforma?"
+  }
+ },
+ "remover": {
+  "third_party_information": "visual",
+  "v_declaracao": "visual"
+ },
+ "policies": {
+  "5fa404171bb96d10a530426fe54bcb1b": {
+   "conditions": "",
+   "actions": {
+    "v_opened_by": {
+     "readonly": true,
+     "set": "javascript:gs.getUserID()"
+    }
+   }
+  },
+  "c20588171bb96d10a530426fe54bcb0f": {
+   "conditions": "",
+   "actions": {
+    "vs_which_company": {
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "16c6ccd71bb96d10a530426fe54bcbde": {
+   "converter": "auto_populate"
+  },
+  "7ec7049b1bb96d10a530426fe54bcbf9": {
+   "converter": "policy:5fa404171bb96d10a530426fe54bcb1b"
+  },
+  "d567c05b1bb96d10a530426fe54bcbb6": {
+   "converter": "regex"
+  }
+ }
+}

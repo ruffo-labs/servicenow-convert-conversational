@@ -1,0 +1,323 @@
+{
+ "sys_id": "6afc1fca1b0f241032822170f54bcb34",
+ "name": "Pessoa com Deficiência",
+ "category": "Medicina do Trabalho",
+ "short_description": "Solicitações relacionadas à Pessoa com Deficiência",
+ "description": "Solicita&ccedil;&otilde;es relacionadas &agrave; Pessoa com Defici&ecirc;ncia",
+ "sets": [
+  {
+   "title": "Informações do Candidato",
+   "perguntas": [
+    "rh_cpf_candidate",
+    "rh_email_candidate",
+    "rh_location",
+    "rh_name_candidate"
+   ]
+  },
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados do candidato",
+   "perguntas": [
+    "candidate_cost_center_set",
+    "vs_expansion_store_set",
+    "candidate_section_set",
+    "candidate_position_function_set",
+    "type_disability_set",
+    "vs_approver_regional_doctor_set"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Pré-análise de compatibilidade à Lei de Cotas",
+     "sla": "SLA - GESTÃO DE GENTE - 40H"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_regional_medical_approver",
+    "rh_is_impacted_candidate",
+    "rh_center_cost_impacted_new",
+    "rh_disability_type",
+    "rh_occupation_impacted",
+    "rh_store_cd",
+    "rh_phone_contact"
+   ],
+   "passa_a_obrigatoria": [
+    "candidate_perception"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Observação 3 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=2"
+    },
+    {
+     "policy": "ALP - Observação 1 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "vs_expansion_store_set=1"
+    },
+    {
+     "policy": "ALP - Observação 7 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=6"
+    },
+    {
+     "policy": "ALP - Observação 6 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=5"
+    },
+    {
+     "policy": "ALP - Observação 4 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=3"
+    },
+    {
+     "policy": "ALP - Observação 5 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=4"
+    },
+    {
+     "policy": "ALP - Observação 2 Pré-análise de compatibilidade à Lei de Cotas",
+     "quando": "type_disability_set=1"
+    },
+    {
+     "policy": "ALP - Reference Centro de custo do candidato e Nome da loja para admissão do candidato",
+     "quando": "vs_expansion_store_set=2"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de EPI para pessoa com deficiência",
+     "sla": "SLA - GESTÃO DE GENTE - 40H"
+    }
+   ],
+   "sai_do_formulario": [
+    "u_action_review_reason",
+    "u_action_review",
+    "candidate_perception"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_regional_medical_approver",
+    "rh_center_cost_impacted_new",
+    "rh_disability_type",
+    "rh_occupation_impacted",
+    "rh_store_cd",
+    "rh_phone_contact"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_regional_medical_approver",
+   "type": "Referência",
+   "question_text": "Aprovador Médico Regional",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "rh_is_impacted_candidate",
+   "type": "Selecionar Caixa",
+   "question_text": "Impactado ou Candidato?",
+   "choices": [
+    "Impactado",
+    "Candidato"
+   ]
+  },
+  {
+   "name": "rh_center_cost_impacted_new",
+   "type": "Texto de Linha Única",
+   "question_text": "Centro de custo do impactado",
+   "reference": "cmn_cost_center",
+   "choices": []
+  },
+  {
+   "name": "candidate_perception",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Preencher com a percepção sobre o candidato durante a entrevista, considerando suas limitações em relação às funções possíveis a serem executadas, para uma análise mais precisa pela equipe médica.",
+   "choices": []
+  },
+  {
+   "name": "rh_disability_type",
+   "type": "Texto de Linha Única",
+   "question_text": "Tipo de deficiência",
+   "choices": []
+  },
+  {
+   "name": "rh_occupation_impacted",
+   "type": "Texto de Linha Única",
+   "question_text": "Cargo/ função do impactado",
+   "choices": []
+  },
+  {
+   "name": "rh_store_cd",
+   "type": "Texto de Linha Única",
+   "question_text": "Loja/CD",
+   "choices": []
+  },
+  {
+   "name": "actions_pre_characterized",
+   "type": "Selecionar Caixa",
+   "question_text": "Ações - Pré caracterizado",
+   "choices": [
+    "Pré Caracterizado Físico",
+    "Pré Caracterizado Mental/ Intelectual",
+    "Pré Caracterizado Visual",
+    "Pré Caracterizado Deficiência múltipla",
+    "Pré Caracterizado Auditivo",
+    "Pré Caracterizado Reabilitado INSS"
+   ]
+  },
+  {
+   "name": "shares_not_featured",
+   "type": "Selecionar Caixa",
+   "question_text": "Ações - Não caracterizado",
+   "choices": [
+    "Não caracterizado devido laudo incompleto",
+    "Não caracterizado na Lei de Cotas pois a perda auditiva deve ser bilateral (ouvido direito e esquerdo)",
+    "Não caracterizado devido dados divergentes",
+    "Não caracterizado devido aberto em duplicidade",
+    "Não caracterizado na Lei de Cotas",
+    "Não caracterizado devido falta de informações básicas",
+    "Não caracterizado na Lei de Cotas pois a acuidade visual deve ser de 20/60 a 20/400 para ser considerado como baixa visão"
+   ]
+  },
+  {
+   "name": "rh_phone_contact",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone para contato com DD",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "rh_store_solic"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0192a43f1b38291032822170f54bcb59",
+   "name": "ALP - Valid RH Name PCD Request",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do nome do solicitante, se a oferta for 'Pré-análise de compatibilidade com a lei de cotas' e o CPF do candidato estiver preenchido, chama global.RHv2Ajax.getSolicCandidate via GlideAjax; se o retorno indicar chamado existente, mostra erro com o número do RITM e limpa rh_cpf_candidate."
+  },
+  {
+   "sys_id": "072c9ec01b55e95032822170f54bcb58",
+   "name": "ALP - Impactado Resolved",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad (visão resolvedora), após um atraso, lê rh_is_impacted_candidate; se for 'candidate', oculta, desobriga e remove a exibição do bloco do colaborador impactado (rh_infos_impacted_set, usuário, solicitante, CPF, e-mail etc.)."
+  },
+  {
+   "sys_id": "0ccfa5983b2b2a10b28dd047f4e45a74",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "159248db1bd8fcd0eca40dcbe54bcbfc",
+   "name": "ALP - Impactado ou Candidato",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma lógica de Impactado ou Candidato: conforme rh_is_impacted_candidate, limpa os campos do candidato ou do impactado."
+  },
+  {
+   "sys_id": "3fbcecaf1bf4e51032822170f54bcbfd",
+   "name": "ALP - Valid CPF PCD Request",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange de rh_cpf_candidate, valida o CPF (11 dígitos, sequências repetidas, dois dígitos verificadores; inválido limpa e mostra 'CPF inválido!'). Se válido, chama global.RHv2Ajax.getSolicCandidate via GlideAjax; se já existir chamado para o mesmo CPF na unidade, mostra 'Encontramos na base chamado N° <ritm> nessa unidade para o mesmo CPF'. Se não, formata o CPF e grava."
+  },
+  {
+   "sys_id": "92b2acff1b38291032822170f54bcb05",
+   "name": "ALP - Valid RH  Service Offe PCD Request",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se a oferta for 'Pré-análise de compatibilidade com a lei de cotas' e CPF do candidato e solicitante estiverem preenchidos, chama global.RHv2Ajax.getSolicCandidate via GlideAjax (oferta, CPF, usuário). Se o retorno indicar chamado existente, mostra 'Encontramos na base chamado N° <ritm> nessa unidade para o mesmo CPF' e limpa rh_cpf_candidate e service_offering."
+  },
+  {
+   "sys_id": "959f393e1b1bac10eca40dcbe54bcb79",
+   "name": "ALP - OnChange CNPJ Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange de rh_cnpj, valida o formato (aceita o CNPJ alfanumérico novo) e, para CNPJ numérico, exige 14 dígitos, rejeita sequências repetidas e confere os dígitos verificadores. Se inválido, limpa o campo e mostra 'CNPJ inválido!'. Se válido, formata o CNPJ e grava."
+  },
+  {
+   "sys_id": "d897df971b70e51032822170f54bcbb4",
+   "name": "ALP - Candidato",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável de candidato, quando esvazia, limpa rh_is_impacted_candidate e oculta, desobriga e esvazia um bloco grande de campos do colaborador impactado (usuário, CPF, e-mail, data de entrada, localidade, departamento, centro de resultado, CNPJ do local etc.). Quando há valor, o comportamento depende do nome da oferta: para 'Pré-análise de compatibilidade com a lei de cotas' segue um ramo próprio, nos demais casos segue outro (o trecho final do script não foi lido em detalhe; confira no registro da instância)."
+  },
+  {
+   "sys_id": "d9cf69983b2b2a10b28dd047f4e45a57",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "dfac36b51bfbec1032822170f54bcb11",
+   "name": "ALP - OnChange validate Phone Contact",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_contact."
+  }
+ ]
+}

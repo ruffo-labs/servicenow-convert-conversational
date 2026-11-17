@@ -1,0 +1,374 @@
+{
+ "sys_id": "c15bef711bdde110a530426fe54bcbc0",
+ "name": "Solicitar criação de pagamento manual e ITP",
+ "sys_name": "FORM0000468",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Formulário para solicitação de criação de pagamentos manuais e ITPs (taxas e juros)",
+ "description": "Formulário para solicitação de criação de pagamentos manuais e ITPs (taxas e juros)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "25",
+   "variaveis_ativas": "26",
+   "bloqueadores": "0",
+   "avisos": "21",
+   "perguntas_sem_conversational_label": "25"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_payment_description: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_template_apportionments: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_attach_template_apportionments: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_ledger_account: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_coin: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_sap_code_ref: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_payment_approver_email: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_additional_information: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_download_template: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_is_an_apportionment: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_beneficiary_cnpj_or_cpf: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_cost_center_or_pep: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_pay_day: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcategory2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 25 de 25 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 25 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 18 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_payment_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the payment category?",
+   "include_none": true,
+   "choices": [
+    "International [=internacional]",
+    "National [=national]"
+   ]
+  },
+  {
+   "name": "v_demanded_by_legal_team",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this payment request demanded by the Legal Team?",
+   "include_none": true,
+   "choices": [
+    "No [=no]",
+    "Yes [=yes]"
+   ]
+  },
+  {
+   "name": "v_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user",
+   "ref_qual": "x_nasm_hr_range>=G^active=true^EQ"
+  },
+  {
+   "name": "v_beneficiary_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Beneficiary's name",
+   "reference": "core_company",
+   "include_none": true
+  },
+  {
+   "name": "v_beneficiary_cnpj_or_cpf",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "What is the beneficiary's CNPJ or CPF?",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj='+ current.variables.v_beneficiary_name.u_cnpj"
+  },
+  {
+   "name": "v_sap_code_ref",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "SAP Code",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_vendor_id='+ current.variables.v_beneficiary_name.u_vendor_id"
+  },
+  {
+   "name": "v_amount_to_be_paid",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount to be paid to the beneficiary?",
+   "include_none": true
+  },
+  {
+   "name": "v_coin",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Coin",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_pay_day",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Pay day",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_payment_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Payment description",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_is_an_apportionment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this payment request an apportionment?",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the template that must be used in the field below",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_attach_template_apportionments",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the template with the apportionments",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_ledger_account",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Ledger Account",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_cost_center_or_pep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Center or PEP",
+   "reference": "fx_currency",
+   "ref_qual": "active=true^EQ",
+   "include_none": true
+  },
+  {
+   "name": "v_payment_approver_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Payment approver name",
+   "reference": "sys_user",
+   "include_none": true
+  },
+  {
+   "name": "v_payment_approver_email",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Payment approver email",
+   "reference": "sys_user",
+   "lookup": "sys_user",
+   "ref_qual": "javascript: 'email='+ current.variables.v_payment_approver_name.email"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information",
+   "reference": "sys_user",
+   "lookup": "sys_user",
+   "ref_qual": "javascript: 'email='+ current.variables.v_payment_approver_name.email"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "b6290e291b19e110d1abda4ce54bcb04",
+   "name": "EY: Company: NTCO - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "v_country (Texto de Linha Única): Country",
+    "vs_which_company (Selecionar Caixa): The request is for which company?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "called_area_others (Texto de Linha Única): Add Area Name",
+    "vs_responsible_area2 (Selecionar Caixa): Indicate the area responsible for hiring",
+    "vs_subcategory2 (Referência): Subcategory",
+    "vs_which_sub_company (Referência): The request is for which sub-company?",
+    "vs_which_sub_company_2 (Referência): The request is for which sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only Fields for payment category = NATIONAL - Resolver View",
+   "when": "IO:v_payment_category=national^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_beneficiary_cnpj_or_cpf: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields - Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_sap_code_ref: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields for apportionment = No - Catalog Item View",
+   "when": "IO:v_is_an_apportionment=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_ledger_account: visible=true,mandatory=true,readonly=true",
+    "v_cost_center_or_pep: visible=true,mandatory=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields for apportionment = Yes - Resolver View",
+   "when": "IO:v_is_an_apportionment=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_template: visible=true",
+    "v_attach_template_apportionments: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields - Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_pay_day: mandatory=true",
+    "v_coin: mandatory=true",
+    "v_payment_description: mandatory=true",
+    "v_payment_category: mandatory=true",
+    "v_is_an_apportionment: mandatory=true",
+    "v_amount_to_be_paid: mandatory=true",
+    "v_beneficiary_name: visible=true,mandatory=true",
+    "v_demanded_by_legal_team: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields for apportionment = No - Resolver View",
+   "when": "IO:v_is_an_apportionment=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_ledger_account: visible=true,mandatory=true,readonly=true",
+    "v_cost_center_or_pep: visible=true,mandatory=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Select the approver",
+   "when": "IO:vs_which_sub_company=8c14f4d61b0acd10237642ece54bcb3e^ORIO:vs_which_sub_company=9b4951991b58d250514cbaef4b4bcbc8^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_approver: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields for payment category = INTERNATIONAL - Resolver View",
+   "when": "IO:v_payment_category=internacional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_approver_name: visible=true,readonly=true",
+    "v_payment_approver_email: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields for payment category = NATIONAL - Catalog Item View",
+   "when": "IO:v_payment_category=national^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_beneficiary_cnpj_or_cpf: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Fields - Resolver View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_amount_to_be_paid: readonly=true",
+    "v_sap_code_ref: readonly=true",
+    "v_coin: readonly=true",
+    "v_pay_day: readonly=true",
+    "v_payment_category: readonly=true",
+    "v_additional_information: readonly=true",
+    "v_beneficiary_name: readonly=true",
+    "v_demanded_by_legal_team: readonly=true",
+    "v_is_an_apportionment: readonly=true",
+    "v_payment_description: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields for payment category = INTERNATIONAL - Catalog Item View",
+   "when": "IO:v_payment_category=internacional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_approver_email: visible=true,readonly=true",
+    "v_payment_approver_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields for apportionment = Yes - Catalog Item View",
+   "when": "IO:v_is_an_apportionment=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_template_apportionments: visible=true,mandatory=true",
+    "v_download_template: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Máscara de Valor - v_amount_to_be_pa",
+   "type": "onChange",
+   "on": "0c6eabb11b112510a530426fe54bcb35",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata 'v_amount_to_be_paid' como moeda, por uma função interna formatarMoeda. Um de seis scripts com o mesmo nome e corpo, variando só o campo formatado."
+  }
+ ]
+}

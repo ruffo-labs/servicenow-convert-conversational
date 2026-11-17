@@ -1,0 +1,89 @@
+{
+ "sys_id": "7bbecc2f1b152550a530426fe54bcbb7",
+ "title": "EY VS - Solicitação de Apropriação e Diferimento",
+ "internal_name": "ey_vs_solicita_o_de_apropria_o_e_diferimento",
+ "description": "Variable Set referent ao Form Solicitação de Apropriação e Diferimento",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Apropriação e Diferimento"
+ ],
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Appropriation [=v_appropriation]",
+    "Deferral [=v_deferral]"
+   ]
+  },
+  {
+   "name": "v_attach_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach template"
+  },
+  {
+   "name": "v_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comments"
+  },
+  {
+   "name": "v_nota_informativa",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "Required to attach invoice or contract (All supporting documentation)"
+  },
+  {
+   "name": "v_document_repository",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Document Repository"
+  },
+  {
+   "name": "v_download_template_appropriation_and_deferral_request_es",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "TEMPLATE ESPAÑOL",
+   "macro": "Download Template - Appropriation and Deferral Request - Español",
+   "widget": "Download Template - Appropriation and De"
+  },
+  {
+   "name": "v_download_template_appropriation_and_deferral_request_pt",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "TEMPLATE PORTUGUESE",
+   "macro": "Download template ptbr 2",
+   "widget": "widget appro reff ptbr"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_comments: readonly=true",
+    "v_request_type: readonly=true",
+    ": ",
+    "v_nota_informativa: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_repository: mandatory=true",
+    "v_request_type: mandatory=true",
+    "v_attach_template: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

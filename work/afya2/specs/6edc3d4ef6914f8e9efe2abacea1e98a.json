@@ -1,0 +1,67 @@
+{
+ "sys_id": "6edc3d4ef6914f8e9efe2abacea1e98a",
+ "status": "dividido",
+ "motivo": "Cadastro de digitalização, informações e reserva pedem só descrição; os pedidos de instalação, movimentação, entrega, papel e toner pedem também qual impressora e o local. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_qual_e_a_impressora": {
+   "label": "Qual é a impressora ou scanner?"
+  },
+  "v_qual_o_local_que_esta_a_impressora": {
+   "label": "Em que local ela está?"
+  }
+ },
+ "policies": {
+  "7f1752d4c4e84b34bc86b7b2c8e54bd0": "remover"
+ },
+ "itens": [
+  {
+   "name": "Cadastrar digitalização, pedir informações ou reservar equipamento",
+   "short_description": "Pedir cadastro para digitalizar, informações de impressão ou reserva de equipamento.",
+   "description": "Use para pedidos que só precisam de descrição. As opções atendidas são Cadastrar Digitalização, Disponibilizar Informações e Reservar Equipamento. Descreva o que precisa.",
+   "frases_exemplo": [
+    "Preciso cadastrar meu usuário para digitalizar",
+    "Quero reservar uma impressora para um evento",
+    "Podem disponibilizar informações sobre as impressoras?",
+    "Cadastro de digitalização no scanner",
+    "Preciso reservar um equipamento"
+   ],
+   "sem_vars": [
+    "v_qual_e_a_impressora",
+    "v_qual_o_local_que_esta_a_impressora"
+   ]
+  },
+  {
+   "name": "Instalar, mover, configurar ou abastecer impressora ou scanner",
+   "short_description": "Pedir serviço físico em uma impressora ou scanner, informando qual e onde.",
+   "description": "Use para serviços em um equipamento específico. As opções atendidas são Configurar, Entregar, Instalar, Movimentar e Recolher Equipamento, Repor Papel e Solicitar Troca de Toner (Cartucho). Informe a impressora e o local.",
+   "frases_exemplo": [
+    "O toner da impressora acabou",
+    "Preciso de papel na impressora do 3º andar",
+    "Quero instalar uma impressora nova",
+    "Mover o scanner para outra sala",
+    "Recolher a impressora que não usamos mais"
+   ],
+   "vars": {
+    "v_qual_e_a_impressora": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_o_local_que_esta_a_impressora": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

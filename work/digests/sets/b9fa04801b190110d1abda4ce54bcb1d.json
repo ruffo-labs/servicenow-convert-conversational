@@ -1,0 +1,139 @@
+{
+ "sys_id": "b9fa04801b190110d1abda4ce54bcb1d",
+ "title": "My personal Information",
+ "internal_name": "my_personal_information_life_change",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Designação de beneficiários do seguro de vida"
+ ],
+ "variaveis": [
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "default": "javascript: gs.getUserID();",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^EQ"
+  },
+  {
+   "name": "cpf_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF",
+   "read_only": true
+  },
+  {
+   "name": "id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global",
+   "read_only": true
+  },
+  {
+   "name": "telephone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Telephone",
+   "read_only": true
+  },
+  {
+   "name": "mobile_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mobile Phone",
+   "read_only": true
+  },
+  {
+   "name": "fax",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Fax",
+   "read_only": true
+  },
+  {
+   "name": "home_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Home Address",
+   "read_only": true
+  },
+  {
+   "name": "home_address_n",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Home Address Nº",
+   "read_only": true
+  },
+  {
+   "name": "complementary_residential_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complementary Residential Address",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address Neighborhood",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address City",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_uf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address UF",
+   "read_only": true
+  },
+  {
+   "name": "residential_address_cep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Residential Address CEP",
+   "read_only": true
+  },
+  {
+   "name": "country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  },
+  {
+   "name": "email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "E-mail",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: fill \"My personal Information\"",
+   "type": "onLoad",
+   "on": "7a3b08801b190110d1abda4ce54bcb7b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche o bloco de informações pessoais chamando x_nasm_hr.ACN_ValidateUtils via GlideAjax."
+  }
+ ]
+}

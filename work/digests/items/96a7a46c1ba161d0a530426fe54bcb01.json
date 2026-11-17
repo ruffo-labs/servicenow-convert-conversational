@@ -1,0 +1,223 @@
+{
+ "sys_id": "96a7a46c1ba161d0a530426fe54bcb01",
+ "name": "Transferência de Ativos e Dados Cadastrais",
+ "sys_name": "Transfer of Assets and Registration Data",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Ativo Fixo",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite movimentação ou modificação no ativo imobilizado",
+ "description": "Solicite movimentação ou modificação no ativo imobilizado",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "30",
+   "bloqueadores": "1",
+   "avisos": "23",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: If sub-company is one of the "
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_link_template_6: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link_template_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link_template_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link_template_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link_template_5: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_link_template_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_master_data: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_email_with_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_cost_center: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_loan_transfer: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_file: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_branch_transfer: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_link_template_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_link_template_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_link_template_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_link_template_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_link_template_5",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_link_template_6",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "c6b820241be161d0a530426fe54bcbc5",
+   "name": "EY VS - Transferência de Ativo Fixo e Dados Cadastrais",
+   "order": "200",
+   "perguntas": [
+    "v_request_type (Selecionar Caixa): Request Type",
+    "v_label_cost_center (Rótulo de Rich Text): The purpose is to change the Cost Center for depreciation and/or the Cost Center responsible for the asset.",
+    "v_label_master_data (Rótulo de Rich Text): The purpose is to make changes to the asset's information data in the accounting basis.",
+    "v_label_loan_transfer (Rótulo de Rich Text): The purpose is to carry out a physical transfer of assets between Natura and a service provider. In this operation, an invoice will be issued.",
+    "v_label_branch_transfer (Rótulo de Rich Text): The objective is the physical transfer of assets between branches of the same center. In this operation, an invoice will be issued.",
+    "v_assets_number (Selecionar Caixa): Enter the number of assets (according to the attached template)",
+    "v_invoice_issue (Selecionar Caixa): Invoice issue?",
+    "v_attach_file (Anexo): Attach Template",
+    "v_attach_email_with_approval (Anexo): Attach Lending Agreement"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide fields if 347, 305 and 315",
+   "when": "IO:vs_which_sub_company_8=7f04f4d61b0acd10237642ece54bcb1f^ORIO:vs_which_sub_company_8=cc14b8d6db0a01104f0d5e7cf39619cd^ORIO:vs_which_sub_company_8=93388c3a1b417910a530426fe54bcb79^ORIO:vs_which_sub_company_8=0f5a826a1bc64150237642ece54bcb7b^ORIO:vs_which_sub_company_8=b2e9083e1b417910a530426fe54bcb44^ORIO:vs_which_sub_company_8=dcb4d5121b620ad09c4797d01b4bcb6d^EQ",
+   "on_load": false,
+   "va_supported": "true",
+   "actions": [
+    "v_link_template_1: visible=false,mandatory=false",
+    "v_link_template_2: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: If subempresa Uruguai, Argentina, Chile + Alteração centro de custo ",
+   "when": "IO:vs_which_sub_company_8=7f04f4d61b0acd10237642ece54bcb1f^ORIO:vs_which_sub_company_8=93388c3a1b417910a530426fe54bcb79^ORIO:vs_which_sub_company_8=cc14b8d6db0a01104f0d5e7cf39619cd^ORIO:vs_which_sub_company_8=0f5a826a1bc64150237642ece54bcb7b^ORIO:vs_which_sub_company_8=b2e9083e1b417910a530426fe54bcb44^ORIO:vs_which_sub_company_8=dcb4d5121b620ad09c4797d01b4bcb6d^IO:v_request_type=cost_center_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_link_template_6: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If subempresa Uruguai, Argentina, Chile + Cambio de Datos Mestros de Activos Fijos",
+   "when": "IO:vs_which_sub_company_8=7f04f4d61b0acd10237642ece54bcb1f^ORIO:vs_which_sub_company_8=93388c3a1b417910a530426fe54bcb79^ORIO:vs_which_sub_company_8=cc14b8d6db0a01104f0d5e7cf39619cd^ORIO:vs_which_sub_company_8=0f5a826a1bc64150237642ece54bcb7b^ORIO:vs_which_sub_company_8=b2e9083e1b417910a530426fe54bcb44^ORIO:vs_which_sub_company_8=dcb4d5121b620ad09c4797d01b4bcb6d^IO:v_request_type=fixed_asset_master_data_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_link_template_5: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill invoice option coniditional SUB",
+   "type": "onChange",
+   "on": "60be47c81b29a590a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Mantém lista de 12 sys_ids de sub-empresas. Lê 'vs_which_sub_company': se NÃO estiver na lista, força 'v_invoice_issue' para 'yes'; se estiver, força para 'no'. Nos dois casos trava o campo como somente leitura, então o usuário nunca escolhe."
+  },
+  {
+   "name": "EY: Hide fields onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Esconde 'v_link_template_5' e 'v_link_template_6' na abertura do formulário."
+  },
+  {
+   "name": "EY: Fill invoice option coniditional",
+   "type": "onChange",
+   "on": "21f8e4641be161d0a530426fe54bcbd4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange sobre o tipo de solicitação, com a mesma lista de 12 sub-empresas dos scripts irmãos. Combina tipo de solicitação e sub-empresa para preencher 'v_invoice_issue' automaticamente: para 'loan_transfer' ou 'transfer_between_branches' força 'yes' se a sub-empresa estiver fora da lista e 'no' se estiver dentro; para 'cost_center_change' ou 'fixed_asset_master_data_change', ou quando a sub-empresa está na lista, aplica outro tratamento do mesmo campo. Em todos os caminhos…"
+  },
+  {
+   "name": "EY: Onload Hide Fields + addOpt Transf",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad. Lê o país do formulário e, se for 'Brazil', acrescenta a opção 'transfer_between_branches' à lista 'v_request_type', usando getMessage para pegar o rótulo traduzido. A linha que esconderia 'v_invoice_issue' está comentada."
+  },
+  {
+   "name": "EY: Add Choice if Country == BR",
+   "type": "onChange",
+   "on": "ea12daa51b9d2910a530426fe54bcbb2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange sobre o país. Se o novo valor for 'Brazil', adiciona a opção 'transfer_between_branches' em 'v_request_type' com rótulo traduzido via getMessage; para qualquer outro país, remove essa opção. É o par onChange do script onLoad equivalente."
+  },
+  {
+   "name": "EY: If sub-company is one of the ",
+   "type": "onChange",
+   "on": "9de674fc3bf1de10924d0247f4e45a7e",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que monta a opção 'loan_transfer' conforme o idioma do usuário. Lê a sub-empresa, o tipo de solicitação e g_lang, define o rótulo em inglês, português ou espanhol, remove a opção 'loan_transfer' da lista e a recria com o texto no idioma certo, condicionado à sub-empresa selecionada."
+  }
+ ]
+}

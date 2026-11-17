@@ -1,0 +1,213 @@
+{
+ "sys_id": "051cbf0b1bafd190a530426fe54bcbd4",
+ "name": "OurTalents",
+ "sys_name": "OurTalents",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Aprendizagem, Desenvolvimento e Desempenho",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "OurTalents é um momento colegiado, atuando de forma colaborativa e complementar para falar sobre o desenvolvimento de nossos talentos com foco no futuro",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @faq_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_your_evidence: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_kb_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_ourtalents",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "OurTalents"
+  },
+  {
+   "name": "faq_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "A resposta para sua dúvida sobre o processo pode estar disponível na FAQ, no portal na opção \"Base de Conhecimento\" ou pesquisando através da Lupa na Home temática."
+  },
+  {
+   "name": "v_choose_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose request type",
+   "include_none": true,
+   "choices": [
+    "Question about the OurTalents process",
+    "System error",
+    "General requests about OurTalents"
+   ]
+  },
+  {
+   "name": "v_classify_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Classify the request type",
+   "include_none": true,
+   "choices": [
+    "Other Requests",
+    "Report"
+   ]
+  },
+  {
+   "name": "v_describe_your_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your need in this field"
+  },
+  {
+   "name": "v_attach_your_evidence",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your evidence here"
+  },
+  {
+   "name": "v_description_for_report",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Detail in the field below what information you need in this report and possible filters such as: Brand, Country, Management Level, Range, Position and Period."
+  },
+  {
+   "name": "v_description_for_other",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your need in this field"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  },
+  {
+   "sys_id": "98a054933bff4e10924d0247f4e45ad8",
+   "name": "EY: Request Hispana",
+   "order": "100",
+   "perguntas": [
+    "vs_country_of_the_request (Selecionar Caixa): País del solicitante",
+    "vs_kb_text (Rótulo de Rich Text): "
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If classify is other",
+   "when": "IO:v_choose_request_type=General requests about OurTalents^IO:v_classify_request_type=Other Requests^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_for_other: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field description",
+   "when": "IO:v_choose_request_type=Question about the OurTalents process^NQIO:v_choose_request_type=System error^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_your_need: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide country in catalog item view ",
+   "when": "IO:vs_country_of_the_request=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_country_of_the_request: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: If classify is report",
+   "when": "IO:v_choose_request_type=General requests about OurTalents^IO:v_classify_request_type=Report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_for_report: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If field classify type",
+   "when": "IO:v_choose_request_type=General requests about OurTalents^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_classify_request_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Field attach if error",
+   "when": "IO:v_choose_request_type=System error^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_evidence: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "choose_request_type: visible=true,mandatory=true",
+    "v_choose_request_type: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide fields onLoad",
+   "type": "onLoad",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde 'vs_country_of_the_request' e 'vs_kb_text' na abertura."
+  },
+  {
+   "name": "EY: Fill employee",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do colaborador, limpando os campos quando o valor fica vazio."
+  },
+  {
+   "name": "EY: View fields Hispana",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe os campos do fluxo hispânico conforme o colaborador selecionado em 'vs_employee'."
+  }
+ ]
+}

@@ -1,0 +1,160 @@
+{
+ "sys_id": "732b87781b8f689032822170f54bcb32",
+ "name": "Apoio Relações Sindicais",
+ "category": "Relações Sindicais",
+ "short_description": "Apoio Relações Sindicais",
+ "description": "Apoio Relações Sindicais",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "ACT (Acordos coletivos de trabalho)",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    },
+    {
+     "name": "CCT (Convenções Coletivas de Trabalho)",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    },
+    {
+     "name": "Denúncias",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    },
+    {
+     "name": "Notificação do Sindicato",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    },
+    {
+     "name": "Orientações de Feriados",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    },
+    {
+     "name": "Visitas ao Sindicato",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Relações Sindicais"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_regional",
+    "rh_store",
+    "rh_type_request",
+    "rh_phone_number",
+    "rh_center_cost"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_regional",
+   "type": "Texto de Linha Única",
+   "question_text": "Regional",
+   "choices": []
+  },
+  {
+   "name": "rh_store",
+   "type": "Texto de Linha Única",
+   "question_text": "Loja/CD",
+   "choices": []
+  },
+  {
+   "name": "rh_type_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Tipo de Solicitação",
+   "choices": [
+    "ACT (Acordos Coletivos de Trabalho)",
+    "Visitas do Sindicato",
+    "CCT (Convenções Coletivas de Trabalho)",
+    "Legislação do Trabalho",
+    "Denúncias"
+   ]
+  },
+  {
+   "name": "rh_phone_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone para contato",
+   "choices": []
+  },
+  {
+   "name": "rh_center_cost",
+   "type": "Referência",
+   "question_text": "Centro de Custo",
+   "reference": "cmn_cost_center",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0c8836fd1bbbec1032822170f54bcb12",
+   "name": "ALP - OnChange validate Phone Number",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_number."
+  },
+  {
+   "sys_id": "1e6279903b6b2a10b28dd047f4e45a1c",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "216239903b6b2a10b28dd047f4e45a25",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

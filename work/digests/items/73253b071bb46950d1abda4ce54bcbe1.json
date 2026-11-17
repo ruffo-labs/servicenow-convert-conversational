@@ -1,0 +1,126 @@
+{
+ "sys_id": "73253b071bb46950d1abda4ce54bcbe1",
+ "name": "Solicitação de adiantamento de comissão - líderes",
+ "sys_name": "Commission advance request - leaders",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Suporte à força de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar adiantamento de comissão para líderes de negócio.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "11",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_documents_if_necessary: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_if_you_wish_you_can_also: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_you_wish_you_can_also",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_select_leader_s_full_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Select leader's full name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_leader_s_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Leader's CNPJ"
+  },
+  {
+   "name": "v_leader_cn_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Leader CN code"
+  },
+  {
+   "name": "v_reason_for_advance",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Reason for advance"
+  },
+  {
+   "name": "v_attach_documents_if_necessary",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach documents, if necessary"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+   "name": "EY: Company  - Avon/Natura and Sub Company",
+   "order": "100",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): For which company is the service being requested?",
+    "vs_sub_company (Referência): Which sub-company is the service for?"
+   ]
+  },
+  {
+   "sys_id": "c560f35f1bf8a190a530426fe54bcbe2",
+   "name": "Informe ciclo e bloco da líder",
+   "order": "500",
+   "perguntas": [
+    "v_cycle (Texto de Linha Única): Cycle",
+    "v_block (Texto de Linha Única): Block"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "800",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Leader",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_leader_s_cnpj: visible=true,mandatory=true",
+    "inform_the_leader_s_cycle_and_block: visible=true,mandatory=true",
+    "v_leader_cn_code: visible=true,mandatory=true",
+    "v_reason_for_advance: visible=true,mandatory=true",
+    "v_select_leader_s_full_name: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate CNPJ",
+   "type": "onChange",
+   "on": "107f23d71bf8a190a530426fe54bcb94",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CNPJ por formato (com máscara 00.000.000/0000-00 ou 14 dígitos corridos). Inválido: limpa e mostra erro. Não confere dígitos verificadores."
+  }
+ ]
+}

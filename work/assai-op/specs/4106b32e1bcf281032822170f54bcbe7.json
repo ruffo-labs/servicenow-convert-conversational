@@ -1,0 +1,67 @@
+{
+ "sys_id": "4106b32e1bcf281032822170f54bcbe7",
+ "status": "dividido",
+ "motivo": "As duas ofertas diferem só no mês perguntado: uma pede o mês do adiantamento com divergência, a outra o mês do adiantamento não recebido.",
+ "vars": {
+  "rh_month_advance": {
+   "label": "De qual mês é o adiantamento com divergência?"
+  },
+  "mes_do_adiantamento_nao_recebido": {
+   "label": "De qual mês é o adiantamento que não foi recebido?"
+  }
+ },
+ "remover": {
+  "v_observacao": "visual"
+ },
+ "policies": {
+  "003a62f71b83ca90347221bbe54bcb5b": "remover",
+  "2ba36fd71b76425032822170f54bcbfb": "remover",
+  "ccfeff621b43681032822170f54bcb2b": "remover"
+ },
+ "itens": [
+  {
+   "name": "Adiantamento salarial com divergência",
+   "short_description": "Reclamar de adiantamento salarial pago com valor divergente",
+   "description": "Use quando o adiantamento salarial foi pago com valor diferente do esperado. Corresponde à oferta Adiantamento salarial com divergência, atendida pelo RH - Adiantamento Salarial.",
+   "frases_exemplo": [
+    "Meu adiantamento veio com valor errado",
+    "O adiantamento salarial está divergente",
+    "Recebi menos no adiantamento",
+    "O valor do adiantamento não bate",
+    "Quero contestar o valor do adiantamento"
+   ],
+   "sem_vars": [
+    "mes_do_adiantamento_nao_recebido"
+   ],
+   "vars": {
+    "rh_month_advance": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Adiantamento salarial não recebido",
+   "short_description": "Avisar que o adiantamento salarial não foi pago",
+   "description": "Use quando o adiantamento salarial não foi depositado. Corresponde à oferta Adiantamento salarial não recebido, atendida pelo RH - Adiantamento Salarial.",
+   "frases_exemplo": [
+    "Não recebi meu adiantamento",
+    "O adiantamento não caiu na conta",
+    "Cadê o adiantamento salarial deste mês?",
+    "Meu adiantamento não foi pago",
+    "Colaborador ainda não recebeu o adiantamento"
+   ],
+   "sem_vars": [
+    "rh_month_advance"
+   ],
+   "vars": {
+    "mes_do_adiantamento_nao_recebido": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

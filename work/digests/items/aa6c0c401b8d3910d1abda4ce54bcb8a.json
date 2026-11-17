@@ -1,0 +1,251 @@
+{
+ "sys_id": "aa6c0c401b8d3910d1abda4ce54bcb8a",
+ "name": "Solicitação e Dúvidas sobre Informe de Rendimentos",
+ "sys_name": "Request and Questions about Income Report",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Formulário de solicitação e dúvidas sobre Informe de Rendimentos",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "16",
+   "variaveis_ativas": "16",
+   "bloqueadores": "2",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "16"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attach_2"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attach_2"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @v_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_tax_code_pj_mei: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_pj_mei: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_pj_mei_text: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_tax_code_pj_mei_text: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 16 de 16 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer para Informe de Rendimentos, com tratamento de usuário externo. Lê três system properties que guardam sys_ids de usuários 'convidado'/externo e compara com current.opened_by. Se o solicitante for um desses, força tanto requested_for quanto opened_by para o usuário externo padrão e NÃO aplica as regras de VIP. Caso contrário mantém o usuário real e chama x_nasm_hr.EY_ProducerUtils para definir o solicitante pelo variable set e elevar prioridade se for VIP. Em ambos os casos grava x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact phone"
+  },
+  {
+   "name": "v_which_company_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Natura",
+    "TBS",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request from?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.\tv_which_company_is_your_request_for"
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which sub-company is the request from?"
+  },
+  {
+   "name": "v_supplier_pj_mei",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Supplier/ PJ (MEI)",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=false"
+  },
+  {
+   "name": "v_supplier_pj_mei_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier/ PJ (MEI)",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=false"
+  },
+  {
+   "name": "v_supplier_code_pj_mei",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier Code / PJ (MEI)"
+  },
+  {
+   "name": "v_supplier_code_pj_mei_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier Code / PJ (MEI)"
+  },
+  {
+   "name": "v_supplier_tax_code_pj_mei",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier tax code / PJ (MEI)",
+   "ref_qual": "u_source_systemISNOTEMPTY^customer=false"
+  },
+  {
+   "name": "v_supplier_tax_code_pj_mei_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier tax code / PJ (MEI)",
+   "ref_qual": "u_source_systemISNOTEMPTY^customer=false"
+  },
+  {
+   "name": "v_calendar_year",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Calendar year"
+  },
+  {
+   "name": "v_request_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Request Description"
+  },
+  {
+   "name": "v_attach_2",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach 2",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Hide internal fields",
+   "when": "IO:v_nameISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_supplier_code_pj_mei: visible=false",
+    "v_which_sub_company_is_the_request_from: visible=false",
+    "v_supplier_pj_mei: visible=false",
+    "v_supplier_tax_code_pj_mei: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide external fields",
+   "when": "IO:v_nameISEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_phone: visible=false",
+    "v_email: visible=false",
+    "v_attach_2: visible=false",
+    "v_supplier_tax_code_pj_mei_text: visible=false",
+    "v_which_sub_company_is_the_request_from_text: visible=false",
+    "v_name: visible=false",
+    "v_supplier_code_pj_mei_text: visible=false",
+    "v_supplier_pj_mei_text: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Public fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que adapta o formulário conforme o usuário estar logado ou não. Se o usuário não é 'guest', esconde os campos de identificação manual (nome, e-mail, telefone) e torna obrigatórios os campos de empresa, sub-empresa, fornecedor, descrição e ano-calendário; esconde também campos de fornecedor em texto livre. Para 'guest' o comportamento é o inverso, pedindo a identificação manual."
+  },
+  {
+   "name": "EY: Validate phone",
+   "type": "onChange",
+   "on": "42a8408f1b19b150a530426fe54bcbae",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone com regex de formato brasileiro (DDI 55 opcional, DDD entre 11 e 99, número de 8 ou 9 dígitos). Sendo inválido, limpa 'v_phone' e exibe 'Telefone inválido' no campo."
+  },
+  {
+   "name": "EY: Read only fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Trava como somente leitura 'v_supplier_code_pj_mei' e 'v_supplier_tax_code_pj_mei' — são campos preenchidos automaticamente por outro script, não pelo usuário."
+  },
+  {
+   "name": "EY: Validate email",
+   "type": "onChange",
+   "on": "90a8cc4f1b19b150a530426fe54bcbfd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail por regex. Sendo inválido, limpa 'v_email' e mostra 'E-mail Inválido' no campo."
+  },
+  {
+   "name": "EY: Clear subcompany",
+   "type": "onChange",
+   "on": "f068c00f1b19b150a530426fe54bcb88",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Ao mudar a empresa, limpa 'v_which_sub_company_is_the_request_from' para a sub-empresa ser reescolhida de forma coerente."
+  },
+  {
+   "name": "EY: Set supplier code and CNPJ",
+   "type": "onChange",
+   "on": "d52fcc041b8d3910d1abda4ce54bcb5f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do fornecedor. Chama o Script Include x_nasm_tax.EY_DataTaxUtils, método getSupplierData, via GlideAjax, passando o fornecedor selecionado. O retorno vem em JSON e alimenta 'v_supplier_code_pj_mei' com o campo code_id e 'v_supplier_tax_code_pj_mei' com o cnpj. Observação: sai cedo apenas no isLoading — com o campo limpo ainda dispara a chamada, e só depois verifica se o valor não é vazio antes de gravar."
+  },
+  {
+   "name": "EY: Regex Year",
+   "type": "onChange",
+   "on": "628090c41b8d3910d1abda4ce54bcb00",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o ano-calendário como exatamente 4 dígitos. Inválido: limpa 'v_calendar_year' e mostra 'Ano inválido'. Válido: regrava o mesmo valor no campo (passo redundante, sem efeito prático)."
+  }
+ ]
+}

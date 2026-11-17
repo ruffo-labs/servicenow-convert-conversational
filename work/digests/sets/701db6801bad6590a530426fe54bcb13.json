@@ -1,0 +1,59 @@
+{
+ "sys_id": "701db6801bad6590a530426fe54bcb13",
+ "title": "Commission payment summary ",
+ "internal_name": "commission_payment_summary_4",
+ "description": "Resumo do pagamento de comissão",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitar aprovações para prêmios e comissões"
+ ],
+ "variaveis": [
+  {
+   "name": "v_type_4",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type",
+   "include_none": true,
+   "choices": [
+    "Manual Bonus Adjustment [=manual_bonus_adjustment]",
+    "Active/Digital Campaign [=active_digital_campaign]",
+    "Projects [=projects]",
+    "Cycle remuneration [=cycle_remuneration]",
+    "Reprocessing [=reprocessing]",
+    "Termination [=termination]",
+    "Total gross amount [=total_gross_amount]",
+    "Total value without adjustment [=total_value_without_adjustment]",
+    "Extra money [=extra_money]",
+    "Other adjustments [=other_adjustments]"
+   ]
+  },
+  {
+   "name": "v_value_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Commission",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_value_4: visible=true,mandatory=true",
+    "v_type_4: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Value currency",
+   "type": "onChange",
+   "on": "442e32481bad6590a530426fe54bcb9e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma validação de moeda aplicada a 'v_value_4'."
+  }
+ ]
+}

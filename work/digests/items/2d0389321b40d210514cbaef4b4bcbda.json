@@ -1,0 +1,296 @@
+{
+ "sys_id": "2d0389321b40d210514cbaef4b4bcbda",
+ "name": "Solicitação de serviços funerários",
+ "sys_name": "Request for Burial Services",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços Funerários",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Use este formulário para solicitar o registro ou o cancelamento do serviço e/ou a modificação dos beneficiários.",
+ "description": "Use este formulário para solicitar o registro ou o cancelamento do serviço e/ou a modificação dos beneficiários.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "29",
+   "variaveis_ativas": "35",
+   "bloqueadores": "0",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "29"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @children_age: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attention_beneficiaries: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @complete_your_data_below: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @menssage_alert: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @children_age_mod_benefities: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 29 de 29 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 29 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "date_of_birth",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Date of birth",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Registration / Adhesion to the benefit [=registration _adhesion_benefit]",
+    "Cancellation of the benefit [=cancellation_benefit]",
+    "Modification of beneficiaries [=modification_beneficiaries]"
+   ]
+  },
+  {
+   "name": "menssage_alert",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "consent_v2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "By means of this form, I give my consent for the complete withdrawal of all beneficiaries of the Secondary Family Group from the funeral service."
+  },
+  {
+   "name": "complete_your_data_below",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Complete your data below"
+  },
+  {
+   "name": "civil_status",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Civil status"
+  },
+  {
+   "name": "address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Address"
+  },
+  {
+   "name": "location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee Location"
+  },
+  {
+   "name": "district",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "District"
+  },
+  {
+   "name": "children_age",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "District"
+  },
+  {
+   "name": "children_age_mod_benefities",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "District"
+  },
+  {
+   "name": "attention_beneficiaries",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "District"
+  },
+  {
+   "name": "check_compliance_v2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "By means of this letter, I hereby notify and express my agreement that Natura Cosméticos S.A. will deduct from my salary, on a monthly basis, the proportional part of the cost established for the funeral service and for the number of persons enrolled in this service (in the event of the death of holders or dependents under the responsibility of each of them). I acknowledge that, in the event of fu…"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  },
+  {
+   "sys_id": "ec5648e93b2c1610924d0247f4e45a97",
+   "name": "Dados dos Beneficiários",
+   "order": "1090",
+   "perguntas": [
+    "last_and_first_name_new (Texto de Linha Única): Last and First Name",
+    "dni_new (Texto de Linha Única): DNI",
+    "family_relationship_new (Texto de Linha Única): Family relationship",
+    "family_address_new (Texto de Linha Única): Address",
+    "family_location_new (Texto de Linha Única): Family Location"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: children_age_mod_benefities",
+   "when": "IO:type_of_request=modification_beneficiaries^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "children_age_mod_benefities: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda",
+   "when": "IO:type_of_request=modification_beneficiaries^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "remember_beneficiaries: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show  consent",
+   "when": "IO:type_of_request=cancellation_benefit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "consent: visible=true,mandatory=true",
+    "consent_v2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly v_country_of_residence",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country_of_residence: mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory type_of_request",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show employee data",
+   "when": "IO:type_of_request=registration _adhesion_benefit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "civil_status: visible=true,mandatory=true",
+    "district: visible=true,mandatory=true",
+    "location: visible=true,mandatory=true",
+    "complete_your_data_below: visible=true",
+    "address: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: children_age e attention_beneficiaries",
+   "when": "IO:type_of_request=registration _adhesion_benefit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attention_beneficiaries: visible=true",
+    "children_age: visible=true"
+   ]
+  },
+  {
+   "name": "message_alert",
+   "when": "IO:type_of_request=cancellation_benefit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "menssage_alert: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show VS variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_identity_document: visible=true",
+    "v_country: visible=false",
+    "v_employee_id: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show multirow, legendas and checkbox",
+   "when": "IO:type_of_request=modification_beneficiaries^ORIO:type_of_request=registration _adhesion_benefit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "beneficiaries_data: visible=true",
+    "check_compliance_v2: visible=true,mandatory=true",
+    "check_compliance: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide Beneficiaries Data OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que esconde o bloco 'beneficiaries_data' na abertura."
+  },
+  {
+   "name": "EY: Show Beneficiaries Data OnChange",
+   "type": "onChange",
+   "on": "54875a5f1b84d610514cbaef4b4bcba1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe o bloco de beneficiários quando o tipo é 'registration _adhesion_benefit'. Observação: o valor comparado tem um ESPAÇO no meio ('registration _adhesion_benefit') — se a opção real não tiver esse espaço, a condição nunca casa."
+  },
+  {
+   "name": "EY: Clear fields when request type chang",
+   "type": "onChange",
+   "on": "54875a5f1b84d610514cbaef4b4bcba1",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa consentimento, estado civil e demais campos quando o tipo de solicitação muda."
+  }
+ ]
+}

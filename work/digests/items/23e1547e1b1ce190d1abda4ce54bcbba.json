@@ -1,0 +1,150 @@
+{
+ "sys_id": "23e1547e1b1ce190d1abda4ce54bcbba",
+ "name": "Consulta de estabilidade médica (casos restritos)",
+ "sys_name": "Medical stability consultation (restricted cases)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Desligamento",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Solicite aqui a análise prévia de estabilidade para casos restritos",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_text_star: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_text_star",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_cont_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Medical Stability (restricted cases)"
+  },
+  {
+   "name": "v_what_company_are_the_employees_part_of",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What company are the employees part of?",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "v_collaborator",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Collaborator",
+   "reference": "x_nasm_hr_profile",
+   "lookup": "x_nasm_hr_profile",
+   "ref_qual": "javascript:'user.company.u_brand='+current.variables.v_what_company_are_the_employees_part_of",
+   "include_none": true
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global"
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "v_expected_shutdown_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Expected shutdown date"
+  },
+  {
+   "name": "v_localization",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Localization"
+  },
+  {
+   "name": "v_department",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Department"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Wich company",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_company_are_the_employees_part_of: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory and read only fields",
+   "when": "IO:v_what_company_are_the_employees_part_ofINAvon LATAM,Natura,TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: visible=true",
+    "v_collaborator: visible=true,mandatory=true",
+    "v_cpf: visible=true,readonly=true",
+    "v_id: visible=true,readonly=true",
+    "v_department: visible=true,readonly=true",
+    "v_expected_shutdown_date: visible=true,mandatory=true",
+    "v_localization: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: clear values",
+   "type": "onChange",
+   "on": "c1b314361b5ce190d1abda4ce54bcbb3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_collaborator' e campos relacionados."
+  },
+  {
+   "name": "EY: Fill data job",
+   "type": "onChange",
+   "on": "0764947a1b5ce190d1abda4ce54bcb07",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do cargo do colaborador, limpando os campos quando o valor fica vazio."
+  }
+ ]
+}

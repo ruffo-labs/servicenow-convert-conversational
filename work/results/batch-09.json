@@ -1,0 +1,684 @@
+[
+  {
+    "sys_id": "30c718e51b091ed0514cbaef4b4bcb43",
+    "nome_atual": "Solicitar reembolsos de conectividade",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 9994,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 45,
+    "justificativa": "Item de altíssimo volume (rank 7) com intenção única e clara: pedir reembolso mensal da fatura de internet/conectividade. Não tem bloqueador formal, mas soma 28 perguntas (acima do limite de 20, então a VA abre janela), 8 rótulos rich text com instruções que não chegam ao LLM e 17 client scripts com GlideAjax (teto, duplicidade de fatura, data completa). Depois de derivar os dados do solicitante e os campos técnicos, a conversa cai para 4 a 8 perguntas, o que justifica o esforço.",
+    "nome_sugerido": "Solicitar reembolso de internet (conectividade)",
+    "short_description_sugerida": "Peça o reembolso mensal da sua fatura de internet e serviços de conectividade (Argentina).",
+    "descricao_sugerida": "Use para pedir o reembolso mensal da fatura de internet (conectividade) que a empresa cobre para quem trabalha remoto ou híbrido na Natura/Avon Argentina. Você informa o número da fatura, o mês e o ano de vencimento e o valor de internet; quem é da força de vendas informa também os valores de televisão, celular e outros serviços. O reembolso respeita o teto (tope) do seu perfil e cada fatura só pode ser reembolsada uma vez. Anexe a fatura no final da conversa. Não use para reembolso de kit escolar, de despesas de viagem ou de outros benefícios.",
+    "frases_exemplo": [
+      "quero pedir o reembolso da minha internet",
+      "preciso lançar a fatura de internet desse mês",
+      "reembolso de conectividade",
+      "como faço pra receber de volta o valor da internet de casa?",
+      "solicitar reintegro de internet",
+      "mandar a conta de internet pra reembolso"
+    ],
+    "bloqueadores": [
+      { "onde": "variable set EY: Hispana Personal Information", "problema": "Traz 16 perguntas de dados do colaborador que empurram o item para 28 perguntas (limite de 20 para conversa inline).", "acao": "Derivar/ocultar na conversa os campos de perfil (ID, e-mail, país, gestor, empresa, local, admissão, documento, cargo, público) via auto-populate a partir de v_employee = usuário logado; ver análise do set." },
+      { "onde": "legenda_attach, v_faq, dados_legenda, legenda_completar_campos, legenda_tope, v_amount_legenda, legenda_datos_factura, legenda_reintegro_60", "problema": "Rótulos rich text com instruções e regras que não chegam ao LLM.", "acao": "Mover as regras (teto, 60% de reintegro, dados obrigatórios da fatura, anexar fatura) para a descrição do item ou para um artigo de KB linkado; remover da conversa." },
+      { "onde": "client scripts EY: Check date and invoice OnSubmit / EY: Check invoice onChange", "problema": "Validação de duplicidade feita no cliente lendo JSON de v_records; frágil em conversa e sem mensagem clara ao usuário.", "acao": "Levar a checagem de duplicidade para o servidor (validação no flow/business rule antes de criar o caso, rejeitando com mensagem) ou manter só o onChange com GlideAjax (VA Supported) e remover o onSubmit baseado em v_records." },
+      { "onde": "client script EY: Clear values", "problema": "Sem guarda isLoading: apaga fatura/mês/ano ao carregar.", "acao": "Adicionar a guarda isLoading ou remover o script (em conversa a troca de colaborador é rara)." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "invoice_number", "origem": "item", "acao": "manter", "conversational_label": "Qual é o número da fatura de internet?", "obs": "Manter a checagem de duplicidade (servidor)." },
+      { "ordem": 2, "variavel": "what_month_does_the_invoice_expire", "origem": "item", "acao": "manter", "conversational_label": "Em que mês a fatura vence?", "obs": "Slot filling: 'fatura de março' já preenche." },
+      { "ordem": 3, "variavel": "what_year_does_the_invoice_due_correspond_to", "origem": "item", "acao": "manter", "conversational_label": "De que ano é esse vencimento?", "obs": "Trocar o onLoad EY: Set Options - Year por opções fixas mantidas (ano atual e anterior) ou default = ano atual." },
+      { "ordem": 4, "variavel": "monto_internet", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor de internet na fatura?", "obs": "Trocar máscara de moeda por Validation Regex numérica (ex.: ^\\d+([.,]\\d{1,2})?$)." },
+      { "ordem": 5, "variavel": "monto_television", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor de televisão na fatura?", "obs": "Só força de vendas (UI policy sem script por sales_force_user)." },
+      { "ordem": 6, "variavel": "monto_celular", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor de celular na fatura?", "obs": "Só força de vendas." },
+      { "ordem": 7, "variavel": "monto_otros", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor de outros serviços, como telefone fixo ou adicionais?", "obs": "Só força de vendas." },
+      { "ordem": 8, "variavel": "monto_total", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor total de desconto na fatura, se houver?", "obs": "Só força de vendas. Avaliar tornar opcional (label diz 'se aplicável' mas a policy torna obrigatório)." },
+      { "ordem": 9, "variavel": "sales_force_user", "origem": "item", "acao": "derivar", "obs": "Checkbox oculta preenchida por GlideAjax; derivar no servidor (default value por script include) e manter oculta." },
+      { "ordem": 10, "variavel": "v_month_year", "origem": "item", "acao": "derivar", "obs": "Data completa montada por 2 scripts; montar no producer script/flow a partir de mês e ano." },
+      { "ordem": 11, "variavel": "v_tope", "origem": "item", "acao": "derivar", "obs": "Teto calculado no servidor; manter oculto e calcular no flow." },
+      { "ordem": 12, "variavel": "v_records", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Técnico; deixa de ser necessário se a duplicidade for validada no servidor." },
+      { "ordem": 13, "variavel": "v_who_is_this_request_for", "origem": "set:EY: Hispana Personal Information", "acao": "derivar", "obs": "Reembolso é sempre para o próprio colaborador: default 'para mim' e ocultar, junto com v_reason_on_behalf." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Máscara de Moeda (6 variantes)", "acao": "converter", "substituicao": "Validation Regex numérica nas variáveis de valor; remover os 6 scripts." },
+      { "nome": "EY: Set Options - Year", "acao": "converter", "substituicao": "Choices fixas (ano atual e anterior) revisadas anualmente ou default value; esconder legenda por atributo da variável." },
+      { "nome": "EY: Set complete date onChange month / year", "acao": "remover", "substituicao": "Montar v_month_year no producer script." },
+      { "nome": "EY: Get tope - onChange (2x)", "acao": "converter", "substituicao": "Calcular o teto no servidor (flow) e informar o limite na resposta/aprovação; opcional manter 1 onChange VA Supported." },
+      { "nome": "EY: Check User Sales Force", "acao": "converter", "substituicao": "Default value por script include em sales_force_user + UI policies sem script para os campos de força de vendas." },
+      { "nome": "EY: Check date and invoice OnSubmit / EY: Check invoice onChange / EY: Check date onChange / EY: Get date and invoice OnChange", "acao": "converter", "substituicao": "Validação de duplicidade e de data no servidor (flow/business rule), rejeitando com mensagem clara." },
+      { "nome": "EY: Show legenda_reintegro_60 / EY: Set bills to 0 for ARG ADM", "acao": "remover", "substituicao": "Regra de 60% e de ARG ADM aplicada no flow; texto na descrição." },
+      { "nome": "EY: Clear values", "acao": "remover", "substituicao": "Desnecessário em conversa; se mantido, incluir guarda isLoading." },
+      { "nome": "UI policies onLoad (EY: Hide Variables, EY: Visible ID Employee, EY: ReadOnly Fields)", "acao": "converter", "substituicao": "Definir hidden/read-only direto nas variáveis." },
+      { "nome": "EY: Show fields / EY: Show internet field / EY: Show television, celular, otros and total fields", "acao": "manter", "substituicao": "Manter como UI policy sem script; remover a condição v_employee ISNOTEMPTY quando v_employee vier por default." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Público hispanofalante: criar também os conversational labels em espanhol (tradução do catálogo hispânico).",
+        "Anexo da fatura solicitado no final da conversa (anexo nativo do record producer)."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O producer_script descrito como 'dúvidas sobre Frota' parece copiado dos irmãos hispânicos; validar que grava item/x_nasm_hr_item corretamente. Há referência a click_here_legenda na policy EY: Show fields que não existe na lista de variáveis."
+  },
+  {
+    "sys_id": "b53b6c913b581a50924d0247f4e45ae7",
+    "nome_atual": "Solicitação de Reembolso de Kit Escolar",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 695,
+    "recomendacao": "manter_formulario",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 15,
+    "justificativa": "O item é montado em torno de um multi-row de filhos (dados_dos_seus_filhos) controlado por um widget custom (mrvs_monitor) e por scripts que usam sessionStorage, sem VA Supported. O teto por filho e a soma do total dependem dessa grade. Uso é sazonal (4 pedidos nos últimos 90 dias). Manter como formulário e melhorar nome/descrição para o item ser encontrado e aberto como link.",
+    "nome_sugerido": "Solicitar reembolso de kit escolar",
+    "short_description_sugerida": "Peça o reembolso da compra de material escolar dos seus filhos (Argentina, Uruguai e Colômbia).",
+    "descricao_sugerida": "Use para pedir o reembolso do kit/material escolar dos seus filhos em idade escolar. Os filhos precisam estar cadastrados no Workday; se não estiverem, peça antes a alteração de dados pessoais. Você informa cada filho, o valor gasto e anexa a nota fiscal da compra (e, na Colômbia, o comprovante de matrícula). O reembolso respeita o teto por filho. Não use para reembolso de internet, auxílio-creche ou outros benefícios.",
+    "frases_exemplo": [
+      "quero reembolso do material escolar do meu filho",
+      "reembolso kit escolar",
+      "comprei os materiais da escola, como peço o reembolso?",
+      "reintegro de útiles escolares",
+      "preciso mandar a nota do material escolar"
+    ],
+    "bloqueadores": [
+      { "onde": "mrvs_monitor", "problema": "Variável Custom com widget de portal (EY: MRV Macro widget Beneficiary).", "acao": "Não renderiza em conversa; manter formulário." },
+      { "onde": "set:Dados dos seus filhos (multi-row)", "problema": "Grade de filhos com teto por linha e soma no onSubmit.", "acao": "Manter no formulário. Alternativa futura: 1 pedido por filho com v_child_name_new + valor + anexo, permitindo conversa." },
+      { "onde": "client scripts EY: Clear Session item children_list_2, EY: Count number of children, EY: Get tope..., EY: Set employee", "problema": "Sem VA Supported, usam sessionStorage.", "acao": "Manter só no formulário." },
+      { "onde": "v_attachment_receipt_school", "problema": "Attachment obrigatório para Colômbia.", "acao": "Manter no formulário." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "UI policies onLoad de textos (v_workday_text, v_link_personal_date_text, v_attach_receipt_of_payment)", "acao": "manter", "substituicao": "Sem mudança no formulário; levar o conteúdo principal para a descrição do item." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": ["A VA deve apresentar o link do formulário ao reconhecer a intenção."]
+    },
+    "itens_derivados": [],
+    "observacoes": "Rever na janela sazonal (início do ano letivo) se vale reestruturar para 1 filho por pedido e torná-lo conversacional."
+  },
+  {
+    "sys_id": "3a2fe0b81b4da5d0d1abda4ce54bcb46",
+    "nome_atual": "Reintegração de ex colaborador",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 35,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Intenção única (reintegrar um ex-colaborador, por decisão administrativa ou judicial) com 13 perguntas e lógica simples por UI policy. O bloqueio é só o widget de anexo público (v_annex_to_the_court_case), que pode virar anexo no final da conversa. Os dois tipos de reintegração não justificam divisão pelo baixo volume.",
+    "nome_sugerido": "Solicitar reintegração de ex-colaborador",
+    "short_description_sugerida": "Peça a reintegração de um colaborador desligado, por decisão administrativa ou judicial.",
+    "descricao_sugerida": "Use para pedir que um ex-colaborador desligado volte para a empresa com os mesmos benefícios, seja por decisão administrativa (a rescisão paga é descontada na folha) ou por decisão judicial (a rescisão é compensada no processo). Informe quem será reintegrado, o tipo de reintegração e, se for judicial, o número do processo e anexe a decisão. Não use para recontratar alguém em nova vaga (admissão) nem para dúvidas de rescisão.",
+    "frases_exemplo": [
+      "preciso reintegrar um ex-funcionário",
+      "reintegração judicial de colaborador",
+      "a justiça determinou a reintegração de uma pessoa do meu time",
+      "reintegrar colaboradora gestante desligada",
+      "como faço a reintegração administrativa?"
+    ],
+    "bloqueadores": [
+      { "onde": "v_annex_to_the_court_case", "problema": "Variável Custom com widget EY: Enable public attachment.", "acao": "Remover e pedir o anexo da decisão judicial no final da conversa (anexo nativo do record producer); obrigatoriedade para judicial validada no flow ou no onSubmit VA Supported." },
+      { "onde": "v_name", "problema": "Texto de linha única com atributo de referência para x_nasm_hr_profile; em conversa vira texto livre.", "acao": "Alterar para Reference (x_nasm_hr_profile) com o qualifier simples user.active=true^ORuser.locked_out=true." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_name", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Referência (x_nasm_hr_profile)", "conversational_label": "Quem é o ex-colaborador que será reintegrado?" },
+      { "ordem": 2, "variavel": "v_type_of_reinstatement", "origem": "item", "acao": "manter", "conversational_label": "A reintegração é administrativa ou judicial?" },
+      { "ordem": 3, "variavel": "v_process_number", "origem": "item", "acao": "manter", "conversational_label": "Qual é o número do processo judicial?", "obs": "Só judicial." },
+      { "ordem": 4, "variavel": "v_period", "origem": "item", "acao": "manter", "conversational_label": "A partir de qual data a reintegração vale?", "obs": "Só judicial; formato yyyy-mm-dd." },
+      { "ordem": 5, "variavel": "v_open_cat", "origem": "item", "acao": "manter", "conversational_label": "É preciso abrir uma CAT (Comunicação de Acidente de Trabalho)?", "obs": "Só judicial." },
+      { "ordem": 6, "variavel": "v_select_the_reason", "origem": "item", "acao": "manter", "conversational_label": "Qual o motivo da abertura da CAT?", "obs": "Só se CAT = Sim." },
+      { "ordem": 7, "variavel": "v_reason_pregnancy", "origem": "item", "acao": "manter", "conversational_label": "O motivo da reintegração é gravidez?", "obs": "Só administrativa." },
+      { "ordem": 8, "variavel": "v_cpf", "origem": "item", "acao": "derivar", "obs": "Preencher a partir do perfil escolhido em v_name (auto-populate); perguntar só se vazio." },
+      { "ordem": 9, "variavel": "v_phone", "origem": "item", "acao": "manter", "conversational_label": "Qual o telefone de contato do ex-colaborador?", "obs": "Trocar os 2 scripts de telefone por Validation Regex." },
+      { "ordem": 10, "variavel": "v_email", "origem": "item", "acao": "manter", "conversational_label": "Qual o e-mail pessoal do ex-colaborador?", "obs": "Validation Regex de e-mail no lugar do script." },
+      { "ordem": 11, "variavel": "v_description", "origem": "item", "acao": "manter", "conversational_label": "Descreva o contexto da reintegração." },
+      { "ordem": 12, "variavel": "v_has_attachment", "origem": "item", "acao": "remover", "obs": "Controle técnico do widget; sem uso após trocar pelo anexo nativo." },
+      { "ordem": 13, "variavel": "v_annex_to_the_court_case", "origem": "item", "acao": "remover", "obs": "Substituído pelo anexo no final da conversa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY:Validate CPF", "acao": "converter", "substituicao": "Validation Regex com pontos escapados (^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$); corrige o defeito atual." },
+      { "nome": "EY: Phone validation (2x)", "acao": "converter", "substituicao": "Validation Regex de telefone brasileiro." },
+      { "nome": "EY: Validate email", "acao": "converter", "substituicao": "Validation Regex de e-mail." },
+      { "nome": "EY: Attach mandatory", "acao": "converter", "substituicao": "Exigir anexo para judicial no flow (ou manter onSubmit VA Supported checando anexo nativo)." },
+      { "nome": "EY: Mandatory fields (onLoad sempre)", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; remover v_has_attachment." },
+      { "nome": "EY: If Judicial / EY: If Adm / EY: If CAT = Yes / EY: If adm and pregnancy", "acao": "manter", "substituicao": "UI policies sem script, já VA Supported; tirar v_text_attach e o widget das ações." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher a descrição do item (hoje vazia)."] },
+    "itens_derivados": [],
+    "observacoes": "Rótulos v_administrative_reinstatement e v_attach_the_court_case explicam a consequência de cada tipo; o conteúdo foi levado para a descrição."
+  },
+  {
+    "sys_id": "ce192c6933bc471098331c07ee5c7b3a",
+    "nome_atual": "Informações ou dúvidas relacionadas à Relações Trabalhista",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 28,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 70,
+    "justificativa": "Item simples de 5 perguntas, sem scripts, que já funciona em conversa. Falta descrição e os labels estão em inglês. É o item 'guarda-chuva' de Relações Trabalhistas; a descrição precisa separar bem dos irmãos específicos (pagamentos sindicais, acordo coletivo, estudos de CCT e novo CNPJ).",
+    "nome_sugerido": "Tirar dúvidas sobre relações trabalhistas e sindicais",
+    "short_description_sugerida": "Envie dúvidas ou pedidos gerais ao time de Relações Trabalhistas e Sindicais.",
+    "descricao_sugerida": "Use para dúvidas e pedidos gerais ao time de Relações Trabalhistas e Sindicais (Brasil): regras de convenção coletiva, relação com sindicatos, jornada prevista em acordo, orientações trabalhistas. Não use para enviar boletos de pagamento sindical (use 'Enviar pagamento sindical para análise'), para pedir a aplicação de um acordo coletivo já assinado, nem para cadastrar novo CNPJ/estabelecimento.",
+    "frases_exemplo": [
+      "tenho uma dúvida sobre a convenção coletiva",
+      "quero falar com relações trabalhistas",
+      "o sindicato mandou um comunicado, com quem falo?",
+      "dúvida sobre acordo sindical",
+      "preciso de orientação trabalhista para minha equipe"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_opened_by", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Default gs.getUserID() e read-only; já é pulada. Definir read-only direto na variável." },
+      { "ordem": 2, "variavel": "v_type_of_request", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de solicitação você quer fazer?" },
+      { "ordem": 3, "variavel": "v_subject_of_request", "origem": "item", "acao": "manter", "conversational_label": "Qual é o assunto?" },
+      { "ordem": 4, "variavel": "v_subcompany", "origem": "item", "acao": "manter", "conversational_label": "Para qual empresa do grupo é o atendimento?", "obs": "Qualifier fixo (Natura/Brasil) funciona; tirar do aviso de qualifier dinâmico." },
+      { "ordem": 5, "variavel": "v_describe_the_request", "origem": "item", "acao": "manter", "conversational_label": "Conte com detalhes o que você precisa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory Fields / EY: ReadOnly Fields", "acao": "converter", "substituicao": "Mandatory e read-only direto nas variáveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Anexo opcional no final da conversa (substitui v_attach_text)."] },
+    "itens_derivados": [],
+    "observacoes": "Sugestão: incorporar aqui o item 'Solicitar Estudos de Aplicações/Regras de CCTs' (ed9d69b1...) como uma opção de v_type_of_request, já que tem 1 pedido em 12 meses."
+  },
+  {
+    "sys_id": "b452011087fc0f90ec360e530cbb356e",
+    "nome_atual": "Solicitações de Pagamentos Sindicais",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 45,
+    "justificativa": "Intenção própria (enviar um boleto/cobrança sindical para análise e pagamento) com 8 perguntas simples. Bloqueia por 2 client scripts sem VA Supported (CNPJ e vencimento) e um campo complementar mostrado por script. Volume muito baixo (1 em 12 meses): ajustar com pouco esforço ou avaliar incorporar ao item geral de relações trabalhistas.",
+    "nome_sugerido": "Enviar pagamento sindical para análise",
+    "short_description_sugerida": "Envie boletos e cobranças de sindicatos para análise e pagamento.",
+    "descricao_sugerida": "Use para enviar ao time de Relações Sindicais um boleto, notificação ou cobrança de sindicato (contribuição assistencial, confederativa, mensalidade etc.) para análise e pagamento. Informe o sindicato, o CNPJ, o vencimento e anexe o documento. Não use para dúvidas gerais sobre sindicato ou convenção coletiva.",
+    "frases_exemplo": [
+      "chegou um boleto do sindicato",
+      "preciso pagar a contribuição sindical",
+      "enviar cobrança do sindicato para pagamento",
+      "o sindicato mandou uma notificação de pagamento"
+    ],
+    "bloqueadores": [
+      { "onde": "client script EY: CNPJ Validation", "problema": "Sem VA Supported.", "acao": "Trocar por Validation Regex de formato de CNPJ; se precisar do dígito verificador, marcar VA Supported (não mexe em DOM)." },
+      { "onde": "client script Ey: Due Date", "problema": "Sem VA Supported.", "acao": "Revisar e marcar VA Supported (validação de data sem DOM) ou validar no flow." },
+      { "onde": "v_attachment", "problema": "Attachment obrigatório.", "acao": "Pedir o anexo do boleto no final da conversa; obrigatoriedade validada no flow." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_opened_by", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Default gs.getUserID() e read-only." },
+      { "ordem": 2, "variavel": "v_type_of_union_payment", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de pagamento sindical é esse?" },
+      { "ordem": 3, "variavel": "v_describe_your_request", "origem": "item", "acao": "manter", "conversational_label": "Descreva o tipo de pagamento.", "obs": "Só quando tipo = outros; trocar o client script por UI policy sem script." },
+      { "ordem": 4, "variavel": "v_union_name", "origem": "item", "acao": "manter", "conversational_label": "Qual é o nome do sindicato?" },
+      { "ordem": 5, "variavel": "v_union_cnpj", "origem": "item", "acao": "manter", "conversational_label": "Qual é o CNPJ do sindicato?" },
+      { "ordem": 6, "variavel": "v_due_date", "origem": "item", "acao": "manter", "conversational_label": "Qual é a data de vencimento?" },
+      { "ordem": 7, "variavel": "v_subcompany", "origem": "item", "acao": "manter", "conversational_label": "Para qual empresa do grupo é o pagamento?" },
+      { "ordem": 8, "variavel": "v_observation", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar alguma observação?" },
+      { "ordem": 9, "variavel": "v_attachment", "origem": "item", "acao": "remover", "obs": "Substituir por anexo no final da conversa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: If 'v_type_of_union_pay' is 'others'", "acao": "converter", "substituicao": "UI policy sem script: v_type_of_union_payment = others -> v_describe_your_request visível e obrigatório." },
+      { "nome": "EY: CNPJ Validation", "acao": "converter", "substituicao": "Validation Regex ou VA Supported." },
+      { "nome": "Ey: Due Date", "acao": "converter", "substituicao": "VA Supported ou validação no flow." },
+      { "nome": "Ey: Mandatory Fields", "acao": "converter", "substituicao": "Atributos mandatory/read-only direto nas variáveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Com 1 pedido/ano, avaliar se o time prefere unificar com 'Tirar dúvidas sobre relações trabalhistas e sindicais' (ce192c69...)."
+  },
+  {
+    "sys_id": "9045899c87fc0f90ec360e530cbb35fb",
+    "nome_atual": "Solicitar Aplicação de Acordo Coletivo",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 10,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 50,
+    "justificativa": "Uso interno (CSC) e de baixo volume, sem scripts. O ponto de atenção é o set de empresas/localidades, que pela policy parece ser um multi-row (lista de empresas que aplicam o acordo), e o anexo obrigatório do acordo. Trocando a grade por List Collector e pedindo o anexo no final, a conversa fica com 7 perguntas.",
+    "nome_sugerido": "Solicitar aplicação de acordo coletivo",
+    "short_description_sugerida": "Envie um acordo coletivo assinado e as diretrizes para aplicá-lo nas empresas e localidades.",
+    "descricao_sugerida": "Use para enviar ao time de Relações Trabalhistas um acordo ou convenção coletiva já assinado, com as diretrizes de aplicação: sindicato da categoria, data-base, empresas e localidades afetadas. Anexe o documento do acordo. Não use para pedir estudo ou interpretação de regras de CCT (use o item de dúvidas de relações trabalhistas) nem para pagamentos sindicais.",
+    "frases_exemplo": [
+      "preciso aplicar um novo acordo coletivo",
+      "saiu a convenção coletiva, como envio para aplicar?",
+      "aplicar CCT nas filiais",
+      "enviar diretrizes do acordo coletivo"
+    ],
+    "bloqueadores": [
+      { "onde": "set:Informe quais empresas deverão aplicar o acordo coletivo", "problema": "Set provavelmente multi-row (UI policy torna o set obrigatório), que não conversa bem.", "acao": "Se for multi-row: trocar por duas variáveis List Collector (empresas em core_company e localidades em cmn_location) com qualifiers fixos." },
+      { "onde": "v_label_attach_collective_agreement_doc", "problema": "Attachment obrigatório.", "acao": "Anexo no final da conversa; validação no flow." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_opened_by", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Default gs.getUserID(), read-only." },
+      { "ordem": 2, "variavel": "v_union_of_the_category", "origem": "item", "acao": "manter", "conversational_label": "Qual é o sindicato da categoria?" },
+      { "ordem": 3, "variavel": "v_base_date", "origem": "item", "acao": "manter", "conversational_label": "Qual é a data-base do acordo?" },
+      { "ordem": 4, "variavel": "v_company", "origem": "set:Informe quais empresas deverão aplicar o acordo coletivo", "acao": "alterar_tipo", "tipo_sugerido": "List Collector (core_company)", "conversational_label": "Quais empresas devem aplicar o acordo?" },
+      { "ordem": 5, "variavel": "v_location", "origem": "set:Informe quais empresas deverão aplicar o acordo coletivo", "acao": "alterar_tipo", "tipo_sugerido": "List Collector (cmn_location)", "conversational_label": "Em quais localidades o acordo se aplica?" },
+      { "ordem": 6, "variavel": "v_observations_for_guideline", "origem": "item", "acao": "manter", "conversational_label": "Quais são as diretrizes para aplicar o acordo?" },
+      { "ordem": 7, "variavel": "v_comments", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar algum comentário?" },
+      { "ordem": 8, "variavel": "v_label_attach_collective_agreement_doc", "origem": "item", "acao": "remover", "obs": "Substituído por anexo no final da conversa." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory Variables", "acao": "converter", "substituicao": "Mandatory/read-only direto nas variáveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Restrito ao grupo EY: CSC Visibilidade Form CCT; manter user criteria."] },
+    "itens_derivados": [],
+    "observacoes": "Se o set não for multi-row, basta trocar os labels. Os qualifiers de empresa/localidade são fixos e resolvem em conversa."
+  },
+  {
+    "sys_id": "9b4f69b31b851250514cbaef4b4bcb0f",
+    "nome_atual": "Solicitar cadastro de novo CNPJ/Estabelecimento (Especifico para HRBPs e RT)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 151,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 25,
+    "justificativa": "Intenção única e de público especializado (HRBPs e RT), com 13 variáveis simples. O problema grave é a UI policy 'EY: Read Only' (sempre, onLoad) que deixa todas as perguntas read-only: em conversa, perguntas read-only são puladas, então a VA não pergunta nada. Removida essa policy e com os 3 anexos pedidos no final, o item conversa bem.",
+    "nome_sugerido": "Solicitar cadastro de novo CNPJ ou estabelecimento",
+    "short_description_sugerida": "Peça o cadastro de um novo CNPJ/estabelecimento nos sistemas de RH (exclusivo para HRBPs e Relações Trabalhistas).",
+    "descricao_sugerida": "Uso exclusivo de HRBPs e do time de Relações Trabalhistas para pedir o cadastro de um novo CNPJ ou estabelecimento (filial, loja, centro de distribuição) nos sistemas de RH e folha. Informe a empresa, o CNPJ, a inscrição estadual, o centro de custo e o sindicato da categoria, e anexe o cartão CNPJ, o comprovante de inscrição estadual e o acordo coletivo. Não use para aplicar um acordo coletivo em estabelecimento já existente.",
+    "frases_exemplo": [
+      "cadastrar novo CNPJ",
+      "abrimos uma nova filial, preciso cadastrar o estabelecimento",
+      "novo estabelecimento para folha",
+      "incluir CNPJ novo no sistema de RH",
+      "cadastro de loja nova com CNPJ"
+    ],
+    "bloqueadores": [
+      { "onde": "UI policy EY: Read Only", "problema": "Deixa todas as variáveis read-only sempre (e zera mandatory), conflitando com 'EY: Mandatory'. Em conversa, read-only é pulada.", "acao": "Remover a policy ou restringi-la à visão do atendente (Applies on Target Record / não aplicar no Catalog Item view)." },
+      { "onde": "v_cnpj_card, v_state_registration_attachment, v_collective_agreement", "problema": "3 anexos obrigatórios.", "acao": "Remover as 3 variáveis de anexo e pedir os documentos no final da conversa (anexo nativo), listando-os na descrição e no último passo; o flow confere se há anexos." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_opened_by", "origem": "item", "acao": "derivar", "obs": "Trocar o onLoad EY: Filling the Opened By por default gs.getUserID() + read-only na variável." },
+      { "ordem": 2, "variavel": "v_which_sub_company_is_the_service_for", "origem": "item", "acao": "manter", "conversational_label": "A qual empresa do grupo o novo estabelecimento pertence?" },
+      { "ordem": 3, "variavel": "v_cnpj", "origem": "item", "acao": "manter", "conversational_label": "Qual é o CNPJ do novo estabelecimento?", "obs": "Adicionar Validation Regex de CNPJ." },
+      { "ordem": 4, "variavel": "v_state_registration", "origem": "item", "acao": "manter", "conversational_label": "Qual é a inscrição estadual?", "obs": "Trocar o script de regex por Validation Regex." },
+      { "ordem": 5, "variavel": "v_cost_center_number", "origem": "item", "acao": "manter", "conversational_label": "Qual é o número do centro de custo?" },
+      { "ordem": 6, "variavel": "v_cost_center", "origem": "item", "acao": "manter", "conversational_label": "Qual é o nome desse centro de custo?" },
+      { "ordem": 7, "variavel": "v_category_union", "origem": "item", "acao": "manter", "conversational_label": "Qual é o sindicato da categoria?" },
+      { "ordem": 8, "variavel": "v_cnpj_union_of_the_category", "origem": "item", "acao": "manter", "conversational_label": "Qual é o CNPJ desse sindicato?" },
+      { "ordem": 9, "variavel": "v_additional_comments", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar alguma observação?" },
+      { "ordem": 10, "variavel": "v_cnpj_card", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 11, "variavel": "v_state_registration_attachment", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 12, "variavel": "v_collective_agreement", "origem": "item", "acao": "remover", "obs": "Anexo no final." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Read Only", "acao": "remover", "substituicao": "Restringir à visão do atendente ou excluir." },
+      { "nome": "EY: Mandatory", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "EY: Filling the Opened By", "acao": "converter", "substituicao": "Default value gs.getUserID() + read-only." },
+      { "nome": "EY: State Registration Regex", "acao": "converter", "substituicao": "Validation Regex na variável v_state_registration." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Sem user criteria de disponibilidade: se é exclusivo de HRBPs/RT, criar user criteria em vez de só avisar no nome."] },
+    "itens_derivados": [],
+    "observacoes": "Producer script lê o perfil de RH mas grava requested_for com o usuário logado (inconsistência herdada); revisar."
+  },
+  {
+    "sys_id": "ed9d69b187708b10ec360e530cbb35fe",
+    "nome_atual": "Solicitar Estudos de Aplicações/Regras de Convenção Coletiva de Trabalho (CCTs)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Apenas 1 pedido em 12 meses e sobreposição direta com irmãos: a short description cita 'análises de pagamentos sindicais' (item próprio) e 'estudos de regras' cabem no item de dúvidas de relações trabalhistas. Sugere-se desativar e incluir 'Estudo de regras de CCT' como tipo de solicitação no item ce192c69 (Tirar dúvidas sobre relações trabalhistas e sindicais).",
+    "nome_sugerido": "Solicitar estudo de regras de convenção coletiva (CCT)",
+    "short_description_sugerida": "Peça ao time de Relações Trabalhistas um estudo de aplicação das regras de uma convenção coletiva de trabalho (CCT).",
+    "descricao_sugerida": "Use para pedir uma análise de como aplicar as regras de uma convenção coletiva de trabalho (CCT) ou acordo coletivo. Não use para enviar boletos sindicais nem para pedir a aplicação de um acordo já assinado.",
+    "frases_exemplo": [
+      "preciso de um estudo da CCT",
+      "como aplicar a regra da convenção coletiva?",
+      "análise de cláusula do acordo coletivo"
+    ],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Se for mantido, é praticamente conversacional: ocultar v_opened_by, labels para vs_study_type, vs_union_name, vs_describe_your_request e v_which_sub_company_is_the_service_for."
+  },
+  {
+    "sys_id": "6b09123f1b7c6590d1abda4ce54bcb57",
+    "nome_atual": "Relatórios Gerais de Recursos Humanos",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 423,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 30,
+    "justificativa": "Intenção única (pedir um relatório de dados de RH) com volume relevante, mas bloqueado por 2 scripts de 'selecionar todas' que manipulam g_list e por List Collectors com qualifier dinâmico (subempresa depende da empresa). A descrição hoje é só '.', o que impede o LLM de achar o item. Removendo os checkboxes de 'selecionar todas', simplificando a subempresa e trocando o anexo de aprovação por aprovação no flow, a conversa fica viável.",
+    "nome_sugerido": "Solicitar relatório de dados de RH (Brasil)",
+    "short_description_sugerida": "Peça relatórios de dados de RH, como ativos e desligados, afastados, dependentes e controle de jornada.",
+    "descricao_sugerida": "Use para pedir relatórios com dados de RH dos colaboradores no Brasil: colaboradores ativos e desligados, afastados, dependentes, controle de jornada e outros. Informe o tipo de relatório, quais dados precisa, para que vai usar e o recorte (empresas, subempresas, regiões). Relatórios com dados sensíveis exigem aprovação do gestor. Não use para pedir seu próprio holerite ou informe de rendimentos; colaboradores dos países hispânicos usam 'Solicitar relatório de RH (América Hispânica)'.",
+    "frases_exemplo": [
+      "preciso de um relatório de headcount",
+      "quero a lista de colaboradores ativos da minha área",
+      "relatório de afastados",
+      "extrair dados de dependentes dos colaboradores",
+      "relatório de controle de jornada da equipe"
+    ],
+    "bloqueadores": [
+      { "onde": "client scripts EY: Select all companies / EY: Select all subcompanies", "problema": "Sem VA Supported; manipulam g_list do List Collector.", "acao": "Remover os scripts e os checkboxes v_select_all_companies/v_select_all_companies2; orientar que deixar em branco = todas (ou opção 'Todas' tratada no flow)." },
+      { "onde": "v_sub_company", "problema": "List Collector com qualifier javascript dependente de v_company.", "acao": "Tornar opcional e trocar o qualifier por um fixo (core_company Natura/Avon) ou por texto livre; o flow filtra." },
+      { "onde": "anexo_aprovacao", "problema": "Attachment obrigatório quando dados sensíveis.", "acao": "Trocar por etapa de aprovação do gestor no flow quando v_data_sensitive = Sim." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_report_type", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de relatório você precisa?" },
+      { "ordem": 2, "variavel": "v_what_data", "origem": "item", "acao": "manter", "conversational_label": "Quais dados o relatório deve trazer?" },
+      { "ordem": 3, "variavel": "v_what_need_data", "origem": "item", "acao": "manter", "conversational_label": "Para que você vai usar esses dados?" },
+      { "ordem": 4, "variavel": "v_company", "origem": "item", "acao": "manter", "conversational_label": "De quais empresas (marcas) você precisa dos dados?" },
+      { "ordem": 5, "variavel": "v_sub_company", "origem": "item", "acao": "manter", "conversational_label": "Quer filtrar por alguma subempresa? Se não, considero todas.", "obs": "Opcional, qualifier fixo." },
+      { "ordem": 6, "variavel": "v_region", "origem": "item", "acao": "manter", "conversational_label": "De quais regiões?" },
+      { "ordem": 7, "variavel": "v_data_sensitive", "origem": "item", "acao": "manter", "conversational_label": "O relatório inclui dados sensíveis (como saúde, salário ou documentos)?" },
+      { "ordem": 8, "variavel": "v_solicitation_about", "origem": "item", "acao": "manter", "conversational_label": "Sobre o que é a solicitação?", "obs": "Rever se ainda é necessário junto com v_report_type; parece duplicar a classificação." },
+      { "ordem": 9, "variavel": "v_details", "origem": "item", "acao": "manter", "conversational_label": "Quer dar mais algum detalhe?" },
+      { "ordem": 10, "variavel": "v_email", "origem": "item", "acao": "derivar", "obs": "Read-only, preenchido a partir do solicitante; auto-populate em vez do script EY: Email." },
+      { "ordem": 11, "variavel": "v_select_all_companies", "origem": "item", "acao": "remover", "obs": "Checkbox de 'selecionar todas'." },
+      { "ordem": 12, "variavel": "v_select_all_companies2", "origem": "item", "acao": "remover", "obs": "Checkbox de 'selecionar todas'." },
+      { "ordem": 13, "variavel": "anexo_aprovacao", "origem": "item", "acao": "remover", "obs": "Aprovação no flow." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Select all companies / EY: Select all subcompanies", "acao": "remover", "substituicao": "Sem 'selecionar todas'; vazio = todas." },
+      { "nome": "EY: Clear Subcompany 1 / 2", "acao": "remover", "substituicao": "Desnecessário com qualifier fixo." },
+      { "nome": "EY: Email", "acao": "converter", "substituicao": "Auto-populate a partir de vs_employee (e-mail)." },
+      { "nome": "EY: Show the attachment field", "acao": "remover", "substituicao": "Aprovação do gestor no flow." },
+      { "nome": "EY: Data field rules / EY: Rule field sensitive data / EY: If Detail is not empty", "acao": "manter", "substituicao": "UI policies sem script." },
+      { "nome": "EY:Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto em v_report_type." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Substituir a descrição '.' pela descrição sugerida."] },
+    "itens_derivados": [],
+    "observacoes": "Irmão hispânico: b184d8c0 (Solicitações de relatório). User criteria já separa os públicos; nomes sugeridos diferenciam Brasil x América Hispânica."
+  },
+  {
+    "sys_id": "b184d8c03b989e10924d0247f4e45a6a",
+    "nome_atual": "Solicitações de relatório",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 228,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Item enxuto (2 perguntas próprias) com intenção clara, sem bloqueadores. O excesso de perguntas vem do set Hispana Personal Information, e as validações de 40 caracteres e a filtragem de opções são scripts que podem virar recursos no-code. Ajuste de baixo esforço.",
+    "nome_sugerido": "Solicitar relatório de RH (América Hispânica)",
+    "short_description_sugerida": "Peça relatórios de folha de pagamento, headcount e outros dados de RH (Argentina, Chile, Colômbia, Equador, Peru e Uruguai).",
+    "descricao_sugerida": "Use para pedir relatórios de RH como folha de pagamento, headcount, banda salarial e outros dados de colaboradores nos países hispânicos. Diga o tipo de relatório e descreva para que precisa e quais informações devem constar (e-mails, data de admissão, centro de custo, banda etc.). Não use para pedir seu recibo de salário ou certificados pessoais; colaboradores do Brasil usam 'Solicitar relatório de dados de RH (Brasil)'.",
+    "frases_exemplo": [
+      "necesito un reporte de headcount",
+      "preciso de um relatório da folha",
+      "relatório de nómina da minha área",
+      "quero um reporte com centro de custo e banda dos colaboradores",
+      "pedir relatório de RH"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_report_type", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de relatório você precisa?", "obs": "Filtragem de opções por script (EY: Hide/Show options) é VA Supported; se possível trocar por choices com condição ou lookup select box." },
+      { "ordem": 2, "variavel": "v_field_detail", "origem": "item", "acao": "manter", "conversational_label": "Para que você precisa do relatório e quais informações ele deve trazer?", "obs": "Validation Regex de no mínimo 40 caracteres (^[\\s\\S]{40,}$) no lugar dos scripts." },
+      { "ordem": 3, "variavel": "v_minimun_characters", "origem": "item", "acao": "remover", "obs": "Rótulo de erro, substituído pela mensagem da Validation Regex." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show error message onChange / onSubmit / EY: Hide error message onLoad", "acao": "converter", "substituicao": "Validation Regex com mensagem na variável v_field_detail." },
+      { "nome": "EY: Hide/Show options on report type / On load", "acao": "manter", "substituicao": "VA Supported; avaliar lookup select box filtrado pelo país para eliminar script." },
+      { "nome": "EY: Mandatory Fields - Catalog view / EY: Hide target fields", "acao": "converter", "substituicao": "Mandatory direto nas variáveis e v_who_is_this_request_for com default 'para mim' + hidden." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Criar conversational labels também em espanhol."] },
+    "itens_derivados": [],
+    "observacoes": "Producer script descrito como 'dúvidas sobre Frota' (copiado); validar gravação de item."
+  },
+  {
+    "sys_id": "8486edc11b549250514cbaef4b4bcb28",
+    "nome_atual": "Solicitações relacionadas à rescisão",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 48,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Item da Colômbia com 3 perguntas próprias (categoria, detalhe, anexo quando saque) e sem bloqueadores. As duas categorias (extrato/relatório e saque de cesantías) não justificam divisão pelo volume baixo. Falta descrição, a validação de 30 caracteres está em script e o producer script tem as linhas de item comentadas, o que pode quebrar os flows.",
+    "nome_sugerido": "Solicitar extrato ou saque de cesantías (indenização por rescisão)",
+    "short_description_sugerida": "Peça o extrato ou o saque das suas cesantías / indenização por rescisão (Colômbia).",
+    "descricao_sugerida": "Use, na Colômbia, para pedir o extrato (relatório) das suas cesantías ou para solicitar o saque parcial dessa indenização (por exemplo, para moradia ou educação). No saque, anexe o documento que comprova o uso. Não use para dúvidas sobre sua rescisão de contrato ou desligamento.",
+    "frases_exemplo": [
+      "quero sacar minhas cesantías",
+      "necesito el certificado de cesantías",
+      "retiro parcial de cesantías para vivienda",
+      "preciso do extrato da indenização por rescisão"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_category", "origem": "item", "acao": "manter", "conversational_label": "Você quer o extrato ou o saque das cesantías?" },
+      { "ordem": 2, "variavel": "v_details", "origem": "item", "acao": "manter", "conversational_label": "Descreva o seu pedido (por exemplo, o motivo do saque).", "obs": "Validation Regex de no mínimo 30 caracteres." },
+      { "ordem": 3, "variavel": "v_attachment", "origem": "item", "acao": "remover", "obs": "Pedir o anexo no final da conversa quando categoria = saque; validar no flow." },
+      { "ordem": 4, "variavel": "v_minimun_characters", "origem": "item", "acao": "remover", "obs": "Substituído pela Validation Regex." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show error message onSubmit / onChange / EY: Hide error message onLoad", "acao": "converter", "substituicao": "Validation Regex ^[\\s\\S]{30,}$ em v_details." },
+      { "nome": "EY: Set Colombia onLoad", "acao": "manter", "substituicao": "VA Supported; alternativa: derivar país pelo perfil (item já restrito à Colômbia por user criteria)." },
+      { "nome": "EY: Mandatory Fields - Always", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "EY: Mandatory Fields - Category = Severance Pay Withdrawal", "acao": "manter", "substituicao": "UI policy sem script (retirar o anexo e o rótulo de download)." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Criar conversational labels em espanhol.", "Link do formulário para download (v_download_document) vai para a descrição ou KB."] },
+    "itens_derivados": [],
+    "observacoes": "Corrigir o producer script: as linhas que gravam x_nasm_hr_item e item com o sysparm_id estão comentadas; sem isso, triggers de flow por item não identificam a origem."
+  },
+  {
+    "sys_id": "1d7ecc1c1be41a90514cbaef4b4bcba7",
+    "nome_atual": "Seguro complementar (saúde, vida e odontológico)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 130,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "O select type_of_request mistura quatro intenções (adesão inicial, inclusão de dependentes, exclusão de dependentes e troca de plano) que mudam todo o formulário por UI policy. Adesão e inclusão dependem do multi-row de dependentes, do widget mrvs_monitor e de formulário anexo, e devem continuar como formulário; troca de plano e exclusão de dependentes são pedidos simples que podem conversar.",
+    "nome_sugerido": "Seguro complementar de saúde, vida e odontológico (Chile)",
+    "short_description_sugerida": "Adesão, inclusão ou exclusão de dependentes e troca de plano do seguro complementar (Chile).",
+    "descricao_sugerida": "Item-pai do seguro complementar de saúde, vida e odontológico para colaboradores no Chile. Dividido em: aderir/incluir dependentes (formulário), trocar de plano e excluir dependentes (conversacionais).",
+    "frases_exemplo": [
+      "quero aderir ao seguro complementar",
+      "incluir meu filho no seguro de saúde",
+      "trocar o plano do seguro complementar",
+      "tirar um dependente do seguro"
+    ],
+    "bloqueadores": [
+      { "onde": "mrvs_monitor", "problema": "Custom com widget EY: MRV Macro widget Beneficiary 4.", "acao": "Fica só no derivado de formulário (adesão/inclusão)." },
+      { "onde": "set:Inclusão de dependentes (multi-row)", "problema": "Grade de dependentes.", "acao": "Formulário para adesão/inclusão; na exclusão, trocar por pergunta de texto com os nomes dos dependentes." },
+      { "onde": "client scripts EY: Clear session OnLoad, EY: Set employee_reference, EY: Block same beneficiaries", "problema": "Sem VA Supported, usam sessionStorage.", "acao": "Ficam só no derivado de formulário." },
+      { "onde": "checkbox_one, checkbox_two", "problema": "Checkboxes de declaração não agrupam bem em conversa.", "acao": "Nos derivados conversacionais, trocar por uma pergunta Sim/Não (Include None) de confirmação única." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "UI policies por type_of_request (EY: Show apply to your dependents, EY: Show detais, EY: Show multirow etc.)", "acao": "converter", "substituicao": "Cada derivado fixa type_of_request e herda só as policies do seu ramo." },
+      { "nome": "EY: Clear Values (2x)", "acao": "remover", "substituicao": "Desnecessário com type_of_request fixo." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["O item atual pode virar o derivado de formulário (adesão/inclusão), preservando flow e user criteria (ACN: Users Chile).", "Conversational labels também em espanhol."] },
+    "itens_derivados": [
+      {
+        "nome": "Aderir ao seguro complementar ou incluir dependentes (Chile)",
+        "short_description": "Faça sua adesão ao seguro complementar de saúde, vida e odontológico ou inclua dependentes (Chile).",
+        "descricao": "Use para entrar no seguro complementar pela primeira vez ou incluir dependentes. É preciso preencher e anexar o formulário do seguro e informar os dados dos dependentes (nome, parentesco, documento, data de nascimento). Os dependentes precisam estar cadastrados no Workday. Abre como formulário. Não use para trocar de plano ou excluir dependentes.",
+        "frases_exemplo": ["quero entrar no seguro complementar", "incluir minha esposa no seguro de saúde", "adesão ao seguro odontológico", "agregar carga al seguro complementario"],
+        "fixar": "type_of_request = initial_incorporation_collaborator | dependent_registration (formulário, non-conversational)",
+        "perguntas": []
+      },
+      {
+        "nome": "Trocar o plano do seguro complementar (Chile)",
+        "short_description": "Peça a mudança de plano do seu seguro complementar de saúde, vida e odontológico (Chile).",
+        "descricao": "Use para pedir a troca de plano do seguro complementar que você já tem. Diga qual plano quer e o motivo. Não use para aderir pela primeira vez ou para incluir/excluir dependentes.",
+        "frases_exemplo": ["quero trocar meu plano do seguro complementar", "mudar de plano de saúde complementar", "cambiar plan del seguro complementario", "subir de plano no seguro"],
+        "fixar": "type_of_request = plan_change (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "details", "conversational_label": "Para qual plano você quer mudar e por quê?" },
+          { "ordem": 2, "variavel": "nova_confirmacao_declaracoes", "conversational_label": "Você confirma que conhece as condições do contrato e que as informações são verdadeiras?" }
+        ]
+      },
+      {
+        "nome": "Excluir dependente do seguro complementar (Chile)",
+        "short_description": "Peça a exclusão de um ou mais dependentes do seu seguro complementar (Chile).",
+        "descricao": "Use para retirar dependentes do seu seguro complementar de saúde, vida e odontológico. Informe quem deve sair e o motivo. Não use para incluir dependentes ou trocar de plano.",
+        "frases_exemplo": ["tirar meu filho do seguro", "excluir dependente do seguro complementar", "dar de baja una carga del seguro", "remover minha ex-esposa do plano"],
+        "fixar": "type_of_request = termination_dependents (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_dependentes_excluir", "conversational_label": "Quais dependentes devem ser excluídos do seguro?" },
+          { "ordem": 2, "variavel": "nova_motivo_exclusao", "conversational_label": "Qual o motivo da exclusão?" },
+          { "ordem": 3, "variavel": "nova_confirmacao_declaracoes", "conversational_label": "Você confirma que conhece as condições do contrato e que as informações são verdadeiras?" }
+        ]
+      }
+    ],
+    "observacoes": "nova_confirmacao_declaracoes (Sim/Não com Include None) substitui checkbox_one e checkbox_two; validar com Jurídico se a confirmação conversacional é aceita. Irmãos do lote com seguro de vida são do Brasil (8cef1bd8 e f8ba73ef); o nome com '(Chile)' evita confusão."
+  },
+  {
+    "sys_id": "8cef1bd81b68c290a530426fe54bcb73",
+    "nome_atual": "Designação de beneficiários do seguro de vida",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1514,
+    "recomendacao": "manter_formulario",
+    "prioridade": "alta",
+    "esforco": "baixo",
+    "prontidao_atual": 10,
+    "justificativa": "Alto volume, mas o item é um formulário legal da seguradora: multi-row de beneficiários com validação de percentual, assinatura eletrônica por widget custom (show_signature), geração de PDF (screen_height) e declarações longas. Nada disso tem equivalente conversacional seguro. Manter como formulário, com nome e descrição fortes para a VA encontrar e oferecer o link.",
+    "nome_sugerido": "Designar ou alterar beneficiários do seguro de vida",
+    "short_description_sugerida": "Indique ou altere quem são os beneficiários do seu seguro de vida.",
+    "descricao_sugerida": "Use para indicar pela primeira vez ou alterar os beneficiários do seu seguro de vida (SulAmérica): nome, CPF, parentesco, data de nascimento e percentual de cada um (a soma deve dar 100%). O pedido é assinado eletronicamente e só vale depois de registrado na seguradora. Abre como formulário. Não use para aderir, não aderir ou cancelar o seguro de vida complementar.",
+    "frases_exemplo": [
+      "quero mudar os beneficiários do meu seguro de vida",
+      "incluir minha esposa como beneficiária",
+      "designação de beneficiários",
+      "como indico quem recebe o seguro de vida?",
+      "trocar percentual dos beneficiários do seguro"
+    ],
+    "bloqueadores": [
+      { "onde": "show_signature", "problema": "Custom com widget EY:Show_Signature.", "acao": "Mantém formulário." },
+      { "onde": "set:Dados do(s) Beneficiário(s) (multi-row)", "problema": "Grade com validação de percentual.", "acao": "Mantém formulário." },
+      { "onde": "client scripts EY: If Beneficiary designation form, Aoop: Validate Percentage", "problema": "Sem VA Supported.", "acao": "Mantém formulário." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "[AOOP]Set Datas from Maternity Leave", "acao": "remover", "substituicao": "Script de licença-maternidade sem relação com o item (provável cópia)." },
+      { "nome": "EY: Hide fields", "acao": "converter", "substituicao": "Bug: setVisible com string 'false'. Definir hidden direto nas variáveis local e data." },
+      { "nome": "EY: Mandatory", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["A VA mostra o link do formulário ao reconhecer a intenção."] },
+    "itens_derivados": [],
+    "observacoes": "Nome técnico FORM0000605 no sys_name; descrição vazia hoje. Diferenciar do irmão f8ba73ef (Seguro de Vida Complementar), que também coleta beneficiários na adesão."
+  },
+  {
+    "sys_id": "f8ba73ef1b444610d1abda4ce54bcba0",
+    "nome_atual": "Seguro de Vida Complementar",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1044,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 5,
+    "justificativa": "Um único formulário com 136 variáveis e 51 UI policies atende três intenções pelo type_of_request: aderir, não aderir e cancelar. A adesão tem declaração pessoal de saúde de 13 perguntas para titular e cônjuge, simulador de desconto, beneficiários em multi-row, assinatura por widget e dados de saúde sensíveis: deve continuar formulário e sem LLM. Não aderir e cancelar são pedidos de uma confirmação e podem ser conversacionais, tirando boa parte do volume do formulário pesado.",
+    "nome_sugerido": "Seguro de vida complementar",
+    "short_description_sugerida": "Adesão, não adesão ou cancelamento do seguro de vida complementar.",
+    "descricao_sugerida": "Item-pai do seguro de vida complementar (SulAmérica). Dividido em: aderir (formulário com declaração de saúde e assinatura), registrar não adesão e cancelar (conversacionais).",
+    "frases_exemplo": [
+      "quero contratar o seguro de vida complementar",
+      "não quero aderir ao seguro de vida complementar",
+      "cancelar meu seguro de vida complementar"
+    ],
+    "bloqueadores": [
+      { "onde": "popup_info_for", "problema": "Custom com widget de popup.", "acao": "Fica só no derivado de adesão (formulário)." },
+      { "onde": "show_signature", "problema": "Custom com widget de assinatura.", "acao": "Fica na adesão; validar com Jurídico se não adesão/cancelamento exigem assinatura (o script HTR_VerifyE-signature é condicionado ao tipo)." },
+      { "onde": "client scripts EY: HTR_VerifyE-signature, Aoop Check is eligible to enrollment, Aoop: Validate Percentage", "problema": "Sem VA Supported.", "acao": "Ficam só na adesão." },
+      { "onde": "Declaração pessoal de saúde (answer_*_employee / answer_*_partner)", "problema": "Dados de saúde sensíveis e 26+ perguntas.", "acao": "Adesão como formulário e com Now Assist desligado." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "UI policies por type_of_request (EY: Type of Request = ..., Resolver View ...)", "acao": "converter", "substituicao": "Cada derivado fixa type_of_request; as policies de não adesão/cancelamento viram atributos simples nos novos itens." },
+      { "nome": "EY: Get screen height for PDF", "acao": "manter", "substituicao": "Só na adesão." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": true, "outras": ["O item atual vira o derivado de adesão (preserva flow, PDF e user criteria EY: Terceiros V2).", "Os derivados conversacionais podem usar o mesmo flow com type_of_request fixo."] },
+    "itens_derivados": [
+      {
+        "nome": "Aderir ao seguro de vida complementar",
+        "short_description": "Contrate o seguro de vida complementar, com declaração de saúde e indicação de beneficiários.",
+        "descricao": "Use para contratar o seguro de vida complementar (SulAmérica) para você e, se quiser, para seu cônjuge. Você preenche a declaração pessoal de saúde, simula o desconto em folha, indica beneficiários e assina eletronicamente. Abre como formulário. Não use para não aderir, cancelar ou só alterar beneficiários de um seguro que você já tem.",
+        "frases_exemplo": ["quero contratar o seguro de vida complementar", "aderir ao seguro de vida adicional", "incluir meu cônjuge no seguro de vida complementar", "como faço a adesão ao seguro de vida?"],
+        "fixar": "type_of_request = enroll_supplementary_life_insurance (formulário, non-conversational, Now Assist desligado)",
+        "perguntas": []
+      },
+      {
+        "nome": "Registrar não adesão ao seguro de vida complementar",
+        "short_description": "Informe que você não quer aderir ao seguro de vida complementar.",
+        "descricao": "Use para registrar que você não quer entrar no seguro de vida complementar. Se mudar de ideia no futuro, será preciso abrir um pedido de adesão. Não use para cancelar um seguro que você já tem.",
+        "frases_exemplo": ["não quero o seguro de vida complementar", "recusar o seguro de vida adicional", "registrar não adesão ao seguro de vida", "não vou aderir ao seguro de vida"],
+        "fixar": "type_of_request = not_enroll_supplementary_life_insurance (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "awareness_non_enrollment", "conversational_label": "Você confirma que não quer aderir ao seguro de vida complementar e que, para aderir no futuro, precisará abrir um novo pedido?" }
+        ]
+      },
+      {
+        "nome": "Cancelar o seguro de vida complementar",
+        "short_description": "Peça o cancelamento do seu seguro de vida complementar.",
+        "descricao": "Use para cancelar o seguro de vida complementar que você tem hoje; o desconto em folha deixa de acontecer. Para voltar no futuro, será preciso abrir um pedido de adesão. Não use para alterar beneficiários.",
+        "frases_exemplo": ["quero cancelar o seguro de vida complementar", "parar o desconto do seguro de vida", "sair do seguro de vida adicional", "cancelamento do seguro de vida"],
+        "fixar": "type_of_request = cancel_supplementary_life_insurance (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "awareness_cancel_enrollment", "conversational_label": "Você confirma o cancelamento do seguro de vida complementar e que, para voltar, precisará abrir um novo pedido de adesão?" }
+        ]
+      }
+    ],
+    "observacoes": "Nos derivados conversacionais, trocar os checkboxes awareness_* por Sim/Não com Include None (checkbox não agrupa bem em conversa). O employee (set My Personal Informations) já vem por default e read-only; manter oculto. Verificar ADP/elegibilidade (Aoop Check is eligible) só na adesão."
+  },
+  {
+    "sys_id": "d1d9642487477e10ec360e530cbb358f",
+    "nome_atual": "Indicadores",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 27,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "Sem scripts e sem bloqueadores, mas o nome 'Indicadores' não diz nada ao LLM e são 21 perguntas (limite de 20), com 5 anexos e o set de colaborador com 7 campos. Ocultando o set (pedido é do próprio usuário) e passando os anexos para o final, sobram cerca de 9 perguntas. Volume baixo não justifica dividir ajuste x inclusão de dados.",
+    "nome_sugerido": "Ajustar ou incluir dados nos indicadores de treinamento",
+    "short_description_sugerida": "Peça ajuste ou inclusão de dados de ações de aprendizagem (treinamentos) usados nos indicadores.",
+    "descricao_sugerida": "Use para pedir ao time de Aprendizagem a correção de dados já lançados ou a inclusão de dados de um treinamento (convocados, inscritos, presença, avaliação de reação) nos indicadores de aprendizagem. Informe a categoria da ação, o treinamento, o formato e a carga horária, e anexe as listas no final. Não use para se inscrever em treinamentos nem para logística de turmas.",
+    "frases_exemplo": [
+      "preciso corrigir os dados de um treinamento no indicador",
+      "incluir lista de presença do treinamento",
+      "o indicador de aprendizagem está errado",
+      "lançar dados de treinamento nos indicadores",
+      "ajustar horas de treinamento da turma"
+    ],
+    "bloqueadores": [
+      { "onde": "v_ajust_existing_data_attachment, v_attachment_of_eligible_called_hc, v_attachment_of_registered_hc, v_hc_attendance_attachment, v_reaction_assessment_attachment", "problema": "5 variáveis Attachment.", "acao": "Remover e pedir os arquivos no final da conversa (anexo nativo), listando na descrição quais enviar; obrigatoriedade do ajuste validada no flow." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_what_is_the_request", "origem": "item", "acao": "manter", "conversational_label": "Você quer ajustar dados já existentes ou incluir dados novos?" },
+      { "ordem": 2, "variavel": "v_learning_category", "origem": "item", "acao": "manter", "conversational_label": "Qual é a categoria da ação de aprendizagem?" },
+      { "ordem": 3, "variavel": "v_hub_selection", "origem": "item", "acao": "manter", "conversational_label": "Qual é o HUB?", "obs": "Só se categoria = HUB." },
+      { "ordem": 4, "variavel": "v_name_cell", "origem": "item", "acao": "manter", "conversational_label": "Qual é o nome da célula?", "obs": "Só se categoria = células." },
+      { "ordem": 5, "variavel": "v_training_name", "origem": "item", "acao": "manter", "conversational_label": "Qual é o nome do treinamento?" },
+      { "ordem": 6, "variavel": "v_mandatory_action", "origem": "item", "acao": "manter", "conversational_label": "É uma ação obrigatória?" },
+      { "ordem": 7, "variavel": "v_the_application_format", "origem": "item", "acao": "manter", "conversational_label": "Qual foi o formato do treinamento (presencial, online etc.)?", "obs": "Só na inclusão de dados." },
+      { "ordem": 8, "variavel": "v_hours_per_class", "origem": "item", "acao": "manter", "conversational_label": "Qual é a carga horária por turma?" },
+      { "ordem": 9, "variavel": "v_extra_comments", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar algum comentário?" },
+      { "ordem": 10, "variavel": "vs_for_who", "origem": "set:EY: Informação Básica do colaborador", "acao": "derivar", "obs": "Default 'for_me' e oculto neste item; os campos de colaborador ficam ocultos." },
+      { "ordem": 11, "variavel": "v_ajust_existing_data_attachment", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 12, "variavel": "v_attachment_of_eligible_called_hc", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 13, "variavel": "v_attachment_of_registered_hc", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 14, "variavel": "v_hc_attendance_attachment", "origem": "item", "acao": "remover", "obs": "Anexo no final." },
+      { "ordem": 15, "variavel": "v_reaction_assessment_attachment", "origem": "item", "acao": "remover", "obs": "Anexo no final." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY -  Set RP variables / EY - Fix Variable set Visibility", "acao": "converter", "substituicao": "Hidden/mandatory direto nas variáveis; tirar as ações sobre os anexos removidos." },
+      { "nome": "EY: Check if solicitation is data entry / EY: Check if the solicitation is Data ajustment", "acao": "converter", "substituicao": "Manter só a ação sobre v_the_application_format; anexos vão para o final." },
+      { "nome": "EY: Category fields handle HUB / EY: Check if Category is Cells", "acao": "manter", "substituicao": "UI policies sem script." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Policies citam v_data_required_for_adherence_indicator_2 e _label, que não aparecem nas variáveis ativas; limpar."
+  }
+]

@@ -1,0 +1,105 @@
+{
+ "sys_id": "64da79341ba5fd50a530426fe54bcb7e",
+ "title": "EY VS - Empresas Natura/Avon",
+ "internal_name": "ey_vs_empresas_natura_avon",
+ "description": "Variable Set destinada a variaveis padrão empresa Natura/Avon",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Solicitar troca de escala coletiva",
+  "Aprovar reembolsos diários por país"
+ ],
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is your request for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS [=tbs]",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getAllLatamSubcompanies(current.variables.vs_which_company, current.cat_item);"
+  },
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: mandatory=true",
+    "vs_which_sub_company: mandatory=true",
+    "vs_which_company: mandatory=true",
+    "v_opened_by: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Somente leitura - Case/task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_opened_by: readonly=true",
+    "vs_which_company: readonly=true",
+    "vs_which_sub_company: readonly=true",
+    "v_country: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Clear Sub Company OnChange",
+   "type": "onChange",
+   "on": "c9cb31f41ba5fd50a530426fe54bcb6c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, sempre que o valor muda em relação ao anterior, limpa 'vs_which_sub_company' e 'v_country' — zera a cascata de sub-empresa e país."
+  },
+  {
+   "name": "Set Country OnChange",
+   "type": "onChange",
+   "on": "0568f5bc1b65fd50a530426fe54bcb08",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company' (sem sufixo). Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Set Variables ReadOnly and Visible",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde e desobriga as variáveis de sub-empresa na abertura do formulário, deixando-as ocultas até que outro script revele a correta."
+  },
+  {
+   "name": "Set Opened By OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que preenche 'v_opened_by' com o usuário logado, sem travar o campo."
+  }
+ ]
+}

@@ -1,0 +1,132 @@
+{
+ "sys_id": "307b25c3c94f407bb6502726a293c55c",
+ "status": "dividido",
+ "motivo": "Criar assinatura pede centro de custo, finalidade e orçamento aprovado; criar grupo de recursos pede assinatura, região Azure, etiquetas e responsável. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_centro_de_custo": {
+   "label": "Qual o centro de custo responsável?"
+  },
+  "v_responsavel_tecnico": {
+   "label": "Quem é o responsável técnico pela assinatura?"
+  },
+  "v_finalidade": {
+   "label": "Qual a finalidade da assinatura?"
+  },
+  "v_orcamento_aprovado": {
+   "label": "Qual o orçamento aprovado?"
+  },
+  "v_ambiente": {
+   "label": "Para qual ambiente será?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_assinatura": {
+   "label": "Em qual assinatura o grupo de recursos será criado?"
+  },
+  "v_regiao_azure": {
+   "label": "Em qual região do Azure será criado?"
+  },
+  "v_etiquetas_obrigatorias": {
+   "label": "Quais etiquetas obrigatórias devem ser aplicadas?"
+  },
+  "v_responsavel": {
+   "label": "Quem é o responsável pelo grupo de recursos?"
+  }
+ },
+ "policies": {
+  "40808b67dcb947ccaa56f5500f4003aa": "remover",
+  "60a2a567fb1e4e1c8b8be525217fa4aa": "remover"
+ },
+ "itens": [
+  {
+   "name": "Criar uma assinatura Azure",
+   "short_description": "Pedir uma nova assinatura Azure com responsável e orçamento.",
+   "description": "Use quando uma área ou projeto precisa de uma assinatura própria no Azure. A opção atendida é Criar assinatura Azure. Informe centro de custo, responsável técnico, finalidade, orçamento aprovado e ambiente.",
+   "frases_exemplo": [
+    "Preciso de uma assinatura Azure nova",
+    "Quero criar uma assinatura para o projeto",
+    "Solicito uma assinatura Azure de produção",
+    "Como peço uma subscription no Azure?",
+    "Meu time precisa de uma assinatura com orçamento aprovado"
+   ],
+   "sem_vars": [
+    "v_assinatura",
+    "v_regiao_azure",
+    "v_etiquetas_obrigatorias",
+    "v_responsavel"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar assinatura Azure"
+   },
+   "vars": {
+    "v_centro_de_custo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_tecnico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_finalidade": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_orcamento_aprovado": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar um grupo de recursos no Azure",
+   "short_description": "Pedir um grupo de recursos em uma assinatura Azure.",
+   "description": "Use quando precisar organizar recursos em um novo grupo dentro de uma assinatura. A opção atendida é Criar grupo de recursos. Informe ambiente, assinatura, região, etiquetas obrigatórias e responsável.",
+   "frases_exemplo": [
+    "Preciso de um resource group novo no Azure",
+    "Quero criar um grupo de recursos na assinatura",
+    "Solicito um grupo de recursos para homologação",
+    "Como peço um grupo de recursos na região Brasil Sul?",
+    "Preciso organizar os recursos do projeto em um grupo"
+   ],
+   "sem_vars": [
+    "v_centro_de_custo",
+    "v_responsavel_tecnico",
+    "v_finalidade",
+    "v_orcamento_aprovado"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar grupo de recursos"
+   },
+   "vars": {
+    "v_assinatura": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_regiao_azure": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_etiquetas_obrigatorias": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

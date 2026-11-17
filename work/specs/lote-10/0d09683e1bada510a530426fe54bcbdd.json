@@ -1,0 +1,281 @@
+{
+ "sys_id": "0d09683e1bada510a530426fe54bcbdd",
+ "status": "dividido",
+ "motivo": "Item cobre três públicos distintos (ex-colaborador, extensão de berçário após desligamento sem justa causa, e colaborador afastado) com perguntas diferentes por caminho, seguindo a divisão da 1ª análise. Os 5 scripts onSubmit de anexo obrigatório viram uma UI policy sobre uma variável de anexo nova (substituindo também o widget de anexo); os 3 scripts de validação de CPF/e-mail/telefone viram regex nas variáveis. O widget de mensagem/modal de informe de rendimentos e o script que limpa categoria/subcategoria são removidos sem substituto por não termos o texto original para levar à descrição.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_cpf": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+   }
+  },
+  "v_email": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$"
+   }
+  },
+  "v_phone": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{9,18}$"
+   }
+  },
+  "v_describe": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_has_attachment": {
+   "props": {
+    "hidden": true
+   }
+  },
+  "nova_anexo": {
+   "nova": {
+    "type": "33",
+    "question_text": "Quer anexar algum documento?",
+    "mandatory": false,
+    "order": 2600
+   }
+  }
+ },
+ "remover": {
+  "v_cont_start": "visual",
+  "contextual_search_results": "visual",
+  "ai_search_assist": "visual",
+  "vs_add_attachment": {
+   "substituida_por": "nova_anexo"
+  },
+  "orientacao_mantimento_beneficio": "texto_movido_descricao",
+  "texto_extensao_bercario_justa_causa": "texto_movido_descricao",
+  "v_download_adiant_prev": "sem_uso_conversa",
+  "v_download_creche_baba": "sem_uso_conversa",
+  "v_text_adiant_prev_for_description": "sem_uso_conversa",
+  "v_text_dados_cadast": "sem_uso_conversa",
+  "v_text_pensao_alim": "sem_uso_conversa",
+  "v_text_ctrl_jorn_lanc_atestado": "sem_uso_conversa",
+  "v_text_ctrl_jorn_reembolso": "sem_uso_conversa",
+  "v_text_adiant_prev_attach": "sem_uso_conversa",
+  "v_text_compl_prev": "sem_uso_conversa",
+  "v_text_baba": "sem_uso_conversa"
+ },
+ "policies": {
+  "3f6bb43e1b21e510a530426fe54bcb21": "remover",
+  "01cb149e1b3dedd0d1abda4ce54bcbc2": "remover",
+  "85b6f0da3bfb5a50924d0247f4e45a1c": "remover",
+  "fa0c3ca11b4d0690d1abda4ce54bcb39": "remover",
+  "6cf00db61b61e510a530426fe54bcb66": "remover",
+  "4b9841361ba1e510a530426fe54bcbfc": "remover",
+  "2bc1853a1b61e510a530426fe54bcb1f": "remover",
+  "6692897a1b61e510a530426fe54bcbf7": "remover",
+  "98c389fa1b61e510a530426fe54bcbeb": "remover",
+  "9d94897e1b61e510a530426fe54bcb3e": "remover",
+  "f29d3ce51b4d0690d1abda4ce54bcb1d": {
+   "conditions": "dispensa_justa_causa=1",
+   "actions": {
+    "localidade_do_bercario": {
+     "visible": true,
+     "mandatory": true
+    },
+    "nome_completo_crianca": {
+     "visible": true,
+     "mandatory": true
+    },
+    "data_do_desligamento": {
+     "visible": true,
+     "mandatory": true
+    },
+    "data_de_nascimento": {
+     "visible": true,
+     "mandatory": true
+    },
+    "ate_quando_manter_beneficio": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "9dddf8321b61e510a530426fe54bcbf2": {
+   "conditions": "v_category_ex_colab=dec_docs",
+   "actions": {
+    "v_subcategory_declar_doc": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_declar_doc_afastados": {
+   "short_description": "Categoria de afastados exige subcategoria de declaração/documento",
+   "conditions": "v_category_afastados=dec_doc",
+   "actions": {
+    "v_subcategory_declar_doc": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_anexo_mandatorio": {
+   "short_description": "Exige anexo para subcategorias de afastados que precisam de comprovante",
+   "conditions": "v_category_afastados=dados_cadast^ORv_subcategory_lic_ausencINcompl_prev,adiant_prev^ORv_subcategory_benefits=creche_baba^ORv_subcategory_journey_controlINlanc_atest,reembolso",
+   "actions": {
+    "nova_anexo": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "046cfc7e1b21e510a530426fe54bcb54": {
+   "converter": "regex"
+  },
+  "5329e2b61b39e910a530426fe54bcb8f": {
+   "converter": "regex"
+  },
+  "c2e8e2761b39e910a530426fe54bcb8f": {
+   "converter": "regex"
+  },
+  "0761ed4f1be92910a530426fe54bcb51": {
+   "converter": "policy:nova_anexo_mandatorio"
+  },
+  "722911031be92910a530426fe54bcb6a": {
+   "converter": "policy:nova_anexo_mandatorio"
+  },
+  "7ec9dd031be92910a530426fe54bcb9e": {
+   "converter": "policy:nova_anexo_mandatorio"
+  },
+  "ed57990f1ba92910a530426fe54bcb9d": {
+   "converter": "policy:nova_anexo_mandatorio"
+  },
+  "f868998f1ba92910a530426fe54bcb2d": {
+   "converter": "policy:nova_anexo_mandatorio"
+  },
+  "182ce11287be3e98017d65790cbb3566": {
+   "remover": "sem_efeito"
+  },
+  "19f86cd73b1f1a10924d0247f4e45a73": {
+   "remover": "sem_efeito"
+  },
+  "7f1c0e541bf53110a530426fe54bcb1a": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_what_situation": "ex_colab"
+   },
+   "sem_vars": [
+    "v_category_afastados",
+    "v_subcategory_vacation",
+    "v_subcategory_benefits",
+    "v_subcategory_fopag",
+    "v_subcategory_journey_control",
+    "v_subcategory_lic_ausenc",
+    "dispensa_justa_causa",
+    "data_do_desligamento",
+    "nome_completo_crianca",
+    "data_de_nascimento",
+    "localidade_do_bercario",
+    "ate_quando_manter_beneficio"
+   ],
+   "sem_policies": [
+    "dfaa74ad1b0d0690d1abda4ce54bcbe5",
+    "f29d3ce51b4d0690d1abda4ce54bcb1d",
+    "bc8dbcfe1b21e510a530426fe54bcb49",
+    "bafe34b21b61e510a530426fe54bcb9d",
+    "c95f74f21b61e510a530426fe54bcbf5",
+    "0daffcf21b61e510a530426fe54bcb8d",
+    "b3ef78361b61e510a530426fe54bcb82",
+    "5e2005761b61e510a530426fe54bcb5f",
+    "nova_declar_doc_afastados",
+    "nova_anexo_mandatorio"
+   ],
+   "sem_scripts": [
+    "76cfc5311bc58690d1abda4ce54bcb85",
+    "9aadc6751b4d8690d1abda4ce54bcbdf",
+    "e010cca71b8d4a90a530426fe54bcb9c"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_what_situation": "ex_colab",
+    "v_category_ex_colab": "extensao_bercario"
+   },
+   "sem_vars": [
+    "v_category_afastados",
+    "v_subcategory_vacation",
+    "v_subcategory_benefits",
+    "v_subcategory_fopag",
+    "v_subcategory_journey_control",
+    "v_subcategory_lic_ausenc",
+    "v_subcategory_declar_doc",
+    "v_subcategory_serv_comerc",
+    "v_describe",
+    "nova_anexo"
+   ],
+   "sem_policies": [
+    "771798121b3dedd0d1abda4ce54bcbd2",
+    "bc8dbcfe1b21e510a530426fe54bcb49",
+    "9dddf8321b61e510a530426fe54bcbf2",
+    "nova_declar_doc_afastados",
+    "bafe34b21b61e510a530426fe54bcb9d",
+    "c95f74f21b61e510a530426fe54bcbf5",
+    "0daffcf21b61e510a530426fe54bcb8d",
+    "b3ef78361b61e510a530426fe54bcb82",
+    "5e2005761b61e510a530426fe54bcb5f",
+    "d7ec7cbe1b21e510a530426fe54bcb1f",
+    "nova_anexo_mandatorio"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_what_situation": "colab_afast"
+   },
+   "sem_vars": [
+    "v_category_ex_colab",
+    "v_subcategory_serv_comerc",
+    "dispensa_justa_causa",
+    "data_do_desligamento",
+    "nome_completo_crianca",
+    "data_de_nascimento",
+    "localidade_do_bercario",
+    "ate_quando_manter_beneficio"
+   ],
+   "sem_policies": [
+    "771798121b3dedd0d1abda4ce54bcbd2",
+    "dfaa74ad1b0d0690d1abda4ce54bcbe5",
+    "f29d3ce51b4d0690d1abda4ce54bcb1d",
+    "d7ec7cbe1b21e510a530426fe54bcb1f",
+    "9dddf8321b61e510a530426fe54bcbf2"
+   ],
+   "sem_scripts": [
+    "76cfc5311bc58690d1abda4ce54bcb85",
+    "9aadc6751b4d8690d1abda4ce54bcbdf",
+    "e010cca71b8d4a90a530426fe54bcb9c"
+   ],
+   "vars": {
+    "nova_anexo": {
+     "nova": {
+      "type": "33",
+      "question_text": "Anexe o documento (atestado, formulário ou comprovante).",
+      "mandatory": false,
+      "order": 2600
+     }
+    }
+   }
+  }
+ ]
+}

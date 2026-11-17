@@ -1,0 +1,61 @@
+{
+ "sys_id": "90fbc7543bb09e50924d0247f4e45a7a",
+ "status": "conversacional",
+ "motivo": "Intenção única de solicitar/alterar/cancelar contribuição voluntária ou dedução para reduzir retenção. Legendas e texto de ajuda viram description; obrigatoriedade e validações de caracteres/dígitos viram props/regex. O script sem VA Support (Load options) é neutralizado pois as opções já são estáticas na variável.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_category": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_amount": {
+   "props": {
+    "validation_regex": "^[0-9]+$"
+   }
+  },
+  "v_detail": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{30,}$"
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "visual",
+  "v_legenda_1": "visual",
+  "v_legenda_2": "visual",
+  "v_legenda_3": "visual",
+  "v_legenda_4": "visual",
+  "v_legenda_5": "visual",
+  "v_minimun_characters": "visual"
+ },
+ "policies": {
+  "04d13f903b70de50924d0247f4e45ab6": "remover",
+  "59d1b7103b70de50924d0247f4e45a11": "remover",
+  "5a1a482c3b34de50924d0247f4e45a4c": "remover",
+  "a8d17f903b70de50924d0247f4e45abf": "remover",
+  "b4d177103b70de50924d0247f4e45af0": "remover",
+  "b9d1b7103b70de50924d0247f4e45a38": "remover",
+  "c2c5af183bf89e50924d0247f4e45afd": "remover"
+ },
+ "scripts": {
+  "12bdaf503bfc9e50924d0247f4e45a7a": {
+   "remover": "sem_efeito"
+  },
+  "699a275c3b7c9e50924d0247f4e45a60": {
+   "converter": "regex"
+  },
+  "ba9a275c3b7c9e50924d0247f4e45aa3": {
+   "converter": "regex"
+  },
+  "de9ae35c3b7c9e50924d0247f4e45a52": {
+   "remover": "sem_efeito"
+  },
+  "fa5ba7503bbc9e50924d0247f4e45a68": {
+   "converter": "regex"
+  }
+ }
+}

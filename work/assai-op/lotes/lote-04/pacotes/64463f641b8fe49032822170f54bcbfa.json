@@ -1,0 +1,174 @@
+{
+ "sys_id": "64463f641b8fe49032822170f54bcbfa",
+ "name": "Consultas",
+ "category": "Recrutamento e Seleção",
+ "short_description": "Consultas",
+ "description": "Consultas",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Candidato",
+   "perguntas": [
+    "rh_cpf_candidate",
+    "rh_email_candidate",
+    "rh_location",
+    "rh_name_candidate"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de Consulta P2",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Atratividade e Seleção"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_state_id_number",
+    "rh_agency_id_number",
+    "rh_center_cost",
+    "rh_id_number",
+    "va_local",
+    "rh_name_mother",
+    "rh_date_birthday"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_state_id_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Estado emissor do RG",
+   "choices": []
+  },
+  {
+   "name": "rh_agency_id_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Órgão emissor",
+   "choices": []
+  },
+  {
+   "name": "rh_center_cost",
+   "type": "Referência",
+   "question_text": "Centro de Custo",
+   "reference": "cmn_cost_center",
+   "choices": []
+  },
+  {
+   "name": "rh_id_number",
+   "type": "Texto de Linha Única",
+   "question_text": "RG",
+   "choices": []
+  },
+  {
+   "name": "va_local",
+   "type": "Selecionar Caixa",
+   "question_text": "Local",
+   "choices": [
+    "Loja",
+    "Matriz/Regionais",
+    "CD"
+   ]
+  },
+  {
+   "name": "va_attachment",
+   "type": "Anexo",
+   "question_text": "Anexo",
+   "choices": []
+  },
+  {
+   "name": "va_setor_proposto",
+   "type": "Selecionar Caixa",
+   "question_text": "Setor proposto",
+   "choices": [
+    "PEIXARIA",
+    "AÇOUGUE",
+    "EMPÓRIO",
+    "DEPÓSITO",
+    "PREVENÇÃO DE PERDAS",
+    "LIDERANÇA",
+    "RECEBIMENTO",
+    "PADARIA"
+   ]
+  },
+  {
+   "name": "rh_name_mother",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da Mãe",
+   "choices": []
+  },
+  {
+   "name": "rh_date_birthday",
+   "type": "Data",
+   "question_text": "Data de Nascimento",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "va_cargo_proposto",
+  "va_cargo_proposto_regmat",
+  "rh_is_impacted_candidate"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "4de352181b112910347221bbe54bcbf0",
+   "name": "Onchange CPF",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange de rh_cpf_candidate, valida o CPF (11 dígitos, sequências repetidas, dois dígitos verificadores; inválido limpa e mostra 'CPF inválido!'); válido formata o CPF."
+  },
+  {
+   "sys_id": "ea8e3f431bd8fcd0eca40dcbe54bcb16",
+   "name": "ALP - Impactado ou Candidato",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma lógica de Impactado ou Candidato: conforme rh_is_impacted_candidate ('impacted' ou 'candidate'), limpa os campos do outro grupo."
+  }
+ ]
+}

@@ -1,0 +1,281 @@
+{
+ "sys_id": "b6b5e07a3b355210924d0247f4e45a73",
+ "name": "Solicitações relacionadas à Frota",
+ "sys_name": "Requests related to Fleet",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Frota",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Use este formulário para solicitações relacionadas à Frota",
+ "description": "Use este formulário para solicitações relacionadas à Frota",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "27",
+   "bloqueadores": "1",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "4 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show remember message, EY: Show error message, EY: Show remember message, EY: Show error message"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_legenda_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_subcategory: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_faqs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_legenda_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_type_of_request: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_legenda_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_faqs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_type_of_request",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Type of request",
+   "lookup": "x_nasm_hr_rules_hispanic_request_flota",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true
+  },
+  {
+   "name": "v_subcategory",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Subcategory",
+   "lookup": "x_nasm_hr_rules_hispanic_request_flota",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilitySubCategory(current.variables.v_employee, current.variables.v_type_of_request);",
+   "include_none": true
+  },
+  {
+   "name": "v_legenda_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_month",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What month does the expense correspond to?",
+   "include_none": true,
+   "choices": [
+    "January [=01]",
+    "February [=02]",
+    "March [=03]",
+    "April [=04]",
+    "May [=05]",
+    "June [=06]",
+    "July [=07]",
+    "August [=08]",
+    "September [=09]",
+    "October [=10]",
+    "November [=11]",
+    "December [=12]"
+   ]
+  },
+  {
+   "name": "v_year",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What year does the expense correspond to?",
+   "include_none": true
+  },
+  {
+   "name": "v_month_year",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complete date"
+  },
+  {
+   "name": "v_total",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total sum of receipts"
+  },
+  {
+   "name": "v_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  },
+  {
+   "name": "v_legenda_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_legenda_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "200",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show v_legenda_3",
+   "when": "IO:v_type_of_request=cc73b31a87719210ec360e530cbb35a7^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Hide portal variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_month_year: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Show v_month, v_year, v_total and v_legenda_2",
+   "when": "IO:v_type_of_request=6d837f1687719210ec360e530cbb35c1^ORIO:v_type_of_request=3e83bbd687719210ec360e530cbb3578^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_2: visible=true",
+    "v_year: visible=true,mandatory=true",
+    "v_month: visible=true,mandatory=true",
+    "v_total: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory v_type_of_request and v_subcategory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_request: mandatory=true",
+    "v_subcategory: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_legenda_1",
+   "when": "IO:v_subcategory=6e0f703e3bf55210924d0247f4e45a40^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_legenda_1: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show remember message",
+   "type": "onLoad",
+   "on": "fe5180a41b849250514cbaef4b4bcbf9",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que exibe um lembrete traduzido por idioma quando a solicitação é para outra pessoa ('for_somebody_else')."
+  },
+  {
+   "name": "EY: Set year",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que monta a lista de anos dinamicamente com o ano atual e o anterior, em vez de deixá-los cravados."
+  },
+  {
+   "name": "EY: Set complete date",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que monta a data completa a partir do mês e do ano preenchidos, verificando antes que os dois existam."
+  },
+  {
+   "name": "EY: Show error message",
+   "type": "onChange",
+   "on": "efd8fc323bf55210924d0247f4e45a6c",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida o tamanho mínimo do texto digitado e monta a mensagem de erro traduzida conforme o idioma do usuário (inglês, português ou espanhol)."
+  },
+  {
+   "name": "EY: Show  FAQs",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que carrega as FAQs pertinentes ao usuário. Chama EY_HTRUtils, método getUserDetails, via GlideAjax, passando o usuário logado, e usa o retorno para montar o bloco de perguntas frequentes."
+  },
+  {
+   "name": "EY: Show remember message",
+   "type": "onChange",
+   "on": "fe5180a41b849250514cbaef4b4bcbf9",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Par onChange do anterior, exibindo o mesmo lembrete quando o usuário escolhe 'for_somebody_else'."
+  },
+  {
+   "name": "EY: Show error message",
+   "type": "onSubmit",
+   "on": "efd8fc323bf55210924d0247f4e45a6c",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que lê 'v_details' e monta a mensagem de erro no idioma do usuário ('Please check all the errors in the form' / 'Por favor...'), usada para barrar o envio quando o formulário tem pendências."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "106870723bf55210924d0247f4e45a55",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de máscara de moeda, repetindo o erro de digitação `var regex = regex = /.../`."
+  },
+  {
+   "name": "EY: Clean variables",
+   "type": "onChange",
+   "on": "ad11f8fe3b755210924d0247f4e45a89",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_subcategory' e campos relacionados."
+  }
+ ]
+}

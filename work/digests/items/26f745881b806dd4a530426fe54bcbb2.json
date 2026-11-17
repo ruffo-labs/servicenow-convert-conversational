@@ -1,0 +1,110 @@
+{
+ "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+ "name": "Solicitação de Exclusão da Aprovação",
+ "sys_name": "Approval Exclusion Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Controle de Jornada",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Exclusão de ajustes aprovados indevidamente no ponto eletrônico",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "13",
+   "variaveis_ativas": "16",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "13"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_employee_s_full_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 13 de 13 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_company_s",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_dates",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  },
+  {
+   "sys_id": "e120f3701bc8ad18a530426fe54bcb16",
+   "name": "Adicionar novo colaborador",
+   "order": "700",
+   "perguntas": [
+    "v_employee_s_full_name (Referência): Collaborator's full name",
+    "v_id (Texto de Linha Única): ID",
+    "v_company (Texto de Linha Única): Company",
+    "v_date (Data): Date"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Date",
+   "when": "IO:vs_solicitation_to_whom=my_request^ORIO:vs_solicitation_to_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_dates: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: read only",
+   "when": "IO:vs_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company_s: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get User Company",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando vazio."
+  }
+ ]
+}

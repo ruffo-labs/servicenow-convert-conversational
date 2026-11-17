@@ -1,0 +1,157 @@
+{
+ "sys_id": "dad4109c1b9c691ca530426fe54bcb24",
+ "name": "Solicitar cadastro e reativação de app de Táxi e Viagens Corporativas",
+ "sys_name": "Request registration and reactivation of Taxi and Corporative Travel app",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Viagens Corporativas e Táxi",
+ "catalogs": "OTC Serviços de Suporte Administrativo, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar cadastro ou reativação em aplicativo de Táxi e Viagens Corporativas.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_label_if_you_have_questions: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de cadastro/reativação de app de Táxi e Viagens Corporativas. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils para definir o solicitante pelo variable set padrão e elevar a prioridade para 2 se o usuário for VIP.",
+ "variaveis": [
+  {
+   "name": "v_label_if_you_have_questions",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ available in the knowledge base"
+  },
+  {
+   "name": "v_container_request_registration_and_reactivation",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request registration and reactivation of Taxi and Corporative Travel app"
+  },
+  {
+   "name": "v_what_is_the_demand_of_the_call",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the demand of the call?",
+   "include_none": true,
+   "choices": [
+    "Phone Change Registered in taxi app [=v_phone_change]",
+    "Request Taxi App Registration [=v_request_taxi_app]",
+    "Request Registration in the Travel System [=v_request_travel_system]",
+    "Request Reactivation in the Corpotive Taxi Application [=v_request_Reactivation_corpotive_application]",
+    "Request Reactivation in the Travel System [=v_request_reactivation_travel_system]"
+   ]
+  },
+  {
+   "name": "v_report_cost_center_pep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Report Cost Center or PEP"
+  },
+  {
+   "name": "v_enter_your_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter your CPF",
+   "example": "000.000.000-00"
+  },
+  {
+   "name": "v_enter_your_phone_number_mobile",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter your phone number (mobile)",
+   "example": "(11) 91234-1234 or (11) 1234-1234"
+  },
+  {
+   "name": "v_enter_the_new_phone_number_mobile",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the new phone number (mobile)",
+   "example": "(11) 91234-1234 or (11) 1234-1234"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "100",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "200",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "800",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If selected Phone Change Registered in Whats is the demand ",
+   "when": "IO:v_what_is_the_demand_of_the_call=v_phone_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_new_phone_number_mobile: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_your_cpf: mandatory=true",
+    "v_enter_your_phone_number_mobile: mandatory=true",
+    "v_what_is_the_demand_of_the_call: mandatory=true",
+    "v_report_cost_center_pep: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: CPF Validation",
+   "type": "onChange",
+   "on": "2d9f1b201b142110a530426fe54bcb6e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF por formato em 'v_enter_your_cpf' (000.000.000-00 ou 11 dígitos corridos). Inválido: limpa e mostra erro. Não confere dígitos verificadores."
+  }
+ ]
+}

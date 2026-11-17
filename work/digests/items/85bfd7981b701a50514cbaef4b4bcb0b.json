@@ -1,0 +1,141 @@
+{
+ "sys_id": "85bfd7981b701a50514cbaef4b4bcb0b",
+ "name": "Pedidos relacionados Despesas",
+ "sys_name": "Related requests expenses",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Pedidos relacionados Despesas",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Utilize este formulário para gerenciar solicitações relacionadas a despesas, como simulações, envio de notícias, solicitações de documentação, entre outros",
+ "description": "Utilize este formulário para gerenciar solicitações relacionadas a despesas, como simulações, envio de notícias, solicitações de documentação, entre outros",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @who_is_this_request_for: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_min_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "who_is_this_request_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Who is this request for?",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^user.location.countryINARG,CHL,PER,COL,ECU,URY^EQ"
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Simulations [=simulations]",
+    "New outflows [=new_outflows]",
+    "Outgoing documentation [=outgoing_documentation]",
+    "Expenses [=expenses]"
+   ]
+  },
+  {
+   "name": "detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your need"
+  },
+  {
+   "name": "v_min_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Madatory variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "who_is_this_request_for: mandatory=true",
+    "detail: mandatory=true",
+    "type_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide  v_who_is_this_request_for",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_who_is_this_request_for: visible=false,mandatory=false",
+    "v_reason_on_behalf: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda 'v_min_characters' na abertura."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando o campo 'detail' tem menos de 40 caracteres."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "8ea0a8341bb89a50514cbaef4b4bcb45",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange da validação de 40 caracteres sobre 'detail'."
+  }
+ ]
+}

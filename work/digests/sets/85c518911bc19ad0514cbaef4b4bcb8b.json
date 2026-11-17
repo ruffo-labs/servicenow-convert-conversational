@@ -1,0 +1,164 @@
+{
+ "sys_id": "85c518911bc19ad0514cbaef4b4bcb8b",
+ "title": "Data to make your refund",
+ "internal_name": "data_to_make_your_refund",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de reembolso de creche ou berço"
+ ],
+ "variaveis": [
+  {
+   "name": "v_attention",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Attention",
+   "read_only": true,
+   "default": "Si tu dependiente no figura en la lista desplegable, puede deberse a que:\r\n\r\n- No esté registrado en Workday\r\n- No esté en la franja de edad que este "
+  },
+  {
+   "name": "v_employee_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee Name",
+   "hidden": true,
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_your_child_s_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Your child's name",
+   "reference": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Beneficiary().getEmployeeBeneficiariesDaycareCrib(current.variables.v_employee_name);"
+  },
+  {
+   "name": "dependent_date_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Dependent's Date of Birth"
+  },
+  {
+   "name": "v_what_type_of_refund_are_you_requesting",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of refund are you requesting?",
+   "include_none": true,
+   "choices": [
+    "Home care [=home_care]",
+    "Nursery / Crib Room [=nursery_crib_room]",
+    "Caring for people [=caring_for_people]",
+    "Caring for people - Child with disabilities [=child_disable]",
+    "Daycare - Child with disabilities [=daycare_child_disable]"
+   ]
+  },
+  {
+   "name": "v_invoice_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice Number"
+  },
+  {
+   "name": "v_salary_receipt_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Salary Receipt Number"
+  },
+  {
+   "name": "v_refund_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Refund amount"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Invoice Visible",
+   "when": "IO:v_what_type_of_refund_are_you_requestingINnursery_crib_room,daycare_child_disable^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Salary Number Visible",
+   "when": "IO:v_what_type_of_refund_are_you_requestingINcaring_for_people,child_disable^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_salary_receipt_number: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_your_child_s_name: mandatory=true",
+    "v_month_mrvs: mandatory=true",
+    "v_year_mrvs: mandatory=true",
+    "v_refund_amount: mandatory=true",
+    "v_what_type_of_refund_are_you_requesting: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read only fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "dependent_date_birth: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate Fiels",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit de 4,1 KB que valida os campos contra o histórico de faturas guardado no sessionStorage, lendo também o mês do formulário pai. É a validação mais complexa do catálogo, e depende de estado do navegador."
+  },
+  {
+   "name": "EY: Show dependent message",
+   "type": "onChange",
+   "on": "751c5c591b459ad0514cbaef4b4bcb02",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe mensagem específica sobre o dependente, a partir do colaborador informado."
+  },
+  {
+   "name": "EY: Get Employee Country",
+   "type": "onChange",
+   "on": "751c5c591b459ad0514cbaef4b4bcb02",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o país do colaborador via GlideAjax e usa o retorno para ajustar o formulário."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "5d3324951b099ad0514cbaef4b4bcbab",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de máscara de moeda, aceitando dígitos, vírgula e ponto."
+  },
+  {
+   "name": "EY: Set employee",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que copia o colaborador do formulário pai para 'v_employee_name' e trava o campo. Roda dentro de multi-row variable set."
+  },
+  {
+   "name": "EY: Clear fields on change of type",
+   "type": "onChange",
+   "on": "7fc1ac111b099ad0514cbaef4b4bcb8a",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa os campos dependentes quando o tipo muda."
+  }
+ ]
+}

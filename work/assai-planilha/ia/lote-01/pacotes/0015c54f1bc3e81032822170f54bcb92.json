@@ -1,0 +1,417 @@
+{
+ "sys_id": "0015c54f1bc3e81032822170f54bcb92",
+ "name": "Assistência Odontológica (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Assistência Odontológica",
+ "description": "Assist&ecirc;ncia Odontol&oacute;gica",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios",
+    "item": "Assistência Odontológica"
+   },
+   "ofertas": [
+    {
+     "name": "Beneficiário(a) não consegue ser atendido(a)",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "att_comprovante_extensao",
+    "v_email_ex_colaborador",
+    "v_chamado_ex_colaborador",
+    "v_nome_da_operadora",
+    "v_informe_operadora_extensao",
+    "rh_reference_month",
+    "v_nome_dependente",
+    "v_informe_operadora",
+    "v_telefone_ex_colaborador",
+    "att_comprovante_operadora",
+    "att_demonstrativo_pagamento",
+    "v_qual_solicitacao",
+    "v_nome_operadora_extensao",
+    "att_formulario_extensao",
+    "v_titular_dependente"
+   ],
+   "passa_a_obrigatoria": [
+    "v_motivo_atendimento_beneficiario",
+    "v_titular_dependente_beneficiario",
+    "v_nome_operadora_beneficiario"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Observação InterOdonto/MaisOdonto (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiarioIN1,2"
+    },
+    {
+     "policy": "CSA - Informe motivo (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=10000"
+    },
+    {
+     "policy": "CSA - Informe dependente (Beneficiario)",
+     "quando": "v_titular_dependente_beneficiarioIN2,3"
+    },
+    {
+     "policy": "CSA - Observação Odontolive (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiario=3"
+    },
+    {
+     "policy": "CSA - Informe operadora (Beneficiario)",
+     "quando": "v_nome_operadora_beneficiario=10000"
+    },
+    {
+     "policy": "CSA - Observação Samp Odonto (Beneficiario)",
+     "quando": "v_motivo_atendimento_beneficiario=4^v_nome_operadora_beneficiario=5"
+    },
+    {
+     "policy": "CSA - Esconder \"Descrição\"",
+     "quando": "v_nome_operadora_beneficiarioIN1,2,3,5^v_motivo_atendimento_beneficiario=4"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Beneficiário(a) odontológico sem atendimento",
+     "description": "Use quando o(a) beneficiário(a) não consegue ser atendido(a) pela operadora odontológica. Informe o motivo, a operadora e se é titular ou dependente."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios",
+    "item": "Assistência Odontológica"
+   },
+   "ofertas": [
+    {
+     "name": "Envio de declaração de reembolso de coparticipação de assistência odontológica",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    },
+    {
+     "name": "Solicitação de extensão de assistência odontológica",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 40H",
+     "SLA - GESTÃO DE GENTE - 32H"
+    ]
+   },
+   "sai_do_formulario": [
+    "v_motivo_atendimento_beneficiario",
+    "v_titular_dependente_beneficiario",
+    "v_nome_dependente_beneficiario",
+    "v_informe_motivo_beneficiario",
+    "v_informe_operadora_beneficiario",
+    "v_nome_operadora_beneficiario"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Declaração de reembolso de coparticipação odontológica",
+     "description": "Use para enviar a declaração de reembolso de coparticipação da assistência odontológica. Informe operadora, mês de referência e anexe os comprovantes."
+    },
+    {
+     "name": "Extensão da assistência odontológica",
+     "description": "Use para solicitar a extensão da assistência odontológica de ex-colaborador(a) ou pedir o formulário de continuidade. Anexe os documentos pedidos."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "att_comprovante_extensao",
+   "type": "Anexo",
+   "question_text": "Comprovante de residência",
+   "choices": [],
+   "label_atual": "Envie o comprovante de residência."
+  },
+  {
+   "name": "v_email_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail do(a) ex-colaborador(a)",
+   "choices": [],
+   "label_atual": "Qual é o e-mail do(a) ex-colaborador(a)?"
+  },
+  {
+   "name": "v_motivo_atendimento_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do atendimento não realizado",
+   "choices": [
+    "Problemas para acessar o APP",
+    "Beneficiário(a) inativo(a) na operadora",
+    "Outros",
+    "Beneficiário(a) com carência",
+    "Beneficiário(a) com divergência nos dados"
+   ],
+   "label_atual": "Qual foi o motivo de o atendimento não ter sido realizado?"
+  },
+  {
+   "name": "v_chamado_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do chamado solicitando o formulário",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado em que o formulário foi solicitado?"
+  },
+  {
+   "name": "v_nome_da_operadora",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "Primavida",
+    "Outros",
+    "MaisOdonto",
+    "Samp Odonto",
+    "Odontolive",
+    "InterOdonto"
+   ],
+   "label_atual": "Qual é a operadora do reembolso?"
+  },
+  {
+   "name": "v_titular_dependente_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Ambos",
+    "Dependente",
+    "Titular"
+   ],
+   "label_atual": "O atendimento é para o titular ou para dependente?"
+  },
+  {
+   "name": "v_informe_operadora_extensao",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": [],
+   "label_atual": "Qual é o nome da operadora da extensão?"
+  },
+  {
+   "name": "v_nome_dependente_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": [],
+   "label_atual": "Qual é o nome do(a) dependente que não foi atendido(a)?"
+  },
+  {
+   "name": "v_informe_motivo_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o motivo do atendimento não realizado",
+   "choices": [],
+   "label_atual": "Qual foi o outro motivo do atendimento não realizado?"
+  },
+  {
+   "name": "rh_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Fevereiro",
+    "Junho",
+    "Agosto",
+    "Outubro",
+    "Abril",
+    "Dezembro",
+    "Janeiro",
+    "Março",
+    "Novembro",
+    "Maio",
+    "Julho",
+    "Setembro"
+   ],
+   "label_atual": "Qual é o mês de referência do reembolso?"
+  },
+  {
+   "name": "v_informe_operadora_beneficiario",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": [],
+   "label_atual": "Qual é o nome da operadora do atendimento?"
+  },
+  {
+   "name": "v_nome_operadora_beneficiario",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "InterOdonto",
+    "Samp Odonto",
+    "Outros",
+    "Primavida",
+    "Odontolive",
+    "MaisOdonto"
+   ],
+   "label_atual": "Qual é a operadora que não realizou o atendimento?"
+  },
+  {
+   "name": "v_nome_dependente",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": [],
+   "label_atual": "Qual é o nome do(a) dependente do reembolso?"
+  },
+  {
+   "name": "v_informe_operadora",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe o nome da operadora",
+   "choices": [],
+   "label_atual": "Qual é o nome da operadora do reembolso?"
+  },
+  {
+   "name": "v_telefone_ex_colaborador",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone do(a) ex-colaborador(a)",
+   "choices": [],
+   "label_atual": "Qual é o telefone do(a) ex-colaborador(a)?"
+  },
+  {
+   "name": "att_comprovante_operadora",
+   "type": "Anexo",
+   "question_text": "Comprovante da operadora",
+   "choices": [],
+   "label_atual": "Envie o comprovante da operadora."
+  },
+  {
+   "name": "att_demonstrativo_pagamento",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento."
+  },
+  {
+   "name": "v_qual_solicitacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Extensão de assistência odontológica",
+    "Formulário para solicitar extensão de assistência odontológica"
+   ],
+   "label_atual": "O que você precisa: a extensão ou o formulário de extensão?"
+  },
+  {
+   "name": "v_nome_operadora_extensao",
+   "type": "Selecionar Caixa",
+   "question_text": "Nome da operadora",
+   "choices": [
+    "MaisOdonto",
+    "InterOdonto",
+    "Samp Odonto",
+    "Outros",
+    "Odontolive",
+    "Primavida"
+   ],
+   "label_atual": "Qual é a operadora da extensão?"
+  },
+  {
+   "name": "att_formulario_extensao",
+   "type": "Anexo",
+   "question_text": "Formulário de opção de continuidade",
+   "choices": [],
+   "label_atual": "Envie o formulário de opção de continuidade."
+  },
+  {
+   "name": "v_titular_dependente",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Ambos",
+    "Dependente",
+    "Titular"
+   ],
+   "label_atual": "O reembolso é do titular ou de dependente?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0d1bfab11bfbec1032822170f54bcb91",
+   "name": "ALP - OnChange validate Phone Contact",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_contact."
+  },
+  {
+   "sys_id": "3541a7e4877f2a50182a0d440cbb355e",
+   "name": "CSA - Impedir abertura de chamado ",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se a operadora do beneficiário for '1', '2', '3' ou '5' e o motivo for '4', mostra 'Favor seguir com a orientação da observação do formulário!' e bloqueia o envio."
+  },
+  {
+   "sys_id": "cc3b3eb11bfbec1032822170f54bcba5",
+   "name": "ALP - OnChange validate Impacted Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_impacted_phone."
+  },
+  {
+   "sys_id": "eb01f19c3b2b2a10b28dd047f4e45afa",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "f011319c3b2b2a10b28dd047f4e45afb",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

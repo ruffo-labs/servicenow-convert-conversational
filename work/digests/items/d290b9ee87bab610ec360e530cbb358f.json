@@ -1,0 +1,110 @@
+{
+ "sys_id": "d290b9ee87bab610ec360e530cbb358f",
+ "name": "Portal de Pagamento de Frete do Brasil",
+ "sys_name": "Brazil Freight Payment Portal",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": {
+  "_display_value": "PTP_",
+  "__text": "bfa3add11b95e118d1abda4ce54bcbfc"
+ },
+ "short_description": "Formulário para verificar documentos de frete que ainda não foram faturados. É necessário anexar o banco de dados seguindo o padrão estabelecido para que a verificação seja feita corretamente.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_document: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_carrier_code: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_carrier_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_pendent_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Pending amount"
+  },
+  {
+   "name": "v_year_related_to_pending_document",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Year related to the issuance of the pending document"
+  },
+  {
+   "name": "v_warning_document_attach",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "It is only permitted to attach documents issued in the same year as the field filled in above."
+  },
+  {
+   "name": "v_attach_document",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach document"
+  },
+  {
+   "name": "v_request_describe",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request in detail"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "eaa639e6877eb610ec360e530cbb3585",
+   "name": "EY - Informações da Empresa e da Transportadora",
+   "order": "100",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Company",
+    "vs_company_cnpj (Texto de Linha Única): Company's CNPJ",
+    "vs_carriers_headquarters_cnpj (Texto de Linha Única): CNPJ of the carrier's headquarters",
+    "vs_carrier_name (Referência): Carrier's name",
+    "vs_carrier_code (Texto de Linha Única): Carrier's Code",
+    "vs_requeste_name (Texto de Linha Única): Requeste's name",
+    "vs_requesters_email (Texto de Linha Única): Requester's E-mail"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set mandatory and read only variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_pendent_value: mandatory=true",
+    "vs_cnpj_label: readonly=true",
+    "v_request_describe: ",
+    "v_attach_document: mandatory=true",
+    "vs_carrier_code: readonly=true",
+    "vs_company_cnpj: mandatory=true",
+    "vs_carriers_headquarters_cnpj: ",
+    "v_request_describe: ",
+    "vs_company: mandatory=true",
+    "v_year_related_to_pending_document: mandatory=true",
+    "vs_requesters_email: mandatory=true",
+    "vs_carrier_name: mandatory=true",
+    "vs_requeste_name: mandatory=true",
+    "v_warning_document_attach: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

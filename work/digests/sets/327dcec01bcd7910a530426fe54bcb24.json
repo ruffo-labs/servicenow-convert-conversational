@@ -1,0 +1,34 @@
+{
+ "sys_id": "327dcec01bcd7910a530426fe54bcb24",
+ "title": "EY: Tax - Company (Supplier code)",
+ "internal_name": "ey_tax_company_supplier_code",
+ "description": "",
+ "usado_por": 3,
+ "itens_exemplo": [
+  "Remessa para Conserto",
+  "Retorno Comodato/Locação",
+  "Remessa para Troca em Garantia"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_which_company_is_the_request_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which company is the request for? (Supplier code)",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=false"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company_is_the_request_for: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

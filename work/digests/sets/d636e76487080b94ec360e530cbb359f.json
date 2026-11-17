@@ -1,0 +1,88 @@
+{
+ "sys_id": "d636e76487080b94ec360e530cbb359f",
+ "title": "Spouse or Partner Information",
+ "internal_name": "spouse_or_partner_information",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Seguro de Vida Complementar"
+ ],
+ "variaveis": [
+  {
+   "name": "partner_reference",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Partner Reference",
+   "hidden": true,
+   "reference": "x_nasm_hr_beneficiary",
+   "ref_qual": "employee.userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^relationship.nameLIKESpouse^ORrelationship.nameLIKECônjuge^EQ"
+  },
+  {
+   "name": "partner_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF:",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "partner_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name",
+   "read_only": true,
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "partner_gender",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Gender",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "partner_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "partner_position",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "spouse_s_average_monthly_income",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Spouse's average monthly income"
+  },
+  {
+   "name": "partner_nationality",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nationality",
+   "reference": "x_nasm_hr_profile"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "Aoop fill reference field",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche o campo de referência chamando x_nasm_hr.ComplementaryInsuranceUtils via GlideAjax."
+  },
+  {
+   "name": "Aoop: Set Brazilian Format Currency",
+   "type": "onChange",
+   "on": "2bb03760874c0b94ec360e530cbb356e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do formatador de moeda no padrão brasileiro, aplicada a outro campo."
+  }
+ ]
+}

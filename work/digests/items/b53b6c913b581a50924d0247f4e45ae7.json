@@ -1,0 +1,257 @@
+{
+ "sys_id": "b53b6c913b581a50924d0247f4e45ae7",
+ "name": "Solicitação de Reembolso de Kit Escolar",
+ "sys_name": "School Kit Refund Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Refunds",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar o reembolso do seu Kit Escolar",
+ "description": "Utilize este formulário para solicitar o reembolso do seu Kit Escolar",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "30",
+   "bloqueadores": "3",
+   "avisos": "13",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "5 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Clear Session item children_list_2, EY: Count number of children, EY: Get tope to apply in amount OnLoad, EY: Get tope to apply in amount OnChange, EY: Set employee"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_link_personal_date_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_workday_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_all_invoices_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment_receipt_school: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_apply_to_children_age: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_support_to_purchase_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_receipt_of_payment: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_child_name_new: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 12 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "total_expenses",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total expenses"
+  },
+  {
+   "name": "mrvs_monitor",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "MRVS Monitor",
+   "widget": "EY: MRV Macro widget Beneficiary"
+  },
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_all_invoices_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_support_to_purchase_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment_receipt_school",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach a receipt that your child is studying\r\n(e.g. contract with the school, monthly payment receipt, etc.)"
+  },
+  {
+   "name": "v_workday_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "To make this request, your child must be registered with Workday."
+  },
+  {
+   "name": "v_link_personal_date_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "To make this request, your child must be registered in the systems. If he or she is not, you must make a request for Modification of Personal Data"
+  },
+  {
+   "name": "v_apply_to_children_age",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_receipt_of_payment",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach the receipt of payment below (it must be tax valid and the products must be related to schooling)"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  },
+  {
+   "sys_id": "a2267f7d3b90de50924d0247f4e45ae3",
+   "name": "Dados dos seus filhos",
+   "order": "1110",
+   "perguntas": [
+    "employee_reference (Referência, hidden): Employee Name",
+    "v_child_name_new (Referência): Child name",
+    "v_total_amount_of_expenses_new (Texto de Linha Única): Total amount of expenses",
+    "v_tope (Texto de Linha Única, ro): Tope"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide total expenses",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "total_expenses: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Set visible fields",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_all_invoices_text: visible=true",
+    "dados_dos_seus_filhos: visible=true,mandatory=true",
+    "v_apply_to_children_age: visible=true"
+   ]
+  },
+  {
+   "name": "EY: RealdOnly employee ID",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee_id: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_receipt_of_payment to URY and ARG",
+   "when": "IO:v_country=ARG^ORIO:v_country=URY^IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_receipt_of_payment: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_workday_text not Operations",
+   "when": "IO:v_public!=Operations Associate^IO:v_employeeISNOTEMPTY^IO:v_country!=ARG^NQIO:v_country=ARG^IO:v_unionized_employee=false^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_workday_text: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show employee ID",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee_id: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_link_personal_date_text COL Operations",
+   "when": "IO:v_public=Operations Associate^IO:v_country!=ARG^IO:v_employeeISNOTEMPTY^NQIO:v_country=ARG^IO:v_unionized_employee=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_link_personal_date_text: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Set visible attachment COL",
+   "when": "IO:v_country=COL^IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_receipt_school: visible=true,mandatory=true",
+    "v_support_to_purchase_text: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Session item children_list_2",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que limpa a chave 'children_list_2' do sessionStorage e desabilita o multi-row de dados dos filhos."
+  },
+  {
+   "name": "EY: Sum the total amount ",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que soma o valor total percorrendo as linhas do multi-row variable set 'dados_dos_seus_filhos', lido como JSON."
+  },
+  {
+   "name": "EY: Clear values on change employee",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa o total de despesas e campos relacionados quando o colaborador muda."
+  }
+ ]
+}

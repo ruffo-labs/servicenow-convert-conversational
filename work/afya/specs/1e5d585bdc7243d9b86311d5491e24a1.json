@@ -1,0 +1,436 @@
+{
+ "sys_id": "1e5d585bdc7243d9b86311d5491e24a1",
+ "status": "dividido",
+ "motivo": "Cada grupo pede dados próprios: ajuste de CPU/memória pede configuração atual e desejada, disco pede unidade e tamanhos, criação de ambiente ou servidor pede arquitetura e rede, desativação pede dependências, backup e data. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_servidor": {
+   "label": "Qual é o servidor?"
+  },
+  "v_configuracao_atual_cpu_memoria": {
+   "label": "Quanto de CPU e memória o servidor tem hoje?"
+  },
+  "v_configuracao_desejada": {
+   "label": "Qual configuração de CPU e memória você precisa?"
+  },
+  "v_justificativa": {
+   "label": "Qual o motivo do pedido?"
+  },
+  "v_janela_de_manutencao": {
+   "label": "Em qual janela o ajuste pode ser feito?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_unidade_volume": {
+   "label": "Qual unidade ou volume precisa de mais espaço?"
+  },
+  "v_tamanho_atual": {
+   "label": "Qual o tamanho atual do disco?"
+  },
+  "v_tamanho_desejado": {
+   "label": "Qual tamanho você quer que ele tenha?"
+  },
+  "v_arquitetura_desejada": {
+   "label": "Como deve ser a arquitetura do ambiente?"
+  },
+  "v_capacidade_estimada": {
+   "label": "Qual a capacidade esperada para o ambiente?"
+  },
+  "v_dados_necessarios": {
+   "label": "Quais dados precisam estar no ambiente?"
+  },
+  "v_acessos_requeridos": {
+   "label": "Quem precisa de acesso e com qual perfil?"
+  },
+  "v_prazo": {
+   "label": "Para quando você precisa do ambiente?"
+  },
+  "v_integracoes": {
+   "label": "Com quais sistemas o ambiente vai se integrar?"
+  },
+  "v_sistema_operacional_windows_linux": {
+   "label": "O servidor será Windows ou Linux?"
+  },
+  "v_ambiente_fisico_virtual_azure": {
+   "label": "Onde o servidor vai rodar: físico, virtual ou Azure?"
+  },
+  "v_cpu_memoria_disco": {
+   "label": "Quanto de CPU, memória e disco o servidor precisa?"
+  },
+  "v_rede_vlan_ip_vnet": {
+   "label": "Em qual rede (VLAN, IP ou VNet) ele deve ficar?"
+  },
+  "v_backup_necessario": {
+   "label": "O servidor precisa de backup?"
+  },
+  "v_criticidade": {
+   "label": "Qual a criticidade do servidor?"
+  },
+  "v_responsavel_tecnico": {
+   "label": "Quem é o responsável técnico pelo servidor?"
+  },
+  "v_dependencias_mapeadas": {
+   "label": "Quais sistemas dependem desse servidor?"
+  },
+  "v_retencao_de_dados_necessaria": {
+   "label": "Os dados do servidor precisam ser mantidos?"
+  },
+  "v_backup_realizado": {
+   "label": "Você já fez o backup do servidor?"
+  },
+  "v_data_de_desativacao": {
+   "label": "Em que data o servidor deve ser desativado?"
+  }
+ },
+ "policies": {
+  "dc55f5bc4a294d30ad6a4245cc6b57a1": "remover",
+  "c4d38719a0464aad9dc2acc3ef09a106": "remover",
+  "e7687db64b6f4161a8d47606c5880719": "remover",
+  "183dce811f7f482088878c5e089d58e4": "remover",
+  "fe1b0d1280ef436eb2755e4987acbf34": "remover",
+  "55ea8231827847dbac9b1109380695c1": "remover",
+  "59e20d4ef90648aeb409a2e6efddc59d": "remover",
+  "eec79ad10ce14d0f8d577d2504f15ece": "remover"
+ },
+ "itens": [
+  {
+   "name": "Aumentar CPU ou memória de um servidor",
+   "short_description": "Pedir mais CPU ou memória para um servidor existente.",
+   "description": "Use quando um servidor está limitado em processamento ou memória e precisa de mais recursos. A opção atendida é Aumentar CPU ou memória. Informe a configuração atual, a desejada, a justificativa e a janela de manutenção.",
+   "frases_exemplo": [
+    "Preciso aumentar a memória do servidor de aplicação",
+    "O servidor está lento, dá pra colocar mais CPU nele?",
+    "Quero subir a memória de 16 para 32 GB no servidor do financeiro",
+    "Pedido de aumento de CPU para o servidor de homologação",
+    "Esse servidor está sem memória, preciso ampliar"
+   ],
+   "sem_vars": [
+    "v_unidade_volume",
+    "v_tamanho_atual",
+    "v_tamanho_desejado",
+    "v_arquitetura_desejada",
+    "v_capacidade_estimada",
+    "v_dados_necessarios",
+    "v_acessos_requeridos",
+    "v_prazo",
+    "v_integracoes",
+    "v_sistema_operacional_windows_linux",
+    "v_ambiente_fisico_virtual_azure",
+    "v_cpu_memoria_disco",
+    "v_rede_vlan_ip_vnet",
+    "v_backup_necessario",
+    "v_criticidade",
+    "v_responsavel_tecnico",
+    "v_dependencias_mapeadas",
+    "v_retencao_de_dados_necessaria",
+    "v_backup_realizado",
+    "v_data_de_desativacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Aumentar CPU ou memória"
+   },
+   "vars": {
+    "v_servidor": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_configuracao_atual_cpu_memoria": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_configuracao_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_manutencao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Aumentar espaço em disco de um servidor",
+   "short_description": "Pedir mais espaço em disco para uma unidade de um servidor.",
+   "description": "Use quando o disco de um servidor está cheio ou perto do limite. A opção atendida é Aumentar espaço em disco. Informe o servidor, a unidade ou volume, o tamanho atual e o desejado e a janela de manutenção.",
+   "frases_exemplo": [
+    "O disco D do servidor está cheio, preciso de mais espaço",
+    "Quero aumentar o volume do servidor de arquivos",
+    "Preciso expandir o disco do servidor de 200 para 500 GB",
+    "Falta espaço no servidor, dá pra aumentar o disco?",
+    "Pedido de mais armazenamento no servidor do banco"
+   ],
+   "sem_vars": [
+    "v_configuracao_atual_cpu_memoria",
+    "v_configuracao_desejada",
+    "v_justificativa",
+    "v_arquitetura_desejada",
+    "v_capacidade_estimada",
+    "v_dados_necessarios",
+    "v_acessos_requeridos",
+    "v_prazo",
+    "v_integracoes",
+    "v_sistema_operacional_windows_linux",
+    "v_ambiente_fisico_virtual_azure",
+    "v_cpu_memoria_disco",
+    "v_rede_vlan_ip_vnet",
+    "v_backup_necessario",
+    "v_criticidade",
+    "v_responsavel_tecnico",
+    "v_dependencias_mapeadas",
+    "v_retencao_de_dados_necessaria",
+    "v_backup_realizado",
+    "v_data_de_desativacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Aumentar espaço em disco"
+   },
+   "vars": {
+    "v_servidor": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_manutencao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_unidade_volume": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_tamanho_atual": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_tamanho_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar um novo ambiente de testes ou homologação",
+   "short_description": "Solicitar a criação de um ambiente completo com arquitetura, dados e acessos.",
+   "description": "Use quando precisar montar um ambiente inteiro, por exemplo de testes ou homologação. A opção atendida é Criar ambiente. Informe a arquitetura, a capacidade, os dados, os acessos, o prazo e as integrações.",
+   "frases_exemplo": [
+    "Preciso de um ambiente de homologação para o novo sistema",
+    "Quero criar um ambiente de testes igual ao de produção",
+    "Vamos subir um ambiente novo para o projeto, como peço?",
+    "Solicito a criação de um ambiente com integração ao ERP",
+    "Preciso de um ambiente para validar a atualização"
+   ],
+   "sem_vars": [
+    "v_servidor",
+    "v_configuracao_atual_cpu_memoria",
+    "v_configuracao_desejada",
+    "v_justificativa",
+    "v_janela_de_manutencao",
+    "v_unidade_volume",
+    "v_tamanho_atual",
+    "v_tamanho_desejado",
+    "v_sistema_operacional_windows_linux",
+    "v_ambiente_fisico_virtual_azure",
+    "v_cpu_memoria_disco",
+    "v_rede_vlan_ip_vnet",
+    "v_backup_necessario",
+    "v_criticidade",
+    "v_responsavel_tecnico",
+    "v_dependencias_mapeadas",
+    "v_retencao_de_dados_necessaria",
+    "v_backup_realizado",
+    "v_data_de_desativacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar ambiente"
+   },
+   "vars": {
+    "v_arquitetura_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_capacidade_estimada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dados_necessarios": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_acessos_requeridos": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_prazo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_integracoes": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar um novo servidor virtual",
+   "short_description": "Solicitar a criação de um servidor Windows ou Linux com recursos e rede definidos.",
+   "description": "Use quando precisar de um servidor novo. A opção atendida é Criar servidor virtual. Informe sistema operacional, ambiente (físico, virtual ou Azure), CPU, memória e disco, rede, backup, criticidade e responsável técnico.",
+   "frases_exemplo": [
+    "Preciso de um servidor Linux novo",
+    "Quero criar uma VM Windows no Azure",
+    "Solicito um servidor virtual para a nova aplicação",
+    "Como peço um servidor com 8 GB de memória e 100 GB de disco?",
+    "Preciso provisionar um servidor com backup diário"
+   ],
+   "sem_vars": [
+    "v_servidor",
+    "v_configuracao_atual_cpu_memoria",
+    "v_configuracao_desejada",
+    "v_justificativa",
+    "v_janela_de_manutencao",
+    "v_unidade_volume",
+    "v_tamanho_atual",
+    "v_tamanho_desejado",
+    "v_arquitetura_desejada",
+    "v_capacidade_estimada",
+    "v_dados_necessarios",
+    "v_acessos_requeridos",
+    "v_prazo",
+    "v_integracoes",
+    "v_dependencias_mapeadas",
+    "v_retencao_de_dados_necessaria",
+    "v_backup_realizado",
+    "v_data_de_desativacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar servidor virtual"
+   },
+   "vars": {
+    "v_sistema_operacional_windows_linux": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ambiente_fisico_virtual_azure": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_cpu_memoria_disco": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_rede_vlan_ip_vnet": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_backup_necessario": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_criticidade": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_tecnico": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Desativar um servidor",
+   "short_description": "Pedir a retirada de operação de um servidor.",
+   "description": "Use quando um servidor não é mais necessário e deve ser desligado. A opção atendida é Desativar servidor. Informe o servidor, a justificativa, as dependências mapeadas, a retenção de dados, o backup e a data de desativação.",
+   "frases_exemplo": [
+    "Quero desativar um servidor que não usamos mais",
+    "Pedido de desligamento do servidor antigo",
+    "Preciso retirar o servidor da rede, o sistema foi descontinuado",
+    "Posso desativar esse servidor? Já fiz o backup",
+    "Solicito a desativação do servidor de testes"
+   ],
+   "sem_vars": [
+    "v_configuracao_atual_cpu_memoria",
+    "v_configuracao_desejada",
+    "v_janela_de_manutencao",
+    "v_unidade_volume",
+    "v_tamanho_atual",
+    "v_tamanho_desejado",
+    "v_arquitetura_desejada",
+    "v_capacidade_estimada",
+    "v_dados_necessarios",
+    "v_acessos_requeridos",
+    "v_prazo",
+    "v_integracoes",
+    "v_sistema_operacional_windows_linux",
+    "v_ambiente_fisico_virtual_azure",
+    "v_cpu_memoria_disco",
+    "v_rede_vlan_ip_vnet",
+    "v_backup_necessario",
+    "v_criticidade",
+    "v_responsavel_tecnico"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Desativar servidor"
+   },
+   "vars": {
+    "v_servidor": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dependencias_mapeadas": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_retencao_de_dados_necessaria": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_backup_realizado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_de_desativacao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

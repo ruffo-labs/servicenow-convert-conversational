@@ -1,0 +1,472 @@
+{
+ "sys_id": "500a15313bacd610924d0247f4e45ad6",
+ "name": "Solicitação de Plano de Saúde, Cobertura Médica, Previdência Social, EPS",
+ "sys_name": "Request for Health Plan, Medical Coverage, Social Security, EPS",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Plano de Saúde / Cobertura Médica / EPS",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Utilize este formulário para solicitar o registro, adicionar seus dependentes, fazer uma alteração ou solicitar o cancelamento do serviço.",
+ "description": "Utilize este formulário para solicitar o registro, adicionar seus dependentes, fazer uma alteração ou solicitar o cancelamento do serviço.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "33",
+   "variaveis_ativas": "47",
+   "bloqueadores": "3",
+   "avisos": "16",
+   "perguntas_sem_conversational_label": "33"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "4 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Load choices OnChange, EY: Clear session OnLoad, EY: Block same beneficiaries, EY: Set employee_reference"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_workday_message: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_message_important: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_12: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_10: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_7: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_8: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_11: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_9: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_full_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 33 de 33 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 33 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 20 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Plano de Saúde / Cobertura Médica / EPS. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "brand_control",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "brand",
+   "hidden": true
+  },
+  {
+   "name": "public_control",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "public",
+   "hidden": true
+  },
+  {
+   "name": "country_control",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "country",
+   "hidden": true
+  },
+  {
+   "name": "mrvs_monitor",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "MRVS Monitor",
+   "widget": "EY: MRV Macro widget Beneficiary 2"
+  },
+  {
+   "name": "range_control",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "range",
+   "hidden": true
+  },
+  {
+   "name": "v_message_important",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Health plan/Additional medical coverage/Prepaid medicine [=health_plan]",
+    "EPS [=eps]"
+   ]
+  },
+  {
+   "name": "v_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Collaborator Registration/Adhesion [=registration]",
+    "Modification of coverage [=modification]",
+    "Addition of dependent [=addition_depentent]",
+    "Deregistration/Exclusion of dependent [=exclusion]",
+    "Documentation of change of social security [=documentation]"
+   ]
+  },
+  {
+   "name": "v_apply_dependent",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Does this request apply to any of your dependents?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_newborn_dependent",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is your dependent a newborn?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_workday_message",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  },
+  {
+   "name": "v_blank_space_container_2",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "v_checkbox_declare_1",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I assume full responsibility for the veracity of the information contained in the form."
+  },
+  {
+   "name": "v_blank_space_container_1",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "v_checkbox_declare_2",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I have prior and express knowledge of the contractual terms and conditions of the request made."
+  },
+  {
+   "name": "v_blank_space_container_3",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "v_checkbox_declare_3",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I confirm that I have reviewed and attached all required documentation before submitting my application."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "200",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  },
+  {
+   "sys_id": "0a851af93b241a10924d0247f4e45a70",
+   "name": "Dados dos dependentes",
+   "order": "800",
+   "perguntas": [
+    "employee_reference (Referência, hidden): Employee Name",
+    "v_full_name (Referência): Full name",
+    "v_dni_dependent (Texto de Linha Única): DNI",
+    "v_date_of_birth (Texto de Linha Única): Date of birth"
+   ]
+  },
+  {
+   "sys_id": "e99e4ac23b249a10924d0247f4e45ab0",
+   "name": "EY: legendas do forms plano de saude",
+   "order": "900",
+   "perguntas": [
+    "legenda_11 (Rótulo de Rich Text): Legenda 1",
+    "legenda_3 (Rótulo de Rich Text): Legenda 1",
+    "legenda_4 (Rótulo de Rich Text): Legenda 1",
+    "legenda_7 (Rótulo de Rich Text): Legenda 1",
+    "legenda_12 (Rótulo de Rich Text): Legenda 1",
+    "legenda_8 (Rótulo de Rich Text): Legenda 1",
+    "legenda_9 (Rótulo de Rich Text): Legenda 1",
+    "legenda_10 (Rótulo de Rich Text): Legenda 1"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show legenda 12",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=addition_depentent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_12: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 4",
+   "when": "IO:country_control=PER^IO:v_type_of_request=registration^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 6",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=addition_depentent^IO:range_control=B^ORIO:range_control=F^ORIO:range_control=G^ORIO:range_control=H^ORIO:range_control=I^ORIO:range_control=J^NQIO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=addition_depentent^IO:range_control=E^IO:public_control=Sales Professional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_6: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_workday_message and VS depentens",
+   "when": "IO:v_apply_dependent=yes^IO:v_newborn_dependent=no^ORIO:v_newborn_dependent=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "inclusion_of_dependents: visible=true,mandatory=true",
+    "v_workday_message: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 8",
+   "when": "IO:country_control=PER^IO:v_type_of_request=addition_depentent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_8: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 3",
+   "when": "IO:country_control=ARG^IO:brand_control=Avon LATAM^IO:v_type_of_request=registration^IO:public_control!=Operations Associate^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_newborn_dependent",
+   "when": "IO:v_apply_dependent=yes^IO:v_type_of_request=registration^ORIO:v_type_of_request=addition_depentent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_newborn_dependent: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 9",
+   "when": "IO:country_control=ARG^IO:v_type_of_request=documentation^IO:brand_control=Natura^ORIO:brand_control=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_9: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 10",
+   "when": "IO:country_control=COL^IO:v_type_of_request=modification^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_10: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Hide legendas - form",
+   "when": "IO:v_type_of_request=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_9: visible=false",
+    "legenda_5: visible=false",
+    "legenda_8: visible=false",
+    "legenda_1: visible=false",
+    "legenda_6: visible=false",
+    "legenda_10: visible=false",
+    "legenda_11: visible=false",
+    "legenda_4: visible=false",
+    "v_legenda_9: visible=false",
+    "v_legenda_7: visible=false",
+    "legenda_2: visible=false",
+    "legenda_7: visible=false",
+    "legenda_12: visible=false",
+    "legenda_3: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 5",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=addition_depentent^IO:range_control=A^ORIO:range_control=C^ORIO:range_control=D^NQIO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=addition_depentent^IO:range_control=E^IO:public_control!=Sales Professional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 2",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=registration^IO:range_control=B^ORIO:range_control=F^ORIO:range_control=G^ORIO:range_control=H^ORIO:range_control=I^ORIO:range_control=J^NQIO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=registration^IO:range_control=E^IO:public_control=Sales Professional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_2: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 7",
+   "when": "IO:country_control=ARG^IO:brand_control=Avon LATAM^IO:v_type_of_request=addition_depentent^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_7: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 11",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=registration^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_11: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda 1 ",
+   "when": "IO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=registration^IO:range_control=A^ORIO:range_control=C^ORIO:range_control=D^NQIO:country_control=ARG^IO:brand_control=Natura^IO:v_type_of_request=registration^IO:range_control=E^IO:public_control!=Sales Professional^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_1: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_checkbox_declare_3: mandatory=true",
+    "v_checkbox_declare_2: mandatory=true",
+    "v_checkbox_declare_1: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Load choices OnChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 5,4 KB que carrega as opções de categoria conforme o contexto, removendo e recolocando itens como 'health_plan'. Um dos maiores controladores de lista do catálogo."
+  },
+  {
+   "name": "EY: Show v_who_is_requested_for",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que decide se exibe 'v_who_is_requested_for', chamando EYHispanic_Employee_Information, método getSysUserInformation, com o usuário logado."
+  },
+  {
+   "name": "EY: Get control variables",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script que busca as variáveis de controle do colaborador via EYHispanic_Employee_Information."
+  },
+  {
+   "name": "EY: Hide choices options OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove opções de categoria ('health_plan', 'eps') e de tipo de solicitação ('registration' e outras) na abertura."
+  },
+  {
+   "name": "EY: Set options OnChange",
+   "type": "onChange",
+   "on": "5973ce793ba01a10924d0247f4e45ab6",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta a obrigatoriedade e a visibilidade de 'v_apply_dependent' conforme a escolha, tratando também os casos vazio e 'None'."
+  },
+  {
+   "name": "EY: Show v_message_important OnChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que decide se exibe a mensagem importante, consultando EYHispanic_Employee_Information via GlideAjax."
+  },
+  {
+   "name": "EY: Clear session OnLoad",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que limpa a chave 'dependents_list' do sessionStorage do navegador e esconde a mensagem importante na abertura."
+  }
+ ]
+}

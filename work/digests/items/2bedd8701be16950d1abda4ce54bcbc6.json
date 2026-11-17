@@ -1,0 +1,104 @@
+{
+ "sys_id": "2bedd8701be16950d1abda4ce54bcbc6",
+ "name": "Adiantamento de Pagamento ao Fornecedor",
+ "sys_name": "Adiantamento de Pagamento ao Fornecedor",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Solicitar um adiantamento parcial ou total ao fornecedor",
+ "description": "Solicitar um adiantamento parcial ou total ao fornecedor",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "27",
+   "variaveis_ativas": "27",
+   "bloqueadores": "0",
+   "avisos": "15",
+   "perguntas_sem_conversational_label": "27"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_supplier: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_currency: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_approval_manager: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 27 de 27 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 27 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "a276c5e51b99e510a530426fe54bcbb0",
+   "name": "EY VS - Fornecedores",
+   "order": "200",
+   "perguntas": [
+    "v_supplier (Referência): Supplier",
+    "v_supplier_code (Texto de Linha Única): Supplier Code",
+    "v_vendor_tax_code_cnpj_cuit_ruc (Texto de Linha Única): Vendor Tax Code (CNPJ/CUIT/RUC)"
+   ]
+  },
+  {
+   "sys_id": "b5f328341ba56950d1abda4ce54bcb50",
+   "name": "EY VS - Variable Adiantamento Fornecedor ",
+   "order": "300",
+   "perguntas": [
+    "v_exchange (Texto de Linha Única): Exchange",
+    "v_contract_number (Texto de Linha Única): Contract number",
+    "v_purchase_order_number (Texto de Linha Única): Purchase order number",
+    "v_date_for_which_payment_is_requested (Data): Payment date proposal",
+    "v_value (Texto de Linha Única): Amount",
+    "vs_approval_manager (Referência): Approval manager",
+    "v_currency (Referência): Currency",
+    "v_month_provision (Texto de Linha Única): Reference month for the accounting statement (the entry of the note to carry out the settlement of the requested advance)",
+    "v_document_number (Texto de Linha Única): Document number KA"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "400",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

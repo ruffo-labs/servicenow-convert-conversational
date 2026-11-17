@@ -1,0 +1,62 @@
+{
+ "sys_id": "ccae2aa11bd56910a530426fe54bcbe7",
+ "title": "EY VS -  Campos Ajuste de Lançamentos",
+ "internal_name": "ey_vs_campos_ajuste_de_lan_amentos",
+ "description": "Variable set destinada as variaveis do ajuste de lançamento a fornecedores",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Ajuste de Lançamento de Fornecedor "
+ ],
+ "variaveis": [
+  {
+   "name": "reason_for_adjustment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for adjustment",
+   "include_none": true,
+   "choices": [
+    "NF Cancelled [=canceled_invoice]",
+    "Incorrect Postings [=incorrect_launch]",
+    "Improper Payments [=improper_payment]",
+    "Service Sheet [=service_sheet]",
+    "Order Number [=order_number]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "document_number_invoice",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document number (Invoice)"
+  },
+  {
+   "name": "value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount"
+  },
+  {
+   "name": "service_sheet_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Service sheet number"
+  },
+  {
+   "name": "purchase_order_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purchase order number"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "c98f66e51bd56910a530426fe54bcbc3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata o campo 'value' como moeda. Mais uma variante da série formatarMoeda."
+  }
+ ]
+}

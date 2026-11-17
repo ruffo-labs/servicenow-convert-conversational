@@ -1,0 +1,178 @@
+{
+ "sys_id": "1c15094f1bc3e81032822170f54bcb04",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Gestor - RH Ponta > Operação de Benefícios > Previdência Privada, 1 item em Preciso reportar um problema (1 oferta) e 1 em Preciso de um serviço de RH (3 ofertas). 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de alteração da previdência privada.",
+ "vars": {
+  "att_handwritten_letter": {
+   "label": "Envie a carta de próprio punho."
+  },
+  "what_is_request": {
+   "label": "O que você precisa solicitar?"
+  },
+  "type_of_change": {
+   "label": "Qual tipo de alteração você quer fazer?"
+  },
+  "open_ticket_number_for_requesting_the_proposal": {
+   "label": "Qual é o número do chamado aberto para pedir a proposta?"
+  },
+  "employee_contact_telephone_number": {
+   "label": "Qual é o seu telefone para contato?"
+  },
+  "change_form": {
+   "label": "Envie o formulário de alteração preenchido."
+  },
+  "contact_number_with_area_code": {
+   "label": "Qual é o seu telefone com DDD para contato?"
+  },
+  "att_email_brasilprev": {
+   "label": "Envie o e-mail recebido da BrasilPrev."
+  }
+ },
+ "remover": {
+  "rh_observation_form_cancel": "visual",
+  "rh_observation_form": "visual",
+  "rh_observation_signed": "visual",
+  "observation_alteration": "visual",
+  "observation_email": "visual",
+  "observation_envio_confirmacao": "visual",
+  "rh_maintenance_description": "oferta_inativa",
+  "observation_termo_cancelamento": "visual"
+ },
+ "policies": {
+  "01d9194d1bb6a91032822170f54bcb13": "remover",
+  "6ea0cb3d87117650182a0d440cbb3538": {
+   "conditions": "service_offering=fe3b628787632250182a0d440cbb3542",
+   "actions": {
+    "type_of_change": {
+     "visible": true,
+     "mandatory": true
+    },
+    "change_form": {
+     "visible": true
+    }
+   }
+  },
+  "770b3d831b07a050eca40dcbe54bcbd3": "remover",
+  "8b21b68f87632250182a0d440cbb3506": {
+   "conditions": "service_offering=fe3b628787632250182a0d440cbb3542",
+   "actions": {
+    "change_form": {
+     "visible": true,
+     "mandatory": true
+    },
+    "type_of_change": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "f9350d8f1bc3e81032822170f54bcb96": "remover",
+  "3ccd764387e32250182a0d440cbb35be": {
+   "conditions": "what_is_request=3",
+   "actions": {
+    "att_handwritten_letter": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "4bef723d87117650182a0d440cbb355a": {
+   "conditions": "what_is_request=3",
+   "actions": {
+    "att_handwritten_letter": {
+     "visible": true
+    }
+   }
+  },
+  "8620873d87117650182a0d440cbb35d4": {
+   "conditions": "what_is_request=2",
+   "actions": {
+    "att_email_brasilprev": {
+     "visible": true
+    }
+   }
+  },
+  "a33b3a8f87a32250182a0d440cbb35a7": {
+   "conditions": "what_is_request=2",
+   "actions": {
+    "att_email_brasilprev": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "d7b9f20f87a32250182a0d440cbb35ad": "remover"
+ },
+ "itens": [
+  {
+   "name": "Previdência Privada (problema)",
+   "short_description": "Reportar que a proposta digital da previdência privada não chegou.",
+   "description": "Use quando a proposta digital da previdência privada foi solicitada e não chegou (oferta Não recebimento de proposta digital). Informe o número do chamado aberto para pedir a proposta e um telefone de contato. Atendimento do RH - Previdência Privada, SLA de 40h.",
+   "frases_exemplo": [
+    "Pedi a proposta da previdência e não chegou",
+    "Não recebi a proposta digital da previdência privada",
+    "A proposta da previdência não veio no e-mail",
+    "Quero reportar proposta de previdência não recebida",
+    "Já abri chamado da previdência e a proposta não apareceu"
+   ],
+   "sem_vars": [
+    "what_is_request",
+    "type_of_change",
+    "change_form",
+    "contact_number_with_area_code"
+   ],
+   "vars": {
+    "open_ticket_number_for_requesting_the_proposal": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "employee_contact_telephone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1426a61d1b18c5d832822170f54bcb11",
+    "6ea0cb3d87117650182a0d440cbb3538",
+    "705632c787a32250182a0d440cbb3535",
+    "8b21b68f87632250182a0d440cbb3506",
+    "94f7265d1b18c5d832822170f54bcb82",
+    "a4c5e21d1b18c5d832822170f54bcb31",
+    "3ccd764387e32250182a0d440cbb35be",
+    "4bef723d87117650182a0d440cbb355a",
+    "8620873d87117650182a0d440cbb35d4",
+    "a33b3a8f87a32250182a0d440cbb35a7"
+   ]
+  },
+  {
+   "name": "Previdência Privada (serviço)",
+   "short_description": "Pedir adesão, alteração ou cancelamento da previdência privada.",
+   "description": "Use para pedir serviços da previdência privada: adesão (oferta Solicitação de adesão da previdência privada), alteração (oferta Solicitação de alteração da previdência privada) ou cancelamento (oferta Solicitação de cancelamento da previdência privada). Informe o telefone de contato e os dados do tipo de pedido, como o formulário de alteração. Atendimento do RH - Previdência Privada.",
+   "frases_exemplo": [
+    "Quero aderir à previdência privada",
+    "Preciso alterar meu plano de previdência",
+    "Como cancelo minha previdência privada?",
+    "Quero pedir resgate total da previdência",
+    "Quero mudar meu plano VGBL"
+   ],
+   "sem_vars": [
+    "open_ticket_number_for_requesting_the_proposal",
+    "employee_contact_telephone_number",
+    "start_1",
+    "formatter",
+    "formatter2"
+   ],
+   "sem_policies": [
+    "1426a61d1b18c5d832822170f54bcb11",
+    "a4c5e21d1b18c5d832822170f54bcb31"
+   ]
+  }
+ ],
+ "scripts": {
+  "71a436911b98c5d832822170f54bcb8f": {
+   "converter": "regex"
+  }
+ }
+}

@@ -1,0 +1,296 @@
+{
+ "sys_id": "90654bf41beb1558d1abda4ce54bcb6b",
+ "name": "Programa de Estágio",
+ "sys_name": "Internship Program",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Aprendizagem, Desenvolvimento e Desempenho",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Para solicitações relacionadas ao Programa de Estágio",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "27",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_your_signed_report_here: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @faq_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_your_signed_contract: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_educ_institution_link: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 20 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_internship_program",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Internship Program"
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Internship contract [=internship_contract]",
+    "Training information [=training_information]",
+    "Activity report [=activity_report]",
+    "Sending Communications [=sending_communications]",
+    "Information about data/indicators [=information_about_data_indicators]"
+   ]
+  },
+  {
+   "name": "faq_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_option_if_type_contract",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose the desired option",
+   "include_none": true,
+   "choices": [
+    "Amendment of contract - Mandatory and/or non-mandatory",
+    "Change of manager in the internship contract",
+    "Submission of signed internship contract",
+    "Information on internship contract",
+    "Request for extension of contract"
+   ]
+  },
+  {
+   "name": "v_new_period_course",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Enter the new course completion period"
+  },
+  {
+   "name": "v_option_if_type_report",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose the desired option",
+   "include_none": true,
+   "choices": [
+    "Manager change in activity report",
+    "Submission of signed activity report"
+   ]
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_attach_your_signed_contract",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your signed internship contract here"
+  },
+  {
+   "name": "v_attach_educ_institution_link",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here your proof of link with the educational institution"
+  },
+  {
+   "name": "v_attach_your_signed_report_here",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your signed report here"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  },
+  {
+   "sys_id": "5b30c4cd1beb5558d1abda4ce54bcb29",
+   "name": "EY: Basic data manager ",
+   "order": "900",
+   "perguntas": [
+    "manager_name (Referência): Manager Name",
+    "manager_id (Texto de Linha Única): Manager ID Global",
+    "manager_email (Texto de Linha Única): Manager Email"
+   ]
+  },
+  {
+   "sys_id": "bf156c8e1ba8a510a530426fe54bcbf0",
+   "name": "EY: Basic data manager 1",
+   "order": "950",
+   "perguntas": [
+    "manager_name1 (Referência): Manager Name",
+    "manager_id1 (Texto de Linha Única): Manager ID Global",
+    "manager_email1 (Texto de Linha Única): Manager Email"
+   ]
+  },
+  {
+   "sys_id": "f2e3f8cd1bab9558d1abda4ce54bcbeb",
+   "name": "Período",
+   "order": "1100",
+   "perguntas": [
+    "start_date (Data): Start date",
+    "end_date (Data): End date"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If training information",
+   "when": "IO:v_request_type=training_information^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: mandatory=true",
+    "v_attach_your_request: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Field  request type mandatory ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Internship contract and amendment contract ",
+   "when": "IO:v_request_type=internship_contract^IO:v_option_if_type_contract=Amendment of contract - Mandatory and/or non-mandatory^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_request: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If activity report and submission signed",
+   "when": "IO:v_request_type=activity_report^IO:v_option_if_type_report=Submission of signed activity report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "end_date: visible=true",
+    "start_date: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If Internship contract and submission contract",
+   "when": "IO:v_request_type=internship_contract^IO:v_option_if_type_contract=Submission of signed internship contract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_signed_contract: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Internship contract",
+   "when": "IO:v_request_type=internship_contract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_option_if_type_contract: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If activity report and manager change",
+   "when": "IO:v_request_type=activity_report^IO:v_option_if_type_report=Manager change in activity report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "end_date: visible=true,mandatory=true",
+    "start_date: visible=true,mandatory=true",
+    "manager_email: visible=true,readonly=true",
+    "manager_id: visible=true,readonly=true",
+    "manager_name: visible=true,mandatory=true",
+    "v_attach_your_request: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If intership contract and internship contract information",
+   "when": "IO:v_request_type=internship_contract^IO:v_option_if_type_contract=Information on internship contract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If activity is report",
+   "when": "IO:v_request_type=activity_report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_option_if_type_report: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Internship contract and request extension",
+   "when": "IO:v_request_type=internship_contract^IO:v_option_if_type_contract=Request for extension of contract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_new_period_course: visible=true,mandatory=true",
+    "v_attach_educ_institution_link: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If internship contract and change manager",
+   "when": "IO:v_request_type=internship_contract^IO:v_option_if_type_contract=Change of manager in the internship contract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_request: visible=true",
+    "manager_email1: visible=true,readonly=true",
+    "manager_name1: visible=true,mandatory=true",
+    "manager_id1: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If activity report and submission",
+   "when": "IO:v_request_type=activity_report^IO:v_option_if_type_report=Submission of signed activity report^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_your_signed_report_here: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Variables",
+   "type": "onChange",
+   "on": "aa794f301b2f1558d1abda4ce54bcbd5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa as variáveis de opção dependentes."
+  }
+ ]
+}

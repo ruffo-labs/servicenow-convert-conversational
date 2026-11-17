@@ -1,0 +1,125 @@
+{
+ "sys_id": "0b843aee1b87281032822170f54bcbbb",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Rescisão e Preciso de um serviço de RH > Rescisão, com 5 ofertas no total. 3 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitar reagendamento de homologação; ALP - Solicitar correção de Dados no TRCT; ALP - Solicitação de pagamento de rescisão complementar para ex-colaborador.",
+ "vars": {
+  "rh_center_result_cost": {
+   "label": "Qual é o centro de resultado (centro de custo)?"
+  },
+  "rh_rescheduling_reason": {
+   "label": "Qual é o motivo do reagendamento?"
+  },
+  "rh_colaborador_foi_homologado": {
+   "label": "O colaborador já foi homologado?"
+  },
+  "rh_date_termination": {
+   "label": "Qual foi a data de desligamento?"
+  },
+  "rh_worked_more_less_1_year_company": {
+   "label": "O ex-colaborador trabalhou por mais ou menos de 1 ano na empresa?"
+  },
+  "rh_request_reason": {
+   "label": "Qual é o motivo da solicitação?"
+  },
+  "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+   "label": "Existe diferença de dissídio a ser paga?"
+  }
+ },
+ "remover": {
+  "rh_observation_ratify_process": "visual",
+  "rh_n2_call_answered_redline": "oferta_inativa",
+  "rh_account_bank": "oferta_inativa",
+  "rh_bank": "oferta_inativa",
+  "rh_observation": "visual",
+  "rh_observation_trct": "visual",
+  "rh_address_complete_update": "oferta_inativa",
+  "rh_observation_attachments": "visual",
+  "rh_agency": "oferta_inativa",
+  "rh_observation_trct_1": "visual"
+ },
+ "policies": {
+  "06bb2bfe1b0f2050eca40dcbe54bcbe7": "remover",
+  "20943eee1b87281032822170f54bcba1": "remover",
+  "60943eee1b87281032822170f54bcb98": "remover",
+  "6c943eee1b87281032822170f54bcba9": {
+   "conditions": "service_offering=a6d123941b47649032822170f54bcb62",
+   "actions": {
+    "rh_request_reason": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "91feab3a1b4f2050eca40dcbe54bcb58": {
+   "conditions": "service_offering=72d123941b47649032822170f54bcb6f",
+   "actions": {
+    "rh_colaborador_foi_homologado": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_existe_diferenca_de_dissidio_a_ser_paga": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "ac943eee1b87281032822170f54bcba6": "remover",
+  "ea75343e1bc7681032822170f54bcb59": "remover",
+  "ec943eee1b87281032822170f54bcba3": {
+   "conditions": "service_offering=b1d1af541b47649032822170f54bcb3f",
+   "actions": {
+    "rh_rescheduling_reason": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Homologação (problemas)",
+   "short_description": "Reportar problema na homologação ou rescisão de ex-colaborador.",
+   "description": "Use para reportar problema relacionado à homologação: correção de dados no TRCT, homologação não agendada no sindicato ou pagamento de rescisão complementar. Atende as ofertas \"Solicitar correção de Dados no TRCT\", \"Homologação não foi agendada no sindicato\" e \"Solicitação de pagamento de rescisão complementar para ex-colaborador\".",
+   "frases_exemplo": [
+    "Os dados do TRCT estão errados",
+    "A homologação não foi agendada no sindicato",
+    "Preciso pagar rescisão complementar de um ex-colaborador",
+    "Tem erro no TRCT do desligado",
+    "O sindicato não marcou a homologação"
+   ],
+   "sem_vars": [
+    "rh_rescheduling_reason",
+    "rh_date_termination"
+   ],
+   "sem_policies": [
+    "75c1ded31bcb2450eca40dcbe54bcbd1",
+    "ec943eee1b87281032822170f54bcba3"
+   ]
+  },
+  {
+   "name": "Homologação (serviços)",
+   "short_description": "Solicitar reagendamento de homologação ou kit de homologação.",
+   "description": "Use para pedir o reagendamento de uma homologação já marcada ou o kit de homologação de ex-colaborador não localizado no ADP. Atende as ofertas \"Solicitar reagendamento de homologação\" e \"Solicitação de kit de homologação de ex-colaborador não localizado no ADP\".",
+   "frases_exemplo": [
+    "Preciso remarcar a homologação",
+    "Quero reagendar a homologação de um desligado",
+    "Não achei o ex-colaborador no ADP, preciso do kit de homologação",
+    "Como peço o kit de homologação?",
+    "A homologação precisa mudar de data"
+   ],
+   "sem_vars": [
+    "rh_center_result_cost",
+    "rh_colaborador_foi_homologado",
+    "rh_worked_more_less_1_year_company",
+    "rh_request_reason",
+    "rh_existe_diferenca_de_dissidio_a_ser_paga"
+   ],
+   "sem_policies": [
+    "60943eee1b87281032822170f54bcb9e",
+    "6c943eee1b87281032822170f54bcba9",
+    "91feab3a1b4f2050eca40dcbe54bcb58",
+    "a0943eee1b87281032822170f54bcb9b"
+   ]
+  }
+ ]
+}

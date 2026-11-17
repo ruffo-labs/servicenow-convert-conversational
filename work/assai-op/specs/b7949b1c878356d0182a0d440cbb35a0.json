@@ -1,0 +1,85 @@
+{
+ "sys_id": "b7949b1c878356d0182a0d440cbb35a0",
+ "status": "conversacional",
+ "motivo": "Só uma oferta; período de extração, ID e estabelecimento passam a ser obrigatórios. 1 policy(ies) com condição em variável inexistente (nunca disparavam) foram descartadas.",
+ "vars": {
+  "final_extraction_date": {
+   "label": "Qual é a data final da extração?"
+  },
+  "date_priority": {
+   "label": "Até qual data você precisa dos documentos?"
+  },
+  "extraction_initial_date": {
+   "label": "Qual é a data inicial da extração?"
+  },
+  "options": {
+   "label": "Para quais colaboradores: ativos, desligados ou aprendizes?"
+  },
+  "id": {
+   "label": "Qual é o ID?"
+  },
+  "establishment": {
+   "label": "Qual é o estabelecimento?"
+  }
+ },
+ "remover": {
+  "container_mandatory_docs": "visual",
+  "formatter4": "visual",
+  "container_mandatory_docs_end": "visual",
+  "rh_container_start": "visual",
+  "container_mandatory_docs_split": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "373db98187629650182a0d440cbb3507": "remover",
+  "4c9dfdc187629650182a0d440cbb3533": "remover",
+  "61302fc73b9fde50b28dd047f4e45a2d": "remover",
+  "61c7728187e69650182a0d440cbb3579": "remover",
+  "997d7dc187629650182a0d440cbb355a": "remover",
+  "9f65c59a3b6e1290b28dd047f4e45aa4": "remover",
+  "d6dc39c187629650182a0d440cbb352d": "remover"
+ },
+ "itens": [
+  {
+   "name": "Documentos para fiscalização",
+   "short_description": "Pedido de documentos para fiscalização.",
+   "description": "Use para solicitar documentos de fiscalização, como AEJ, AFDT, RAIS ou TRCT, informando o período de extração, o ID e o estabelecimento. Corresponde à oferta \"Documentos Fiscalizações\", atendida pelo RPA - Doc. Fiscalização.",
+   "frases_exemplo": [
+    "Preciso de documentos para fiscalização",
+    "Fiscal pediu o AEJ",
+    "Quero o arquivo AFDT de um período",
+    "Preciso da RAIS para a fiscalização",
+    "Pedido de TRCT para fiscalização"
+   ],
+   "vars": {
+    "final_extraction_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "extraction_initial_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "id": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "establishment": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ],
+ "scripts": {
+  "3d231d603b3652d0b28dd047f4e45a2e": {
+   "remover": {
+    "outro": "define a oferta padrão; coberto pelo derivado"
+   }
+  }
+ }
+}

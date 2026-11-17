@@ -1,0 +1,110 @@
+{
+ "sys_id": "7a4a85391ba16110a530426fe54bcb79",
+ "name": "Outros lançamentos contábeis - Intercompany, mercadoria e caixa em trânsito",
+ "sys_name": "FORM0000499",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Lançamentos Contábeis",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite um lançamento contábil",
+ "description": "Solicite um lançamento contábil",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "22",
+   "variaveis_ativas": "23",
+   "bloqueadores": "1",
+   "avisos": "16",
+   "perguntas_sem_conversational_label": "22"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)",
+    "onde": "vs_rep_templates"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_document_repository: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_launch_template: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_select_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_repository_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 22 de 22 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 22 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "a782884b1bf986d0a530426fe54bcb7f",
+   "name": "EY VS - Sox",
+   "order": "150",
+   "perguntas": [
+    "does_this_request_have_sox_control_attached (Selecionar Caixa): Does this request have sox control attached?",
+    "sox_control_name (Texto de Linha Única): Sox Control Name"
+   ]
+  },
+  {
+   "sys_id": "baea89791ba16110a530426fe54bcbf0",
+   "name": "EY VS - Solicitação de Lançamento - Intercompany, Caixa ou Mercadoria em trânsit",
+   "order": "200",
+   "perguntas": [
+    "v_request_type (Selecionar Caixa): Request type",
+    "v_select_approver (Referência): Select Approver",
+    "v_launch_template (Anexo): Launch Template",
+    "v_document_repository (Anexo): Document Repository",
+    "vs_rep_templates (Personalizado com rótulo): TEMPLATES",
+    "vs_repository_template (Rótulo de Rich Text): "
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

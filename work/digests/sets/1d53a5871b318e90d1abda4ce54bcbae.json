@@ -1,0 +1,89 @@
+{
+ "sys_id": "1d53a5871b318e90d1abda4ce54bcbae",
+ "title": "Value",
+ "internal_name": "value",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de compras descentralizadas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_controller",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Controller",
+   "hidden": true
+  },
+  {
+   "name": "vs_total_purchase_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the total purchase value?"
+  },
+  {
+   "name": "vs_payment_in_reais_or_foreign_currency",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will payment be made in reais or foreign currency?",
+   "include_none": true,
+   "choices": [
+    "Payment in REAL (BRL) [=real]",
+    "Payment in Foreign Currency [=foreign]"
+   ]
+  },
+  {
+   "name": "vs_info_does_not_meet_the_criteria_decentralized_purchasing",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If controller is true",
+   "when": "IO:vs_controller=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_info_does_not_meet_the_criteria_decentralized_purchasing: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_total_purchase_value: mandatory=true",
+    "vs_payment_in_reais_or_foreign_currency: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set when \"Payment currency\" change",
+   "type": "onChange",
+   "on": "4a54a98b1b318e90d1abda4ce54bcb44",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange disparado pela moeda de pagamento. Lê o valor total da compra, converte do formato brasileiro para número (remove pontos, troca vírgula por ponto) e aplica a regra de negócio conforme a moeda escolhida."
+  },
+  {
+   "name": "EY: Set when \"Total value\" change",
+   "type": "onChange",
+   "on": "5cd3ad4b1b318e90d1abda4ce54bcb44",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Gêmeo do anterior, disparado pela mudança do valor total em vez da moeda. Mesma conversão e mesma regra."
+  },
+  {
+   "name": "EY: Validate value",
+   "type": "onChange",
+   "on": "5cd3ad4b1b318e90d1abda4ce54bcb44",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'vs_total_purchase_value'. Inválido: limpa o campo."
+  }
+ ]
+}

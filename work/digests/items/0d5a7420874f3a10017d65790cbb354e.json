@@ -1,0 +1,205 @@
+{
+ "sys_id": "0d5a7420874f3a10017d65790cbb354e",
+ "name": "Treinamentos Normativos",
+ "sys_name": "FORM0000730",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços de Ações de Aprendizagem",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Para solicitações relacionadas a capacitações obrigatórias por lei para trabalhadores, exigidas pelas Normas Regulamentadoras (NRs) do Ministério do Trabalho",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "15",
+   "bloqueadores": "0",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @label_training_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_training_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @label_training: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @select_which_trainings_should_be_mapped: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @id_number_m2m: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @enter_employee_name_m2m: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @indicate_training_m2m: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @indicate_training_m2m: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @id_number: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @enter_employee_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "what_is_the_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the request?",
+   "include_none": true,
+   "choices": [
+    "Solicitação de Mapeamento [=solicitacao_mapeamento]",
+    "Sending of certificates [=solicitacao_certificados]",
+    "Solicitação de Relatórios [=solicitacao_relatorios]",
+    "Solicitação de Desmapeamento [=solicitacao_desmapeamento]"
+   ]
+  },
+  {
+   "name": "label_training",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Label Training"
+  },
+  {
+   "name": "label_training_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Label Training 2"
+  },
+  {
+   "name": "label_training_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Label Training 3"
+  },
+  {
+   "name": "select_mapping_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the type of mapping",
+   "include_none": true,
+   "choices": [
+    "1. Map a single training session for multiple employees [=1]",
+    "2. Map several trainings for multiple employees [=2]"
+   ]
+  },
+  {
+   "name": "select_which_trainings_should_be_mapped",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Select which training should be mapped",
+   "lookup": "question_choice",
+   "ref_qual": "question=0e775a231b4f3c10a530426fe54bcb2a",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+   "name": "EY: Informação do solicitante",
+   "order": "100",
+   "perguntas": [
+    "opened_by (Referência, default, ro): Opened By",
+    "request_for_who (Selecionar Caixa): Request for who?",
+    "employee (Referência): Employee's name"
+   ]
+  },
+  {
+   "sys_id": "e429096887477a10017d65790cbb35ae",
+   "name": "EY: Informações do treinamento",
+   "order": "600",
+   "perguntas": [
+    "enter_employee_name (Referência): Employee (Search by ID, Name, or Email)",
+    "id_number (Texto de Linha Única): Registration"
+   ]
+  },
+  {
+   "sys_id": "778c8dac87877a10017d65790cbb35dd",
+   "name": "EY: Informações do treinamento M2M",
+   "order": "1100",
+   "perguntas": [
+    "enter_employee_name_m2m (Referência): Employee (Search by ID, Name, or Email)",
+    "id_number_m2m (Texto de Linha Única): Registration",
+    "indicate_training_m2m (Coletor de Listas): Indicate the training"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "10000",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Multirow One to Many",
+   "when": "IO:select_mapping_type=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_which_trainings_should_be_mapped: visible=true,mandatory=true",
+    "ey_training_info: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "what_is_the_request: visible=true,mandatory=true",
+    "vs_additional_information: visible=true,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Request is Certificate OR Report",
+   "when": "IO:what_is_the_request=solicitacao_relatorios^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: visible=true",
+    "request_for_who: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Multirow Many to Many",
+   "when": "IO:select_mapping_type=2^NQIO:what_is_the_request=solicitacao_desmapeamento^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "ey_training_info_m2m: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Request is Mapping",
+   "when": "IO:what_is_the_request=solicitacao_mapeamento^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_mapping_type: visible=true,mandatory=true",
+    "label_training: visible=true",
+    "map_several_trainings_multiple_employees: visible=true",
+    "label_training_2: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Request is Unmapping",
+   "when": "IO:what_is_the_request=solicitacao_desmapeamento^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "label_training_3: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear if request changes",
+   "type": "onChange",
+   "on": "acd605a887077a10017d65790cbb35d5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que chama uma função clearAll() quando o valor fica vazio, nulo ou 'none' — trata três formas de 'sem valor', mais defensivo que os irmãos."
+  }
+ ]
+}

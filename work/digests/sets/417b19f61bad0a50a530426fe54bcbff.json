@@ -1,0 +1,130 @@
+{
+ "sys_id": "417b19f61bad0a50a530426fe54bcbff",
+ "title": "EY: Personal Informations Crachá",
+ "internal_name": "ey_personal_informations_cracha",
+ "description": "Este variable set contém dados de informações pessoais dos colaboradores com uma ordem e com campos específicos",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de 2ª via de crachá"
+ ],
+ "variaveis": [
+  {
+   "name": "v_personal_information",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Personal Information"
+  },
+  {
+   "name": "employee_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee name",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Id Global:"
+  },
+  {
+   "name": "position_title",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position"
+  },
+  {
+   "name": "company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "workplace",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Workplace"
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "rg",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "RG"
+  },
+  {
+   "name": "date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  },
+  {
+   "name": "address",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Address"
+  },
+  {
+   "name": "telephone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Telephone"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Mandatory Field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_name: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hidden the fields, it only can show in the resolver vision",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "address: visible=false",
+    "rg: visible=false",
+    "telephone: visible=false",
+    "position_title: visible=false",
+    "workplace: visible=false",
+    "date_of_birth: visible=false",
+    "company: visible=false",
+    "id_global: visible=false",
+    "cpf: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: HTR_Fill employee information",
+   "type": "onChange",
+   "on": "1d9dd1ba1bad0a50a530426fe54bcb46",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 1,9 KB que preenche as informações do colaborador. Versão mais completa do irmão de mesmo nome."
+  },
+  {
+   "name": "EY: Get user for set employee field",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que busca o usuário para preencher o campo de colaborador, via x_nasm_hr.ACN_ValidateUtils."
+  }
+ ]
+}

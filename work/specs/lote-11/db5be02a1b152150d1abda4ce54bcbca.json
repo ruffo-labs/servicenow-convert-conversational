@@ -1,0 +1,60 @@
+{
+ "sys_id": "db5be02a1b152150d1abda4ce54bcbca",
+ "status": "conversacional",
+ "motivo": "Intenção única de pedir pagamento manual fora do fluxo padrão (fornecedor, imposto ou taxa). Removido o aviso expirado (EY: Approver PopUp), que bloqueava o canal conversacional, e o script de limpeza do aprovador, substituído pela ação nativa de limpar valor ao ocultar na própria UI policy EY: Approver. A policy 'Variavies Obrigatorias' age sobre variáveis de variable sets, que não podem ser alteradas: mantive a policy só com as ações reais (sem virar prop). O script de máscara de moeda (EY: Máscara de Moeda) pertence ao variable set e não é client script do item, então não pode ser convertido/removido na spec do item; ele continua ativo sem alteração, sem perda de dado (o valor segue digitável em texto livre).",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_select_the_approver": {
+   "label": "Quem é o gestor (nível G ou acima) que vai aprovar?"
+  }
+ },
+ "remover": {
+  "label_obrigatoriedade_anexos": "visual"
+ },
+ "policies": {
+  "ab17fe371b19ad50a530426fe54bcb58": {
+   "conditions": "",
+   "actions": {
+    "v_currency": {
+     "mandatory": true
+    },
+    "v_what_is_the_payment_category": {
+     "mandatory": true
+    },
+    "v_document_number": {
+     "mandatory": true
+    },
+    "v_due_date": {
+     "mandatory": true
+    },
+    "v_payment_date": {
+     "mandatory": true
+    },
+    "v_value": {
+     "mandatory": true
+    }
+   }
+  },
+  "ef9a309533110f1098331c07ee5c7bdf": "remover",
+  "fda931f333f90f1098331c07ee5c7b24": {
+   "conditions": "vs_which_sub_company!=8c14f4d61b0acd10237642ece54bcb3e^vs_which_sub_company!=9b4951991b58d250514cbaef4b4bcbc8",
+   "actions": {
+    "v_select_the_approver": {
+     "visible": true,
+     "mandatory": true,
+     "clear": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "1ab90eb733bd0f1098331c07ee5c7b05": {
+   "converter": "policy:fda931f333f90f1098331c07ee5c7b24"
+  },
+  "d2146d6087420750ec360e530cbb351d": {
+   "remover": "sem_efeito"
+  }
+ }
+}

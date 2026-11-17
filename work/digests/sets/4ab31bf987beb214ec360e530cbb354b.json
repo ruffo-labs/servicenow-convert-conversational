@@ -1,0 +1,62 @@
+{
+ "sys_id": "4ab31bf987beb214ec360e530cbb354b",
+ "title": "EY VS - SPR Request",
+ "internal_name": "ey_vs_spr_request",
+ "description": "SPR form variables - destined to open a request for the colaborator or someone else based on the company",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Pagamento Via SPR"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_for_who",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Who is the request for?",
+   "include_none": true,
+   "choices": [
+    "For me [=for_me]",
+    "Another User [=another_user]"
+   ]
+  },
+  {
+   "name": "vs_select_the_collaborator",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the collaborator",
+   "read_only": true,
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_requesters_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Requester's name",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is your request for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS [=tbs]",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getAllLatamSubcompanies(current.variables.vs_which_company, current.cat_item);"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

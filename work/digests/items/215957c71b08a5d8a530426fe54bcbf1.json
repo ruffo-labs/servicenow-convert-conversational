@@ -1,0 +1,423 @@
+{
+ "sys_id": "215957c71b08a5d8a530426fe54bcbf1",
+ "name": "Informações de cartão combustível e redes credenciadas",
+ "sys_name": "Fuel card information and accredited networks",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Frotas",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Chamado para retirar dúvidas sobre cartão combustível, solicitar relatórios de uso, estudo de capilaridade (indicação de novos estabelecimentos) e consultar redes credenciadas",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "33",
+   "variaveis_ativas": "41",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "33"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_label_acesse: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_template_frota_download: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 33 de 33 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 33 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_template_frota_download",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ available in the knowledge base"
+  },
+  {
+   "name": "v_container_fuel_card_information_and_accredited_networks",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Fuel card information and accredited networks"
+  },
+  {
+   "name": "v_what_is_the_demand_of_the_call",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the demand of the call?",
+   "include_none": true,
+   "choices": [
+    "Indicate accredited network [=v_indicate_accredited_network]",
+    "Remove questions [=v_remove_questions]",
+    "Request reports and studies [=v_request_reports_studies]"
+   ]
+  },
+  {
+   "name": "v_what_kind_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Qual o tipo de dúvida você possui?",
+   "include_none": true,
+   "choices": [
+    "2nd copy [=v_2_copy]",
+    "Eligibility [=v_eligibility]",
+    "Emission [=v_emission]",
+    "Accredited network [=v_accredited_network]",
+    "Theft or Loss [=v_thelf_or_loss]",
+    "Available balance [=v_available_balance]",
+    "Card values [=v_card_values]",
+    "Others. [=others]"
+   ]
+  },
+  {
+   "name": "v_enter_your_question_",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Enter your question"
+  },
+  {
+   "name": "v_label_acesse",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_fuel_station",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Fuel Station"
+  },
+  {
+   "name": "v_zip_code_",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Zip Code",
+   "example": "00000-000"
+  },
+  {
+   "name": "v_state_",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "State"
+  },
+  {
+   "name": "v_city_",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "v_neighborhood_",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "v_street_av_st",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Street/Av/St"
+  },
+  {
+   "name": "v_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number"
+  },
+  {
+   "name": "v_complement_",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complement"
+  },
+  {
+   "name": "v_fuel_station_contact_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Fuel Station Contact Name:"
+  },
+  {
+   "name": "v_inform_phone_post",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform contact phone of the indicated post:",
+   "example": "(11) 91234-1234 or (11) 1234-1234"
+  },
+  {
+   "name": "v_enter_the_type_of_report_or_study_you_want_to_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the type of report or study you want to request",
+   "include_none": true,
+   "choices": [
+    "Capillarity study [=v_capilarity_study]",
+    "Accredited networks report [=v_accredited_report]",
+    "Fuel card usage report [=v_fuel_card_report]",
+    "Others. [=v_others_]"
+   ]
+  },
+  {
+   "name": "v_tell_place_capilarity",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Tell the place you want to have the capillarity study"
+  },
+  {
+   "name": "v_request_for_what_type_of_query",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request for what type of query?",
+   "include_none": true,
+   "choices": [
+    "Cost Center [=v_cost_center_]",
+    "Individual Contributor [=v_individual_contributor]"
+   ]
+  },
+  {
+   "name": "v_enter_the_full_name_of_the_user_contributor",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Enter the full name of the user contributor",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_enter_collaborater_registration_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the user collaborater's registration number"
+  },
+  {
+   "name": "v_enter_the_cost_center_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the cost center number"
+  },
+  {
+   "name": "v_inform_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform requested period - Start Date"
+  },
+  {
+   "name": "v_inform_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform requested period - End Date"
+  },
+  {
+   "name": "v_inform_the_state",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the State",
+   "include_none": true
+  },
+  {
+   "name": "v_inform_the_municipality",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Municipality",
+   "include_none": true
+  },
+  {
+   "name": "v_if_you_wish_specify_the_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "If you wish, specify the neighborhood"
+  },
+  {
+   "name": "v_describe_desired_report",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe the desired report"
+  },
+  {
+   "name": "v_additional_information_",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+   "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "3100",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If  Enter the type of report or study is Fuel card usage report",
+   "when": "IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report^IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_end_date: visible=true,mandatory=true",
+    "v_inform_start_date: visible=true,mandatory=true",
+    "v_request_for_what_type_of_query: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  Request for what type of query  is Cost Center",
+   "when": "IO:v_request_for_what_type_of_query=v_cost_center_^IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report^IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_cost_center_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  Enter the type report or study is Capilarity Study",
+   "when": "IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_capilarity_study^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_tell_place_capilarity: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If  Request for what type of query  is Individual Contributor",
+   "when": "IO:v_request_for_what_type_of_query=v_individual_contributor^IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report^IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_full_name_of_the_user_contributor: visible=true,mandatory=true",
+    "v_enter_collaborater_registration_number: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: If  What is the demand is  Request Reports ans Studies",
+   "when": "IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_type_of_report_or_study_you_want_to_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Demand of call Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_demand_of_the_call: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  Enter the type report or study is Others",
+   "when": "IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_others_^IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_desired_report: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  Enter the type report or study is Capilarity Study OR Accredited networks reports",
+   "when": "IO:v_enter_the_type_of_report_or_study_you_want_to_request=v_capilarity_study^ORIO:v_enter_the_type_of_report_or_study_you_want_to_request=v_accredited_report^IO:v_what_is_the_demand_of_the_call=v_request_reports_studies^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_the_municipality: visible=true,mandatory=true",
+    "v_inform_the_state: visible=true,mandatory=true",
+    "v_if_you_wish_specify_the_neighborhood: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If  What is the demand is Indicate Accredited Network",
+   "when": "IO:v_what_is_the_demand_of_the_call=v_indicate_accredited_network^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_fuel_station: visible=true,mandatory=true",
+    "v_complement_: visible=true",
+    "v_label_acesse: visible=true",
+    "v_street_av_st: visible=true,mandatory=true",
+    "v_zip_code_: visible=true,mandatory=true",
+    "v_inform_phone_post: visible=true,mandatory=true",
+    "v_city_: visible=true,mandatory=true",
+    "v_fuel_station_contact_name: visible=true,mandatory=true",
+    "v_number: visible=true,mandatory=true",
+    "v_state_: visible=true,mandatory=true",
+    "v_neighborhood_: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If  What is the demand is Remove Questions",
+   "when": "IO:v_what_is_the_demand_of_the_call=v_remove_questions^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_kind_of_doubt_do_you_have: visible=true,mandatory=true",
+    "v_enter_your_question_: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Start Date before End Date",
+   "type": "onChange",
+   "on": "beef73071b04e5d8a530426fe54bcb36",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a ordem das datas. Lê início e fim, converte com uma função auxiliar de transformação de data e, se o fim for menor ou igual ao início, exibe mensagem de erro no formulário. Validação de coerência entre dois campos, não de formato."
+  },
+  {
+   "name": "EY: Get Matriculation",
+   "type": "onChange",
+   "on": "fb3db70b1bc0e5d8a530426fe54bcbe3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a matrícula do colaborador. Chama o Script Include x_nasm_finance.EY_UserDataFinanceUtils, método getGlobalID, via GlideAjax, passando o usuário; o retorno preenche 'v_enter_collaborater_registration_number'."
+  },
+  {
+   "name": "EY: Validation Fuel Station Phone",
+   "type": "onChange",
+   "on": "ae4937c31b80e5d8a530426fe54bcb4c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone do posto de combustível com regex de formato brasileiro (DDD + 8 ou 9 dígitos). Inválido: limpa 'v_inform_phone_post' e mostra 'Número de telefone inválido.'"
+  },
+  {
+   "name": "EY: CEP Validation",
+   "type": "onChange",
+   "on": "e386b3871b40e5d8a530426fe54bcb78",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CEP no formato 00000-000 (hífen opcional). Inválido: limpa 'v_zip_code_' e mostra 'CEP Inválido'."
+  }
+ ]
+}

@@ -1,0 +1,112 @@
+{
+ "sys_id": "9494b8f11b216110a530426fe54bcbb6",
+ "title": "EY VS -  Solicitação de Provisões de Fatura",
+ "internal_name": "ey_vs_solicita_o_de_provis_es_de_fatura",
+ "description": "Variable Set referente ao Form Solicitação de Provisão de Fatura",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Provisões de Fatura"
+ ],
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Partial Reversal [=estorno_parcial]",
+    "Invoice [=fatura]",
+    "Freight [=frete]",
+    "Others [=outras]"
+   ]
+  },
+  {
+   "name": "vs_requesting_area",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Requesting Area",
+   "include_none": true,
+   "choices": [
+    "Sales Force [=sales_force]",
+    "Freight [=freight]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_request_description",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Describe the type of request"
+  },
+  {
+   "name": "v_attach_template_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach template file"
+  },
+  {
+   "name": "v_informative_note_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_document_repository",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Document Repository"
+  },
+  {
+   "name": "v_template_provision_avon_natura",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "Request for Invoice Provisions - Avon & Natura",
+   "macro": "TMP DL Provision",
+   "widget": "TMP DL Provision"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show the request_description field when v_request_type is others",
+   "when": "IO:v_request_type=outras^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_description: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_description: readonly=true",
+    "v_request_type: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_repository: mandatory=true",
+    "v_informative_note_1: mandatory=true",
+    "v_attach_template_file: mandatory=true",
+    "v_informative_note_2: mandatory=true",
+    "v_request_type: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Data fechamento",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que consulta a janela de fechamento contábil. Chama o Script Include EY_RTRUtils, método isNowInDefinedSchedules, via GlideAjax, sem parâmetros. O retorno é a string 'true' ou 'false': quando 'true', exibe e torna obrigatória 'vs_requesting_area'; caso contrário esconde e desobriga. Ou seja, o campo só aparece dentro do período de fechamento definido no Script Include."
+  }
+ ]
+}

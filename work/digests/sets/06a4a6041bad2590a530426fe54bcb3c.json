@@ -1,0 +1,66 @@
+{
+ "sys_id": "06a4a6041bad2590a530426fe54bcb3c",
+ "title": "EY VS - Registro IFRS 16",
+ "internal_name": "ey_vs_registro_ifrs_16",
+ "description": "Variable Set referente ao Form Registro IFRS 16",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Registros IFRS 16"
+ ],
+ "variaveis": [
+  {
+   "name": "v_what_is_the_initial_period",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the initial period?"
+  },
+  {
+   "name": "v_what_is_the_final_period",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the final period?"
+  },
+  {
+   "name": "v_describe_the_information_you_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the information you need"
+  },
+  {
+   "name": "v_attach_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach file"
+  },
+  {
+   "name": "v_informative_note",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_the_information_you_need: readonly=true",
+    "v_what_is_the_final_period: readonly=true",
+    "v_what_is_the_initial_period: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_the_information_you_need: mandatory=true",
+    "v_attach_file: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

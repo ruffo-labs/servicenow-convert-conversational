@@ -1,0 +1,115 @@
+{
+ "sys_id": "815231471bb18e90d1abda4ce54bcb1b",
+ "title": "Type of request",
+ "internal_name": "type_of_request",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de compras descentralizadas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the type of request?",
+   "include_none": true,
+   "choices": [
+    "PR creation [=pr_creation]",
+    "Creation and Acceptance of Service Sheet [=creation_acceptance_service_sheet]"
+   ]
+  },
+  {
+   "name": "vs_type_of_contract",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of contractation",
+   "include_none": true,
+   "choices": [
+    "Service [=service]",
+    "Material [=material]"
+   ]
+  },
+  {
+   "name": "vs_purchase_order_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purchase order number"
+  },
+  {
+   "name": "vs_order_line",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Order line"
+  },
+  {
+   "name": "vs_location_service_provision",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Location of service provision",
+   "reference": "x_nasm_ptp_place_of_service_provision",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "vs_service_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Service description"
+  },
+  {
+   "name": "vs_confirm_service_provision",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Can we confirm service provision?",
+   "include_none": true
+  },
+  {
+   "name": "vs_start_date_service_provision",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start date of service provision"
+  },
+  {
+   "name": "vs_end_date_service_provision",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End date of service provision"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory if \"What type of request\" is \"Creation and Acceptance of Service Sheet\"",
+   "when": "IO:vs_type_of_request=creation_acceptance_service_sheet^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_order_line: visible=true,mandatory=true",
+    "vs_purchase_order_number: visible=true,mandatory=true",
+    "vs_service_description: visible=true,mandatory=true",
+    "vs_location_service_provision: visible=true,mandatory=true",
+    "vs_confirm_service_provision: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory if \"What is the type of request?\" is \"PR Creation\"",
+   "when": "IO:vs_type_of_request=pr_creation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_type_of_contract: visible=true,mandatory=true",
+    "vs_start_date_service_provision: visible=true,mandatory=true",
+    "vs_end_date_service_provision: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_type_of_request: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

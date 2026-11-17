@@ -1,0 +1,65 @@
+{
+ "sys_id": "a782884b1bf986d0a530426fe54bcb7f",
+ "title": "EY VS - Sox",
+ "internal_name": "ey_vs_sox",
+ "description": "",
+ "usado_por": 6,
+ "itens_exemplo": [
+  "Estorno de Lançamento Contábil",
+  "Lançamento Contábil Avon",
+  "Outros lançamentos contábeis - Intercompany, mercadoria e caixa em trânsito",
+  "Solicitação de Apropriação e Diferimento",
+  "Solicitação de Provisões de Fatura",
+  "Lançamento Contábil - Natura + TBS"
+ ],
+ "variaveis": [
+  {
+   "name": "does_this_request_have_sox_control_attached",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Does this request have sox control attached?",
+   "include_none": true,
+   "choices": [
+    "No [=no]",
+    "Sí [=yes]"
+   ]
+  },
+  {
+   "name": "sox_control_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Sox Control Name"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If Sox Control is YES 2",
+   "when": "IO:does_this_request_have_sox_control_attached=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sox_control_name: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly Case",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "does_this_request_have_sox_control_attached: readonly=true",
+    "sox_control_name: "
+   ]
+  },
+  {
+   "name": "EY: If Sox Control is YES",
+   "when": "IO:does_this_request_have_sox_control_attached=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sox_control_name: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

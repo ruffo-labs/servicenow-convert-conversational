@@ -1,0 +1,72 @@
+{
+ "sys_id": "beaf14601bed21d0a530426fe54bcbd6",
+ "title": "EY VS - Informações Bloco K",
+ "internal_name": "ey_vs_informa_es_bloco_k",
+ "description": "Variable Set referente ao Form Informações Bloco K",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Informações Bloco K"
+ ],
+ "variaveis": [
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "include_none": true,
+   "choices": [
+    "K Block [=v_k_block]"
+   ]
+  },
+  {
+   "name": "v_report_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Report Start Date"
+  },
+  {
+   "name": "v_report_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Report End Date"
+  },
+  {
+   "name": "v_describe_the_information_you_need",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the information you need"
+  },
+  {
+   "name": "v_attach_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach file"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: readonly=true",
+    "v_report_end_date: readonly=true",
+    "v_report_start_date: readonly=true",
+    "v_describe_the_information_you_need: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_the_information_you_need: mandatory=true",
+    "v_request_type: mandatory=true",
+    "v_attach_file: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

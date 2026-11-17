@@ -1,0 +1,118 @@
+{
+ "sys_id": "951b75c444944459b05139cfc8417e2c",
+ "status": "dividido",
+ "motivo": "Instalar, atualizar, configurar ou desinstalar pedem equipamento, sistema operacional e programa; os pedidos de EndPoint Central e dúvidas só pedem descrição; consultas e relatórios pedem também assinatura digital e DocXpress. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_qual_e_o_equipamento": {
+   "label": "Qual é o equipamento?"
+  },
+  "v_qual_sistema_operacional": {
+   "label": "Qual o sistema operacional do equipamento?"
+  },
+  "v_qual_programa_aplicativo": {
+   "label": "Qual programa ou aplicativo você precisa?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_assinatura_digital": {
+   "label": "Você precisa de assinatura digital?"
+  },
+  "v_docxpress_kofax": {
+   "label": "Você precisa do DocXpress (Kofax)?"
+  }
+ },
+ "policies": {
+  "e5a7f1f3db4f413f91cdcbd284ba5707": "remover",
+  "6dd055eff9c54a7894470ff3b13c2325": "remover"
+ },
+ "itens": [
+  {
+   "name": "Instalar, atualizar, configurar ou desinstalar um programa",
+   "short_description": "Pedir ação em um software de um equipamento.",
+   "description": "Use para mexer em um programa instalado ou a instalar. As opções atendidas são Atualizar, Configurar, Desinstalar e Instalar. Informe o equipamento, o sistema operacional e o programa ou aplicativo.",
+   "frases_exemplo": [
+    "Preciso instalar um programa no meu computador",
+    "Quero atualizar o aplicativo",
+    "Podem desinstalar um software que não uso?",
+    "Preciso configurar um programa no meu notebook",
+    "Instalar o Office na máquina nova"
+   ],
+   "sem_vars": [
+    "v_assinatura_digital",
+    "v_docxpress_kofax"
+   ],
+   "vars": {
+    "v_qual_e_o_equipamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_sistema_operacional": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_programa_aplicativo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Pedir suporte no EndPoint Central ou tirar dúvidas",
+   "short_description": "Pedir ajuste de agentes, SDL ou equipamentos no EndPoint Central, ou esclarecer dúvidas.",
+   "description": "Use para ações no EndPoint Central ou para dúvidas. As opções atendidas são Atualizar Instalação de Agentes, Criar Acesso para SDL no Portal, Dúvidas e Informações, Excluir equipamento e Mover equipamento entre Escritório Remoto. Descreva o que precisa.",
+   "frases_exemplo": [
+    "Preciso de acesso ao SDL no EndPoint Central",
+    "Quero excluir um equipamento do EndPoint Central",
+    "Mover um computador para outro escritório remoto",
+    "O agente do EndPoint está desatualizado",
+    "Tenho uma dúvida sobre softwares"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_equipamento",
+    "v_qual_sistema_operacional",
+    "v_qual_programa_aplicativo",
+    "v_assinatura_digital",
+    "v_docxpress_kofax"
+   ]
+  },
+  {
+   "name": "Consultar ou pedir relatório de softwares",
+   "short_description": "Pedir uma consulta ou relatório, informando assinatura digital e DocXpress.",
+   "description": "Use para consultas e relatórios sobre softwares. As opções atendidas são Consultar e Solicitar Relatório. Informe a descrição e se precisa de assinatura digital ou do DocXpress (Kofax).",
+   "frases_exemplo": [
+    "Preciso de um relatório dos softwares instalados",
+    "Quero consultar as licenças de um programa",
+    "Podem gerar um relatório de aplicativos?",
+    "Preciso saber quem usa assinatura digital",
+    "Solicito uma consulta sobre o DocXpress"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_equipamento",
+    "v_qual_sistema_operacional",
+    "v_qual_programa_aplicativo"
+   ],
+   "vars": {
+    "v_assinatura_digital": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_docxpress_kofax": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

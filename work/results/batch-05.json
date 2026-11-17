@@ -1,0 +1,2835 @@
+[
+ {
+  "sys_id": "58c52cfc3b7c5290924d0247f4e45a3d",
+  "nome_atual": "Solicitar troca de escala coletiva",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 12,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Item de baixo volume, sem bloqueadores, mas com 3 checkboxes de turno agrupados por um label, um checkbox de ciência e um anexo obrigatório apenas mencionado em rich text. Com troca dos checkboxes, ciência em Sim/Não e anexo no fim da conversa, fica curto e conversável.",
+  "nome_sugerido": "Solicitar troca coletiva de escala (feriado por dia trabalhado)",
+  "short_description_sugerida": "Pedir a troca coletiva de um feriado por outro dia trabalhado para os turnos de uma filial.",
+  "descricao_sugerida": "Use para pedir a troca coletiva de escala, ou seja, quando um grupo de colaboradores de uma filial vai folgar num feriado e trabalhar em outro dia no lugar. A troca depende de aprovação das relações sindicais e deve ser pedida com pelo menos 5 dias úteis de antecedência. É obrigatório anexar o e-mail de acordo das relações sindicais com as regras da troca. Não use para troca individual de folga ou de turno de um único colaborador, nem para dúvidas sobre banco de horas ou ponto.",
+  "frases_exemplo": [
+   "Preciso trocar o feriado de sexta por um sábado trabalhado para a fábrica",
+   "quero fazer troca de escala coletiva do feriado",
+   "a filial vai folgar no feriado e compensar no sábado, como peço?",
+   "troca de feriado por dia trabalhado para o 1º e 2º turno",
+   "solicitar mudança coletiva de escala aprovada pelo sindicato"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variaveis primeiro_turno / segundo_turno / terceiro_turno",
+    "problema": "Checkboxes agrupados por um label (eligible_shifts_for_collective_schedule_change) marcado como obrigatório; checkbox não é agrupado na conversa e o label não gera pergunta.",
+    "acao": "Substituir pelos turnos numa única pergunta: nova_turnos (List Collector sobre uma tabela simples de opções 1º, 2º e 3º turno, sem filtro dinâmico). Ajustar o flow para ler a nova variável."
+   },
+   {
+    "onde": "variavel v_text (rich text)",
+    "problema": "Exige anexar o e-mail de acordo sindical, mas não há variável de anexo; o texto não chega ao LLM.",
+    "acao": "Levar a exigência para a descrição e pedir o anexo ao final da conversa (anexo do caso) ou criar nova_anexo_acordo_sindical (Attachment OOB, obrigatória)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_filial",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual filial será feita a troca de escala?",
+    "obs": "Reference qualifier dinâmico depende de vs_which_sub_company; testar se resolve na conversa. Se não resolver, trocar por qualificador simples filtrando pela empresa do perfil."
+   },
+   {
+    "ordem": 2,
+    "variavel": "which_day_will_be_off",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual feriado (data) será de folga?",
+    "obs": "Data no formato yyyy-mm-dd."
+   },
+   {
+    "ordem": 3,
+    "variavel": "which_day_will_be_worked",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual dia será trabalhado no lugar do feriado?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "nova_turnos",
+    "origem": "item",
+    "acao": "nova",
+    "tipo_sugerido": "List Collector (opções estáticas: 1º, 2º, 3º turno)",
+    "conversational_label": "Quais turnos participam da troca?",
+    "obs": "Substitui primeiro_turno, segundo_turno e terceiro_turno."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_detail",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar algum detalhe sobre a troca?",
+    "obs": "Hoje é obrigatório pela policy; sugerir torná-lo opcional."
+   },
+   {
+    "ordem": 6,
+    "variavel": "fleg_ciente",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Sim/Não (Include None)",
+    "conversational_label": "Você está ciente de que a troca depende de aprovação sindical e precisa de 5 dias úteis de antecedência?",
+    "obs": "Label atual é uma frase longa em inglês; manter obrigatório."
+   },
+   {
+    "ordem": 7,
+    "variavel": "primeiro_turno",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Substituído por nova_turnos."
+   },
+   {
+    "ordem": 8,
+    "variavel": "segundo_turno",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Substituído por nova_turnos."
+   },
+   {
+    "ordem": 9,
+    "variavel": "terceiro_turno",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Substituído por nova_turnos."
+   },
+   {
+    "ordem": 10,
+    "variavel": "eligible_shifts_for_collective_schedule_change",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label que hoje recebe mandatory=true; sem efeito na conversa."
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_text",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Conteúdo vai para a descrição; anexo pedido no fim da conversa."
+   },
+   {
+    "ordem": 12,
+    "variavel": "personal_information",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text informativo, não gera pergunta útil."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Marcar Mandatory direto nas variáveis (v_filial, which_day_will_be_off, which_day_will_be_worked, fleg_ciente, nova_turnos) e retirar o mandatory do label e de v_detail. Excluir a policy."
+   },
+   {
+    "nome": "EY: Read only fields / EY: Hide fields VS",
+    "acao": "manter",
+    "substituicao": "Policies do variable set (v_opened_by read-only, v_country oculto); tratadas na análise dos sets."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script define requested_for como o usuário logado, coerente com um pedido feito pelo gestor da filial. Baixo volume: fazer o ajuste junto com a revisão do set 'EY VS - Empresas Natura/Avon'."
+ },
+ {
+  "sys_id": "4a564f8b3bfb0e10924d0247f4e45a5e",
+  "nome_atual": "Dúvidas, consultas, reclamações ou sugestões sobre Dados Pessoais",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 131,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Item simples do catálogo hispânico (motivo, categoria e detalhe), sem bloqueadores. Precisa de nome e descrição que o separem do pedido de modificação de dados pessoais e do genérico brasileiro, conversational labels e troca da validação de 40 caracteres por regex.",
+  "nome_sugerido": "Tirar dúvida ou registrar reclamação sobre dados pessoais (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre seus dados pessoais cadastrados no RH, para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre seus dados pessoais cadastrados (documento, estado civil, contatos, dependentes, dados bancários etc.), quando o tema não estiver nas perguntas frequentes de dados pessoais do seu país. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para pedir a alteração efetiva dos dados (use 'Solicitar alteração de dados pessoais') nem se você trabalha no Brasil.",
+  "frases_exemplo": [
+   "tengo una duda sobre mis datos personales",
+   "quero reclamar que meu endereço está errado no sistema",
+   "consulta sobre mis datos registrados en RRHH",
+   "sugestão sobre o cadastro de dependentes",
+   "no sé cómo ver mis datos personales en Workday"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_contact_reason",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+    "obs": "Mandatory direto na variável."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_select_the_category_lookup",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual tema dos seus dados pessoais?",
+    "obs": "Lookup com reference qualifier dinâmico por elegibilidade do colaborador (getElegibilityCategory). Testar na conversa; se não resolver, avaliar lista de opções estática por país."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_detail_field",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Adicionar Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_minimun_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Legenda substituída pela mensagem da Validation Regex."
+   },
+   {
+    "ordem": 5,
+    "variavel": "FAQs",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Instrução vai para a descrição (link das FAQs por país)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory - v_select_category_lookup / v_detail_field / v_contact_reason",
+    "acao": "converter",
+    "substituicao": "Três policies onLoad sem condição: marcar Mandatory direto nas variáveis e excluir as policies."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange",
+    "acao": "remover",
+    "substituicao": "Legenda de mínimo de caracteres substituída pela Validation Regex."
+   },
+   {
+    "nome": "EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Sem a legenda, o script perde função."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter 'Use NLU' desmarcado.",
+    "Descrição e frases em pt-BR e espanhol ajudam o LLM a casar a intenção do público hispânico."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais do set (ocultar na conversa o que é auto-preenchido) são feitas na análise separada e são decisivas para este item."
+ },
+ {
+  "sys_id": "bcb96c711b942550d1abda4ce54bcbce",
+  "nome_atual": "Informações ou dúvidas relacionadas à Dados Pessoais",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 367,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 25,
+  "justificativa": "Formulário genérico de uma pergunta só, bloqueado apenas pelos dois widgets de busca (Custom). Removendo-os e limpando policies órfãs, vira um item conversacional de uma pergunta, ideal para o Now Assist.",
+  "nome_sugerido": "Tirar dúvida sobre dados pessoais (Brasil)",
+  "short_description_sugerida": "Envie ao RH uma dúvida sobre seus dados pessoais cadastrados quando não houver formulário específico nem resposta nos materiais de apoio.",
+  "descricao_sugerida": "Use para tirar dúvidas ou pedir informações sobre seus dados pessoais cadastrados no RH (nome, documentos, endereço, contatos, dependentes etc.) quando o assunto não tiver um formulário específico nem estiver nos materiais de apoio. Para colaboradores no Brasil. Não use para pedir declarações ou documentos, nem se você trabalha em país da América Hispânica (use o formulário hispânico de dados pessoais).",
+  "frases_exemplo": [
+   "tenho uma dúvida sobre meus dados cadastrais",
+   "meu nome está errado no sistema do RH, o que faço?",
+   "como atualizo meu endereço no cadastro?",
+   "dúvida sobre cadastro de dependente",
+   "onde vejo meus dados pessoais?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel contextual_search_results",
+    "problema": "Tipo Custom com UI Macro cxs_rp_search e widget de busca contextual; não renderiza em conversa e trava o modo conversacional.",
+    "acao": "Remover do item (ou ocultar na VA). Na conversa o próprio Now Assist já busca e sugere artigos de KB antes de abrir o caso."
+   },
+   {
+    "onde": "variavel ai_search_assist",
+    "problema": "Tipo Custom com widget 'Assistência para pesquisa com IA'; não renderiza em conversa.",
+    "acao": "Remover do item; a deflexão por KB já é feita pelo Now Assist/AI Search na conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_description_details",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a sua dúvida sobre dados pessoais? Conte com detalhes.",
+    "obs": "Mandatory na variável + Validation Regex de tamanho mínimo."
+   },
+   {
+    "ordem": 2,
+    "variavel": "Info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text informativo; conteúdo relevante vai para a descrição."
+   },
+   {
+    "ordem": 3,
+    "variavel": "contextual_search_results",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   },
+   {
+    "ordem": 4,
+    "variavel": "ai_search_assist",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show kb link",
+    "acao": "remover",
+    "substituicao": "Condição usa v_have_you_tried_searching_the_knowledge_base e ação em link_kb, variáveis que não existem mais no item (policy órfã). Remover."
+   },
+   {
+    "nome": "EY: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Marcar v_description_details como Mandatory direto na variável e remover as ações órfãs (v_have_you_already_searched_the_portals_search_engine, v_have_you_tried_searching_the_knowledge_base). Depois excluir a policy."
+   },
+   {
+    "nome": "EY: minimum caracter",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Há um container end ('formatter') sem container start; remover para limpar o formulário. Mesmo padrão dos genéricos de Declarações, Desligamento, Benefícios e Férias: vale aplicar a mesma correção em lote."
+ },
+ {
+  "sys_id": "bd7ff4121bb41690514cbaef4b4bcb86",
+  "nome_atual": "Solicitação de modificação de Dados Pessoais",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 57,
+  "recomendacao": "dividir",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 15,
+  "justificativa": "O select v_select_category (banco, endereço, dependentes) muda todo o formulário via 9 UI policies, somando 34 perguntas (acima do limite de 20) e um client script sem VA Supported. Cada ramo é uma intenção clara ('mudar minha conta', 'mudar meu endereço'); separados, cada item fica com 3 a 10 perguntas e sem scripts de opções.",
+  "nome_sugerido": "Solicitar alteração de dados pessoais (América Hispânica)",
+  "short_description_sugerida": "Pedir a alteração de dados bancários, endereço ou dependentes no cadastro do RH (público operacional de Argentina, Chile, Colômbia e Equador).",
+  "descricao_sugerida": "Item pai substituído pelos itens derivados por tipo de alteração. Use para alterar dados cadastrais (conta bancária, endereço, dependentes) do público operacional. Não use para dúvidas sobre dados pessoais.",
+  "frases_exemplo": [
+   "quiero cambiar mi cuenta bancaria",
+   "preciso atualizar meu endereço",
+   "cambiar mi domicilio",
+   "quero incluir um dependente"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Add options onChange",
+    "problema": "Sem VA Supported; remove e recoloca opções do tipo de conta bancária com g_form.",
+    "acao": "Remover. No derivado de dados bancários, deixar em v_bank_account_type só as opções válidas (desativar as demais na tabela de choices) ou usar choices dependentes do país sem script."
+   },
+   {
+    "onde": "item inteiro",
+    "problema": "34 perguntas; acima de 20 a VA abre janela em vez de conversar.",
+    "acao": "Dividir por categoria (itens_derivados)."
+   },
+   {
+    "onde": "variavel v_declare_checkbox",
+    "problema": "Checkbox de declaração sob juramento.",
+    "acao": "Trocar por Sim/Não (Include None) obrigatório no derivado de endereço."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show category / EY: Show ... (9 policies por categoria)",
+    "acao": "remover",
+    "substituicao": "A categoria vira o próprio item. As condições por país (ARG x COL/CHL/ECU) continuam como UI Policy sem script, baseadas em v_country (derivado do perfil) dentro de cada derivado."
+   },
+   {
+    "nome": "EY: Regex to set CBU",
+    "acao": "converter",
+    "substituicao": "Validation Regex ^\\d{22}$ direto em v_cbu com mensagem 'O CBU deve ter 22 dígitos'."
+   },
+   {
+    "nome": "EY: Remove option onLoad / EY: Add options onChange",
+    "acao": "remover",
+    "substituicao": "Desativar as opções não usadas de v_bank_account_type; sem manipulação de opções por script."
+   },
+   {
+    "nome": "EY: Clear values on catagory changes",
+    "acao": "remover",
+    "substituicao": "Sem select de categoria no derivado, não há o que limpar."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda v_minimum_characters substituída pela Validation Regex."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Dados bancários são sensíveis: validar com Privacidade/Jurídico se o derivado de dados bancários pode trafegar pelo LLM; se não, marcar 'Turn off Now Assist' só nele."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Alterar dados bancários para pagamento de salário",
+    "short_description": "Pedir a troca da conta bancária onde você recebe o salário (público operacional de Argentina, Chile, Colômbia e Equador).",
+    "descricao": "Use para informar uma nova conta bancária para receber o salário. Na Argentina informe o CBU (22 dígitos); em Chile, Colômbia e Equador informe número e tipo de conta. Não use para dúvidas sobre pagamento ou folha (use o formulário de remuneração).",
+    "frases_exemplo": [
+     "quiero cambiar mi cuenta sueldo",
+     "cambié de banco, cómo actualizo mi CBU?",
+     "quero mudar a conta onde recebo o salário",
+     "nueva cuenta bancaria para el pago"
+    ],
+    "fixar": "v_select_category = bank (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_bank_name",
+      "conversational_label": "Qual é o nome do banco?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_cbu",
+      "conversational_label": "Qual é o CBU da conta (22 dígitos)?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_bank_account_number",
+      "conversational_label": "Qual é o número da conta?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_bank_account_type",
+      "conversational_label": "Qual é o tipo de conta (corrente ou poupança)?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_detail",
+      "conversational_label": "Quer acrescentar algum detalhe?"
+     }
+    ]
+   },
+   {
+    "nome": "Alterar endereço no cadastro do RH",
+    "short_description": "Pedir a atualização do seu endereço residencial (público operacional de Argentina, Chile, Colômbia e Equador).",
+    "descricao": "Use quando você se mudou e precisa atualizar o endereço no cadastro do RH. Na Argentina o endereço é pedido por partes (rua, número, andar, bairro, localidade, CEP, telefone); nos demais países, em um único campo. Exige declarar que a informação é verdadeira.",
+    "frases_exemplo": [
+     "me mudé, quiero actualizar mi domicilio",
+     "preciso trocar meu endereço",
+     "cambio de dirección",
+     "actualizar mi dirección y teléfono"
+    ],
+    "fixar": "v_select_category = address (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_full_address",
+      "conversational_label": "Qual é o seu novo endereço completo (prédio, bairro, andar, apartamento, município)?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_calle",
+      "conversational_label": "Qual é a rua?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_number",
+      "conversational_label": "Qual é o número?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_floor",
+      "conversational_label": "Qual é o andar? (se houver)"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_dept",
+      "conversational_label": "Qual é o apartamento? (se houver)"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_between_streets",
+      "conversational_label": "Entre quais ruas fica?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_neighborhood",
+      "conversational_label": "Qual é o bairro?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_location_form",
+      "conversational_label": "Qual é a localidade?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_party",
+      "conversational_label": "Qual é o partido (município)?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_postal_code",
+      "conversational_label": "Qual é o código postal?"
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_phone",
+      "conversational_label": "Qual é o telefone de contato (celular ou fixo)?"
+     },
+     {
+      "ordem": 12,
+      "variavel": "v_declare_checkbox",
+      "conversational_label": "Você declara sob juramento que as informações são verdadeiras?"
+     }
+    ]
+   },
+   {
+    "nome": "Alterar dependentes no cadastro do RH",
+    "short_description": "Pedir inclusão, exclusão ou correção de dependentes (público operacional de Argentina, Chile, Colômbia e Equador).",
+    "descricao": "Use para incluir, excluir ou corrigir dependentes no cadastro do RH. Descreva a alteração e anexe os documentos comprobatórios ao final. As orientações hoje em v_message_1 devem ir para esta descrição.",
+    "frases_exemplo": [
+     "quiero agregar a mi hijo como carga familiar",
+     "preciso incluir minha esposa como dependente",
+     "dar de baja un dependiente",
+     "corregir datos de mi hijo"
+    ],
+    "fixar": "v_select_category = dependents (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_detail",
+      "conversational_label": "Qual alteração de dependente você precisa? Informe nome e parentesco."
+     }
+    ]
+   }
+  ],
+  "observacoes": "Rich texts v_message_data, v_message_physical_bank, v_message_1, v_message_2 e v_minimum_characters não chegam ao LLM: levar o conteúdo para a descrição de cada derivado. Os campos de ARG x demais países continuam condicionados por UI Policy sem script em v_country. Volume baixo: se o custo de manter 3 itens for alto, alternativa é manter o item como formulário (non-conversational) com nome/descrição melhorados."
+ },
+ {
+  "sys_id": "b9f1160b1b3d8510d1abda4ce54bcbef",
+  "nome_atual": "Workday Wiki - Materiais de apoio para execução de processos no Workday",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 0,
+  "justificativa": "Zero registros nos últimos 12 meses (e no total). É um record producer sem variáveis usado como vitrine/link para material de apoio do Workday, papel que cabe melhor num artigo de KB que o Now Assist já encontra e resume.",
+  "nome_sugerido": "Materiais de apoio do Workday",
+  "short_description_sugerida": "Guias e materiais de apoio para executar processos no Workday.",
+  "descricao_sugerida": "Conteúdo de apoio sobre como executar processos no Workday. Sugere-se migrar para artigo(s) de base de conhecimento em vez de item de catálogo.",
+  "frases_exemplo": [
+   "como faço isso no Workday?",
+   "manual do Workday",
+   "onde acho os guias do Workday?"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se mantido como link, marcar non-conversational para abrir direto."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Tem uma lista grande de flows genéricos associados (herança), sem relação com o conteúdo. Confirmar com o dono antes de desativar e publicar o conteúdo como KB."
+ },
+ {
+  "sys_id": "87cb02061b5ce950a530426fe54bcb55",
+  "nome_atual": "Aplicação / Devolução de Medida Disciplinar",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 214,
+  "recomendacao": "dividir",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "O select v_type_of_service separa duas intenções diferentes: o gestor pedir a emissão de uma advertência (dados do colaborador, tipo e motivo) e devolver a advertência assinada (quem recebeu + anexo). Cada ramo tem perguntas próprias e volume relevante; separados, cada item tem 2 a 3 perguntas reais, porque o resto é auto-preenchido.",
+  "nome_sugerido": "Medida disciplinar (emissão ou devolução)",
+  "short_description_sugerida": "Pedir a emissão de uma medida disciplinar ou devolver a medida assinada pelo colaborador.",
+  "descricao_sugerida": "Item pai substituído pelos dois derivados: emissão e devolução de medida disciplinar.",
+  "frases_exemplo": [
+   "preciso aplicar uma advertência",
+   "devolver advertência assinada"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel v_attach",
+    "problema": "Attachment exige tratamento à parte na conversa.",
+    "acao": "No derivado de devolução, manter o Attachment OOB obrigatório (pergunta de anexo) ou pedir o anexo ao final da conversa."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory if Issuance / EY: Mandatory and read only if return",
+    "acao": "remover",
+    "substituicao": "O tipo vira o próprio item; obrigatoriedade e read-only passam para atributos das variáveis em cada derivado."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "v_opened_by read-only e oculto na conversa por atributo; v_type_of_service fixo por default/hidden."
+   },
+   {
+    "nome": "EY: Fill data job requester / EY: Fill ID / EY: Fill data job contributor's",
+    "acao": "converter",
+    "substituicao": "Trocar por Auto-populate (dependent question) a partir de v_requester, v_name e v_who_received (campos de x_nasm_hr_profile) e remover os scripts."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Tema sensível (disciplinar): validar com Jurídico/Relações Trabalhistas se o motivo da advertência pode trafegar pelo LLM; se não, marcar 'Turn off Now Assist' no derivado de emissão."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar emissão de medida disciplinar (advertência)",
+    "short_description": "Gestor pede ao RH a emissão de advertência ou medida disciplinar para um colaborador.",
+    "descricao": "Use quando você, como gestor, precisa que o RH emita uma medida disciplinar (advertência ou suspensão) para um colaborador da sua equipe. Informe o colaborador, o tipo de medida e o motivo. Não use para devolver a medida já assinada (use 'Devolver medida disciplinar assinada').",
+    "frases_exemplo": [
+     "preciso dar uma advertência para um colaborador",
+     "quero aplicar uma suspensão",
+     "emitir advertência por atraso",
+     "gerar medida disciplinar para alguém do meu time",
+     "como faço advertência formal?"
+    ],
+    "fixar": "v_type_of_service = issuance (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_name",
+      "conversational_label": "Qual colaborador vai receber a medida disciplinar?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_warning_type",
+      "conversational_label": "Qual é o tipo de medida (advertência ou suspensão)?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_reason",
+      "conversational_label": "Qual é o motivo da medida? Descreva o ocorrido."
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_requester",
+      "conversational_label": "(derivar) default gs.getUserID() e oculto na conversa; v_id, v_area_department e v_company auto-populados"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_id2 / v_area_department2 / v_company2",
+      "conversational_label": "(derivar) auto-populate a partir de v_name, read-only e ocultos na conversa"
+     }
+    ]
+   },
+   {
+    "nome": "Devolver medida disciplinar assinada",
+    "short_description": "Enviar ao RH a medida disciplinar assinada pelo colaborador.",
+    "descricao": "Use para devolver ao RH a advertência ou medida disciplinar já emitida e assinada pelo colaborador, anexando o documento. Não use para pedir uma nova medida.",
+    "frases_exemplo": [
+     "devolver advertência assinada",
+     "o colaborador assinou a advertência, onde envio?",
+     "anexar medida disciplinar assinada",
+     "retorno da advertência"
+    ],
+    "fixar": "v_type_of_service = return (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_who_received",
+      "conversational_label": "Qual colaborador recebeu a medida disciplinar?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_attach",
+      "conversational_label": "Anexe a medida disciplinar assinada."
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_id3",
+      "conversational_label": "(derivar) auto-populate a partir de v_who_received, oculto na conversa"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Reference qualifiers de v_requester, v_name e v_who_received são estáticos (user.active=true^ORuser.locked_out=true), o que é aceitável; x_nasm_hr_profile é tabela grande, então ajustar as propriedades de busca de referência. Producer script marca o caso como prioritário; manter nos dois derivados."
+ },
+ {
+  "sys_id": "2c07a9771ba48510a530426fe54bcbb9",
+  "nome_atual": "Declaração de vínculo ou lotação e escala de trabalho",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 166,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 50,
+  "justificativa": "Item quase pronto: uma única pergunta (tipo de declaração) mais o colaborador com default. O que falta é nome e descrição (ambos vazios hoje), essenciais para o LLM achar o item e separá-lo da 'Solicitação de declaração' genérica.",
+  "nome_sugerido": "Pedir declaração de vínculo, lotação ou escala de trabalho",
+  "short_description_sugerida": "Emitir declaração de vínculo empregatício, de lotação ou de escala de trabalho.",
+  "descricao_sugerida": "Use para pedir uma declaração que comprove seu vínculo com a empresa, seu local de lotação ou sua escala/horário de trabalho, por exemplo para faculdade, banco, aluguel ou órgão público. Não use para outros tipos de declaração (use 'Solicitar declaração') nem para documentos de processo trabalhista ou PPP.",
+  "frases_exemplo": [
+   "preciso de uma declaração de vínculo empregatício",
+   "declaração que trabalho na empresa para a faculdade",
+   "quero uma declaração com minha escala de trabalho",
+   "declaração de lotação",
+   "comprovante de que sou funcionário"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "escolha_o_tipo_de_declaracao",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual declaração você precisa: de vínculo, de lotação ou de escala de trabalho?",
+    "obs": "Tornar obrigatória na variável (hoje sem policy de mandatory)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "employee",
+    "origem": "set:Suas informações pessoais",
+    "acao": "ocultar_na_conversa",
+    "obs": "Já vem com default do usuário logado; ocultar/read-only na conversa neste item, pois a declaração é sempre do próprio solicitante."
+   }
+  ],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Há dois flows associados, um deles 'Cópia de ...' — verificar se a cópia está ativa, para evitar execução duplicada. Avaliar no futuro consolidar como opção de 'Solicitar declaração' (3ac2b8cc...), que atende o mesmo público (Brasil)."
+ },
+ {
+  "sys_id": "59a2d0171bef9190d1abda4ce54bcb98",
+  "nome_atual": "Documentos para Processo Trabalhista, Auditoria e Fiscalização",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 445,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "Sem bloqueadores, mas 20 perguntas, 10 delas checkboxes de documentos soltos, o que fica ruim na conversa. Trocando os checkboxes por uma única pergunta de múltipla seleção, o item cai para 6 a 8 perguntas. O ramo auditoria/fiscalização é trivial (1 campo), então não compensa dividir.",
+  "nome_sugerido": "Solicitar documentos para processo trabalhista, auditoria ou fiscalização",
+  "short_description_sugerida": "Pedir ao RH documentos de um colaborador ou ex-colaborador para defesa em processo trabalhista, auditoria ou fiscalização.",
+  "descricao_sugerida": "Use quando a área Jurídica, de auditoria ou de compliance precisa de documentos trabalhistas de um colaborador ou ex-colaborador (contrato, cartões de ponto, holerites, FGTS - Fundo de Garantia do Tempo de Serviço, TRCT - Termo de Rescisão do Contrato de Trabalho, PPP - Perfil Profissiográfico Previdenciário, fichas de EPI - Equipamento de Proteção Individual etc.) para processo trabalhista, auditoria ou fiscalização. Não use para pedir o seu próprio PPP (use 'PPP - Perfil Profissiográfico Previdenciário') nem declarações comuns.",
+  "frases_exemplo": [
+   "preciso dos documentos do reclamante para um processo trabalhista",
+   "documentos para defesa trabalhista",
+   "a fiscalização pediu documentos de um funcionário",
+   "preciso de cartões de ponto e holerites de um ex-colaborador para auditoria",
+   "solicitar TRCT e FGTS para processo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variaveis v_early_warning ... v_others (10 checkboxes)",
+    "problema": "Checkboxes soltos sob um label; checkbox não é agrupado na conversa e gera 10 perguntas de sim/não.",
+    "acao": "Substituir por nova_documentos (List Collector sobre tabela simples de tipos de documento, sem filtro dinâmico), com a opção 'Outros'. Ajustar o flow, que hoje lê os checkboxes."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_enter_the_type_of_process",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Os documentos são para processo trabalhista, auditoria ou fiscalização?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_claimant_s_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual colaborador ou ex-colaborador são os documentos?",
+    "obs": "Default gs.getUserID() não faz sentido (o reclamante raramente é quem pede); remover o default. Tabela x_nasm_hr_profile é grande: ajustar busca de referência."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_company",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual empresa é esse colaborador?",
+    "obs": "Avaliar derivar do perfil do reclamante (auto-populate) e deixar de perguntar."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_sub_company",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Qualificador dinâmico por marca (u_brand); testar na conversa. Só para Natura/TBS."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_date_of_admission",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual foi a data de admissão?",
+    "obs": "Só no processo trabalhista. Avaliar auto-populate pelo perfil."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_dismissal_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual foi a data de desligamento?",
+    "obs": "Só no processo trabalhista."
+   },
+   {
+    "ordem": 7,
+    "variavel": "nova_documentos",
+    "origem": "item",
+    "acao": "nova",
+    "tipo_sugerido": "List Collector",
+    "conversational_label": "Quais documentos você precisa?",
+    "obs": "Substitui os 10 checkboxes; só no processo trabalhista. Holerites hoje é obrigatório: validar no flow."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_inform_the_document",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual outro documento você precisa?",
+    "obs": "Visível quando nova_documentos contém 'Outros'."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_specify_the_required_documents",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quais documentos a auditoria ou fiscalização pediu?",
+    "obs": "Só para auditoria/fiscalização."
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação, como número do processo ou prazo?"
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_early_warning / v_employment_contract_and_any_additions / v_timecards / v_job_description / v_fgts_and_analytical_extract_and_payments_upon_termination / v_complete_registration_form / v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate / v_payslips / v_ppp / v_trct_and_proof_of_payment / v_others",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Substituídos por nova_documentos."
+   },
+   {
+    "ordem": 12,
+    "variavel": "v_text_checkbox",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label dos checkboxes."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY:  Mandatory",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_company, v_enter_the_type_of_process e v_claimant_s_name; excluir a policy."
+   },
+   {
+    "nome": "EY: If type is trabalhista",
+    "acao": "converter",
+    "substituicao": "Manter como UI Policy sem script, agora mostrando v_date_of_admission, v_dismissal_date e nova_documentos."
+   },
+   {
+    "nome": "EY: If type = trabalhista and doc=other",
+    "acao": "converter",
+    "substituicao": "Condição passa a ser nova_documentos contém 'Outros'."
+   },
+   {
+    "nome": "EY: Specify the required documents Visible / EY: Set Sub-Company",
+    "acao": "manter",
+    "substituicao": "Policies simples, sem script, compatíveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script usa o perfil do reclamante como requested_for; manter. Se o volume por tipo mostrar muito uso de auditoria/fiscalização, dá para dividir depois em dois itens."
+ },
+ {
+  "sys_id": "e58c5dad1b5c2150a530426fe54bcb64",
+  "nome_atual": "Informações ou dúvidas relacionadas à Declarações",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 103,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 25,
+  "justificativa": "Genérico de uma pergunta, bloqueado só pelos widgets de busca Custom. Removendo-os e as policies órfãs, fica pronto para conversa. Precisa de descrição que o separe dos itens que emitem declarações.",
+  "nome_sugerido": "Tirar dúvida sobre declarações e documentos do RH",
+  "short_description_sugerida": "Envie ao RH uma dúvida sobre declarações e documentos quando não houver formulário específico nem resposta nos materiais de apoio.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre declarações e documentos emitidos pelo RH (prazos, conteúdo, validade, como pedir) quando o assunto não tiver formulário próprio. Não use para pedir a emissão de uma declaração (use 'Solicitar declaração' ou 'Pedir declaração de vínculo, lotação ou escala de trabalho'), nem para PPP ou documentos de processo trabalhista.",
+  "frases_exemplo": [
+   "tenho uma dúvida sobre declaração",
+   "quanto tempo demora para sair minha declaração?",
+   "a declaração que recebi está errada",
+   "que tipo de declaração o RH emite?",
+   "dúvida sobre documento do RH"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel contextual_search_results",
+    "problema": "Tipo Custom com UI Macro cxs_rp_search e widget de busca contextual; não renderiza em conversa e trava o modo conversacional.",
+    "acao": "Remover do item (ou ocultar na VA). Na conversa o próprio Now Assist já busca e sugere artigos de KB antes de abrir o caso."
+   },
+   {
+    "onde": "variavel ai_search_assist",
+    "problema": "Tipo Custom com widget 'Assistência para pesquisa com IA'; não renderiza em conversa.",
+    "acao": "Remover do item; a deflexão por KB já é feita pelo Now Assist/AI Search na conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_description_details",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a sua dúvida sobre declarações ou documentos? Conte com detalhes."
+   },
+   {
+    "ordem": 2,
+    "variavel": "Info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text informativo; conteúdo vai para a descrição."
+   },
+   {
+    "ordem": 3,
+    "variavel": "contextual_search_results",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   },
+   {
+    "ordem": 4,
+    "variavel": "ai_search_assist",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show kb link",
+    "acao": "remover",
+    "substituicao": "Condição usa v_have_you_tried_searching_the_knowledge_base e ação em link_kb, variáveis que não existem mais no item (policy órfã). Remover."
+   },
+   {
+    "nome": "EY: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Marcar v_description_details como Mandatory direto na variável e remover as ações órfãs (v_have_you_already_searched_the_portals_search_engine, v_have_you_tried_searching_the_knowledge_base). Depois excluir a policy."
+   },
+   {
+    "nome": "EY: Limit minimun caracter",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script é cópia de outro item (comentário cita Admissão Internacional), mas só define requested_for como o usuário logado e grava item; funciona. Container end 'formatter' órfão pode ser removido."
+ },
+ {
+  "sys_id": "4f50f3a71b102dd0a530426fe54bcb88",
+  "nome_atual": "PPP - Perfil Profissiográfico Previdenciário",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 369,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 30,
+  "justificativa": "Poucas perguntas próprias, mas bloqueado pelo client script onSubmit 'EY: Mandatory attachment' (sem VA Supported), que exige anexo conforme data, empresa e situação. Trocando por uma variável Attachment com UI Policy sem script e a validação de CPF por regex, o item fica conversável, com volume relevante e intenção bem clara.",
+  "nome_sugerido": "Solicitar PPP (Perfil Profissiográfico Previdenciário)",
+  "short_description_sugerida": "Pedir o PPP, documento usado para aposentadoria especial no INSS, para colaborador ativo ou desligado.",
+  "descricao_sugerida": "Use para pedir o PPP (Perfil Profissiográfico Previdenciário), documento que o INSS (Instituto Nacional do Seguro Social) exige para análise de aposentadoria, inclusive aposentadoria especial. Serve para colaboradores ativos e para ex-colaboradores (nesse caso informe CPF e data de desligamento e anexe os documentos pedidos). Desligamentos anteriores a 2001 na Natura podem ter regras diferentes. Não use para comunicar que você se aposentou (use 'Comunicar aposentadoria') nem para documentos de processo trabalhista.",
+  "frases_exemplo": [
+   "preciso do meu PPP para me aposentar",
+   "como peço o perfil profissiográfico previdenciário?",
+   "sou ex-funcionário e preciso do PPP",
+   "o INSS pediu o PPP",
+   "documento para aposentadoria especial"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Mandatory attachment",
+    "problema": "onSubmit sem VA Supported que exige anexo conforme combinação de data de desligamento, contribuinte ativo e empresa.",
+    "acao": "Remover. Criar nova_anexo_documentos (Attachment OOB) visível e obrigatória por UI Policy sem script quando v_active_contributor = Não (condições extras de empresa/data, se necessárias, também sem script). Alternativa: pedir o anexo ao final da conversa."
+   },
+   {
+    "onde": "UI Policy EY: date",
+    "problema": "Condição usa javascript:gs.dateGenerate(...) para comparar data; pode não avaliar em conversa e só mostra um rich text (v_text_if_date2000).",
+    "acao": "Remover a policy e levar a orientação sobre desligamentos antes de 2001 para a descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_which_company",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual empresa você trabalha ou trabalhou?",
+    "obs": "Para colaborador ativo, avaliar auto-populate pelo perfil."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_active_contributor",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Você ainda trabalha na empresa?",
+    "obs": "Sim/Não já tem Include None."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_cpf",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o seu CPF?",
+    "obs": "Só se ex-colaborador. Validation Regex ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$ no lugar do script (que tem ponto sem escape)."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_dismissal_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual foi a data do seu desligamento?",
+    "obs": "Só se ex-colaborador."
+   },
+   {
+    "ordem": 5,
+    "variavel": "nova_anexo_documentos",
+    "origem": "item",
+    "acao": "nova",
+    "tipo_sugerido": "Attachment",
+    "conversational_label": "Anexe os documentos pedidos para ex-colaboradores (por exemplo, documento de identificação).",
+    "obs": "Substitui o script de anexo obrigatório."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação ao pedido?"
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_text_if_date2000",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text; conteúdo vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory attachment",
+    "acao": "remover",
+    "substituicao": "Attachment nova_anexo_documentos + UI Policy sem script."
+   },
+   {
+    "nome": "EY: CPF",
+    "acao": "converter",
+    "substituicao": "Validation Regex na variável v_cpf."
+   },
+   {
+    "nome": "EY: If active is NO",
+    "acao": "converter",
+    "substituicao": "Manter como UI Policy sem script; remover ações órfãs (v_current_date, v_text_attach_the_documents) e incluir nova_anexo_documentos."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_which_company e v_active_contributor."
+   },
+   {
+    "nome": "EY: date",
+    "acao": "remover",
+    "substituicao": "Orientação na descrição."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Requester Data' (vs_solicitation_to_whom, vs_employee_status, vs_employee...) já pergunta se é para si ou outro e a situação do colaborador; há sobreposição com v_active_contributor. Na análise do set, avaliar derivar v_active_contributor de vs_employee_status. Flow de assinatura eletrônica ('ACN: General e-Signature into Documents') não é afetado."
+ },
+ {
+  "sys_id": "9895a2241ba7dd18d1abda4ce54bcb49",
+  "nome_atual": "Solicitação de Cadastro de Aposentadoria",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 8,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Item enxuto: descrição e anexo da carta de concessão do INSS, sem scripts. Baixo volume, mas o ajuste é só texto: nome, descrição e labels.",
+  "nome_sugerido": "Comunicar aposentadoria pelo INSS",
+  "short_description_sugerida": "Informar ao RH que você (ou um colaborador) teve a aposentadoria concedida pelo INSS, anexando a carta de concessão.",
+  "descricao_sugerida": "Use para comunicar ao RH que a aposentadoria foi concedida pelo INSS (Instituto Nacional do Seguro Social), anexando a carta de concessão, para atualização do cadastro. Não use para pedir documentos para dar entrada na aposentadoria (use 'Solicitar PPP') nem para pedir desligamento.",
+  "frases_exemplo": [
+   "me aposentei, como informo o RH?",
+   "saiu minha aposentadoria do INSS",
+   "quero cadastrar minha aposentadoria",
+   "enviar carta de concessão do INSS",
+   "comunicar aposentadoria de colaborador"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_communicate_retirement_attach_the_inss_decision",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Anexe a carta de concessão da aposentadoria do INSS.",
+    "obs": "Attachment OOB obrigatório; tratamento de anexo na conversa."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação, como a data de início da aposentadoria?",
+    "obs": "Avaliar tornar opcional."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas duas variáveis; excluir a policy."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Solicitante definido pelo set 'EY: Requester Data' via EY_ProducerUtils.setRequestedFor."
+ },
+ {
+  "sys_id": "3ac2b8cc1bbbb010a530426fe54bcbe6",
+  "nome_atual": "Solicitação de declaração",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 351,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Estrutura boa para conversa (tipo de declaração, 'outros' condicional, informações necessárias), sem scripts no item. Faltam descrição, conversational labels e limpeza de um label de instrução e de uma variável de texto chamada 'formatter'.",
+  "nome_sugerido": "Solicitar declaração ao RH",
+  "short_description_sugerida": "Pedir ao RH uma declaração (por exemplo, de salário, de férias, de tempo de empresa).",
+  "descricao_sugerida": "Use para pedir ao RH uma declaração, como declaração de salário, de tempo de empresa, de férias ou outra que você precise para fins pessoais. Informe o tipo e o que deve constar nela. Não use para declaração de vínculo, lotação ou escala de trabalho (tem item próprio), PPP ou documentos para processo trabalhista.",
+  "frases_exemplo": [
+   "preciso de uma declaração do RH",
+   "quero uma declaração de salário para o banco",
+   "declaração de tempo de empresa",
+   "pedir declaração de férias",
+   "preciso de um documento dizendo quanto eu ganho"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "need_statement",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual tipo de declaração você precisa?",
+    "obs": "Mandatory direto na variável."
+   },
+   {
+    "ordem": 2,
+    "variavel": "formatter",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o tipo de declaração?",
+    "obs": "Texto de linha única exibido quando need_statement = Outros. Renomear a variável para v_other_statement_type (nome 'formatter' confunde com layout), ajustando flow/mapeamentos."
+   },
+   {
+    "ordem": 3,
+    "variavel": "information_need",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O que precisa constar na declaração?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "formatter2",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label de instrução de anexo; na conversa o anexo é oferecido no final."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em need_statement."
+   },
+   {
+    "nome": "ACN: if is statement_need is others, shows is formatter",
+    "acao": "manter",
+    "substituicao": "UI Policy simples sem script, compatível."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "sys_name 'Claims on Demand' e labels em inglês ('complaint') são traduções erradas; o nome exibido deve ser o sugerido. Dois flows ('Copy of ACN: Issuance of declarations' e o original): confirmar que só um está ativo. Irmão 2c07a977 (vínculo/lotação/escala) atende o mesmo público; pode ser consolidado aqui como opção de need_statement."
+ },
+ {
+  "sys_id": "23e1547e1b1ce190d1abda4ce54bcbba",
+  "nome_atual": "Consulta de estabilidade médica (casos restritos)",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 38,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 50,
+  "justificativa": "Sem bloqueadores; das 8 perguntas, 4 são auto-preenchidas (ID, CPF, localização e departamento) e podem sumir da conversa. Ficam empresa, colaborador, data prevista e descrição.",
+  "nome_sugerido": "Consultar estabilidade médica antes de desligar (casos restritos)",
+  "short_description_sugerida": "Pedir ao RH a análise prévia de estabilidade médica de um colaborador antes de um desligamento.",
+  "descricao_sugerida": "Use, como gestor ou RH, para pedir a análise prévia de estabilidade médica (por exemplo, retorno de afastamento, acidente de trabalho ou doença ocupacional) de um colaborador que você pretende desligar, nos casos restritos. Informe o colaborador e a data prevista do desligamento. Não use para pedir o desligamento em si (use 'Comunicar desligamento') nem para prévia de rescisão.",
+  "frases_exemplo": [
+   "preciso verificar se o colaborador tem estabilidade antes de desligar",
+   "consulta de estabilidade médica",
+   "o funcionário voltou de afastamento, posso desligar?",
+   "análise de estabilidade para desligamento"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_what_company_are_the_employees_part_of",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual empresa é o colaborador (Avon LATAM, Natura ou TBS)?",
+    "obs": "Necessária hoje por causa do qualificador de v_collaborator. Alternativa: qualificador estático para as 3 marcas e derivar a empresa do perfil."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_collaborator",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual colaborador você pretende desligar?",
+    "obs": "Qualificador dinâmico por marca; testar na conversa."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_expected_shutdown_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a data prevista do desligamento?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Há alguma informação relevante sobre a saúde ou afastamentos do colaborador?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_id / v_cpf / v_localization / v_department",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Auto-populate a partir de v_collaborator (x_nasm_hr_profile), read-only e ocultos na conversa; remover o script 'Fill data job'."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_text_star",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text; orientação vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Fill data job",
+    "acao": "converter",
+    "substituicao": "Auto-populate (dependent question) nas variáveis derivadas."
+   },
+   {
+    "nome": "EY: clear values",
+    "acao": "remover",
+    "substituicao": "Auto-populate já limpa/atualiza os derivados quando o colaborador muda."
+   },
+   {
+    "nome": "EY: Wich company / EY: Mandatory and read only fields",
+    "acao": "converter",
+    "substituicao": "Mandatory e read-only direto nas variáveis; manter só a condição de visibilidade por empresa, sem script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Dado de saúde é sensível: validar com Privacidade se o campo de descrição pode trafegar pelo LLM."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script copiado de outro item (comentário cita Admissão Internacional) define requested_for como o usuário logado; aceitável, mas o caso fica no nome do gestor e não do colaborador."
+ },
+ {
+  "sys_id": "7392f8da1b13b010a530426fe54bcbe0",
+  "nome_atual": "Desligamento",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 442,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Só 2 perguntas (data e comentários) e nenhum script. Mas o nome genérico 'Desligamento' disputa intenção com vários irmãos (transferência internacional, prévia de rescisão, rescisão complementar, estabilidade, dúvidas) e a descrição está vazia. O producer script lê a variável 'employee', que não aparece no item.",
+  "nome_sugerido": "Comunicar desligamento de colaborador",
+  "short_description_sugerida": "Área comunica ao RH um desligamento para levantamento de pendências e cálculo da rescisão.",
+  "descricao_sugerida": "Use, como gestor ou área responsável, para comunicar ao RH o desligamento de um colaborador e a data de saída, para que as pendências sejam levantadas e lançadas na rescisão do contrato. Não use para transferência internacional permanente, prévia de rescisão de diretores, pagamento complementar a ex-colaborador, consulta de estabilidade médica ou dúvidas sobre desligamento: cada um tem item próprio.",
+  "frases_exemplo": [
+   "preciso comunicar o desligamento de um colaborador",
+   "vou desligar uma pessoa do meu time",
+   "informar data de desligamento",
+   "abrir desligamento no RH",
+   "o funcionário pediu demissão, onde registro?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "producer script",
+    "problema": "Lê x_nasm_hr_profile pela variável 'employee', que não existe entre as variáveis do item; requested_for pode ficar vazio.",
+    "acao": "Confirmar a origem de 'employee'. Se não existir, criar nova_employee (Reference x_nasm_hr_profile, obrigatória) como primeira pergunta."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "nova_employee",
+    "origem": "item",
+    "acao": "nova",
+    "tipo_sugerido": "Referência (x_nasm_hr_profile)",
+    "conversational_label": "Qual colaborador será desligado?",
+    "obs": "Só se confirmado que a variável 'employee' não existe (ver bloqueador)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "termination_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a data do desligamento?",
+    "obs": "Mandatory direto na variável."
+   },
+   {
+    "ordem": 3,
+    "variavel": "comments",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Há pendências ou observações para a rescisão (equipamentos, adiantamentos, benefícios)?"
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Campos Obrigatorios",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em termination_date; excluir a policy."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Disponível para 'ACN: access to the Termination Item' e terceiros; o user criteria já restringe quem vê. Irmão 5b674a3b ('Solicitar desligamento de um colaborador da minha equipe', volume zero) é só uma página explicativa e disputa a mesma intenção: desativá-lo reforça este item."
+ },
+ {
+  "sys_id": "7153436d1b046d58d1abda4ce54bcb54",
+  "nome_atual": "Desligamento Transferência Permanente Internacional",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 13,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 35,
+  "justificativa": "Bloqueado só pelo client script 'EY: Show Msg' (testa spModal), fácil de remover. Das 14 perguntas, 10 são read-only preenchidas pelo perfil; na conversa sobram 4 (colaborador, data, reposição da vaga, descrição).",
+  "nome_sugerido": "Desligar colaborador por transferência internacional permanente",
+  "short_description_sugerida": "Pedir o desligamento no Brasil de um colaborador que será admitido em outro país do grupo.",
+  "descricao_sugerida": "Use quando um colaborador do Brasil vai ser transferido de forma permanente para outro país do grupo e precisa ser desligado aqui para ser admitido lá. Informe o colaborador, a data de desligamento e se haverá reposição da vaga. Não use para desligamentos comuns (use 'Comunicar desligamento') nem para transferências temporárias/expatriação.",
+  "frases_exemplo": [
+   "colaborador vai ser transferido para o México, como desligo no Brasil?",
+   "desligamento por transferência internacional",
+   "transferência permanente para outro país",
+   "funcionário vai trabalhar na Argentina definitivamente"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Show Msg",
+    "problema": "onLoad sem VA Supported; testa se spModal existe para esconder o texto de resolvedor (v_text_resolv) conforme a interface.",
+    "acao": "Remover. Esconder v_text_resolv por UI Policy sem script (ou removê-lo, já que texto de resolvedor não deve aparecer ao solicitante)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual colaborador será transferido e desligado no Brasil?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_termination_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a data de desligamento no Brasil?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_yes_no",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "A vaga será reposta?",
+    "obs": "Sim/Não já com Include None."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual país e empresa ele vai? Quer acrescentar algo?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_id / v_admission_date / v_employment_type / v_job_profile / v_company / v_supervisory / v_location / v_manager / v_id_manager",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Auto-populate a partir de v_name, read-only e ocultos na conversa; substitui 'EY: Fill data job'."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_reason_for_dismissal",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Default 'Pedido de demissão' e read-only; ocultar."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_text_start / v_text_resolv",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; orientação vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show Msg",
+    "acao": "remover",
+    "substituicao": "UI Policy sem script ou remoção de v_text_resolv."
+   },
+   {
+    "nome": "EY: Fill data job",
+    "acao": "converter",
+    "substituicao": "Auto-populate nas variáveis derivadas."
+   },
+   {
+    "nome": "EY: End date Script",
+    "acao": "manter",
+    "substituicao": "VA Supported; verificar se só valida a data. Se for regra simples (data futura), trocar por validação sem script."
+   },
+   {
+    "nome": "EY: Mandatory and read only fields",
+    "acao": "converter",
+    "substituicao": "Atributos mandatory/read-only direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "v_admission_date é Data mas tem atributo reference=sys_user residual; limpar."
+ },
+ {
+  "sys_id": "8d6da4711bd42550d1abda4ce54bcb5d",
+  "nome_atual": "Informações ou dúvidas relacionadas à Desligamento",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 226,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 25,
+  "justificativa": "Genérico de uma pergunta, bloqueado só pelos widgets de busca Custom. Com a remoção deles e das policies órfãs vira conversa de uma pergunta. A descrição precisa separá-lo dos vários itens transacionais de desligamento.",
+  "nome_sugerido": "Tirar dúvida sobre desligamento e rescisão",
+  "short_description_sugerida": "Envie ao RH uma dúvida sobre desligamento ou rescisão quando não houver formulário específico nem resposta nos materiais de apoio.",
+  "descricao_sugerida": "Use para tirar dúvidas sobre desligamento e rescisão (prazos de pagamento, verbas, aviso prévio, homologação, exame demissional) quando não houver item específico nem resposta nos materiais de apoio. Não use para comunicar um desligamento, pedir prévia de rescisão, rescisão complementar ou consulta de estabilidade: cada um tem item próprio.",
+  "frases_exemplo": [
+   "dúvida sobre minha rescisão",
+   "quando cai o pagamento da rescisão?",
+   "como funciona o aviso prévio?",
+   "tenho uma pergunta sobre desligamento",
+   "não recebi o TRCT"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel contextual_search_results",
+    "problema": "Tipo Custom com UI Macro cxs_rp_search e widget de busca contextual; não renderiza em conversa e trava o modo conversacional.",
+    "acao": "Remover do item (ou ocultar na VA). Na conversa o próprio Now Assist já busca e sugere artigos de KB antes de abrir o caso."
+   },
+   {
+    "onde": "variavel ai_search_assist",
+    "problema": "Tipo Custom com widget 'Assistência para pesquisa com IA'; não renderiza em conversa.",
+    "acao": "Remover do item; a deflexão por KB já é feita pelo Now Assist/AI Search na conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_description_details",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a sua dúvida sobre desligamento ou rescisão? Conte com detalhes."
+   },
+   {
+    "ordem": 2,
+    "variavel": "Info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich text informativo."
+   },
+   {
+    "ordem": 3,
+    "variavel": "contextual_search_results",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   },
+   {
+    "ordem": 4,
+    "variavel": "ai_search_assist",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widget Custom (bloqueador)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show kb link",
+    "acao": "remover",
+    "substituicao": "Condição usa v_have_you_tried_searching_the_knowledge_base e ação em link_kb, variáveis que não existem mais no item (policy órfã). Remover."
+   },
+   {
+    "nome": "EY: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Marcar v_description_details como Mandatory direto na variável e remover as ações órfãs (v_have_you_already_searched_the_portals_search_engine, v_have_you_tried_searching_the_knowledge_base). Depois excluir a policy."
+   },
+   {
+    "nome": "EY: Minimum caracter",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Container end 'formatter' órfão pode ser removido."
+ },
+ {
+  "sys_id": "3a4932df87544b14ec360e530cbb3516",
+  "nome_atual": "Solicitação de Prévia de Rescisão",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 4,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 50,
+  "justificativa": "Item novo (4 registros, todos no último ano), de público restrito, sem bloqueadores. Das 10 perguntas, 3 são read-only derivadas; os GlideAjax são VA Supported. Com labels e descrição fica conversável, mas o conteúdo (verbas de diretores) é sensível.",
+  "nome_sugerido": "Solicitar prévia de rescisão (diretores, +20 anos ou pacote de desligamento)",
+  "short_description_sugerida": "Pedir a simulação prévia da rescisão de diretores e cargos acima, colaboradores com mais de 20 anos de casa ou com pacote de desligamento.",
+  "descricao_sugerida": "Use para pedir ao RH uma prévia (simulação) dos valores de rescisão antes de um desligamento, exclusivamente para diretores e cargos acima, colaboradores com mais de 20 anos de empresa ou desligamentos com pacote. Informe o colaborador, o motivo, a data prevista e se haverá multa ou pagamento adicional. Não use para comunicar o desligamento em si nem para rescisão complementar.",
+  "frases_exemplo": [
+   "preciso de uma prévia de rescisão de um diretor",
+   "simular rescisão antes de desligar",
+   "quanto vai custar o desligamento desse colaborador com 25 anos de casa?",
+   "prévia de rescisão com pacote"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "select_collaborator",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual colaborador é a prévia de rescisão?",
+    "obs": "sys_user é tabela grande: ajustar busca de referência."
+   },
+   {
+    "ordem": 2,
+    "variavel": "reason_requesting_preliminary_approval",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o motivo da prévia: cargo de diretor ou acima, mais de 20 anos de empresa ou pacote de desligamento?",
+    "obs": "Select Box com atributos reference/ref_qual residuais; limpar."
+   },
+   {
+    "ordem": 3,
+    "variavel": "expected_shutdown_date",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a data prevista do desligamento?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "termination_fee",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Haverá multa rescisória?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "additional_payment",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Haverá algum pagamento adicional?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "additional_payment_included_termination_settlement",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual pagamento adicional será incluído na rescisão?",
+    "obs": "Só se additional_payment = Sim."
+   },
+   {
+    "ordem": 7,
+    "variavel": "additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?"
+   },
+   {
+    "ordem": 8,
+    "variavel": "global_id / name / date_admission",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Auto-populate a partir de select_collaborator (sys_user), read-only e ocultos; substitui o GlideAjax 'Aoop: Set Date of Admission'."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Aoop: Set Date of Admission",
+    "acao": "converter",
+    "substituicao": "Auto-populate da data de admissão, se estiver em campo do sys_user/perfil."
+   },
+   {
+    "nome": "Aoop: Validate Expected Shutdown Date",
+    "acao": "manter",
+    "substituicao": "VA Supported; manter se a regra de negócio (calendário efetivo) não puder ser expressa sem script."
+   },
+   {
+    "nome": "Aoop: Show mandatory fields",
+    "acao": "converter",
+    "substituicao": "Atributos mandatory/read-only direto nas variáveis."
+   },
+   {
+    "nome": "Aoop: Show Describe what additional payment",
+    "acao": "manter",
+    "substituicao": "UI Policy simples sem script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Conteúdo sensível (verbas de executivos): validar com RH/Privacidade; se não puder ir ao LLM, marcar 'Turn off Now Assist'."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Está disponível para 'EY: Grupo teste' e herda uma lista de flows genéricos; revisar o user criteria e os flows antes de promover. Baixíssimo volume: prioridade baixa."
+ },
+ {
+  "sys_id": "5b674a3b87e55210ec360e530cbb354c",
+  "nome_atual": "Solicitar desligamento de um colaborador da minha equipe",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 0,
+  "justificativa": "Zero registros. É um record producer sem variáveis que só explica como pedir desligamento ('saiba como'), o que duplica a intenção de 'Desligamento' (7392f8da) e confunde o LLM na escolha do item.",
+  "nome_sugerido": "Como solicitar o desligamento de um colaborador",
+  "short_description_sugerida": "Orientações para o gestor solicitar o desligamento de alguém da equipe.",
+  "descricao_sugerida": "Conteúdo de orientação; recomenda-se publicar como artigo de KB e direcionar os pedidos para 'Comunicar desligamento de colaborador'.",
+  "frases_exemplo": [
+   "como desligo alguém do meu time?",
+   "passo a passo para desligar um colaborador"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se mantido, marcar non-conversational para não competir com o item transacional."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Herda flows genéricos sem relação com o conteúdo. Desativar e mover o texto para KB."
+ },
+ {
+  "sys_id": "44b5349e1b13b010a530426fe54bcbf7",
+  "nome_atual": "Solicitar Rescisão Complementar",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 125,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Sem bloqueadores no item, mas o ex-colaborador e o valor ficam no set '(+) Adicionar um ex-colaborador' (provavelmente multi-row), que não conversa bem. O item tem poucas perguntas (tipo de verba, descrição se Outros, justificativa); resolvendo o ex-colaborador e o valor como perguntas simples, fica conversável.",
+  "nome_sugerido": "Solicitar rescisão complementar para ex-colaborador",
+  "short_description_sugerida": "Pedir pagamento complementar de verbas rescisórias a um ex-colaborador.",
+  "descricao_sugerida": "Use quando um ex-colaborador precisa receber um valor complementar da rescisão (verba esquecida, diferença de cálculo, bônus ou PLR - Participação nos Lucros e Resultados - após o desligamento). Informe o ex-colaborador, o tipo de verba, o valor e a justificativa. Não use para comunicar um novo desligamento nem para prévia de rescisão.",
+  "frases_exemplo": [
+   "preciso pagar uma diferença na rescisão de um ex-funcionário",
+   "rescisão complementar",
+   "faltou pagar uma verba na rescisão",
+   "pagar PLR para quem já saiu da empresa"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "set Adicionar um ex-colaborador (employee_name_termination, global_id, value_termination)",
+    "problema": "Set com '(+) Adicionar' tende a ser multi-row; multi-row não é bem suportado na conversa.",
+    "acao": "Confirmar o tipo. Se for multi-row e o normal for 1 ex-colaborador por pedido, trocar por set single-row (ou variáveis no item). Casos com vários ex-colaboradores podem ficar no formulário."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "employee_name_termination",
+    "origem": "set:Adicionar um ex-colaborador",
+    "acao": "manter",
+    "conversational_label": "Qual ex-colaborador vai receber o pagamento complementar?",
+    "obs": "global_id é read-only derivado (script ACN: GetUserGlobalID é VA Supported); ocultar na conversa."
+   },
+   {
+    "ordem": 2,
+    "variavel": "release_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o tipo de verba a pagar?",
+    "obs": "Marcar Include None/mandatory na variável."
+   },
+   {
+    "ordem": 3,
+    "variavel": "payment_description",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Descreva o pagamento.",
+    "obs": "Só quando release_type = Outros."
+   },
+   {
+    "ordem": 4,
+    "variavel": "value_termination",
+    "origem": "set:Adicionar um ex-colaborador",
+    "acao": "manter",
+    "conversational_label": "Qual é o valor a pagar (R$)?",
+    "obs": "Adicionar Validation Regex numérica."
+   },
+   {
+    "ordem": 5,
+    "variavel": "comments_termination_2",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a justificativa para o pagamento complementar?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "info / termination_template",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; se termination_template tiver link de modelo, levar a URL para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "ACN: Field Request for Release Type is \"Other\"",
+    "acao": "converter",
+    "substituicao": "Inverter para mostrar payment_description (visible/mandatory) quando release_type = Outros; a variável já é hidden por padrão. Sem script."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em release_type."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script lê o perfil de 'employee' mas grava requested_for = usuário logado; o caso fica no nome de quem pediu. Validar com o dono se deveria ser o ex-colaborador. O container end tem label 'test' residual."
+ },
+ {
+  "sys_id": "56e683221be95990a530426fe54bcba6",
+  "nome_atual": "DIGICARD",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 0,
+  "justificativa": "Zero registros. Record producer sem variáveis, com nome de sistema (DIGICARD) que o colaborador não usa, apontando para o reporte de licenças médicas e acidentes da Avon Argentina. Funciona como link externo e não como pedido.",
+  "nome_sugerido": "Reportar licença médica ou acidente de trabalho (Avon Argentina)",
+  "short_description_sugerida": "Acesso ao DIGICARD para colaboradores da Avon Argentina reportarem licenças médicas e acidentes de trabalho.",
+  "descricao_sugerida": "Link para o DIGICARD, onde colaboradores da Avon Argentina reportam licenças médicas e acidentes de trabalho. Recomenda-se publicar como artigo de KB com o link.",
+  "frases_exemplo": [
+   "estoy con licencia médica, dónde aviso?",
+   "tuve un accidente de trabajo",
+   "cómo informo mi certificado médico en Avon Argentina?"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se mantido como link, marcar non-conversational."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "User criteria contraditório: disponível para 'ACN: Users Argentina' e indisponível para 'ACN Argentina Users'. Revisar antes de decidir. Herda flows genéricos."
+ },
+ {
+  "sys_id": "5a4445e23b809210924d0247f4e45a9d",
+  "nome_atual": "Dúvidas, consultas, reclamações ou sugestões relacionadas à Remuneração",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 708,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "Alto volume no catálogo hispânico e sem bloqueadores, mas passa do limite de 20 perguntas por causa do set pessoal e depende de GlideAjax para mostrar a subcategoria. Ocultando os derivados do set e simplificando legendas e validações, a conversa fica com 4 ou 5 perguntas.",
+  "nome_sugerido": "Tirar dúvida ou reclamar sobre salário e pagamentos (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre folha de pagamento, recibo de salário, adiantamentos e liquidações, para Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre remuneração: pagamento do salário, recibo de pagamento (holerite), descontos, horas extras, adiantamentos e liquidação final. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para benefícios, férias ou licenças (têm formulários próprios) nem para mudar a conta bancária (use 'Alterar dados bancários').",
+  "frases_exemplo": [
+   "no me llegó el sueldo completo",
+   "tengo una duda con mi recibo de sueldo",
+   "quero reclamar de um desconto no meu salário",
+   "cuándo pagan la liquidación final?",
+   "consulta sobre un anticipo de sueldo",
+   "me pagaron mal las horas extra"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "item + set EY: Hispana Personal Information",
+    "problema": "21 perguntas; acima de 20 a VA abre janela em vez de conversar.",
+    "acao": "Ocultar na conversa as variáveis read-only/auto-populadas do set e remover a variável de controle subcategory_exists da contagem (manter hidden)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_type_of_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?",
+    "obs": "Mandatory na variável."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_category_lookup",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual assunto de pagamento é o seu pedido?",
+    "obs": "Lookup com reference qualifier dinâmico por elegibilidade do colaborador (EY_Get_Hispanic_Categories). Testar na conversa; se não resolver, trocar por qualificador simples ou lista estática por país."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_subcategory_lookup",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o detalhe do assunto?",
+    "obs": "Só quando houver subcategoria. Hoje depende do GlideAjax 'Check if Subcat exists' (VA Supported); manter, mas testar na conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_detail_field",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que aconteceu (mês, valor, o que esperava receber).",
+    "obs": "Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_corporate_e_mail",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "derivar",
+    "obs": "Obrigatório por policy deste item; auto-populate do perfil e ocultar na conversa."
+   },
+   {
+    "ordem": 6,
+    "variavel": "subcategory_exists",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Variável de controle hidden."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_caption / v_minimun_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; a legenda da Colômbia vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory - v_type_of_request / v_detail_field / v_corporate_e_mail",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis; excluir policies."
+   },
+   {
+    "nome": "EY: Hide v_caption OnLoad / EY: ReadOnly - v_subcategory_lookup",
+    "acao": "remover",
+    "substituicao": "Atributos direto na variável (v_caption removida; v_subcategory_lookup começa oculta sem policy onLoad)."
+   },
+   {
+    "nome": "EY: Show/Mandatory - v_category_lookup / EY: Show - v_subcategory_lookup",
+    "acao": "manter",
+    "substituicao": "UI Policies condicionais sem script, compatíveis."
+   },
+   {
+    "nome": "EY: Show v_caption according category",
+    "acao": "remover",
+    "substituicao": "Texto específico da Colômbia vai para a descrição."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda v_minimun_characters substituída pela mensagem da Validation Regex."
+   },
+   {
+    "nome": "EY: Check if Subcat exists",
+    "acao": "manter",
+    "substituicao": "VA Supported (GlideAjax). Alternativa no-code: deixar v_subcategory_lookup opcional e sempre visível, com qualificador que retorna vazio quando não há subcategoria."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Descrição e frases em pt-BR e espanhol."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais (ocultar na conversa o que é auto-preenchido, pedir só 'para quem é') ficam na análise dos sets e são decisivas aqui. Producer script comentado como 'Plano de Saúde' é cópia, mas funciona (resolve requested_for pelo colaborador)."
+ },
+ {
+  "sys_id": "343924291bc09a50514cbaef4b4bcbcf",
+  "nome_atual": "Dúvidas, consultas, reclamações ou sugestões sobre benefícios",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 896,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Maior volume do grupo hispânico, sem bloqueadores. As perguntas próprias são poucas (motivo, categoria, subcategoria, detalhe); o que atrapalha são os scripts onLoad que escondem campos, a validação de 40 caracteres e a falta de descrição que o separe do formulário brasileiro de benefícios.",
+  "nome_sugerido": "Tirar dúvida ou reclamar sobre benefícios (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre benefícios (plano de saúde, seguro de vida, alimentação etc.) para Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre benefícios, como cobertura médica/plano de saúde, seguro de vida, auxílio alimentação, academia e outros benefícios do seu país. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use se você trabalha no Brasil (use 'Tirar dúvida ou reclamar sobre benefícios (Brasil)') nem para salário, férias ou licenças.",
+  "frases_exemplo": [
+   "tengo una duda sobre mi prepaga",
+   "quiero reclamar por el seguro de vida",
+   "cómo agrego a mi hijo a la obra social?",
+   "dúvida sobre o benefício de alimentação",
+   "sugerencia sobre los beneficios",
+   "no me aparece el reintegro del gimnasio"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_contact_reason",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_select_category",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual benefício é o seu pedido?",
+    "obs": "Lookup com reference qualifier dinâmico por elegibilidade do colaborador (EY_Get_Hispanic_Categories). Testar na conversa; se não resolver, trocar por qualificador simples ou lista estática por país."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_subcategory",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o assunto específico desse benefício?",
+    "obs": "Só quando existir subcategoria (GlideAjax VA Supported)."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_field_detail",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_who_is_this_request_for",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "manter",
+    "conversational_label": "O pedido é para você ou para outra pessoa?",
+    "obs": "O script 'EY: Who is this req Mandatory' torna obrigatório e esconde v_employee, invertendo o padrão dos irmãos; padronizar com o set via atributos, sem script."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_corporate_e_mail",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "derivar",
+    "obs": "Obrigatório por policy deste item; auto-populate e ocultar."
+   },
+   {
+    "ordem": 7,
+    "variavel": "FAQs / v_min_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; link das FAQs vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory v_corporate_email / v_contact_reason / v_field_detail",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: Hide Category on load",
+    "acao": "manter",
+    "substituicao": "Condicional (v_employee preenchido), sem script."
+   },
+   {
+    "nome": "EY: Who is this req Mandatory",
+    "acao": "converter",
+    "substituicao": "Mandatory em v_who_is_this_request_for por atributo; visibilidade de v_employee por UI Policy sem script (for_somebody_else)."
+   },
+   {
+    "nome": "EY: Hide subcat onLoad",
+    "acao": "converter",
+    "substituicao": "v_subcategory começa oculta/opcional por atributo, sem script onLoad."
+   },
+   {
+    "nome": "EY: Check if Subcat exists",
+    "acao": "manter",
+    "substituicao": "VA Supported; testar na conversa."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_field_detail (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda v_min_characters substituída pela mensagem da Validation Regex."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Descrição e frases em pt-BR e espanhol."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais (ocultar na conversa o que é auto-preenchido, pedir só 'para quem é') ficam na análise dos sets e são decisivas aqui."
+ },
+ {
+  "sys_id": "18ac98eb3bb30250924d0247f4e45ac5",
+  "nome_atual": "Dúvidas, consultas, reclamações ou sugestões sobre licenças",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 150,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Mesmo padrão dos irmãos hispânicos: poucas perguntas próprias (motivo, tipo de licença, categoria, detalhe), sem bloqueadores, mas com scripts onLoad para esconder campos e validação de 40 caracteres. Uma policy referencia variável inexistente.",
+  "nome_sugerido": "Tirar dúvida ou reclamar sobre licenças (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre licenças (médica, maternidade, paternidade, estudo etc.) para Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre licenças: licença médica, maternidade, paternidade, casamento, luto, estudo e outras previstas no seu país. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para férias (use o formulário de férias) nem para salário ou benefícios.",
+  "frases_exemplo": [
+   "cuántos días de licencia por paternidad tengo?",
+   "duda sobre mi licencia médica",
+   "licencia por matrimonio, cómo la pido?",
+   "quero reclamar que descontaram minha licença",
+   "consulta sobre licencia por estudio"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "reason_for_contact",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "select_the_license_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual tipo de licença?",
+    "obs": "Lookup com reference qualifier dinâmico por elegibilidade do colaborador (EY_Get_Hispanic_Categories). Testar na conversa; se não resolver, trocar por qualificador simples ou lista estática por país."
+   },
+   {
+    "ordem": 3,
+    "variavel": "select_the_category_as_appropriate",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o assunto específico?",
+    "obs": "Só quando houver subcategoria; o ref_qual aparece truncado no digest ('select_the_license_ty'), conferir."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_detail_field",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_corporate_e_mail",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "derivar",
+    "obs": "Obrigatório por policy deste item; auto-populate e ocultar."
+   },
+   {
+    "ordem": 6,
+    "variavel": "FAQs / v_minimun_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; link das FAQs de licença por país vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Hide fields if employee is me",
+    "acao": "converter",
+    "substituicao": "Remover a ação órfã why_are_you_opening_on_behalf_of (variável inexistente); manter só v_employee oculto quando for_me, sem script."
+   },
+   {
+    "nome": "EY: Hide v_minimun_characters onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda removida."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: View category",
+    "acao": "manter",
+    "substituicao": "Condicional sem script."
+   },
+   {
+    "nome": "EY: Hide subcat onLoad",
+    "acao": "converter",
+    "substituicao": "Categoria começa oculta por atributo."
+   },
+   {
+    "nome": "EY: Check if Subcat exists",
+    "acao": "manter",
+    "substituicao": "VA Supported; testar na conversa."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Show error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda substituída pela Validation Regex."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Descrição e frases em pt-BR e espanhol."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais (ocultar na conversa o que é auto-preenchido, pedir só 'para quem é') ficam na análise dos sets e são decisivas aqui. O rótulo FAQs está em espanhol e os labels em inglês; padronizar."
+ },
+ {
+  "sys_id": "b774fd621b3b8610514cbaef4b4bcbea",
+  "nome_atual": "Dúvidas, questões, reclamações ou sugestões relativas a admissões, movimentos, promoções ou saídas",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 89,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 50,
+  "justificativa": "Item simples (motivo, categoria, detalhe) sem bloqueadores. Aqui v_employee é sempre obrigatório e 'para quem é' fica oculto, então o colaborador é escolhido direto (uso típico de gestor). Ajustes de texto e troca da validação por regex bastam.",
+  "nome_sugerido": "Tirar dúvida sobre admissão, transferência, promoção ou saída (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre admissões, movimentações, promoções ou desligamentos, para países da América Hispânica.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre admissão, transferência ou movimentação interna, promoção ou saída de um colaborador (seu ou da sua equipe). Vale para os públicos hispânicos (exceto Operations Associate). Não use para salário, benefícios, férias ou licenças.",
+  "frases_exemplo": [
+   "duda sobre la promoción de un colaborador de mi equipo",
+   "consulta sobre un traslado de área",
+   "quando sai a alteração do cargo?",
+   "tengo una consulta sobre el ingreso de una persona nueva",
+   "reclamo sobre mi egreso"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_employee",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "manter",
+    "conversational_label": "Sobre qual colaborador é a sua dúvida?",
+    "obs": "Neste item é sempre visível e obrigatório (policy 'EY: Show v_employee'); passar para atributo e, se o pedido for do próprio usuário, default gs.getUserID()."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_contact_reason",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_select_category",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O assunto é admissão, movimentação, promoção ou saída?",
+    "obs": "Lookup com reference qualifier dinâmico por elegibilidade do colaborador (EY_Get_Hispanic_Categories). Testar na conversa; se não resolver, trocar por qualificador simples ou lista estática por país."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_field_detail",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_min_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Legenda substituída pela regex."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Hide v_who_is_this_request_for / EY: Show v_employee",
+    "acao": "converter",
+    "substituicao": "Atributos direto no item (override do set) em vez de policies onLoad."
+   },
+   {
+    "nome": "EY: Mandatory v_field_detail / v_contact_reason / v_select_category",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_field_detail (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda v_min_characters substituída pela mensagem da Validation Regex."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Descrição e frases em pt-BR e espanhol."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais (ocultar na conversa o que é auto-preenchido, pedir só 'para quem é') ficam na análise dos sets e são decisivas aqui. Há três flows associados (um 'Old ...'); confirmar que só um está ativo."
+ },
+ {
+  "sys_id": "b99630ca1b766d10a530426fe54bcba4",
+  "nome_atual": "Dúvidas, reclamações e sugestões relacionadas a benefícios",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 3033,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 20,
+  "justificativa": "Maior volume do lote (3.033/ano) e poucas perguntas reais (tipo, benefício, detalhe), mas bloqueado pelos dois widgets de busca Custom e por um client script sem VA Supported que remove opções pelo idioma. Os ajustes são pontuais e o ganho de atendimento conversacional é grande.",
+  "nome_sugerido": "Tirar dúvida ou reclamar sobre benefícios (Brasil)",
+  "short_description_sugerida": "Dúvidas, reclamações ou sugestões sobre benefícios (plano de saúde, odontológico, vale-refeição, vale-alimentação etc.) quando não houver formulário específico.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, reclamação ou sugestão sobre benefícios no Brasil, como plano de saúde, plano odontológico, vale-refeição, vale-alimentação, seguro de vida, auxílio-creche e similares, quando não houver formulário específico nem resposta nos materiais de apoio. Não use se você trabalha em país da América Hispânica (use o formulário hispânico de benefícios) nem para salário, férias ou licenças.",
+  "frases_exemplo": [
+   "meu vale-refeição não caiu",
+   "dúvida sobre o plano de saúde",
+   "quero incluir meu filho no plano odontológico",
+   "reclamação sobre o cartão alimentação",
+   "como funciona o auxílio-creche?",
+   "o reembolso do plano não foi pago"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel contextual_search_results",
+    "problema": "Tipo Custom com UI Macro cxs_rp_search e widget de busca contextual; não renderiza em conversa e trava o modo conversacional.",
+    "acao": "Remover do item (ou ocultar na VA). Na conversa o próprio Now Assist já busca e sugere artigos de KB antes de abrir o caso."
+   },
+   {
+    "onde": "variavel ai_search_assist",
+    "problema": "Tipo Custom com widget 'Assistência para pesquisa com IA'; não renderiza em conversa.",
+    "acao": "Remover do item; a deflexão por KB já é feita pelo Now Assist/AI Search na conversa."
+   },
+   {
+    "onde": "client script EY: Remove options based on country",
+    "problema": "onLoad sem VA Supported que remove opções de 'beneficios' quando o idioma do usuário é português.",
+    "acao": "Remover o script. Como o item é do Brasil, desativar na tabela de choices as opções que não valem para o Brasil (ou usar choices dependentes de request_type), sem manipular opções por script."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "request_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, reclamação ou sugestão?",
+    "obs": "Mandatory na variável."
+   },
+   {
+    "ordem": 2,
+    "variavel": "beneficios",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual benefício?",
+    "obs": "Opções limpas para o Brasil. Corrigir o valor 'food _voucher' (espaço) usado na policy."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_description_details",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Mandatory + Validation Regex de tamanho mínimo."
+   },
+   {
+    "ordem": 4,
+    "variavel": "Info / v_text_vale_ref_alim",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; a orientação de vale-refeição/alimentação vai para a descrição ou KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "contextual_search_results / ai_search_assist",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widgets Custom (bloqueadores)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Remove options based on country",
+    "acao": "remover",
+    "substituicao": "Desativar as opções não aplicáveis na tabela de choices."
+   },
+   {
+    "nome": "NVLX: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em beneficios, request_type e v_description_details."
+   },
+   {
+    "nome": "EY: Set text vale refeição/alimentação",
+    "acao": "remover",
+    "substituicao": "Texto vai para a descrição."
+   },
+   {
+    "nome": "NVLX: Minimum caracter",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Disponível só para 'EY: Terceiros V2' segundo o digest, o que não combina com o volume; conferir o user criteria. O set 'Informações pessoais - Benefícios' tem 12 campos read-only que devem ficar ocultos na conversa (análise do set). Com esse volume, vale avaliar depois dividir por benefício principal (ex.: plano de saúde, vale-refeição/alimentação) se a distribuição de 'beneficios' mostrar concentração."
+ },
+ {
+  "sys_id": "a62589461bbc9290514cbaef4b4bcb4d",
+  "nome_atual": "Solicitações de Empréstimos de Emergência",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 41,
+  "recomendacao": "manter_formulario",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 10,
+  "justificativa": "37 perguntas, assinatura digital em widget Custom, anexo obrigatório condicionado a país e perfil HRBP, script de opções sem VA Supported e vários GlideAjax. Com baixo volume e conteúdo financeiro e contratual, o custo de conversão não se paga. Manter como formulário, com nome e descrição que façam a VA achar o item e abrir o link.",
+  "nome_sugerido": "Solicitar empréstimo de emergência (América Hispânica)",
+  "short_description_sugerida": "Pedir, simular, pagar ou desistir de um empréstimo de emergência combinado previamente com seu HRBP.",
+  "descricao_sugerida": "Use para pedir um empréstimo de emergência da empresa, ou para tratar pagamento antecipado ou desistência de um empréstimo já feito, depois de ter conversado com seu Business Partner de RH (HRBP) ou com o responsável de RH da sua área. Para pedir é preciso aceitar a Política de Empréstimo de Emergência e assinar digitalmente (no Equador, anexar o formulário assinado). Vale para os públicos hispânicos, exceto DP e OA. Não use para adiantamento de salário.",
+  "frases_exemplo": [
+   "necesito un préstamo de emergencia",
+   "quiero pedir un préstamo a la empresa",
+   "cómo cancelo mi préstamo de emergencia?",
+   "ya hablé con mi HRBP sobre el préstamo",
+   "quiero desistir del préstamo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel signature",
+    "problema": "Tipo Custom com widget EY:Show_Signature; não renderiza em conversa.",
+    "acao": "Manter no formulário (item non-conversational)."
+   },
+   {
+    "onde": "client script EY: Show choices category OnChange",
+    "problema": "Sem VA Supported; monta opções de categoria por script.",
+    "acao": "Manter no formulário; se no futuro for converter, trocar por choices estáticas."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": true,
+   "outras": [
+    "O VA exibe o link do formulário ao reconhecer a intenção pelo nome/descrição.",
+    "Turn off Now Assist sugerido por envolver valores de empréstimo e assinatura eletrônica."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Se o volume crescer, os ramos 'pagamento' e 'desistência' (categorias pay/regret: só número do ticket e motivo) podem virar um item conversacional leve à parte, deixando só o pedido (request) como formulário. Legend texts (5 rich texts) e has_signature_created (Sim/Não sem Include None) só importam se houver conversão."
+ },
+ {
+  "sys_id": "9869b07c1bbf1114d1abda4ce54bcb13",
+  "nome_atual": "Devolução do Aviso de Férias",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 2886,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 30,
+  "justificativa": "Segundo maior volume do lote. O item junta duas intenções: o colaborador dar ciência das próprias férias (1 data + confirmação, perfeito para conversa) e o gestor devolver o aviso da equipe com anexo do ADP e lista de colaboradores (set '(+) Adicionar Colaborador', provavelmente multi-row). O bloqueador é um script onSubmit sem VA Supported que inspeciona o DOM, e ele só existe no ramo do gestor.",
+  "nome_sugerido": "Devolução do aviso de férias",
+  "short_description_sugerida": "Dar ciência do aviso de férias programadas no ADP (individual ou da equipe).",
+  "descricao_sugerida": "Item pai substituído pelos dois derivados: ciência individual e devolução do aviso da equipe.",
+  "frases_exemplo": [
+   "dar ciência das minhas férias",
+   "devolver aviso de férias da equipe"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "client script EY: Attach mandatory",
+    "problema": "onSubmit sem VA Supported que exige anexo quando o pedido é para outro colaborador, inspecionando o DOM por classe CSS.",
+    "acao": "Remover. No derivado da equipe, criar nova_anexo_aviso_adp (Attachment OOB, obrigatória)."
+   },
+   {
+    "onde": "set (+)Adicionar Colaborador (v_vs_name, v_vs_vacation_start_date)",
+    "problema": "Provável multi-row; lista de vários colaboradores não conversa bem.",
+    "acao": "No derivado da equipe, avaliar manter como formulário ou pedir só o anexo do ADP (que já lista os colaboradores) e remover a lista manual."
+   },
+   {
+    "onde": "UI Policy EY: Fields mandatory",
+    "problema": "Ações sobre variáveis inexistentes (v_13th_salary, v_number_days_enjoyment, v_sale_of_10_days).",
+    "acao": "Remover ações órfãs; deixar v_vacation_start_date mandatory por atributo."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Attach mandatory",
+    "acao": "remover",
+    "substituicao": "Attachment OOB obrigatório no derivado da equipe."
+   },
+   {
+    "nome": "EY: Field mandatory if my team / EY: Field mandatory if my request",
+    "acao": "remover",
+    "substituicao": "vs_solicitation_to_whom vira o próprio item; obrigatoriedade por atributo em cada derivado. Remover ações órfãs (adicionar_anexo, add_contributor)."
+   },
+   {
+    "nome": "EY: Fields mandatory",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_vacation_start_date; remover ações órfãs."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [
+   {
+    "nome": "Dar ciência das minhas férias programadas",
+    "short_description": "Confirmar que você está ciente da data de início das suas férias programadas no ADP.",
+    "descricao": "Use para dar ciência (devolver o aviso) das suas próprias férias já programadas no sistema ADP, informando a data de início. É a confirmação obrigatória do aviso de férias. Não use para programar ou alterar férias (faça no ADP) nem para tirar dúvidas sobre férias.",
+    "frases_exemplo": [
+     "quero dar ciência das minhas férias",
+     "recebi o aviso de férias, como confirmo?",
+     "devolver meu aviso de férias",
+     "confirmar início das férias dia 10",
+     "assinar aviso de férias"
+    ],
+    "fixar": "vs_solicitation_to_whom = my_request (default/hidden); vs_employee = usuário logado",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_vacation_start_date",
+      "conversational_label": "Qual é a data de início das suas férias?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_aware_vacation",
+      "conversational_label": "Você confirma que está ciente da data de início das suas férias? (trocar checkbox por Sim/Não com Include None)"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_description",
+      "conversational_label": "Quer acrescentar alguma observação? (opcional)"
+     }
+    ]
+   },
+   {
+    "nome": "Devolver aviso de férias da minha equipe",
+    "short_description": "Gestor ou responsável envia o aviso de férias gerado pelo ADP para colaboradores da equipe.",
+    "descricao": "Use, como gestor ou responsável, para devolver o aviso de férias de colaboradores da sua equipe, anexando o aviso gerado pelo ADP com 35 dias de antecedência. Não use para as suas próprias férias (use 'Dar ciência das minhas férias programadas').",
+    "frases_exemplo": [
+     "devolver aviso de férias da equipe",
+     "enviar avisos de férias do meu time",
+     "anexar aviso de férias do ADP dos colaboradores",
+     "ciência de férias de funcionários da minha área"
+    ],
+    "fixar": "vs_solicitation_to_whom = another_employee (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "nova_anexo_aviso_adp",
+      "conversational_label": "Anexe o aviso de férias gerado pelo ADP."
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_vs_name / v_vs_vacation_start_date (set (+)Adicionar Colaborador)",
+      "conversational_label": "Quais colaboradores constam no aviso e quando começam as férias? (avaliar se a lista é necessária além do anexo)"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_i_confirm_added_all",
+      "conversational_label": "Você confirma que incluiu todos os colaboradores do documento anexado? (Sim/Não)"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_description",
+      "conversational_label": "Quer acrescentar alguma observação?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Rich texts label_importante, label_assistente_maia e label_kb_adp e o label v_text_attach devem ir para as descrições (a menção à assistente Maia sugere que parte do fluxo já era atendida por bot). Se o multi-row for indispensável, o derivado da equipe pode ficar non-conversational sem prejudicar o derivado individual, que concentra a maior parte do volume. O flow 'EY: Return of Vacation Notice' precisa aceitar os dois itens (current.item diferente)."
+ },
+ {
+  "sys_id": "b4e12da91bdc2150a530426fe54bcb1a",
+  "nome_atual": "Informações ou dúvidas relacionadas à Férias",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 1369,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "baixo",
+  "prontidao_atual": 25,
+  "justificativa": "Alto volume, 3 perguntas (tipo, tema, detalhe), bloqueado só pelos widgets de busca Custom. Removendo-os, tirando as policies órfãs e levando os textos por tema para a descrição/KB, fica pronto para conversar.",
+  "nome_sugerido": "Tirar dúvida sobre férias (Brasil)",
+  "short_description_sugerida": "Envie ao RH uma dúvida sobre férias quando a resposta não estiver na norma de férias (STD-00536).",
+  "descricao_sugerida": "Use para tirar dúvidas sobre férias no Brasil (programação, férias obrigatórias/coletivas, abono, adiantamento de 13º, pagamento das férias) quando a resposta não estiver na Norma STD-00536 - Férias de Colaboradores. Não use para dar ciência do aviso de férias (use 'Dar ciência das minhas férias programadas'), para programar férias (faça no ADP) nem se você trabalha em país da América Hispânica.",
+  "frases_exemplo": [
+   "dúvida sobre minhas férias",
+   "posso vender 10 dias de férias?",
+   "quando cai o pagamento das férias?",
+   "como funcionam as férias coletivas?",
+   "não consigo programar férias no ADP",
+   "tenho férias vencendo, o que faço?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "variavel contextual_search_results",
+    "problema": "Tipo Custom com UI Macro cxs_rp_search e widget de busca contextual; não renderiza em conversa e trava o modo conversacional.",
+    "acao": "Remover do item (ou ocultar na VA). Na conversa o próprio Now Assist já busca e sugere artigos de KB antes de abrir o caso."
+   },
+   {
+    "onde": "variavel ai_search_assist",
+    "problema": "Tipo Custom com widget 'Assistência para pesquisa com IA'; não renderiza em conversa.",
+    "acao": "Remover do item; a deflexão por KB já é feita pelo Now Assist/AI Search na conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "selecione_o_tema",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sua dúvida é sobre qual tema de férias?",
+    "obs": "Mandatory na variável. Ordem: tema antes do tipo, do mais amplo para o específico."
+   },
+   {
+    "ordem": 2,
+    "variavel": "request_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, reclamação ou sugestão?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_description_details",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes a sua dúvida sobre férias.",
+    "obs": "Mandatory + Validation Regex."
+   },
+   {
+    "ordem": 4,
+    "variavel": "Info / mandatory_vacations_txt / programming_vacations_txt",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts por tema não chegam ao LLM; levar para KB (o Now Assist sugere o artigo) e resumir na descrição."
+   },
+   {
+    "ordem": 5,
+    "variavel": "contextual_search_results / ai_search_assist",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Widgets Custom (bloqueadores)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show kb link",
+    "acao": "remover",
+    "substituicao": "Policy órfã (v_have_you_tried_searching_the_knowledge_base e link_kb não existem)."
+   },
+   {
+    "nome": "EY: Mandatory Fields / EY: Mandatory select boxes",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_description_details, selecione_o_tema e request_type; remover ações órfãs."
+   },
+   {
+    "nome": "EY: Theme = Schudele Vacation / EY: Theme = Mandatory vacation",
+    "acao": "remover",
+    "substituicao": "Textos vão para KB/descrição."
+   },
+   {
+    "nome": "EY: Minimum caracter",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_description_details (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": []
+  },
+  "itens_derivados": [],
+  "observacoes": "Producer script define requested_for como o usuário logado; ok para dúvida própria."
+ },
+ {
+  "sys_id": "3d2e068f1b398910a530426fe54bcb1d",
+  "nome_atual": "Programação / Consulta Férias – ADP",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 0,
+  "justificativa": "Zero registros. Record producer sem variáveis que só serve de atalho para a plataforma ADP; papel de artigo de KB ou link no portal, não de pedido.",
+  "nome_sugerido": "Programar ou consultar férias no ADP",
+  "short_description_sugerida": "Acesso à plataforma ADP para programar ou consultar férias.",
+  "descricao_sugerida": "Link para a plataforma ADP, onde o colaborador programa e consulta suas férias. Recomenda-se publicar como artigo de KB com o link, para o Now Assist responder 'como programo minhas férias?'.",
+  "frases_exemplo": [
+   "como programo minhas férias?",
+   "onde consulto minhas férias?",
+   "link do ADP para férias"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se mantido como link, marcar non-conversational."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Herda flows genéricos sem relação com o conteúdo."
+ },
+ {
+  "sys_id": "6a2fa9bc1b005650514cbaef4b4bcb85",
+  "nome_atual": "Questões, dúvidas, reclamações ou sugestões relacionadas a Férias",
+  "tabela": "x_nasm_hr_case",
+  "volume_12m": 414,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "Poucas perguntas próprias (motivo, categoria só para Equador, detalhe), sem bloqueadores, mas com um onLoad que usa setTimeout para mostrar a categoria no Equador (frágil e ruim em conversa) e validação de 40 caracteres. Tudo tem substituto sem script.",
+  "nome_sugerido": "Tirar dúvida ou reclamar sobre férias (América Hispânica)",
+  "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre férias para Argentina, Chile, Colômbia, Equador, Peru e Uruguai.",
+  "descricao_sugerida": "Use para enviar ao RH uma dúvida, consulta, reclamação ou sugestão sobre férias (saldo de dias, programação, pagamento das férias) quando o tema não estiver nas perguntas frequentes. Vale para colaboradores de Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use se você trabalha no Brasil (use 'Tirar dúvida sobre férias (Brasil)') nem para licenças.",
+  "frases_exemplo": [
+   "cuántos días de vacaciones me quedan?",
+   "duda sobre mis vacaciones",
+   "no me pagaron las vacaciones",
+   "quiero reclamar porque no me aprobaron las vacaciones",
+   "consulta sobre vacaciones en Ecuador"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_contact_reason",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_select_the_category",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Sobre qual assunto de férias?",
+    "obs": "Só para Equador: UI Policy sem script com condição v_country = ECU. É Select Box com atributos lookup/ref_qual residuais; conferir se deveria ser Lookup Select Box."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_detail_field",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Conte em detalhes o que você precisa.",
+    "obs": "Validation Regex de 40 caracteres."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_corporate_e_mail",
+    "origem": "set:EY: Hispana Personal Information",
+    "acao": "derivar",
+    "obs": "Obrigatório por policy deste item; auto-populate e ocultar."
+   },
+   {
+    "ordem": 5,
+    "variavel": "FAQs / v_minimun_characters",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich texts; link das FAQs vai para a descrição."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Hide category OnLoad",
+    "acao": "converter",
+    "substituicao": "UI Policy sem script: v_select_the_category visível (e obrigatória, se for o caso) quando v_country = ECU. Remover o setTimeout."
+   },
+   {
+    "nome": "EY: Show category if Equador OnChange",
+    "acao": "remover",
+    "substituicao": "Coberto pela mesma UI Policy."
+   },
+   {
+    "nome": "EY: Mandatory - v_corporate_e_mail / v_contact_reason / v_detail_field / v_employee",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis (v_employee como override do set)."
+   },
+   {
+    "nome": "EY: hide v_reason_on_behalf",
+    "acao": "manter",
+    "substituicao": "Condicional sem script."
+   },
+   {
+    "nome": "EY: Show error message onSubmit",
+    "acao": "converter",
+    "substituicao": "Script é VA Supported, mas a mensagem de erro onSubmit fica pouco natural na conversa. Trocar por Validation Regex na variável v_detail_field (ex.: ^[\\s\\S]{40,}$ com mensagem 'Descreva com um pouco mais de detalhe (mínimo de 40 caracteres)') e remover o script."
+   },
+   {
+    "nome": "EY: Show error message onChange / EY: Hide error message onLoad",
+    "acao": "remover",
+    "substituicao": "Legenda v_minimun_characters substituída pela mensagem da Validation Regex."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Descrição e frases em pt-BR e espanhol."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O set 'EY: Hispana Personal Information' traz 16 perguntas quase todas derivadas do perfil; as recomendações gerais (ocultar na conversa o que é auto-preenchido, pedir só 'para quem é') ficam na análise dos sets e são decisivas aqui."
+ }
+]

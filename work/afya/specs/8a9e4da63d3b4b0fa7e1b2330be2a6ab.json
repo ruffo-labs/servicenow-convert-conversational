@@ -1,0 +1,184 @@
+{
+ "sys_id": "8a9e4da63d3b4b0fa7e1b2330be2a6ab",
+ "status": "dividido",
+ "motivo": "Arquivo bloqueado pede nome, caminho, SO e evidências; conta bloqueada pede usuário e sistema; cofre de senhas pede nome do cofre, tipo de política e usuários. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_nome_do_arquivo_processo": {
+   "label": "Qual o nome do arquivo ou processo bloqueado?"
+  },
+  "v_caminho_completo": {
+   "label": "Qual o caminho completo do arquivo?"
+  },
+  "v_justificativa_tecnica": {
+   "label": "Qual a justificativa técnica para liberar?"
+  },
+  "v_sistema_operacional": {
+   "label": "Qual o sistema operacional do equipamento?"
+  },
+  "v_anexo_de_evidencias_attachment": {
+   "label": "Envie as evidências do bloqueio."
+  },
+  "v_usuario_afetado": {
+   "label": "Qual usuário foi afetado?"
+  },
+  "v_sistema_ou_aplicacao": {
+   "label": "Qual sistema ou aplicação está envolvido?"
+  },
+  "v_motivo_do_desbloqueio": {
+   "label": "Qual o motivo do desbloqueio?"
+  },
+  "v_justificativa_de_negocio": {
+   "label": "Qual a justificativa de negócio?"
+  },
+  "v_nome_do_cofre": {
+   "label": "Qual o nome do cofre de senhas?"
+  },
+  "v_tipo_de_politica": {
+   "label": "Qual o tipo de política?"
+  },
+  "v_usuario_s_envolvidos": {
+   "label": "Quais usuários estão envolvidos?"
+  },
+  "v_justificativa": {
+   "label": "Qual a justificativa da mudança?"
+  }
+ },
+ "policies": {
+  "1d796d73559644a39b492f3f0f6fe4c4": "remover",
+  "405a9ffa6b91405f94aca88df89e54f0": "remover",
+  "d3f082cf843d47848e103b3aab8d20a0": "remover"
+ },
+ "itens": [
+  {
+   "name": "Liberar arquivo ou processo bloqueado pelo antivírus/EDR",
+   "short_description": "Peça exceção para um arquivo ou processo legítimo bloqueado pelo EDR ou antivírus.",
+   "description": "Use quando o EDR ou antivírus bloqueou algo legítimo (falso positivo). Corresponde à opção Arquivo ou processo legítimo bloqueado pelo EDR/Antivírus. Informe nome, caminho, justificativa, sistema operacional e evidências.",
+   "frases_exemplo": [
+    "O antivírus está bloqueando um programa que preciso",
+    "Meu arquivo foi bloqueado pelo EDR por engano",
+    "Preciso liberar um processo bloqueado",
+    "Falso positivo no antivírus, como libero?",
+    "O EDR travou um executável legítimo"
+   ],
+   "sem_vars": [
+    "v_usuario_afetado",
+    "v_sistema_ou_aplicacao",
+    "v_motivo_do_desbloqueio",
+    "v_justificativa_de_negocio",
+    "v_nome_do_cofre",
+    "v_tipo_de_politica",
+    "v_usuario_s_envolvidos",
+    "v_justificativa"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Arquivo ou processo legítimo bloqueado pelo EDR/Antivírus"
+   },
+   "vars": {
+    "v_nome_do_arquivo_processo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_caminho_completo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa_tecnica": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Desbloquear conta ou tratar suspeita de credencial comprometida",
+   "short_description": "Peça o desbloqueio de uma conta bloqueada ou suspeita de credencial comprometida.",
+   "description": "Use quando uma conta foi bloqueada ou há suspeita de comprometimento de credencial. Corresponde à opção Conta bloqueada ou suspeita de comprometimento de credencial. Informe usuário afetado, sistema, motivo do desbloqueio e justificativa de negócio.",
+   "frases_exemplo": [
+    "Minha conta foi bloqueada por segurança",
+    "Suspeito que minha senha vazou",
+    "Preciso desbloquear a conta de um colaborador",
+    "Conta bloqueada por suspeita de comprometimento",
+    "Preciso liberar o acesso de um usuário bloqueado"
+   ],
+   "sem_vars": [
+    "v_nome_do_arquivo_processo",
+    "v_caminho_completo",
+    "v_justificativa_tecnica",
+    "v_sistema_operacional",
+    "v_anexo_de_evidencias_attachment",
+    "v_nome_do_cofre",
+    "v_tipo_de_politica",
+    "v_usuario_s_envolvidos",
+    "v_justificativa"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Conta bloqueada ou suspeita de comprometimento de credencial"
+   },
+   "vars": {
+    "v_usuario_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_sistema_ou_aplicacao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_motivo_do_desbloqueio": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Alterar acesso ou rotação de credenciais no cofre de senhas",
+   "short_description": "Solicite mudança nas regras de acesso ou rotação de credenciais do cofre de senhas.",
+   "description": "Use para criar, alterar ou revisar políticas de acesso e rotação no cofre de senhas. Corresponde à opção Solicitar mudança nas regras de acesso ou rotação de credenciais no cofre de senhas. Informe o cofre, tipo de política, usuários envolvidos e justificativa.",
+   "frases_exemplo": [
+    "Preciso mudar a rotação de senha no cofre",
+    "Quero dar acesso a um cofre de senhas",
+    "Preciso revisar a política de um cofre",
+    "Como altero as regras de acesso do cofre?",
+    "Quero pedir rotação de credenciais no cofre"
+   ],
+   "sem_vars": [
+    "v_nome_do_arquivo_processo",
+    "v_caminho_completo",
+    "v_justificativa_tecnica",
+    "v_sistema_operacional",
+    "v_anexo_de_evidencias_attachment",
+    "v_usuario_afetado",
+    "v_sistema_ou_aplicacao",
+    "v_motivo_do_desbloqueio",
+    "v_justificativa_de_negocio"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar mudança nas regras de acesso ou rotação de credenciais no cofre de senhas"
+   },
+   "vars": {
+    "v_nome_do_cofre": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_tipo_de_politica": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_usuario_s_envolvidos": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

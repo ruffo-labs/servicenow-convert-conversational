@@ -1,0 +1,440 @@
+{
+ "sys_id": "8658a8a21bff861007caeca12b4bcb8b",
+ "name": "Propostas de Movimentação - Lojas e CDs",
+ "category": "Movimentação de Pessoal",
+ "short_description": "Propostas de Movimentação - Lojas e CDs",
+ "description": "Propostas de Movimenta&ccedil;&atilde;o - Lojas e CDs",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Remuneração e Estrutura",
+    "item": "Regionais - Movimentação de Pessoal"
+   },
+   "ofertas": [
+    {
+     "name": "Propostas Salariais - Lojas e CD - Solicitação de proposta salarial - Lojas e CD",
+     "grupo_suporte": "RH - Remuneração"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "salario_atual",
+    "descricao_do_novo_cr",
+    "numero_do_novo_estabelecimento",
+    "codigo_da_nova_funcao",
+    "data_da_vigencia",
+    "novo_salario",
+    "se_trata_de_uma_substituicao",
+    "codigo_da_fun_o_atual",
+    "descricao_do_cr_atual",
+    "numero_do_cr_atual",
+    "retorno_para_o_local_de_origem",
+    "percentual",
+    "motivo_da_movimentacao",
+    "colaborador_possui_politica_de_transferencia",
+    "politica_de_transferencia",
+    "impacto_financeiro",
+    "n_mero_do_estabelecimento_atual",
+    "numero_do_novo_cr"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Informe o motivo da proposta",
+     "quando": "se_trata_de_uma_substituicao=No^motivo_da_movimentacaoNOT INmerito,transfer_merit"
+    }
+   ],
+   "anterior": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "salario_atual",
+   "type": "Texto de Linha Única",
+   "question_text": "Salário Atual",
+   "choices": []
+  },
+  {
+   "name": "descricao_do_novo_cr",
+   "type": "Texto de Linha Única",
+   "question_text": "Descrição do Novo CR",
+   "default": "-- None --",
+   "choices": []
+  },
+  {
+   "name": "aprovador_1",
+   "type": "Referência",
+   "question_text": "Aprovador 1",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "approver_group",
+   "type": "Referência",
+   "question_text": "Grupo Aprovador",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "numero_do_novo_estabelecimento",
+   "type": "Referência",
+   "question_text": "Novo Estabelecimento",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "descricao_da_funcao_atual",
+   "type": "Selecionar Caixa",
+   "question_text": "Descrição da Função Atual",
+   "default": "-- None --",
+   "choices": [
+    "ANALISTA ATENDIMENTO PL",
+    "ANALISTA PROJETOS GALERIAS JR",
+    "GERENTE SERV PROD FINANCEIRO PL",
+    "ESPECIALISTA SUPORTE II",
+    "ANALISTA EXPANSAO SR",
+    "CHEFE ACOUGUE I E CAMARA FRIA",
+    "CONSULTOR REPORT EXTERNO JR",
+    "COORDENADOR CADEIA SUPRIMENTOS PL",
+    "COORDENADOR LGPD JR",
+    "COORDENADOR REL CLIENTES JR",
+    "DIRETOR TI",
+    "GERENTE REL CLIENTES SR",
+    "SUPERVISOR ATEND AO CLIENTE PL",
+    "CONSULTOR SUSTENTABILIDADE PL",
+    "COORDENADOR FACILITIES JR"
+   ]
+  },
+  {
+   "name": "codigo_da_nova_funcao",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da Nova Função",
+   "choices": []
+  },
+  {
+   "name": "inform_reason_proposal",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o motivo da proposta",
+   "choices": [
+    "Transferência com a vaga",
+    "Transformação de vaga",
+    "Aumento de quadro"
+   ]
+  },
+  {
+   "name": "data_da_vigencia",
+   "type": "Data",
+   "question_text": "Data da vigência",
+   "choices": []
+  },
+  {
+   "name": "novo_salario",
+   "type": "Texto de Linha Única",
+   "question_text": "Novo Salário",
+   "choices": []
+  },
+  {
+   "name": "se_trata_de_uma_substituicao",
+   "type": "Sim/Não",
+   "question_text": "Se trata de uma substituição?",
+   "choices": []
+  },
+  {
+   "name": "aprovador_2",
+   "type": "Referência",
+   "question_text": "Aprovador 2",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "codigo_da_fun_o_atual",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da Função Atual",
+   "choices": []
+  },
+  {
+   "name": "descricao_do_cr_atual",
+   "type": "Texto de Linha Única",
+   "question_text": "Descrição do CR Atual",
+   "default": "--None--",
+   "choices": []
+  },
+  {
+   "name": "numero_do_cr_atual",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do CR Atual",
+   "choices": []
+  },
+  {
+   "name": "nome_do_substituido",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do substituído",
+   "choices": []
+  },
+  {
+   "name": "retorno_para_o_local_de_origem",
+   "type": "Sim/Não",
+   "question_text": "Retorno para o local de origem?",
+   "choices": []
+  },
+  {
+   "name": "percentual",
+   "type": "Texto de Linha Única",
+   "question_text": "Percentual",
+   "default": "%",
+   "choices": []
+  },
+  {
+   "name": "motivo_da_movimentacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da movimentação",
+   "choices": [
+    "Transferência/Promoção",
+    "Movimentação Interna Prosin",
+    "Escalonamento",
+    "Transferência/Mérito",
+    "Enquadramento Função",
+    "Transferência",
+    "Alteração de Carga Horária",
+    "Mérito",
+    "Enquadramento Salarial",
+    "Promoção",
+    "Enquadramento de Piso Salarial"
+   ]
+  },
+  {
+   "name": "colaborador_possui_politica_de_transferencia",
+   "type": "Sim/Não",
+   "question_text": "Colaborador possui política de transferência ativa (Reembolso de Aluguel)? Caso positivo, manter?",
+   "choices": []
+  },
+  {
+   "name": "aprovador_4",
+   "type": "Referência",
+   "question_text": "Aprovador 4",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "politica_de_transferencia",
+   "type": "Sim/Não",
+   "question_text": "Política de transferência?",
+   "choices": []
+  },
+  {
+   "name": "aprovador_3",
+   "type": "Referência",
+   "question_text": "Aprovador 3",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "impacto_financeiro",
+   "type": "Sim/Não",
+   "question_text": "Impacto financeiro?",
+   "choices": []
+  },
+  {
+   "name": "codigo_do_estabelecimento",
+   "type": "Texto de Linha Única",
+   "question_text": "Código do Estabelecimento",
+   "choices": []
+  },
+  {
+   "name": "descricao_da_nova_funcao",
+   "type": "Selecionar Caixa",
+   "question_text": "Descrição da Nova Função",
+   "default": "-- None --",
+   "choices": [
+    "TECNICO SEGURANCA TRABALHO I",
+    "ARQUITETO PL",
+    "COORDENADOR REFORMAS",
+    "ESPECIALISTA SEG INFORMACAO I",
+    "CHEFE ACOUGUE I E CAMARA FRIA",
+    "COORDENADOR GESTAO COMERCIAL",
+    "ANALISTA FINANCEIRO SR",
+    "CONSULTOR PLAN ESTRATEGICO JR",
+    "COORDENADOR CADASTRO PL",
+    "COORDENADOR PLAN CONTROLE SR",
+    "COORDENADOR TESOURARIA JR",
+    "GERENTE PROJETOS PL",
+    "ANALISTA INFRAESTRUTURA SR  - Noturno",
+    "ARQUITETO SR",
+    "CONSULTOR RH JR"
+   ]
+  },
+  {
+   "name": "matricula_do_substituido",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula do substituído",
+   "choices": []
+  },
+  {
+   "name": "esta_acima_de_90_da_faixa_fora_da_politica",
+   "type": "Sim/Não",
+   "question_text": "Movimentação está fora da política?",
+   "choices": []
+  },
+  {
+   "name": "n_mero_do_estabelecimento_atual",
+   "type": "Referência",
+   "question_text": "Estabelecimento Atual",
+   "reference": "core_company",
+   "choices": []
+  },
+  {
+   "name": "numero_do_novo_cr",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do Novo CR",
+   "choices": []
+  },
+  {
+   "name": "codigo_do_estabelecimento_novo",
+   "type": "Texto de Linha Única",
+   "question_text": "Código do Estabelecimento",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "condicao_do_flow"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "157b04601b88d61007caeca12b4bcbd2",
+   "name": "CSA - Descrição do CR Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma consulta de CR atual, com as variáveis numero_do_cr_atual e descricao_do_cr_atual."
+  },
+  {
+   "sys_id": "1669c06c1b48d61007caeca12b4bcb83",
+   "name": "CSA - Descrição do CR Novo",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma consulta de CR, para o CR novo (numero_do_novo_cr e descricao_do_novo_cr)."
+  },
+  {
+   "sys_id": "1b3761c11b881e1007caeca12b4bcb9c",
+   "name": "Aprovador 3",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Variante com grupo aprovador: no onChange, esconde mensagens de aprovador_2, approver_group e aprovador_4; se aprovador_2 estiver vazio, limpa approver_group e aprovador_4 e mostra 'Necessário aprovador 2' em approver_group."
+  },
+  {
+   "sys_id": "2219846c1b48d61007caeca12b4bcbbd",
+   "name": "CSA - Calcula Porcentual Salario",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesmo cálculo de percentual de aumento salarial, com as variáveis novo_salario e salario_atual, gravando em percentual."
+  },
+  {
+   "sys_id": "720848e81b48d61007caeca12b4bcb22",
+   "name": "CSA - Local Novo",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de numero_do_novo_estabelecimento, lê o registro por getReference e grava u_establishment em codigo_do_estabelecimento_novo (ou limpa se vazio)."
+  },
+  {
+   "sys_id": "728769811b881e1007caeca12b4bcb31",
+   "name": "Aprovador 4",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Variante com grupo aprovador: no onChange, se approver_group estiver vazio, limpa approver_group e aprovador_4 e mostra 'Necessário Grupo Aprovador' em aprovador_4."
+  },
+  {
+   "sys_id": "8ac239d03b6b2a10b28dd047f4e45af4",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "95bac46c1b48d61007caeca12b4bcbc7",
+   "name": "CSA - Função Nova",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de código de função, para a função nova (codigo_da_nova_funcao / descricao_da_nova_funcao), lista fixa embutida (~1.260 códigos)."
+  },
+  {
+   "sys_id": "a41b04601b88d61007caeca12b4bcbb8",
+   "name": "CSA - Função Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de código de função, para codigo_da_fun_o_atual / descricao_da_funcao_atual, lista fixa embutida (~1.260 códigos). Quando inválido grava '-- None --' na descrição e limpa o código."
+  },
+  {
+   "sys_id": "c3c2fdd03b6b2a10b28dd047f4e45a8e",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "c778482c1b48d61007caeca12b4bcb46",
+   "name": "CSA - Local Atual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do número do estabelecimento atual, lê o registro por getReference e grava u_establishment em codigo_do_estabelecimento (ou limpa se vazio)."
+  }
+ ]
+}

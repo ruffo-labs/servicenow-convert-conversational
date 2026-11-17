@@ -1,0 +1,110 @@
+{
+ "sys_id": "40d87ef087c33250017d65790cbb35ca",
+ "title": "Enter here the data of the materials to be changed",
+ "internal_name": "ey_enter_here_the_data_of_the_materials_to_be_changed",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Alteração de Custo Padrão (Materiais Produtivos)"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_material_type",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Material Type"
+  },
+  {
+   "name": "vs_material_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Material Code"
+  },
+  {
+   "name": "vs_material_description",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Material Description"
+  },
+  {
+   "name": "vs_center_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Center/Country"
+  },
+  {
+   "name": "vs_current_cost",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Current Cost"
+  },
+  {
+   "name": "vs_new_cost",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "New cost"
+  },
+  {
+   "name": "vs_variation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Variation"
+  },
+  {
+   "name": "vs_unit_of_measurement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Unit of measurement"
+  },
+  {
+   "name": "vs_reason_for_change",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Reason for change"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_new_cost: mandatory=true",
+    "vs_material_type: mandatory=true",
+    "vs_reason_for_change: mandatory=true",
+    "vs_center_country: mandatory=true",
+    "vs_material_code: mandatory=true",
+    "vs_current_cost: mandatory=true",
+    "vs_material_description: mandatory=true",
+    "vs_variation: readonly=true",
+    "vs_unit_of_measurement: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set multirow mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Calc cost variation Percent Current ",
+   "type": "onChange",
+   "on": "9a2bbe3087073250017d65790cbb353a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula a variação percentual de custo. Lê 'vs_new_cost' e 'vs_current_cost', e grava em 'vs_variation' a variação em porcentagem. Observação: a função de validação interna testa se o valor é do tipo number, mas parseFloat de um campo vazio devolve NaN e de texto inválido também — na prática o cálculo só ocorre com os dois campos numéricos preenchidos; caso contrário 'vs_variation' é limpo. Não há proteção contra custo atual igual a zero, que produziria divisão…"
+  },
+  {
+   "name": "EY: Calc cost variation Percent New cost",
+   "type": "onChange",
+   "on": "845bba3087073250017d65790cbb35df",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula a variação percentual de custo. Lê 'vs_new_cost' e 'vs_current_cost', e grava em 'vs_variation' a variação em porcentagem. Observação: a função de validação interna testa se o valor é do tipo number, mas parseFloat de um campo vazio devolve NaN e de texto inválido também — na prática o cálculo só ocorre com os dois campos numéricos preenchidos; caso contrário 'vs_variation' é limpo. Não há proteção contra custo atual igual a zero, que produziria divisão…"
+  }
+ ]
+}

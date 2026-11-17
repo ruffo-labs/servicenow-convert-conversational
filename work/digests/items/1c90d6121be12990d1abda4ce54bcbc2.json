@@ -1,0 +1,108 @@
+{
+ "sys_id": "1c90d6121be12990d1abda4ce54bcbc2",
+ "name": "Lançamento Contábil Avon",
+ "sys_name": "Avon Accounting Entry",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Lançamentos Contábeis",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Reclasificaciones contables",
+ "description": "Reclasificaciones contables",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "12",
+   "bloqueadores": "3",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom with Label (personalizado com rotulo) (type 17 / Personalizado com rótulo)",
+    "onde": "v_template_avon"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "v_template_avon"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_template_avon"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_approver_avon: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_attachment_information_avon: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_template_file: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_template_file2: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [],
+ "variable_sets": [
+  {
+   "sys_id": "cf3da7791bf83910d1abda4ce54bcb99",
+   "name": "EY VS - Empresas Avon - Lançamento Contábil Avon",
+   "order": "100",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened By",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "vs_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "a782884b1bf986d0a530426fe54bcb7f",
+   "name": "EY VS - Sox",
+   "order": "125",
+   "perguntas": [
+    "does_this_request_have_sox_control_attached (Selecionar Caixa): Does this request have sox control attached?",
+    "sox_control_name (Texto de Linha Única): Sox Control Name"
+   ]
+  },
+  {
+   "sys_id": "7c366e921b652990d1abda4ce54bcbab",
+   "name": "EY VS Lançamento Contabil AVON",
+   "order": "150",
+   "perguntas": [
+    "vs_approver_avon (Referência, hidden): Select approver",
+    "vs_attachment_information_avon (Rótulo de Rich Text): ",
+    "v_template_avon (Personalizado com rótulo): Accounting entry template - Avon",
+    "v_attach_template_file (Anexo): Attach template file",
+    "v_attach_template_file2 (Anexo): Attach Support Document"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "10000",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "EY: Campo company - Tirar natura/tbs",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Remove as opções 'tbs' e 'natura' da lista 'vs_which_company', restringindo a escolha de empresa às demais opções neste formulário."
+  }
+ ]
+}

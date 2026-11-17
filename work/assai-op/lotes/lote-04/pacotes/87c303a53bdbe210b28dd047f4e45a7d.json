@@ -1,0 +1,76 @@
+{
+ "sys_id": "87c303a53bdbe210b28dd047f4e45a7d",
+ "name": "Décimo Terceiro Salário (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Décimo terceiro salário",
+ "description": "D&eacute;cimo terceiro sal&aacute;rio",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no décimo terceiro salário",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "payment_statement"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Não recebimento do décimo terceiro salário",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Décimo Terceiro"
+    }
+   ],
+   "sai_do_formulario": [
+    "payment_statement"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com a divergência",
+   "choices": []
+  }
+ ],
+ "client_scripts": []
+}

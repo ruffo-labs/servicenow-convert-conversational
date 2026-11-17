@@ -1,0 +1,395 @@
+{
+ "sys_id": "ba93972d1b002d58a530426fe54bcbfe",
+ "name": "Solicitação para tratativa de caixa Lojas",
+ "sys_name": "FORM0000366",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Varejo e Fechamento de Caixa",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar a confirmação de depósitos realizado em vendas corporativas",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "27",
+   "variaveis_ativas": "29",
+   "bloqueadores": "0",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "27"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_proof_retention: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_template_accountability: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_completed_template: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_comprovante: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_select_the_approving_supervisor: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_print_dtef: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_proof_sale: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_store_reference: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 27 de 27 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 27 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 13 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_select_the_approving_supervisor",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approving supervisor.",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=dfdf12a6873147d0ec360e530cbb3519^EQ"
+  },
+  {
+   "name": "v_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Indicate the manager responsible for approval.",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^user.active=true^EQ"
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select request type",
+   "include_none": true,
+   "choices": [
+    "Box adjustment [=box_adjust]",
+    "Cancellation of sale [=cancel_sale]",
+    "Fake note [=fake_note]",
+    "Accountability [=account]",
+    "Corporate sale [=corp_sale]"
+   ]
+  },
+  {
+   "name": "value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value"
+  },
+  {
+   "name": "payment_method",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Payment Method",
+   "include_none": true,
+   "choices": [
+    "Debit [=debit]",
+    "Credit [=credit]",
+    "PIX [=pix]"
+   ]
+  },
+  {
+   "name": "customer_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Customer Name"
+  },
+  {
+   "name": "customer_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Customer CPF",
+   "example": "000.000.000-00"
+  },
+  {
+   "name": "bank",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank"
+  },
+  {
+   "name": "agency",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Agency"
+  },
+  {
+   "name": "account",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Account"
+  },
+  {
+   "name": "v_nsu",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform NSU"
+  },
+  {
+   "name": "v_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Inform date"
+  },
+  {
+   "name": "v_pos",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the POS"
+  },
+  {
+   "name": "v_cnpj_store",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the CNPJ of the store",
+   "example": "00.000.000/0000-00"
+  },
+  {
+   "name": "v_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the value (R$)"
+  },
+  {
+   "name": "v_data_of_box_adjustment",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Data of cash adjustment"
+  },
+  {
+   "name": "v_value_cancel",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the value to cancel (R$)"
+  },
+  {
+   "name": "v_attach_comprovante",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Customer payment receipt"
+  },
+  {
+   "name": "v_aut",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the Aut"
+  },
+  {
+   "name": "v_template_accountability",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_proof_sale",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach proof of sale"
+  },
+  {
+   "name": "v_attach_print_dtef",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the print D-TEF"
+  },
+  {
+   "name": "v_attach_completed_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the completed template"
+  },
+  {
+   "name": "v_attach_proof_retention",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach proof of retention of the note issued by the bank"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+   "name": "EY: Opened by",
+   "order": "10",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by"
+   ]
+  },
+  {
+   "sys_id": "b9d4b5991bc86558a530426fe54bcba7",
+   "name": "EY: Company: Natura/TBS/Aesop",
+   "order": "20",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company is your request for?"
+   ]
+  },
+  {
+   "sys_id": "c0f13edd87f7a210ec360e530cbb352e",
+   "name": "EY: Store (Reference)",
+   "order": "30",
+   "perguntas": [
+    "vs_store_reference (Referência): Which store is your request for?"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "900",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "999",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_approving_supervisor: mandatory=true",
+    "v_select_the_approver: mandatory=true",
+    "v_request_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory field if PIX",
+   "when": "IO:v_request_type=cancel_sale^IO:payment_method=pix^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_comprovante: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Corporate sale",
+   "when": "IO:v_request_type=corp_sale^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_proof_sale: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: IF Debit OR Credit OR PIX",
+   "when": "IO:payment_methodINdebit,credit,pix^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_value_cancel: visible=true,mandatory=true",
+    "v_value: visible=true,mandatory=true",
+    "v_cnpj_store: visible=true,mandatory=true",
+    "v_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Date of cash/box adjustment visiblity",
+   "when": "IO:v_request_type=box_adjust^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_data_of_box_adjustment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: PIX",
+   "when": "IO:payment_method=pix^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "bank: visible=true,mandatory=true",
+    "customer_cpf: visible=true,mandatory=true",
+    "account: visible=true,mandatory=true",
+    "agency: visible=true,mandatory=true",
+    "customer_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Fake note",
+   "when": "IO:v_request_type=fake_note^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_proof_retention: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Payment Method",
+   "when": "IO:payment_methodINdebit,credit^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_aut: visible=true,mandatory=true",
+    "v_attach_print_dtef: visible=true,mandatory=true",
+    "v_nsu: visible=true,mandatory=true",
+    "v_pos: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Cancellation of sale",
+   "when": "IO:v_request_type=cancel_sale^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "payment_method: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Accountability",
+   "when": "IO:v_request_type=account^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_completed_template: visible=true,mandatory=true",
+    "v_template_accountability: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Se \"Ajuste de caixa\", \"Nota Falsa\" e \"Venda Corporativa\" ",
+   "when": "IO:v_request_typeINbox_adjust,fake_note,corp_sale^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "value: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validade CNPJ",
+   "type": "onChange",
+   "on": "329163251b442d58a530426fe54bcb86",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CNPJ por formato. Duplicata quase idêntica ao outro validador de CNPJ desta fatia, com hash diferente por variação de espaçamento."
+  },
+  {
+   "name": "EY: Validate value cancel",
+   "type": "onChange",
+   "on": "42126ba51b442d58a530426fe54bcb53",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'v_value_cancel'. Inválido: limpa e mostra erro."
+  },
+  {
+   "name": "EY: Validate value",
+   "type": "onChange",
+   "on": "39d1a7a51b442d58a530426fe54bcbcc",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'v_value'. Inválido: limpa o campo e mostra 'Valor inválido'. Observação: o script se chama 'Number Regex' mas valida moeda, não número simples."
+  },
+  {
+   "name": "EY: Clear values",
+   "type": "onChange",
+   "on": "bd59d7a91b802d58a530426fe54bcbf3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de dados da transação: NSU, data, POS, CNPJ da loja, valor, valor cancelado e código de autorização."
+  }
+ ]
+}

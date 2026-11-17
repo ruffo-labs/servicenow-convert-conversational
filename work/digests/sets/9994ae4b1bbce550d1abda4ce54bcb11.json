@@ -1,0 +1,65 @@
+{
+ "sys_id": "9994ae4b1bbce550d1abda4ce54bcb11",
+ "title": "EY: Company: Natura/TBS - Country Subcompany",
+ "internal_name": "ey_company_natura_tbs_country_subcompany",
+ "description": "Company and Subcompany Natura/TBS only in Colombia, Chile, Argentina, Peru, México countries.",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Reclassificação e Legalização de Adiantamentos a Colaboradores – LATAM",
+  "Realizar Prestação de Contas - LATAM"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company?",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura",
+    "TBS"
+   ]
+  },
+  {
+   "name": "vs_what_is_the_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "What is the sub-company?",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_which_company+'^countryINColombia, Chile, Argentina, Peru, México^ORDERBYDESCx_nasm_hr_code'\r\n",
+   "include_none": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show subcompany on form",
+   "when": "IO:vs_which_company!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_what_is_the_sub_company: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make \"Which Company\" Mandatory field on form",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear sub-company ",
+   "type": "onChange",
+   "on": "40e46ecb1bbce550d1abda4ce54bcbec",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_what_is_the_sub_company' quando o campo anterior muda."
+  }
+ ]
+}

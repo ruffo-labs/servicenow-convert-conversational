@@ -1,0 +1,144 @@
+{
+ "sys_id": "01fc31061b03241032822170f54bcbfc",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Gestor - RH Ponta > Admissão > Processo de Admissão, 1 item em Preciso reportar um problema (2 ofertas) e 1 em Preciso de um serviço de RH (2 ofertas). 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Desconto indevido de INSS na admissão; ALP - Solicitação de correção de dados cadastrais.",
+ "vars": {
+  "rfb_irregularity_detail": {
+   "label": "Qual é o detalhe da irregularidade na Receita Federal?"
+  },
+  "rfb_registration_status": {
+   "label": "Qual é a situação cadastral do CPF na Receita Federal?"
+  },
+  "new_admission_date": {
+   "label": "Qual é a nova data de admissão?"
+  },
+  "rh_info_incorrect": {
+   "label": "Qual dado está incorreto?"
+  },
+  "ra_number": {
+   "label": "Qual é o número do RA?"
+  },
+  "registration": {
+   "label": "Qual é a matrícula do colaborador?"
+  },
+  "rh_registration_newly_admitted": {
+   "label": "Qual é a matrícula do recém-admitido?"
+  },
+  "rh_full_name_newly_admitted": {
+   "label": "Qual é o nome completo do recém-admitido?"
+  },
+  "admission_date": {
+   "label": "Qual é a data de admissão atual?"
+  },
+  "reason": {
+   "label": "Qual é o motivo do cancelamento?"
+  },
+  "what_is_the_documentary_discrepancy": {
+   "label": "Qual é a divergência na documentação?"
+  },
+  "cpf": {
+   "label": "Qual é o CPF do colaborador?"
+  },
+  "Attachment": {
+   "label": "Envie o anexo da solicitação."
+  }
+ },
+ "remover": {
+  "rh_alert_4": "visual",
+  "rh_alert_1": "visual",
+  "rh_month_undue_discount": "oferta_inativa",
+  "rh_alert_2": "visual",
+  "rh_alert_3": "visual",
+  "rh_alert_5": "visual"
+ },
+ "policies": {
+  "7bfc79061b03241032822170f54bcbac": "remover",
+  "7d3500453b02d210b28dd047f4e45a24": "remover",
+  "91ba7fb43b8e9210b28dd047f4e45a7b": "remover",
+  "bbfc79061b03241032822170f54bcba9": "remover",
+  "fbfc79061b03241032822170f54bcba6": {
+   "conditions": "service_offering=11d16f541b47649032822170f54bcb2e",
+   "actions": {
+    "rh_full_name_newly_admitted": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_registration_newly_admitted": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_info_incorrect": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Processo de Admissão (problema)",
+   "short_description": "Reportar necessidade de alterar data ou corrigir dados do contrato.",
+   "description": "Use para reportar problema numa admissão: data de admissão que precisa mudar (oferta Solicitação de alteração de data de admissão) ou dado incorreto no contrato (oferta Solicitação de correção de dados do contrato). Informe o candidato ou recém-admitido e o que está errado. Atendimento do RH - Admissão, SLA de 24h.",
+   "frases_exemplo": [
+    "Preciso mudar a data de admissão de um candidato",
+    "O contrato do novo colaborador está com dado errado",
+    "Quero corrigir informação do contrato de admissão",
+    "A data de admissão precisa ser alterada",
+    "Errei um dado na admissão, como corrijo?"
+   ],
+   "sem_vars": [
+    "rfb_registration_status",
+    "ra_number",
+    "registration",
+    "admission_date",
+    "reason",
+    "what_is_the_documentary_discrepancy",
+    "cpf",
+    "start",
+    "formatter",
+    "formatter2"
+   ],
+   "sem_policies": [
+    "5938f73c3b4e9210b28dd047f4e45a2b",
+    "61cd2bc6873c4310182a0d440cbb3538",
+    "65873fb83b4e9210b28dd047f4e45aba",
+    "c1087ff83b4e9210b28dd047f4e45ab3",
+    "de6d6bc6873c4310182a0d440cbb35be",
+    "f13e3b343bce9210b28dd047f4e45ac7",
+    "f3deb7b43bce9210b28dd047f4e45a17",
+    "3d2e238a873c4310182a0d440cbb352f"
+   ]
+  },
+  {
+   "name": "Processo de Admissão (serviço)",
+   "short_description": "Pedir cancelamento de admissão ou validação de documentação da admissão digital.",
+   "description": "Use para pedir serviços de admissão: cancelar uma admissão em andamento (oferta Solicitação de cancelamento de admissão) ou validar a documentação de uma admissão digital, como pendências na Receita Federal (oferta Solicitação de validação de documentação - Admissão digital). Atendimento do RH - Admissão.",
+   "frases_exemplo": [
+    "Quero cancelar a admissão de um candidato",
+    "Candidato desistiu, preciso cancelar a admissão",
+    "Preciso validar a documentação da admissão digital",
+    "O candidato tem pendência na Receita Federal",
+    "Como valido os documentos de uma admissão digital?"
+   ],
+   "sem_vars": [
+    "new_admission_date",
+    "rh_info_incorrect",
+    "rh_registration_newly_admitted",
+    "rh_full_name_newly_admitted",
+    "Attachment"
+   ],
+   "sem_policies": [
+    "90d890893b06d210b28dd047f4e45aca",
+    "969718053b06d210b28dd047f4e45ad0",
+    "fbfc79061b03241032822170f54bcba6"
+   ]
+  }
+ ],
+ "scripts": {
+  "ec647b8e877c4310182a0d440cbb35d5": {
+   "remover": {
+    "outro": "preenche descrição padrão conforme oferta; coberto pelo derivado"
+   }
+  }
+ }
+}

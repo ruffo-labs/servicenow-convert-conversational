@@ -1,0 +1,131 @@
+{
+ "sys_id": "1506f32e1bcf281032822170f54bcb4f",
+ "name": "INSS",
+ "category": "Folha de pagamento",
+ "short_description": "INSS",
+ "description": "INSS",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Folha de Pagamento",
+    "item": "INSS"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de análise de desconto/ recolhimento de INSS",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - INSS"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_month_ir",
+    "rh_year_ir"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Análise de desconto ou recolhimento de INSS",
+     "description": "Use quando tiver dúvida ou divergência no desconto ou recolhimento de INSS. Corresponde à oferta Solicitação de análise de desconto/ recolhimento de INSS. Informe o mês e o ano em questão."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_month_ir",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês do IR",
+   "choices": [
+    "Março",
+    "Maio",
+    "Julho",
+    "Dezembro",
+    "Outubro",
+    "Agosto",
+    "Fevereiro",
+    "Abril",
+    "Junho",
+    "Setembro",
+    "Novembro",
+    "Janeiro"
+   ],
+   "label_atual": "Qual é o mês do IR?"
+  },
+  {
+   "name": "rh_year_ir",
+   "type": "Texto de Linha Única",
+   "question_text": "Ano do IR",
+   "choices": [],
+   "label_atual": "Qual é o ano do IR?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "108a695c3be72a10b28dd047f4e45a10",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "3a7a6d1c3be72a10b28dd047f4e45a66",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

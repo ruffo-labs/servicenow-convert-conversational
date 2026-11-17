@@ -1,0 +1,319 @@
+{
+ "sys_id": "1d7ecc1c1be41a90514cbaef4b4bcba7",
+ "name": "Seguro complementar (saúde, vida e odontológico)",
+ "sys_name": "Supplemental insurance (health, life and dental)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Seguro Complementar",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Use this form to apply for supplemental insurance, change your plan or modify your dependents.",
+ "description": "Use this form to apply for supplemental insurance, change your plan or modify your dependents.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "28",
+   "variaveis_ativas": "35",
+   "bloqueadores": "3",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "28"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "mrvs_monitor"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "3 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Clear session OnLoad, EY: Set employee_reference, EY: Block same beneficiaries"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_form: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @legend_one: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legend_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @select_the_dependent: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_full_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 28 de 28 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 28 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 15 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+ "variaveis": [
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "mrvs_monitor",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "MRVS Monitor",
+   "widget": "EY: MRV Macro widget Beneficiary 4"
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Initial incorporation collaborator [=initial_incorporation_collaborator]",
+    "Plan change [=plan_change]",
+    "Dependent registration [=dependent_registration]",
+    "Termination of dependents [=termination_dependents]"
+   ]
+  },
+  {
+   "name": "apply_to_your_dependents",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Does this application apply to any of your dependents?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "legend_one",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "select_the_dependent",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legend_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Date of birth"
+  },
+  {
+   "name": "details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "To request a change of plan, please see the following details"
+  },
+  {
+   "name": "attach_form",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Supplemental Insurance Form"
+  },
+  {
+   "name": "v_container_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "checkbox_one",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I have prior and express knowledge of the contractual terms and conditions of the request made."
+  },
+  {
+   "name": "v_container_start_midle",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": ""
+  },
+  {
+   "name": "checkbox_two",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I assume full responsibility for the accuracy of the information contained in this form."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  },
+  {
+   "sys_id": "62cbed6d3be85610924d0247f4e45a0b",
+   "name": "Inclusão de dependentes",
+   "order": "550",
+   "perguntas": [
+    "employee_reference (Referência, hidden): Employee name",
+    "v_full_name (Referência): Full name",
+    "v_family_relationship (Texto de Linha Única): Family relationship",
+    "v_document (Texto de Linha Única): Identity document",
+    "v_date_of_birth (Data): Date of birth"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show apply to your dependents",
+   "when": "IO:type_of_request=initial_incorporation_collaborator^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "apply_to_your_dependents: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set hide attachment",
+   "when": "IO:type_of_request=termination_dependents^ORIO:type_of_request=plan_change^ORIO:type_of_request=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_form: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Show template link and legenda",
+   "when": "IO:type_of_request=initial_incorporation_collaborator^ORIO:type_of_request=dependent_registration^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legend_attach: visible=true",
+    "template: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show legenda workday",
+   "when": "IO:apply_to_your_dependents=yes^NQIO:type_of_request=dependent_registration^ORIO:type_of_request=termination_dependents^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legend_one: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Set checkbox one mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "checkbox_one: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory attachment",
+   "when": "IO:type_of_request=initial_incorporation_collaborator^ORIO:type_of_request=dependent_registration^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_form: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set checkbox two mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "checkbox_two: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show detais",
+   "when": "IO:type_of_request=plan_change^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "details: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set type_of_request mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "type_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show multirow",
+   "when": "IO:apply_to_your_dependents=yes^NQIO:type_of_request=dependent_registration^ORIO:type_of_request=termination_dependents^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "inclusion_of_dependents: visible=true,mandatory=true",
+    "select_the_dependent: visible=true"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly v_country_of_residence",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country_of_residence: mandatory=false,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear Values",
+   "type": "onChange",
+   "on": "e3dbacec1b249a90514cbaef4b4bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'apply_to_your_dependents', 'details' e campos relacionados quando o valor anterior muda."
+  },
+  {
+   "name": "EY: Clear session OnLoad",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove a chave 'dependents_list' do sessionStorage do navegador. Uso incomum: o formulário guarda a lista de dependentes no armazenamento da sessão do browser, e este script zera esse cache na abertura."
+  },
+  {
+   "name": "EY: Clear Values",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o tipo de solicitação e o bloco de dependentes quando o valor anterior muda."
+  }
+ ]
+}

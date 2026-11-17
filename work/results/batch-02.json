@@ -1,0 +1,2598 @@
+[
+ {
+  "sys_id": "97ff6e031bb02950d1abda4ce54bcb4a",
+  "nome_atual": "Logística de Transferência - Força de Vendas Natura",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 154,
+  "recomendacao": "dividir",
+  "prioridade": "media",
+  "esforco": "alto",
+  "prontidao_atual": 30,
+  "justificativa": "O select v_what_is_the_demand_for_the_call mistura duas intenções sem relação entre si: pedir apoio logístico para mudança de setor (endereço de origem/destino, veículo, cotações, aprovação do RH) e tirar dúvidas sobre transferência (tipo de dúvida + descrição). Com 36 perguntas o item passa do limite de renderização inline e abre como janela. Separando e consolidando os endereços, o ramo de apoio logístico cai para ~15 perguntas e o de dúvidas para 3.",
+  "nome_sugerido": "Logística de transferência de setor - Força de Vendas Natura",
+  "short_description_sugerida": "Apoio logístico e dúvidas sobre a transferência de setor da Força de Vendas Natura",
+  "descricao_sugerida": "Item pai a ser substituído pelos dois itens derivados: \"Solicitar apoio logístico para transferência de setor\" e \"Tirar dúvidas sobre transferência de setor\". Use somente para a Força de Vendas Natura Brasil.",
+  "frases_exemplo": [
+   "vou ser transferido de setor e preciso de ajuda com a mudança",
+   "tenho dúvida sobre a transferência de setor"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_proof_of_approval_from_your_area_hr, v_attach_1st/2st/3st_quotation",
+    "problema": "4 variáveis Attachment obrigatórias no meio do fluxo",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo. As 3 cotações de carreta viram um único pedido de anexo (\"anexe as 3 cotações\")."
+   },
+   {
+    "onde": "v_if_have_questions_about, v_attention (Rich Text Label)",
+    "problema": "Mídia removida na conversa; instrução não chega ao LLM",
+    "acao": "Levar o texto útil para a descrição do item derivado ou para um artigo de KB linkado."
+   },
+   {
+    "onde": "muitas_perguntas",
+    "problema": "36 perguntas (acima de 20 abre janela)",
+    "acao": "Dividir por intenção e consolidar os 7 campos de endereço de origem e os 7 de destino em 2 perguntas de texto cada (CEP + endereço completo)."
+   },
+   {
+    "onde": "v_inform_the_new_sales_management",
+    "problema": "Lookup Select Box com reference qualifier dinâmico dependente de v_inform_the_target_market",
+    "acao": "Manter, mas testar na conversa; se não resolver, trocar para Reference em x_nasm_finance_market_sector com qualifier simples, ou Single Line Text."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: What is the demand for the call? / EY: If \"What demand of the calling?\" (2 policies)",
+    "acao": "remover",
+    "substituicao": "O ramo vira o próprio item derivado; v_what_is_the_demand_for_the_call fica com default value e oculta."
+   },
+   {
+    "nome": "EY: If \"Personal vehicle...\", \"corporate vehicle\", \"Reel/trailer\", \"Sales Management Other\", \"Other sector\"",
+    "acao": "manter",
+    "substituicao": "Condições simples sem script; desmarcar On load e colocar mandatory direto na variável quando for sempre obrigatória."
+   },
+   {
+    "nome": "EY: Validate license plate / Validate zip code / Validate zip code destination",
+    "acao": "converter",
+    "substituicao": "Validation Regex na variável: placa ^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$ e CEP ^\\d{5}-?\\d{3}$ (aceitar hífen opcional)."
+   },
+   {
+    "nome": "EY: Clear * (10 scripts onChange de limpeza)",
+    "acao": "remover",
+    "substituicao": "Na conversa a ordem é linear e os campos ocultos por UI Policy não são enviados; a limpeza em cascata é desnecessária no fluxo conversacional. Se precisar manter para o portal, marcar como Desktop/Portal apenas."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Conferir no flow se ele usa v_what_is_the_demand_for_the_call para rotear; cada derivado fixa o valor por default.",
+    "Variáveis referenciadas nas policies e ausentes no digest (v_enter_the_name_of_the_new_sector, v_*_destination) precisam ser revisadas: estão inativas ou faltam no item."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar apoio logístico para transferência de setor",
+    "short_description": "Mudança de endereço e transporte de veículo na transferência de setor da Força de Vendas Natura",
+    "descricao": "Use quando você, da Força de Vendas Natura, foi transferido para outro setor ou gerência de vendas e precisa de apoio com a mudança: transporte do carro próprio, do carro da frota ou contratação de carreta. É necessário ter a aprovação do RH da sua área (HR BP). Não use para tirar dúvidas sobre a transferência (há um item próprio) nem para mudança de endereço sem troca de setor.",
+    "frases_exemplo": [
+     "fui transferido de setor e preciso levar meu carro para a nova cidade",
+     "preciso de carreta para a mudança da transferência",
+     "quero pedir a logística da minha transferência de setor",
+     "vou mudar de gerência de vendas e preciso transportar o carro da frota",
+     "mudança de setor, como peço o transporte?"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = request_assistance_in_sector_transfer (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_inform_the_target_market",
+      "conversational_label": "Para qual mercado você está sendo transferido?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_inform_the_new_sales_management",
+      "conversational_label": "Qual é a nova gerência de vendas?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_if_you_cannot_find_the_new_sales_management",
+      "conversational_label": "Não encontrei a gerência na lista. Qual é o nome dela?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_enter_the_name_of_the_new_sector",
+      "conversational_label": "Qual é o novo setor?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_area_hr_hr_bp_responsible_for_the_employee",
+      "conversational_label": "Quem é o RH da sua área (HR BP) responsável pela transferência?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "nova_origin_address (substitui v_zip_code, v_street_av_park, v_number, v_complement, v_neighborhood, v_city, v_state)",
+      "conversational_label": "Qual é o endereço de origem completo, com CEP, rua, número, complemento, bairro, cidade e estado?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "nova_destination_address (substitui os 7 campos v_*_destination)",
+      "conversational_label": "E qual é o endereço de destino completo, com CEP?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_transportation_required_by_personal_vehicle",
+      "conversational_label": "Você precisa transportar um veículo próprio?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_inform_vehicle_brand",
+      "conversational_label": "Qual é a marca do veículo?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "v_inform_vehicle_model",
+      "conversational_label": "Qual é o modelo?"
+     },
+     {
+      "ordem": 11,
+      "variavel": "v_enter_the_year_of_the_vehicle",
+      "conversational_label": "Qual é o ano do veículo?"
+     },
+     {
+      "ordem": 12,
+      "variavel": "v_license_plate",
+      "conversational_label": "Qual é a placa?"
+     },
+     {
+      "ordem": 13,
+      "variavel": "v_transportation_required_for_corporate_vehicle",
+      "conversational_label": "Precisa transportar um carro da frota corporativa?"
+     },
+     {
+      "ordem": 14,
+      "variavel": "v_corporate_vehicle_supplier",
+      "conversational_label": "Qual é o fornecedor do carro da frota?"
+     },
+     {
+      "ordem": 15,
+      "variavel": "v_is_a_trailer_required_for_moving",
+      "conversational_label": "Vai precisar de carreta para a mudança?"
+     },
+     {
+      "ordem": 16,
+      "variavel": "anexos (fim da conversa)",
+      "conversational_label": "Anexe a aprovação do RH da sua área e, se precisar de carreta, as 3 cotações de frete."
+     }
+    ]
+   },
+   {
+    "nome": "Tirar dúvidas sobre transferência de setor",
+    "short_description": "Dúvidas sobre o processo de transferência de setor da Força de Vendas Natura",
+    "descricao": "Use quando você tem uma dúvida sobre o processo de transferência de setor da Força de Vendas Natura (regras, prazos, reembolso, andamento). Não use para pedir o apoio logístico da mudança: para isso use \"Solicitar apoio logístico para transferência de setor\".",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre a transferência de setor",
+     "como funciona a logística da transferência?",
+     "quem paga a mudança quando troco de setor?",
+     "qual o prazo para pedir o transporte do carro na transferência?"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = ask_questions_about_transfer (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_type_of_doubt_do_you_have",
+      "conversational_label": "Sobre qual assunto é a sua dúvida?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_inform_your_doubt",
+      "conversational_label": "Qual é a sua dúvida?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "Variáveis de layout (v_enter_your_origin_address_below, v_destination_address_below, v_the_quote_for_the_corporate_vehicle, v_3_different_quotes_for_shipping) saem da conversa. Se o time exigir os campos de endereço separados para o flow, manter os campos e perguntar só CEP, número e complemento, preenchendo o resto por integração de CEP. Nomes com erro (2st/3st) podem ser corrigidos ao recriar."
+ },
+ {
+  "sys_id": "73253b071bb46950d1abda4ce54bcbe1",
+  "nome_atual": "Solicitação de adiantamento de comissão - líderes",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 0,
+  "recomendacao": "avaliar_desativacao",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Zero chamados nos últimos 12 meses e apenas 2 no histórico. Não vale converter; avaliar com a Célula de Remuneração e Pagamentos se o processo ainda existe ou se é atendido por \"Solicitação de pagamentos Força de Vendas\".",
+  "nome_sugerido": "Solicitar adiantamento de comissão para líder de negócio",
+  "short_description_sugerida": "Adiantamento de comissão para líderes de negócio",
+  "descricao_sugerida": "Use para pedir adiantamento de comissão de uma líder de negócio (informar líder, CNPJ, código CN, ciclo e bloco). Não use para ajustes de prêmio, comissão ou campanhas já pagas.",
+  "frases_exemplo": [
+   "preciso adiantar a comissão de uma líder",
+   "adiantamento de comissão líder de negócio"
+  ],
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Se mantido: trocar v_select_leader_s_full_name (texto com reference sys_user) por Reference, e a validação de CNPJ por Validation Regex."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Se o negócio confirmar que o item deve continuar, o ajuste é leve: 6 perguntas, anexo opcional ao final e labels em pt-BR."
+ },
+ {
+  "sys_id": "06f9c5401bace5d0d1abda4ce54bcb43",
+  "nome_atual": "Solicitação de pagamentos Força de Vendas (prêmio ou comissão, bônus e campanhas)",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 259,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 55,
+  "justificativa": "Uma intenção só (pedir pagamento de prêmio ou comissão), com um ramo simples prêmio x comissão que muda uma pergunta. Os ajustes são: labels em pt-BR, tirar os Rich Text de download do template do fluxo, transformar o anexo obrigatório e a label \"Attach payment approvals\" (marcada como obrigatória, o que não funciona) num único pedido de anexo no final. É preciso diferenciar bem do item irmão \"Solicitar aprovações para prêmios e comissões\".",
+  "nome_sugerido": "Solicitar pagamento de prêmio ou comissão da Força de Vendas",
+  "short_description_sugerida": "Pagamento de prêmio, comissão, bônus ou campanha para líderes e colaboradores da Força de Vendas",
+  "descricao_sugerida": "Use para pedir o pagamento (ou ajuste de pagamento) de prêmio, comissão, bônus ou campanha da Força de Vendas em um ciclo. Você vai informar se é prêmio ou comissão, o tipo de pagamento, a data do ciclo e a quantidade de líderes ou colaboradores, e anexar a planilha no modelo padrão com as aprovações. Não use para pedir a aprovação prévia de valores de prêmios e comissões em cargas (use \"Solicitar aprovação de valores de prêmios e comissões\") nem para adiantamento de comissão.",
+  "frases_exemplo": [
+   "preciso pagar a premiação da campanha do ciclo",
+   "quero solicitar pagamento de comissão das líderes",
+   "ajuste de comissão de líder que não caiu",
+   "pagamento de bônus para a força de vendas",
+   "lançar prêmio de campanha para as colaboradoras"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_template_to_the_payment_slate",
+    "problema": "Attachment obrigatório no meio do fluxo",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   },
+   {
+    "onde": "v_attach_payment_approvals",
+    "problema": "Label (tipo Rótulo) marcada como obrigatória por UI Policy; a conversa pula labels e o anexo das aprovações fica sem pedido",
+    "acao": "Remover a label e juntar no mesmo pedido de anexo final: \"Anexe a planilha no modelo e as aprovações do pagamento\"."
+   },
+   {
+    "onde": "v_click_here_to_download_prize / v_click_here_to_download_commission",
+    "problema": "Rich Text Label com link do template, marcado como obrigatório; mídia removida",
+    "acao": "Publicar os dois modelos num artigo de KB e citar o link na descrição do item; remover mandatory das labels."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_is_the_application_for_prize_or_commission",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O pagamento é de prêmio ou de comissão?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_enter_the_payment_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o tipo de pagamento?",
+    "obs": "Conferir se as opções cobrem bônus e campanha, citados no nome."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_number_of_leaders",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quantas líderes vão receber a comissão?",
+    "obs": "Só para comissão. Adicionar Validation Regex numérica."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_number_of_employees",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quantos colaboradores vão receber o prêmio?",
+    "obs": "Só para prêmio. Adicionar Validation Regex numérica."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_in_which_cycle_should_the_payment_be_made",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em que data o pagamento do ciclo deve ser feito?",
+    "obs": "Tipo Data (formato yyyy-mm-dd)."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação?",
+    "obs": "Opcional."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_attach_the_template_to_the_payment_slate",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a planilha no modelo padrão e as aprovações do pagamento.",
+    "obs": "Anexo no final da conversa."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_attach_payment_approvals",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label obrigatória; substituída pelo pedido de anexo acima."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_click_here_to_download_prize",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link vai para a descrição / KB."
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_click_here_to_download_commission",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link vai para a descrição / KB."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Make fields Mandatory On Load",
+    "acao": "converter",
+    "substituicao": "Marcar mandatory direto nas variáveis (sempre obrigatórias) e remover a policy; tirar a label v_attach_payment_approvals."
+   },
+   {
+    "nome": "EY: Make Mandatory and Visible Number of Leaders / Number of Employees",
+    "acao": "manter",
+    "substituicao": "UI Policy sem script, compatível; desmarcar On load."
+   },
+   {
+    "nome": "EY: Make Visible and Mandatory Label Commission / Prize",
+    "acao": "remover",
+    "substituicao": "Labels saem da conversa."
+   },
+   {
+    "nome": "EY: Hide Fields (vs_phone_number)",
+    "acao": "manter",
+    "substituicao": "Esconde pergunta do set; ok."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Nome atual é longo e com parênteses; o nome sugerido casa melhor com a fala do usuário. Label da variável de data fala em \"Cycle\" mas o tipo é Data: alinhar com a área se o esperado é número do ciclo (texto) ou data."
+ },
+ {
+  "sys_id": "3e7cb3041bf821d0a530426fe54bcb90",
+  "nome_atual": "Solicitar aprovações para prêmios e comissões",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 81,
+  "recomendacao": "manter_formulario",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 15,
+  "justificativa": "São 55 perguntas porque o formulário repete 5 vezes o mesmo bloco de \"carga\" (ciclo, data de processamento, líderes/colaboradores, planilha, data de disponibilidade e resumo tipo/valor em 10 variable sets). É uma grade disfarçada, com 5 anexos obrigatórios e 10 UI policies combinatórias, usada por células internas do OTC com volume baixo. Na conversa isso vira um interrogatório; manter como formulário aberto por link.",
+  "nome_sugerido": "Solicitar aprovação de valores de prêmios e comissões",
+  "short_description_sugerida": "Aprovação de valores de prêmios e comissões em cargas antes do pagamento",
+  "descricao_sugerida": "Use para pedir a aprovação dos valores de prêmios ou comissões de uma ou mais cargas (até 5) antes do pagamento, anexando a planilha de cada carga. Uso das células de Remuneração e Pagamentos, Reembolso e Prestação de Contas e Serviços Corporativos. Não use para pedir o pagamento em si de prêmio, comissão, bônus ou campanha (use \"Solicitar pagamento de prêmio ou comissão da Força de Vendas\").",
+  "frases_exemplo": [
+   "preciso aprovar os valores de comissão da carga",
+   "aprovação de premiação antes do pagamento",
+   "quero enviar as cargas de prêmio para aprovação",
+   "aprovar pagamento de comissão das líderes do ciclo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_the_payment_sheet_in_question (_2 a _5)",
+    "problema": "Até 5 anexos obrigatórios",
+    "acao": "Mantido no formulário."
+   },
+   {
+    "onde": "muitas_perguntas",
+    "problema": "55 perguntas repetidas por carga",
+    "acao": "Mantido no formulário; ver alternativa em observações."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "10 UI Policies \"If it is commissions/Awards and loads is N\"",
+    "acao": "manter",
+    "substituicao": "Continuam no formulário."
+   },
+   {
+    "nome": "EY: Clear Fields / EY: Clear Field loads",
+    "acao": "manter",
+    "substituicao": "Continuam no formulário."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": true,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "O VA passa a apresentar o link do formulário quando o usuário pedir aprovação de prêmios ou comissões.",
+    "Revisar o flow duplicado \"Copy of EY: Request approvals for awards and commissions\"."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Alternativa se quiserem conversar no futuro: 1 chamado por carga (remover v_quantity_of_loads e as variáveis _2 a _5), ficando ~8 perguntas: prêmio ou comissão, ciclo, data de processamento, quantidade de líderes/colaboradores, tipo e valor do resumo, data de disponibilidade e planilha anexada no final. A label de v_inform_the_block diz \"Enter the processing date\" (nome e label divergem)."
+ },
+ {
+  "sys_id": "7e680bf31bc8a51cd1abda4ce54bcb7f",
+  "nome_atual": "Aprovar reembolsos diários por país",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 708,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "baixo",
+  "prontidao_atual": 65,
+  "justificativa": "Item enxuto (4 perguntas próprias + empresa/sub-empresa do set), alto volume e sem bloqueador. Falta nome e descrição que um usuário diria, labels em pt-BR e tratar a lista de pagamentos como anexo final. A UI Policy de obrigatoriedade aponta para variáveis que não existem no item (v_which_country_is_the_refund_for, select_the_approver).",
+  "nome_sugerido": "Solicitar programação de pagamento de reembolsos",
+  "short_description_sugerida": "Programar o pagamento diário de reembolsos a consultoras, representantes e franqueados por país",
+  "descricao_sugerida": "Use para pedir a programação e aprovação do pagamento de reembolsos do dia a consultoras, representantes ou franqueados, informando país (pela sub-empresa), moeda, quantidade e valor total, e anexando a lista de pagamentos. Não use para pedir reembolso de uma nota de crédito específica nem estorno de pagamento duplicado ou por fraude.",
+  "frases_exemplo": [
+   "preciso programar o pagamento dos reembolsos de hoje",
+   "aprovar reembolsos do dia para o Peru",
+   "enviar lista de reembolsos para pagamento",
+   "tenho 30 reembolsos para consultoras, como programo?",
+   "programação de pagamento de reembolso em pesos"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_payment_list",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_number_of_refunds_requested",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quantos reembolsos serão pagos?",
+    "obs": "Adicionar Validation Regex numérica."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_which_currency",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Em qual moeda?",
+    "obs": "Poderia ser derivada do país da sub-empresa; manter se houver pagamentos em moeda diferente da local."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_what_is_the_refund_amount",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o valor total dos reembolsos?",
+    "obs": "Validation Regex de valor monetário."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_attach_payment_list",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a lista de pagamentos.",
+    "obs": "Anexo no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Marcar mandatory direto nas 4 variáveis e remover a policy; apagar as referências a v_which_country_is_the_refund_for e select_the_approver, que não existem no item."
+   },
+   {
+    "nome": "EY: Hide fields VS (v_opened_by)",
+    "acao": "manter",
+    "substituicao": "Esconde o aberto por; ok."
+   },
+   {
+    "nome": "EY: Hide TBS (onLoad)",
+    "acao": "manter",
+    "substituicao": "VA Supported e só remove uma opção; alternativa no-code é um set de empresa sem a opção TBS (tratar na análise dos sets)."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "Revisar flows duplicados (\"Copy of ...\") e manter apenas o ativo."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "O nome atual (\"Aprovar...\") soa como ação do aprovador; quem abre é quem pede a programação. O verbo \"Solicitar programação\" evita confusão com aprovações pendentes do usuário."
+ },
+ {
+  "sys_id": "71b073b033084b9498331c07ee5c7b88",
+  "nome_atual": "Atendimento a Franquias",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 63,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 60,
+  "justificativa": "Poucas perguntas e sem bloqueador, mas sem descrição e com nome genérico que colide com qualquer assunto de franquia. O ramo \"reembolso\" (tipo_de_solicitacao = 1) só acrescenta 4 valores, então não vale dividir. Há um Rich Text Label duplicando o label de detalhamento.",
+  "nome_sugerido": "Solicitar análise de pedido de franquia",
+  "short_description_sugerida": "Análise de pedido de franqueado, incluindo estorno ou reembolso de valores EmanaPay/Capta",
+  "descricao_sugerida": "Use quando precisar que o time analise um pedido de um franqueado (por exemplo divergência no pedido ou pedido de estorno/reembolso de valores pagos via EmanaPay ou Capta). Informe nome e código do franqueado e o número do pedido. Não use para regularizar título pago em duplicidade no cartão ou Pix, nem para pagamentos de varejo das lojas.",
+  "frases_exemplo": [
+   "preciso de análise de um pedido de franquia",
+   "franqueado pediu reembolso do pedido",
+   "estornar valor EmanaPay de um pedido de franqueado",
+   "pedido do franqueado com problema",
+   "reembolso de pedido pago no Capta"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "anexo_solicitacao",
+    "problema": "Rich Text Label com o mesmo texto do detalhamento; mídia removida na conversa",
+    "acao": "Remover; se for instrução de anexo, pedir anexo no final da conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "tipo_de_solicitacao",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O que você precisa: análise do pedido ou reembolso/estorno?",
+    "obs": "Revisar os rótulos das opções (valor \"1\" = reembolso)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "nome_do_franqueado",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o nome do franqueado?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "codigo_do_franqueado",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o código do franqueado?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "numero_do_pedido",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do pedido?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "valor_a_ser_estornado_reembolsado",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual valor deve ser estornado ou reembolsado?",
+    "obs": "Só no reembolso."
+   },
+   {
+    "ordem": 6,
+    "variavel": "valor_emanapay",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quanto foi pago pelo EmanaPay?",
+    "obs": "Só no reembolso."
+   },
+   {
+    "ordem": 7,
+    "variavel": "valor_capta",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "E quanto foi pago pelo Capta?",
+    "obs": "Só no reembolso."
+   },
+   {
+    "ordem": 8,
+    "variavel": "numero_de_protocolo_nat",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número de protocolo do atendimento Natura (NAT)?",
+    "obs": "Só no reembolso. Confirmar o significado de NAT com a área."
+   },
+   {
+    "ordem": 9,
+    "variavel": "detalhamento_da_solicitacao",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Descreva o que aconteceu com o pedido."
+   },
+   {
+    "ordem": 10,
+    "variavel": "anexo_solicitacao",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Rich Text duplicado."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Marcar mandatory/visible direto nas variáveis e remover a policy onLoad."
+   },
+   {
+    "nome": "EY: Reembolso",
+    "acao": "manter",
+    "substituicao": "UI Policy sem script; desmarcar On load."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (define requested_for a partir de employee do set de solicitante)."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Mover tipo_de_solicitacao para a primeira pergunta ajuda o slot filling (\"quero reembolso do pedido X\")."
+ },
+ {
+  "sys_id": "c0aea2511b405a50514cbaef4b4bcbcb",
+  "nome_atual": "Conciliação Bancária - Entradas Cobrança",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 1054,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 45,
+  "justificativa": "Alto volume e poucas perguntas próprias. As duas variáveis do item (compensation_type e v_approver) estão como somente leitura e obrigatórias, ou seja, são fixas e não deveriam ser perguntadas; o template vem de um Rich Text obrigatório. O peso está no set \"EY VS - Empresas Natura\" (8 variantes de sub-empresa e 8 scripts GlideAjax de país), cuja correção é da análise de sets, mas afeta diretamente este item.",
+  "nome_sugerido": "Solicitar conciliação bancária de recebimentos (reclassificação e compensação)",
+  "short_description_sugerida": "Reclassificação e compensação bancária de recebimentos nas contas de clientes",
+  "descricao_sugerida": "Use quando um recebimento de cobrança entrou no banco mas não foi baixado ou foi aplicado na conta errada do cliente e precisa ser reclassificado ou compensado. Anexe a planilha no modelo padrão com os recebimentos. Não use para regularizar título pago em duplicidade no cartão ou Pix, nem para enviar comprovante de pagamento de um título específico (use \"Consulta/aplicação de pagamento\").",
+  "frases_exemplo": [
+   "preciso reclassificar um recebimento na conta do cliente",
+   "compensação bancária de entrada de cobrança",
+   "depósito entrou na conta errada, preciso conciliar",
+   "conciliação bancária de recebimentos",
+   "reclassificar crédito recebido no banco"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "link_template (Rich Text Label obrigatório)",
+    "problema": "Label obrigatória não gera pergunta e a mídia é removida",
+    "acao": "Remover o mandatory; colocar o link do template na descrição/KB e pedir a planilha como anexo no final da conversa."
+   },
+   {
+    "onde": "set EY VS - Empresas Natura",
+    "problema": "8 variáveis de sub-empresa, scripts onLoad com sys_id fixo e GlideAjax para país",
+    "acao": "Tratar na análise do set; para este item, uma só sub-empresa (Reference com qualifier simples) e país por auto-populate."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "compensation_type",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Read-only e obrigatório: definir default value e deixar oculto/read-only; a conversa pula."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_approver",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Read-only: definir default (aprovador fixo do grupo) ou mover a escolha para o flow (aprovação por grupo)."
+   },
+   {
+    "ordem": 3,
+    "variavel": "link_template",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link na descrição/KB."
+   },
+   {
+    "ordem": 4,
+    "variavel": "nova_anexo_planilha",
+    "origem": "item",
+    "acao": "nova",
+    "conversational_label": "Anexe a planilha com os recebimentos a conciliar, no modelo padrão.",
+    "obs": "Anexo no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read only fields in Target Record / Read only fields Item View",
+    "acao": "converter",
+    "substituicao": "Read-only e default direto nas variáveis; remover as policies."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Retirar link_template; v_approver com default dispensa mandatory."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "Conferir no flow se compensation_type e v_approver chegam por default antes de ocultar."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Sem user criteria (disponível para todos). Se v_type_of_request do set distinguir reclassificação de compensação, perguntar \"Você precisa de reclassificação ou de compensação?\" como primeira pergunta."
+ },
+ {
+  "sys_id": "d3cfa71c1bff99d0d1abda4ce54bcb7d",
+  "nome_atual": "Consulta/aplicação de pagamento",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 64,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 35,
+  "justificativa": "Intenção clara (enviar comprovante de um título pago para localizar e aplicar o pagamento), mas 25 perguntas: a maior parte vem do set de busca de consultora/representante/franqueado, que tem uma variável por forma de busca. As perguntas do item são boas; ajustar labels, tirar \"status do título\" (a área consulta) e levar o comprovante para o anexo final.",
+  "nome_sugerido": "Enviar comprovante para localizar e aplicar pagamento de título",
+  "short_description_sugerida": "Envio de comprovante para localizar e aplicar o pagamento de um título de consultora, representante ou franqueado",
+  "descricao_sugerida": "Use quando uma consultora, representante ou franqueado pagou um título (boleto/parcela) e o pagamento não aparece baixado. Informe o número do título, a parcela, o valor, o vencimento e anexe o comprovante (e o boleto, se tiver). Não use para pagamento em duplicidade no cartão ou Pix, para reclassificação de recebimentos em lote nem para pagamentos de outros clientes (não Força de Vendas).",
+  "frases_exemplo": [
+   "a consultora pagou o boleto e não baixou",
+   "preciso aplicar um pagamento de título",
+   "tenho o comprovante de pagamento da parcela, onde envio?",
+   "título pago aparece em aberto",
+   "consultar pagamento de título da representante"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_payment",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo. A label v_mandatory_attach vira parte do texto do pedido de anexo."
+   },
+   {
+    "onde": "muitas_perguntas",
+    "problema": "25 perguntas (set com busca por nome/CPF/código/e-mail para 3 perfis)",
+    "acao": "Recomendação para o set: uma pergunta de identificação (Reference em core_company buscando por código, CPF/CNPJ ou nome) no lugar de 14 variáveis condicionais."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_claim_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do título pago?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_what_installment",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a parcela?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_value_installment",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o valor da parcela?",
+    "obs": "Validation Regex de valor monetário."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_maturity_bond",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual era o vencimento do título?",
+    "obs": "Data yyyy-mm-dd."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_status_title",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "O status é consultado pela área no sistema; perguntar ao usuário gera resposta imprecisa."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_what_request",
+    "origem": "item",
+    "acao": "manter",
+    "tipo_sugerido": "Select Box",
+    "conversational_label": "O que você precisa: só consultar ou aplicar o pagamento?",
+    "obs": "Se for sempre texto livre, trocar para Select Box (Consultar / Aplicar pagamento)."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_mandatory_attach",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label; texto vai para o pedido de anexo."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_attach_payment",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe o comprovante de pagamento e, se tiver, o boleto.",
+    "obs": "Anexo no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis; tirar v_status_title."
+   },
+   {
+    "nome": "EY: Show Select Franchisee / Representative / Consultant",
+    "acao": "remover",
+    "substituicao": "Policies sem nenhuma ação e com condição em sys_id de variável; não fazem nada."
+   },
+   {
+    "nome": "EY: Remove TBS (onLoad)",
+    "acao": "manter",
+    "substituicao": "VA Supported; alternativa no-code na análise do set."
+   },
+   {
+    "nome": "EY: Clear sub-company and select person",
+    "acao": "manter",
+    "substituicao": "Pertence ao set; sem efeito negativo na conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Nome atual (\"Consulta/aplicação\") é pouco natural; o usuário fala \"pagou e não baixou\". Diferenciar dos irmãos \"Regularização de título em aberto/duplicidade - Cartão ou Pix\" e \"Conciliação bancária\"."
+ },
+ {
+  "sys_id": "046b58fc1bb71114d1abda4ce54bcbbc",
+  "nome_atual": "Prorrogação de título",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 156,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Poucas perguntas: aprovador, descrição, empresa/sub-empresa e a planilha de títulos. Ajustar o anexo (final da conversa), tirar os Rich Text de template (Natura e Avon) para a descrição/KB e dar nome e descrição de negócio. A UI Policy cita v_attach_approval, que não existe no item.",
+  "nome_sugerido": "Solicitar prorrogação de vencimento de títulos",
+  "short_description_sugerida": "Prorrogação em massa do vencimento de títulos de consultoras e representantes",
+  "descricao_sugerida": "Use para pedir a prorrogação do vencimento de um ou vários títulos (boletos) de consultoras ou representantes Natura ou Avon, anexando a planilha no modelo padrão com os títulos e indicando o aprovador. Não use para reparcelar título com faturamento incorreto (use \"Reparcelamento de título\") nem para dar baixa em título.",
+  "frases_exemplo": [
+   "preciso prorrogar o vencimento de uns boletos",
+   "prorrogação de títulos em massa",
+   "quero adiar o vencimento dos títulos das consultoras",
+   "prorrogar boleto da representante Avon",
+   "estender vencimento de título"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_template",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   },
+   {
+    "onde": "v_template_natura / v_template_avon",
+    "problema": "Rich Text Label com link do template; mídia removida",
+    "acao": "Colocar os dois links (Natura e Avon) na descrição do item ou em KB e remover as variáveis."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "vs_describe_request",
+    "origem": "set:EY: Opened by - Company:Avon/Natura - Describe",
+    "acao": "manter",
+    "conversational_label": "Descreva o pedido de prorrogação (quantos títulos e para quando).",
+    "obs": "Label específica deste item; o set é compartilhado."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_select_the_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem vai aprovar a prorrogação?",
+    "obs": "Reference em sys_user_grmember: exibir o nome do usuário (display value) e testar a busca na conversa."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_template",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a planilha com os títulos a prorrogar, no modelo padrão.",
+    "obs": "Anexo no final da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_template_natura",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link na descrição/KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_template_avon",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link na descrição/KB."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto em v_select_the_approver e v_attach_template; remover a referência a v_attach_approval."
+   },
+   {
+    "nome": "EY: Show template Natura / Avon",
+    "acao": "remover",
+    "substituicao": "Templates saem da conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Se o aprovador for sempre o gestor do solicitante, derivar por auto-populate e tirar a pergunta."
+ },
+ {
+  "sys_id": "5f13e4311bbfd154d1abda4ce54bcb3e",
+  "nome_atual": "Regularização de Título em aberto/duplicidade - Cartão ou Pix",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 1066,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 50,
+  "justificativa": "Alto volume e intenção clara, sem descrição. As 18 perguntas podem cair para ~11: há pares de variáveis que só existem por perfil (CPF x CNPJ, consultora x franqueado para nome, código e e-mail). opened_by é preenchido por client script onLoad e deve virar default. A evidência obrigatória é só uma label; precisa virar pedido de anexo.",
+  "nome_sugerido": "Regularizar título em aberto ou pago em duplicidade no cartão ou Pix",
+  "short_description_sugerida": "Título não baixado ou pagamento em duplicidade feito no cartão ou Pix",
+  "descricao_sugerida": "Use quando uma consultora, representante ou franqueado pagou um título pelo cartão ou Pix e ele continua em aberto no sistema, ou quando pagou o mesmo título duas vezes. Informe o documento (CPF ou CNPJ), o código, o número do pedido e do título e anexe as evidências do pagamento. Não use para boleto pago e não baixado (use \"Enviar comprovante para localizar e aplicar pagamento\"), nem para estorno por fraude.",
+  "frases_exemplo": [
+   "a consultora pagou no Pix e o título continua em aberto",
+   "pagamento em duplicidade no cartão",
+   "cliente pagou duas vezes o mesmo pedido",
+   "título não baixou depois do pagamento no cartão",
+   "franqueado pagou o Pix em dobro"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_evidence",
+    "problema": "Label pedindo anexo obrigatório pela opção do portal; a conversa pula labels",
+    "acao": "Remover a label e pedir as evidências como anexo no final da conversa."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "opened_by",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Default value javascript:gs.getUserID() e read-only na variável; remover o client script."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_type_deal",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "O título ficou em aberto ou foi pago em duplicidade?",
+    "obs": "Subir para a primeira pergunta; ajuda o slot filling."
+   },
+   {
+    "ordem": 3,
+    "variavel": "which_company",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "É de qual empresa: Natura, Avon ou The Body Shop?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "which_sub_company",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "De qual país ou sub-empresa?",
+    "obs": "Reference com qualifier dinâmico por empresa; testar na conversa."
+   },
+   {
+    "ordem": 5,
+    "variavel": "vs_payment_method",
+    "origem": "set:EY: Payment method - Order",
+    "acao": "manter",
+    "conversational_label": "O pagamento foi feito no cartão ou no Pix?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "document_type",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Desnecessário com um único campo de documento."
+   },
+   {
+    "ordem": 7,
+    "variavel": "document_number_cpf",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Single Line Text + Validation Regex",
+    "conversational_label": "Qual é o CPF ou CNPJ do cliente?",
+    "obs": "Unificar com document_number_cnpj numa única variável com Validation Regex que aceite CPF ou CNPJ."
+   },
+   {
+    "ordem": 8,
+    "variavel": "document_number_cnpj",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Unificado acima."
+   },
+   {
+    "ordem": 9,
+    "variavel": "full_name_consultant_representative",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Single Line Text",
+    "conversational_label": "Qual é o nome completo da consultora, representante ou franqueado?",
+    "obs": "Unificar com full_name_franchisees; label neutra."
+   },
+   {
+    "ordem": 10,
+    "variavel": "full_name_franchisees",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Unificado acima."
+   },
+   {
+    "ordem": 11,
+    "variavel": "code_consultant",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Single Line Text",
+    "conversational_label": "Qual é o código dela(e)?",
+    "obs": "Unificar com code_franchisee."
+   },
+   {
+    "ordem": 12,
+    "variavel": "code_franchisee",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Unificado acima."
+   },
+   {
+    "ordem": 13,
+    "variavel": "email_consultant",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Email",
+    "conversational_label": "Qual é o e-mail?",
+    "obs": "Unificar com email_franchisee; Validation Regex de e-mail."
+   },
+   {
+    "ordem": 14,
+    "variavel": "email_franchisee",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Unificado acima."
+   },
+   {
+    "ordem": 15,
+    "variavel": "vs_order_number",
+    "origem": "set:EY: Payment method - Order",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do pedido?"
+   },
+   {
+    "ordem": 16,
+    "variavel": "v_title_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do título?"
+   },
+   {
+    "ordem": 17,
+    "variavel": "select_the_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem vai aprovar a regularização?",
+    "obs": "Reference em sys_user_grmember; testar busca na conversa."
+   },
+   {
+    "ordem": 18,
+    "variavel": "v_attach_evidence",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Substituída pelo pedido de anexo final: \"Anexe os comprovantes dos pagamentos\"."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Set Opened By OnLoad",
+    "acao": "remover",
+    "substituicao": "Substituir por default value gs.getUserID() + read-only na variável opened_by."
+   },
+   {
+    "nome": "EY: CPF / EY: CNPJ",
+    "acao": "remover",
+    "substituicao": "Campo de documento único."
+   },
+   {
+    "nome": "EY: Natura || Avon Latam / EY: TBS",
+    "acao": "remover",
+    "substituicao": "Campos de nome, código e e-mail unificados; se o flow precisar distinguir, usar which_company."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "Ajustar o flow/mapeamento para ler as variáveis unificadas no lugar dos pares CPF/CNPJ e consultora/franqueado."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Não dividi título em aberto x duplicidade porque as perguntas são idênticas; v_type_deal resolve por slot filling."
+ },
+ {
+  "sys_id": "a72f275f1b693990d1abda4ce54bcbcc",
+  "nome_atual": "Reparcelamento de título",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 29,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "Todas as perguntas estão no set exclusivo \"EY VS: Repayment of title\" (usado só por este item), então as recomendações ficam aqui. Pedido individual pede título, vencimento, parcelas e identificação do cliente; pedido em lote pede só motivo e planilha. Há duas variáveis de motivo e 4 variáveis de busca do cliente que podem virar uma.",
+  "nome_sugerido": "Solicitar reparcelamento de título por faturamento incorreto",
+  "short_description_sugerida": "Reparcelamento de título (individual ou em lote) com faturamento incorreto",
+  "descricao_sugerida": "Use para pedir o reparcelamento de um título ou de um lote de títulos de consultoras ou representantes que foram faturados incorretamente. No pedido individual, informe o título, o vencimento e em quantas parcelas; no lote, anexe a planilha no modelo. Não use para só prorrogar vencimento (use \"Solicitar prorrogação de vencimento de títulos\").",
+  "frases_exemplo": [
+   "preciso reparcelar um título faturado errado",
+   "reparcelamento de boleto da consultora",
+   "quero dividir o título em mais parcelas",
+   "reparcelar títulos em lote",
+   "faturamento incorreto, precisa reparcelar"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "vs_annex_credit_approval",
+    "problema": "Attachment obrigatório no lote",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "vs_order_individual_or_batch",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "É um título só ou um lote de títulos?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "vs_data_search",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "remover",
+    "obs": "Substituída por uma única busca do cliente."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_search_cpf_cnpj",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference",
+    "conversational_label": "Qual é o CPF/CNPJ, código ou nome da consultora ou representante?",
+    "obs": "Reference única em core_company (customer=true) com busca por várias colunas (ref_ac_columns com CPF/CNPJ, código, nome). Só no individual."
+   },
+   {
+    "ordem": 4,
+    "variavel": "vs_consultant_name_new",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "remover",
+    "obs": "Unificada em v_search_cpf_cnpj."
+   },
+   {
+    "ordem": 5,
+    "variavel": "vs_representative_code",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "remover",
+    "obs": "Unificada em v_search_cpf_cnpj."
+   },
+   {
+    "ordem": 6,
+    "variavel": "vs_representative_email_new",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "remover",
+    "obs": "Unificada em v_search_cpf_cnpj."
+   },
+   {
+    "ordem": 7,
+    "variavel": "vs_number_bond",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do título a reparcelar?",
+    "obs": "Só no individual."
+   },
+   {
+    "ordem": 8,
+    "variavel": "vs_maturity_bond",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "Qual é o vencimento atual?",
+    "obs": "Só no individual."
+   },
+   {
+    "ordem": 9,
+    "variavel": "vs_many_parcels",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "Em quantas parcelas?",
+    "obs": "Só no individual."
+   },
+   {
+    "ordem": 10,
+    "variavel": "vs_describe_the_reason_for_your_request",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "Qual é o motivo do reparcelamento?",
+    "obs": "Usar esta variável nos dois cenários."
+   },
+   {
+    "ordem": 11,
+    "variavel": "vs_describe_reason_request",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "remover",
+    "obs": "Duplicada da anterior (uma para lote, outra para individual)."
+   },
+   {
+    "ordem": 12,
+    "variavel": "vs_select_the_approver",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "manter",
+    "conversational_label": "Quem vai aprovar o reparcelamento?"
+   },
+   {
+    "ordem": 13,
+    "variavel": "vs_annex_credit_approval",
+    "origem": "set:EY VS: Repayment of title",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a planilha preenchida com os títulos.",
+    "obs": "Só no lote; anexo no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show Fields for Individual Order / Batch Order",
+    "acao": "manter",
+    "substituicao": "UI Policies sem script; ajustar para a variável de motivo única."
+   },
+   {
+    "nome": "EY: Show Fields Code/CPF/Email/Name Search",
+    "acao": "remover",
+    "substituicao": "Busca unificada."
+   },
+   {
+    "nome": "EY: Mandatory Fields Catalog Item View",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "Revisar mapeamento do flow \"Repayment of title\" para a variável de busca e de motivo unificadas."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Volume baixo; se o esforço de mexer no set não se pagar, basta aplicar labels e o anexo final."
+ },
+ {
+  "sys_id": "eec5bf8d33104f9098331c07ee5c7b53",
+  "nome_atual": "Solicitação de Aplicação de Pagamentos - Outros clientes",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 4,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 65,
+  "justificativa": "Item novo (os 4 chamados são dos últimos 90 dias), com 5 perguntas reais e sem bloqueador. O solicitante já é default read-only e o país é derivado da subsidiária. Ajustar labels, descrição e um default indevido em which_company_your_request_for.",
+  "nome_sugerido": "Informar pagamento de fatura de outros clientes",
+  "short_description_sugerida": "Aplicação de pagamento recebido de outros clientes (fora da Força de Vendas)",
+  "descricao_sugerida": "Use para informar que um cliente que não é consultora, representante ou franqueado (outros clientes) pagou uma fatura, para que o pagamento seja aplicado. Informe a subsidiária, o número da fatura e o número de registro do cliente. Não use para títulos da Força de Vendas nem para registrar uma nova fatura (use \"Registrar fatura de outros clientes\").",
+  "frases_exemplo": [
+   "um cliente pagou a fatura e preciso aplicar o pagamento",
+   "aplicação de pagamento de outros clientes",
+   "recebemos pagamento da fatura 1234 de um cliente corporativo",
+   "informar pagamento de fatura de cliente externo"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "requesting_person",
+    "origem": "item",
+    "acao": "derivar",
+    "obs": "Default gs.getUserID() e read-only; a conversa pula."
+   },
+   {
+    "ordem": 2,
+    "variavel": "which_company_your_request_for",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual empresa é o pedido?",
+    "obs": "Remover o default javascript:gs.getUserId() e o reference sys_user, indevidos num Select Box."
+   },
+   {
+    "ordem": 3,
+    "variavel": "which_subsidiary_is_the_service_for",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a subsidiária?",
+    "obs": "Qualifier por Script Include; testar na conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "country",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Read-only e derivado da subsidiária."
+   },
+   {
+    "ordem": 5,
+    "variavel": "invoice_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número da fatura paga?"
+   },
+   {
+    "ordem": 6,
+    "variavel": "registration_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número de registro (CNPJ/ID fiscal) do cliente?",
+    "obs": "Confirmar com a área o significado de \"Registration Number\"."
+   },
+   {
+    "ordem": 7,
+    "variavel": "additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar alguma informação ou anexar o comprovante?",
+    "obs": "Opcional."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Aoop: Set mandatory fields at begin of request",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "Aoop: Show field Country after fild in which subsidiary was selected",
+    "acao": "manter",
+    "substituicao": "Sem script; country fica read-only."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (define requested_for a partir de requesting_person).",
+    "Sem user criteria: confirmar o público."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Item irmão de \"Solicitação de Registro de Faturas - Outros Clientes\"; as descrições deixam claro registrar x informar pagamento."
+ },
+ {
+  "sys_id": "31ca83d11b3b1d14a530426fe54bcbbb",
+  "nome_atual": "Solicitação de Baixa de Titulo e Abertura de Débito",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 961,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 40,
+  "justificativa": "O item junta duas intenções opostas, escolhidas por request_type (do set Describe2, exibido só neste item por um client script com sys_id fixo): baixa de títulos (planilha de títulos) e abertura de débito (categoria multa/débito indevido, motivo e template próprio). Com 961 chamados/ano, cada ramo tem volume e sentido próprios, e o nome de cada derivado casa com o que o usuário pede.",
+  "nome_sugerido": "Baixa de título e abertura de débito",
+  "short_description_sugerida": "Substituído por dois itens: baixa de títulos e abertura de débito",
+  "descricao_sugerida": "Item pai a ser substituído por \"Solicitar baixa de títulos\" e \"Solicitar abertura de débito\".",
+  "frases_exemplo": [
+   "preciso dar baixa em títulos",
+   "abrir débito para consultora"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_spreadsheet",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   },
+   {
+    "onde": "v_template / v_template_multa / v_template_debito",
+    "problema": "Rich Text Label com template; mídia removida",
+    "acao": "Link dos templates na descrição de cada derivado ou em KB."
+   },
+   {
+    "onde": "set Describe2: client script \"Request type - Baixa de título\"",
+    "problema": "Exibe request_type por comparação com sys_id fixo",
+    "acao": "Com a divisão, request_type recebe default e fica oculto em cada derivado; o script deixa de ser necessário para este item."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: IF \"Baixa de título\" / EY: IF \"Abertura de Débito\"",
+    "acao": "remover",
+    "substituicao": "Cada ramo vira item."
+   },
+   {
+    "nome": "EY: Se \"Abertura de débito\" e \"Multa\" / \"Baixa de débito indevido\"",
+    "acao": "remover",
+    "substituicao": "Templates vão para a descrição/KB."
+   },
+   {
+    "nome": "EY: Hide Avon se Abertura de Débito",
+    "acao": "converter",
+    "substituicao": "No item \"abertura de débito\", usar um select de empresa com as opções já filtradas (sem Avon Latam) em vez de removeOption; no de baixa, remover só Avon Latam idem."
+   },
+   {
+    "nome": "EY: Clear fields",
+    "acao": "remover",
+    "substituicao": "Limpeza de vs_which_company ao trocar request_type deixa de existir sem o select."
+   },
+   {
+    "nome": "EY: Mandatory Fields / EY: Read Only",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis; tirar a referência a v_attach_approval (inexistente). v_select_the_approver está read-only e obrigatório: se é fixo, default value e oculto; se o usuário escolhe, tirar o read-only."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "O flow \"EY: Request title write-off\" deve continuar recebendo request_type (default em cada derivado)."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar baixa de títulos",
+    "short_description": "Baixa de títulos de consultoras e franqueadas por planilha",
+    "descricao": "Use para pedir a baixa (write-off) de um ou mais títulos de consultoras ou franqueadas, anexando a planilha no modelo padrão com os títulos. Não use para abrir um novo débito, prorrogar ou reparcelar títulos, nem para títulos pagos que não baixaram (use os itens de regularização de pagamento).",
+    "frases_exemplo": [
+     "preciso dar baixa em títulos de consultoras",
+     "baixar títulos em aberto por planilha",
+     "write-off de títulos da franqueada",
+     "quero baixar uns boletos que não são mais devidos",
+     "baixa de título em lote"
+    ],
+    "fixar": "request_type = title_write_off (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "vs_which_company",
+      "conversational_label": "É de qual empresa?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "vs_which_sub_company",
+      "conversational_label": "De qual país ou sub-empresa?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "vs_describe_request",
+      "conversational_label": "Por que esses títulos devem ser baixados?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_select_the_approver",
+      "conversational_label": "Quem vai aprovar a baixa?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_attach_spreadsheet",
+      "conversational_label": "Anexe a planilha com os títulos a baixar, no modelo padrão."
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar abertura de débito",
+    "short_description": "Abertura de débito (multa ou baixa de débito indevido) para consultoras e franqueadas",
+    "descricao": "Use para pedir a criação de um débito para consultora ou franqueada, por exemplo multa ou baixa de débito indevido, informando a categoria e o motivo e anexando a planilha no modelo da categoria. Não use para dar baixa em títulos existentes.",
+    "frases_exemplo": [
+     "preciso abrir um débito de multa para a consultora",
+     "lançar débito para franqueada",
+     "abertura de débito por débito indevido",
+     "quero cobrar uma multa da consultora"
+    ],
+    "fixar": "request_type = debit_opening (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_category",
+      "conversational_label": "Qual é o tipo de débito: multa ou baixa de débito indevido?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "vs_which_company",
+      "conversational_label": "É de qual empresa?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "vs_which_sub_company",
+      "conversational_label": "De qual país ou sub-empresa?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_motivo",
+      "conversational_label": "Qual é o motivo do débito?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_select_the_approver",
+      "conversational_label": "Quem vai aprovar?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_attach_spreadsheet",
+      "conversational_label": "Anexe a planilha no modelo da categoria escolhida."
+     }
+    ]
+   }
+  ],
+  "observacoes": "No derivado de abertura de débito, vs_describe_request e v_motivo se sobrepõem: manter só v_motivo (ou só o do set) e deixar o outro oculto/opcional."
+ },
+ {
+  "sys_id": "47b773db33104b1498331c07ee5c7bbc",
+  "nome_atual": "Solicitação de Registro de Faturas - Outros Clientes",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 12,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 65,
+  "justificativa": "Item novo (11 dos 12 chamados nos últimos 90 dias) com 5 perguntas reais. Ajustar labels em pt-BR, descrição, e corrigir o client script que limpa a subsidiária em qualquer mudança. Não há pedido de anexo da fatura a registrar, o que deve ser confirmado com a área.",
+  "nome_sugerido": "Registrar fatura de outros clientes",
+  "short_description_sugerida": "Registro de novo lançamento de contas a receber de outros clientes",
+  "descricao_sugerida": "Use para pedir o registro de uma nova fatura ou lançamento de contas a receber de um cliente que não é da Força de Vendas (outros clientes), informando a subsidiária, o nome do cliente e o aprovador do mercado. Não use para informar pagamento de uma fatura já registrada (use \"Informar pagamento de fatura de outros clientes\").",
+  "frases_exemplo": [
+   "preciso registrar uma fatura de outro cliente",
+   "lançar conta a receber de cliente corporativo",
+   "registro de fatura para cliente externo",
+   "incluir nova fatura de outros clientes no contas a receber"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "opened_by",
+    "origem": "set:Aoop: Aberto Por",
+    "acao": "derivar",
+    "obs": "Já tem default; marcar read-only para a conversa pular."
+   },
+   {
+    "ordem": 2,
+    "variavel": "which_company_is_your_request_for",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Para qual empresa é o registro?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "which_subsidiary_is_the_service_for",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a subsidiária?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "country",
+    "origem": "item",
+    "acao": "ocultar_na_conversa",
+    "obs": "Read-only, derivado da subsidiária."
+   },
+   {
+    "ordem": 5,
+    "variavel": "supplier_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o nome do cliente da fatura?",
+    "obs": "Label atual diz \"Supplier Name\"; confirmar se é cliente ou fornecedor."
+   },
+   {
+    "ordem": 6,
+    "variavel": "market_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem é o aprovador do mercado?",
+    "obs": "Reference em sys_user_grmember; testar busca."
+   },
+   {
+    "ordem": 7,
+    "variavel": "additional_information",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quer acrescentar detalhes da fatura (número, valor, vencimento)?",
+    "obs": "Opcional; avaliar pedir o documento da fatura como anexo no final."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Aoop: Clear values on change",
+    "acao": "converter",
+    "substituicao": "Os dois ramos limpam a subsidiária; manter só a limpeza quando a empresa muda (UI Policy não resolve limpeza; manter client script simples VA Supported) ou remover, já que o qualifier impede subsidiária incompatível."
+   },
+   {
+    "nome": "Aoop: Set Fields Mandatory",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "Aoop: Show field Country",
+    "acao": "manter",
+    "substituicao": "Sem script."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Producer script mínimo não define solicitante: considerar setar requested_for a partir de opened_by.",
+    "Sem user criteria: confirmar público."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "fd1dee9d1bffd914a530426fe54bcb34",
+  "nome_atual": "Solicitar criação de nota de crédito",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 178,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "baixo",
+  "prontidao_atual": 55,
+  "justificativa": "Poucas perguntas (empresa, sub-empresa, descrição, aprovador, planilha). O client script usa g_form.getReference para decidir qual template exibir pelo país; na conversa o template (Rich Text) nem aparece, então basta levar os dois links para a descrição/KB e remover o script. Anexo obrigatório vai para o final.",
+  "nome_sugerido": "Solicitar criação de nota de crédito",
+  "short_description_sugerida": "Criação de nota de crédito ou aplicação de pedidos não entregues para consultoras e franqueados",
+  "descricao_sugerida": "Use para pedir a criação de uma nota de crédito para consultora, representante ou franqueado (por exemplo por pedido não entregue ou cobrado indevidamente), anexando a planilha no modelo padrão com a listagem. Não use para pedir o reembolso em dinheiro de uma nota de crédito já existente (use \"Solicitar reembolso de nota de crédito\").",
+  "frases_exemplo": [
+   "preciso criar uma nota de crédito para a consultora",
+   "pedido não foi entregue, quero gerar crédito",
+   "gerar crédito para franqueado",
+   "nota de crédito de pedido não entregue",
+   "criar crédito em lote por planilha"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_template",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   },
+   {
+    "onde": "EY: Templates Fields (client script)",
+    "problema": "g_form.getReference com callback para mostrar/ocultar Rich Text de template",
+    "acao": "Remover; links dos templates Brasil e Hispana na descrição ou em KB."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "vs_describe_request",
+    "origem": "set:EY: Opened by - Company:Avon/Natura - Describe2",
+    "acao": "manter",
+    "conversational_label": "Por que a nota de crédito deve ser criada?",
+    "obs": "Label específica deste item."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_select_the_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem vai aprovar a nota de crédito?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_attach_template",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a planilha com a listagem a criar, no modelo padrão.",
+    "obs": "Anexo no final da conversa."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_template_brasil",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link na descrição/KB."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_template_hispana",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Link na descrição/KB."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Templates Fields",
+    "acao": "remover",
+    "substituicao": "Sem templates no fluxo conversacional."
+   },
+   {
+    "nome": "EY: Hidden Templates onLoad",
+    "acao": "remover",
+    "substituicao": "Variáveis removidas."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "request_type do set Describe2 fica oculto aqui (client script com sys_id fixo no set); sem ação no item."
+ },
+ {
+  "sys_id": "f233a3221bb79594d1abda4ce54bcbed",
+  "nome_atual": "Solicitar Estorno por Fraude - Cartão e Pix",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 5,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 40,
+  "justificativa": "Volume muito baixo e todas as perguntas vêm de sets (busca de consultora/representante/franqueado, forma de pagamento e pedido). No item só há uma label de anexo obrigatório. Ajuste mínimo: nome/descrição, pedido de evidência no final e depender da simplificação do set de busca.",
+  "nome_sugerido": "Solicitar estorno por fraude no cartão ou Pix",
+  "short_description_sugerida": "Estorno de pagamento feito no cartão ou Pix por fraude",
+  "descricao_sugerida": "Use quando um pedido de consultora, representante ou franqueado foi pago no cartão ou Pix de forma fraudulenta (por exemplo cartão clonado ou Pix sem reconhecimento do titular) e é preciso estornar o valor. Informe o cliente, o pedido e a forma de pagamento e anexe as evidências da fraude. Não use para pagamento em duplicidade ou título não baixado.",
+  "frases_exemplo": [
+   "pagamento com cartão clonado, preciso estornar",
+   "estorno por fraude no Pix",
+   "cliente não reconhece a compra no cartão",
+   "fraude em pedido pago no cartão",
+   "pedir estorno de pagamento fraudulento"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_fraud_evidence",
+    "problema": "Label pedindo anexo obrigatório; a conversa pula labels",
+    "acao": "Remover e pedir as evidências da fraude como anexo no final da conversa."
+   },
+   {
+    "onde": "set EY: Company:Natura/Avon/TBS - Collaborator - Code",
+    "problema": "17 variáveis de busca condicionais (21 perguntas no total)",
+    "acao": "Tratar na análise do set (busca única do cliente)."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_attach_fraud_evidence",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Vira pedido de anexo final: \"Anexe as evidências da fraude\"."
+   }
+  ],
+  "scripts_e_policies": [],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Com 5 chamados/ano, se o set de busca não for simplificado, o item continua acima de 20 perguntas; nesse caso avaliar manter como formulário."
+ },
+ {
+  "sys_id": "39901cd21b8c6598a530426fe54bcb72",
+  "nome_atual": "Solicitar reembolso de nota de crédito",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 5,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 40,
+  "justificativa": "Volume baixo (5 em 12 meses). Perguntas próprias são simples; o excesso (26) vem do set de busca do cliente e dos dados bancários. Ajustar labels, levar a regra de conta (sem conta de terceiro/poupança) para a descrição e trocar os client scripts de valor por Validation Regex.",
+  "nome_sugerido": "Solicitar reembolso de nota de crédito",
+  "short_description_sugerida": "Devolução em conta bancária do valor de uma nota de crédito",
+  "descricao_sugerida": "Use para pedir que o valor de uma nota de crédito específica de consultora, representante ou franqueado seja devolvido em conta bancária do próprio titular. Não fazemos reembolso para conta de terceiros ou poupança, e nos países hispânicos não para banco digital. Não use para criar uma nova nota de crédito (use \"Solicitar criação de nota de crédito\").",
+  "frases_exemplo": [
+   "a consultora quer o dinheiro da nota de crédito de volta",
+   "reembolso de crédito na conta",
+   "devolver valor da nota de crédito",
+   "transformar crédito em reembolso bancário"
+  ],
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_credit_repaid",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual nota de crédito deve ser reembolsada?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_order_number",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o número do pedido?"
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_total_value",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o valor total do pedido?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_refund_amount",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quanto deve ser reembolsado?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_describe_request",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Multi Line Text",
+    "conversational_label": "Conte o motivo do reembolso.",
+    "obs": "Texto curto demais para descrição."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_refunds_info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Regra vai para a descrição do item."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_attach_info",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Label; anexos opcionais no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Validate value \"Refund amount\" / \"Total value\"",
+    "acao": "converter",
+    "substituicao": "Validation Regex de moeda brasileira nas variáveis."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   },
+   {
+    "nome": "EY: Show Data Search",
+    "acao": "manter",
+    "substituicao": "Pertence ao fluxo do set."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Baixo volume: fazer só o ajuste de labels/descrição, sem retrabalho grande."
+ },
+ {
+  "sys_id": "ba93972d1b002d58a530426fe54bcbfe",
+  "nome_atual": "Solicitação para tratativa de caixa Lojas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 1267,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "alto",
+  "prontidao_atual": 30,
+  "justificativa": "Maior volume do lote e 27 perguntas. v_request_type junta assuntos diferentes: cancelamento de venda (com ramo cartão x Pix e 6 dados de transação), confirmação de venda corporativa, ajuste de caixa, nota falsa e prestação de contas. A descrição atual fala só de \"confirmação de depósitos em vendas corporativas\", o que confunde o LLM. Dividir em 3 itens deixa cada conversa com 5 a 12 perguntas.",
+  "nome_sugerido": "Tratativa de caixa das lojas",
+  "short_description_sugerida": "Substituído por: cancelamento de venda, venda corporativa e ajuste de caixa da loja",
+  "descricao_sugerida": "Item pai a ser substituído por \"Solicitar cancelamento de venda na loja\", \"Confirmar depósito de venda corporativa da loja\" e \"Solicitar ajuste de caixa da loja\".",
+  "frases_exemplo": [
+   "preciso de tratativa de caixa da loja"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_comprovante, v_attach_proof_sale, v_attach_print_dtef, v_attach_completed_template, v_attach_proof_retention",
+    "problema": "5 variáveis Attachment condicionais",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo. Cada derivado pede só o anexo do seu caso."
+   },
+   {
+    "onde": "v_template_accountability",
+    "problema": "Rich Text Label com template",
+    "acao": "Link na descrição do derivado de ajuste de caixa / KB."
+   },
+   {
+    "onde": "muitas_perguntas",
+    "problema": "27 perguntas",
+    "acao": "Dividir por tipo de solicitação."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Cancellation of sale / Corporate sale / Date of cash adjustment / Fake note / Accountability / Se \"Ajuste de caixa\"...",
+    "acao": "remover",
+    "substituicao": "Cada ramo vira item ou opção do item de ajuste de caixa."
+   },
+   {
+    "nome": "EY: Payment Method / EY: PIX / EY: IF Debit OR Credit OR PIX / Mandatory field if PIX",
+    "acao": "manter",
+    "substituicao": "Ficam no item de cancelamento; sem script, desmarcar On load."
+   },
+   {
+    "nome": "EY: Validade CNPJ / Validate value / Validate value cancel",
+    "acao": "converter",
+    "substituicao": "Validation Regex (CNPJ ^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$ e moeda)."
+   },
+   {
+    "nome": "EY: Clear values",
+    "acao": "remover",
+    "substituicao": "Limpeza em cascata desnecessária na conversa."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis de aprovador."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada.",
+    "Flow \"EY: Request for store cash handling\" deve receber v_request_type por default em cada derivado."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar cancelamento de venda na loja",
+    "short_description": "Cancelamento de venda paga no débito, crédito ou Pix em loja própria",
+    "descricao": "Use para pedir o cancelamento/estorno de uma venda feita na loja e paga no cartão de débito, crédito ou Pix. Para cartão, tenha em mãos NSU, código de autorização, POS e o print do D-TEF; para Pix, os dados bancários do cliente e o comprovante. Não use para ajuste de caixa, nota falsa ou venda corporativa.",
+    "frases_exemplo": [
+     "preciso cancelar uma venda no cartão na loja",
+     "estornar venda paga no Pix",
+     "cliente desistiu da compra, como cancelo a venda?",
+     "cancelamento de venda no débito",
+     "devolver Pix de venda cancelada na loja"
+    ],
+    "fixar": "v_request_type = cancel_sale (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "vs_store_reference",
+      "conversational_label": "De qual loja é a venda?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "payment_method",
+      "conversational_label": "A venda foi paga no débito, crédito ou Pix?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_date",
+      "conversational_label": "Em que data foi a venda?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_value",
+      "conversational_label": "Qual foi o valor da venda (R$)?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_value_cancel",
+      "conversational_label": "Qual valor deve ser cancelado (R$)?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_cnpj_store",
+      "conversational_label": "Qual é o CNPJ da loja?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_nsu",
+      "conversational_label": "Qual é o NSU da transação?"
+     },
+     {
+      "ordem": 8,
+      "variavel": "v_aut",
+      "conversational_label": "Qual é o código de autorização?"
+     },
+     {
+      "ordem": 9,
+      "variavel": "v_pos",
+      "conversational_label": "Qual é o POS (maquininha)?"
+     },
+     {
+      "ordem": 10,
+      "variavel": "customer_name",
+      "conversational_label": "Qual é o nome do cliente que vai receber o Pix?"
+     },
+     {
+      "ordem": 11,
+      "variavel": "customer_cpf",
+      "conversational_label": "Qual é o CPF do cliente?"
+     },
+     {
+      "ordem": 12,
+      "variavel": "bank",
+      "conversational_label": "Qual é o banco do cliente?"
+     },
+     {
+      "ordem": 13,
+      "variavel": "agency",
+      "conversational_label": "Qual é a agência?"
+     },
+     {
+      "ordem": 14,
+      "variavel": "account",
+      "conversational_label": "E a conta?"
+     },
+     {
+      "ordem": 15,
+      "variavel": "v_select_the_approving_supervisor",
+      "conversational_label": "Quem é o supervisor que aprova?"
+     },
+     {
+      "ordem": 16,
+      "variavel": "v_select_the_approver",
+      "conversational_label": "Qual gerente é responsável pela aprovação?"
+     },
+     {
+      "ordem": 17,
+      "variavel": "anexos (fim da conversa)",
+      "conversational_label": "Anexe o print do D-TEF (cartão) ou o comprovante do cliente (Pix)."
+     }
+    ]
+   },
+   {
+    "nome": "Confirmar depósito de venda corporativa da loja",
+    "short_description": "Confirmação de depósito de venda corporativa feita na loja",
+    "descricao": "Use para pedir a confirmação do depósito de uma venda corporativa (venda para empresa) realizada na loja, anexando o comprovante da venda. Não use para cancelamento de venda nem para ajuste de caixa.",
+    "frases_exemplo": [
+     "confirmar depósito de venda corporativa",
+     "fizemos uma venda para empresa, preciso confirmar o pagamento",
+     "venda corporativa da loja não identificada",
+     "confirmação de depósito de venda B2B"
+    ],
+    "fixar": "v_request_type = corp_sale (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "vs_store_reference",
+      "conversational_label": "De qual loja é a venda?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "value",
+      "conversational_label": "Qual é o valor da venda?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_select_the_approving_supervisor",
+      "conversational_label": "Quem é o supervisor que aprova?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_select_the_approver",
+      "conversational_label": "Qual gerente é responsável pela aprovação?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_attach_proof_sale",
+      "conversational_label": "Anexe o comprovante da venda."
+     }
+    ]
+   },
+   {
+    "nome": "Solicitar ajuste de caixa da loja",
+    "short_description": "Ajuste de caixa, nota falsa recebida ou prestação de contas da loja",
+    "descricao": "Use para pedir ajuste no fechamento de caixa da loja, registrar uma nota (cédula) falsa recebida ou enviar a prestação de contas no modelo padrão. Não use para cancelar uma venda ou confirmar venda corporativa.",
+    "frases_exemplo": [
+     "preciso ajustar o caixa da loja",
+     "recebemos uma nota falsa no caixa",
+     "diferença no fechamento de caixa",
+     "enviar prestação de contas da loja",
+     "o banco reteve uma cédula falsa"
+    ],
+    "fixar": "v_request_type limitado a box_adjust, fake_note, account",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_request_type",
+      "conversational_label": "É ajuste de caixa, nota falsa ou prestação de contas?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "vs_store_reference",
+      "conversational_label": "De qual loja?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "value",
+      "conversational_label": "Qual é o valor?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_data_of_box_adjustment",
+      "conversational_label": "Qual é a data do caixa a ajustar?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_select_the_approving_supervisor",
+      "conversational_label": "Quem é o supervisor que aprova?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_select_the_approver",
+      "conversational_label": "Qual gerente é responsável pela aprovação?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "anexos (fim da conversa)",
+      "conversational_label": "Anexe o comprovante de retenção da nota pelo banco ou o modelo de prestação de contas preenchido."
+     }
+    ]
+   }
+  ],
+  "observacoes": "Existem dois campos de valor (value e v_value) por ramo; em cada derivado usar um só. vs_company (set) pode ser derivado da loja escolhida. Diferenciar de \"Solicitar tratativa da loja\" (inconsistências gerais) e \"Solicitação para tratativa de pagamentos Varejo\"."
+ },
+ {
+  "sys_id": "4b499a951b84a558a530426fe54bcb84",
+  "nome_atual": "Solicitação para tratativa de pagamentos Varejo",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 163,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "media",
+  "esforco": "medio",
+  "prontidao_atual": 50,
+  "justificativa": "Há dois selects de tipo de solicitação quase iguais (um para Natura/Aesop, outro para TBS com a opção extra de devolução a franquia), que podem virar um só. A UI Policy \"Mandatory fields\" deixa sempre obrigatórios campos que só aparecem no ramo TBS, e v_country é sempre oculto. Com a unificação e o anexo no final, a conversa fica em ~10 perguntas.",
+  "nome_sugerido": "Solicitar pagamento do varejo (lojas)",
+  "short_description_sugerida": "Pagamentos do varejo: pagamentos a colaboradores, saldos e devolução a franquias TBS",
+  "descricao_sugerida": "Use para pedir um pagamento relacionado às lojas de varejo Natura, Aesop ou The Body Shop, como pagamento a colaborador, acerto de saldo ou devolução de valores a franquia TBS. Informe a loja, o favorecido (CPF ou CNPJ), o valor, a conta contábil e o centro de custo, e anexe a aprovação do responsável. Não use para tratativas de caixa (cancelamento de venda, ajuste de caixa, nota falsa).",
+  "frases_exemplo": [
+   "preciso fazer um pagamento para uma colaboradora da loja",
+   "devolução de valor para franquia The Body Shop",
+   "pagamento de saldo do varejo",
+   "solicitar pagamento da loja Aesop",
+   "reembolsar franquia TBS"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attach_approval",
+    "problema": "Attachment obrigatório",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "v_request_type",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Select Box",
+    "conversational_label": "Que tipo de pagamento você precisa?",
+    "obs": "Unificar com v_request_type_tbs num único Select Box; a opção \"devolução a franquia TBS\" só aparece para TBS (UI Policy/choice filter sem script)."
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_request_type_tbs",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Unificado em v_request_type."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_collaborator_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o nome do colaborador?",
+    "obs": "Ramos pagamento/saldo."
+   },
+   {
+    "ordem": 4,
+    "variavel": "v_cpf",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o CPF dele?",
+    "obs": "Validation Regex de CPF."
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_franchise_name",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o nome da franquia?",
+    "obs": "Ramo TBS."
+   },
+   {
+    "ordem": 6,
+    "variavel": "v_cnpj",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o CNPJ da franquia?",
+    "obs": "Validation Regex de CNPJ."
+   },
+   {
+    "ordem": 7,
+    "variavel": "v_value",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o valor (R$)?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "ordem": 8,
+    "variavel": "v_account_type",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "A conta é corrente ou poupança?",
+    "obs": "Só no ramo TBS, junto aos dados bancários do set."
+   },
+   {
+    "ordem": 9,
+    "variavel": "v_accounting",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é a conta contábil?"
+   },
+   {
+    "ordem": 10,
+    "variavel": "v_cost_center",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual é o centro de custo?"
+   },
+   {
+    "ordem": 11,
+    "variavel": "v_country",
+    "origem": "item",
+    "acao": "remover",
+    "obs": "Sempre oculto; se o flow usa, definir default."
+   },
+   {
+    "ordem": 12,
+    "variavel": "v_attach_approval",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Anexe a aprovação do responsável.",
+    "obs": "Anexo no final da conversa."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Natura and Aesop request type / EY: TBS request type",
+    "acao": "converter",
+    "substituicao": "Uma variável de tipo; opções condicionais por vs_company."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Decidir: conta contábil e centro de custo obrigatórios sempre (então visíveis sempre) ou só TBS (então tirar desta policy)."
+   },
+   {
+    "nome": "EY: Hide Country",
+    "acao": "remover",
+    "substituicao": "Variável removida."
+   },
+   {
+    "nome": "EY: Show fields when ...",
+    "acao": "manter",
+    "substituicao": "Sem script; ajustar para a variável única."
+   },
+   {
+    "nome": "EY: Validate CPF / Validade CNPJ / Validate value",
+    "acao": "converter",
+    "substituicao": "Validation Regex nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Containers (v_label_payment, v_bank_details) sem lógica podem ficar; não geram pergunta."
+ },
+ {
+  "sys_id": "7cc6a1dd1bc46558a530426fe54bcbb9",
+  "nome_atual": "Solicitar tratativa da loja",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 62,
+  "recomendacao": "conversacional_com_ajustes",
+  "prioridade": "baixa",
+  "esforco": "baixo",
+  "prontidao_atual": 65,
+  "justificativa": "Item simples: loja, empresa, supervisor, gerente aprovador e descrição livre. Falta descrição que o separe dos itens irmãos de caixa e de pagamentos do varejo; o anexo vai para o final.",
+  "nome_sugerido": "Reportar inconsistência na loja",
+  "short_description_sugerida": "Tratativa de inconsistências em lojas próprias e franqueadas",
+  "descricao_sugerida": "Use para pedir tratativa de uma inconsistência em loja própria ou franqueada que não se encaixa nos outros itens de varejo (por exemplo divergência de lançamento ou problema de conciliação da loja). Descreva o problema e anexe evidências. Não use para cancelamento de venda, venda corporativa, ajuste de caixa ou pagamentos do varejo, que têm itens próprios.",
+  "frases_exemplo": [
+   "tem uma inconsistência na loja",
+   "preciso de tratativa para um problema na loja franqueada",
+   "divergência nos lançamentos da loja",
+   "problema financeiro na loja, a quem recorro?"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "v_attachment",
+    "problema": "Attachment",
+    "acao": "Pedir o anexo ao final da conversa (anexo OOB do chamado / clipe do VA) em vez de variável Attachment no meio do fluxo."
+   }
+  ],
+  "perguntas": [
+   {
+    "ordem": 1,
+    "variavel": "vs_store_reference",
+    "origem": "set:EY: Store (Reference)",
+    "acao": "manter",
+    "conversational_label": "De qual loja é a inconsistência?"
+   },
+   {
+    "ordem": 2,
+    "variavel": "v_inform_request",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Descreva a inconsistência."
+   },
+   {
+    "ordem": 3,
+    "variavel": "v_select_the_approving_supervisor",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Quem é o supervisor que aprova?"
+   },
+   {
+    "ordem": 4,
+    "variavel": "select_the_approver",
+    "origem": "item",
+    "acao": "manter",
+    "conversational_label": "Qual gerente é responsável pela aprovação?"
+   },
+   {
+    "ordem": 5,
+    "variavel": "v_attachment",
+    "origem": "item",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo do chamado",
+    "conversational_label": "Quer anexar alguma evidência?",
+    "obs": "Anexo opcional no final."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Mandatory direto nas variáveis."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Manter o producer script (grava x_nasm_hr_item usado pelas triggers de flow e define o solicitante); não depende de variável perguntada."
+   ]
+  },
+  "itens_derivados": [],
+  "observacoes": "Container v_request_detail sem lógica, pode ficar."
+ },
+ {
+  "sys_id": "dc3fe5771b00651cd1abda4ce54bcbba",
+  "nome_atual": "Informações de Táxis e Viagens Corporativas",
+  "tabela": "x_nasm_finance_case",
+  "volume_12m": 576,
+  "recomendacao": "dividir",
+  "prioridade": "alta",
+  "esforco": "medio",
+  "prontidao_atual": 35,
+  "justificativa": "v_what_is_the_demand_for_the_call mistura três intenções: pedir relatório de uso de táxi/viagem, tirar dúvida sobre o processo (táxi ou viagem) e trocar o responsável/aprovador de centro de custo ou PEP. Cada uma tem perguntas próprias e volume relevante. Há um GlideAjax para preencher a matrícula que pode virar auto-populate, e 4 Rich Text com instruções que não chegam ao LLM.",
+  "nome_sugerido": "Táxi e viagens corporativas",
+  "short_description_sugerida": "Substituído por: relatório de uso, dúvidas e troca de aprovador de centro de custo/PEP",
+  "descricao_sugerida": "Item pai a ser substituído por \"Solicitar relatório de uso de táxi ou viagens corporativas\", \"Tirar dúvidas sobre táxi ou viagens corporativas\" e \"Alterar aprovador de centro de custo ou PEP para táxi e viagens\".",
+  "frases_exemplo": [
+   "informações sobre táxi corporativo"
+  ],
+  "bloqueadores": [
+   {
+    "onde": "EY: Get ID Global (GlideAjax)",
+    "problema": "Busca matrícula do colaborador via Script Include",
+    "acao": "Auto-populate de v_enrollment_employee_report a partir de v_name_of_the_employee_who_wants_the_report (campo de matrícula/ID global do sys_user), sem script."
+   },
+   {
+    "onde": "v_if_you_have_questions_about_the_process, v_to_contact_the_travel_agency, v_attention_to_proceed_with_the_request_to_change, v_click_here_to_access_taxi_and_corporate",
+    "problema": "Rich Text Label: instruções e links não chegam ao LLM",
+    "acao": "Levar os textos e links (agência de viagens, relatórios de autoatendimento) para a descrição dos derivados ou KB."
+   },
+   {
+    "onde": "muitas_perguntas",
+    "problema": "23 perguntas",
+    "acao": "Dividir por intenção."
+   }
+  ],
+  "perguntas": [],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: What is the demand for the call? / EY: Request Taxi or Trip usage reports / EY: When it is \"Resolve doubts...\" / \"Solve doubts...\"",
+    "acao": "remover",
+    "substituicao": "O ramo vira o item derivado."
+   },
+   {
+    "nome": "EY: When No - \"Is the desired report available?\"",
+    "acao": "remover",
+    "substituicao": "A pergunta de disponibilidade some; a descrição aponta o relatório de autoatendimento."
+   },
+   {
+    "nome": "EY: When you want cost center / PEP / Contributor information",
+    "acao": "manter",
+    "substituicao": "No derivado de relatório; sem script, desmarcar On load."
+   },
+   {
+    "nome": "EY: Get ID Global",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "EY: Clear Fields / Clear information / Clear report available / Clear Fields type doubt taxi / travel",
+    "acao": "remover",
+    "substituicao": "Limpeza em cascata desnecessária na conversa."
+   }
+  ],
+  "configuracoes": {
+   "make_item_non_conversational": false,
+   "turn_off_nowassist_conversation": false,
+   "outras": [
+    "Conferir se o flow \"EY: Taxi and Corporate Travel Information\" roteia por v_what_is_the_demand_for_the_call; cada derivado fixa o valor por default."
+   ]
+  },
+  "itens_derivados": [
+   {
+    "nome": "Solicitar relatório de uso de táxi ou viagens corporativas",
+    "short_description": "Relatório de uso de táxi ou viagens corporativas por centro de custo, PEP ou colaborador",
+    "descricao": "Use para pedir um relatório de uso de táxi corporativo ou de viagens corporativas por centro de custo, PEP (elemento de projeto) ou colaborador, em um período. Antes, confira se o relatório já está disponível no autoatendimento (link na descrição). Não use para dúvidas sobre o processo nem para trocar o aprovador do centro de custo.",
+    "frases_exemplo": [
+     "preciso do relatório de táxi do meu centro de custo",
+     "quanto meu time gastou com táxi no último trimestre?",
+     "relatório de viagens corporativas do PEP",
+     "uso de táxi de um colaborador em março",
+     "extrato de viagens por centro de custo"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = resquest_taxi_usage_reports ou request_trip_usage_reports (perguntar \"táxi ou viagem?\" como Select Box de 2 opções, ou dividir em 2 defaults)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_what_is_the_demand_for_the_call",
+      "conversational_label": "O relatório é de táxi ou de viagens corporativas?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_do_you_want_information_by_cost_center_pep_or_employee",
+      "conversational_label": "Você quer o relatório por centro de custo, por PEP ou por colaborador?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_enter_the_cost_center_number",
+      "conversational_label": "Qual é o número do centro de custo?"
+     },
+     {
+      "ordem": 4,
+      "variavel": "v_enter_the_pep_number",
+      "conversational_label": "Qual é o número do PEP?"
+     },
+     {
+      "ordem": 5,
+      "variavel": "v_name_of_the_employee_who_wants_the_report",
+      "conversational_label": "De qual colaborador?"
+     },
+     {
+      "ordem": 6,
+      "variavel": "v_inform_requested_period_start_date",
+      "conversational_label": "A partir de que data?"
+     },
+     {
+      "ordem": 7,
+      "variavel": "v_inform_requested_period_end_date",
+      "conversational_label": "Até que data?"
+     }
+    ]
+   },
+   {
+    "nome": "Tirar dúvidas sobre táxi ou viagens corporativas",
+    "short_description": "Dúvidas sobre o processo de táxi corporativo ou de viagens corporativas",
+    "descricao": "Use para tirar dúvidas sobre como funciona o táxi corporativo ou as viagens corporativas (regras, cadastro, uso, cobrança). Para contato direto com a agência de viagens, veja a descrição/KB. Não use para pedir relatório de uso nem para trocar aprovador de centro de custo ou PEP.",
+    "frases_exemplo": [
+     "tenho uma dúvida sobre táxi corporativo",
+     "como funciona a política de viagens?",
+     "como me cadastro no app de táxi da empresa?",
+     "dúvida sobre cobrança de viagem corporativa"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = answer_questions_about_the_corporate_taxi_process ou answer_questions_about_the_corporate_travel_process (Select Box de 2 opções)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_what_is_the_demand_for_the_call",
+      "conversational_label": "Sua dúvida é sobre táxi ou sobre viagens corporativas?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_what_type_of_doubt_do_you_have_tx / v_what_type_of_doubt_do_you_have",
+      "conversational_label": "Sobre qual assunto é a dúvida?"
+     },
+     {
+      "ordem": 3,
+      "variavel": "v_describe_your_question",
+      "conversational_label": "Qual é a sua dúvida?"
+     }
+    ]
+   },
+   {
+    "nome": "Alterar aprovador de centro de custo ou PEP para táxi e viagens",
+    "short_description": "Troca do responsável/aprovador de centro de custo ou PEP no táxi e viagens corporativas",
+    "descricao": "Use para pedir a troca do responsável ou aprovador de um centro de custo ou PEP nas ferramentas de táxi e viagens corporativas. Não use para dúvidas gerais nem relatórios.",
+    "frases_exemplo": [
+     "preciso trocar o aprovador do centro de custo no táxi",
+     "mudar responsável do PEP nas viagens",
+     "o aprovador do meu centro de custo saiu da empresa",
+     "alterar dono do centro de custo para aprovar viagens"
+    ],
+    "fixar": "v_what_is_the_demand_for_the_call = answer_questions_about_the_corporate_travel_process e v_what_type_of_doubt_do_you_have = change_cost_center_or_pep_owner (default/hidden)",
+    "perguntas": [
+     {
+      "ordem": 1,
+      "variavel": "v_inform_the_cost_center_or_pep",
+      "conversational_label": "Qual é o centro de custo ou PEP?"
+     },
+     {
+      "ordem": 2,
+      "variavel": "v_inform_the_new_owner_approver_of_the_cost_center_or_pep",
+      "conversational_label": "Quem será o novo responsável ou aprovador?"
+     }
+    ]
+   }
+  ],
+  "observacoes": "v_is_the_desired_report_available (Sim/Não) sai: se o relatório está disponível, o usuário não precisa abrir chamado. v_inform_the_new_owner_approver pode virar Reference sys_user. vs_requested_for e dados do set de solicitante: avaliar na análise do set."
+ }
+]

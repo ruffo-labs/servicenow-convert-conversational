@@ -1,0 +1,250 @@
+{
+ "sys_id": "33f3cde33bc53a10b28dd047f4e45a1d",
+ "name": "Academia (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Academia",
+ "description": "Academia",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Academia"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de atualização do e-mail cadastrado na academia",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Academia N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_request",
+    "reference_month",
+    "evidence_of_the_error",
+    "policyholder_or_dependent",
+    "payment_statement",
+    "carrier_evidence",
+    "dependent_name"
+   ],
+   "passa_a_obrigatoria": [
+    "which_operator"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "APL - Solicitação de atualização do e-mail cadastrado na academia -totalpass",
+     "quando": "which_operator=10"
+    },
+    {
+     "policy": "APL - Solicitação de atualização do e-mail cadastrado na academia - Wellhub (Gympass)",
+     "quando": "which_operator=20"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Atualizar e-mail cadastrado na academia",
+     "description": "Use para trocar o e-mail cadastrado na operadora da academia (Wellhub/Gympass ou TotalPass). Corresponde à oferta Solicitação de atualização do e-mail cadastrado na academia. Você informa a operadora e o novo e-mail."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Academia"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência nos valores descontados de academia",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Academia N3"
+    },
+    {
+     "name": "Problemas ao utilizar academia",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Academia N3"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 56H",
+     "SLA - GESTÃO DE GENTE - 40H"
+    ]
+   },
+   "sai_do_formulario": [
+    "new_email"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência nos valores descontados de academia",
+     "description": "Use quando o valor descontado em folha pela academia (Wellhub/Gympass ou TotalPass) está diferente do esperado. Corresponde à oferta Divergência nos valores descontados de academia. Você informa a operadora, o mês de referência e anexa o demonstrativo de pagamento e a evidência da operadora."
+    },
+    {
+     "name": "Problemas ao utilizar a academia",
+     "description": "Use quando tem problema para usar o benefício de academia, como bloqueio, falha de acesso ao cadastro ou de inscrição. Corresponde à oferta Problemas ao utilizar academia. Você informa a operadora, o motivo e anexa a evidência do erro; na TotalPass, também se é titular ou dependente."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "new_email",
+   "type": "Texto de Linha Única",
+   "question_text": "Novo endereço de e-mail do(a) colaborador(a)",
+   "choices": [],
+   "label_atual": "Qual é o novo e-mail para cadastrar na academia?"
+  },
+  {
+   "name": "reason_for_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Beneficiário(a) com bloqueio no benefício. ",
+    "Beneficiário(a) não consegue acessar cadastro.",
+    "Beneficiário(a) não consegue realizar inscrição"
+   ],
+   "label_atual": "Qual é o motivo da solicitação?"
+  },
+  {
+   "name": "reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Agosto",
+    "Abril",
+    "Junho",
+    "Outubro",
+    "Janeiro",
+    "Setembro",
+    "Março",
+    "Maio",
+    "Novembro",
+    "Julho",
+    "Dezembro",
+    "Fevereiro"
+   ],
+   "label_atual": "De qual mês é o desconto com divergência?"
+  },
+  {
+   "name": "evidence_of_the_error",
+   "type": "Anexo",
+   "question_text": "Evidência do erro",
+   "choices": [],
+   "label_atual": "Envie uma evidência do erro, como print da tela."
+  },
+  {
+   "name": "policyholder_or_dependent",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Ambos",
+    "Titular",
+    "Dependente"
+   ],
+   "label_atual": "O problema é com o titular ou com o dependente?"
+  },
+  {
+   "name": "which_operator",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual operadora?",
+   "choices": [
+    "Wellhub (Gympass)",
+    "TotalPass"
+   ],
+   "label_atual": "Qual é a operadora da academia?"
+  },
+  {
+   "name": "payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento do mês."
+  },
+  {
+   "name": "carrier_evidence",
+   "type": "Anexo",
+   "question_text": "Evidência da operadora",
+   "choices": [],
+   "label_atual": "Envie a evidência da operadora, como a cobrança ou fatura."
+  },
+  {
+   "name": "dependent_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": [],
+   "label_atual": "Qual é o nome do dependente?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "1e3981843b553e10b28dd047f4e45a39",
+   "name": "ALP - Clear form -  dependent_name",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa o valor da variável dependent_name (tanto quando o campo gatilho fica vazio quanto quando muda). Serve para zerar o dependente quando o campo de origem é alterado."
+  },
+  {
+   "sys_id": "50297a7b3b45fa10b28dd047f4e45adb",
+   "name": "bloquearSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se a oferta for o sys_id fixo c6774deb... e which_operator for '10', mostra aviso de que a fila é exclusiva para alteração de e-mail na Wellhub (Gympass), orientando falar com a TotalPass diretamente, e bloqueia o envio."
+  },
+  {
+   "sys_id": "6b387af73b45fa10b28dd047f4e45a7d",
+   "name": "errorTotalpass",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "false",
+   "resumo": "No onChange de which_operator, limpa as mensagens; se o valor for '10' e a oferta for o sys_id fixo c6774deb..., mostra o aviso de que a fila é exclusiva para alteração de e-mail na Wellhub (Gympass) e marca a flag bloquearEnvio como true; senão false. Neste script a flag só é gravada, não há onSubmit que a use (o bloqueio efetivo está no script bloquearSubmit)."
+  },
+  {
+   "sys_id": "d2b981c43b553e10b28dd047f4e45ad5",
+   "name": "ALP - Clear form -  which_operator",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa policyholder_or_dependent, new_email, reason_for_request e reference_month, tanto com valor quanto vazio. Reinicia o bloco do pedido de troca de operadora/e-mail."
+  },
+  {
+   "sys_id": "f69a3a7f3b45fa10b28dd047f4e45a41",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa which_operator, reference_month, payment_statement, carrier_evidence, reason_for_request, policyholder_or_dependent, evidence_of_the_error, dependent_name e new_email (sempre, independentemente do valor). Reinicia o bloco de campos de assistência/operadora."
+  }
+ ]
+}

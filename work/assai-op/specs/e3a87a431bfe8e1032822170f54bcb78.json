@@ -1,0 +1,53 @@
+{
+ "sys_id": "e3a87a431bfe8e1032822170f54bcb78",
+ "status": "conversacional",
+ "motivo": "Oferta única; só pergunta o assunto da dúvida.",
+ "vars": {
+  "subject_of_doubt": {
+   "label": "Sobre qual assunto é a sua dúvida?"
+  }
+ },
+ "remover": {
+  "observacao_protocolo": "visual",
+  "protocolo_de_atendimento_da_cooperativa_de_credito": "oferta_inativa"
+ },
+ "policies": {
+  "5bb60b0f1b72ce1032822170f54bcbb3": "remover",
+  "b036cb8b1b72ce1032822170f54bcb1e": "remover",
+  "c4b018331b3e0e10347221bbe54bcb78": "remover",
+  "nova_g0_1": {
+   "short_description": "descrição",
+   "conditions": "subject_of_doubt!=",
+   "actions": {
+    "Attachments": {
+     "visible": true
+    },
+    "rh_description": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Dúvidas sobre encerramento da Cooperativa de Crédito",
+   "short_description": "Tirar dúvidas sobre o encerramento da Cooperativa de Crédito",
+   "description": "Use para tirar dúvidas sobre o encerramento da Cooperativa de Crédito, como empréstimo, benefícios ou valores a receber. Atendido pelo RH - Cooperativa de Crédito.",
+   "frases_exemplo": [
+    "Dúvida sobre o fim da Cooperativa de Crédito",
+    "O que acontece com meu empréstimo da cooperativa?",
+    "Quando recebo meus valores da cooperativa?",
+    "A cooperativa vai encerrar, e agora?",
+    "Preciso de informação sobre a cooperativa"
+   ],
+   "vars": {
+    "subject_of_doubt": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

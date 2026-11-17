@@ -1,0 +1,725 @@
+[
+  {
+    "sys_id": "de3a6bbe1b4fb910a530426fe54bcb8c",
+    "nome_atual": "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 2148,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 5,
+    "justificativa": "Item de maior volume do lote, mas com 142 perguntas, 95 UI policies, widgets Custom/HTML (mrv_macro_widget, benefit_description, benefit_description_value/2/3), client script onSubmit sem VA Supported e 60 anexos distribuídos em 10 variable sets 'Seção N'. O select registration_option mistura intenções diferentes (adesão do titular, inclusão de dependente, exclusão/cancelamento, troca de plano/operadora exclusiva AVON), cada uma com volume e perguntas próprias. Dividir por intenção é a única forma de caber no limite de perguntas e de o LLM casar a intenção.",
+    "nome_sugerido": "Plano de saúde e odontológico: adesão, inclusão e exclusão",
+    "short_description_sugerida": "Aderir, incluir ou excluir dependentes nos planos de assistência médica e odontológica.",
+    "descricao_sugerida": "Item pai substituído por itens derivados, um por intenção. Use para entrar no plano de saúde ou odontológico, incluir ou excluir dependentes, ou trocar de operadora. Não use para reembolso, autorização de procedimento, carteirinha, carta de viagem ou dúvidas de uso do plano: para isso use 'Atendimento Saúde'.",
+    "frases_exemplo": [
+      "quero aderir ao plano de saúde",
+      "preciso incluir meu filho no convênio",
+      "como tiro minha esposa do plano odontológico",
+      "quero cancelar meu plano dental"
+    ],
+    "bloqueadores": [
+      { "onde": "variavel mrv_macro_widget", "problema": "Tipo Custom com widget de portal (multi-row de dependentes); não renderiza em conversa.", "acao": "Remover. Nos derivados, perguntar os dependentes via Reference/Lookup Select Box (beneficiary_name) um por vez; o widget fica só no formulário do portal, se mantido." },
+      { "onde": "variaveis benefit_description, benefit_description_value, benefit_description_value2, benefit_description_value3 (set Eligibilities Informative / item)", "problema": "Custom com widget e HTML: só exibem os planos elegíveis; não chegam ao LLM e quebram a conversa.", "acao": "Remover da conversa. A elegibilidade deve ser calculada no servidor (flow/script do producer a partir de v_range) e descrita em artigo de KB linkado na descrição." },
+      { "onde": "client script EY: Check mandatory checkbox (onSubmit, sem VA Supported)", "problema": "Valida checkboxes de termos por g_form no envio; não roda na VA.", "acao": "Remover. Cada termo vira uma pergunta Yes/No obrigatória (com Include None) só no derivado em que se aplica, tornada mandatória por atributo da variável." },
+      { "onde": "variable sets Seção 1 a Seção 10 (60 variáveis Attachment)", "problema": "Anexos por dependente e por tipo de parentesco, controlados por 60+ UI policies; Attachment exige tratamento à parte e estoura o limite de perguntas.", "acao": "Substituir por um único Attachment ao final da conversa ('Anexe os documentos dos dependentes') com a lista de documentos por parentesco na descrição; a conferência documental passa para a tarefa do analista/flow." },
+      { "onde": "client scripts EY: Is requester candidate, ACN: Verifying if employee is range H, ACN: Verifying if employee is AVON, EY: Fill and validate user range", "problema": "GlideAjax em cascata para decidir faixa, candidato e AVON; lógica de elegibilidade no cliente.", "acao": "Mover para o servidor (producer script/flow) e para user criteria: o item de troca de operadora só disponível para força de vendas AVON; a faixa (v_range) derivada do perfil sem pergunta." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "registration_option", "origem": "item", "acao": "remover", "obs": "Vira o próprio item derivado (default value oculto em cada um)." },
+      { "ordem": 2, "variavel": "requester_candidate", "origem": "item", "acao": "derivar", "obs": "Já é oculto; manter cálculo no servidor." },
+      { "ordem": 3, "variavel": "v_range", "origem": "item", "acao": "derivar", "obs": "Derivar do perfil (x_nasm_hr_profile) sem perguntar." },
+      { "ordem": 4, "variavel": "executar_validacoes_mrv", "origem": "item", "acao": "remover", "obs": "Controle técnico do widget MRV; sem uso na conversa." },
+      { "ordem": 5, "variavel": "health_care / dental_care / verifica_medico / verifica_odonto", "origem": "item", "acao": "alterar_tipo", "tipo_sugerido": "Select Box (nova_tipo_plano: Médico, Odontológico, Ambos)", "obs": "Checkboxes ocultos que controlam termos; trocar por uma pergunta única nos derivados." },
+      { "ordem": 6, "variavel": "employee e demais campos do set Suas informações pessoais", "origem": "set:Suas informações pessoais", "acao": "ocultar_na_conversa", "obs": "Todos read-only e preenchidos a partir do usuário; a VA pula." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "DOC - * PATH 1..10 (≈50 UI policies de anexos por parentesco)", "acao": "remover", "substituicao": "Anexo único ao final + checklist na descrição e conferência na tarefa." },
+      { "nome": "Ocultar variables sets - Seção 1..10", "acao": "remover", "substituicao": "Sets de Seção removidos dos derivados." },
+      { "nome": "Ey: Validar data de nascimento dep 1..10", "acao": "converter", "substituicao": "Regra de comprovante universitário (dependente maior de idade) validada no flow a partir de date_of_birth do beneficiário; pedir o comprovante na conversa só via UI policy sem script quando relationship = filho e idade > limite (ou sempre pedir como opcional)." },
+      { "nome": "Apresentar documentos (9,8 KB)", "acao": "remover", "substituicao": "Substituído pelo anexo único com checklist." },
+      { "nome": "EY: Hide Dental Title (bug setDisplay('false'))", "acao": "remover", "substituicao": "Label não vai para a conversa." },
+      { "nome": "Regra Registration_Option ... / EY: If benefit_description_value2 contains 'Plano Care Plus'", "acao": "converter", "substituicao": "Termos específicos por plano viram perguntas Yes/No fixas no derivado correspondente." }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Enquanto os derivados não existirem, marcar o item atual como non-conversational para a VA abrir o formulário como link.",
+        "Após a divisão, desativar o item pai ou mantê-lo só no portal.",
+        "Revisar reference qualifier de plans_odonto e beneficiary_name (dinâmicos) para funcionarem na conversa."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Aderir ao plano de saúde ou odontológico",
+        "short_description": "Entrar no plano de assistência médica e/ou odontológica como titular, com ou sem dependentes.",
+        "descricao": "Use quando você ainda não tem o plano (ou só tem um deles) e quer aderir à assistência médica e/ou odontológica da empresa. Você pode já indicar dependentes. Não use para incluir dependente num plano que você já tem (use 'Incluir dependente no plano de saúde ou odontológico') nem para dúvidas de uso do plano (use 'Atendimento Saúde').",
+        "frases_exemplo": ["quero aderir ao plano de saúde", "acabei de entrar na empresa e quero o convênio médico", "como faço pra ter plano odontológico", "quero entrar no plano dental com minha família", "adesão ao plano de saúde"],
+        "fixar": "registration_option = 1 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_tipo_plano", "conversational_label": "Você quer aderir a qual plano: médico, odontológico ou ambos?" },
+          { "ordem": 2, "variavel": "plans_odonto", "conversational_label": "Qual opção de plano odontológico você escolhe?" },
+          { "ordem": 3, "variavel": "bank_refund", "conversational_label": "Qual o banco da conta para reembolso?" },
+          { "ordem": 4, "variavel": "agency_refund", "conversational_label": "Qual a agência?" },
+          { "ordem": 5, "variavel": "checking_account_refund", "conversational_label": "Qual o número da conta corrente?" },
+          { "ordem": 6, "variavel": "want_insert_dependents", "conversational_label": "Você quer incluir dependentes já nesta adesão?" },
+          { "ordem": 7, "variavel": "beneficiary_name", "conversational_label": "Quais dependentes você quer incluir?" },
+          { "ordem": 8, "variavel": "nova_anexo_documentos", "conversational_label": "Anexe os documentos dos dependentes (CPF e certidão conforme o parentesco)." },
+          { "ordem": 9, "variavel": "auth_discount", "conversational_label": "Você autoriza o desconto em folha das mensalidades do plano?" },
+          { "ordem": 10, "variavel": "declare_accuracy", "conversational_label": "Você confirma que as informações enviadas são verdadeiras?" }
+        ]
+      },
+      {
+        "nome": "Incluir dependente no plano de saúde ou odontológico",
+        "short_description": "Incluir cônjuge, filhos ou outros dependentes num plano que você já tem.",
+        "descricao": "Use quando você já é titular do plano médico ou odontológico e quer incluir um dependente (cônjuge, companheiro, filho, enteado, tutelado). Não use para aderir ao plano pela primeira vez nem para extensão de plano de filho universitário maior de idade (use 'Atendimento Saúde').",
+        "frases_exemplo": ["quero incluir meu filho recém-nascido no plano", "preciso colocar minha esposa no convênio", "incluir dependente no plano odontológico", "casei e quero pôr meu marido no plano"],
+        "fixar": "registration_option = 2 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_tipo_plano", "conversational_label": "Em qual plano você quer incluir: médico, odontológico ou ambos?" },
+          { "ordem": 2, "variavel": "beneficiary_name", "conversational_label": "Qual dependente você quer incluir?" },
+          { "ordem": 3, "variavel": "plan_options", "conversational_label": "Qual opção de plano para esse dependente?" },
+          { "ordem": 4, "variavel": "dependent_live_birth_certificate", "conversational_label": "Se for recém-nascido, qual o número da Declaração de Nascido Vivo?" },
+          { "ordem": 5, "variavel": "nova_anexo_documentos", "conversational_label": "Anexe os documentos do dependente (CPF e certidão conforme o parentesco)." },
+          { "ordem": 6, "variavel": "authorization_discount", "conversational_label": "Você autoriza o desconto em folha referente ao dependente?" },
+          { "ordem": 7, "variavel": "declare_accuracy", "conversational_label": "Você confirma que as informações enviadas são verdadeiras?" }
+        ]
+      },
+      {
+        "nome": "Excluir dependente ou cancelar plano de saúde ou odontológico",
+        "short_description": "Tirar dependentes do plano ou cancelar seu plano médico ou odontológico.",
+        "descricao": "Use para excluir um ou mais dependentes do plano médico ou odontológico, ou para cancelar o seu próprio plano. Atenção: reincluir um dependente excluído exige cumprir novamente as regras e carências. Não use para trocar de operadora.",
+        "frases_exemplo": ["quero tirar minha ex-esposa do plano", "cancelar meu plano odontológico", "excluir dependente do convênio", "não quero mais o plano de saúde"],
+        "fixar": "registration_option = 3 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_tipo_plano", "conversational_label": "De qual plano é a exclusão: médico, odontológico ou ambos?" },
+          { "ordem": 2, "variavel": "beneficiary_name", "conversational_label": "Quem você quer excluir do plano? Se for você mesmo, diga 'eu'." },
+          { "ordem": 3, "variavel": "dependent_exclusion_science", "conversational_label": "Você está ciente de que, para reincluir esse dependente depois, será preciso cumprir as regras de carência novamente?" },
+          { "ordem": 4, "variavel": "declare_accuracy", "conversational_label": "Você confirma que as informações são verdadeiras?" }
+        ]
+      },
+      {
+        "nome": "Trocar operadora do plano de saúde (força de vendas AVON)",
+        "short_description": "Troca de operadora do plano médico, exclusiva para a força de vendas AVON.",
+        "descricao": "Exclusivo para colaboradores da força de vendas AVON que querem trocar a operadora do plano de saúde. Demais colaboradores não têm essa opção.",
+        "frases_exemplo": ["sou da AVON e quero trocar a operadora do plano", "mudar de operadora do convênio", "troca de plano de saúde AVON"],
+        "fixar": "registration_option = 4 (default/hidden); disponibilidade por user criteria AVON",
+        "perguntas": [
+          { "ordem": 1, "variavel": "operator_option", "conversational_label": "Para qual operadora você quer mudar?" },
+          { "ordem": 2, "variavel": "auth_discount", "conversational_label": "Você autoriza o desconto em folha do novo plano?" },
+          { "ordem": 3, "variavel": "declare_accuracy", "conversational_label": "Você confirma que as informações são verdadeiras?" }
+        ]
+      }
+    ],
+    "observacoes": "registration_option = 5 aparece numa UI policy (mudança de plano) sem rótulo no digest; confirmar se é ativo e, se for, virar derivado próprio ou entrar no de troca. O item compartilha tema com 'Atendimento Saúde' (c93db36a); as descrições dos derivados foram escritas para separar movimentação cadastral (este) de uso do plano (aquele). Esforço alto: reescrever validação documental no flow."
+  },
+  {
+    "sys_id": "c93db36a1bbfd194a530426fe54bcb02",
+    "nome_atual": "Atendimento Saúde",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 997,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 30,
+    "justificativa": "Não há bloqueador duro, mas são 29 perguntas (acima do limite de 20, abre janela) e o select v_what_is_the_subject_of_your_request agrupa 11 assuntos com perguntas totalmente diferentes (carta de viagem, autorização de procedimento, reembolso, programa gestante, extensão de dependente universitário etc.). Vários assuntos são só informativos (labels de coparticipação, carteirinha, check-up) e deveriam ser respondidos por KB. Dividir nos assuntos que geram trabalho e deixar um item de dúvidas gerais.",
+    "nome_sugerido": "Atendimento do plano de saúde e odontológico",
+    "short_description_sugerida": "Dúvidas e pedidos sobre uso do plano médico e odontológico: reembolso, autorização, carta de viagem, gestante.",
+    "descricao_sugerida": "Item pai substituído pelos derivados. Cobre o uso do plano de assistência médica e odontológica. Não use para aderir, incluir ou excluir dependentes (use os itens de adesão, inclusão e exclusão do plano).",
+    "frases_exemplo": ["preciso de uma carta do plano para viagem", "meu reembolso do médico", "o plano não autorizou minha cirurgia", "dúvida sobre coparticipação"],
+    "bloqueadores": [
+      { "onde": "item (29 perguntas)", "problema": "Acima de glide.sc.va.inline_render.question.limit (20): a VA abre janela.", "acao": "Dividir por assunto; cada derivado fica com 3 a 11 perguntas." },
+      { "onde": "labels v_label_you_can_request_reimbursements, v_label_procedure_authorizations, v_label_medial_dental_card, v_label_employees_band, v_label_request_prior, v_label_copayment_drawing, v_label_sending_information, v_label_register_download, v_download_reembolso, v_download_termo_anuencia", "problema": "Instruções importantes em Label/Rich Text que não chegam ao LLM.", "acao": "Mover o conteúdo para artigos de KB (carteirinha, coparticipação, check-up, prazos de autorização, como pedir reembolso no app) e resumir na descrição de cada derivado." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_what_is_the_subject_of_your_request", "origem": "item", "acao": "remover", "obs": "Vira o próprio item derivado (default oculto)." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: If Subject is ... (uma policy por assunto)", "acao": "remover", "substituicao": "Cada derivado já contém só as perguntas do assunto, com mandatory direto na variável." },
+      { "nome": "EY: Fill CPF Field / EY: fill field email", "acao": "converter", "substituicao": "Auto-populate a partir de v_full_name (dot-walk no perfil) em vez de client script." },
+      { "nome": "EY: End Date cannot be before Start Date", "acao": "manter", "substituicao": "VA Supported; alternativa no-code: validação no flow ou UI policy de data." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Desativar o item pai após publicar os derivados.", "Assuntos só informativos (carteirinha, coparticipação, check-up, rede credenciada) respondidos por KB/AI Search antes de abrir caso."] },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar carta do plano de saúde para viagem internacional",
+        "short_description": "Carta da operadora comprovando cobertura do plano para viagem ao exterior.",
+        "descricao": "Use para pedir a carta do plano de saúde para viagem internacional (comprovante de cobertura para visto ou embarque). A carta é emitida em até 72 horas úteis. Não use para seguro-viagem corporativo.",
+        "frases_exemplo": ["preciso da carta do plano para viajar", "vou pra Europa e o consulado pediu carta do convênio", "carta de viagem do plano de saúde em inglês", "comprovante do plano para visto"],
+        "fixar": "v_what_is_the_subject_of_your_request = 3 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_full_name", "conversational_label": "Para quem é a carta? Pode ser você ou um dependente." },
+          { "ordem": 2, "variavel": "v_destination_country", "conversational_label": "Para qual país você vai viajar?" },
+          { "ordem": 3, "variavel": "v_shipment_date", "conversational_label": "Qual a data de ida?" },
+          { "ordem": 4, "variavel": "return_date", "conversational_label": "E a data de volta?" },
+          { "ordem": 5, "variavel": "v_inform_the_desired_language_in_the_letter", "conversational_label": "Em qual idioma você precisa da carta?" },
+          { "ordem": 6, "variavel": "v_incase_companion", "conversational_label": "Algum acompanhante vai junto? Se sim, informe nome completo e CPF (Cadastro de Pessoa Física)." },
+          { "ordem": 7, "variavel": "v_telephone", "conversational_label": "Qual telefone com DDD para contato?" },
+          { "ordem": 8, "variavel": "v_full_home_address", "conversational_label": "Qual seu endereço residencial completo?" }
+        ]
+      },
+      {
+        "nome": "Autorização de procedimento no plano de saúde",
+        "short_description": "Acompanhar ou contestar autorização de exame complexo ou cirurgia pela operadora.",
+        "descricao": "Use quando a operadora ainda não liberou ou negou um exame complexo ou cirurgia. A autorização é pedida pelo prestador direto à operadora; prazos: exames complexos 7 dias úteis, cirurgias 21 dias úteis. Não use para reembolso.",
+        "frases_exemplo": ["o plano não autorizou minha cirurgia", "minha ressonância está pendente de liberação", "autorização do convênio está demorando", "negaram meu exame"],
+        "fixar": "v_what_is_the_subject_of_your_request = 1 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_procedure_name", "conversational_label": "Qual procedimento ou exame precisa de autorização?" },
+          { "ordem": 2, "variavel": "V_provider", "conversational_label": "Qual o hospital, clínica ou médico que vai fazer?" },
+          { "ordem": 3, "variavel": "v_request_date", "conversational_label": "Em que data o pedido foi enviado à operadora?" },
+          { "ordem": 4, "variavel": "v_procedure_date", "conversational_label": "Para quando o procedimento está marcado?" },
+          { "ordem": 5, "variavel": "v_description", "conversational_label": "Conte o que aconteceu com a autorização." },
+          { "ordem": 6, "variavel": "v_attachment", "conversational_label": "Quer anexar o pedido médico ou a negativa?" }
+        ]
+      },
+      {
+        "nome": "Reembolso do plano de saúde",
+        "short_description": "Prévia ou solicitação de reembolso de consultas, exames e terapias.",
+        "descricao": "Use para dúvidas ou problemas com reembolso do plano médico, ou para pedir prévia do valor a reembolsar. Em geral o reembolso é pedido direto no app ou site da operadora; use este item quando não conseguir por lá ou houver divergência.",
+        "frases_exemplo": ["meu reembolso da psicóloga não caiu", "quero saber quanto vou receber de reembolso", "prévia de reembolso de cirurgia", "reembolso da consulta foi negado"],
+        "fixar": "v_what_is_the_subject_of_your_request = 11; nova pergunta substitui a escolha entre 9 (prévia) e 11 (solicitação)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_tipo_reembolso", "conversational_label": "É uma prévia de valor ou um reembolso de algo já pago?" },
+          { "ordem": 2, "variavel": "v_description", "conversational_label": "Descreva o atendimento (tipo, data e valor)." },
+          { "ordem": 3, "variavel": "v_attachment", "conversational_label": "Anexe o recibo, nota fiscal ou orçamento com pedido médico." }
+        ]
+      },
+      {
+        "nome": "Inscrição no Programa Gestante",
+        "short_description": "Inscrever-se no programa de acompanhamento de gestantes do plano de saúde.",
+        "descricao": "Use para se inscrever no Programa Gestante do plano ou tirar dúvidas sobre ele. Para inscrição é preciso anexar o termo de anuência e o relatório médico com idade gestacional e data provável do parto.",
+        "frases_exemplo": ["estou grávida e quero entrar no programa gestante", "inscrição programa gestante", "dúvida sobre o programa de gestante do plano", "minha esposa está grávida, tem algum programa?"],
+        "fixar": "v_what_is_the_subject_of_your_request = 8 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_type_of_care2", "conversational_label": "Você quer se inscrever ou tirar uma dúvida sobre o programa?" },
+          { "ordem": 2, "variavel": "v_attach_the_term_of_consent_and_the_medical_report", "conversational_label": "Anexe o termo de anuência e o relatório médico." },
+          { "ordem": 3, "variavel": "v_description", "conversational_label": "Qual é a sua dúvida?" }
+        ]
+      },
+      {
+        "nome": "Manter filho universitário no plano de saúde",
+        "short_description": "Extensão do plano para dependente que atingiu a idade limite e está na faculdade.",
+        "descricao": "Use quando seu filho atingiu a idade limite do plano e continua estudando, para mantê-lo como dependente. É preciso comprovante de matrícula na faculdade. Não use para incluir dependente novo.",
+        "frases_exemplo": ["meu filho fez 21 anos e está na faculdade", "extensão do plano para filho universitário", "como manter meu filho no convênio depois dos 18", "maioridade de dependente no plano"],
+        "fixar": "v_what_is_the_subject_of_your_request = 7 (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_description", "conversational_label": "Qual o nome do seu filho e o curso que ele faz?" },
+          { "ordem": 2, "variavel": "v_attach_university_proof", "conversational_label": "Anexe o comprovante de matrícula da faculdade." }
+        ]
+      },
+      {
+        "nome": "Dúvidas sobre o plano de saúde e odontológico",
+        "short_description": "Rede credenciada, carteirinha, coparticipação, check-up e outras dúvidas do plano.",
+        "descricao": "Use para dúvidas gerais sobre o plano médico ou odontológico: rede credenciada, carteirinha digital, coparticipação, check-up executivo e outros temas sem item específico. Antes, veja os artigos de apoio.",
+        "frases_exemplo": ["qual hospital atende meu plano", "como pego minha carteirinha do convênio", "quanto pago de coparticipação", "tenho direito a check-up?", "dúvida sobre o plano odontológico"],
+        "fixar": "v_what_is_the_subject_of_your_request = 6 por padrão; nova Select Box com os assuntos 2, 4, 5, 6, 10",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_assunto_duvida", "conversational_label": "Sua dúvida é sobre rede credenciada, carteirinha, coparticipação, check-up ou outro assunto?" },
+          { "ordem": 2, "variavel": "v_type_of_care", "conversational_label": "Você procura atendimento por especialidade médica ou para um procedimento com pedido médico?" },
+          { "ordem": 3, "variavel": "v_region", "conversational_label": "Em qual cidade ou região você procura atendimento?" },
+          { "ordem": 4, "variavel": "v_description", "conversational_label": "Descreva sua dúvida." },
+          { "ordem": 5, "variavel": "v_attachment", "conversational_label": "Quer anexar algum documento?" }
+        ]
+      }
+    ],
+    "observacoes": "Set EY: Requester Data não analisado aqui (análise de sets separada). Os valores numéricos das opções do assunto foram inferidos pelas UI policies: 1 autorização, 2 rede credenciada, 3 carta de viagem, 4 coparticipação, 5 check-up, 6 dúvidas gerais, 7 extensão universitário, 8 gestante, 9 prévia de reembolso, 10 carteirinha, 11 reembolso. Confirmar antes de implementar."
+  },
+  {
+    "sys_id": "28bf7cb5879847d0ec360e530cbb35db",
+    "nome_atual": "Registro de Atendimento (CSC Partner/Balcão)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 274,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 15,
+    "justificativa": "Formulário interno usado pelos atendentes do CSC Partner e do balcão para registrar atendimentos, não um pedido do colaborador. Tem 41 perguntas, 16 reference qualifiers dinâmicos em cascata (macro torre > torre > gestor, categoria > subcategoria) e grupos de checkboxes. Converter traria pouco ganho e alto risco; deve abrir como formulário.",
+    "nome_sugerido": "Registrar atendimento do CSC (Partner ou balcão)",
+    "short_description_sugerida": "Uso interno dos atendentes do CSC para registrar atendimentos do CSC Partner e presenciais.",
+    "descricao_sugerida": "Formulário de uso exclusivo dos atendentes do CSC Partner e do balcão presencial para registrar cada atendimento realizado. Não é para colaboradores abrirem solicitações: se você é colaborador, procure o serviço específico do seu assunto.",
+    "frases_exemplo": ["registrar atendimento do balcão", "lançar atendimento CSC Partner", "registro de atendimento presencial do CSC", "abrir registro de atendimento"],
+    "bloqueadores": [
+      { "onde": "item (41 perguntas)", "problema": "Acima do limite de 20; VA abre janela.", "acao": "Manter como formulário (non-conversational)." },
+      { "onde": "variaveis v_tower, v_manager, v_customer_service_subcategory, customer_service_subcategory_text", "problema": "Reference qualifier por script dependente de outra variável (cscPartnerCounterUtils.getDinamicFilter).", "acao": "Sem ação para conversa; manter no formulário." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "Aoop: Clean values from subcategory / Clear value from Manager / Clear value from Tower and Manager", "acao": "manter", "substituicao": "Formulário continua como está." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["short_description está vazia hoje: preencher para o item ser encontrado pela busca dos atendentes.", "Opcional: trocar grupos de checkbox (public_*, available_*) por List Collector ou Multiple Choice para limpeza do formulário."] },
+    "itens_derivados": [],
+    "observacoes": "Disponível só para o grupo Aoop: CSC Atendimento HTR And CSC Partner, então não compete com itens de colaborador. Volume concentrado nos últimos 90 dias (item novo)."
+  },
+  {
+    "sys_id": "b3f428323b801610924d0247f4e45aa2",
+    "nome_atual": "Solicitações de pagamento antecipado",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 251,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "Item do catálogo hispânico disponível só para o Chile, sem bloqueador duro. A experiência é ruim por causa de 6 client scripts de show/hide (um com setTimeout), 14 UI policies onLoad que só escondem campos e 4 Rich Text Labels com regras de adiantamento (50%/20%, recorrente, cancelamento) que não chegam ao LLM. Com ajustes, o fluxo real tem 3 a 4 perguntas.",
+    "nome_sugerido": "Solicitar adiantamento salarial (Chile)",
+    "short_description_sugerida": "Pedir, tornar mensal ou cancelar o adiantamento de salário (anticipo) no Chile.",
+    "descricao_sugerida": "Use para pedir adiantamento de salário (anticipo), definir se ele será pago todo mês ou cancelar um adiantamento recorrente. Disponível para colaboradores do Chile. Não use para empréstimos, reembolso de despesas ou dúvidas de folha de pagamento.",
+    "frases_exemplo": ["quero um adiantamento do salário", "necesito un anticipo de sueldo", "quero cancelar meu adiantamento mensal", "pedir anticipo todos os meses", "adiantamento de 50% do salário"],
+    "bloqueadores": [
+      { "onde": "Rich Text Labels v_request_50, v_request_20, v_once_advance_payment, v_cancel_advance_payment", "problema": "Regras de percentual e recorrência só visíveis no formulário; não chegam ao LLM.", "acao": "Levar as regras para a descrição do item (ou KB) e remover os labels da conversa." },
+      { "onde": "client script EY: Remove Cancel Option of Type Request", "problema": "Remove opção via g_form com setTimeout: frágil e dependente de ordem de carga.", "acao": "Como o item só está disponível no Chile, fixar as opções válidas na própria choice list (ou usar choice com condição) e remover o script." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_type_of_request", "origem": "item", "acao": "manter", "conversational_label": "Você quer pedir um adiantamento ou cancelar um adiantamento recorrente?", "obs": "Opções reais não constam no digest; revisar textos das choices em linguagem natural." },
+      { "ordem": 2, "variavel": "v_amount", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Read-only quando request_advance_payment (valor calculado); a VA pula. Se deve ser informado, tornar editável com Validation Regex numérica." },
+      { "ordem": 3, "variavel": "v_advance_payment", "origem": "item", "acao": "manter", "conversational_label": "Você quer que o adiantamento seja pago todo mês?", "obs": "Mostrar via UI policy sem script quando v_type_of_request = request_advance_payment." },
+      { "ordem": 4, "variavel": "v_detail_field", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar algum detalhe sobre o pedido?" },
+      { "ordem": 5, "variavel": "v_request_50 / v_request_20 / v_once_advance_payment / v_cancel_advance_payment", "origem": "item", "acao": "remover", "obs": "Conteúdo vai para a descrição." },
+      { "ordem": 6, "variavel": "v_corporate_e_mail", "origem": "set:EY: Hispana Personal Information", "acao": "derivar", "obs": "Policy deste item o torna obrigatório; deve vir auto-populado do usuário, sem pergunta." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show v_request_50 or v_request_20 / EY: Show v_advance_payment description", "acao": "remover", "substituicao": "Labels removidos da conversa." },
+      { "nome": "EY: Show v_amount according request / EY: Show v_advance_payment / EY: Hide target variables on Load", "acao": "converter", "substituicao": "UI policies sem script com condição em v_type_of_request (visible/mandatory)." },
+      { "nome": "EY: Hide * OnLoad (10 policies 'sempre')", "acao": "converter", "substituicao": "Definir hidden direto na variável ou remover a variável do item." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Público hispanofalante: cadastrar traduções es dos conversational labels e da descrição."] },
+    "itens_derivados": [],
+    "observacoes": "Se as opções de v_type_of_request forem de fato três intenções com volume relevante (pedir, tornar recorrente, cancelar), avaliar dividir 'Cancelar adiantamento recorrente' num item próprio. Producer script tem atribuição dupla de requested_for sem efeito; limpar."
+  },
+  {
+    "sys_id": "73bfff2d1b37d154d1abda4ce54bcb1d",
+    "nome_atual": "Solicitação ou Desistência de Vaga no Berçário",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 125,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "O select v_request_type separa duas intenções opostas (pedir vaga e desistir da vaga) com perguntas praticamente disjuntas e até variáveis duplicadas (v_name_of_the_person_in_charge vs _waiver, v_child_s_name vs v_childs_name_waiver). Dividir deixa cada item curto e com nome que casa com o pedido. Há validações de data em UI policy sem ação e client script com bug de setDisplay('false').",
+    "nome_sugerido": "Berçário: solicitar ou desistir de vaga",
+    "short_description_sugerida": "Pedir ou desistir de vaga nos berçários das unidades NASP e Cajamar.",
+    "descricao_sugerida": "Item pai substituído pelos derivados 'Solicitar vaga no berçário' e 'Desistir da vaga no berçário'.",
+    "frases_exemplo": ["quero vaga no berçário", "desistir da vaga do berçário"],
+    "bloqueadores": [
+      { "onde": "client script EY: Hide filde (onLoad)", "problema": "Bug: setDisplay('false') com string pode exibir o campo; lógica de layout no cliente.", "acao": "Remover; a visibilidade de v_child_s_name já é tratada pelas UI policies." },
+      { "onde": "UI policies EY: Validate probable date of birth / prediction_of_start_to_nursery (sem ações)", "problema": "Validação de data sem ação efetiva (provavelmente dependia de script).", "acao": "Converter para validação no flow ou UI policy com mensagem; na conversa, informar a regra (início entre 4 meses e 1 ano de idade) na pergunta." },
+      { "onde": "variavel v_attach_holidays_to_maternity_leave", "problema": "Attachment exige tratamento à parte.", "acao": "Manter como anexo opcional no fim da conversa, condicionado à resposta Sim." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_request_type", "origem": "item", "acao": "remover", "obs": "Vira o próprio item derivado." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: When it is 'Job Request' / EY: when: vacancy waiver", "acao": "remover", "substituicao": "Mandatory direto nas variáveis de cada derivado." },
+      { "nome": "EY: Hidden the data fields / EY: When to show the Data de nascimento da criança field", "acao": "converter", "substituicao": "Uma única data (v_childs_date_of_birth) com label condicional: nascido = data de nascimento; não nascido = data provável do parto. Remover probable_date_of_birth." },
+      { "nome": "ACN Fill Add beneficiary data", "acao": "converter", "substituicao": "Auto-populate a partir do beneficiário selecionado." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Revisar reference qualifier de v_child_s_name (depende de v_name_of_the_person_in_charge); com o responsável auto-populado pelo usuário logado, o filtro fica estável."] },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar vaga no berçário",
+        "short_description": "Pedir vaga para seu filho no berçário das unidades NASP ou Cajamar.",
+        "descricao": "Use para pedir vaga no berçário da empresa (unidades NASP e Cajamar) para seu filho já nascido ou que vai nascer. O início no berçário deve ser entre 4 meses e 1 ano de idade da criança. Não use para desistir de uma vaga.",
+        "frases_exemplo": ["quero vaga no berçário pro meu bebê", "como coloco meu filho na creche da empresa", "vaga no berçário de Cajamar", "estou grávida e quero reservar o berçário", "berçário NASP"],
+        "fixar": "v_request_type = vacancy_request (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_nursery_unit", "conversational_label": "Em qual unidade você quer a vaga: NASP ou Cajamar?" },
+          { "ordem": 2, "variavel": "v_shift", "conversational_label": "Em qual turno?" },
+          { "ordem": 3, "variavel": "has_the_child_been_born", "conversational_label": "A criança já nasceu?" },
+          { "ordem": 4, "variavel": "v_child_s_name", "conversational_label": "Qual o nome da criança?" },
+          { "ordem": 5, "variavel": "v_childs_date_of_birth", "conversational_label": "Qual a data de nascimento da criança, ou a data provável do parto?" },
+          { "ordem": 6, "variavel": "v_prediction_of_start_to_nursery", "conversational_label": "Quando você prevê que a criança comece no berçário?" },
+          { "ordem": 7, "variavel": "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave", "conversational_label": "Você pretende emendar férias depois da licença-maternidade?" },
+          { "ordem": 8, "variavel": "v_attach_holidays_to_maternity_leave", "conversational_label": "Anexe a programação de férias." },
+          { "ordem": 9, "variavel": "v_phone", "conversational_label": "Qual seu telefone com DDD?" },
+          { "ordem": 10, "variavel": "v_private_email", "conversational_label": "Qual seu e-mail pessoal?" },
+          { "ordem": 11, "variavel": "v_complete_address", "conversational_label": "Qual seu endereço completo?" }
+        ]
+      },
+      {
+        "nome": "Desistir da vaga no berçário",
+        "short_description": "Abrir mão da vaga do seu filho no berçário da empresa.",
+        "descricao": "Use para desistir da vaga do seu filho no berçário (NASP ou Cajamar) a partir de hoje. Ao desistir, uma nova vaga futura depende de disponibilidade.",
+        "frases_exemplo": ["quero desistir da vaga do berçário", "meu filho vai sair do berçário", "cancelar vaga no berçário", "não vou mais usar o berçário"],
+        "fixar": "v_request_type = vacancy_waiver (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_childs_name_waiver", "conversational_label": "De qual criança é a vaga?" },
+          { "ordem": 2, "variavel": "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date", "conversational_label": "Você confirma que desiste da vaga a partir de hoje, ciente de que uma nova vaga dependerá de disponibilidade?" }
+        ]
+      }
+    ],
+    "observacoes": "Remover do item: v_eligibility_for e v_label_wk (Rich Text, levar texto de elegibilidade e orientação do Workday para a descrição/KB); are_you_registered_with_wd (derivável: se a criança está em x_nasm_hr_beneficiary, está no Workday); v_corporate_email e v_name_of_the_person_in_charge(_waiver) auto-populados do usuário logado. v_i_declare... é Checkbox: trocar por Yes/No com Include None. Producer script cita 'Admissão e Movimentação Internacional' (copiado): revisar."
+  },
+  {
+    "sys_id": "0f3d986c87508390ec360e530cbb35c5",
+    "nome_atual": "Celebrações e Eventos da Jornada da pessoa Colaboradora",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 61,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 45,
+    "justificativa": "Item simples (7 perguntas) bloqueado apenas pelo client script EY: Add Option, que injeta a opção 'Celebrações de Pais e Mães' conforme o idioma. Resolvendo isso e ajustando labels, fica bom para conversa. Volume baixo mas crescente (30 nos últimos 90 dias).",
+    "nome_sugerido": "Dúvidas sobre celebrações e eventos para colaboradores",
+    "short_description_sugerida": "Informações e dúvidas sobre celebrações e eventos da jornada do colaborador (Dia dos Pais e Mães, datas comemorativas, eventos internos).",
+    "descricao_sugerida": "Use para tirar dúvidas ou pedir informações sobre celebrações e eventos da empresa ligados à jornada do colaborador, como Dia das Mães e dos Pais, datas comemorativas e eventos internos. Pode ser para você ou para um colega. Não use para benefícios, folha de pagamento ou férias.",
+    "frases_exemplo": ["quando vai ser a comemoração do dia das mães", "não recebi o presente do dia dos pais", "dúvida sobre evento de fim de ano", "quero informação sobre a celebração de tempo de casa", "meu colega não foi convidado para o evento"],
+    "bloqueadores": [
+      { "onde": "client script EY: Add Option (onLoad, sem VA Supported)", "problema": "Adiciona opção à lista via g_form conforme idioma; não roda na VA.", "acao": "Cadastrar 'Celebrações de Pais e Mães' como choice fixa de select_the_celebration_event_below (com tradução) e remover o script; se a restrição for de país, usar user criteria/choice condicional, não idioma." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "who_is_this_request_for", "origem": "item", "acao": "manter", "conversational_label": "O pedido é para você ou para outro colega?" },
+      { "ordem": 2, "variavel": "employee_name_for_me", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Default gs.getUserID() e read-only; a VA pula." },
+      { "ordem": 3, "variavel": "employee_name_to_other_colleague", "origem": "item", "acao": "manter", "conversational_label": "Qual o nome do colega?" },
+      { "ordem": 4, "variavel": "type_of_request", "origem": "item", "acao": "manter", "conversational_label": "É uma dúvida, um pedido de informação ou outro tipo de solicitação?", "obs": "Remover atributo reference: sys_user residual. Revisar choices." },
+      { "ordem": 5, "variavel": "select_the_celebration_event_below", "origem": "item", "acao": "manter", "conversational_label": "Sobre qual celebração ou evento?", "obs": "Remover reference residual." },
+      { "ordem": 6, "variavel": "please_describe_the_celebration_event", "origem": "item", "acao": "manter", "conversational_label": "Qual é o evento?", "obs": "Só quando a opção for 'Outro'." },
+      { "ordem": 7, "variavel": "use_field_below_to_provide", "origem": "item", "acao": "manter", "conversational_label": "Conte os detalhes do que você precisa." },
+      { "ordem": 8, "variavel": "more_info_text_item", "origem": "item", "acao": "remover", "obs": "Rich Text; levar o texto para a descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Add Option", "acao": "remover", "substituicao": "Choice fixa na variável." },
+      { "nome": "Aoop: Set some fields mandatory", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "Aoop: This request is for me / to another colleague / Show field Please describe", "acao": "manter", "substituicao": "UI policies sem script, compatíveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Incluir o item no catálogo Virtual Agent Search (hoje só no HTR)."] },
+    "itens_derivados": [],
+    "observacoes": "short_description atual é genérica e description vazia; a descrição sugerida resolve a busca pelo LLM."
+  },
+  {
+    "sys_id": "f6e9b18a3b609a10924d0247f4e45a1b",
+    "nome_atual": "Solicitações relacionadas a Certificados e Documentos",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 482,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Item do catálogo hispânico (Argentina, Chile, Colômbia, Equador, Peru, Uruguai) com só 4 perguntas próprias e sem bloqueador. Pontos de atenção: o lookup choose_the_document_you_need usa reference qualifier por script dependente de v_employee (elegibilidade por país) e nenhuma pergunta tem conversational label. Ajustes pequenos deixam o item bom para conversa.",
+    "nome_sugerido": "Solicitar certificado ou declaração de trabalho",
+    "short_description_sugerida": "Pedir certificado de trabalho, contrato, declaração de renda ou outros documentos do RH (países hispânicos).",
+    "descricao_sugerida": "Use para pedir ao RH certificados e documentos como certificado de trabalho, cópia de contrato, declaração de renda ou de vínculo, inclusive com certificação ou legalização. Disponível para Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Não use para recibos de pagamento (liquidación) ou dúvidas de folha.",
+    "frases_exemplo": ["necesito un certificado laboral", "preciso de uma declaração de que trabalho na empresa", "quiero una copia de mi contrato", "certificado de renta para o banco", "preciso do certificado apostilado"],
+    "bloqueadores": [
+      { "onde": "variavel choose_the_document_you_need", "problema": "Lookup Select Box com ref_qual por script (EY_Get_Hispanic_Categories.getElegibilityCategory(v_employee)); pode não resolver na conversa.", "acao": "Testar na VA; se falhar, trocar por reference qualifier simples por país do usuário (dot-walk no perfil) ou user criteria." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "choose_the_document_you_need", "origem": "item", "acao": "manter", "conversational_label": "Qual documento você precisa?" },
+      { "ordem": 2, "variavel": "description_information", "origem": "item", "acao": "manter", "conversational_label": "Que informações devem constar no documento? (por exemplo, para quem é destinado, salário, cargo)" },
+      { "ordem": 3, "variavel": "document_certified", "origem": "item", "acao": "manter", "conversational_label": "Você precisa que o documento seja certificado ou legalizado?", "obs": "Yes/No já com Include None. Só para Argentina, Chile, Colômbia e Uruguai." },
+      { "ordem": 4, "variavel": "indicate_legalized", "origem": "item", "acao": "manter", "conversational_label": "Em qual órgão ou instituição ele deve ser certificado ou legalizado?" }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "EY: Hide field if Equador or Peru", "acao": "manter", "substituicao": "UI policy sem script, compatível (nome engana: mostra para AR, CL, CO, UY)." },
+      { "nome": "EY: 'Do you need the document to be certified or legalized?' is YES", "acao": "manter", "substituicao": "Compatível." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Público hispanofalante: cadastrar traduções es dos conversational labels e da descrição.", "Incluir o item no catálogo Virtual Agent Search."] },
+    "itens_derivados": [],
+    "observacoes": "Set EY: Hispana Personal Information tratado em análise própria. Producer script com atribuição dupla de requested_for e comentário de 'apólice de seguro' copiado: limpar."
+  },
+  {
+    "sys_id": "f03c49981b567010d1abda4ce54bcbc4",
+    "nome_atual": "Consultar / Alterar Documentos",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday, sem perguntas e sem volume em 12 meses. Duplica 'Consultar ou alterar documentos pessoais' (7b9dd65a) e 'Consultar ou alterar dados pessoais' (4481229e). Melhor atendido por um artigo de KB ou tópico da VA com link para o Workday.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Volume zero é esperado em itens de link (não geram caso); confirmar cliques no portal antes de desativar. Se mantido, consolidar com 4481229e e 7b9dd65a num único item/KB 'Consultar ou alterar dados e documentos pessoais no Workday'."
+  },
+  {
+    "sys_id": "515c89981b567010d1abda4ce54bcb67",
+    "nome_atual": "Consultar ou alterar dados de carreira",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday (escolaridade, idiomas, experiências – OurTalents), sem perguntas e sem volume em 12 meses. Conteúdo é instrução, não pedido: melhor como artigo de KB com link.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Volume zero esperado para itens de link; confirmar acessos no portal. Se mantido, a descrição deve citar os termos 'escolaridade', 'idiomas', 'currículo' e 'OurTalents' para a busca."
+  },
+  {
+    "sys_id": "4481229e1bd8c110a530426fe54bcb96",
+    "nome_atual": "Consultar ou alterar dados pessoais",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday, sem perguntas e sem volume em 12 meses. Sobrepõe 'Consultar / Alterar Documentos' (f03c4998), 'Consultar ou alterar documentos pessoais' (7b9dd65a), 'Contatos de emergência' (64cb4d58) e 'Endereço, telefone e email' (7cdb0198).",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Candidato a ser o item único consolidado (ou KB) de 'dados pessoais no Workday' caso o negócio queira manter um ponto de entrada; os outros quatro seriam desativados."
+  },
+  {
+    "sys_id": "7b9dd65a1bd8c110a530426fe54bcb16",
+    "nome_atual": "Consultar ou alterar documentos pessoais",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o perfil no Workday, sem perguntas, sem descrição e sem volume em 12 meses. Duplicata direta de 'Consultar / Alterar Documentos' (f03c4998).",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Volume zero esperado para itens de link; consolidar com f03c4998 e 4481229e."
+  },
+  {
+    "sys_id": "64cb4d581b567010d1abda4ce54bcb1a",
+    "nome_atual": "Consultar/ Alterar Contatos de emergência",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday, sem perguntas e sem volume em 12 meses. Short description e descrição idênticas às de f03c4998 e 7cdb0198, o que confunde o LLM na escolha.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Se mantido, diferenciar a descrição ('contato de emergência', 'pessoa para avisar em caso de acidente'); preferível consolidar em KB de dados pessoais no Workday."
+  },
+  {
+    "sys_id": "7cdb01981b567010d1abda4ce54bcb73",
+    "nome_atual": "Consultar/ Alterar Endereço, telefone e email",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday, sem perguntas e sem volume em 12 meses. Descrição idêntica à de outros itens de dados pessoais do lote.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Consolidar com 4481229e (dados pessoais) ou substituir por KB com link ao Workday."
+  },
+  {
+    "sys_id": "879c8d981b567010d1abda4ce54bcbbe",
+    "nome_atual": "Abrir uma requisição de vaga",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para o Workday (abertura de vaga pelo gestor), sem perguntas e sem volume em 12 meses. Melhor como KB/tópico da VA com link.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Cuidado com colisão de intenção: 'vaga' também aparece em 'Solicitar vaga no berçário' (73bfff2d). Se mantido, nome 'Abrir vaga de contratação (requisição de pessoal)' e descrição citando gestor/recrutamento."
+  },
+  {
+    "sys_id": "2def243d1bd42550d1abda4ce54bcbae",
+    "nome_atual": "Informações ou dúvidas relacionadas à Controle de Jornada",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 721,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "baixo",
+    "prontidao_atual": 30,
+    "justificativa": "Item genérico de alto volume, bloqueado só pelas variáveis Custom de busca contextual (contextual_search_results com macro/widget e ai_search_assist com widget), que não têm função na conversa porque a VA já faz busca. Removendo-as da conversa e ajustando descrição (hoje '.') e labels, o item fica com 3 perguntas.",
+    "nome_sugerido": "Dúvidas sobre controle de jornada e ponto",
+    "short_description_sugerida": "Dúvidas gerais sobre jornada de trabalho, ponto eletrônico, banco de horas e escalas que não têm serviço específico.",
+    "descricao_sugerida": "Use para dúvidas ou pedidos sobre controle de jornada que não se encaixam em outro serviço: regras de jornada, escalas, horas extras, banco de horas, intervalos. Não use para: ajustar marcações do ponto ou consultar banco de horas (faça direto no ADP), pedir correção retroativa do ponto ('Solicitar correção retroativa do ponto eletrônico'), excluir ajuste aprovado por engano ('Excluir ajuste aprovado indevidamente no ponto') ou sobreaviso ('Registrar sobreaviso').",
+    "frases_exemplo": ["dúvida sobre meu banco de horas", "como funciona hora extra no fim de semana", "qual a regra de intervalo de almoço", "minha escala está errada", "tenho uma dúvida sobre jornada de trabalho"],
+    "bloqueadores": [
+      { "onde": "variavel contextual_search_results", "problema": "Custom (type 14) com UI Macro cxs_rp_search e widget de pesquisa contextual.", "acao": "Remover do item ou ocultar na VA; a deflexão na conversa é feita pela AI Search da própria VA." },
+      { "onde": "variavel ai_search_assist", "problema": "Custom (type 14) com widget de assistência de pesquisa com IA.", "acao": "Remover do item ou ocultar na VA." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "select_the_topic", "origem": "item", "acao": "manter", "conversational_label": "Sobre qual assunto de jornada é a sua dúvida?", "obs": "Reordenar antes do tipo e da descrição." },
+      { "ordem": 2, "variavel": "type_of_request", "origem": "item", "acao": "manter", "conversational_label": "É uma dúvida, um problema ou uma solicitação?" },
+      { "ordem": 3, "variavel": "v_description_details", "origem": "item", "acao": "manter", "conversational_label": "Descreva o que você precisa, com datas se houver." },
+      { "ordem": 4, "variavel": "Info", "origem": "item", "acao": "remover", "obs": "Rich Text; levar o texto para a descrição." },
+      { "ordem": 5, "variavel": "contextual_search_results / ai_search_assist", "origem": "item", "acao": "remover" }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show kb link", "acao": "remover", "substituicao": "Referencia variáveis inexistentes (v_have_you_tried_searching_the_knowledge_base, link_kb)." },
+      { "nome": "EY: Mandatory Fields", "acao": "converter", "substituicao": "Mandatory direto em select_the_topic, type_of_request e v_description_details; remover referências a variáveis que não existem mais." },
+      { "nome": "EY: minimum caracter (onSubmit)", "acao": "converter", "substituicao": "Validation Regex na variável v_description_details (ex.: mínimo de caracteres)." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Item genérico: a descrição precisa listar os itens irmãos de Controle de Jornada (reembolso/correção do ponto, exclusão de aprovação, sobreaviso, link ADP) para o LLM não cair aqui por padrão. Os nomes citados na descrição são os nomes sugeridos neste lote."
+  },
+  {
+    "sys_id": "34c6524f1b3d8510d1abda4ce54bcbb0",
+    "nome_atual": "Ponto eletrônico / Banco de horas – ADP",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 0,
+    "justificativa": "Item de redirecionamento para a plataforma ADP (ajuste de ponto, banco de horas, justificativa de ausência), sem perguntas e sem volume em 12 meses. Serve melhor como KB/tópico da VA com link para o ADP.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Volume zero esperado para link. A intenção 'ajustar ponto / ver banco de horas' é frequente; se desativado, garantir que o link ao ADP esteja na descrição de 'Dúvidas sobre controle de jornada e ponto' (2def243d) e num artigo de KB para a VA responder direto."
+  },
+  {
+    "sys_id": "66ac57671b98e9d0a530426fe54bcbcd",
+    "nome_atual": "Sobre Aviso",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 13,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 45,
+    "justificativa": "Item curto sem bloqueador: empresa derivada, um template para baixar e dois anexos obrigatórios (planilha de sobreaviso e aprovação do gestor). Volume muito baixo (13 em 12 meses), então o ajuste mínimo basta: descrição, labels e anexo consolidado no fim.",
+    "nome_sugerido": "Registrar sobreaviso",
+    "short_description_sugerida": "Enviar as horas de sobreaviso (plantão à distância) com a aprovação do gestor.",
+    "descricao_sugerida": "Use para enviar ao RH o registro de horas de sobreaviso (quando você fica à disposição da empresa fora do expediente, em plantão à distância), com a planilha modelo preenchida e o e-mail de aprovação do seu gestor. Não use para horas extras comuns, correção de ponto ou dúvidas gerais de jornada.",
+    "frases_exemplo": ["preciso lançar meu sobreaviso", "fiquei de plantão no fim de semana", "como envio as horas de sobreaviso", "registrar sobre aviso do mês"],
+    "bloqueadores": [
+      { "onde": "variaveis v_attach_template e v_attach (Attachment obrigatórios)", "problema": "Dois anexos obrigatórios exigem tratamento à parte na conversa.", "acao": "Manter como anexos no final; se possível unificar num único anexo ('planilha de sobreaviso e aprovação do gestor')." },
+      { "onde": "variavel v_template (Rich Text)", "problema": "Link do template não chega ao LLM.", "acao": "Colocar o link do modelo na descrição do item (ou KB)." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_company", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Read-only, preenchido pelo client script EY: Get company; a VA pula." },
+      { "ordem": 2, "variavel": "v_attach_template", "origem": "item", "acao": "manter", "conversational_label": "Anexe a planilha de sobreaviso preenchida." },
+      { "ordem": 3, "variavel": "v_attach", "origem": "item", "acao": "manter", "conversational_label": "Agora anexe o e-mail de aprovação do seu gestor." },
+      { "ordem": 4, "variavel": "v_template", "origem": "item", "acao": "remover", "obs": "Link vai para a descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Get company", "acao": "converter", "substituicao": "Auto-populate de v_company a partir de vs_employee (dot-walk no perfil)." },
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Atributos mandatory/read-only direto nas variáveis." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Descrição atual é '.'. Com volume tão baixo, alternativa é consolidar como opção de 'Dúvidas sobre controle de jornada e ponto', mas os anexos obrigatórios justificam item próprio."
+  },
+  {
+    "sys_id": "26f745881b806dd4a530426fe54bcbb2",
+    "nome_atual": "Solicitação de Exclusão da Aprovação",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 218,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Item curto (empresa derivada e data) sem bloqueador. O nome é técnico e não diz o que o colaborador quer ('desfazer ajuste de ponto aprovado por engano'); a descrição está vazia. O set 'Adicionar novo colaborador' (provável multi-row para gestor incluir vários) pede tratamento à parte.",
+    "nome_sugerido": "Excluir ajuste aprovado indevidamente no ponto",
+    "short_description_sugerida": "Desfazer um ajuste de ponto eletrônico que foi aprovado por engano.",
+    "descricao_sugerida": "Use quando um ajuste de marcação no ponto eletrônico (ADP) foi aprovado por engano e precisa ser excluído. Pode ser para você ou para um colaborador da sua equipe. Não use para pedir correção de marcação que faltou ou está errada (use 'Solicitar correção retroativa do ponto eletrônico') nem para dúvidas gerais de jornada.",
+    "frases_exemplo": ["aprovaram um ajuste errado no meu ponto", "preciso excluir uma aprovação do ponto", "o gestor aprovou a marcação errada", "desfazer ajuste aprovado no ADP", "cancelar aprovação de ponto do dia 10"],
+    "bloqueadores": [
+      { "onde": "variable set Adicionar novo colaborador (v_employee_s_full_name, v_id, v_company, v_date)", "problema": "Set para incluir mais colaboradores; se for multi-row, não é conversacional, e o reference qualifier de v_employee_s_full_name é dinâmico.", "acao": "Na conversa, tratar um colaborador por pedido; manter o set só no formulário do portal ou ocultá-lo na VA." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_dates", "origem": "item", "acao": "manter", "conversational_label": "Qual a data do ajuste que foi aprovado indevidamente?" },
+      { "ordem": 2, "variavel": "nova_detalhe_ajuste", "origem": "item", "acao": "nova", "tipo_sugerido": "Multi Line Text", "conversational_label": "Qual ajuste deve ser excluído? Informe o horário e o que estava errado.", "obs": "Hoje não há campo para descrever o ajuste; ajuda o analista a identificar a marcação." },
+      { "ordem": 3, "variavel": "v_company_s", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Read-only, derivado do colaborador." },
+      { "ordem": 4, "variavel": "set:Adicionar novo colaborador", "origem": "set:Adicionar novo colaborador", "acao": "ocultar_na_conversa" }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Get User Company", "acao": "converter", "substituicao": "Auto-populate de v_company_s a partir de vs_employee." },
+      { "nome": "EY: Date", "acao": "converter", "substituicao": "Mandatory direto em v_dates (as duas opções de vs_solicitation_to_whom cobrem todos os casos)." },
+      { "nome": "EY: read only", "acao": "converter", "substituicao": "Read-only direto na variável." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "v_dates é Date: formato yyyy-mm-dd na VA. Container End 'formatter' sem Start no item; revisar layout."
+  },
+  {
+    "sys_id": "1bd0c1041b006dd4a530426fe54bcbaf",
+    "nome_atual": "Solicitação de Reembolso do Ponto Eletrônico",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 778,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Alto volume e intenção clara (corrigir marcação retroativa do ponto), mas com 22 perguntas (acima do limite de 20, abre janela) por causa do set '(+)Adicionar Colaborador' que repete os mesmos 8 campos para um segundo colaborador. Removendo esse set da conversa, o item cai para cerca de 7 perguntas. O nome 'Reembolso' confunde com reembolso financeiro.",
+    "nome_sugerido": "Solicitar correção retroativa do ponto eletrônico",
+    "short_description_sugerida": "Corrigir marcação de ponto de dias anteriores (entrada/saída) com o de acordo do gestor.",
+    "descricao_sugerida": "Use para corrigir marcações de ponto eletrônico de dias passados que não podem mais ser ajustadas direto no ADP (esquecimento de marcação, falha no relógio, horário divergente). É obrigatório anexar o e-mail de 'de acordo' do seu gestor. Não use para ajustes do período aberto (faça no ADP), para excluir ajuste aprovado por engano ('Excluir ajuste aprovado indevidamente no ponto') nem para reembolso de despesas.",
+    "frases_exemplo": ["esqueci de bater o ponto semana passada", "preciso corrigir meu ponto do mês passado", "o relógio de ponto não registrou minha entrada", "ajuste retroativo de ponto", "minha marcação de saída do dia 5 está errada"],
+    "bloqueadores": [
+      { "onde": "item (22 perguntas)", "problema": "Acima de glide.sc.va.inline_render.question.limit (20): a VA abre janela.", "acao": "Ocultar na VA o set (+)Adicionar Colaborador; um colaborador por pedido na conversa." },
+      { "onde": "variable set (+)Adicionar Colaborador", "problema": "Duplica todas as perguntas para um segundo colaborador (provável multi-row) e tem reference qualifier dinâmico em v_name_1.", "acao": "Ocultar na conversa; manter no formulário do portal para gestores que registram em lote." },
+      { "onde": "variavel anexo_email (Attachment obrigatório)", "problema": "Anexo exige tratamento à parte; o label é uma frase longa de instrução.", "acao": "Manter como última pergunta com label curto; a regra vai para a descrição." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_date_of_divergence", "origem": "item", "acao": "manter", "conversational_label": "Qual o dia da marcação que precisa ser corrigida?" },
+      { "ordem": 2, "variavel": "v_entry_time", "origem": "item", "acao": "manter", "conversational_label": "Qual foi o horário real de entrada?", "obs": "Adicionar Validation Regex HH:MM." },
+      { "ordem": 3, "variavel": "v_departure_time", "origem": "item", "acao": "manter", "conversational_label": "E o horário real de saída?", "obs": "Adicionar Validation Regex HH:MM." },
+      { "ordem": 4, "variavel": "v_justification", "origem": "item", "acao": "manter", "conversational_label": "Qual a justificativa da correção?" },
+      { "ordem": 5, "variavel": "v_reason", "origem": "item", "acao": "manter", "conversational_label": "E o motivo?", "obs": "Justification e Reason parecem redundantes; revisar choices e, se possível, fundir numa só pergunta." },
+      { "ordem": 6, "variavel": "anexo_email", "origem": "item", "acao": "manter", "conversational_label": "Anexe o e-mail de 'de acordo' do seu gestor." },
+      { "ordem": 7, "variavel": "v_company", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Read-only, derivado do colaborador." },
+      { "ordem": 8, "variavel": "set:(+)Adicionar Colaborador", "origem": "set:(+)Adicionar Colaborador", "acao": "ocultar_na_conversa" }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Fields Mandatory", "acao": "converter", "substituicao": "Mandatory direto nas variáveis." },
+      { "nome": "EY: Get user company", "acao": "converter", "substituicao": "Auto-populate de v_company a partir de vs_employee." },
+      { "nome": "EY: Get data job (set (+)Adicionar Colaborador)", "acao": "manter", "substituicao": "Só no formulário do portal." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": [] },
+    "itens_derivados": [],
+    "observacoes": "Descrição atual é '1'. Se o usuário precisar corrigir vários dias, a conversa pode abrir um pedido por dia ou aceitar texto livre extra (nova variável opcional 'Outros dias e horários'). Set EY: Requester Data tratado em análise separada."
+  }
+]

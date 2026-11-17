@@ -1,0 +1,4290 @@
+[
+ {
+  "sys_id": "65c549651b99e510a530426fe54bcb58",
+  "titulo": "EY VS - Empresas Natura",
+  "usado_por": 30,
+  "recomendacao": "ajustar",
+  "esforco": "alto",
+  "resumo": "Set mais reutilizado do lote (30 itens de finanças). Traz 8 variações de sub-empresa, e scripts onLoad escolhem qual aparece comparando sys_id do formulário. O país é preenchido por 9 scripts GlideAjax. Na conversa, a pergunta certa não aparece de forma confiável. Consolidar em empresa + uma sub-empresa + país derivado.",
+  "bloqueadores": [
+   {
+    "onde": "Set Companies OnLoad / Set Variables Subcompanies Visible",
+    "problema": "Scripts onLoad (até 12 KB) com listas fixas de sys_ids de record producers decidem opções e visibilidade das variáveis de empresa e sub-empresa. Lógica de layout por item dentro de um set compartilhado.",
+    "acao": "Consolidar numa única vs_which_sub_company com ref qualifier que já recebe current.cat_item (getAllSubcompanies). Ou tirar as variantes do set e colocar a variável certa em cada item. Depois excluir os dois scripts."
+   },
+   {
+    "onde": "vs_which_sub_company_2 … _8",
+    "problema": "7 variáveis quase iguais com o mesmo label. Cada item usa só uma, e o LLM não tem como saber qual.",
+    "acao": "Remover do set depois de consolidar. Onde o filtro for mesmo específico, mover a variável para o item."
+   },
+   {
+    "onde": "Set Country OnChange (8 variantes) / Clear Country / Clear Sub Company",
+    "problema": "Cascata de GlideAjax para preencher v_country.",
+    "acao": "Trocar por auto-populate de v_country a partir da sub-empresa (core_company.country). Com uma sub-empresa só, basta uma configuração."
+   },
+   {
+    "onde": "EY: Validate the form for the area field / EY: Called Area if Payment HUB",
+    "problema": "called_area só vale para um formulário (sys_id fixo) e ganha opção extra por script.",
+    "acao": "Mover called_area e called_area_others para o item que usa (Payment HUB), com a opção “Carteira de RH Benefícios” cadastrada como choice. Excluir os scripts."
+   },
+   {
+    "onde": "EY: Somente leitura - Case/task",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default value javascript:gs.getUserID(), read-only e oculto na conversa (não é pergunta). Sem client script. Substitui o script Set Opened By OnLoad."
+   },
+   {
+    "variavel": "v_type_of_request",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Já fica sempre oculta pela policy. Usar default value por item ou remover se não houver uso no fulfillment."
+   },
+   {
+    "variavel": "vs_which_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, Avon ou The Body Shop?",
+    "obs": "Select Box com Include None. Trocar o label em inglês."
+   },
+   {
+    "variavel": "vs_which_sub_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa (unidade) do serviço?",
+    "obs": "Fica como a única variável de sub-empresa. O ref qualifier depende de vs_which_company e cat_item. Tabela core_company grande: configurar ref_ac_columns e busca por nome/código."
+   },
+   {
+    "variavel": "vs_which_sub_company_2",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar em vs_which_sub_company (getAvonBR)."
+   },
+   {
+    "variavel": "vs_which_sub_company_3",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getNatura7900)."
+   },
+   {
+    "variavel": "vs_which_sub_company_4",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getCostCenterSubcompany)."
+   },
+   {
+    "variavel": "vs_which_sub_company_5",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getBlockedUnblockedSubcompany)."
+   },
+   {
+    "variavel": "vs_which_sub_company_6",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getBrazilEquadorSubCompany)."
+   },
+   {
+    "variavel": "vs_which_sub_company_7",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getRTRSubcompanies)."
+   },
+   {
+    "variavel": "vs_which_sub_company_8",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidar (getRTRSubcompanies_v2)."
+   },
+   {
+    "variavel": "v_country",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_which_sub_company, Dot-walk path = country. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "called_area",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual área o chamado deve ser aberto?",
+    "obs": "Sai do set e vai para o item Payment HUB. Lá, usar o conversational label sugerido."
+   },
+   {
+    "variavel": "called_area_others",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o nome da área?",
+    "obs": "Vai junto com called_area para o item. Visível e obrigatória só quando called_area = outros (a policy atual serve)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Set Companies OnLoad",
+    "acao": "remover",
+    "substituicao": "Consolidação da sub-empresa e choices fixas em vs_which_company."
+   },
+   {
+    "nome": "Set Variables Subcompanies Visible",
+    "acao": "remover",
+    "substituicao": "Uma única variável de sub-empresa, visível e obrigatória por atributo."
+   },
+   {
+    "nome": "Set Country OnChange / 2(RTR) / 3 / 4 / 5 / 6 / 7 / 8",
+    "acao": "converter",
+    "substituicao": "Auto-populate: Dependent question = vs_which_sub_company, Dot-walk path = country. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "nome": "Clear Country OnChange",
+    "acao": "remover",
+    "substituicao": "O auto-populate limpa o país quando a sub-empresa fica vazia."
+   },
+   {
+    "nome": "Clear Sub Company OnChange",
+    "acao": "converter",
+    "substituicao": "Com o ref qualifier dependente, a sub-empresa inválida é recusada. Se ainda quiser limpar, manter como onChange simples (VA Supported, sem DOM)."
+   },
+   {
+    "nome": "Set Opened By OnLoad",
+    "acao": "converter",
+    "substituicao": "Default value javascript:gs.getUserID() + read-only na variável."
+   },
+   {
+    "nome": "EY: Validate the form for the area field",
+    "acao": "remover",
+    "substituicao": "called_area passa a ser variável do item."
+   },
+   {
+    "nome": "EY: Called Area if 'Payment HUB Info...'",
+    "acao": "remover",
+    "substituicao": "Cadastrar a choice hr_benefits_wallet direto na variável do item."
+   },
+   {
+    "nome": "EY: Esconder variável type of request",
+    "acao": "converter",
+    "substituicao": "Marcar a variável como Hidden, ou removê-la."
+   },
+   {
+    "nome": "EY: Tratando o campo de \"Adicione o nome da área\"",
+    "acao": "manter",
+    "substituicao": "Policy sem script com condição real. Vai junto com as variáveis de área para o item."
+   },
+   {
+    "nome": "EY: Somente leitura - Case/task",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Obrigatório",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Remover também as referências a variáveis que não existem no set (v_which_sub_company_is_the_service_for, v_is_your_request_for_which_company)."
+   }
+  ],
+  "observacoes": "Impacto alto: 30 itens. Sugestão: testar a consolidação num item piloto e depois ajustar o ref qualifier único para cobrir os filtros por item via current.cat_item. Os scripts estão marcados VA Supported, mas dependem de sys_id do formulário, o que não é confiável na conversa."
+ },
+ {
+  "sys_id": "724f41271b446dd8a530426fe54bcb28",
+  "titulo": "EY: Opened by - Requested for data",
+  "usado_por": 18,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Dados do solicitante (18 itens). Quase tudo sai do usuário: dá para derivar com auto-populate a partir de vs_requested_for e perguntar só o telefone, quando faltar.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Get data requested for on change / on load",
+    "problema": "GlideAjax (EY_UserDataFinanceUtils.getCollaboratorData) para preencher matrícula, área e e-mail.",
+    "acao": "Trocar por auto-populate a partir de vs_requested_for (employee_number, department, email)."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Já tem default gs.getUserID() e read-only. Ocultar na conversa."
+   },
+   {
+    "variavel": "vs_requested_for",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para quem é esta solicitação?",
+    "obs": "Default no usuário logado: a pergunta é pulada, a menos que o usuário diga que é para outra pessoa (slot filling)."
+   },
+   {
+    "variavel": "vs_registration",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_requested_for, Dot-walk path = employee_number. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_area",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_requested_for, Dot-walk path = department. Read-only; o valor vem sozinho e a pergunta é pulada. Tirar o mandatory da policy (ou manter: vem preenchido)."
+   },
+   {
+    "variavel": "vs_email",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_requested_for, Dot-walk path = email. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_phone_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual telefone podemos usar para falar com você?",
+    "obs": "Auto-populate de mobile_phone como sugestão. Validação por Validation Regex, ex.: ^\\(?\\d{2}\\)?\\s?9?\\d{4}-?\\d{4}$."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get data requested for on change",
+    "acao": "converter",
+    "substituicao": "Auto-populate nas variáveis vs_registration, vs_area e vs_email."
+   },
+   {
+    "nome": "EY: Get data requested for on load",
+    "acao": "converter",
+    "substituicao": "Mesmo auto-populate. Não precisa de lógica onLoad."
+   },
+   {
+    "nome": "EY: Validate Phone",
+    "acao": "converter",
+    "substituicao": "Variable Validation Regex de telefone BR na vs_phone_number."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Os containers (vs_personal_information / vs_formatter) não geram pergunta e podem ficar. vs_registration tem atributo reference sem sentido (é texto). Limpar."
+ },
+ {
+  "sys_id": "b3b65b7e1bb0f110d1abda4ce54bcb1b",
+  "titulo": "EY: Tax - Attachments",
+  "usado_por": 10,
+  "recomendacao": "substituir",
+  "esforco": "baixo",
+  "resumo": "Set com um único anexo obrigatório (template fiscal), usado em 10 itens. Anexo não é respondido por conversa.",
+  "bloqueadores": [
+   {
+    "onde": "vs_attach_template",
+    "problema": "Variável Attachment obrigatória.",
+    "acao": "Anexo não é respondido em linguagem natural. Manter uma única variável de anexo pedida no fim da conversa ou usar 'Mandatory attachment' do próprio item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_attach_template",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Anexo no item (Mandatory attachment)",
+    "conversational_label": "Envie o modelo (template) preenchido.",
+    "obs": "Preferir “Mandatory attachment” no item e tirar o set. Se continuar como variável, ela deve ser a última pergunta."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Mandatory na variável ou Mandatory attachment no item."
+   }
+  ],
+  "observacoes": "Pôr na descrição de cada item onde baixar o template, porque o LLM não vê help text."
+ },
+ {
+  "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+  "titulo": "EY: Company: Natura/Avon/TBS - Subcompany",
+  "usado_por": 9,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Empresa + sub-empresa com ref qualifier dependente simples. Compatível. Falta só conversational label e mover o mandatory para a variável.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, Avon ou The Body Shop?",
+    "obs": "Select Box com Include None."
+   },
+   {
+    "variavel": "vs_subcompany",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Ref qualifier u_brand=<empresa>: ok. Aparece quando vs_company está preenchida."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show sub-company",
+    "acao": "manter",
+    "substituicao": "Policy sem script com condição real. Pode ficar."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Clear sub-company",
+    "acao": "manter",
+    "substituicao": "onChange simples, VA Supported, sem DOM. Alternativa no-code: UI Policy com Value action = Clear value."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+  "titulo": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+  "usado_por": 8,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Empresa + sub-empresa com ref qualifier dependente simples. Compatível. Falta só conversational label e mover o mandatory para a variável.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, Avon, The Body Shop ou Aesop?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_subcompany",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Só aparece para Avon LATAM, Natura e TBS (para Aesop não é perguntada)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show sub-company",
+    "acao": "manter",
+    "substituicao": "Policy sem script com condição real."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Clear sub-company",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported."
+   }
+  ],
+  "observacoes": "Quase igual ao set “Natura/Avon/TBS - Subcompany”. Vale unificar os dois."
+ },
+ {
+  "sys_id": "a782884b1bf986d0a530426fe54bcb7f",
+  "titulo": "EY VS - Sox",
+  "usado_por": 6,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Duas perguntas simples sobre controle SOX. Policies mal configuradas deixam os campos read-only na abertura, e aí o LLM pula as perguntas.",
+  "bloqueadores": [
+   {
+    "onde": "EY: ReadOnly Case",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "EY: If Sox Control is YES 2",
+    "problema": "Quando a resposta é “yes”, sox_control_name fica read-only, justo quando ela precisa ser respondida.",
+    "acao": "Restringir a Target Record ou excluir."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "does_this_request_have_sox_control_attached",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Esta solicitação tem algum controle SOX (Sarbanes-Oxley) vinculado?",
+    "obs": "Select Box Sim/Não com Include None."
+   },
+   {
+    "variavel": "sox_control_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o nome do controle SOX?",
+    "obs": "Visível e obrigatória só quando a resposta anterior é sim."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: If Sox Control is YES",
+    "acao": "converter",
+    "substituicao": "Manter a condição e acrescentar mandatory=true. Sem script."
+   },
+   {
+    "nome": "EY: If Sox Control is YES 2",
+    "acao": "converter",
+    "substituicao": "Restringir a Target Record ou remover."
+   },
+   {
+    "nome": "EY: ReadOnly Case",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+  "titulo": "EY: Company  - Avon/Natura and Sub Company",
+  "usado_por": 4,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Empresa + sub-empresa com ref qualifier dependente simples. Compatível. Falta só conversational label e mover o mandatory para a variável.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura ou Avon?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_sub_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Ref qualifier dependente de vs_company."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Clear sub-company",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported."
+   }
+  ],
+  "observacoes": "Mais uma cópia do padrão empresa/sub-empresa. Unificar com os irmãos."
+ },
+ {
+  "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+  "titulo": "EY: Requester Info",
+  "usado_por": 4,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Pergunta “para quem” + perfil de RH. O onChange por GlideAjax para “me” dá para trocar por default value. Aí a conversa só pergunta o colaborador quando é para outra pessoa.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Request for who Control",
+    "problema": "GlideAjax (EY_HTRUtils.getHRProfile) para preencher employee quando é “me”.",
+    "acao": "Default value server-side em employee (perfil x_nasm_hr_profile do gs.getUserID()) e remover o script."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Já tem default e read-only. Oculta na conversa."
+   },
+   {
+    "variavel": "request_for_who",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Não precisa: employee vem com o próprio usuário, e o LLM troca se o usuário disser que é para outra pessoa. Se o fulfillment precisar do valor, deixar Hidden com default “me”."
+   },
+   {
+    "variavel": "employee",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual colaborador é a solicitação?",
+    "obs": "Default = perfil de RH do usuário logado (javascript: consulta x_nasm_hr_profile por user=gs.getUserID()). Sempre visível."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Request for who Control",
+    "acao": "converter",
+    "substituicao": "Default value na variável employee."
+   },
+   {
+    "nome": "EY: Requested for me",
+    "acao": "remover",
+    "substituicao": "Sai junto com request_for_who."
+   },
+   {
+    "nome": "EY: Requested for who",
+    "acao": "remover",
+    "substituicao": "employee passa a ser sempre visível e obrigatória por atributo."
+   }
+  ],
+  "observacoes": "request_for_who é Select Box com atributo reference sem sentido. Limpar se mantiver."
+ },
+ {
+  "sys_id": "327dcec01bcd7910a530426fe54bcb24",
+  "titulo": "EY: Tax - Company (Supplier code)",
+  "usado_por": 3,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Uma referência a core_company com filtro estático. Compatível. Só falta conversational label.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_which_company_is_the_request_for",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação? Pode informar o nome ou o código de fornecedor.",
+    "obs": "core_company é grande: configurar ref_ac_columns/ref_ac_columns_search com o código de fornecedor para o LLM achar pelo código."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Irmão do set “Tax - Company (Customer code)”."
+ },
+ {
+  "sys_id": "b9d4b5991bc86558a530426fe54bcba7",
+  "titulo": "EY: Company: Natura/TBS/Aesop",
+  "usado_por": 3,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Um Select Box de empresa. Compatível.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, The Body Shop ou Aesop?",
+    "obs": "Tirar o atributo reference que sobrou no Select Box."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "d1dac2b01b45fd10a530426fe54bcb64",
+  "titulo": "EY: Tax - Company (Customer code)",
+  "usado_por": 3,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Uma referência a core_company (clientes) com filtro estático. Compatível. Só falta conversational label.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_which_company_is_the_request_for_customer",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação? Pode informar o nome ou o código de cliente.",
+    "obs": "Configurar ref_ac_columns_search com o código de cliente."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "2579a7048707f610ec360e530cbb35cb",
+  "titulo": "EY: Basic collaborator Info",
+  "usado_por": 2,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Escolha do colaborador + dados copiados por GlideAjax. Basta perguntar o colaborador. O resto sai por auto-populate.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Populate collaboratos name",
+    "problema": "GlideAjax (EY_HTRUtils.getEmployeeGlobalIdAndPublic) preenche ID global e público.",
+    "acao": "Auto-populate a partir de vs_select_the_collaborator. Se “público” não for dot-walkable, preencher no flow."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_for_who",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Trocar pelo default da referência no usuário logado. O LLM ajusta se for para outra pessoa."
+   },
+   {
+    "variavel": "vs_select_the_collaborator",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual colaborador é a solicitação?",
+    "obs": "Default javascript:gs.getUserID()."
+   },
+   {
+    "variavel": "vs_select_collaborators_name",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Sempre oculta pela policy. Duplicada."
+   },
+   {
+    "variavel": "vs_collaborator_name",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_select_the_collaborator, Dot-walk path = name. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_collaborato_global_id",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_select_the_collaborator, Dot-walk path = employee_number (ou user_name, conforme o que é o Global ID). Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_collaborator_e_mail",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_select_the_collaborator, Dot-walk path = email. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_public",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Read-only e oculta na conversa. Preencher por auto-populate, se o campo existir no usuário, ou no flow."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Populate collaboratos name",
+    "acao": "converter",
+    "substituicao": "Auto-populate nas variáveis derivadas."
+   },
+   {
+    "nome": "EY: Set Collaborators Name Visible off",
+    "acao": "remover",
+    "substituicao": "Remover a variável vs_select_collaborators_name."
+   }
+  ],
+  "observacoes": "O script é descrito como duplicata de outro. Conferir se há scripts de item fazendo o mesmo."
+ },
+ {
+  "sys_id": "3b66e0ce1b638e10514cbaef4b4bcb31",
+  "titulo": "EY: Opened by - Company:Avon/Natura - Describe2",
+  "usado_por": 2,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Solicitante + empresa + sub-empresa + descrição. request_type só aparece num item, por script que compara sys_id.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Request type - Baixa de título",
+    "problema": "Script onLoad mostra ou esconde request_type comparando o sys_id do formulário.",
+    "acao": "Mover request_type para o item “Solicitação de Baixa de Título e Abertura de Débito” e excluir o script."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default gs.getUserID() e read-only. Oculta na conversa."
+   },
+   {
+    "variavel": "request_type",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de solicitação?",
+    "obs": "Vai para o item de baixa de título. Lá, usar o label sugerido."
+   },
+   {
+    "variavel": "vs_which_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura ou Avon?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_which_sub_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Ref qualifier scripted (EY_DataFinanceUtils.getSubcompany) server-side: funciona na conversa."
+   },
+   {
+    "variavel": "vs_describe_request",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva o que você precisa.",
+    "obs": "Deixar como última pergunta."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Request type - Baixa de título",
+    "acao": "remover",
+    "substituicao": "request_type vira variável do item."
+   },
+   {
+    "nome": "EY: Clear sub-company value",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported (ui_type Mobile/Portal: conferir se é “All”)."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Parecido com “Opened by - Company:Avon/Natura - Describe”. Unificar."
+ },
+ {
+  "sys_id": "64da79341ba5fd50a530426fe54bcb7e",
+  "titulo": "EY VS - Empresas Natura/Avon",
+  "usado_por": 2,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Versão menor do set de empresas Natura. Tem solicitante, empresa, sub-empresa e país. Um script onLoad esconde a sub-empresa, e a policy de read-only trava tudo: do jeito que está, nada é perguntado.",
+  "bloqueadores": [
+   {
+    "onde": "Set Variables ReadOnly and Visible",
+    "problema": "onLoad esconde e desobriga a sub-empresa, e nenhum outro script a mostra de volta.",
+    "acao": "Remover. Sub-empresa visível e obrigatória por atributo."
+   },
+   {
+    "onde": "EY: Somente leitura - Case/task",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default value javascript:gs.getUserID(), read-only e oculto na conversa (não é pergunta). Sem client script."
+   },
+   {
+    "variavel": "vs_which_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura ou Avon?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_which_sub_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Ref qualifier scripted (getAllLatamSubcompanies)."
+   },
+   {
+    "variavel": "v_country",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_which_sub_company, Dot-walk path = country. Read-only; o valor vem sozinho e a pergunta é pulada."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Set Opened By OnLoad",
+    "acao": "converter",
+    "substituicao": "Default value + read-only na variável."
+   },
+   {
+    "nome": "Set Country OnChange",
+    "acao": "converter",
+    "substituicao": "Auto-populate: Dependent question = vs_which_sub_company, Dot-walk path = country. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "nome": "Clear Sub Company OnChange",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported (ou UI Policy com Value action = Clear value)."
+   },
+   {
+    "nome": "Set Variables ReadOnly and Visible",
+    "acao": "remover",
+    "substituicao": "Atributos visible/mandatory na variável."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Somente leitura - Case/task",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   }
+  ],
+  "observacoes": "Depois da consolidação do set “EY VS - Empresas Natura”, dá para substituir este set por ele."
+ },
+ {
+  "sys_id": "98a054933bff4e10924d0247f4e45ad8",
+  "titulo": "EY: Request Hispana",
+  "usado_por": 2,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "País do solicitante + texto de KB em rich text. O país sai do usuário. O rich text não chega ao LLM.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_country_of_the_request",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "De qual país é a sua solicitação?",
+    "obs": "Default value server-side com o país do usuário (sys_user.country / location.country) mapeado para as choices. Se não der para mapear, manter a pergunta."
+   },
+   {
+    "variavel": "vs_kb_text",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   }
+  ],
+  "scripts_e_policies": [],
+  "observacoes": "Itens para público hispânico (OurTalents, MyPerformance). Cadastrar também a tradução es do conversational label, ex.: “¿De qué país es tu solicitud?”."
+ },
+ {
+  "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+  "titulo": "My personal Information",
+  "usado_por": 2,
+  "recomendacao": "remover_da_conversa",
+  "esforco": "medio",
+  "resumo": "Bloco de 22 dados pessoais do colaborador (CPF, PIS, nome da mãe, endereço), todos read-only e preenchidos por script. Nada disso deve ser perguntado, nem enviado ao LLM sem necessidade.",
+  "bloqueadores": [
+   {
+    "onde": "employee",
+    "problema": "Default gs.getUserID() numa referência a x_nasm_hr_profile: o sys_id é de sys_user, não do perfil.",
+    "acao": "Default server-side com o sys_id do perfil (x_nasm_hr_profile onde user = gs.getUserID())."
+   },
+   {
+    "onde": "ACN: fill \"My personal Information\"",
+    "problema": "onLoad com Script Include preenche 20 campos.",
+    "acao": "Auto-populate a partir de employee (dot-walk no perfil de RH) ou preencher no flow."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "employee",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default no perfil do usuário logado, read-only."
+   },
+   {
+    "variavel": "company / company_cnpj / location / id_global / registration / mobile_phone / employee_start_date",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate a partir de employee. Já ficam ocultas e read-only."
+   },
+   {
+    "variavel": "cpf / marital_status / birth_date / mother_name / title / pis",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Dados sensíveis: preferir preencher no flow (server-side), não no formulário."
+   },
+   {
+    "variavel": "home_address / home_address_n / complementary_residential_address / residential_address_neighborhood / residential_address_city / residential_address_uf / residential_address_cep",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Idem, pelo flow ou por auto-populate."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "ACN: fill \"My personal Information\"",
+    "acao": "converter",
+    "substituicao": "Auto-populate por variável ou preenchimento no flow."
+   },
+   {
+    "nome": "EY: Hide In Portal",
+    "acao": "converter",
+    "substituicao": "Marcar as variáveis como Hidden/read-only direto nelas, ou remover do formulário se forem usadas só no fulfillment."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Com default, employee não precisa de mandatory na conversa."
+   }
+  ],
+  "observacoes": "Recomendo tirar esses dados do formulário e buscá-los no flow a partir do perfil. Assim eles não passam pelo LLM."
+ },
+ {
+  "sys_id": "003e17161b2f7010d1abda4ce54bcb85",
+  "titulo": "Beneficiary(ies) data",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Lista de beneficiários do seguro de vida (tudo indica multi-row), com soma de percentuais = 100% e scripts sem VA Supported. Difícil de conduzir por conversa.",
+  "bloqueadores": [
+   {
+    "onde": "EY: If Beneficiary designation form / Aoop: Validate Percentage",
+    "problema": "Scripts sem VA Supported. Um deles depende do form_identifier do formulário pai.",
+    "acao": "Validar o percentual com Validation Regex e a soma de 100% no flow ou num onSubmit do item. Remover a checagem de formulário pai."
+   },
+   {
+    "onde": "Estrutura multi-row",
+    "problema": "Vários beneficiários com percentuais que se somam não cabem bem numa conversa pergunta a pergunta.",
+    "acao": "Manter o item “Designação de beneficiários” como formulário (non-conversational), ou limitar a conversa a 1 beneficiário por pedido."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "full_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o nome completo do beneficiário?",
+    "obs": ""
+   },
+   {
+    "variavel": "cpf",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o CPF do beneficiário?",
+    "obs": "Validation Regex ^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$."
+   },
+   {
+    "variavel": "affinity",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Select Box",
+    "conversational_label": "Qual é o grau de parentesco do beneficiário?",
+    "obs": "Trocar texto livre por Select Box (cônjuge, filho(a), pai/mãe, outro)."
+   },
+   {
+    "variavel": "birth_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de nascimento do beneficiário?",
+    "obs": "Formato yyyy-mm-dd. Não pode ser data futura."
+   },
+   {
+    "variavel": "participation",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual o percentual de participação dele (de 1% a 100%)?",
+    "obs": "Validation Regex ^(100|[1-9]\\d?)%?$."
+   },
+   {
+    "variavel": "lembre_se",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Texto fixo em default de multiline. Levar para a descrição do item."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: If Beneficiary designation form",
+    "acao": "remover",
+    "substituicao": "Sem regra por sys_id do formulário."
+   },
+   {
+    "nome": "Aoop: Validate Percentage",
+    "acao": "converter",
+    "substituicao": "Validation Regex na variável participation."
+   },
+   {
+    "nome": "ACN Validate CPF Beneficiary -",
+    "acao": "manter",
+    "substituicao": "VA Supported. O formato pode ir para Validation Regex, e o dígito verificador fica no script."
+   },
+   {
+    "nome": "ACN: A date later than the current date cannot be entered",
+    "acao": "converter",
+    "substituicao": "Policy sem ação e com javascript na condição. Trocar por um onChange simples VA Supported que valida data futura, ou validar no flow."
+   },
+   {
+    "nome": "EY: Campos Obrigatorios",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "021e52a31b310ed0a530426fe54bcb64",
+  "titulo": "Payment",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Classificação fiscal do serviço (LC 116/2003) em 29 Select Boxes com o mesmo label, mostrados por um script de 8,4 KB conforme o tipo de serviço. Inviável na conversa: o LLM veria 29 perguntas iguais.",
+  "bloqueadores": [
+   {
+    "onde": "vs_service_* (29 variáveis)",
+    "problema": "Uma variável por tipo de serviço, todas com o mesmo label, escondidas por policy e reveladas por script.",
+    "acao": "Trocar por uma única variável (nova_vs_service_classification): Lookup Select Box ou Reference numa tabela de classificação, com ref qualifier dependente de vs_select_type_of_service."
+   },
+   {
+    "onde": "EY: Dynamic Service Classification / EY: Clear service / Hide Fields OnLoad Case / Set Fields ReadOnly Case",
+    "problema": "Motor de classificação e manipulação de visibilidade em client script.",
+    "acao": "Remover depois da troca acima."
+   },
+   {
+    "onde": "vs_download_nm_2041_3_0",
+    "problema": "Rich text com link de download.",
+    "acao": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_select_type_of_service",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de serviço contratado?",
+    "obs": ""
+   },
+   {
+    "variavel": "nova_vs_service_classification",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Lookup Select Box / Reference com qualifier dependente",
+    "conversational_label": "Qual é a classificação do serviço pela Lei Complementar 116/2003?",
+    "obs": "Nova: substitui as 29 vs_service_*. Filtro dependente do tipo de serviço."
+   },
+   {
+    "variavel": "vs_service_electricity … vs_service_passenger (29)",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidadas em nova_vs_service_classification."
+   },
+   {
+    "variavel": "vs_summary_contracted_service",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Resuma o serviço contratado.",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_tax_benefit_linked_service",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Há algum benefício fiscal ligado ao serviço? Qual?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_service_provided_abroad_bring_economic_results_to_natura_brasil",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Esse serviço prestado no exterior vai gerar resultado econômico para a Natura Brasil?",
+    "obs": "Yes/No com Include None: ok."
+   },
+   {
+    "variavel": "vs_explain_why_the_results_of_the_service_provided_will_not_have_economic_results_for_natura_br",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Por que o serviço não vai gerar resultado econômico para a Natura Brasil?",
+    "obs": "Só quando a resposta anterior for Não (a policy atual serve)."
+   },
+   {
+    "variavel": "vs_the_taxes_levied_on_this_contract_will_be_paid_by_natura_or_supplier",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem vai pagar os impostos do contrato: a Natura ou o fornecedor?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_will_values_exceed_those_stipulated_in_standard_nm_2041_3_0_contracts",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Os valores vão passar do limite da norma NM-2041.3.0?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_download_nm_2041_3_0",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "vs_supplier_bank_details",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quais são os dados bancários do fornecedor?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Dynamic Service Classification",
+    "acao": "remover",
+    "substituicao": "Qualifier dependente na nova variável única."
+   },
+   {
+    "nome": "EY: Clear service",
+    "acao": "remover",
+    "substituicao": "Com uma variável só, a UI Policy com Value action = Clear value resolve, se precisar."
+   },
+   {
+    "nome": "EY: Hide Fields OnLoad",
+    "acao": "remover",
+    "substituicao": "As 29 variáveis saem."
+   },
+   {
+    "nome": "EY: Hide Fields OnLoad Case",
+    "acao": "remover",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: Set Fields ReadOnly Case",
+    "acao": "converter",
+    "substituicao": "Se for preciso travar no RITM, usar UI Policy só em Target Record."
+   },
+   {
+    "nome": "EY: Mandatory if \"Will this service provided abroad…\" is \"No\"",
+    "acao": "manter",
+    "substituicao": "Policy sem script com condição real."
+   }
+  ],
+  "observacoes": "Usado só por “Solicitação de compras descentralizadas”, junto com os sets “Value” e “Type of request”. Na análise do item, avaliar manter como formulário se a troca não for feita."
+ },
+ {
+  "sys_id": "06d980f91be92110a530426fe54bcb33",
+  "titulo": "EY VS - Provisão de Estoque",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Aprovador + descrição + anexo. A policy de read-only sempre ativa faz o LLM pular as perguntas.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "v_attach_file",
+    "problema": "Anexo obrigatório.",
+    "acao": "Anexo não é respondido em linguagem natural. Manter uma única variável de anexo pedida no fim da conversa ou usar 'Mandatory attachment' do próprio item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_select_approver",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference sys_user",
+    "conversational_label": "Quem vai aprovar esta solicitação?",
+    "obs": "Referência a sys_user_grmember mostra o registro de membro, não a pessoa. Trocar para sys_user filtrado pelos membros do grupo."
+   },
+   {
+    "variavel": "v_describe_the_information_you_need",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva a informação de que você precisa.",
+    "obs": ""
+   },
+   {
+    "variavel": "v_attach_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o arquivo de apoio.",
+    "obs": "Última pergunta."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "08c17b981b29ed90a530426fe54bcbc7",
+  "titulo": "EY VS - Bloqueio ou Desbloqueio Variable",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Dados do título para bloquear ou desbloquear pagamento. Tipos simples, mas a policy de read-only sempre ativa e a máscara de moeda atrapalham.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Variaveis Formulario Read Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_lock_or_unlock",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Você quer bloquear ou desbloquear o pagamento?",
+    "obs": "Se os dois casos tiverem volume, avaliar dividir o item (Bloquear / Desbloquear) e fixar esta variável por default."
+   },
+   {
+    "variavel": "v_reason",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o motivo?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_document_type",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de documento?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_invoice_data",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quais são os dados da nota fiscal?",
+    "obs": "Label ambíguo (“Invoice Data”). Se for data de emissão, trocar para tipo Date."
+   },
+   {
+    "variavel": "v_document_number_invoice",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do documento (nota fiscal)?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_maturity",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de vencimento?",
+    "obs": "Formato yyyy-mm-dd."
+   },
+   {
+    "variavel": "v_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor?",
+    "obs": "Validation Regex de moeda BR."
+   },
+   {
+    "variavel": "v_payment_date_proposal",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual data você propõe o pagamento?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável. Obs.: o script atual usa parseInt e perde os centavos."
+   },
+   {
+    "nome": "EY: Variaveis Formulario Read Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "Variaveis Obrigatorias",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "8 perguntas obrigatórias. Aceitável, mas a ordem (ação → motivo → documento → valores/datas) deve ser mantida."
+ },
+ {
+  "sys_id": "1181bd1b1b4d6194d1abda4ce54bcb5b",
+  "titulo": "EY: Requested for",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Uma referência a sys_user com default no usuário logado. Compatível: a pergunta é pulada, a menos que o usuário peça para outra pessoa.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_requested_for",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para quem é esta solicitação?",
+    "obs": "Default gs.getUserID()."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "1857891887304f90ec360e530cbb3553",
+  "titulo": "Please specify which companies will be required to implement the collective agre",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Localidade + empresa por referência com filtro estático. Compatível.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual empresa vai aplicar o acordo coletivo?",
+    "obs": "Pergunta mais ampla primeiro. O título do set fala em “empresas” (plural): se forem várias, avaliar List Collector."
+   },
+   {
+    "variavel": "v_location",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual localidade?",
+    "obs": "cmn_location é grande: configurar colunas de busca."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory Variables",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Título do set longo e em forma de instrução. Renomear (ex.: “Empresa e localidade – acordo coletivo”)."
+ },
+ {
+  "sys_id": "1c0d5ca81b296150d1abda4ce54bcb2c",
+  "titulo": "VS - Conciliação bancaria",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Tipo de compensação com dois selects condicionais + aprovador. Um script duplica as UI policies, e a policy de read-only força tudo visível e travado.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Somente leitura / case-task",
+    "problema": "Força visible=true e readonly=true em todas as variáveis, o que anula as condições e faz o LLM pular as perguntas.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "v_approver",
+    "problema": "Referência a sys_user_grmember (registro de membro).",
+    "acao": "Trocar para sys_user filtrado pelo grupo."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_compensation_type",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de compensação: entradas ou saídas bancárias?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_compensation_bank_entries",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a compensação de entradas bancárias?",
+    "obs": "Só quando o tipo for entradas."
+   },
+   {
+    "variavel": "v_compensa_o_sa_das_banc_rias",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a compensação de saídas bancárias?",
+    "obs": "Só quando o tipo for saídas."
+   },
+   {
+    "variavel": "v_approver",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference sys_user",
+    "conversational_label": "Quem vai aprovar?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Treating bank input and output field",
+    "acao": "remover",
+    "substituicao": "As duas UI policies condicionais já fazem isso sem script."
+   },
+   {
+    "nome": "if select compensation_bank_entries… (2 policies)",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real. Renomear: os dois nomes estão iguais."
+   },
+   {
+    "nome": "EY: Obrigatorio",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Somente leitura / case-task",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   }
+  ],
+  "observacoes": "O valor de choice “bank _outgoing_compensation” tem espaço no meio. Conferir."
+ },
+ {
+  "sys_id": "1d53a5871b318e90d1abda4ce54bcbae",
+  "titulo": "Value",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Valor da compra e moeda. Scripts calculam se a compra se enquadra e ligam um checkbox oculto que mostra um aviso em rich text. O aviso não aparece na conversa.",
+  "bloqueadores": [
+   {
+    "onde": "vs_controller + vs_info_does_not_meet_the_criteria_decentralized_purchasing",
+    "problema": "O aviso de “não se enquadra” é rich text ligado por checkbox oculto: o LLM não mostra.",
+    "acao": "No script onChange, usar showFieldMsg/addErrorMessage (VA mostra) e limpar o valor, ou levar a regra para a descrição do item. Remover o checkbox e o rich text."
+   },
+   {
+    "onde": "EY: Set when … change (2 scripts)",
+    "problema": "Regra de negócio duplicada nos dois onChange.",
+    "acao": "Juntar num script só, VA Supported, com ui_type All."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_controller",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Checkbox técnico oculto."
+   },
+   {
+    "variavel": "vs_total_purchase_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor total da compra?",
+    "obs": "Validation Regex de moeda BR no lugar do script de validação."
+   },
+   {
+    "variavel": "vs_payment_in_reais_or_foreign_currency",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "O pagamento vai ser em reais ou em moeda estrangeira?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_info_does_not_meet_the_criteria_decentralized_purchasing",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Validate value",
+    "acao": "converter",
+    "substituicao": "Validation Regex de moeda BR."
+   },
+   {
+    "nome": "EY: Set when \"Payment currency\" change",
+    "acao": "converter",
+    "substituicao": "Juntar com o irmão num único onChange VA Supported (ui_type All) que avisa com mensagem, sem checkbox."
+   },
+   {
+    "nome": "EY: Set when \"Total value\" change",
+    "acao": "converter",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: If controller is true",
+    "acao": "remover",
+    "substituicao": "Sai junto com vs_controller."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Os scripts estão com ui_type Mobile/Service Portal. Conferir se o VA os executa."
+ },
+ {
+  "sys_id": "1ede6c0f1bebf510a530426fe54bcb77",
+  "titulo": "Path 5",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "medio",
+  "resumo": "Documentos do dependente 5: 6 anexos + dependente read-only. Anexos não são respondidos em conversa, e o set repete o mesmo bloco por dependente (Path 1..N).",
+  "bloqueadores": [
+   {
+    "onde": "v_doc_cpf_5 … v_termo_guarda_adocao_5",
+    "problema": "6 variáveis Attachment por dependente.",
+    "acao": "Trocar por um único anexo “documentos do dependente” (ou Mandatory attachment no item), com a lista de documentos por parentesco na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "dependente_5",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Read-only, vem de outra etapa. Não é pergunta."
+   },
+   {
+    "variavel": "relacionamento_5",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Oculta. Usar auto-populate a partir de dependente_5 (tipo Reference) se precisar."
+   },
+   {
+    "variavel": "nova_v_documentos_dependente_5",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Attachment único",
+    "conversational_label": "Envie os documentos do dependente (CPF, certidão e comprovantes, conforme o parentesco).",
+    "obs": "Nova: substitui os 6 anexos."
+   },
+   {
+    "variavel": "v_doc_cpf_5 / v_certidao_nascimento_5 / v_comprovante_universitario_5 / v_certidao_casamento_5 / v_escritura_publica_uniao_estavel_5 / v_termo_guarda_adocao_5",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidados."
+   }
+  ],
+  "scripts_e_policies": [],
+  "observacoes": "O item “Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica” usa vários “Path”. Na análise do item, o mais provável é manter como formulário."
+ },
+ {
+  "sys_id": "201a83d11bc4bd10a530426fe54bcb66",
+  "titulo": "My personal information",
+  "usado_por": 1,
+  "recomendacao": "remover_da_conversa",
+  "esforco": "baixo",
+  "resumo": "Dados pessoais do colaborador (Global ID, CPF, RG, admissão, nascimento), todos read-only. Não devem ser perguntados.",
+  "bloqueadores": [
+   {
+    "onde": "v_employee",
+    "problema": "Read-only e sem default: fica vazio e os demais não são preenchidos.",
+    "acao": "Default server-side com o perfil x_nasm_hr_profile do usuário logado."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_employee",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default = perfil do usuário logado."
+   },
+   {
+    "variavel": "v_global_id / v_cpf / v_rg / v_admission_date / v_date_of_birth",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate a partir de v_employee (dot-walk), ou no flow. São dados sensíveis: melhor não expor ao LLM."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get data manager name on load",
+    "acao": "converter",
+    "substituicao": "Auto-populate a partir de v_employee."
+   },
+   {
+    "nome": "EY:  Your personal information Read Only fields",
+    "acao": "manter",
+    "substituicao": "Read-only é o comportamento desejado: a conversa pula essas variáveis."
+   }
+  ],
+  "observacoes": "Tem ref_qual solto em variáveis texto (v_global_id, v_cpf) sem efeito. Limpar."
+ },
+ {
+  "sys_id": "31ab31051b3f9514a530426fe54bcb02",
+  "titulo": "(+) Add Contributor",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Colaborador + data de início das férias. Pelo nome, é multi-row. Tipos simples e sem scripts.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_vs_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual colaborador vai devolver o aviso de férias?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_vs_vacation_start_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quando começam as férias dele?",
+    "obs": "Formato yyyy-mm-dd."
+   }
+  ],
+  "scripts_e_policies": [],
+  "observacoes": "Se for multi-row: na conversa costuma ir melhor 1 colaborador por pedido. Se o normal for um só, trocar por variable set simples."
+ },
+ {
+  "sys_id": "350894e51b76f990d1abda4ce54bcb15",
+  "titulo": "Transport voucher",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "alto",
+  "resumo": "Vale-transporte em cascata (UF → linha → valor) com Lookup Select Box, pergunta “não achei a linha” com label invertido e 4 scripts de limpeza e formatação.",
+  "bloqueadores": [
+   {
+    "onde": "v_didnt_find_the_line",
+    "problema": "Label “Não encontrei a linha” contradiz as policies (No = digitar manualmente). Confunde o LLM.",
+    "acao": "Reescrever como “Você encontrou a sua linha na lista?” e conferir os valores Yes/No."
+   },
+   {
+    "onde": "v_line_name / v_unitary_value / v_line_city",
+    "problema": "Cidade e valor dependem de scripts (Get Line City) e Lookup Select encadeado.",
+    "acao": "Trocar v_line_name para Reference em x_nasm_hr_rates e fazer auto-populate de v_line_city e v_unitary_value."
+   },
+   {
+    "onde": "EY: Mandatory fields",
+    "problema": "Cita variáveis que não existem no set (v_number_tickets_day_back, v_already_have_vt_card).",
+    "acao": "Limpar a policy."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_state",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual estado (UF) você usa o transporte?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_line_name",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference x_nasm_hr_rates",
+    "conversational_label": "Qual é a linha (operadora e modalidade)?",
+    "obs": "Filtro dependente de v_state (já existe)."
+   },
+   {
+    "variavel": "v_didnt_find_the_line",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Você encontrou a sua linha na lista?",
+    "obs": "Yes/No com Include None. Trocar o label."
+   },
+   {
+    "variavel": "v_line_city",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_line_name, Dot-walk path = city. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_inform_name_city_line",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual operadora e linha você usa, e em qual cidade?",
+    "obs": "Só quando não encontrou a linha."
+   },
+   {
+    "variavel": "v_number_tickets_day",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quantas passagens você usa por dia nessa linha?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_unitary_value",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_line_name, Dot-walk path = valor unitário. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_inform_unitary_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor de cada passagem?",
+    "obs": "Só quando não encontrou a linha. Validation Regex de moeda."
+   },
+   {
+    "variavel": "v_additional_comments",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quer acrescentar algum comentário?",
+    "obs": "Opcional."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "(sem nome) formatarMoeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável. Obs.: o script atual usa parseInt e perde os centavos. Dar nome ao registro, ou excluir."
+   },
+   {
+    "nome": "EY: Get Line City",
+    "acao": "converter",
+    "substituicao": "Auto-populate a partir de v_line_name (Reference)."
+   },
+   {
+    "nome": "EY: Clear values",
+    "acao": "converter",
+    "substituicao": "Nas UI policies de “encontrou a linha”, usar Value action = Clear value."
+   },
+   {
+    "nome": "EY: Clear Line Name if Checked",
+    "acao": "converter",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: Show Inform City Name and Line / EY: Show Line City / EY: Line name mandatory",
+    "acao": "manter",
+    "substituicao": "Sem script e com condição real. Juntar as duas de “No” numa só."
+   },
+   {
+    "nome": "EY: Read only field",
+    "acao": "manter",
+    "substituicao": "v_line_city derivada fica read-only mesmo."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). E remover as variáveis inexistentes."
+   }
+  ],
+  "observacoes": "O conversational label de v_inform_name_city_line já está em pt-BR, mas pergunta só a operadora. Ampliar como sugerido."
+ },
+ {
+  "sys_id": "374a53851b550510d1abda4ce54bcb1c",
+  "titulo": "Dependent Data",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "alto",
+  "resumo": "Inclusão de dependente no plano: escolhe o beneficiário e o plano, e 8 dados são copiados por script. Validação de duplicidade usa contexto do Service Portal, e um onSubmit marca checkboxes.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Validar dependente duplicado",
+    "problema": "Usa spThis (contexto do Service Portal), que não existe no VA.",
+    "acao": "Levar a regra para o ref qualifier (excluir dependentes já incluídos) ou validar no flow."
+   },
+   {
+    "onde": "EY: Marcar checkbox atraves do plans_opt",
+    "problema": "onSubmit marca checkboxes de benefício.",
+    "acao": "Derivar no flow a partir de plan_options."
+   },
+   {
+    "onde": "ACN Fill Add beneficiary data",
+    "problema": "onChange copia os dados do dependente.",
+    "acao": "Auto-populate a partir de beneficiary_name."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "beneficiary_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual dependente você quer incluir?",
+    "obs": "Ref qualifier scripted server-side (getBeneficiaryQuery): ok."
+   },
+   {
+    "variavel": "plan_options",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual plano: médico, odontológico ou ambos?",
+    "obs": ""
+   },
+   {
+    "variavel": "dependent_live_birth_certificate",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número da Declaração de Nascido Vivo (DNV) do dependente?",
+    "obs": "Só se aplicável (recém-nascido). Tornar condicional ao parentesco."
+   },
+   {
+    "variavel": "rg / ssn / dependentes_id / marital_status2 / relationship / genero / date_of_birth / mother_name2",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate a partir de beneficiary_name (dot-walk em x_nasm_hr_beneficiary). Já são read-only."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "ACN Fill Add beneficiary data",
+    "acao": "converter",
+    "substituicao": "Auto-populate nas 8 variáveis derivadas."
+   },
+   {
+    "nome": "EY: Validar dependente duplicado",
+    "acao": "converter",
+    "substituicao": "Ref qualifier que exclui duplicados, ou validação no flow."
+   },
+   {
+    "nome": "EY: Marcar checkbox atraves do plans_opt",
+    "acao": "converter",
+    "substituicao": "Flow/Business logic server-side."
+   },
+   {
+    "nome": "EY: Campos Obrigatorios",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Tirar as referências a variáveis inexistentes (surname, status, beneficiary_type)."
+   }
+  ],
+  "observacoes": "Label “Gende” com erro de digitação (genero)."
+ },
+ {
+  "sys_id": "39f57d061b54e950a530426fe54bcb24",
+  "titulo": "(+) Add Date",
+  "usado_por": 1,
+  "recomendacao": "remover_da_conversa",
+  "esforco": "baixo",
+  "resumo": "Set sem nenhuma variável. Não gera pergunta e só polui a configuração.",
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "observacoes": "Desvincular do item “Solicitação de Pagamento Sindical” e excluir, depois de confirmar que não há uso em flow."
+ },
+ {
+  "sys_id": "3affe4401bc82dd4a530426fe54bcb81",
+  "titulo": "(+) Add Collaborator",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Colaborador + data das férias a cancelar (pelo nome, multi-row). ID e empresa saem por auto-populate. A regra dos 40 dias fica num onChange simples.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Get Company and ID",
+    "problema": "GlideAjax para ID e empresa.",
+    "acao": "Auto-populate a partir de v_name_addcolab."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_name_addcolab",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual colaborador vai cancelar as férias?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_id_addcolab",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_name_addcolab, Dot-walk path = ID global do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_company_addcolab",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_name_addcolab, Dot-walk path = empresa do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_current_date_addcolab",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default com a data atual. Read-only. Não é pergunta."
+   },
+   {
+    "variavel": "v_start_date_addcolab",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quando começariam as férias programadas?",
+    "obs": "Precisa ser pelo menos 40 dias à frente."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get Company and ID",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "EY: Block date 40 days in add colab",
+    "acao": "manter",
+    "substituicao": "onChange VA Supported sem DOM. Não há equivalente no-code para validar prazo."
+   },
+   {
+    "nome": "EY: Mandatory Fields",
+    "acao": "converter",
+    "substituicao": "Mandatory/read-only direto nas variáveis."
+   }
+  ],
+  "observacoes": "Se for multi-row, avaliar 1 colaborador por pedido na conversa."
+ },
+ {
+  "sys_id": "401798181b3461d0a530426fe54bcba3",
+  "titulo": "Award payment summary",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Tipo + valor. Compatível, depois de trocar a validação de moeda por regex e o mandatory por atributo.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_type_award",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de prêmio?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_value_award",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor?",
+    "obs": "Validation Regex de moeda BR."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Value currency",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável."
+   },
+   {
+    "nome": "EY: Award",
+    "acao": "converter",
+    "substituicao": "Remover a policy: ela só força visible/mandatory sempre. Marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "observacoes": "Os sets “Award payment summary” e “Commission payment summary” são iguais. Dá para unificar num só."
+ },
+ {
+  "sys_id": "417b19f61bad0a50a530426fe54bcbff",
+  "titulo": "EY: Personal Informations Crachá",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Dados do colaborador para 2ª via de crachá. Só o colaborador é pergunta, e com default no usuário logado. O resto fica oculto e pode sair por auto-populate.",
+  "bloqueadores": [
+   {
+    "onde": "EY: HTR_Fill employee information / EY: Get user for set employee field",
+    "problema": "GlideAjax preenche colaborador e dados.",
+    "acao": "Default server-side em employee_name + auto-populate nos demais."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "employee_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual colaborador é a 2ª via do crachá?",
+    "obs": "Default = perfil de RH do usuário logado."
+   },
+   {
+    "variavel": "id_global / position_title / company / workplace / cpf / rg / date_of_birth / address / telephone",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate a partir de employee_name. Já ficam ocultos. São dados sensíveis: preferir o flow."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get user for set employee field",
+    "acao": "converter",
+    "substituicao": "Default value na variável employee_name."
+   },
+   {
+    "nome": "EY: HTR_Fill employee information",
+    "acao": "converter",
+    "substituicao": "Auto-populate nas variáveis derivadas."
+   },
+   {
+    "nome": "EY: Hidden the fields, it only can show in the resolver vision",
+    "acao": "converter",
+    "substituicao": "Marcar as variáveis como Hidden, ou policy só em Target Record."
+   },
+   {
+    "nome": "Mandatory Field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Container de layout pode ficar."
+ },
+ {
+  "sys_id": "4526141e1bcc6598a530426fe54bcb4e",
+  "titulo": "EY: Company:Natura/Avon/TBS - Collaborator",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Busca de consultor, representante ou franqueado em 12 referências (empresa × forma de busca), controladas por 17 UI policies e 8 scripts. Na conversa basta uma referência com busca por nome, CPF/CNPJ, código ou e-mail.",
+  "bloqueadores": [
+   {
+    "onde": "vs_data_search + 12 variáveis *_new",
+    "problema": "Uma variável por combinação empresa × tipo de busca, várias com o mesmo label.",
+    "acao": "Trocar por uma única Reference (nova_vs_customer) em core_company, com ref qualifier dependente de vs_company (source system / brand) e ref_ac_columns_search = name,u_cnpj,u_vendor_id,u_email."
+   },
+   {
+    "onde": "EY: Get User Data TBS/Natura/Avon",
+    "problema": "GlideAjax sem parâmetro para dados do usuário logado.",
+    "acao": "Auto-populate / default value, ou remover se os campos de destino não fizerem mais sentido."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, Avon ou The Body Shop?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_subcompany",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": ""
+   },
+   {
+    "variavel": "nova_vs_customer",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference core_company com busca em várias colunas",
+    "conversational_label": "Qual é o consultor, representante ou franqueado? Pode informar nome, CPF/CNPJ, código ou e-mail.",
+    "obs": "Nova: substitui as 12 referências."
+   },
+   {
+    "variavel": "vs_data_search",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "A busca multi-coluna da referência dispensa essa escolha."
+   },
+   {
+    "variavel": "v_pesquisar_cpf",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Coberta pela busca na referência."
+   },
+   {
+    "variavel": "vs_consultant_* / vs_representative_* / vs_franchisee_* (12)",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidadas em nova_vs_customer."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show … (15 policies de exibição)",
+    "acao": "remover",
+    "substituicao": "Uma variável só, sem condição."
+   },
+   {
+    "nome": "EY: Show Natura/Avon/TBS field",
+    "acao": "remover",
+    "substituicao": "Citam variáveis inexistentes (vs_consultant, vs_representative, vs_franchisee)."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Get consultant/representative/franchisee CPF/CNPJ",
+    "acao": "converter",
+    "substituicao": "Se o CPF/CNPJ precisar ir para o RITM, usar auto-populate a partir de nova_vs_customer (u_cnpj)."
+   },
+   {
+    "nome": "EY: Get User Data TBS/Natura/Avon",
+    "acao": "remover",
+    "substituicao": "Default value / auto-populate, onde ainda for preciso."
+   },
+   {
+    "nome": "EY: Clear fields 1 / 2",
+    "acao": "remover",
+    "substituicao": "Não são mais necessários com uma variável."
+   }
+  ],
+  "observacoes": "Usado só em “Solicitar reembolso de nota de crédito”."
+ },
+ {
+  "sys_id": "5702d5c21b29a110a530426fe54bcbae",
+  "titulo": "Document number to be reversed - AVON LATAM",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Multi-row com lote e número do documento a estornar. Tipos simples, mas a policy de read-only sempre ativa impede a resposta.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_batch_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do lote?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_document_number_avon_latam",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do documento a ser estornado?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   }
+  ],
+  "observacoes": "Multi-row: na conversa, orientar 1 documento por vez, ou aceitar a lista num texto de várias linhas."
+ },
+ {
+  "sys_id": "5a54054f1b523510a530426fe54bcbc4",
+  "titulo": "Add more",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "alto",
+  "resumo": "Multi-row de produtos do RPE: código de venda (referência) com alternativa manual, dados do produto por getReference, quantidade e “é amostra” acima de 1000.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Auto Fill Fields Based on Sales Code",
+    "problema": "g_form.getReference preenche material e descrição.",
+    "acao": "Auto-populate a partir de vs_sales_code_mr."
+   },
+   {
+    "onde": "Estrutura multi-row",
+    "problema": "Vários produtos por pedido.",
+    "acao": "Na conversa, 1 produto por rodada. Se o normal for muitos produtos, manter o item como formulário."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_did_you_find_the_sales_code_mr",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Você sabe o código de venda do produto?",
+    "obs": "Perguntar antes do código. Yes/No com Include None."
+   },
+   {
+    "variavel": "vs_sales_code_mr",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o código de venda?",
+    "obs": "Quando Sim."
+   },
+   {
+    "variavel": "vs_sales_code_mr2",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Digite o código de venda do produto.",
+    "obs": "Quando Não. Avaliar juntar com vs_material_code_mr."
+   },
+   {
+    "variavel": "vs_material_code_mr",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o código do material?",
+    "obs": "Auto-populate quando vem da referência. Perguntado só quando Não."
+   },
+   {
+    "variavel": "vs_product_description_mr",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a descrição do produto?",
+    "obs": "Auto-populate quando vem da referência. Perguntada só quando Não."
+   },
+   {
+    "variavel": "vs_quantity_required_mr",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual quantidade você precisa?",
+    "obs": "Validation Regex numérica ^\\d+$."
+   },
+   {
+    "variavel": "vs_this_product_a_sample",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Esse produto é amostra?",
+    "obs": "Só a partir de 1000 unidades."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Auto Fill Fields Based on Sales Code",
+    "acao": "converter",
+    "substituicao": "Auto-populate (dot-walk) a partir de vs_sales_code_mr."
+   },
+   {
+    "nome": "EY: Over 1000 products",
+    "acao": "manter",
+    "substituicao": "onChange VA Supported. Texto não permite condição numérica em UI Policy."
+   },
+   {
+    "nome": "EY: Show or Hide Product a Sample",
+    "acao": "remover",
+    "substituicao": "Na conversa o campo começa vazio. O onChange basta."
+   },
+   {
+    "nome": "EY: Clear sales code",
+    "acao": "converter",
+    "substituicao": "UI Policy “Did you find… is No” com Value action = Clear value em vs_material_code_mr e read-only=false (já existe)."
+   },
+   {
+    "nome": "EY: \"Did you find the sales code?\" is \"Yes\"",
+    "acao": "converter",
+    "substituicao": "A condição é Yes OU No (sempre que respondido). Renomear e simplificar."
+   },
+   {
+    "nome": "EY: Mandatory Fields Catalog Item View",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "651fea191b331d14a530426fe54bcb2a",
+  "titulo": "EY: Opened by - Company:Avon/Natura - Describe",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Solicitante + empresa + sub-empresa + descrição. Compatível: basta ocultar o solicitante e pôr os labels.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_opened_by",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default gs.getUserID(), read-only. Oculta na conversa."
+   },
+   {
+    "variavel": "vs_which_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura ou Avon?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_sub_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_describe_request",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva o que você precisa.",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Quase igual ao set “…Describe2”. Unificar."
+ },
+ {
+  "sys_id": "6aedb8bb1bfca990a530426fe54bcbaa",
+  "titulo": "EY: Company: Natura/TBS/Aesop - Subcompany",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Empresa + sub-empresa com ref qualifier dependente simples. Compatível. Falta só conversational label e mover o mandatory para a variável.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_company",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual empresa é a solicitação: Natura, The Body Shop ou Aesop?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_subcompany",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a sub-empresa?",
+    "obs": "Visível quando a empresa é Natura/TBS (a condição cita Avon LATAM, que nem está no título)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show sub-company",
+    "acao": "manter",
+    "substituicao": "Policy sem script."
+   },
+   {
+    "nome": "EY: Mandatory field",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   },
+   {
+    "nome": "EY: Clear sub-company",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported (duplicata do irmão)."
+   }
+  ],
+  "observacoes": "Usado por 1 item. Dá para trocar pelo set “Natura/Avon/TBS/Aesop - Subcompany” e limitar as choices."
+ },
+ {
+  "sys_id": "6cdbb7341bccad18a530426fe54bcb4a",
+  "titulo": "(+)Add Contributor",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Multi-row de divergência de ponto: colaborador, data, horários, justificativa e motivo. ID e empresa saem por auto-populate.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Get data job",
+    "problema": "GlideAjax para ID e empresa.",
+    "acao": "Auto-populate a partir de v_name_1."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_name_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual colaborador teve a divergência no ponto?",
+    "obs": "Default no próprio usuário, se for o caso mais comum."
+   },
+   {
+    "variavel": "v_id",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_name_1, Dot-walk path = ID do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_company_1",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_name_1, Dot-walk path = empresa do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_date_divergence_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em que dia aconteceu a divergência?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_entry_time_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual foi o horário de entrada?",
+    "obs": "Validation Regex ^([01]\\d|2[0-3]):[0-5]\\d$."
+   },
+   {
+    "variavel": "v_departure_time_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "E o horário de saída?",
+    "obs": "Mesma regex."
+   },
+   {
+    "variavel": "v_justification_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a justificativa?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_reason_1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o motivo?",
+    "obs": "Se justificativa e motivo forem parecidos, avaliar juntar."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get data job",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "EY: Mandatory and read only",
+    "acao": "converter",
+    "substituicao": "Atributos mandatory/read-only direto nas variáveis."
+   }
+  ],
+  "observacoes": "Se for multi-row, 1 dia por rodada na conversa."
+ },
+ {
+  "sys_id": "778c8dac87877a10017d65790cbb35dd",
+  "titulo": "EY: Training Info M2M",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Colaborador + matrícula + treinamentos (List Collector). A matrícula sai por auto-populate. O List Collector tem filtro estático, o que é aceitável.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Populate ID",
+    "problema": "GlideAjax para a matrícula.",
+    "acao": "Auto-populate a partir de enter_employee_name_m2m."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "enter_employee_name_m2m",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual colaborador vai fazer o treinamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "id_number_m2m",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = enter_employee_name_m2m, Dot-walk path = employee_number. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "indicate_training_m2m",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quais treinamentos você quer indicar?",
+    "obs": "List Collector: ressalva, mas o filtro é estático. Conferir se a tabela de referência é mesmo question_choice (o digest mostra sys_user)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Populate ID",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "Training Info M2M Default",
+    "acao": "converter",
+    "substituicao": "Mandatory/read-only direto nas variáveis."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "7c366e921b652990d1abda4ce54bcbab",
+  "titulo": "EY VS Lançamento Contabil AVON",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "medio",
+  "resumo": "Template de lançamento por widget/macro (Custom with Label), rich text, dois anexos e aprovador oculto mas obrigatório. O widget torna o item não conversacional.",
+  "bloqueadores": [
+   {
+    "onde": "v_template_avon",
+    "problema": "Tipo Custom with Label com macro/widget de download.",
+    "acao": "Remover e pôr o link do template na descrição do item ou num artigo de KB."
+   },
+   {
+    "onde": "vs_approver_avon",
+    "problema": "Hidden e mandatory ao mesmo tempo, com ref qualifier por alçada.",
+    "acao": "Definir o aprovador no flow (FilterApproversUtils) em vez de variável. Se precisar ser escolhido, deixar visível com label."
+   },
+   {
+    "onde": "v_attach_template_file / v_attach_template_file2",
+    "problema": "Dois anexos obrigatórios.",
+    "acao": "Anexo não é respondido em linguagem natural. Manter uma única variável de anexo pedida no fim da conversa ou usar 'Mandatory attachment' do próprio item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_approver_avon",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Calcular no flow pela alçada. Se for mantida como pergunta: “Quem vai aprovar o lançamento?”."
+   },
+   {
+    "variavel": "vs_attachment_information_avon",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_template_avon",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Widget. Link na descrição."
+   },
+   {
+    "variavel": "v_attach_template_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template de lançamento preenchido.",
+    "obs": "Anexo no fim da conversa."
+   },
+   {
+    "variavel": "v_attach_template_file2",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o documento de suporte.",
+    "obs": "Ou juntar os dois num único anexo / Mandatory attachment."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY - ReadOnly on Target Record",
+    "acao": "converter",
+    "substituicao": "Garantir que vale só em Target Record. Remover a variável inexistente vs_repository_avon_pb."
+   },
+   {
+    "nome": "EY - Mandatory on CatItem View",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "815231471bb18e90d1abda4ce54bcb1b",
+  "titulo": "Type of request",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Tipo de solicitação (criação de requisição de compra vs. folha de serviço) que troca o conjunto de perguntas por UI policy. São duas intenções diferentes.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_type_of_request",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Você quer criar uma requisição de compra ou criar e aceitar uma folha de serviço?",
+    "obs": "Na análise do item, avaliar dividir em dois itens e fixar esta variável por default."
+   },
+   {
+    "variavel": "vs_type_of_contract",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de contratação?",
+    "obs": "Criação de requisição."
+   },
+   {
+    "variavel": "vs_start_date_service_provision",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quando começa a prestação do serviço?",
+    "obs": "Criação de requisição."
+   },
+   {
+    "variavel": "vs_end_date_service_provision",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "E quando termina?",
+    "obs": "Criação de requisição."
+   },
+   {
+    "variavel": "vs_purchase_order_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do pedido de compra?",
+    "obs": "Folha de serviço."
+   },
+   {
+    "variavel": "vs_order_line",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a linha do pedido?",
+    "obs": "Folha de serviço."
+   },
+   {
+    "variavel": "vs_location_service_provision",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Onde o serviço foi prestado?",
+    "obs": "Folha de serviço."
+   },
+   {
+    "variavel": "vs_service_description",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva o serviço prestado.",
+    "obs": "Folha de serviço."
+   },
+   {
+    "variavel": "vs_confirm_service_provision",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Você confirma que o serviço foi prestado?",
+    "obs": "Folha de serviço. Yes/No com Include None."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory if … \"Creation and Acceptance of Service Sheet\"",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real."
+   },
+   {
+    "nome": "EY: Mandatory if … \"PR Creation\"",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "85c518911bc19ad0514cbaef4b4bcb8b",
+  "titulo": "Data to make your refund",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Multi-row de reembolso de creche/berço (público hispânico). Tem onSubmit de 4 KB que valida contra sessionStorage, onLoad que lê o formulário pai (sem VA Supported) e aviso em texto fixo. Não funciona na conversa.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Validate Fiels",
+    "problema": "onSubmit sem VA Supported, depende do sessionStorage do navegador e do formulário pai.",
+    "acao": "Levar a validação de duplicidade de fatura para o flow ou para um Script Include chamado no servidor."
+   },
+   {
+    "onde": "EY: Set employee",
+    "problema": "onLoad copia o colaborador do formulário pai (g_service_catalog.parent), sem VA Supported.",
+    "acao": "Tirar v_employee_name da multi-row. O colaborador vem do item (default no usuário logado)."
+   },
+   {
+    "onde": "v_attention",
+    "problema": "Aviso em multiline read-only com default.",
+    "acao": "Levar para a descrição do item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_attention",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_employee_name",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Oculta. Fica no item."
+   },
+   {
+    "variavel": "v_your_child_s_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual filho(a) é o reembolso?",
+    "obs": "Ref qualifier scripted server-side: ok, se não depender do pai no client."
+   },
+   {
+    "variavel": "dependent_date_birth",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = v_your_child_s_name, Dot-walk path = data de nascimento. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "v_what_type_of_refund_are_you_requesting",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Que tipo de reembolso você está pedindo?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_invoice_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número da fatura?",
+    "obs": "Só para berçário/creche."
+   },
+   {
+    "variavel": "v_salary_receipt_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do recibo de salário?",
+    "obs": "Só para cuidador."
+   },
+   {
+    "variavel": "v_refund_amount",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor do reembolso?",
+    "obs": "Validation Regex de moeda."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Validate Fiels",
+    "acao": "converter",
+    "substituicao": "Validação server-side no flow."
+   },
+   {
+    "nome": "EY: Set employee",
+    "acao": "remover",
+    "substituicao": "Colaborador no item."
+   },
+   {
+    "nome": "EY: Show dependent message",
+    "acao": "converter",
+    "substituicao": "Levar a mensagem para a descrição do item."
+   },
+   {
+    "nome": "EY: Get Employee Country",
+    "acao": "converter",
+    "substituicao": "Default value server-side com o país do usuário, no item."
+   },
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável."
+   },
+   {
+    "nome": "EY: Clear fields on change of type",
+    "acao": "converter",
+    "substituicao": "UI policies de fatura/recibo com Value action = Clear value."
+   },
+   {
+    "nome": "EY: Invoice Visible / EY: Salary Number Visible",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real. A de recibo precisa de mandatory=true."
+   },
+   {
+    "nome": "EY: Mandatory variables",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Remover v_month_mrvs e v_year_mrvs (não existem no set)."
+   },
+   {
+    "nome": "EY: Read only fields",
+    "acao": "manter",
+    "substituicao": "dependent_date_birth derivada."
+   }
+  ],
+  "observacoes": "Enquanto a validação depender do navegador, manter o item como formulário. Cadastrar conversational label em es também."
+ },
+ {
+  "sys_id": "9494b8f11b216110a530426fe54bcbb6",
+  "titulo": "EY VS -  Solicitação de Provisões de Fatura",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "medio",
+  "resumo": "Tipo de provisão com template por widget/macro, rich text, dois anexos e área solicitante que só aparece na janela de fechamento (GlideAjax onLoad). O widget impede a conversa.",
+  "bloqueadores": [
+   {
+    "onde": "v_template_provision_avon_natura",
+    "problema": "Custom with Label (macro/widget).",
+    "acao": "Remover e pôr o link do template na descrição/KB."
+   },
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "EY: Data fechamento",
+    "problema": "onLoad GlideAjax (isNowInDefinedSchedules) decide se vs_requesting_area aparece.",
+    "acao": "Deixar vs_requesting_area sempre visível e opcional, ou tratar o período no flow. Se a regra for mesmo necessária, o script é VA Supported, mas conferir o ui_type."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_request_type",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Que tipo de provisão você precisa?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_request_description",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva o tipo de solicitação.",
+    "obs": "Só quando o tipo for “outras”."
+   },
+   {
+    "variavel": "vs_requesting_area",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a área solicitante?",
+    "obs": "Hoje só aparece no período de fechamento."
+   },
+   {
+    "variavel": "v_informative_note_1",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_template_provision_avon_natura",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Widget. Link na descrição."
+   },
+   {
+    "variavel": "v_attach_template_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template de provisão preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "v_document_repository",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie os documentos de suporte.",
+    "obs": "Ou juntar num único anexo / Mandatory attachment."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Data fechamento",
+    "acao": "converter",
+    "substituicao": "Sempre visível/opcional ou regra no flow."
+   },
+   {
+    "nome": "EY: Show the request_description field when v_request_type is others",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real."
+   },
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Tirar o rich text v_informative_note_1 e a inexistente v_informative_note_2."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "a2267f7d3b90de50924d0247f4e45ae3",
+  "titulo": "Your children's data",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Multi-row de reembolso de kit escolar: filho, valor e teto calculado por scripts sem VA Supported que leem o formulário pai e o sessionStorage.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Get tope… OnLoad/OnChange, EY: Set employee, EY: Count number of children",
+    "problema": "Scripts sem VA Supported, dependentes do formulário pai (g_service_catalog.parent) e do sessionStorage. O onChange tem bug (g_form.clearMessages sem parênteses).",
+    "acao": "Calcular o teto e a contagem de filhos no flow/servidor. Colaborador no item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "employee_reference",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Oculta, copiada do pai. Fica no item."
+   },
+   {
+    "variavel": "v_child_name_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual filho(a) é o reembolso do kit escolar?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_total_amount_of_expenses_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual foi o valor total gasto?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "variavel": "v_tope",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Teto calculado no servidor. Oculto."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get tope to apply in amount OnLoad",
+    "acao": "converter",
+    "substituicao": "Cálculo no flow."
+   },
+   {
+    "nome": "EY: Get tope to apply in amount OnChange",
+    "acao": "converter",
+    "substituicao": "Idem (e corrigir clearMessages())."
+   },
+   {
+    "nome": "EY: Set employee",
+    "acao": "remover",
+    "substituicao": "Colaborador no item."
+   },
+   {
+    "nome": "EY: Count number of children",
+    "acao": "converter",
+    "substituicao": "Validação no flow."
+   },
+   {
+    "nome": "EY: Set amount regex",
+    "acao": "converter",
+    "substituicao": "Variable Validation Regex."
+   },
+   {
+    "nome": "EY: Hide tope",
+    "acao": "converter",
+    "substituicao": "Marcar v_tope como Hidden."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Enquanto o teto depender do client, manter o item como formulário."
+ },
+ {
+  "sys_id": "aa040a611bd92910a530426fe54bcb42",
+  "titulo": "EY VS - Consulta a Pagamentos Atrasados",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Número do documento, vencimento e valor. Tipos simples. Falta tirar a policy de read-only da visão do item e trocar a máscara por regex.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Variaveis Read Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_document_number_invoice",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do documento (nota fiscal)?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_due_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual era a data de vencimento?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_amount",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor?",
+    "obs": "Validation Regex de moeda."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável."
+   },
+   {
+    "nome": "EY: Variaveis Read Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "aba7d12f1b552910d1abda4ce54bcb3f",
+  "titulo": "EY VS - Capitalização de Gastos",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Data, descrição e anexo, mais 3 rich text de template (um com macro). A policy de read-only trava a descrição e o anexo.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "v_template_capitalization_expenses",
+    "problema": "Rich text com macro de download.",
+    "acao": "Remover e pôr o link do template na descrição/KB."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_release_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de lançamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_describe_the_information_you_need",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva a sua solicitação.",
+    "obs": ""
+   },
+   {
+    "variavel": "v_informative_note",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_template_capitalization_expenses",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Macro de download. Link na descrição."
+   },
+   {
+    "variavel": "v_template_accounting_entry_avon",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_attach_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template preenchido.",
+    "obs": "Anexo no fim."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks. Remover as variáveis inexistentes citadas."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "acc8c11d87608710ec360e530cbb35e9",
+  "titulo": "Enter the information for the new dependent",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Dados do novo dependente (nome, CPF, gênero, nascimento). Compatível. Falta label e o mandatory na variável.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "dependent_s_full_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o nome completo do bebê?",
+    "obs": "Item de licença-maternidade."
+   },
+   {
+    "variavel": "dependent_s_cpf_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o CPF do bebê?",
+    "obs": "Validation Regex de CPF."
+   },
+   {
+    "variavel": "dependent_s_gender",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o sexo do bebê?",
+    "obs": ""
+   },
+   {
+    "variavel": "dependent_s_date_of_birth",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de nascimento?",
+    "obs": "Tirar o include_none (não se aplica a Date)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Aoop: Format and validate the cpf number",
+    "acao": "manter",
+    "substituicao": "VA Supported. O formato pode ir para Validation Regex, e o dígito verificador fica no script."
+   },
+   {
+    "nome": "Aoop: Set fields mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "b5f328341ba56950d1abda4ce54bcb50",
+  "titulo": "EY VS - Variable Adiantamento Fornecedor",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Dados do adiantamento a fornecedor: contrato, pedido, data, valor, moeda, aprovador por alçada e mês de referência. A policy de read-only trava quase tudo, e o valor precisa vir antes do aprovador.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Make Variables ReadOnly",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   },
+   {
+    "onde": "vs_approval_manager",
+    "problema": "Ref qualifier depende de v_value (alçada). Na conversa, o valor precisa ser perguntado antes.",
+    "acao": "Pôr v_value antes do aprovador (ordem da variável)."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_exchange",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Sempre oculta."
+   },
+   {
+    "variavel": "v_contract_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do contrato?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_purchase_order_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do pedido de compra?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor do adiantamento?",
+    "obs": "Validation Regex de moeda. Vem antes do aprovador."
+   },
+   {
+    "variavel": "v_currency",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual moeda?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_date_for_which_payment_is_requested",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual data você propõe o pagamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_approval_manager",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem vai aprovar?",
+    "obs": "Lista filtrada pela alçada do valor."
+   },
+   {
+    "variavel": "v_month_provision",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o mês de referência para contabilizar o adiantamento?",
+    "obs": "Label atual muito longo."
+   },
+   {
+    "variavel": "v_document_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do documento KA?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável."
+   },
+   {
+    "nome": "EY: Clear Approver When Value Changes",
+    "acao": "manter",
+    "substituicao": "onChange simples VA Supported, útil quando o usuário corrige o valor."
+   },
+   {
+    "nome": "EY: Hide Exchange",
+    "acao": "remover",
+    "substituicao": "Remover v_exchange ou marcá-la como Hidden."
+   },
+   {
+    "nome": "EY: Make Variables ReadOnly",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Obrigatorio",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Remover v_ged_process_number (não existe no set)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "ba61aeba1ba94a50a530426fe54bcb7d",
+  "titulo": "EY: Address to sent the badge",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Endereço de entrega do crachá em 7 campos texto, sem scripts. Compatível. Labels a melhorar.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "zip_code",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o CEP do endereço de entrega?",
+    "obs": "Validation Regex ^\\d{5}-?\\d{3}$."
+   },
+   {
+    "variavel": "public_place",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a rua (logradouro)?",
+    "obs": ""
+   },
+   {
+    "variavel": "number_house",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número?",
+    "obs": ""
+   },
+   {
+    "variavel": "complement",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Tem complemento?",
+    "obs": "Opcional."
+   },
+   {
+    "variavel": "neighborhood",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o bairro?",
+    "obs": ""
+   },
+   {
+    "variavel": "city",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a cidade?",
+    "obs": ""
+   },
+   {
+    "variavel": "uf",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o estado (UF)?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [],
+  "observacoes": "Nenhuma variável é obrigatória. Marcar Mandatory no que for essencial. Alternativa: um único texto “Qual é o endereço completo para entrega?”, e o LLM preenche de uma vez."
+ },
+ {
+  "sys_id": "babe0b011b6d6dd0a530426fe54bcbce",
+  "titulo": "EY VS - Ajuste de inventário e ajuste Ciclico",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "medio",
+  "resumo": "Ajuste de inventário com template por widget/macro. A policy de read-only trava tudo, e os campos de ajuste cíclico (texto multilinha) nunca aparecem com o tipo padrão.",
+  "bloqueadores": [
+   {
+    "onde": "v_template",
+    "problema": "Custom with Label (macro/widget de download).",
+    "acao": "Remover e pôr o link do template na descrição/KB."
+   },
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_request_type",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Default inventory_adjustment e read-only. Se o ajuste cíclico for pedido pelo usuário, tirar o read-only e perguntar: “É ajuste de inventário ou ajuste cíclico?”."
+   },
+   {
+    "variavel": "v_issuance",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de emissão?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_branch / v_responsible / v_inventory_code / v_desc_inventory / v_quantity_counted / v_validated",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Campos do ajuste cíclico, parecem ser do atendimento. Se forem do solicitante, pedir no template anexado."
+   },
+   {
+    "variavel": "v_describe_the_information_you_need",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva a sua solicitação.",
+    "obs": ""
+   },
+   {
+    "variavel": "v_attach_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template de ajuste preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "v_template",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Widget."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Request type Read-Only",
+    "acao": "converter",
+    "substituicao": "Marcar read-only na variável, ou remover se o cíclico for perguntado."
+   },
+   {
+    "nome": "EY: Hide if Ajuste != Ciclico",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real (se os campos cíclicos continuarem)."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "bc6bd86d1b34e554d1abda4ce54bcbfa",
+  "titulo": "Enter deposit details",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Dados do depósito (depositante, data, valor, documento). Tipos simples e sem scripts.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_depositor",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem fez o depósito?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em que data foi feito o depósito?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual foi o valor depositado?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "variavel": "v_accounting_document_batch",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o documento contábil ou lote?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: deposit details",
+    "acao": "converter",
+    "substituicao": "Remover a policy: ela só força visible/mandatory sempre. Marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "bf156c8e1ba8a510a530426fe54bcbf0",
+  "titulo": "EY: Basic data manager 1",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Gestor + ID e e-mail. ID e e-mail saem por auto-populate. A policy de read-only cita nomes errados.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "manager_name1",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem é o gestor responsável?",
+    "obs": ""
+   },
+   {
+    "variavel": "manager_id1",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = manager_name1, Dot-walk path = ID global do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "manager_email1",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = manager_name1, Dot-walk path = e-mail do usuário. Read-only; o valor vem sozinho e a pergunta é pulada."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "Ey: Get data manager1",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "Ey: Read only fields",
+    "acao": "converter",
+    "substituicao": "Cita vs_manager_email1/vs_manager_id1, que não existem. Marcar read-only direto em manager_id1/manager_email1."
+   }
+  ],
+  "observacoes": "Descrição do set é só “.”. Documentar."
+ },
+ {
+  "sys_id": "c560f35f1bf8a190a530426fe54bcbe2",
+  "titulo": "Inform the leader's cycle and block",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Ciclo e bloco do líder. Dois textos simples.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_cycle",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual ciclo é o adiantamento? (até 3 ciclos à frente)",
+    "obs": "A regra dos 3 ciclos hoje está só na descrição do set. Levar para a descrição do item."
+   },
+   {
+    "variavel": "v_block",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o bloco do líder?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Cycle leader",
+    "acao": "converter",
+    "substituicao": "Remover a policy: ela só força visible/mandatory sempre. Marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "c6b820241be161d0a530426fe54bcbc5",
+  "titulo": "EY VS - Transferência de Ativo Fixo e Dados Cadastrais",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Tipo de transferência com 4 legendas em rich text e links de template trocados por script conforme tipo e sub-empresa. As legendas não chegam ao LLM, e a policy de read-only trava o tipo.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Show label and temp for each request / EY: Hide all labels onLoad",
+    "problema": "Scripts mostram/escondem legendas e links de template por sys_id de sub-empresa.",
+    "acao": "Pôr o texto das legendas no label das choices de v_request_type e os links na descrição/KB. Excluir os scripts."
+   },
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_request_type",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Que tipo de mudança você precisa: troca de centro de custo, alteração de dados cadastrais, transferência por comodato ou transferência entre filiais?",
+    "obs": "Choices com texto explicativo curto (ex.: “Transferência entre filiais (emite nota fiscal)”)."
+   },
+   {
+    "variavel": "v_label_cost_center / v_label_master_data / v_label_loan_transfer / v_label_branch_transfer",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "v_assets_number",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quantos ativos estão no template?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_invoice_issue",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Read-only. Derivar do tipo (transferências emitem nota) por UI Policy/default. Não perguntar."
+   },
+   {
+    "variavel": "v_attach_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "v_attach_email_with_approval",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o contrato de comodato.",
+    "obs": "Só para transferência por comodato."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Show label and temp for each request",
+    "acao": "remover",
+    "substituicao": "Legendas nas choices e links na descrição."
+   },
+   {
+    "nome": "EY: Hide all labels onLoad",
+    "acao": "remover",
+    "substituicao": "Idem."
+   },
+   {
+    "nome": "EY: Hide attach comodato",
+    "acao": "manter",
+    "substituicao": "Sem script, com condição real."
+   },
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "d252faca1b6da590d1abda4ce54bcba3",
+  "titulo": "EY VS - Lancamento Contabil - Natura + TBS",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Aprovador por alçada, 3 rich text e 2 anexos. Rich text sai da conversa. A policy de read-only precisa valer só no registro.",
+  "bloqueadores": [
+   {
+    "onde": "EY - ReadOnly on Target Record",
+    "problema": "Se estiver marcada também para a visão do item, trava o aprovador e o anexo.",
+    "acao": "Garantir só Target Record."
+   },
+   {
+    "onde": "vs_approver",
+    "problema": "Ref qualifier usa v_opened_by, que vem de outro set.",
+    "acao": "Garantir que o item tenha v_opened_by derivado (default gs.getUserID()) antes desta pergunta."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "vs_approver",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem vai aprovar o lançamento?",
+    "obs": "Lista filtrada pela alçada."
+   },
+   {
+    "variavel": "vs_attachment_information / vs_repository_pb / vs_repository_es",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   },
+   {
+    "variavel": "vs_attachment",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template de lançamento preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "vs_attachment_avon",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o documento de suporte.",
+    "obs": "Ou juntar num único anexo."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY - ReadOnly on Target Record",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY - Mandatory on CatItem View",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "d52bb384873a5a50ec360e530cbb35db",
+  "titulo": "Select the date and name of the collaborator",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Data + colaborador, com matrícula e CPF por script. Estes saem por auto-populate.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "vs_full_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual colaborador é o pagamento sindical?",
+    "obs": ""
+   },
+   {
+    "variavel": "vs_data",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de referência?",
+    "obs": "Label “Date” genérico: deixar explícito do que é a data."
+   },
+   {
+    "variavel": "vs_employee_number",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_full_name, Dot-walk path = matrícula do perfil. Read-only; o valor vem sozinho e a pergunta é pulada."
+   },
+   {
+    "variavel": "vs_cpf",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Auto-populate: Dependent question = vs_full_name, Dot-walk path = CPF do perfil. Read-only; o valor vem sozinho e a pergunta é pulada. Dado sensível."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Fill information for Name Employee",
+    "acao": "converter",
+    "substituicao": "Auto-populate."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "d5a017c31be70510a530426fe54bcbb1",
+  "titulo": "Employee benefits",
+  "usado_por": 1,
+  "recomendacao": "remover_da_conversa",
+  "esforco": "baixo",
+  "resumo": "Quatro campos read-only de benefício atual (colaborador, código, produto, data). Informativos, não são perguntas.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "employee_id / benefit_code / product / option_date",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Read-only: a conversa pula. Preencher no servidor (default/flow) se o fulfillment precisar."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "ACN: HTR All fields read only if doesn't change",
+    "acao": "manter",
+    "substituicao": "Read-only é o comportamento desejado. Remover days_voucher (não existe no set)."
+   }
+  ],
+  "observacoes": "Nenhum script do set preenche esses valores. Conferir de onde vêm."
+ },
+ {
+  "sys_id": "d5a2ddb21bef7510a530426fe54bcbc8",
+  "titulo": "Path 2",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "medio",
+  "resumo": "Documentos do dependente 2: 6 anexos + dependente read-only. Anexos não são respondidos em conversa, e o set repete o mesmo bloco por dependente (Path 1..N).",
+  "bloqueadores": [
+   {
+    "onde": "v_doc_cpf_2 … v_termo_guarda_adocao_2",
+    "problema": "6 variáveis Attachment por dependente.",
+    "acao": "Trocar por um único anexo “documentos do dependente” (ou Mandatory attachment no item), com a lista de documentos por parentesco na descrição."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "dependente_2",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Read-only, vem de outra etapa. Não é pergunta."
+   },
+   {
+    "variavel": "relacionamento_2",
+    "acao": "ocultar_na_conversa",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Oculta. Usar auto-populate a partir de dependente_2 (tipo Reference) se precisar."
+   },
+   {
+    "variavel": "nova_v_documentos_dependente_2",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Attachment único",
+    "conversational_label": "Envie os documentos do dependente (CPF, certidão e comprovantes, conforme o parentesco).",
+    "obs": "Nova: substitui os 6 anexos."
+   },
+   {
+    "variavel": "v_doc_cpf_2 / v_certidao_nascimento_2 / v_comprovante_universitario_2 / v_certidao_casamento_2 / v_escritura_publica_uniao_estavel_2 / v_termo_guarda_adocao_2",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Consolidados."
+   }
+  ],
+  "scripts_e_policies": [],
+  "observacoes": "O item “Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica” usa vários “Path”. Na análise do item, o mais provável é manter como formulário."
+ },
+ {
+  "sys_id": "dd8e82cc1ba12590a530426fe54bcb41",
+  "titulo": "EY VS -  Capitalização de Projeto em Curso (Alta)",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Número de ativos, descrição e anexo, mais 3 rich text de template. A policy de read-only trava tudo.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_enter_the_number_of_assets",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quantos ativos estão no template?",
+    "obs": "Tem map_to_field. Manter o mapeamento."
+   },
+   {
+    "variavel": "v_comments",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Descreva a sua solicitação.",
+    "obs": ""
+   },
+   {
+    "variavel": "v_attach_file",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "v_download_template / v_download_template_2 / v_informative_note_2",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Remover v_attach_email_with_approval (não existe no set)."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "e1ed453b1b55a110d1abda4ce54bcb21",
+  "titulo": "EY VS - Baixa de Ativo Fixo",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "alto",
+  "resumo": "Baixa de ativo: gestor, tipo de baixa, número de ativos, nota fiscal, 2 anexos e 14 rich text (legendas, links e documentos exigidos por tipo). A emissão de nota é definida por script com listas de sys_id de sub-empresa.",
+  "bloqueadores": [
+   {
+    "onde": "14 variáveis Rich Text",
+    "problema": "Legendas, links de template e documentos exigidos por tipo de baixa não chegam ao LLM.",
+    "acao": "Pôr na descrição do item um resumo por tipo (documentos exigidos) e os links dos templates. Remover as variáveis da conversa."
+   },
+   {
+    "onde": "EY: Issuance of Invoice",
+    "problema": "Listas fixas de sys_id de sub-empresa definem e travam a emissão de nota.",
+    "acao": "Derivar no servidor (atributo na core_company + auto-populate) ou no flow."
+   },
+   {
+    "onde": "EY: Read-Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "v_what_kind_of_casualty",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de baixa: doação, destruição, furto/perda, devolução ou venda?",
+    "obs": ""
+   },
+   {
+    "variavel": "select_the_manager_who_apprends_this_request",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Reference sys_user",
+    "conversational_label": "Qual gestor vai aprovar a baixa?",
+    "obs": "Trocar Lookup Select Box em sys_user por Reference com o mesmo filtro de faixa (range G–L)."
+   },
+   {
+    "variavel": "v_number_assets",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quantos ativos estão no template?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_issuing_invoice",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Derivar da sub-empresa. Perguntar só se não der para derivar: “Vai emitir nota fiscal?”."
+   },
+   {
+    "variavel": "v_attach_files",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie o template de baixa preenchido.",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "v_attach_email_with_approval",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Envie a documentação de suporte (ex.: boletim de ocorrência).",
+    "obs": "Anexo no fim."
+   },
+   {
+    "variavel": "legenda_* / link_* / documentos_* / v_legenda_attach",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Rich text / label não chega ao LLM. Tirar da conversa e levar o texto para a descrição do item ou para um artigo de KB (link)."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Issuance of Invoice",
+    "acao": "converter",
+    "substituicao": "Auto-populate a partir de um campo da sub-empresa, ou regra no flow."
+   },
+   {
+    "nome": "EY: Read-Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   },
+   {
+    "nome": "EY: Mandatory",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica). Remover v_invoice_available (inexistente)."
+   }
+  ],
+  "observacoes": "A sub-empresa usada pelo script vem de outro set (Empresas Natura). Depende da consolidação daquele set."
+ },
+ {
+  "sys_id": "e73efbac1b749a50514cbaef4b4bcb4d",
+  "titulo": "Your children's data",
+  "usado_por": 1,
+  "recomendacao": "substituir",
+  "esforco": "alto",
+  "resumo": "Multi-row de reembolso escolar (hispânico) com teto, contagem de filhos e texto de ajuda montados por scripts sem VA Supported, que leem o formulário pai e o sessionStorage.",
+  "bloqueadores": [
+   {
+    "onde": "EY: Get tope…, EY: Count number of children, EY: Set employee, EY: Show help text",
+    "problema": "Scripts sem VA Supported, dependentes do pai e do sessionStorage. clearMessages sem parênteses.",
+    "acao": "Teto e contagem no flow. Colaborador no item. Texto de ajuda por país/idioma na descrição do item."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "employee_reference",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Fica no item."
+   },
+   {
+    "variavel": "v_child_name",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual filho(a) é o reembolso escolar?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_amount_of_schooling",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual foi o valor da escola?",
+    "obs": "Validation Regex de moeda. Tirar o atributo reference que sobrou."
+   },
+   {
+    "variavel": "v_tope",
+    "acao": "derivar",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Teto calculado no servidor. Oculto."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Get tope to apply in amount OnLoad / OnChange",
+    "acao": "converter",
+    "substituicao": "Cálculo no flow."
+   },
+   {
+    "nome": "EY: Count number of children",
+    "acao": "converter",
+    "substituicao": "Validação no flow."
+   },
+   {
+    "nome": "EY: Set employee",
+    "acao": "remover",
+    "substituicao": "Colaborador no item."
+   },
+   {
+    "nome": "EY: Show help text",
+    "acao": "remover",
+    "substituicao": "Texto por país na descrição do item."
+   },
+   {
+    "nome": "EY: Set amount regex",
+    "acao": "converter",
+    "substituicao": "Variable Validation Regex."
+   },
+   {
+    "nome": "EY: Hide tope",
+    "acao": "converter",
+    "substituicao": "Marcar v_tope como Hidden."
+   },
+   {
+    "nome": "EY: Mandatory fields",
+    "acao": "converter",
+    "substituicao": "Remover a policy e marcar Mandatory direto em cada variável (policy sem condição não tem lógica)."
+   }
+  ],
+  "observacoes": "Mesmo padrão do set “Your children’s data” do kit escolar. Tratar os dois juntos."
+ },
+ {
+  "sys_id": "ec5648e93b2c1610924d0247f4e45a97",
+  "titulo": "Beneficiaries Data",
+  "usado_por": 1,
+  "recomendacao": "pronto",
+  "esforco": "baixo",
+  "resumo": "Dados do beneficiário (nome, DNI, parentesco, endereço, localidade). Textos simples, sem scripts.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "last_and_first_name_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o nome completo do beneficiário?",
+    "obs": ""
+   },
+   {
+    "variavel": "dni_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o DNI (documento de identidade) dele?",
+    "obs": ""
+   },
+   {
+    "variavel": "family_relationship_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o parentesco com você?",
+    "obs": "Avaliar Select Box."
+   },
+   {
+    "variavel": "family_address_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o endereço dele?",
+    "obs": ""
+   },
+   {
+    "variavel": "family_location_new",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual cidade/localidade?",
+    "obs": ""
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Mandatory/Visible beneficiaries_data_new variables",
+    "acao": "converter",
+    "substituicao": "Remover a policy: ela só força visible/mandatory sempre. Marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "observacoes": "Público hispânico (DNI). Cadastrar também conversational label em es."
+ },
+ {
+  "sys_id": "ef63fb481be9e590a530426fe54bcb57",
+  "titulo": "EY VS - Antecipação do Vencimento para Pagamento",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "medio",
+  "resumo": "Antecipação ou prorrogação de vencimento. A escolha é feita com label + 2 checkboxes obrigatórios que se excluem por UI policy. Isso não funciona bem na conversa, e a policy de read-only trava os dados.",
+  "bloqueadores": [
+   {
+    "onde": "v_select_request_type_v2 + v_early_payment_v2 + v_due_date_extension_v2",
+    "problema": "Checkboxes obrigatórios mutuamente exclusivos. Checkbox não agrupa sem variável intermediária.",
+    "acao": "Trocar por um único Select Box (nova_v_request_type: antecipação / prorrogação) e remover as 3 variáveis e as 2 policies. Se os dois casos tiverem volume, avaliar dividir o item."
+   },
+   {
+    "onde": "EY: Variaveis Read Only",
+    "problema": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks.",
+    "acao": "Restringir a Target Record."
+   }
+  ],
+  "perguntas": [
+   {
+    "variavel": "nova_v_request_type",
+    "acao": "alterar_tipo",
+    "tipo_sugerido": "Select Box",
+    "conversational_label": "Você quer antecipar o pagamento ou prorrogar o vencimento?",
+    "obs": "Nova: substitui o label e os 2 checkboxes."
+   },
+   {
+    "variavel": "v_select_request_type_v2 / v_early_payment_v2 / v_due_date_extension_v2",
+    "acao": "remover",
+    "tipo_sugerido": "",
+    "conversational_label": "",
+    "obs": "Substituídos."
+   },
+   {
+    "variavel": "v_type_of_payment",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de pagamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_form_of_payment",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a forma de pagamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_document_number_invoice",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o número do documento (nota fiscal)?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor?",
+    "obs": "Validation Regex de moeda."
+   },
+   {
+    "variavel": "v_currency",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Em qual moeda?",
+    "obs": "Label “Coin” errado. Trocar por “Moeda”."
+   },
+   {
+    "variavel": "original_expiration_date",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é a data de vencimento original?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_payment_s_date_requested",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Para qual data você quer o pagamento?",
+    "obs": ""
+   },
+   {
+    "variavel": "select_approver_v2",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Quem vai aprovar?",
+    "obs": "Ref qualifier scripted server-side: ok."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Clear Due Date Ext. v2",
+    "acao": "remover",
+    "substituicao": "Select Box único."
+   },
+   {
+    "nome": "EY: Clear Early Payment v2",
+    "acao": "remover",
+    "substituicao": "Select Box único."
+   },
+   {
+    "nome": "EY: Máscara de Moeda",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável. Obs.: o script atual usa parseInt e perde os centavos."
+   },
+   {
+    "nome": "EY: Variaveis Read Only",
+    "acao": "converter",
+    "substituicao": "Policy sempre ativa que deixa as variáveis read-only. Se valer na visão do item, o LLM pula essas perguntas. Desmarcar 'Applies on Catalog Item view' e manter só 'Applies on Target Record' / Requested Items / Catalog Tasks."
+   }
+  ],
+  "observacoes": ""
+ },
+ {
+  "sys_id": "f739b6911b1c1510d1abda4ce54bcb8f",
+  "titulo": "ACN: Candidate",
+  "usado_por": 1,
+  "recomendacao": "remover_da_conversa",
+  "esforco": "baixo",
+  "resumo": "Set sem nenhuma variável. Não gera pergunta.",
+  "bloqueadores": [],
+  "perguntas": [],
+  "scripts_e_policies": [],
+  "observacoes": "Desvincular do item “Alteração de Vale Refeição - VR, Alimentação - VA” e excluir, depois de confirmar que não é usado em flow."
+ },
+ {
+  "sys_id": "fcb6085c1bbc21d0a530426fe54bcbec",
+  "titulo": "Commission payment summary",
+  "usado_por": 1,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Tipo + valor. Compatível, depois de trocar a validação de moeda por regex e o mandatory por atributo.",
+  "bloqueadores": [],
+  "perguntas": [
+   {
+    "variavel": "v_type",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o tipo de comissão?",
+    "obs": ""
+   },
+   {
+    "variavel": "v_value",
+    "acao": "manter",
+    "tipo_sugerido": "",
+    "conversational_label": "Qual é o valor?",
+    "obs": "Validation Regex de moeda BR."
+   }
+  ],
+  "scripts_e_policies": [
+   {
+    "nome": "EY: Value currency ",
+    "acao": "converter",
+    "substituicao": "Remover o script. Criar uma Variable Validation Regex de moeda BR (ex.: ^\\d{1,3}(\\.\\d{3})*(,\\d{2})?$) e aplicar na variável."
+   },
+   {
+    "nome": "EY: Commission",
+    "acao": "converter",
+    "substituicao": "Remover a policy: ela só força visible/mandatory sempre. Marcar Mandatory direto nas variáveis."
+   }
+  ],
+  "observacoes": "Os sets “Award payment summary” e “Commission payment summary” são iguais. Dá para unificar num só."
+ }
+]

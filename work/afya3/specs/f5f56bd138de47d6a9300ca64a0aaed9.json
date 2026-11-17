@@ -1,0 +1,121 @@
+{
+ "sys_id": "f5f56bd138de47d6a9300ca64a0aaed9",
+ "status": "dividido",
+ "motivo": "Quarentena de antispam pede remetente, assunto e data da mensagem; bloqueio de DLP pede canal afetado, descrição do incidente, justificativa de negócio e arquivo. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_remetente_email": {
+   "label": "Qual o e-mail do remetente?"
+  },
+  "v_assunto_do_e_mail": {
+   "label": "Qual o assunto do e-mail?"
+  },
+  "v_data_da_mensagem_date": {
+   "label": "Em que data a mensagem foi enviada?"
+  },
+  "v_justificativa_de_liberacao": {
+   "label": "Por que essa mensagem deve ser liberada?"
+  },
+  "v_canal_afetado": {
+   "label": "Por qual canal o bloqueio ocorreu?"
+  },
+  "v_descricao_do_incidente": {
+   "label": "Descreva o que aconteceu com o envio."
+  },
+  "v_justificativa_de_negocio": {
+   "label": "Qual a justificativa de negócio para o envio?"
+  },
+  "v_anexo_do_arquivo_attachment": {
+   "label": "Envie o arquivo bloqueado, se houver."
+  }
+ },
+ "policies": {
+  "3567821100d24917a87076e4e77a4623": "remover",
+  "64ff71875eed44489a6b8542f89c7265": "remover"
+ },
+ "itens": [
+  {
+   "name": "Liberar e-mail retido na quarentena do antispam",
+   "short_description": "Pedir a liberação de um e-mail legítimo retido na quarentena.",
+   "description": "Use quando um e-mail que você esperava ficou retido no antispam. A opção atendida é E-mail legítimo retido na quarentena de antispam. Informe o remetente, o assunto, a data e a justificativa.",
+   "frases_exemplo": [
+    "Um e-mail importante ficou preso na quarentena",
+    "Não recebi o e-mail de um cliente, acho que foi pro antispam",
+    "Preciso liberar uma mensagem retida",
+    "Libera o e-mail do fornecedor que caiu na quarentena",
+    "Solicito a liberação de um e-mail bloqueado"
+   ],
+   "sem_vars": [
+    "v_canal_afetado",
+    "v_descricao_do_incidente",
+    "v_justificativa_de_negocio",
+    "v_anexo_do_arquivo_attachment"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "E-mail legítimo retido na quarentena de antispam"
+   },
+   "vars": {
+    "v_remetente_email": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_assunto_do_e_mail": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_da_mensagem_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa_de_liberacao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Liberar envio bloqueado pela política de DLP",
+   "short_description": "Pedir exceção para um envio legítimo bloqueado pela prevenção de vazamento de dados.",
+   "description": "Use quando um envio de dados legítimo foi barrado pela política de DLP. A opção atendida é Enviar legítimo de dados sendo bloqueado pela política de DLP. Informe o canal, o que aconteceu, a justificativa de negócio e o arquivo.",
+   "frases_exemplo": [
+    "Não consigo enviar um arquivo, a DLP bloqueou",
+    "Meu e-mail com planilha foi barrado pela política de dados",
+    "Preciso de exceção para enviar um arquivo ao cliente",
+    "O envio foi bloqueado por vazamento de dados, é legítimo",
+    "Pedido de liberação de bloqueio de DLP"
+   ],
+   "sem_vars": [
+    "v_remetente_email",
+    "v_assunto_do_e_mail",
+    "v_data_da_mensagem_date",
+    "v_justificativa_de_liberacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Enviar legítimo de dados sendo bloqueado pela política de DLP"
+   },
+   "vars": {
+    "v_canal_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao_do_incidente": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa_de_negocio": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

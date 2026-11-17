@@ -1,0 +1,120 @@
+{
+ "sys_id": "8efadce81b54215cd1abda4ce54bcbee",
+ "name": "Informar direito a solicitar novo veículo",
+ "sys_name": "Inform the right to request a new vehicle",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Frotas",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Chamado para informar fornecedor sobre colaborador com direito a veículo corporativo (promoção, contratação)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "16",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_text_attention: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_start_text: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_start_text",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ available in the knowledge base"
+  },
+  {
+   "name": "v_range",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the collaborator's Range"
+  },
+  {
+   "name": "v_office",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the collaborator's Position"
+  },
+  {
+   "name": "v_text_attention",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your promotion letter here with information about the right to the vehicle"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+   "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+   "order": "400",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach: mandatory=true",
+    "v_range: mandatory=true",
+    "v_office: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get Range and Title",
+   "type": "onChange",
+   "on": "80ea119a1b00e598a530426fe54bcb0b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca faixa e título do colaborador. Chama x_nasm_finance.EY_UserDataFinanceUtils, método getCollaboratorData, via GlideAjax e preenche os campos com o retorno. Se o valor ficar vazio, limpa 'vs_requested_for' — mas a chamada dispara mesmo assim."
+  }
+ ]
+}

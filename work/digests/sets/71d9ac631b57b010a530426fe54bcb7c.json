@@ -1,0 +1,60 @@
+{
+ "sys_id": "71d9ac631b57b010a530426fe54bcb7c",
+ "title": "Personal information - VT Extra",
+ "internal_name": "personal_information_vt_extra",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Vale Transporte Extra"
+ ],
+ "variaveis": [
+  {
+   "name": "solicitation_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation to whom?",
+   "include_none": true,
+   "choices": [
+    "My request [=my_request]",
+    "Request for another employee [=another_employee]"
+   ]
+  },
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "default": "javascript: gs.getUserID()",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^EQ"
+  },
+  {
+   "name": "update_information_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: When \"Solicitation Whom\" is \"My request\" show \"Employee\" field",
+   "when": "IO:solicitation_whom=my_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "update_information_link: visible=true",
+    "employee: visible=true,mandatory=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "solicitation_whom: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

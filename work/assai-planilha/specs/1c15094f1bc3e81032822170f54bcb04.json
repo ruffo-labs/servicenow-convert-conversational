@@ -1,0 +1,167 @@
+{
+ "sys_id": "1c15094f1bc3e81032822170f54bcb04",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de alteração da previdência privada.",
+ "vars": {
+  "att_handwritten_letter": {
+   "label": "Carta de próprio punho"
+  },
+  "what_is_request": {
+   "label": "Qual a solicitação?"
+  },
+  "type_of_change": {
+   "label": "Qual tipo de alteração?"
+  },
+  "open_ticket_number_for_requesting_the_proposal": {
+   "label": "Nº do chamado aberto para solicitação da proposta"
+  },
+  "employee_contact_telephone_number": {
+   "label": "N° de telefone para contato do(a) colaborador(a)"
+  },
+  "change_form": {
+   "label": "Formulário de alteração"
+  },
+  "contact_number_with_area_code": {
+   "label": "N° de telefone para contato do(a) colaborador(a)"
+  },
+  "att_email_brasilprev": {
+   "label": "E-mail da BrasilPrev"
+  }
+ },
+ "remover": {
+  "rh_observation_form_cancel": "visual",
+  "start_1": "visual",
+  "rh_observation_form": "visual",
+  "formatter": "visual",
+  "rh_observation_signed": "visual",
+  "observation_alteration": "visual",
+  "formatter2": "visual",
+  "observation_email": "visual",
+  "observation_envio_confirmacao": "visual",
+  "rh_maintenance_description": "oferta_inativa",
+  "observation_termo_cancelamento": "visual"
+ },
+ "policies": {
+  "01d9194d1bb6a91032822170f54bcb13": "remover",
+  "6ea0cb3d87117650182a0d440cbb3538": {
+   "conditions": "service_offering=fe3b628787632250182a0d440cbb3542",
+   "actions": {
+    "type_of_change": {
+     "visible": true,
+     "mandatory": true
+    },
+    "change_form": {
+     "visible": true
+    }
+   }
+  },
+  "770b3d831b07a050eca40dcbe54bcbd3": "remover",
+  "8b21b68f87632250182a0d440cbb3506": {
+   "conditions": "service_offering=fe3b628787632250182a0d440cbb3542",
+   "actions": {
+    "change_form": {
+     "visible": true,
+     "mandatory": true
+    },
+    "type_of_change": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "f9350d8f1bc3e81032822170f54bcb96": "remover",
+  "3ccd764387e32250182a0d440cbb35be": {
+   "conditions": "what_is_request=3",
+   "actions": {
+    "att_handwritten_letter": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "4bef723d87117650182a0d440cbb355a": {
+   "conditions": "what_is_request=3",
+   "actions": {
+    "att_handwritten_letter": {
+     "visible": true
+    }
+   }
+  },
+  "8620873d87117650182a0d440cbb35d4": {
+   "conditions": "what_is_request=2",
+   "actions": {
+    "att_email_brasilprev": {
+     "visible": true
+    }
+   }
+  },
+  "a33b3a8f87a32250182a0d440cbb35a7": {
+   "conditions": "what_is_request=2",
+   "actions": {
+    "att_email_brasilprev": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "d7b9f20f87a32250182a0d440cbb35ad": "remover"
+ },
+ "itens": [
+  {
+   "name": "Previdência Privada (Operação de Benefícios - problema)",
+   "short_description": "Previdência Privada",
+   "description": "Previdência Privada",
+   "frases_exemplo": [
+    "Não recebimento de proposta digital"
+   ],
+   "sem_vars": [
+    "what_is_request",
+    "type_of_change",
+    "change_form",
+    "contact_number_with_area_code"
+   ],
+   "vars": {
+    "open_ticket_number_for_requesting_the_proposal": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "employee_contact_telephone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1426a61d1b18c5d832822170f54bcb11",
+    "6ea0cb3d87117650182a0d440cbb3538",
+    "705632c787a32250182a0d440cbb3535",
+    "8b21b68f87632250182a0d440cbb3506",
+    "94f7265d1b18c5d832822170f54bcb82",
+    "a4c5e21d1b18c5d832822170f54bcb31",
+    "3ccd764387e32250182a0d440cbb35be",
+    "4bef723d87117650182a0d440cbb355a",
+    "8620873d87117650182a0d440cbb35d4",
+    "a33b3a8f87a32250182a0d440cbb35a7"
+   ]
+  },
+  {
+   "name": "Previdência Privada (Operação de Benefícios - servico)",
+   "short_description": "Previdência Privada",
+   "description": "Previdência Privada",
+   "frases_exemplo": [
+    "Solicitação de adesão da previdência privada",
+    "Solicitação de cancelamento da previdência privada",
+    "Solicitação de alteração da previdência privada"
+   ],
+   "sem_vars": [
+    "open_ticket_number_for_requesting_the_proposal",
+    "employee_contact_telephone_number"
+   ],
+   "sem_policies": [
+    "1426a61d1b18c5d832822170f54bcb11",
+    "a4c5e21d1b18c5d832822170f54bcb31"
+   ]
+  }
+ ]
+}

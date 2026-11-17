@@ -1,0 +1,141 @@
+{
+ "sys_id": "3767a758ba85481f96b56203e6792a13",
+ "status": "dividido",
+ "motivo": "Alterar automação pede a alteração desejada, testes, impacto e critério de aceite; desativar pede dependências, retenção e data de desativação. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_automacao_a_alterar": {
+   "label": "Qual automação você quer alterar?"
+  },
+  "v_alteracao_desejada": {
+   "label": "Que alteração você deseja?"
+  },
+  "v_motivo": {
+   "label": "Qual o motivo da mudança?"
+  },
+  "v_plano_de_testes": {
+   "label": "Como essa mudança deve ser testada?"
+  },
+  "v_impacto_estimado": {
+   "label": "Qual o impacto esperado dessa mudança?"
+  },
+  "v_criterio_de_aceite": {
+   "label": "O que indica que a mudança deu certo?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_automacao_a_desativar": {
+   "label": "Qual automação você quer desativar?"
+  },
+  "v_dependencias_mapeadas": {
+   "label": "Quais dependências dessa automação você conhece?"
+  },
+  "v_retencao_necessaria": {
+   "label": "É preciso guardar os registros dessa automação?"
+  },
+  "v_data_de_desativacao": {
+   "label": "Em que data ela deve ser desativada?"
+  }
+ },
+ "policies": {
+  "3e28e8bce71547528853bd10c853fee9": "remover",
+  "34fc81b0d1ed470fae6e8fcebd6d6ff6": "remover"
+ },
+ "itens": [
+  {
+   "name": "Alterar uma automação existente",
+   "short_description": "Pedir mudança controlada em uma automação que já está em uso.",
+   "description": "Use quando uma automação existente precisa mudar, como regra, conector, aprovação ou destinatário. A opção atendida é Alterar automação existente. Informe a automação, a alteração, o motivo, o plano de testes, o impacto e o critério de aceite.",
+   "frases_exemplo": [
+    "Preciso mudar o destinatário de uma automação",
+    "Quero alterar uma regra da automação",
+    "Trocar o aprovador do fluxo automático",
+    "Ajustar o conector de uma automação existente",
+    "Pedido de mudança numa automação que já roda"
+   ],
+   "sem_vars": [
+    "v_automacao_a_desativar",
+    "v_dependencias_mapeadas",
+    "v_retencao_necessaria",
+    "v_data_de_desativacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar automação existente"
+   },
+   "vars": {
+    "v_automacao_a_alterar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_alteracao_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_testes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_estimado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_criterio_de_aceite": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Desativar uma automação",
+   "short_description": "Pedir a desativação controlada de uma automação.",
+   "description": "Use quando uma automação não deve mais rodar. A opção atendida é Desativar automação. Informe a automação, o motivo, as dependências mapeadas, a retenção de registros e a data de desativação.",
+   "frases_exemplo": [
+    "Quero desligar uma automação que não é mais usada",
+    "Preciso desativar um fluxo automático",
+    "Essa automação está enviando e-mails indevidos, desativem",
+    "Pedido de desativação de automação",
+    "Vamos descontinuar essa automação, como peço?"
+   ],
+   "sem_vars": [
+    "v_automacao_a_alterar",
+    "v_alteracao_desejada",
+    "v_plano_de_testes",
+    "v_impacto_estimado",
+    "v_criterio_de_aceite"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Desativar automação"
+   },
+   "vars": {
+    "v_automacao_a_desativar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dependencias_mapeadas": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_retencao_necessaria": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_de_desativacao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

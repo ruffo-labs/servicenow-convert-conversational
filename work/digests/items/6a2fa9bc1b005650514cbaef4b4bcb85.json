@@ -1,0 +1,191 @@
+{
+ "sys_id": "6a2fa9bc1b005650514cbaef4b4bcb85",
+ "name": "Questões, dúvidas, reclamações ou sugestões relacionadas a Férias",
+ "sys_name": "Questions, consults, complaints or suggestions related to Vacations",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Férias",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+ "description": "Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "21",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_select_the_category: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Puedes usar este formulario si la temática que buscas no está disponible aqui"
+  },
+  {
+   "name": "v_contact_reason",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Contact reason",
+   "include_none": true,
+   "choices": [
+    "Questions/Consults [=questions]",
+    "Suggestions [=suggestions]",
+    "Complaints [=complaints]"
+   ]
+  },
+  {
+   "name": "v_select_the_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the category",
+   "lookup": "x_nasm_hr_rules_hispanic_vacaciones_questions",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true,
+   "choices": [
+    "Vacations [=vacations]",
+    "Vacations sales [=vacations_sales]"
+   ]
+  },
+  {
+   "name": "v_detail_field",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "50",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory - v_corporate_e_mail",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_corporate_e_mail: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory - v_contact_reason",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_contact_reason: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: hide v_reason_on_behalf ",
+   "when": "IO:v_who_is_this_request_for=for_me^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_reason_on_behalf: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory - v_detail_field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_detail_field: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory - v_employee",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Hide category OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a categoria e, DENTRO DE UM setTimeout, verifica se o país é 'ECU' para reexibi-la. O uso de setTimeout indica contorno de problema de ordem de carregamento — solução frágil, porque depende de tempo e não de evento."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "816471381b405650514cbaef4b4bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange do anterior: enquanto o usuário digita, exibe a legenda de mínimo de caracteres se o texto tiver entre 1 e 39 caracteres, e esconde quando atinge 40."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."
+  },
+  {
+   "name": "EY: Show category if Equador OnChange",
+   "type": "onChange",
+   "on": "2c405bc71bb78a10514cbaef4b4bcb0a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange do anterior: exibe a categoria quando o país é 'ECU' (Equador), sem o setTimeout."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que BLOQUEIA o envio quando a descrição tem menos de 40 caracteres. Exibe a legenda de mínimo de caracteres e retorna false. Validação de qualidade de conteúdo, não de formato."
+  }
+ ]
+}

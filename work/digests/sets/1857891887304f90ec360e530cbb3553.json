@@ -1,0 +1,41 @@
+{
+ "sys_id": "1857891887304f90ec360e530cbb3553",
+ "title": "Please specify which companies will be required to implement the collective agre",
+ "internal_name": "please_specify_which_companies_will_be_required_to_implement_the_collective_agre",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitar Aplicação de Acordo Coletivo"
+ ],
+ "variaveis": [
+  {
+   "name": "v_location",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Location",
+   "reference": "cmn_location",
+   "ref_qual": "nameISNOTEMPTY^EQ"
+  },
+  {
+   "name": "v_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Company",
+   "reference": "core_company",
+   "ref_qual": "u_brand=Natura^country=Brazil^ORcountry=Brasil^EQ"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_location: mandatory=true",
+    "v_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

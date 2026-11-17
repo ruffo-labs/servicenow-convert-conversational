@@ -1,0 +1,113 @@
+{
+ "sys_id": "0c15c54f1bc3e81032822170f54bcb9e",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Auxílio Creche (autoatendimento, problema) e Auxílio creche (gestor, problema e serviço), 3 grupos e 3 ofertas.",
+ "vars": {
+  "rh_child_name": {
+   "label": "Qual é o nome do(a) dependente?"
+  },
+  "rh_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "rh_inform_dependents_full_name": {
+   "label": "Qual é o nome completo do(a) dependente?"
+  },
+  "rh_attach_billet_proof_of_payment": {
+   "label": "Envie o boleto ou a nota fiscal."
+  }
+ },
+ "policies": {
+  "6d350d8f1bc3e81032822170f54bcb5e": "remover",
+  "b175fdf81bdfe110347221bbe54bcb0f": "remover",
+  "b995f53c1bdfe110347221bbe54bcb0d": "remover",
+  "caa8163d871d3650182a0d440cbb35e3": "remover"
+ },
+ "itens": [
+  {
+   "name": "Auxílio Creche",
+   "short_description": "Reportar não recebimento ou valor errado do auxílio creche.",
+   "description": "Use quando você não recebeu o auxílio creche ou o valor veio divergente. Atende a oferta Não recebimento ou divergência no valor do Auxílio creche. Informe o nome do dependente e o mês de referência.",
+   "frases_exemplo": [
+    "Não recebi meu auxílio creche",
+    "O valor do auxílio creche veio errado",
+    "Meu auxílio creche não caiu este mês",
+    "Auxílio creche com valor diferente do combinado",
+    "Quero reclamar do pagamento do auxílio creche"
+   ],
+   "sem_vars": [
+    "rh_inform_dependents_full_name",
+    "rh_attach_billet_proof_of_payment"
+   ],
+   "vars": {
+    "rh_child_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Auxílio creche (não recebimento ou divergência)",
+   "short_description": "Reportar auxílio creche não recebido ou com valor divergente de colaborador.",
+   "description": "Use quando um colaborador da sua equipe não recebeu o auxílio creche ou recebeu valor divergente. Atende a oferta Não recebimento ou divergência no valor do Auxílio creche. Informe o nome do dependente e o mês de referência.",
+   "frases_exemplo": [
+    "Um colaborador meu não recebeu o auxílio creche",
+    "O auxílio creche dela veio com valor errado",
+    "Reportar divergência no auxílio creche de um funcionário",
+    "Auxílio creche não foi pago para alguém da equipe",
+    "Valor do auxílio creche está divergente"
+   ],
+   "sem_vars": [
+    "rh_inform_dependents_full_name",
+    "rh_attach_billet_proof_of_payment"
+   ],
+   "vars": {
+    "rh_child_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Auxílio creche (reembolso Instituto)",
+   "short_description": "Solicitar reembolso de auxílio creche do Instituto.",
+   "description": "Use para solicitar o reembolso de auxílio creche do Instituto para um colaborador. Atende a oferta Solicitação de Reembolso de Auxilio Creche - Instituto. Informe o nome do dependente e anexe o boleto ou a nota fiscal.",
+   "frases_exemplo": [
+    "Preciso pedir reembolso de creche do Instituto",
+    "Quero solicitar o reembolso do auxílio creche",
+    "Reembolso da creche do filho de um colaborador",
+    "Como peço reembolso de auxílio creche Instituto?",
+    "Tenho o boleto da creche e quero o reembolso"
+   ],
+   "sem_vars": [
+    "rh_child_name",
+    "rh_reference_month",
+    "rh_container_init",
+    "formatter"
+   ],
+   "vars": {
+    "rh_inform_dependents_full_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_attach_billet_proof_of_payment": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

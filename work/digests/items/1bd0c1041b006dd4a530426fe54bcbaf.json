@@ -1,0 +1,181 @@
+{
+ "sys_id": "1bd0c1041b006dd4a530426fe54bcbaf",
+ "name": "Solicitação de Reembolso do Ponto Eletrônico",
+ "sys_name": "Electronic Point Refund Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Controle de Jornada",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Utilize esse formulário para solicitar reembolso/devolução do ponto eletrônico, referente a inconsistência na marcação do ponto retroativo.",
+ "description": "1",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "22",
+   "variaveis_ativas": "24",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "22"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @anexo_email: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_name_1: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 22 de 22 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 22 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company",
+   "read_only": true
+  },
+  {
+   "name": "v_date_of_divergence",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of divergence"
+  },
+  {
+   "name": "v_entry_time",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Entry time"
+  },
+  {
+   "name": "v_departure_time",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Departure Time"
+  },
+  {
+   "name": "v_justification",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Justification",
+   "include_none": true,
+   "choices": [
+    "#TempoPresente [=tempo_presente]",
+    "COVID-19 Vaccination Allowance [=v_COVID-19_vaccination]",
+    "Union Director Allowance [=v_union_director_allowance]",
+    "Administrative Allowance [=v_administrative_allowance]",
+    "Chief Allowance [=v_chief_allowance]",
+    "Military enlistment [=v_enlistment]",
+    "Breast-feeding [=v_breast-feeding]",
+    "Birthday [=v_birthday]",
+    "Bus delay [=v_bus_delay]",
+    "Ext Hours Medical Certificate [=v_ext_hours_medical_certificate]",
+    "Dental certificate [=v_dental_certificate]",
+    "Delay Paid [=v_delay_paid]",
+    "Hs Monitoring Certificate [=v_hs_monitoring_certificate]",
+    "Day Companion Certificate [=v_day_companion_certificate]",
+    "Hs In Medical Certificate [=v_hs_medical_certificate]",
+    "Medical Certificate of Hours [=v_medical_certificate_hours]",
+    "Excused Absence [=v_excused_absence]",
+    "Wedding [=v_wedding]",
+    "Time Compensation [=v_time_compensation]",
+    "Declaration of Attendance [=v_declaration_attendance]",
+    "Blood donation [=v_blood_donation]",
+    "Forgetfulness / Loss of Badge [=v_forgetfulness]",
+    "Family Death [=v_family_death]",
+    "Absence Paid [=v_absence_paid]",
+    "Home Office [=v_home_office]",
+    "Electoral Justification [=v_electoral_justification]",
+    "Electoral justice [=v_electoral_justice]",
+    "Justification of the Union [=v_justification_union]",
+    "Provision of Vestibular [=v_provision_vestibular]",
+    "Clock Problems [=v_clock_problems]",
+    "Paid Early Departure [=v_paid_early_departure]",
+    "External Service [=v_external_service]",
+    "Syndicate [=v_syndicate]",
+    "Suspension [=v_suspension]",
+    "Training [=v_training]"
+   ]
+  },
+  {
+   "name": "v_reason",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason",
+   "include_none": true,
+   "choices": [
+    "Systemic error [=v_ systemic_error]",
+    "Lack of manager approval [=v_lack_manager_approval]",
+    "Lack of employee adjustment [=v_lack_adjustment]"
+   ]
+  },
+  {
+   "name": "anexo_email",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Para que sua solicitação seja analisada, é obrigatório anexar o e-mail do \"de acordo\" da sua gestão."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  },
+  {
+   "sys_id": "6cdbb7341bccad18a530426fe54bcb4a",
+   "name": "(+)Adicionar Colaborador",
+   "order": "700",
+   "perguntas": [
+    "v_name_1 (Referência): Name",
+    "v_id (Texto de Linha Única): ID",
+    "v_company_1 (Texto de Linha Única): Company",
+    "v_date_divergence_1 (Data): Date of divergence",
+    "v_entry_time_1 (Texto de Linha Única): Entry time",
+    "v_departure_time_1 (Texto de Linha Única): Departure Time",
+    "v_justification_1 (Selecionar Caixa): Justification",
+    "v_reason_1 (Selecionar Caixa): Reason"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Fields Mandatory ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "anexo_email: mandatory=true",
+    "v_entry_time: mandatory=true",
+    "v_reason: mandatory=true",
+    "v_departure_time: mandatory=true",
+    "v_date_of_divergence: mandatory=true",
+    "v_justification: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get user company",
+   "type": "onChange",
+   "on": "3bae284f1bafdd50a530426fe54bcbbe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a empresa do usuário, limpando o campo quando o valor fica vazio."
+  }
+ ]
+}

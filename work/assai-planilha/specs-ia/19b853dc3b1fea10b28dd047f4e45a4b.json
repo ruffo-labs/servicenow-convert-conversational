@@ -1,0 +1,136 @@
+{
+ "sys_id": "19b853dc3b1fea10b28dd047f4e45a4b",
+ "status": "conversacional",
+ "motivo": "Item da planilha: Autoatendimento > Preciso de um serviço de RH > Crachá, com 3 ofertas.",
+ "vars": {
+  "v_motivo_da_solicitacao": {
+   "label": "Qual é o motivo do pedido da 2ª via?"
+  },
+  "v_data_nascimento": {
+   "label": "Qual é a sua data de nascimento?"
+  },
+  "v_anexar_foto_2": {
+   "label": "Envie a foto para o crachá."
+  },
+  "v_apelido_social": {
+   "label": "Qual apelido social você quer no crachá?"
+  },
+  "v_deseja_alterar_foto": {
+   "label": "Você quer alterar a foto do crachá?"
+  },
+  "v_anexar_foto_3": {
+   "label": "Envie a foto do prestador de serviço."
+  },
+  "v_nome_social": {
+   "label": "Qual nome social você quer no crachá?"
+  },
+  "v_motivo_solicitacao": {
+   "label": "Você quer usar apelido social ou nome social?"
+  },
+  "v_autodeclaracao": {
+   "label": "Com qual identidade você se autodeclara?"
+  },
+  "v_anexar_foto": {
+   "label": "Envie a nova foto para o crachá."
+  },
+  "v_cpf_prestador": {
+   "label": "Qual é o CPF do prestador de serviço?"
+  },
+  "v_nome_prestador": {
+   "label": "Qual é o nome completo do prestador de serviço?"
+  }
+ },
+ "remover": {
+  "v_observacao": "visual",
+  "v_observacao_nome": "visual",
+  "v_observacao_apelido": "visual"
+ },
+ "policies": {
+  "4c7132283bd36e10b28dd047f4e45a7e": {
+   "conditions": "v_deseja_alterar_foto=Yes^service_offering=2437a26c3b536e10b28dd047f4e45a9b",
+   "actions": {
+    "v_anexar_foto": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "73c47eec3bd36e10b28dd047f4e45a8c": {
+   "conditions": "v_motivo_solicitacao=2^service_offering=799826203b936e10b28dd047f4e45a08",
+   "actions": {
+    "v_nome_social": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_autodeclaracao": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8aa1bee43bd36e10b28dd047f4e45a38": {
+   "conditions": "service_offering=2b2826203b936e10b28dd047f4e45a03",
+   "actions": {
+    "v_cpf_prestador": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_anexar_foto_3": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_nome_prestador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "90e27ee83bd36e10b28dd047f4e45aa4": {
+   "conditions": "v_motivo_solicitacao=1^service_offering=799826203b936e10b28dd047f4e45a08",
+   "actions": {
+    "v_apelido_social": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "922b946287d17210182a0d440cbb3541": {
+   "conditions": "v_deseja_alterar_foto=Yes^service_offering=2437a26c3b536e10b28dd047f4e45a9b",
+   "actions": {
+    "v_anexar_foto": {
+     "visible": true
+    }
+   }
+  },
+  "c12c50a287d17210182a0d440cbb3537": {
+   "conditions": "service_offering=2b2826203b936e10b28dd047f4e45a03",
+   "actions": {
+    "v_anexar_foto_3": {
+     "visible": true
+    },
+    "v_cpf_prestador": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_nome_prestador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Crachá",
+   "short_description": "Pedir 2ª via, crachá com nome social ou crachá de prestador.",
+   "description": "Use para pedir a 2ª via do crachá por perda ou dano, o crachá com nome social ou o crachá de prestador de serviço. Atende as ofertas Solicitação de 2ª via de crachá - Crachá, Solicitação de crachá - Nome social - Crachá e Solicitação de crachá - Prestador de serviço - Crachá. Os dados pedidos variam conforme o tipo, como motivo, nome desejado, CPF e foto.",
+   "frases_exemplo": [
+    "Perdi meu crachá, preciso de outro",
+    "Quero crachá com meu nome social",
+    "Preciso de crachá para um prestador de serviço",
+    "Meu crachá estragou, como peço a 2ª via?",
+    "Solicitar crachá novo"
+   ]
+  }
+ ]
+}

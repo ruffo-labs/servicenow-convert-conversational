@@ -1,0 +1,126 @@
+{
+ "sys_id": "9c5592d61be12990d1abda4ce54bcbb4",
+ "name": "Relatorios e consultas em geral",
+ "sys_name": "Reports and General Queries",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Relatórios e Consultas Contábeis",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite um relatório ou efetue uma consulta",
+ "description": "Solicite um relatório ou efetue uma consulta",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "20",
+   "bloqueadores": "1",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Remove options information type"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_controle",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Is your request for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS [=tbs]",
+    "Avon LATAM [=avon_latam]"
+   ]
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "7ec5d61a1be12990d1abda4ce54bcb1b",
+   "name": "EY VS - Relatorios e consultas em geral",
+   "order": "200",
+   "perguntas": [
+    "vs_request_type (Selecionar Caixa): What is the type of request?",
+    "vs_information_type (Selecionar Caixa): The information is about:",
+    "vs_report_start_date (Data): Report Start Date",
+    "vs_report_end_date (Data): Report End Date",
+    "vs_description (Texto de Várias Linhas): Describe the information you need"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_controle: visible=false,mandatory=false,readonly=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Preencher variável controle ",
+   "type": "onChange",
+   "on": "797e07881b29a590a530426fe54bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Grava na variável de controle 'v_controle' o valor da empresa ('vs_which_company') quando o novo valor é 'Avon LATAM', e a string 'true' em qualquer outro caso. Serve de apoio para outras regras do formulário."
+  },
+  {
+   "name": "EY: Remove options information type",
+   "type": "onChange",
+   "on": "9de674fc3bf1de10924d0247f4e45a7e",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange sobre o tipo de informação. Sempre começa removendo as opções 'cost', 'fixed_asset' e 'others' de 'vs_information_type' — inclusive no caso de valor vazio, quando sai logo em seguida. Depois lê o display value da sub-empresa e o idioma do usuário (g_lang), monta os rótulos em inglês, espanhol ou português, e recoloca as opções conforme a sub-empresa contenha os códigos 347, 305, 315, 331 ou 332. Efeito prático: a lista de tipos de informação muda conforme a sub-emp…"
+  }
+ ]
+}

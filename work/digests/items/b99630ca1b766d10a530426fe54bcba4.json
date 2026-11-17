@@ -1,0 +1,203 @@
+{
+ "sys_id": "b99630ca1b766d10a530426fe54bcba4",
+ "name": "Dúvidas, reclamações e sugestões relacionadas a benefícios",
+ "sys_name": "FORM0000561",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Dúvidas, reclamações e sugestões relacionadas a benefícios",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Este é um formulário genérico para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre Informações ou Dúvidas relacionadas a benefícios.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "22",
+   "bloqueadores": "6",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Remove options based on country"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_text_vale_ref_alim: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @Info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @information_workday: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "Info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request Type",
+   "include_none": true,
+   "choices": [
+    "Complaints [=complaints]",
+    "Queries [=queries]",
+    "Suggestions [=suggestions]"
+   ]
+  },
+  {
+   "name": "beneficios",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the benefit",
+   "include_none": true,
+   "choices": [
+    "Health care [=health_care]",
+    "Dental Care [=dental_care]",
+    "Childcare Assistance [=childcare_assistance]",
+    "Internet Aid [=internet_aid]",
+    "Nursery [=bercario]",
+    "Fathers and Mothers Celebrations [=fathers_and_ mothers_celebrations]",
+    "Pharmacy [=pharmacy]",
+    "Chartered [=chartered]",
+    "Wellhub [=gympass]",
+    "Ecommerce [=ecommerce]",
+    "PAP [=pap]",
+    "Private Pension [=private_pension]",
+    "Living Psychology [=living_psychology]",
+    "Restaurant [=restaurant]",
+    "Life Insurance [=life_insurance]",
+    "Relationship Time [=relationship_time]",
+    "Food Voucher [=food _voucher]",
+    "Meal Voucher [=meal_voucher]",
+    "Transportation Valley [=transportation_valley]",
+    "Fuel Assistance [=fuel_assistance]"
+   ]
+  },
+  {
+   "name": "v_text_vale_ref_alim",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_description_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Contextual Search Results",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "1a401a591b15f510a530426fe54bcb1a",
+   "name": "Informações pessoais - Benefícios",
+   "order": "100",
+   "perguntas": [
+    "solicitation_to_whom (Selecionar Caixa): Solicitation to whom?",
+    "why_opening (Selecionar Caixa): Employee status",
+    "employee (Referência, ro): Employee",
+    "information_workday (Rótulo de Rich Text): ",
+    "id_global (Texto de Linha Única, ro): ID Global",
+    "corporate_email (Texto de Linha Única, ro): Corporate email",
+    "manegar_name (Texto de Linha Única, ro): Manager name",
+    "country (Texto de Linha Única, ro): Country",
+    "company (Texto de Linha Única, ro): Company",
+    "location (Texto de Linha Única, ro): Location",
+    "discharge_date (Texto de Linha Única, ro): Discharge date",
+    "position_title (Texto de Linha Única, ro): Position",
+    "management_level (Texto de Linha Única, ro): Management level",
+    "address (Texto de Linha Única, ro): Address",
+    "national_id (Texto de Linha Única, ro): National ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "NVLX: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "beneficios: mandatory=true",
+    "request_type: mandatory=true",
+    "v_description_details: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set text vale refeição/alimentação",
+   "when": "IO:beneficios=food _voucher^ORIO:beneficios=meal_voucher^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_vale_ref_alim: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "NVLX: Minimum caracter ",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o tamanho mínimo da descrição. Variante 'NVLX' do validador — prefixo diferente dos EY/ACN usados no resto."
+  },
+  {
+   "name": "EY: Remove options based on country",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove opções de benefício quando o idioma do usuário é português. Opção condicionada a idioma, não a país — mesmo padrão visto no catálogo Hispanic."
+  }
+ ]
+}

@@ -1,0 +1,89 @@
+{
+ "sys_id": "abad07423ba4da10924d0247f4e45a63",
+ "status": "conversacional",
+ "motivo": "Intenção única (enviar novidade de folha) para áreas autorizadas. A policy 'EY: Required fields' vira props; os três scripts de validação de 40 caracteres viram uma validation_regex em describe_tu_necesidad; rótulos v_min_characters/registration/attach/v_template são só visuais. category/subcategory ficam como lookup (opções dinâmicas via reference_qual em javascript), sem virar lista fixa. A policy 'EY: Read only - Target record' é reescrita para não citar mais 'registration', removida da conversa.",
+ "vars": {
+  "request_type": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "select_the_country_related_to_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "select_the_brand_related_to_your_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "indicate_the_number_of_employees_affected": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[0-9]+$"
+   }
+  },
+  "monto_cantidad_total": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "describe_tu_necesidad": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_min_characters": "visual",
+  "registration": "visual",
+  "attach": "visual",
+  "v_template": "visual"
+ },
+ "policies": {
+  "ffba53ce3b28da10924d0247f4e45a6a": "remover",
+  "bedcdf863b68da10924d0247f4e45a23": {
+   "conditions": "",
+   "actions": {
+    "describe_tu_necesidad": {
+     "readonly": true
+    },
+    "subcategory": {
+     "readonly": true
+    },
+    "request_type": {
+     "readonly": true
+    },
+    "category": {
+     "readonly": true
+    },
+    "select_the_country_related_to_your_request": {
+     "readonly": true
+    },
+    "indicate_the_number_of_employees_affected": {
+     "readonly": true
+    },
+    "monto_cantidad_total": {
+     "readonly": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "1f5a5b0e3b28da10924d0247f4e45ada": {
+   "converter": "regex"
+  },
+  "3bf993ca3b28da10924d0247f4e45ac2": {
+   "remover": {
+    "substituido_por": "describe_tu_necesidad"
+   }
+  },
+  "a36a5fca3b28da10924d0247f4e45a96": {
+   "remover": {
+    "substituido_por": "describe_tu_necesidad"
+   }
+  }
+ }
+}

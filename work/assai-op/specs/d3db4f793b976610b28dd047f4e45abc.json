@@ -1,0 +1,185 @@
+{
+ "sys_id": "d3db4f793b976610b28dd047f4e45abc",
+ "status": "dividido",
+ "motivo": "Divergência/não recebimento pede só o nome do pensionista; alteração bancária pede dados bancários e comprovante; cadastro pede também o ofício; exclusão pede só o ofício.",
+ "vars": {
+  "agencia_pensionista": {
+   "label": "Qual é a agência do(a) pensionista?"
+  },
+  "banco_pensionista": {
+   "label": "Qual é o banco do(a) pensionista?"
+  },
+  "cpf_pensionista": {
+   "label": "Qual é o CPF do(a) pensionista?"
+  },
+  "anexo_comprovante_dados_bancarios": {
+   "label": "Envie o comprovante dos dados bancários."
+  },
+  "anexo_oficio_emitido_juiz": {
+   "label": "Envie o ofício emitido pelo juiz."
+  },
+  "nome_pensionista": {
+   "label": "Qual é o nome completo do(a) pensionista?"
+  },
+  "conta_pensionista": {
+   "label": "Qual é o número da conta do(a) pensionista, com dígito?"
+  }
+ },
+ "policies": {
+  "109d90ce8797a610182a0d440cbb35ad": "remover",
+  "4c9a64ea87157210182a0d440cbb356f": "remover",
+  "4fc4d48e8757a610182a0d440cbb3510": "remover",
+  "6c1a6c6a87157210182a0d440cbb353c": "remover",
+  "853698028797a610182a0d440cbb35cf": "remover",
+  "93c79cc28797a610182a0d440cbb353c": "remover",
+  "ce3480468717a610182a0d440cbb357b": "remover",
+  "deee2082875ba610182a0d440cbb3536": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência ou não recebimento da pensão alimentícia",
+   "short_description": "Divergência no valor ou não recebimento da pensão alimentícia",
+   "description": "Use quando o valor da pensão alimentícia está divergente ou não foi recebido. Corresponde à oferta Divergência no valor da pensão alimentícia / Não recebimento da pensão alimentícia. Informe o nome do pensionista.",
+   "frases_exemplo": [
+    "A pensão veio com valor errado",
+    "Minha pensão alimentícia não foi paga",
+    "Tem divergência no valor da pensão",
+    "O pensionista não recebeu",
+    "Desconto de pensão diferente do esperado"
+   ],
+   "sem_vars": [
+    "agencia_pensionista",
+    "banco_pensionista",
+    "cpf_pensionista",
+    "anexo_comprovante_dados_bancarios",
+    "anexo_oficio_emitido_juiz",
+    "conta_pensionista"
+   ],
+   "vars": {
+    "nome_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Alterar dados bancários do pensionista",
+   "short_description": "Solicitação de alteração dos dados bancários do(a) pensionista",
+   "description": "Use para alterar os dados bancários do pensionista. Corresponde à oferta Solicitação de alteração dos dados bancários do(a) pensionista. Informe os dados da nova conta e anexe o comprovante.",
+   "frases_exemplo": [
+    "Preciso trocar a conta do pensionista",
+    "O pensionista mudou de banco",
+    "Atualizar dados bancários da pensão",
+    "Alterar agência e conta da pensão alimentícia"
+   ],
+   "sem_vars": [
+    "anexo_oficio_emitido_juiz"
+   ],
+   "vars": {
+    "agencia_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "banco_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "cpf_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "anexo_comprovante_dados_bancarios": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "nome_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "conta_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Cadastrar pensão alimentícia",
+   "short_description": "Solicitação de cadastro de pensão alimentícia",
+   "description": "Use para cadastrar uma pensão alimentícia. Corresponde à oferta Solicitação de cadastro de pensão alimentícia. Informe os dados do pensionista e anexe o ofício do juiz.",
+   "frases_exemplo": [
+    "Preciso cadastrar uma pensão alimentícia",
+    "Chegou um ofício de pensão para cadastrar",
+    "Incluir pensão alimentícia na folha",
+    "Nova pensão para o colaborador"
+   ],
+   "sem_vars": [
+    "anexo_comprovante_dados_bancarios"
+   ],
+   "vars": {
+    "agencia_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "banco_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "cpf_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "anexo_oficio_emitido_juiz": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "nome_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "conta_pensionista": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Excluir pensão alimentícia",
+   "short_description": "Solicitação de exclusão de pensão alimentícia",
+   "description": "Use para excluir uma pensão alimentícia. Corresponde à oferta Solicitação de exclusão de pensão alimentícia. Anexe o ofício emitido pelo juiz.",
+   "frases_exemplo": [
+    "Preciso excluir uma pensão alimentícia",
+    "O juiz determinou o fim da pensão",
+    "Cancelar a pensão na folha",
+    "Remover pensão alimentícia do colaborador"
+   ],
+   "sem_vars": [
+    "agencia_pensionista",
+    "banco_pensionista",
+    "cpf_pensionista",
+    "anexo_comprovante_dados_bancarios",
+    "nome_pensionista",
+    "conta_pensionista"
+   ],
+   "vars": {
+    "anexo_oficio_emitido_juiz": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

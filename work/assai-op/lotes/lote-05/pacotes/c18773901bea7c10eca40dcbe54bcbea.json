@@ -1,0 +1,111 @@
+{
+ "sys_id": "c18773901bea7c10eca40dcbe54bcbea",
+ "name": "FGTS Desligado",
+ "category": "Rescisão",
+ "short_description": "FGTS Desligado",
+ "description": "FGTS Desligado",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de correção de FGTS rescisório - Barcelona ",
+     "sla": "SLA - GESTÃO DE GENTE - 120H",
+     "grupo_suporte": "RH - FGTS Desligados"
+    },
+    {
+     "name": "Solicitação de correção de FGTS rescisório - Xantocarpa",
+     "sla": "SLA - GESTÃO DE GENTE - 120H",
+     "grupo_suporte": "RH - FGTS Desligados"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "resignation_date",
+    "approval_date"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "resignation_date",
+   "type": "Data",
+   "question_text": "Data de Demissão",
+   "choices": []
+  },
+  {
+   "name": "approval_date",
+   "type": "Data",
+   "question_text": "Data de Homologação",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "747375943b6b2a10b28dd047f4e45aee",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "776375943b6b2a10b28dd047f4e45a4d",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

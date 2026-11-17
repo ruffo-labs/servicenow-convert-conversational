@@ -1,0 +1,324 @@
+{
+ "sys_id": "65c549651b99e510a530426fe54bcb58",
+ "title": "EY VS - Empresas Natura ",
+ "internal_name": "ey_vs_empresas_natura",
+ "description": "variable set destinada a variaveis padrão empresa natura",
+ "usado_por": 30,
+ "itens_exemplo": [
+  "Estorno de Lançamento Contábil",
+  "Consulta de Fornecedores",
+  "Adiantamento de Pagamento ao Fornecedor",
+  "Consulta a Pagamentos Atrasados",
+  "Baixa de Ativo Fixo",
+  "Envio De Informações de Fechamento Contábil",
+  "Ajuste de Inventário e Ajuste Ciclico",
+  "Capitalização de Gastos"
+ ],
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Payment [=payment]",
+    "Accounting [=accounting]"
+   ]
+  },
+  {
+   "name": "vs_which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is your request for which company?",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS/Newbeauty [=tbs]",
+    "Avon LATAM"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company_2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: \r\nvar companySysIds = new x_nasm_rtr.EY_RTRUtils().getAvonBR(current.variables.vs_which_company);\r\nif (current.variables.vs_which_company "
+  },
+  {
+   "name": "vs_which_sub_company_6",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Para qual sub-empresa é o serviço?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_ptp.EY_PTPUtils().getBrazilEquadorSubCompany(current.variables.vs_which_company);"
+  },
+  {
+   "name": "vs_which_sub_company_7",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getRTRSubcompanies(current.variables.vs_which_company);"
+  },
+  {
+   "name": "vs_which_sub_company_3",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getNatura7900(current.variables.vs_which_company);"
+  },
+  {
+   "name": "called_area",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which area will the call be opened?",
+   "include_none": true,
+   "choices": [
+    "Legal [=juridico]",
+    "VP&MP [=vpemi]",
+    "Corporate HR [=rh_corporativo]",
+    "Investor Relations [=relacao_investidores]",
+    "CSC [=csc]",
+    "Avon Industrial [=avon_industrial]",
+    "Controladoria [=controladoria]",
+    "Desenvolvimento do Produto [=desenvolvimento_produto]",
+    "Força de Vendas [=forca_vendas]",
+    "Instituto Natura [=instituto_natura]",
+    "Inteligência de Mercado [=inteligencia_mercado]",
+    "Internacionalização [=internacionalizacao]",
+    "Natura Pay [=natura_pay]",
+    "O&L [=oel]",
+    "Omnicanal [=omnicanal]",
+    "Proativa [=proativa]",
+    "Seguros [=seguros]",
+    "Serviços Comerciais CSC [=servicos_comerciais_csc]",
+    "Outros [=outros]"
+   ]
+  },
+  {
+   "name": "vs_which_sub_company_4",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Para qual sub-empresa é o serviço?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_ptp.EY_PTPUtils().getCostCenterSubcompany(current.variables.vs_which_company);"
+  },
+  {
+   "name": "vs_which_sub_company_8",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getRTRSubcompanies_v2(current.variables.vs_which_company, current.cat_item);"
+  },
+  {
+   "name": "vs_which_sub_company_5",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Para qual sub-empresa é o serviço?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_ptp.EY_PTPUtils().getBlockedUnblockedSubcompany(current.variables.vs_which_company);"
+  },
+  {
+   "name": "called_area_others",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Adicione o nome da área"
+  },
+  {
+   "name": "vs_which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getAllSubcompanies(current.variables.vs_which_company, current.cat_item);",
+   "include_none": true
+  },
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Esconder variável type of request",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_request: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Tratando o campo de \"Adicione o nome da área\"",
+   "when": "IO:called_area=outros^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "called_area_others: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Somente leitura - Case/task",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "called_area: readonly=true",
+    "vs_which_company: readonly=true",
+    "vs_which_sub_company: readonly=true",
+    "v_opened_by: readonly=true",
+    "vs_which_sub_company_3: readonly=true",
+    "called_area_others: readonly=true",
+    "vs_which_sub_company_4: readonly=true",
+    "vs_which_sub_company_6: readonly=true",
+    "v_country: readonly=true",
+    "vs_which_sub_company_2: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Obrigatório",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true",
+    "v_country: mandatory=true",
+    "vs_which_sub_company: ",
+    "v_which_sub_company_is_the_service_for: mandatory=true",
+    "v_opened_by: mandatory=true",
+    "v_is_your_request_for_which_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Set Companies OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que define quais empresas ficam disponíveis no formulário. Mantém uma lista longa de sys_ids de record producers considerados 'Avon' e, conforme o formulário atual pertencer ou não a ela, ajusta a exibição e as opções das variáveis de empresa. Uma das entradas aparece duplicada (uma comentada)."
+  },
+  {
+   "name": "Set Country OnChange 6",
+   "type": "onChange",
+   "on": "351048403b7fce50924d0247f4e45a37",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o país a partir da sub-empresa 6. Lê 'vs_which_sub_company_6' e chama o Script Include EY_PTPUtils, método getCountry, via GlideAjax. O retorno vem como JSON; o campo 'country' da resposta é gravado em 'v_country', que fica somente leitura. Um dos oito scripts irmãos, idênticos exceto pela variável de origem."
+  },
+  {
+   "name": "Set Country OnChange 3",
+   "type": "onChange",
+   "on": "5b6b2c191b71a110a530426fe54bcbc5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento do irmão, lendo 'vs_which_sub_company_3'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Set Country OnChange 8",
+   "type": "onChange",
+   "on": "9de674fc3bf1de10924d0247f4e45a7e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento do irmão, lendo 'vs_which_sub_company_8'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Set Opened By OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad. Trava 'v_opened_by' como somente leitura e preenche com o sys_id do usuário logado. Observação: passa a string 'true' em vez do booleano para setReadOnly — funciona por coerção, mas não é a forma correta."
+  },
+  {
+   "name": "Set Country OnChange",
+   "type": "onChange",
+   "on": "60be47c81b29a590a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company' (sem sufixo). Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "EY: Validate the form for the area field",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que restringe o campo de área ao formulário certo. Compara o sys_id do formulário atual com um valor fixo: se for diferente, esconde 'called_area' e 'called_area_others'; se for igual, exibe ambos e os torna obrigatórios."
+  },
+  {
+   "name": "EY: Called Area if 'Payment HUB Info...'",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Só age no formulário de sys_id fixo '7e9b82b5...': nele acrescenta a opção 'hr_benefits_wallet' com rótulo 'Carteira de RH Benefícios' à lista 'called_area'. Observação: a variável formId é atribuída sem declaração (var/let), criando uma global implícita."
+  },
+  {
+   "name": "Set Country OnChange 5",
+   "type": "onChange",
+   "on": "f06436ff1b5d0610a530426fe54bcbf8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company_5'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Clear Country OnChange",
+   "type": "onChange",
+   "on": "60be47c81b29a590a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Quando o novo valor fica vazio, limpa 'v_country'. A linha que também limparia 'vs_which_sub_company' está comentada."
+  },
+  {
+   "name": "Set Country OnChange 4",
+   "type": "onChange",
+   "on": "9c94d66a1b75a114d1abda4ce54bcb81",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company_4'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Clear Sub Company OnChange",
+   "type": "onChange",
+   "on": "797e07881b29a590a530426fe54bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Sempre que o valor muda em relação ao anterior, limpa 'vs_which_sub_company', 'vs_which_sub_company_2' e 'v_country' — zera a cascata de sub-empresa e país para ser repreenchida."
+  },
+  {
+   "name": "Set Country OnChange RTR",
+   "type": "onChange",
+   "on": "0dbe0d491bbd2110a530426fe54bcb20",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company_2'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  },
+  {
+   "name": "Set Variables Subcompanies Visible",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad — o maior do conjunto (12 KB). Mesma mecânica das listas de sys_ids de record producers para decidir quais variáveis de sub-empresa ficam visíveis e obrigatórias, com mais casos cobertos que as variantes menores. É código repetido em bloco, sem chamada a outro script."
+  },
+  {
+   "name": "Set Country OnChange 7",
+   "type": "onChange",
+   "on": "5a3e65011b705e50514cbaef4b4bcbd0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesmo comportamento dos irmãos, lendo 'vs_which_sub_company_7'. Chama EY_PTPUtils.getCountry via GlideAjax e grava o país retornado em 'v_country', travando o campo."
+  }
+ ]
+}

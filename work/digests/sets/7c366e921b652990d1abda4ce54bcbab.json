@@ -1,0 +1,72 @@
+{
+ "sys_id": "7c366e921b652990d1abda4ce54bcbab",
+ "title": "EY VS Lançamento Contabil AVON",
+ "internal_name": "ey_vs_lan_amento_contabil_avon",
+ "description": "Campos referente ao formulário Lançamento Contabil AVON",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Lançamento Contábil Avon"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_approver_avon",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select approver",
+   "hidden": true,
+   "reference": "sys_user",
+   "ref_qual": "javascript: new FilterApproversUtils().validarRange(current.variables.vs_opened_by)"
+  },
+  {
+   "name": "vs_attachment_information_avon",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template_avon",
+   "type": "Personalizado com rótulo",
+   "type_code": "17",
+   "label": "Accounting entry template - Avon",
+   "macro": "TMP DL Lanç Cont Avon - Macro",
+   "widget": "TMP DL Lanç Cont Avon"
+  },
+  {
+   "name": "v_attach_template_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach template file"
+  },
+  {
+   "name": "v_attach_template_file2",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Support Document"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY - ReadOnly on Target Record",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_approver_avon: readonly=true",
+    "vs_repository_avon_pb: readonly=true",
+    "v_attach_template_file: readonly=true"
+   ]
+  },
+  {
+   "name": "EY - Mandatory on CatItem View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_approver_avon: mandatory=true",
+    "v_attach_template_file2: mandatory=true",
+    "v_attach_template_file: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,134 @@
+{
+ "sys_id": "6cdbb7341bccad18a530426fe54bcb4a",
+ "title": "(+)Add Contributor",
+ "internal_name": "v_add_colab",
+ "description": "1",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de Reembolso do Ponto Eletrônico"
+ ],
+ "variaveis": [
+  {
+   "name": "v_name_1",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID"
+  },
+  {
+   "name": "v_company_1",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_date_divergence_1",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of divergence"
+  },
+  {
+   "name": "v_entry_time_1",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Entry time"
+  },
+  {
+   "name": "v_departure_time_1",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Departure Time"
+  },
+  {
+   "name": "v_justification_1",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Justification",
+   "include_none": true,
+   "choices": [
+    "#TempoPresente [=tempo]",
+    "Administrative Allowance",
+    "COVID-19 Vaccination Allowance",
+    "Chief Allowance",
+    "Union Director Allowance",
+    "Military enlistment",
+    "Breast-feeding",
+    "Birthday",
+    "Medical Certificate of Hours",
+    "Bus delay",
+    "Delay Paid",
+    "Day Companion Certificate",
+    "Hs In Medical Certificate",
+    "Ext Hours Medical Certificate",
+    "Dental certificate",
+    "Hs Monitoring Certificate",
+    "Excused Absence",
+    "Wedding",
+    "Time Compensation",
+    "Declaration of Attendance",
+    "Blood donation",
+    "Forgetfulness / Badge Loss",
+    "Family Death",
+    "Falta abonada [=falta_abonada]",
+    "Home Office",
+    "Electoral Justification",
+    "Electoral justice",
+    "Justification of the Union",
+    "Clock Problems",
+    "Provision of Vestibular",
+    "Paid Early Departure",
+    "External Service",
+    "Syndicate",
+    "Suspension",
+    "Training"
+   ]
+  },
+  {
+   "name": "v_reason_1",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason",
+   "include_none": true,
+   "choices": [
+    "Lack of manager approval [=v_lack_manager_approval_1]",
+    "Lack of employee adjustment [=v_lack_adjustment_1]",
+    "Systemic error [=v_ systemic_error_1]"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory and read only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_departure_time_1: visible=true,mandatory=true",
+    "v_justification_1: visible=true,mandatory=true",
+    "v_id: visible=true,readonly=true",
+    "v_company_1: visible=true,readonly=true",
+    "v_entry_time_1: visible=true,mandatory=true",
+    "v_reason_1: visible=true,mandatory=true",
+    "v_date_divergence_1: visible=true,mandatory=true",
+    "v_name_1: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get data job",
+   "type": "onChange",
+   "on": "a29cf7381bccad18a530426fe54bcb4f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados de cargo, limpando quando o valor fica vazio."
+  }
+ ]
+}

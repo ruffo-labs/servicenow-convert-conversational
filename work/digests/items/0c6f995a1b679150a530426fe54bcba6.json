@@ -1,0 +1,389 @@
+{
+ "sys_id": "0c6f995a1b679150a530426fe54bcba6",
+ "name": "Acompanhamento de Beneficio (Cartão de Vale Transporte)",
+ "sys_name": "Benefit Monitoring (Transport Voucher Card)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Esse formulário é para acompanhamento da entrega do Cartão de Vale Transporte.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "21",
+   "variaveis_ativas": "27",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "21"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_hyperlink_transport_voucher_label: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_store: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_2_copy_label: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 21 de 21 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 21 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de acompanhamento de vale-transporte. Lê o registro em x_nasm_hr_profile a partir da variável do nome do colaborador e usa o campo 'user' como requested_for. Grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "div_variables_benefit",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "DIV Variables"
+  },
+  {
+   "name": "employee_s_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee's name",
+   "default": "javascript:gs.getUserID()",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global",
+   "default": "javascript: var userID;\r\nvar user = new GlideRecord('sys_user');\r\nif (user.get(gs.getUserID()))\r\n{userID = user.employee_number.getDisplayValue()};\r\nu"
+  },
+  {
+   "name": "v_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Company",
+   "default": "javascript: var userCompany;\r\nvar user = new GlideRecord('sys_user');\r\nif (user.get(gs.getUserID()))\r\n{userCompany = user.company.getDisplayValue()};\r",
+   "reference": "core_company"
+  },
+  {
+   "name": "v_container_acompanhamento_de_beneficio",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Benefit Tracking"
+  },
+  {
+   "name": "formatter2",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  },
+  {
+   "name": "v_type_of_benefit",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of benefit",
+   "choices": [
+    "Transport voucher (card or pass) [=3]"
+   ]
+  },
+  {
+   "name": "v_enter_the_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the option",
+   "include_none": true,
+   "choices": [
+    "Delivery tracking [=2]",
+    "2nd copy [=1]"
+   ]
+  },
+  {
+   "name": "v_2_copy_label",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "To request the 2nd copy, contact the Sodexo call center 3003-5083 (capitals and metropolitan regions) 0800 728-5083 other locations. The block and 2nd copy can also be requested in the Sodexo Club application.\r\nAs soon as you block, return the call informing the place to deliver the benefit."
+  },
+  {
+   "name": "v_has_the_benefit_claimed",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Has the benefit already been claimed?",
+   "include_none": true
+  },
+  {
+   "name": "v_where_do_you_want_to_receive_your_card",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Where do you want to receive your card?",
+   "include_none": true,
+   "choices": [
+    "Workplace delivery [=2]"
+   ]
+  },
+  {
+   "name": "v_workplace",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Workplace",
+   "include_none": true,
+   "choices": [
+    "Natura Spaces [=1]",
+    "Stores [=2]"
+   ]
+  },
+  {
+   "name": "v_choose_the_location",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose the location",
+   "include_none": true,
+   "choices": [
+    "Interlagos [=1]",
+    "Cabreuva [=2]",
+    "NASP [=3]",
+    "Cajamar [=4]"
+   ]
+  },
+  {
+   "name": "v_departament",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Departament"
+  },
+  {
+   "name": "v_responsible",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Responsible"
+  },
+  {
+   "name": "v_store",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Store",
+   "reference": "cmn_location",
+   "ref_qual": "company=8c14f4d61b0acd10237642ece54bcb6e^EQ^ORDERBYname"
+  },
+  {
+   "name": "v_other_store",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Other store"
+  },
+  {
+   "name": "v_zip_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CEP"
+  },
+  {
+   "name": "v_street",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Street"
+  },
+  {
+   "name": "v_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number"
+  },
+  {
+   "name": "v_complement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complement"
+  },
+  {
+   "name": "v_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "v_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "v_region",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Region"
+  },
+  {
+   "name": "v_hyperlink_transport_voucher_label",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "The application for membership of the transport voucher must be carried out using the form."
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a5ee338a1bfc7910d1abda4ce54bcb53",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "2200",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Has the he benefit claimed Mandatory",
+   "when": "IO:v_type_of_benefit=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_has_the_benefit_claimed: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Choose location, Departament and Responsible Visible and Mandatory - Natura",
+   "when": "IO:v_workplace=1^IO:v_where_do_you_want_to_receive_your_card=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_departament: visible=true,mandatory=true",
+    "v_responsible: visible=true,mandatory=true",
+    "v_choose_the_location: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Workplace Visible and Mandatory",
+   "when": "IO:v_where_do_you_want_to_receive_your_card=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_workplace: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Where you want receive and Workplace ",
+   "when": "IO:v_workplace=2^IO:v_where_do_you_want_to_receive_your_card=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_store: visible=true,mandatory=true",
+    "v_other_store: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Enter the option visible and Mandatory",
+   "when": "IO:v_type_of_benefit=1^ORIO:v_type_of_benefit=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_option: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Name`s Employee and Company Read Only and Type of benefit",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_benefit: visible=true,mandatory=true",
+    "v_company: readonly=true",
+    "v_id: visible=true,readonly=true",
+    "employee_s_name: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Benefit has claimed is No Visible and Mandatory",
+   "when": "IO:v_type_of_benefit=3^IO:v_has_the_benefit_claimed=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_hyperlink_transport_voucher_label: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Where do you want receive your card Visible and Mandatory",
+   "when": "IO:v_enter_the_option=2^ORIO:v_has_the_benefit_claimed=Yes^IO:v_type_of_benefit=1^ORIO:v_type_of_benefit=2^ORIO:v_type_of_benefit=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_where_do_you_want_to_receive_your_card: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: 2 copy Visible label",
+   "when": "IO:v_enter_the_option=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_2_copy_label: visible=true"
+   ]
+  },
+  {
+   "name": "EY: CEP/Zip Code Visible and Mandatory",
+   "when": "IO:v_where_do_you_want_to_receive_your_card=1^IO:v_type_of_benefit=1^ORIO:v_type_of_benefit=2^ORIO:v_type_of_benefit=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_street: visible=true,mandatory=true",
+    "v_complement: visible=true",
+    "v_city: visible=true,mandatory=true",
+    "v_region: visible=true,mandatory=true",
+    "v_neighborhood: visible=true,mandatory=true",
+    "v_zip_code: visible=true,mandatory=true",
+    "v_number: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fields Clear Choose the location",
+   "type": "onChange",
+   "on": "7524c22a1bafd550a530426fe54bcbc7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa departamento e campos relacionados quando a localização muda."
+  },
+  {
+   "name": "EY: Clear Values Type of Benefit",
+   "type": "onChange",
+   "on": "d0b7f9261babd550a530426fe54bcb87",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a opção escolhida e demais campos quando o tipo de benefício muda."
+  },
+  {
+   "name": "EY: Fields Clear Where do you want to re",
+   "type": "onChange",
+   "on": "a0404e621b6fd550a530426fe54bcbe6",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa CEP e o bloco de endereço quando muda a resposta sobre onde receber."
+  },
+  {
+   "name": "EY: Fields Clear Has the benefit claimed",
+   "type": "onChange",
+   "on": "6889026a1b231950a530426fe54bcb8b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a opção escolhida e demais campos quando o tipo de benefício muda."
+  },
+  {
+   "name": "EY: Fields Clear Enter the option",
+   "type": "onChange",
+   "on": "413c3d6e1bebd550a530426fe54bcb94",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa CEP e campos dependentes quando a opção escolhida muda."
+  },
+  {
+   "name": "EY: Fields Clear Workplace",
+   "type": "onChange",
+   "on": "f39246221bafd550a530426fe54bcb7c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a localização escolhida quando o local de trabalho muda."
+  }
+ ]
+}

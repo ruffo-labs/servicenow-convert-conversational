@@ -1,0 +1,480 @@
+{
+ "sys_id": "3b4e97ec1becad14a530426fe54bcb14",
+ "name": "Solicitação de emissão do cartão corporativo",
+ "sys_name": "Corporate card issuance request",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Cartão Corporativo",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Chamado para solicitar emissão de cartão corporativo.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "34",
+   "variaveis_ativas": "39",
+   "bloqueadores": "0",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "34"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_approval_manager_director_or_sales: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_if_have_doubts: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_attention: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_responsability_term_card_corporate: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_requested_for: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 34 de 34 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 34 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_have_doubts",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Caso tenha dúvidas do processo, clique aqui para consultar a FAQ disponível na base de conhecimento"
+  },
+  {
+   "name": "v_registration",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Matriculation"
+  },
+  {
+   "name": "v_inform_the_area",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Inform the area",
+   "reference": "cmn_department"
+  },
+  {
+   "name": "v_inform_your_grade",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform your grade"
+  },
+  {
+   "name": "v_enter_your_cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter your cost center"
+  },
+  {
+   "name": "v_which_audience_do_you_belong_to",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which audience do you belong to?",
+   "include_none": true,
+   "choices": [
+    "Administrative [=v_administrative]",
+    "Sales Force [=v_sales_force]",
+    "Operational [=v_operational]",
+    "Retail [=v_retail]"
+   ]
+  },
+  {
+   "name": "v_select_card_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select card type",
+   "include_none": true,
+   "choices": [
+    "Corporate Card [=v_corporate card]",
+    "Withdrawal Card [=v_withdrawal_card]"
+   ]
+  },
+  {
+   "name": "v_label_attention",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "ATTENTION: before proceeding with the request for issuing the Withdrawal Card, it is necessary to have your registration active in the LINX system with the Customer and Supplier Registration team. Access here to open the call.\r\nIt is essential to be logged into the VPN to join the system.\r\nSee the FAQ for more information."
+  },
+  {
+   "name": "v_inform_the_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the email"
+  },
+  {
+   "name": "v_inform_the_cell_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the cell phone",
+   "example": "(11) 12345-6789"
+  },
+  {
+   "name": "v_enter_business_phone_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter business phone number",
+   "example": "(11) 12345-6789"
+  },
+  {
+   "name": "v_inform_the_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the CPF",
+   "example": "000.000.000-00"
+  },
+  {
+   "name": "v_inform_the_rg",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the RG"
+  },
+  {
+   "name": "v_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth"
+  },
+  {
+   "name": "v_naturalness",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Naturalness"
+  },
+  {
+   "name": "v_gender",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Gender",
+   "include_none": true,
+   "choices": [
+    "Female [=v_female]",
+    "Male [=v_male]"
+   ]
+  },
+  {
+   "name": "v_name_printed_on_card",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name printed on card"
+  },
+  {
+   "name": "v_mother_s_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mother's name"
+  },
+  {
+   "name": "v_father_s_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Father's name"
+  },
+  {
+   "name": "v_inform_your_postal_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform your postal code",
+   "example": "00000-000"
+  },
+  {
+   "name": "v_street_av_street",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Street/Av/Street"
+  },
+  {
+   "name": "v_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number"
+  },
+  {
+   "name": "v_complemento",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complemento"
+  },
+  {
+   "name": "v_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "v_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "v_state",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "State"
+  },
+  {
+   "name": "v_enter_reason_requesting_card",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the reason for requesting the card",
+   "include_none": true,
+   "choices": [
+    "Admission [=v_admission]",
+    "Stores [=v_stores]",
+    "Promotion [=v_promotion]",
+    "Trips [=v_trips]",
+    "Others [=v_others]"
+   ]
+  },
+  {
+   "name": "v_specify_the_reason",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Specify the reason"
+  },
+  {
+   "name": "v_attach_approval_manager_director_or_sales",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach approval from your manager, director or Sales Adm as per applicable rule/policy"
+  },
+  {
+   "name": "v_label_responsability_term_card_corporate",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_have_you_read_and_accept_the_terms_and_conditions",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Have you read and accept the terms and conditions?"
+  },
+  {
+   "name": "v_label_if_requesting_card",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "If you are requesting the card on behalf of another person, please attach the Term of Responsibility signed by the cardholder."
+  },
+  {
+   "name": "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the PDF of the term of responsibility signed by the card user"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+   "name": "EY: Opened by",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "1181bd1b1b4d6194d1abda4ce54bcb5b",
+   "name": "EY: Requested for",
+   "order": "350",
+   "perguntas": [
+    "vs_requested_for (Referência, default): Requested for"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "3500",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Make fields Visible and Mandatory IF Withdrawal Card",
+   "when": "IO:v_select_card_type=v_corporate card^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_city: visible=true,mandatory=true",
+    "v_state: visible=true,mandatory=true",
+    "v_neighborhood: visible=true,mandatory=true",
+    "v_street_av_street: visible=true,mandatory=true",
+    "v_naturalness: visible=true,mandatory=true",
+    "v_have_you_read_and_accept_the_terms_and_conditions: visible=true,mandatory=true",
+    "v_attach_the_pdf_of_the_term_of_responsibility_signed_by_the_card_user: visible=true",
+    "v_mother_s_name: visible=true,mandatory=true",
+    "v_inform_the_rg: visible=true,mandatory=true",
+    "v_inform_your_postal_code: visible=true,mandatory=true",
+    "v_name_printed_on_card: visible=true,mandatory=true",
+    "v_label_if_requesting_card: visible=true",
+    "v_label_responsability_term_card_corporate: visible=true",
+    "v_father_s_name: visible=true",
+    "v_complemento: visible=true",
+    "v_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make field Visible and Mandatory IF Inform the motive of request of card IS Others",
+   "when": "IO:v_enter_reason_requesting_card=v_others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_specify_the_reason: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make Mandatory Fields On Load ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_audience_do_you_belong_to: mandatory=true",
+    "v_enter_reason_requesting_card: mandatory=true",
+    "v_inform_the_email: mandatory=true",
+    "v_inform_the_cpf: mandatory=true",
+    "v_inform_your_grade: mandatory=true",
+    "v_enter_business_phone_number: mandatory=true",
+    "v_select_card_type: visible=true,mandatory=true",
+    "v_inform_the_area: mandatory=true",
+    "v_date_of_birth: mandatory=true",
+    "v_inform_the_cell_phone: mandatory=true",
+    "v_enter_your_cost_center: mandatory=true",
+    "v_attach_approval_manager_director_or_sales: mandatory=true",
+    "v_gender: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make field Registration Read Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_registration: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Make field Visible and Mandatory IF Selected Type of Card IS \"Corporate Card\" AND Which audience IS \"Retail\"",
+   "when": "IO:v_select_card_type=v_withdrawal_card^IO:v_which_audience_do_you_belong_to=v_retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_attention: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get Data of Requested for on change",
+   "type": "onChange",
+   "on": "08d17dd71b4d6194d1abda4ce54bcb3b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do solicitante. Chama x_nasm_finance.EY_UserDataFinanceUtils, método getCollaboratorData, via GlideAjax; o retorno preenche matrícula e área. Se o valor ficar vazio, limpa esses campos antes — mas a chamada dispara mesmo assim."
+  },
+  {
+   "name": "EY: Clear Value Type of Card",
+   "type": "onChange",
+   "on": "922e750d1ba4a554a530426fe54bcb26",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera todos os dados pessoais e de endereço do cartão quando o tipo de cartão muda: RG, naturalidade, nome impresso, nome da mãe, nome do pai, CEP, logradouro, número e demais campos de endereço."
+  },
+  {
+   "name": "EY: Clear Value Which Audience Belong",
+   "type": "onChange",
+   "on": "1653a8b81b602154a530426fe54bcb8d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera todos os dados pessoais e de endereço do cartão quando o tipo de cartão muda: RG, naturalidade, nome impresso, nome da mãe, nome do pai, CEP, logradouro, número e demais campos de endereço."
+  },
+  {
+   "name": "EY: CEP Regex",
+   "type": "onChange",
+   "on": "69459c851be82554a530426fe54bcb7a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CEP (00000-000, hífen opcional) em 'v_inform_your_postal_code'. Inválido: limpa e mostra 'CEP Inválido'."
+  },
+  {
+   "name": "EY: Regex Cell Phone number",
+   "type": "onChange",
+   "on": "c75d28f41b242154a530426fe54bcbc2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida celular com regex de formato brasileiro em 'v_inform_the_cell_phone'. Inválido: limpa e mostra 'Número de telefone inválido.'"
+  },
+  {
+   "name": "EY: Get Data of Requested for on load",
+   "type": "onLoad",
+   "on": "08d17dd71b4d6194d1abda4ce54bcb3b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que preenche área e e-mail apenas quando faz sentido. Só dispara se quem abriu é o mesmo para quem se pede E os campos estiverem vazios — evita sobrescrever dado já informado. Nesse caso chama x_nasm_finance.EY_UserDataFinanceUtils, método getCollaboratorData, via GlideAjax e preenche os campos com o retorno."
+  },
+  {
+   "name": "EY: Only Text Naturalness",
+   "type": "onChange",
+   "on": "bf3d84411b682554a530426fe54bcb8d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita apenas letras e espaços (incluindo acentuadas) em 'v_naturalness'. Contendo número ou caractere especial, limpa o campo e pede para não inserir números nem caracteres especiais."
+  },
+  {
+   "name": "EY: Regex Bussiness Telephone number",
+   "type": "onChange",
+   "on": "7cd448f41b68ed14a530426fe54bcbaf",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone comercial com a mesma regex brasileira dos irmãos. Inválido: limpa o campo e mostra 'Número de telefone inválido.'"
+  },
+  {
+   "name": "EY: Only Text Name Printed on Card",
+   "type": "onChange",
+   "on": "d803184d1ba82554a530426fe54bcb63",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita só letras e espaços em 'v_name_printed_on_card' (nome impresso no cartão). Inválido: limpa e mostra a mensagem padrão sobre números e caracteres especiais."
+  },
+  {
+   "name": "EY: Only Text Mothers Name",
+   "type": "onChange",
+   "on": "2bd314011be82554a530426fe54bcb44",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita só letras e espaços em 'v_mother_s_name'. Inválido: limpa e mostra a mensagem padrão."
+  },
+  {
+   "name": "EY: Regex CPF",
+   "type": "onChange",
+   "on": "3240b0b41b642154a530426fe54bcb9a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CPF. Aceita o formato 000.000.000-00 e, se não casar, remove tudo que não for dígito e aceita 11 dígitos corridos. Não sendo nenhum dos dois, limpa o campo e mostra erro. Valida apenas o FORMATO — não confere os dígitos verificadores, então um CPF de 11 dígitos inválido passa."
+  },
+  {
+   "name": "EY: Only Text Father's Name",
+   "type": "onChange",
+   "on": "fae454851be82554a530426fe54bcbec",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita só letras e espaços em 'v_father_s_name'. Inválido: limpa e mostra a mensagem padrão."
+  }
+ ]
+}

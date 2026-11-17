@@ -1,0 +1,282 @@
+{
+ "sys_id": "0aa214221bf06d10d1abda4ce54bcb82",
+ "name": "Solicitação de alteração de limite do Cartão Corporativo",
+ "sys_name": "Corporate Card limit change request",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Cartão Corporativo",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Chamado para solicitar alteração do limite de crédito do Cartão Corporativo.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "26",
+   "bloqueadores": "0",
+   "avisos": "8",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_manager_s_proof_of_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_label_template_download: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_label_if_have_questions_click_here: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_request_template_for_changing_the_corporate_card_limit: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 9 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_label_if_have_questions_click_here",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ available in the knowledge base"
+  },
+  {
+   "name": "v_the_limit_of_the_corporate_card",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request to change the limit of the Corporate Card"
+  },
+  {
+   "name": "v_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country"
+  },
+  {
+   "name": "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will the change be made for an individual employee or a group of employees?",
+   "include_none": true,
+   "choices": [
+    "Individual Contributor [=v_individual_contributor]",
+    "Employee Group [=v_employee_group]"
+   ]
+  },
+  {
+   "name": "v_which_audience_does_the_card_holder_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which audience does the card holder have?",
+   "include_none": true,
+   "choices": [
+    "Administrative [=v_administrative]",
+    "Sales Force [=v_sales_force]",
+    "Operational [=v_operational]",
+    "Retail [=v_retail]"
+   ]
+  },
+  {
+   "name": "v_label_template_download",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_the_request_template_for_changing_the_corporate_card_limit",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the request template for changing the Corporate Card limit"
+  },
+  {
+   "name": "v_attach_the_manager_s_proof_of_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the manager's proof of approval"
+  },
+  {
+   "name": "v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the proof of approval to Adm. Sales or Finance Sales Force"
+  },
+  {
+   "name": "v_type_of_change_to_make",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Change to Make",
+   "include_none": true,
+   "choices": [
+    "Limit change for a given period [=v_limit_change_for_given_period]",
+    "Definitive limit change [=v_definitive_limit_change]"
+   ]
+  },
+  {
+   "name": "v_value_of_the_new_requested_limit",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value of the new requested limit",
+   "example": "00.000,00"
+  },
+  {
+   "name": "v_what_is_the_start_date_for_the_new_limit",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the start date for the new limit?"
+  },
+  {
+   "name": "v_what_is_the_end_date_for_the_new_limit",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the end date for the new limit?"
+  },
+  {
+   "name": "v_enter_the_reason_for_the_limit_change_request",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the reason for the limit change request"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+   "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "1700",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Make fields Visible and Mandatory IF \"Type of change to make\" IS \" Limit change for given period\"",
+   "when": "IO:v_type_of_change_to_make=v_limit_change_for_given_period^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_end_date_for_the_new_limit: visible=true,mandatory=true",
+    "v_what_is_the_start_date_for_the_new_limit: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make fields Visible and Mandatory IF  \"Which audience does the card the card holder have?\" IS \"Administrative\" OR \"Operational\" OR \"Retail\"",
+   "when": "IO:v_which_audience_does_the_card_holder_have=v_administrative^ORIO:v_which_audience_does_the_card_holder_have=v_operational^ORIO:v_which_audience_does_the_card_holder_have=v_retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_manager_s_proof_of_approval: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make fields Visible and Mandatory ON LOAD",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: visible=true,readonly=true",
+    "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees: visible=true,mandatory=true",
+    "v_which_audience_does_the_card_holder_have: visible=true,mandatory=true",
+    "v_type_of_change_to_make: visible=true,mandatory=true",
+    "v_value_of_the_new_requested_limit: visible=true,mandatory=true",
+    "v_enter_the_reason_for_the_limit_change_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make fields Visible and Mandatory IF  \"Which audience does the card the card holder have?\" IS \"Sales Force\"",
+   "when": "IO:v_which_audience_does_the_card_holder_have=v_sales_force^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_proof_of_approval_to_adm_sales_or_finance_sales_force: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide Country if Aesop",
+   "when": "IO:vs_company=Aesop^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Make fields Visible and Mandatory IF  \"Change will be made for a  Employee Group or Individual\" IS \" Employee Group\"",
+   "when": "IO:v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees=v_employee_group^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_template_download: visible=true",
+    "v_attach_the_request_template_for_changing_the_corporate_card_limit: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear field type of change",
+   "type": "onChange",
+   "on": "80ed502e1b746d10d1abda4ce54bcbd8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange. Ao mudar o tipo de alteração, limpa os campos dependentes: valor do novo limite, data de início, data de fim e motivo do pedido de alteração de limite."
+  },
+  {
+   "name": "EY: Get Country",
+   "type": "onChange",
+   "on": "ced8e59b1b2c61d0d1abda4ce54bcb79",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o país a partir da empresa. Se o valor ficou vazio limpa 'v_country'. Chama o Script Include EY_DataFinanceUtils, método getCountry, via GlideAjax, passando a empresa; o retorno vem em JSON e alimenta o campo de país. Observação: a chamada dispara mesmo com o valor vazio, logo após a limpeza."
+  },
+  {
+   "name": "EY: Validate value",
+   "type": "onChange",
+   "on": "f01fd46e1b746d10d1abda4ce54bcba7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro (milhar com ponto, dois decimais após vírgula) em 'v_value_of_the_new_requested_limit'. Inválido: limpa e mostra 'Valor inválido'."
+  },
+  {
+   "name": "EY: Clear Field card holder",
+   "type": "onChange",
+   "on": "026bd8621b746d10d1abda4ce54bcb8b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os três campos de comprovante de aprovação (do gestor, da administração/finanças de vendas e o template de alteração de limite) quando o titular do cartão muda."
+  },
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "4faad4ae1b346d10d1abda4ce54bcb96",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera o bloco inteiro de alteração de cartão corporativo: público do titular, tipo de alteração, novo limite, motivo, informações adicionais e os anexos de comprovação."
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+{
+ "sys_id": "c0080d0b253f41e7ac8cc084d900bc9a",
+ "status": "dividido",
+ "motivo": "Desbloqueio pede aplicativo, motivo e período de liberação; microsegmentação pede ambiente, origem e destino, portas e data; WAF pede sistema afetado, URL, descrição do problema e evidências. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_aplicativo_site_ip": {
+   "label": "Qual aplicativo, site ou IP precisa ser liberado?"
+  },
+  "v_motivo_do_desbloqueio": {
+   "label": "Por que esse acesso precisa ser desbloqueado?"
+  },
+  "v_responsavel_solicitante": {
+   "label": "Quem é o responsável por este pedido?"
+  },
+  "v_justificativa_de_negocio": {
+   "label": "Qual a justificativa de negócio para a liberação?"
+  },
+  "v_periodo_de_liberacao": {
+   "label": "Por quanto tempo o acesso deve ficar liberado?"
+  },
+  "v_nome_do_ambiente": {
+   "label": "Qual é o nome do ambiente envolvido?"
+  },
+  "v_origem_destino_de_trafego": {
+   "label": "Qual a origem e o destino do tráfego?"
+  },
+  "v_portas_protocolos": {
+   "label": "Quais portas e protocolos serão usados?"
+  },
+  "v_justificativa_tecnica": {
+   "label": "Qual a justificativa técnica para a regra?"
+  },
+  "v_data_desejada_de_aplicacao_date": {
+   "label": "Em que data você quer aplicar a mudança?"
+  },
+  "v_sistema_afetado": {
+   "label": "Qual sistema está sendo afetado pelo bloqueio?"
+  },
+  "v_url_ou_dominio": {
+   "label": "Qual a URL ou domínio bloqueado?"
+  },
+  "v_descricao_do_problema": {
+   "label": "Descreva o problema que você está tendo."
+  },
+  "v_anexo_de_evidencias_attachment": {
+   "label": "Envie as evidências do problema, se tiver."
+  }
+ },
+ "policies": {
+  "a6eb45bf86b140fda8d352c764c1b2b0": "remover",
+  "68b64647faad42fda4e29e008b8d4b1c": "remover",
+  "0afea5339bb24d20b276cc665a67d01b": "remover",
+  "d4e83272635f4261987af9d9e9a72e79": "remover"
+ },
+ "itens": [
+  {
+   "name": "Liberar aplicativo, site ou recurso de rede bloqueado",
+   "short_description": "Pedir aprovação para desbloquear um aplicativo, site ou acesso de rede.",
+   "description": "Use quando algo é bloqueado por segurança e você precisa dele para trabalhar. A opção atendida é Aprovar aplicativo, site ou recurso de rede bloqueado. Informe o que liberar, o motivo, o responsável, a justificativa de negócio e o período.",
+   "frases_exemplo": [
+    "Um site que preciso está bloqueado, podem liberar?",
+    "Preciso desbloquear um aplicativo para trabalhar",
+    "O acesso a esse IP está bloqueado pela segurança",
+    "Quero liberar um recurso de rede por 30 dias",
+    "Pedido de liberação de um site bloqueado"
+   ],
+   "sem_vars": [
+    "v_nome_do_ambiente",
+    "v_origem_destino_de_trafego",
+    "v_portas_protocolos",
+    "v_justificativa_tecnica",
+    "v_data_desejada_de_aplicacao_date",
+    "v_sistema_afetado",
+    "v_url_ou_dominio",
+    "v_descricao_do_problema",
+    "v_anexo_de_evidencias_attachment"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Aprovar aplicativo, site ou recurso de rede bloqueado"
+   },
+   "vars": {
+    "v_aplicativo_site_ip": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_motivo_do_desbloqueio": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsavel_solicitante": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Criar, ajustar ou remover regra de microsegmentação",
+   "short_description": "Pedir mudança em regra de tráfego entre ambientes ou servidores.",
+   "description": "Use quando o tráfego entre ambientes precisa ser liberado, alterado ou removido. A opção atendida é Solicitar criação, ajuste ou remoção de regra de microsegmentação entre ambientes. Informe ambiente, origem e destino, portas, justificativa técnica e data.",
+   "frases_exemplo": [
+    "Preciso liberar a porta 443 entre dois servidores",
+    "Quero criar uma regra de microsegmentação",
+    "Remover uma regra de rede que não é mais usada",
+    "Os servidores não se comunicam, preciso liberar o tráfego",
+    "Ajustar a regra entre o ambiente de homologação e o banco"
+   ],
+   "sem_vars": [
+    "v_aplicativo_site_ip",
+    "v_motivo_do_desbloqueio",
+    "v_responsavel_solicitante",
+    "v_justificativa_de_negocio",
+    "v_periodo_de_liberacao",
+    "v_sistema_afetado",
+    "v_url_ou_dominio",
+    "v_descricao_do_problema",
+    "v_anexo_de_evidencias_attachment"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar criação, ajuste ou remoção de regra de microsegmentação entre ambientes"
+   },
+   "vars": {
+    "v_nome_do_ambiente": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_origem_destino_de_trafego": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_portas_protocolos": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reportar bloqueio indevido ou ajustar regra do WAF",
+   "short_description": "Reportar bloqueio do WAF ou pedir ajuste de regra de proteção.",
+   "description": "Use quando o WAF bloqueia indevidamente uma aplicação ou uma regra precisa de ajuste. A opção atendida é Reportar bloqueio indevido, solicitar liberação ou pedir ajuste em regra do WAF. Informe o sistema, a URL, o problema, a justificativa e as evidências.",
+   "frases_exemplo": [
+    "O WAF está bloqueando o acesso ao nosso sistema",
+    "Preciso liberar uma URL que o WAF barrou",
+    "Usuários tomam bloqueio ao acessar o site",
+    "Pedido de ajuste em regra do WAF",
+    "Bloqueio indevido na aplicação, vou anexar o print"
+   ],
+   "sem_vars": [
+    "v_aplicativo_site_ip",
+    "v_motivo_do_desbloqueio",
+    "v_responsavel_solicitante",
+    "v_justificativa_de_negocio",
+    "v_periodo_de_liberacao",
+    "v_nome_do_ambiente",
+    "v_origem_destino_de_trafego",
+    "v_portas_protocolos",
+    "v_data_desejada_de_aplicacao_date"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Reportar bloqueio indevido, solicitar liberação ou pedir ajuste em regra do WAF"
+   },
+   "vars": {
+    "v_sistema_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_url_ou_dominio": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_descricao_do_problema": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

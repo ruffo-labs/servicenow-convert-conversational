@@ -1,0 +1,151 @@
+{
+ "sys_id": "8dc994c41b1cda10514cbaef4b4bcb44",
+ "name": "Solicitação de acesso aos sistemas de RH",
+ "sys_name": "HR Systems Access Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Acessos a Sistemas de RH",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Use este formulário para fazer uma solicitação de acesso aos sistemas de RH",
+ "description": "Use este formulário para fazer uma solicitação de acesso aos sistemas de RH",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "18",
+   "variaveis_ativas": "20",
+   "bloqueadores": "1",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "18"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Condition for v_choose_the_option"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_minimun_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 18 de 18 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_choose_the_option",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose the option you need here",
+   "include_none": true,
+   "choices": [
+    "System for viewing payment receipts [=receipt_viewing]",
+    "Assignment of COL code in SAP [=assignment_col_code_sap]",
+    "Assignment of AR (Cadastro) code in SAP [=assignment_ar_code_sap]",
+    "Assignment of CL Code in SAP [=assignment_cl_code_sap]",
+    "Assignment of E1 Code [=assignment_e1_code]",
+    "Access to self-management platform (Payment receipts, labor certifications, etc) [=access_self_management_platform]",
+    "System for displaying contractual documents (contract, attachments, etc) [=system_for_displaying_contractual]"
+   ]
+  },
+  {
+   "name": "v_field_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Please use the field below to detail your need"
+  },
+  {
+   "name": "v_minimun_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Please use the field below to detail your need"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory v_field_detail",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_field_detail: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Condition for v_choose_the_option",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 4,4 KB que controla a visibilidade e as opções de 'v_choose_the_option' conforme o contexto, escondendo o campo nos casos vazio e 'None'."
+  },
+  {
+   "name": "EY: Hide options v_choose_the_option",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que esconde 'v_choose_the_option' na abertura."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda de mínimo de caracteres na abertura."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "on": "675821c01b5c1e10514cbaef4b4bcb34",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'v_field_detail' tem menos de 40 caracteres."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "675821c01b5c1e10514cbaef4b4bcb34",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange da validação de 40 caracteres sobre 'v_field_detail'."
+  }
+ ]
+}

@@ -1,0 +1,3465 @@
+[
+  {
+    "sys_id": "8c25974c1b1c291ca530426fe54bcbff",
+    "name": "Informar orçamentos de viagens e suplementação orçamentaria para Centro de Custo ou PEP",
+    "status": "analise_humana",
+    "motivo": "Nenhum chamado nos últimos 12 meses (516 no histórico), o que indica que o processo mudou de canal ou deixou de existir. O item tem 31 perguntas, 5 anexos e ramos cruzados (orçamento x suplementação, centro de custo x PEP, um ou vários). A área de Viagens Corporativas precisa confirmar se o processo continua; se continuar, o caminho é dividir em 'Informar orçamento de viagens' e 'Pedir suplementação de verba de viagens'.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "dad4109c1b9c691ca530426fe54bcb24",
+    "name": "Solicitar cadastro e reativação de app de Táxi e Viagens Corporativas",
+    "status": "conversacional",
+    "motivo": "Intenção única e poucas perguntas, sem bloqueador. As policies onLoad de obrigatoriedade viram atributo da variável, o script de CPF vira Validation Regex e o rich text de FAQ sai da conversa.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_label_if_you_have_questions",
+        "motivo": "Rich text com link para o FAQ; a referência ao FAQ na base de conhecimento passa para a descrição do item."
+      },
+      {
+        "name": "v_container_request_registration_and_reactivation",
+        "motivo": "Container de layout, não gera pergunta."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Cadastrar ou reativar acesso ao app de táxi e viagens corporativas",
+        "short_description": "Cadastro, reativação ou troca do celular cadastrado no aplicativo corporativo de táxi e no sistema de viagens.",
+        "description": "<p>Use quando precisar ser cadastrado no aplicativo corporativo de táxi ou no sistema de viagens corporativas, reativar um acesso bloqueado ou inativo, ou trocar o número de celular cadastrado no app de táxi.</p><p>Vão ser pedidos o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto), o CPF e o celular. Dúvidas sobre o processo: consulte o FAQ na base de conhecimento.</p><p>Não use para enviar orçamento de viagens nem para pedir suplementação de verba: para isso existe outro item.</p>",
+        "frases_exemplo": [
+          "preciso de cadastro no app de táxi da empresa",
+          "meu acesso ao app de viagens corporativas foi bloqueado",
+          "quero reativar minha conta do táxi corporativo",
+          "troquei de celular e preciso atualizar o número no app de táxi",
+          "preciso de acesso ao sistema de viagens da empresa"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_what_is_the_demand_of_the_call",
+            "order": 100,
+            "conversational_label": "O que você precisa: cadastro ou reativação no app de táxi corporativo, cadastro ou reativação no sistema de viagens, ou troca do celular cadastrado no app de táxi?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_report_cost_center_pep",
+            "order": 200,
+            "conversational_label": "Qual é o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto)?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_enter_your_cpf",
+            "order": 300,
+            "conversational_label": "Qual é o seu CPF?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+            }
+          },
+          {
+            "name": "v_enter_your_phone_number_mobile",
+            "order": 400,
+            "conversational_label": "Qual é o seu número de celular, com DDD?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_enter_the_new_phone_number_mobile",
+            "order": 500,
+            "conversational_label": "Qual é o novo número de celular que deve ficar cadastrado no app?"
+          },
+          {
+            "name": "v_additional_information",
+            "order": 600,
+            "conversational_label": "Quer acrescentar mais alguma informação?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "724f41271b446dd8a530426fe54bcb28",
+            "name": "EY: Opened by - Requested for data",
+            "order": 100
+          },
+          {
+            "sys_id": "ff18ed571b2c61d0d1abda4ce54bcbe3",
+            "name": "EY: Company: Natura/Avon/TBS/Aesop - Subcompany",
+            "order": 200
+          },
+          {
+            "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+            "name": "EY: Document repository",
+            "order": 800
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "0740b79d1b58ad10a530426fe54bcba6",
+            "short_description": "Troca de celular: mostrar e exigir o novo número",
+            "on_load": true,
+            "conditions": "v_what_is_the_demand_of_the_call=v_phone_change",
+            "actions": [
+              {
+                "variable": "v_enter_the_new_phone_number_mobile",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory Fields",
+            "tipo": "ui_policy",
+            "como": "mandatory=true direto em v_what_is_the_demand_of_the_call, v_report_cost_center_pep, v_enter_your_cpf e v_enter_your_phone_number_mobile; policy removida."
+          },
+          {
+            "origem": "EY: CPF Validation",
+            "tipo": "client_script",
+            "como": "Validation Regex em v_enter_your_cpf (000.000.000-00 ou 11 dígitos)."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "8dc994c41b1cda10514cbaef4b4bcb44",
+    "name": "Solicitação de acesso aos sistemas de RH",
+    "status": "conversacional",
+    "motivo": "Item simples (opção de acesso e descrição de no mínimo 40 caracteres), só do público hispânico, por isso textos em espanhol. As validações de tamanho viram Validation Regex; o script que filtra as opções conforme o colaborador não dá para converter com segurança e fica mantido com ajuste para VA.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_faq",
+        "motivo": "Rich text com link para o FAQ; a referência ao FAQ passa para a descrição do item."
+      },
+      {
+        "name": "v_minimun_characters",
+        "motivo": "Rich text de aviso de mínimo de caracteres; a regra de 40 caracteres passa a ser Validation Regex em v_field_detail."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar acceso a sistemas de RR. HH.",
+        "short_description": "Solicitud de acceso a un sistema de Recursos Humanos (RR. HH.) o de asignación de código en SAP.",
+        "description": "<p>Usa este ítem cuando necesites acceso a un sistema de Recursos Humanos (RR. HH.): sistema de visualización de recibos de pago, plataforma de autogestión (recibos, certificados laborales, etc.) o sistema de documentos contractuales. También sirve para pedir la asignación de código COL, AR (Cadastro), CL o E1 en SAP.</p><p>Indica qué acceso o código necesitas y describe tu necesidad con al menos 40 caracteres. Consulta también las preguntas frecuentes en la base de conocimiento.</p>",
+        "frases_exemplo": [
+          "necesito acceso a los sistemas de RRHH",
+          "no puedo entrar a la plataforma de autogestión para ver mis recibos",
+          "necesito que me asignen el código COL en SAP",
+          "quiero acceso al sistema de documentos contractuales",
+          "necesito ver mis recibos de sueldo en el sistema"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_choose_the_option",
+            "order": 100,
+            "conversational_label": "¿Qué acceso o código necesitas?"
+          },
+          {
+            "name": "v_field_detail",
+            "order": 200,
+            "conversational_label": "Cuéntanos en detalle qué necesitas (mínimo 40 caracteres).",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[\\s\\S]{40,}$"
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 100
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "168d24893b1c9650924d0247f4e45a2c",
+            "name": "EY: Condition for v_choose_the_option",
+            "ajuste": "onChange em v_employee (4,4 KB) sem VA Supported: revisar, remover manipulação de DOM se houver e marcar VA Supported. Alternativa preferida: trocar a filtragem por dependência de choices em v_choose_the_option."
+          },
+          {
+            "sys_id": "1af405c13b90d650924d0247f4e45ade",
+            "name": "EY: Hide options v_choose_the_option",
+            "ajuste": "onLoad par do script acima; manter enquanto a filtragem por script existir e testar na VA. Se a filtragem virar dependência de choices, remover."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory v_field_detail",
+            "tipo": "ui_policy",
+            "como": "mandatory=true direto em v_field_detail."
+          },
+          {
+            "origem": "EY: Show error message onSubmit",
+            "tipo": "client_script",
+            "como": "Validation Regex ^[\\s\\S]{40,}$ em v_field_detail."
+          },
+          {
+            "origem": "EY: Show error message onChange",
+            "tipo": "client_script",
+            "como": "Coberto pela mesma Validation Regex; removido."
+          },
+          {
+            "origem": "EY: Hide error message onLoad",
+            "tipo": "client_script",
+            "como": "Removido junto com v_minimun_characters."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "0c6f995a1b679150a530426fe54bcba6",
+    "name": "Acompanhamento de Beneficio (Cartão de Vale Transporte)",
+    "status": "conversacional",
+    "motivo": "As choices mostram que o item é só de vale-transporte (tipo de benefício com uma opção) e que a entrega é só no local de trabalho, então as policies de endereço e de 'opção' nunca disparam. O fluxo real fica curto: já fez a adesão? onde trabalha (unidade Natura ou loja) e dados de entrega; tipo, local de entrega e dados do colaborador ficam fixos/ocultos.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "div_variables_benefit",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "v_container_acompanhamento_de_beneficio",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "formatter2",
+        "motivo": "Fim de container."
+      },
+      {
+        "name": "formatter",
+        "motivo": "Fim de container."
+      },
+      {
+        "name": "v_2_copy_label",
+        "motivo": "Rich text informativo (2ª via pela central Sodexo); o texto passa para a descrição do item."
+      },
+      {
+        "name": "v_hyperlink_transport_voucher_label",
+        "motivo": "Rich text orientando usar o formulário de adesão; a orientação passa para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Acompanhar entrega do cartão de vale-transporte",
+        "short_description": "Consulta sobre a entrega do cartão de vale-transporte e indicação do local de trabalho para recebê-lo.",
+        "description": "<p>Use quando o seu cartão de vale-transporte ainda não chegou e você quer acompanhar a entrega e informar onde vai recebê-lo no seu local de trabalho (unidade Natura ou loja).</p><p>Para 2ª via ou bloqueio do cartão, ligue para a central da Sodexo (3003-5083 em capitais e regiões metropolitanas, 0800 728-5083 nas demais localidades) ou use o app Sodexo Club; depois do bloqueio, abra este pedido informando onde receber o cartão.</p><p>Se você ainda não fez a adesão ao vale-transporte, use o item de adesão. Não use para alterar ou cancelar o vale-transporte, nem para pedir vale-transporte extra.</p>",
+        "frases_exemplo": [
+          "meu cartão de vale transporte ainda não chegou",
+          "quero saber onde está meu cartão VT",
+          "onde retiro meu cartão de vale-transporte?",
+          "quero receber o cartão do VT na minha loja",
+          "cadê meu cartão da Sodexo?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "employee_s_name",
+            "order": 100,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_id",
+            "order": 200,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_company",
+            "order": 300,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_type_of_benefit",
+            "order": 400,
+            "overrides": {
+              "hidden": true,
+              "default_value": "3",
+              "mandatory": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_enter_the_option",
+            "order": 500,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_has_the_benefit_claimed",
+            "order": 600,
+            "conversational_label": "Você já fez a adesão ao vale-transporte?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_where_do_you_want_to_receive_your_card",
+            "order": 700,
+            "overrides": {
+              "hidden": true,
+              "default_value": "2",
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_workplace",
+            "order": 800,
+            "conversational_label": "Você trabalha em um espaço Natura (unidade ou escritório) ou em loja?"
+          },
+          {
+            "name": "v_choose_the_location",
+            "order": 900,
+            "conversational_label": "Em qual unidade você quer receber o cartão: Interlagos, Cabreúva, NASP ou Cajamar?"
+          },
+          {
+            "name": "v_departament",
+            "order": 1000,
+            "conversational_label": "Qual é o seu departamento?"
+          },
+          {
+            "name": "v_responsible",
+            "order": 1100,
+            "conversational_label": "Quem é o responsável que vai receber o cartão na unidade?"
+          },
+          {
+            "name": "v_store",
+            "order": 1200,
+            "conversational_label": "Em qual loja você trabalha?"
+          },
+          {
+            "name": "v_other_store",
+            "order": 1300,
+            "conversational_label": "Se a sua loja não apareceu na lista, qual é o nome dela?"
+          },
+          {
+            "name": "v_zip_code",
+            "order": 1400,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_street",
+            "order": 1500,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_number",
+            "order": 1600,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_complement",
+            "order": 1700,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_city",
+            "order": 1800,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_neighborhood",
+            "order": 1900,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_region",
+            "order": 2000,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a5ee338a1bfc7910d1abda4ce54bcb53",
+            "name": "EY VS - Informaçoes/anexo",
+            "order": 2200
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3315a5ba1b631d50a530426fe54bcbc0",
+            "short_description": "Adesão feita: mostrar e exigir o local de trabalho",
+            "on_load": true,
+            "conditions": "v_has_the_benefit_claimed=Yes",
+            "actions": [
+              {
+                "variable": "v_workplace",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "2819f5761b2b1d50a530426fe54bcba3",
+            "short_description": "Espaço Natura: unidade, departamento e responsável",
+            "on_load": true,
+            "conditions": "v_workplace=1",
+            "actions": [
+              {
+                "variable": "v_choose_the_location",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_departament",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_responsible",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "545cf34f1b2b9190d1abda4ce54bcb23",
+            "short_description": "Loja: loja e outra loja",
+            "on_load": true,
+            "conditions": "v_workplace=2",
+            "actions": [
+              {
+                "variable": "v_store",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_other_store",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Name`s Employee and Company Read Only and Type of benefit",
+            "tipo": "ui_policy",
+            "como": "read_only direto em employee_s_name, v_id e v_company; v_type_of_benefit fixo (default 3, oculto)."
+          },
+          {
+            "origem": "EY: Has the he benefit claimed Mandatory",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira (tipo fixo = 3): mandatory direto em v_has_the_benefit_claimed."
+          },
+          {
+            "origem": "EY: Where do you want receive your card Visible and Mandatory",
+            "tipo": "ui_policy",
+            "como": "A variável só tem a opção 'Workplace delivery' (2): default 2 e oculta; a exibição do local de trabalho passa a depender de v_has_the_benefit_claimed=Yes."
+          },
+          {
+            "origem": "EY: Enter the option visible and Mandatory",
+            "tipo": "ui_policy",
+            "como": "Removida: dependia de tipo 1 ou 2, que não existem nas choices. v_enter_the_option fica oculta."
+          },
+          {
+            "origem": "EY: CEP/Zip Code Visible and Mandatory",
+            "tipo": "ui_policy",
+            "como": "Removida: dependia de entrega = 1, que não existe nas choices. Campos de endereço mantidos ocultos."
+          },
+          {
+            "origem": "EY: 2 copy Visible label / EY: Benefit has claimed is No Visible and Mandatory",
+            "tipo": "ui_policy",
+            "como": "Removidas junto com os rich texts; orientações na descrição."
+          },
+          {
+            "origem": "6 client scripts 'EY: Fields Clear ...' / 'EY: Clear Values Type of Benefit'",
+            "tipo": "client_script",
+            "como": "Removidos: só limpavam campos na troca de resposta; a conversa trata correções e as policies escondem os campos fora de contexto."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "23094fd91bfab990d1abda4ce54bcb29",
+    "name": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+    "status": "dividido",
+    "motivo": "v_select_option junta 4 intenções (adesão, alteração, cancelamento e novo colaborador que não quer aderir). As choices mostram que v_benefit_type só tem 'Transport voucher', então todos os ramos de fretado nunca disparam. Cada intenção vira um item com v_select_option e v_benefit_type fixos, os termos continuam como checkboxes obrigatórios e as orientações dos rich texts vão para a descrição.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "link",
+        "motivo": "Rich text informativo; orientação vai para a descrição dos itens."
+      },
+      {
+        "name": "v_label_fill_request",
+        "motivo": "Rich text informativo; orientação vai para a descrição dos itens."
+      },
+      {
+        "name": "v_label_subscribing",
+        "motivo": "Rich text de adesão a VT + fretado (opção inexistente); sem uso."
+      },
+      {
+        "name": "v_label_transport_subscribing",
+        "motivo": "Rich text de adesão ao VT; orientação vai para a descrição do item de adesão."
+      },
+      {
+        "name": "v_label_transport_line_update",
+        "motivo": "Rich text de alteração de linhas; orientação vai para a descrição do item de alteração."
+      },
+      {
+        "name": "v_label_cancel_transport_voucher",
+        "motivo": "Rich text de cancelamento de VT; orientação vai para a descrição do item de cancelamento."
+      },
+      {
+        "name": "v_label_cancel_charter",
+        "motivo": "Rich text de cancelamento de fretado (opção inexistente); sem uso."
+      },
+      {
+        "name": "v_label_cancel_transport_voucher_and_charter",
+        "motivo": "Rich text de cancelamento de VT + fretado (opção inexistente); sem uso."
+      },
+      {
+        "name": "legenda_linha_onibus",
+        "motivo": "Rich text 'uma linha por vez'; a orientação vai para a descrição dos itens de adesão e alteração."
+      },
+      {
+        "name": "legenda_vt",
+        "motivo": "Rich text informativo de VT; orientação vai para a descrição."
+      },
+      {
+        "name": "v_label_transport_infos",
+        "motivo": "Rich text do bloco de fretado (opção inexistente); sem uso."
+      },
+      {
+        "name": "v_label_chartered",
+        "motivo": "Rich text do bloco de fretado (opção inexistente); sem uso."
+      },
+      {
+        "name": "termos_de_responsabilidade",
+        "motivo": "Label de layout duplicado; os itens usam responsability_terms antes dos checkboxes."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Aderir ao vale-transporte",
+        "short_description": "Adesão ao vale-transporte para o trajeto casa-trabalho.",
+        "description": "<p>Use para começar a receber vale-transporte no trajeto casa-trabalho. Você vai informar as linhas de ônibus, metrô ou trem que usa (se usar mais de uma linha, informe uma de cada vez), quantas passagens por dia e, se já tiver, a foto do cartão de transporte.</p><p>O vale-transporte tem desconto de 6% do salário na folha (Lei 7.418/85) e deve ser usado só no trajeto casa-trabalho.</p><p>Não use para trocar linhas de um vale-transporte que você já tem (use 'Alterar linhas do vale-transporte'), para vale-transporte extra ou para acompanhar a entrega do cartão.</p>",
+        "frases_exemplo": [
+          "quero aderir ao vale transporte",
+          "preciso começar a receber VT",
+          "como faço para ter vale-transporte?",
+          "quero solicitar vale-transporte para ir ao trabalho",
+          "entrei agora e quero VT"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_select_option",
+            "value": "membership"
+          },
+          {
+            "name": "v_benefit_type",
+            "value": "transport_voucher"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_already_have_a_vt_card",
+            "order": 300,
+            "conversational_label": "Você já tem cartão de transporte?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "attach_your_transport_card_photo_here",
+            "order": 400,
+            "conversational_label": "Envie a foto do seu cartão de transporte."
+          },
+          {
+            "name": "if_you_have_more_than_one_transport_card_attach_it_here",
+            "order": 500,
+            "conversational_label": "Se você tiver mais de um cartão de transporte, envie a foto do outro cartão."
+          },
+          {
+            "name": "responsability_terms",
+            "order": 600
+          },
+          {
+            "name": "v_checkbox_transport_voucher_1",
+            "order": 700,
+            "conversational_label": "Você está ciente de que deve informar todas as linhas que usa de casa para o trabalho e do trabalho para casa?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_transport_voucher_2",
+            "order": 800,
+            "conversational_label": "Você se compromete a atualizar as informações anualmente ou sempre que mudarem e a usar o vale-transporte só no trajeto casa-trabalho?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_transport_voucher_3",
+            "order": 900,
+            "conversational_label": "Você está ciente do desconto de 6% do salário na folha de pagamento (Lei 7.418/85)?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "checkbox_vt_responsability",
+            "order": 1000,
+            "conversational_label": "Você declara que assume total responsabilidade pela veracidade das informações?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_1",
+            "order": 1100,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_2",
+            "order": 1200,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_responsability",
+            "order": 1300,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+            "name": "Suas informações pessoais",
+            "order": 10
+          },
+          {
+            "sys_id": "350894e51b76f990d1abda4ce54bcb15",
+            "name": "Vale transporte",
+            "order": 200
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3b13e43d1b0c4a50a530426fe54bcb2c",
+            "short_description": "EY: Ocultar dados do colaborador - Item view",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a6f193521b00ce50a530426fe54bcb6b",
+            "short_description": "EY: Ocultar dados do colaborador - Task",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8e4d19c21bb0d290514cbaef4b4bcb1c",
+            "short_description": "EY: Adjust Visibility",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "location",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "fb8dfd843b269e10924d0247f4e45a35",
+            "short_description": "Tem cartão: exigir foto do cartão",
+            "on_load": true,
+            "conditions": "v_already_have_a_vt_card=Yes",
+            "actions": [
+              {
+                "variable": "attach_your_transport_card_photo_here",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e34b9aaa3bff2610924d0247f4e45a90",
+            "short_description": "Tem cartão: mostrar anexo de cartão adicional",
+            "on_load": true,
+            "conditions": "v_already_have_a_vt_card=Yes",
+            "actions": [
+              {
+                "variable": "if_you_have_more_than_one_transport_card_attach_it_here",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "v_select_option fixo (membership) no item."
+          },
+          {
+            "origem": "EY: VT OR VT + CHARTERED",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em v_already_have_a_vt_card; legendas vão para a descrição."
+          },
+          {
+            "origem": "EY: Checkbox Adhesion or Amendment and Transport Voucher and Chartered or Transport Voucher / Checkbox Reponsability VT",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto nos checkboxes de VT e em checkbox_vt_responsability."
+          },
+          {
+            "origem": "EY: Adhesion or Amendment and Transport voucher or Transport voucher + Chartered",
+            "tipo": "ui_policy",
+            "como": "Mostrava o set 'Vale transporte'; o set passa a fazer parte do item."
+          },
+          {
+            "origem": "Policies de fretado (Checkbox Veracity, Checkbox ... Chartered, Adhesion ... Chartered, labels)",
+            "tipo": "ui_policy",
+            "como": "Removidas: v_benefit_type não tem opção de fretado. Checkboxes de fretado mantidos ocultos."
+          },
+          {
+            "origem": "EY: Checkbox mandatory",
+            "tipo": "client_script",
+            "como": "Substituído por mandatory direto nos checkboxes do item."
+          },
+          {
+            "origem": "EY: Set transport voucher and chartered / EY: Benefity type mandatory or read only / EY: If transport only / EY: Clear value attachment field / EY: Clear values",
+            "tipo": "client_script",
+            "como": "Removidos: v_select_option e v_benefit_type são fixos no item."
+          },
+          {
+            "origem": "EY: Pop UP - Form Adesão",
+            "tipo": "client_script",
+            "como": "Removido (modal spModal sem VA Supported, sobre fretado); orientação na descrição/KB."
+          }
+        ]
+      },
+      {
+        "name": "Alterar linhas do vale-transporte",
+        "short_description": "Troca, inclusão ou exclusão de linhas ou da quantidade de passagens do vale-transporte.",
+        "description": "<p>Use quando você já tem vale-transporte e precisa mudar algo: trocar ou incluir linha, ou mudar a quantidade de passagens por mudança de endereço ou de local de trabalho. Informe as linhas que vai passar a usar (uma de cada vez) e quantas passagens por dia.</p><p>Não use para cancelar o vale-transporte (use 'Cancelar vale-transporte'), para vale-transporte extra ou para acompanhar a entrega do cartão.</p>",
+        "frases_exemplo": [
+          "mudei de endereço e preciso trocar as linhas do VT",
+          "quero incluir mais uma linha de ônibus no vale transporte",
+          "preciso alterar a quantidade de passagens do VT",
+          "mudei de unidade, tenho que atualizar meu vale-transporte",
+          "trocar linha do vale transporte"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_select_option",
+            "value": "amendment"
+          },
+          {
+            "name": "v_benefit_type",
+            "value": "transport_voucher"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_already_have_a_vt_card",
+            "order": 300,
+            "conversational_label": "Você já tem cartão de transporte?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "attach_your_transport_card_photo_here",
+            "order": 400,
+            "conversational_label": "Envie a foto do seu cartão de transporte."
+          },
+          {
+            "name": "if_you_have_more_than_one_transport_card_attach_it_here",
+            "order": 500,
+            "conversational_label": "Se você tiver mais de um cartão de transporte, envie a foto do outro cartão."
+          },
+          {
+            "name": "responsability_terms",
+            "order": 600
+          },
+          {
+            "name": "v_checkbox_transport_voucher_1",
+            "order": 700,
+            "conversational_label": "Você está ciente de que deve informar todas as linhas que usa de casa para o trabalho e do trabalho para casa?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_transport_voucher_2",
+            "order": 800,
+            "conversational_label": "Você se compromete a atualizar as informações anualmente ou sempre que mudarem e a usar o vale-transporte só no trajeto casa-trabalho?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_transport_voucher_3",
+            "order": 900,
+            "conversational_label": "Você está ciente do desconto de 6% do salário na folha de pagamento (Lei 7.418/85)?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "checkbox_vt_responsability",
+            "order": 1000,
+            "conversational_label": "Você declara que assume total responsabilidade pela veracidade das informações?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_1",
+            "order": 1100,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_2",
+            "order": 1200,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_checkbox_chartered_responsability",
+            "order": 1300,
+            "overrides": {
+              "hidden": true,
+              "mandatory": false,
+              "not_available_conversation": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+            "name": "Suas informações pessoais",
+            "order": 10
+          },
+          {
+            "sys_id": "350894e51b76f990d1abda4ce54bcb15",
+            "name": "Vale transporte",
+            "order": 200
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3b13e43d1b0c4a50a530426fe54bcb2c",
+            "short_description": "EY: Ocultar dados do colaborador - Item view",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a6f193521b00ce50a530426fe54bcb6b",
+            "short_description": "EY: Ocultar dados do colaborador - Task",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8e4d19c21bb0d290514cbaef4b4bcb1c",
+            "short_description": "EY: Adjust Visibility",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "location",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "fb8dfd843b269e10924d0247f4e45a35",
+            "short_description": "Tem cartão: exigir foto do cartão",
+            "on_load": true,
+            "conditions": "v_already_have_a_vt_card=Yes",
+            "actions": [
+              {
+                "variable": "attach_your_transport_card_photo_here",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e34b9aaa3bff2610924d0247f4e45a90",
+            "short_description": "Tem cartão: mostrar anexo de cartão adicional",
+            "on_load": true,
+            "conditions": "v_already_have_a_vt_card=Yes",
+            "actions": [
+              {
+                "variable": "if_you_have_more_than_one_transport_card_attach_it_here",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "v_select_option fixo (amendment) no item."
+          },
+          {
+            "origem": "EY: VT OR VT + CHARTERED",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em v_already_have_a_vt_card; legendas vão para a descrição."
+          },
+          {
+            "origem": "EY: Checkbox Adhesion or Amendment and Transport Voucher and Chartered or Transport Voucher / Checkbox Reponsability VT",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto nos checkboxes de VT e em checkbox_vt_responsability."
+          },
+          {
+            "origem": "EY: Adhesion or Amendment and Transport voucher or Transport voucher + Chartered / EY: Amendment and Transport voucher or Transport voucher + Chartered",
+            "tipo": "ui_policy",
+            "como": "Mostravam o set 'Vale transporte' e a legenda de alteração; o set passa a fazer parte do item e a orientação vai para a descrição."
+          },
+          {
+            "origem": "Policies de fretado",
+            "tipo": "ui_policy",
+            "como": "Removidas: v_benefit_type não tem opção de fretado. Checkboxes de fretado mantidos ocultos."
+          },
+          {
+            "origem": "EY: Checkbox mandatory",
+            "tipo": "client_script",
+            "como": "Substituído por mandatory direto nos checkboxes do item."
+          },
+          {
+            "origem": "EY: Set transport voucher and chartered / EY: Benefity type mandatory or read only / EY: If transport only / EY: Clear value attachment field / EY: Clear values",
+            "tipo": "client_script",
+            "como": "Removidos: v_select_option e v_benefit_type são fixos no item."
+          },
+          {
+            "origem": "EY: Pop UP - Form Adesão",
+            "tipo": "client_script",
+            "como": "Removido (modal spModal sem VA Supported)."
+          }
+        ]
+      },
+      {
+        "name": "Cancelar vale-transporte",
+        "short_description": "Cancelamento do vale-transporte.",
+        "description": "<p>Use para deixar de receber o vale-transporte, por exemplo porque passou a ir de carro ou mudou para perto do trabalho. Com o cancelamento, todos os benefícios de transporte em vigor são excluídos. Para só trocar ou tirar uma linha, use 'Alterar linhas do vale-transporte'.</p>",
+        "frases_exemplo": [
+          "quero cancelar meu vale-transporte",
+          "vou de carro agora, pode cortar o VT",
+          "não preciso mais de vale transporte",
+          "cancelar VT",
+          "como paro de receber vale-transporte?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_select_option",
+            "value": "cancellation"
+          },
+          {
+            "name": "v_benefit_type",
+            "value": "transport_voucher"
+          }
+        ],
+        "variables": [
+          {
+            "name": "responsability_terms",
+            "order": 300
+          },
+          {
+            "name": "v_checkbox_chartered_4",
+            "order": 400,
+            "conversational_label": "Você está ciente de que, com o cancelamento, todos os benefícios de transporte em vigor serão excluídos?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_checkbox_responsability",
+            "order": 500,
+            "conversational_label": "Você declara que assume total responsabilidade pela veracidade das informações?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+            "name": "Suas informações pessoais",
+            "order": 10
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3b13e43d1b0c4a50a530426fe54bcb2c",
+            "short_description": "EY: Ocultar dados do colaborador - Item view",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a6f193521b00ce50a530426fe54bcb6b",
+            "short_description": "EY: Ocultar dados do colaborador - Task",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8e4d19c21bb0d290514cbaef4b4bcb1c",
+            "short_description": "EY: Adjust Visibility",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "location",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "v_select_option fixo (cancellation) no item."
+          },
+          {
+            "origem": "EY: Checkbox Cancellation and Transport Voucher + Chartered or Chartered",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em v_checkbox_chartered_4."
+          },
+          {
+            "origem": "EY: Checkbox Adhesion, Amendment or Cancellation",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em v_checkbox_responsability."
+          },
+          {
+            "origem": "EY: Cancellation and Transport voucher / Cancellation and Chartered / Cancellation and Transport voucher + Chartered",
+            "tipo": "ui_policy",
+            "como": "Só mostravam rich texts; orientação na descrição."
+          },
+          {
+            "origem": "EY: Checkbox mandatory",
+            "tipo": "client_script",
+            "como": "Substituído por mandatory direto nos checkboxes do item."
+          },
+          {
+            "origem": "EY: Set transport voucher and chartered / EY: Benefity type mandatory or read only / EY: If transport only / EY: Clear value attachment field / EY: Clear values / EY: Pop UP - Form Adesão",
+            "tipo": "client_script",
+            "como": "Removidos: valores fixos no item; modal sem VA Supported."
+          }
+        ]
+      },
+      {
+        "name": "Recusar vale-transporte (novo colaborador)",
+        "short_description": "Declaração do novo colaborador de que não quer aderir ao vale-transporte.",
+        "description": "<p>Use se você acabou de entrar na empresa e não quer receber vale-transporte. A declaração fica registrada pelo RH. Se mudar de ideia depois, use 'Aderir ao vale-transporte'.</p>",
+        "frases_exemplo": [
+          "sou novo e não quero vale transporte",
+          "não vou precisar de VT, acabei de ser contratado",
+          "quero declarar que não uso vale-transporte",
+          "recém-admitido, não quero aderir ao VT"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_select_option",
+            "value": "new_employee_do_not_join"
+          }
+        ],
+        "variables": [
+          {
+            "name": "responsability_terms",
+            "order": 300
+          },
+          {
+            "name": "v_checkbox_responsability",
+            "order": 400,
+            "conversational_label": "Você confirma que não quer aderir ao vale-transporte e assume a responsabilidade pela veracidade dessa informação?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "9a5298841b190110d1abda4ce54bcb29",
+            "name": "Suas informações pessoais",
+            "order": 10
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3b13e43d1b0c4a50a530426fe54bcb2c",
+            "short_description": "EY: Ocultar dados do colaborador - Item view",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a6f193521b00ce50a530426fe54bcb6b",
+            "short_description": "EY: Ocultar dados do colaborador - Task",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "employee",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "container_colab",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8e4d19c21bb0d290514cbaef4b4bcb1c",
+            "short_description": "EY: Adjust Visibility",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "location",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "v_select_option fixo (new_employee_do_not_join) no item."
+          },
+          {
+            "origem": "EY: Checkbox Adhesion, Amendment or Cancellation",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em v_checkbox_responsability."
+          },
+          {
+            "origem": "EY: Benefity type mandatory or read only / EY: Checkbox mandatory / demais scripts",
+            "tipo": "client_script",
+            "como": "Removidos: sem tipo de benefício neste item e checkbox obrigatório por atributo."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "bf029e5e1ba2b810a530426fe54bcb4b",
+    "name": "Solicitação de Vale Transporte Extra",
+    "status": "conversacional",
+    "motivo": "Intenção única. O bloqueador era o onSubmit sem VA Supported que exige anexo quando o pedido é para outro colaborador: vira uma variável Attachment nova com UI policy sem script. A policy que mostrava o set pelo nome interno passa a agir nas variáveis do set.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "attach_template_employee_information",
+        "motivo": "Rich text com o link do modelo de planilha do colaborador; a orientação passa para a descrição do item."
+      },
+      {
+        "name": "text_commitment_term",
+        "motivo": "Rich text com o termo de compromisso; o texto passa para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar vale-transporte extra",
+        "short_description": "Pedido de vale-transporte adicional por um período determinado.",
+        "description": "<p>Use quando você precisar de passagens de vale-transporte além das habituais por um período: mudança temporária de local de trabalho, mudança de horário, trabalho em dia fora da escala ou doença ocupacional. Informe o período, a cidade e a linha e quantas passagens de ida e de volta por dia.</p><p>Se o pedido for para outro colaborador, anexe a planilha com os dados dele no modelo do RH. Ao enviar, você declara assumir a responsabilidade pela veracidade das informações (termo de compromisso).</p><p>Não use para aderir, alterar ou cancelar o vale-transporte fixo, nem para acompanhar a entrega do cartão.</p>",
+        "frases_exemplo": [
+          "preciso de vale transporte extra para a semana que vem",
+          "vou trabalhar em outra unidade por um mês, preciso de VT adicional",
+          "mudou meu horário e preciso de passagem extra",
+          "VT extra para trabalhar no meu dia de folga",
+          "como peço vale-transporte a mais?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "request_reason",
+            "order": 200,
+            "conversational_label": "Qual é o motivo do vale-transporte extra: mudança temporária de local, mudança de horário, dia fora da escala ou doença ocupacional?"
+          },
+          {
+            "name": "comments",
+            "order": 400,
+            "conversational_label": "Quer deixar alguma observação?"
+          },
+          {
+            "name": "statement_veracity",
+            "order": 500
+          },
+          {
+            "name": "declare_statement_veracity",
+            "order": 600,
+            "conversational_label": "Você declara assumir total responsabilidade pela veracidade das informações?"
+          },
+          {
+            "name": "nova_anexo_dados_colaborador",
+            "order": 700,
+            "conversational_label": "Envie a planilha com os dados do colaborador (modelo do RH).",
+            "nova": {
+              "type": "33",
+              "question_text": "Anexe a planilha com os dados do colaborador",
+              "mandatory": false
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "71d9ac631b57b010a530426fe54bcb7c",
+            "name": "Personal information - VT Extra",
+            "order": 100
+          },
+          {
+            "sys_id": "e3f03a161b66b810a530426fe54bcb49",
+            "name": "Vale Transporte Extra",
+            "order": 300
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "6f36a9a11b9ff010d1abda4ce54bcb5a",
+            "short_description": "Pedido para outro colaborador: exigir planilha de dados",
+            "on_load": true,
+            "conditions": "solicitation_whom=another_employee",
+            "actions": [
+              {
+                "variable": "nova_anexo_dados_colaborador",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "9094e9211b9ff010d1abda4ce54bcb79",
+            "short_description": "Pedido para mim: mostrar motivo e dados das passagens",
+            "on_load": true,
+            "conditions": "solicitation_whom=my_request",
+            "actions": [
+              {
+                "variable": "request_reason",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "additional_request_start_date",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "end_date_of_additional_request",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "transport_city",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "line_name",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "others",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "quantity_one_way_day",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "quantity_return_day",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "unit_value",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "city_and_line",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "already_have_vt_card",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "7a58d94b1bce4510a530426fe54bcbc0",
+            "name": "ACN my request fill the variable set",
+            "ajuste": "Já é VA Supported; manter. Avaliar trocar por auto-populate nas variáveis do set."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "ACN: Mandatory Attachment",
+            "tipo": "client_script",
+            "como": "Substituído pela variável nova_anexo_dados_colaborador (Attachment) obrigatória via UI policy quando solicitation_whom=another_employee."
+          },
+          {
+            "origem": "ACN - All the fields from \"State of veracity\"...",
+            "tipo": "ui_policy",
+            "como": "A ação sobre o rich text do modelo foi trocada pela exibição/obrigatoriedade do anexo novo."
+          },
+          {
+            "origem": "ACN - The variable set \"Transportation tickets\"...",
+            "tipo": "ui_policy",
+            "como": "A ação sobre o container do set (bono_de_transporte_adicional) passou para as variáveis do set, com a mesma condição."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "340f1a9a1bd8c110a530426fe54bcb5d",
+    "name": "Alterar dados de conta bancária",
+    "status": "analise_humana",
+    "motivo": "O item não cria chamado: o onSubmit sempre bloqueia o envio e redireciona para o Workday, então é só um atalho. Nenhum chamado em 12 meses (1 no histórico). O RH precisa decidir se desativa o item e publica um artigo de KB com o link do Workday (dado bancário não deve ser coletado em conversa).",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "c7573a6f1b8f3c10a530426fe54bcb07",
+    "name": "Logística de Ações de Aprendizagem",
+    "status": "dividido",
+    "motivo": "qual_solicitacao separa 3 pedidos com campos próprios: logística completa, convite na agenda e comunicado por e-mail. Convite e comunicado ficam conversacionais; a logística completa continua como formulário por ter muitas perguntas, anexos e regras. Policies e scripts que apontam para variáveis inativas foram descartados.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "training_specifics",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "formatter",
+        "motivo": "Fim de container."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar logística completa de treinamento",
+        "short_description": "Organização completa de um treinamento pelo CSC: cadastro no Workday, sala, datas, instrutor, inscrições, convite e coffee break.",
+        "description": "<p>Use quando você é responsável por um treinamento e precisa que o CSC (Centro de Serviços Compartilhados) cuide da logística completa: cadastro no Workday, sala e layout, datas e horários, instrutor interno ou externo, inscrições pelo Workday ou convite na agenda e pedido de coffee break.</p><p>Como tem muitos detalhes e anexos (formulário do Workday, pedido de coffee), este pedido abre como formulário. Para só enviar um convite de agenda ou um comunicado por e-mail, use os itens específicos.</p>",
+        "frases_exemplo": [
+          "preciso organizar um treinamento presencial para minha equipe",
+          "quero reservar sala e coffee para um curso",
+          "logística de treinamento com instrutor externo",
+          "preciso cadastrar um treinamento no Workday e montar a turma"
+        ],
+        "make_item_non_conversational": true,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "qual_solicitacao",
+            "value": "logistica_completa_treinamento"
+          }
+        ],
+        "variables": [
+          {
+            "name": "categoria_de_aprendizagem",
+            "order": 100,
+            "conversational_label": "Qual é a categoria de aprendizagem: Núcleo, HUB, Células ou Portas de Entrada?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "seleciona_o_hub",
+            "order": 200,
+            "conversational_label": "Qual é o HUB?"
+          },
+          {
+            "name": "nome_da_celula",
+            "order": 300,
+            "conversational_label": "Qual é o nome da célula?"
+          },
+          {
+            "name": "training_responsible",
+            "order": 400,
+            "conversational_label": "Quem é o responsável pelo treinamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "training_is_registered_workday",
+            "order": 500,
+            "conversational_label": "O treinamento já está cadastrado no Workday?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "template_workday",
+            "order": 550
+          },
+          {
+            "name": "attach_form_workday",
+            "order": 600,
+            "conversational_label": "Envie o formulário de cadastro do treinamento no Workday."
+          },
+          {
+            "name": "training_name",
+            "order": 700,
+            "conversational_label": "Qual é o nome do treinamento?"
+          },
+          {
+            "name": "training_objective",
+            "order": 800,
+            "conversational_label": "Qual é o objetivo do treinamento?"
+          },
+          {
+            "name": "facilitation_type",
+            "order": 900,
+            "conversational_label": "A facilitação vai ser interna ou externa?"
+          },
+          {
+            "name": "instructor_name",
+            "order": 1000,
+            "conversational_label": "Qual é o nome do instrutor?"
+          },
+          {
+            "name": "instructor_email",
+            "order": 1100,
+            "conversational_label": "Qual é o e-mail do instrutor?"
+          },
+          {
+            "name": "instructor_ssn",
+            "order": 1200,
+            "conversational_label": "Qual é o número do documento do instrutor?"
+          },
+          {
+            "name": "room_layout",
+            "order": 1300,
+            "conversational_label": "Qual layout de sala você precisa?"
+          },
+          {
+            "name": "other_format_coment",
+            "order": 1350
+          },
+          {
+            "name": "start_date",
+            "order": 1400,
+            "conversational_label": "Em que data começa o treinamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "start_time",
+            "order": 1500,
+            "conversational_label": "Que horas começa?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "end_date",
+            "order": 1600,
+            "conversational_label": "Em que data termina?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "end_time",
+            "order": 1700,
+            "conversational_label": "Que horas termina?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "training_location",
+            "order": 1800,
+            "conversational_label": "Onde vai ser o treinamento?"
+          },
+          {
+            "name": "total_workload",
+            "order": 1900,
+            "conversational_label": "Qual é a carga horária total (HH:mm)?"
+          },
+          {
+            "name": "class_capacity",
+            "order": 2000,
+            "conversational_label": "Qual é a capacidade máxima da turma?"
+          },
+          {
+            "name": "inscricoes_workday_direto_agenda",
+            "order": 2100,
+            "conversational_label": "As inscrições vão ser feitas pelo Workday ou por convite direto na agenda?"
+          },
+          {
+            "name": "forward_invitation",
+            "order": 2200,
+            "conversational_label": "Você quer que o CSC envie o convite?"
+          },
+          {
+            "name": "titulo_convite",
+            "order": 2300,
+            "conversational_label": "Qual é o título do convite?"
+          },
+          {
+            "name": "descricao_convite",
+            "order": 2400,
+            "conversational_label": "Qual texto deve ir no convite?"
+          },
+          {
+            "name": "email_convidados",
+            "order": 2500,
+            "conversational_label": "Envie a lista de e-mails dos convidados."
+          },
+          {
+            "name": "do_you_need_to_request_coffee",
+            "order": 2600,
+            "conversational_label": "Vai precisar de coffee break?"
+          },
+          {
+            "name": "template_sodexo",
+            "order": 2650
+          },
+          {
+            "name": "attach_sodexo",
+            "order": 2700,
+            "conversational_label": "Envie o formulário de pedido de coffee preenchido."
+          },
+          {
+            "name": "cost_center",
+            "order": 2800,
+            "conversational_label": "Qual é o centro de custo?"
+          },
+          {
+            "name": "informe_classe_contabil",
+            "order": 2900,
+            "conversational_label": "Qual é a classe contábil?"
+          },
+          {
+            "name": "additional_information",
+            "order": 3000,
+            "conversational_label": "Tem mais alguma informação, como materiais para a sala, brindes ou intérprete de Libras?"
+          },
+          {
+            "name": "descricao",
+            "order": 3100,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "descricao_2",
+            "order": 3200,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "assessment_deadline",
+            "order": 3300,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+            "name": "Informações pessoais",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "20d148938736b250ec360e530cbb35e6",
+            "short_description": "EY: Nome da célula",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=celulas",
+            "actions": [
+              {
+                "variable": "nome_da_celula",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e65108138736b250ec360e530cbb35cf",
+            "short_description": "EY: Selecione o HUB",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=hub",
+            "actions": [
+              {
+                "variable": "seleciona_o_hub",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c5e195533b985a90924d0247f4e45a99",
+            "short_description": "Treinamento não cadastrado no Workday: formulário",
+            "on_load": true,
+            "conditions": "training_is_registered_workday=v_no",
+            "actions": [
+              {
+                "variable": "template_workday",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "attach_form_workday",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a02e901387f2f250ec360e530cbb3573",
+            "short_description": "EY: Nome do Treinamento",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada",
+            "actions": [
+              {
+                "variable": "training_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8663cf6333d3f21098331c07ee5c7b37",
+            "short_description": "EY: Training Objective",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada^training_is_registered_workday=v_no",
+            "actions": [
+              {
+                "variable": "training_objective",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "52f6a01b87b6f250ec360e530cbb351b",
+            "short_description": "EY: Local de Treinamento",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada",
+            "actions": [
+              {
+                "variable": "training_location",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "9d5f989f87f2f250ec360e530cbb3588",
+            "short_description": "EY: Facilitação/CC",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada",
+            "actions": [
+              {
+                "variable": "inscricoes_workday_direto_agenda",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "do_you_need_to_request_coffee",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "facilitation_type",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "total_workload",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "room_layout",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "class_capacity",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "additional_information",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a13b7c601b400110d1abda4ce54bcbf3",
+            "short_description": "Layout de sala 'Outro': mostrar orientação",
+            "on_load": true,
+            "conditions": "room_layout=other",
+            "actions": [
+              {
+                "variable": "other_format_coment",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c030205b8736f250ec360e530cbb35a3",
+            "short_description": "EY: Nome/RG instrutor",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada^facilitation_type=External",
+            "actions": [
+              {
+                "variable": "instructor_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "instructor_email",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "instructor_ssn",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "cb5ecf273397f21098331c07ee5c7b26",
+            "short_description": "EY: Deseja que a CSC encaminhe o convite?",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada^inscricoes_workday_direto_agenda=convite_agenda",
+            "actions": [
+              {
+                "variable": "forward_invitation",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "30c5705f873ef250ec360e530cbb3568",
+            "short_description": "EY: Convite",
+            "on_load": true,
+            "conditions": "forward_invitation=Yes",
+            "actions": [
+              {
+                "variable": "email_convidados",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "titulo_convite",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "descricao_convite",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c4744a633bdcda90924d0247f4e45a66",
+            "short_description": "Coffee break: formulário Sodexo",
+            "on_load": true,
+            "conditions": "do_you_need_to_request_coffee=Yes",
+            "actions": [
+              {
+                "variable": "template_sodexo",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "attach_sodexo",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "39ce43a73397f21098331c07ee5c7b8b",
+            "short_description": "EY: Informe o Centro de Custo",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada^do_you_need_to_request_coffee=Yes",
+            "actions": [
+              {
+                "variable": "cost_center",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "453f07ab3397f21098331c07ee5c7b0a",
+            "short_description": "EY: Informe a Classe Contábil",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=nucleo^ORcategoria_de_aprendizagem=hub^ORcategoria_de_aprendizagem=portas_entrada^do_you_need_to_request_coffee=Yes",
+            "actions": [
+              {
+                "variable": "informe_classe_contabil",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "37c5d8801b93bc10a530426fe54bcb71",
+            "name": "ACN: Date Criteria",
+            "ajuste": "Nenhum: já VA Supported (valida end_date)."
+          },
+          {
+            "sys_id": "fd8491dc1b610a10a530426fe54bcb1a",
+            "name": "EY: Retroactive date lock",
+            "ajuste": "Bloqueia data retroativa em start_date; sem VA Supported. Item fica como formulário, mas revisar e marcar VA Supported se for tornado conversacional."
+          },
+          {
+            "sys_id": "3c83eb33339fb61098331c07ee5c7b0e",
+            "name": "EY: Workday ou Convite na agenda control",
+            "ajuste": "Nenhum: já VA Supported."
+          },
+          {
+            "sys_id": "ac3288538736b250ec360e530cbb35e7",
+            "name": "EY: Qual a solicitação? control",
+            "ajuste": "Revisar: remover trechos que dependem de qual_solicitacao, agora fixo no item."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em categoria_de_aprendizagem e training_responsible; demais ações eram vazias ou em variáveis inativas; qual_solicitacao fixo."
+          },
+          {
+            "origem": "EY: Treinamento está cadastrado no Workday?",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em training_is_registered_workday."
+          },
+          {
+            "origem": "EY: Data Inicio/Fim",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto nas 4 variáveis de data/hora."
+          },
+          {
+            "origem": "ACN: Field Request for Training Request Selection is Presential/Online/Other, ACN: Specific Assessment, ACN: Educational Material, EY: Would you like CSC to forward the invitation? - Yes",
+            "tipo": "ui_policy",
+            "como": "Removidas: condições ou ações em variáveis inativas (training_type, specific_assessment, educational_material, invited_list etc.)."
+          },
+          {
+            "origem": "If Others, show description / If Others, show description 2 / If Assestmente Application is Other",
+            "tipo": "ui_policy",
+            "como": "Removidas: condição sobre additional_information (texto livre) nunca é verdadeira. descricao, descricao_2 e assessment_deadline mantidas ocultas."
+          },
+          {
+            "origem": "EY: Informação adicional / EY: Titulo Comunicado/Mailing",
+            "tipo": "ui_policy",
+            "como": "Não se aplicam a este item (convite/comunicado têm itens próprios)."
+          },
+          {
+            "origem": "ACN: Validate Provider: Telephone",
+            "tipo": "client_script",
+            "como": "Removido: aponta para provider_telephone, que está inativa."
+          }
+        ]
+      },
+      {
+        "name": "Enviar convite de treinamento na agenda",
+        "short_description": "Envio, pelo CSC, do convite de agenda de um treinamento para os participantes.",
+        "description": "<p>Use quando o treinamento já está organizado e você só precisa que o CSC (Centro de Serviços Compartilhados) envie o convite na agenda (Outlook) para os participantes. Informe a categoria de aprendizagem, o responsável, data e horário de início e fim, o local, o título e o texto do convite e anexe a lista de e-mails dos convidados.</p><p>Não use para organizar sala, coffee ou instrutor (use 'Solicitar logística completa de treinamento') nem para disparar comunicado por e-mail.</p>",
+        "frases_exemplo": [
+          "preciso que enviem o convite do treinamento na agenda",
+          "mandar convite de Outlook para os participantes do curso",
+          "quero que o CSC dispare o convite da turma",
+          "envio de convite de treinamento para 30 pessoas"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "qual_solicitacao",
+            "value": "envio_convite_agenda"
+          }
+        ],
+        "variables": [
+          {
+            "name": "categoria_de_aprendizagem",
+            "order": 100,
+            "conversational_label": "Qual é a categoria de aprendizagem: Núcleo, HUB, Células ou Portas de Entrada?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "seleciona_o_hub",
+            "order": 200,
+            "conversational_label": "Qual é o HUB?"
+          },
+          {
+            "name": "nome_da_celula",
+            "order": 300,
+            "conversational_label": "Qual é o nome da célula?"
+          },
+          {
+            "name": "training_responsible",
+            "order": 400,
+            "conversational_label": "Quem é o responsável pelo treinamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "start_date",
+            "order": 500,
+            "conversational_label": "Em que data começa o treinamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "start_time",
+            "order": 600,
+            "conversational_label": "Que horas começa?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "end_date",
+            "order": 700,
+            "conversational_label": "Em que data termina?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "end_time",
+            "order": 800,
+            "conversational_label": "Que horas termina?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "training_location",
+            "order": 900,
+            "conversational_label": "Onde vai ser o treinamento (sala, endereço ou link)?",
+            "overrides": {
+              "hidden": false,
+              "mandatory": true
+            }
+          },
+          {
+            "name": "titulo_convite",
+            "order": 1000,
+            "conversational_label": "Qual é o título do convite?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "descricao_convite",
+            "order": 1100,
+            "conversational_label": "Qual texto deve ir no corpo do convite?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "email_convidados",
+            "order": 1200,
+            "conversational_label": "Envie o arquivo com os e-mails dos convidados.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "informacao_adicional",
+            "order": 1300,
+            "conversational_label": "Tem mais alguma informação para o CSC?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+            "name": "Informações pessoais",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "20d148938736b250ec360e530cbb35e6",
+            "short_description": "EY: Nome da célula",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=celulas",
+            "actions": [
+              {
+                "variable": "nome_da_celula",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e65108138736b250ec360e530cbb35cf",
+            "short_description": "EY: Selecione o HUB",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=hub",
+            "actions": [
+              {
+                "variable": "seleciona_o_hub",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "37c5d8801b93bc10a530426fe54bcb71",
+            "name": "ACN: Date Criteria",
+            "ajuste": "Nenhum: já VA Supported (valida end_date)."
+          },
+          {
+            "sys_id": "fd8491dc1b610a10a530426fe54bcb1a",
+            "name": "EY: Retroactive date lock",
+            "ajuste": "Sem VA Supported: revisar (mensagem traduzida, sem DOM) e marcar VA Supported; alternativa: validar data retroativa no flow."
+          },
+          {
+            "sys_id": "ac3288538736b250ec360e530cbb35e7",
+            "name": "EY: Qual a solicitação? control",
+            "ajuste": "Revisar: remover trechos que dependem de qual_solicitacao, agora fixo no item."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em categoria_de_aprendizagem e training_responsible; qual_solicitacao fixo."
+          },
+          {
+            "origem": "EY: Convite",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em titulo_convite, descricao_convite e email_convidados."
+          },
+          {
+            "origem": "EY: Local de Treinamento",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: training_location visível e obrigatória por atributo."
+          },
+          {
+            "origem": "EY: Data Inicio/Fim",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto nas 4 variáveis de data/hora."
+          },
+          {
+            "origem": "EY: Informação adicional",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: informacao_adicional visível por padrão."
+          },
+          {
+            "origem": "ACN: Validate Provider: Telephone",
+            "tipo": "client_script",
+            "como": "Removido: aponta para variável inativa."
+          }
+        ]
+      },
+      {
+        "name": "Enviar comunicado de treinamento por e-mail ou chat",
+        "short_description": "Disparo, pelo CSC, de comunicado ou e-mail de ativação de uma ação de aprendizagem.",
+        "description": "<p>Use quando você precisa que o CSC (Centro de Serviços Compartilhados) dispare um comunicado ou e-mail de ativação sobre um treinamento ou ação de aprendizagem, por e-mail ou chat. Você vai informar o título, a data e o canal de envio e anexar a peça de comunicação (ou o texto do e-mail) e o mailing dos destinatários.</p><p>Não use para convite de agenda nem para organizar a logística do treinamento.</p>",
+        "frases_exemplo": [
+          "preciso disparar um e-mail de comunicação de um curso",
+          "quero enviar comunicado de ativação da trilha de aprendizagem",
+          "divulgar treinamento por e-mail para os colaboradores",
+          "mandar comunicado do treinamento no chat"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "qual_solicitacao",
+            "value": "envio_comunicacao_ativacao_email"
+          }
+        ],
+        "variables": [
+          {
+            "name": "categoria_de_aprendizagem",
+            "order": 100,
+            "conversational_label": "Qual é a categoria de aprendizagem: Núcleo, HUB, Células ou Portas de Entrada?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "seleciona_o_hub",
+            "order": 200,
+            "conversational_label": "Qual é o HUB?"
+          },
+          {
+            "name": "nome_da_celula",
+            "order": 300,
+            "conversational_label": "Qual é o nome da célula?"
+          },
+          {
+            "name": "training_responsible",
+            "order": 400,
+            "conversational_label": "Quem é o responsável pela ação?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "training_name",
+            "order": 500,
+            "conversational_label": "Qual é o nome do treinamento ou da ação?"
+          },
+          {
+            "name": "titulo_comunicado",
+            "order": 600,
+            "conversational_label": "Qual é o título do comunicado?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "data_envio",
+            "order": 700,
+            "conversational_label": "Em que data o comunicado deve ser enviado?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "canal_envio",
+            "order": 800,
+            "conversational_label": "Por qual canal deve ser enviado: e-mail ou chat?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "peca_comunicacao_texto_email",
+            "order": 900,
+            "conversational_label": "Envie a peça de comunicação ou o texto do e-mail.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "mailing_destinatarios",
+            "order": 1000,
+            "conversational_label": "Envie a lista de destinatários (mailing).",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "informacao_adicional",
+            "order": 1100,
+            "conversational_label": "Tem mais alguma informação para o CSC?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+            "name": "Informações pessoais",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "20d148938736b250ec360e530cbb35e6",
+            "short_description": "EY: Nome da célula",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=celulas",
+            "actions": [
+              {
+                "variable": "nome_da_celula",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e65108138736b250ec360e530cbb35cf",
+            "short_description": "EY: Selecione o HUB",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=hub",
+            "actions": [
+              {
+                "variable": "seleciona_o_hub",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a02e901387f2f250ec360e530cbb3573",
+            "short_description": "Células: nome do treinamento",
+            "on_load": true,
+            "conditions": "categoria_de_aprendizagem=celulas",
+            "actions": [
+              {
+                "variable": "training_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "ac3288538736b250ec360e530cbb35e7",
+            "name": "EY: Qual a solicitação? control",
+            "ajuste": "Revisar: remover trechos que dependem de qual_solicitacao, agora fixo no item."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em categoria_de_aprendizagem e training_responsible; qual_solicitacao fixo."
+          },
+          {
+            "origem": "EY: Titulo Comunicado/Mailing",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: mandatory direto em titulo_comunicado, data_envio, canal_envio, peca_comunicacao_texto_email e mailing_destinatarios."
+          },
+          {
+            "origem": "EY: Informação adicional",
+            "tipo": "ui_policy",
+            "como": "Condição sempre verdadeira no item: informacao_adicional visível por padrão."
+          },
+          {
+            "origem": "EY: Nome do Treinamento",
+            "tipo": "ui_policy",
+            "como": "Neste ramo só vale para Células: condição reduzida a categoria_de_aprendizagem=celulas."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "2fbbb06a1ba79550a530426fe54bcbc8",
+    "name": "MyPerformance",
+    "status": "conversacional",
+    "motivo": "Estrutura simples (etapa, tipo de pedido, classificação e descrição) com policies sem script. Mantém as variáveis e policies condicionais (achatar as opções exigiria mudar choices e flow), converte as obrigatoriedades fixas em atributo e remove ações sobre a variável inativa v_attach_your_file. O ganho principal é nome, descrição e labels.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_cont_start_myperformace",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "faq_text",
+        "motivo": "Rich text com link para o FAQ; a referência passa para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Dúvida ou problema no MyPerformance (metas e avaliação de desempenho)",
+        "short_description": "Dúvidas, erros de sistema, relatórios e outros pedidos sobre o processo de metas e avaliação de desempenho MyPerformance.",
+        "description": "<p>Use para qualquer assunto do MyPerformance, o processo de metas e avaliação de desempenho, nas etapas Match, Talk ou Finish: dúvidas sobre o processo, erro no sistema (tenha um print da tela), pedido de relatório (por marca, país, nível de gestão, grade, cargo, período) ou outros pedidos. Consulte também o FAQ na base de conhecimento.</p><p>Não use para o OurTalents (comitê de talentos), que tem item próprio.</p>",
+        "frases_exemplo": [
+          "não consigo cadastrar minhas metas no MyPerformance",
+          "dúvida sobre a etapa Talk da avaliação de desempenho",
+          "preciso de um relatório das avaliações da minha área",
+          "o sistema de metas está dando erro no Finish",
+          "como funciona o Match do MyPerformance?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_choose_your_request",
+            "order": 100,
+            "conversational_label": "Sobre qual etapa do MyPerformance é o seu pedido: Match, Talk ou Finish?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_choose_request_type",
+            "order": 200,
+            "conversational_label": "O que você precisa: tirar uma dúvida sobre o processo, relatar um erro no sistema ou fazer outro pedido sobre o MyPerformance?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_classify_the_request_type",
+            "order": 300,
+            "conversational_label": "O seu pedido é um relatório ou outro tipo de pedido?"
+          },
+          {
+            "name": "v_describe",
+            "order": 400,
+            "conversational_label": "Descreva o que você precisa."
+          },
+          {
+            "name": "v_attach_your_evidence",
+            "order": 500,
+            "conversational_label": "Envie um print da tela com o erro."
+          },
+          {
+            "name": "v_description_report",
+            "order": 600,
+            "conversational_label": "Quais informações você precisa no relatório e com quais filtros (marca, país, nível de gestão, grade, cargo, período)?"
+          },
+          {
+            "name": "v_description_for_other",
+            "order": 700,
+            "conversational_label": "Descreva o que você precisa."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "98a054933bff4e10924d0247f4e45ad8",
+            "name": "EY: Request Hispana",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "c0c3c2a61bafd550a530426fe54bcb70",
+            "short_description": "EY: If type =General Requests about MyPerformance",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about MyPerformance",
+            "actions": [
+              {
+                "variable": "v_classify_the_request_type",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "4f54826a1bafd550a530426fe54bcb6b",
+            "short_description": "EY: If classify is report",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about MyPerformance^v_classify_the_request_type=Report",
+            "actions": [
+              {
+                "variable": "v_description_report",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "52f419821be8e510a530426fe54bcbe0",
+            "short_description": "EY: If Type = General and Classify is Other",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about MyPerformance^v_classify_the_request_type=Other Requests",
+            "actions": [
+              {
+                "variable": "v_description_for_other",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "7031d34f1bef9190a530426fe54bcbef",
+            "short_description": "EY: Description for error or question",
+            "on_load": true,
+            "conditions": "v_choose_request_type=Question about the MyPerformance process^ORv_choose_request_type=System error",
+            "actions": [
+              {
+                "variable": "v_describe",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8c410ae61b6fd550a530426fe54bcb65",
+            "short_description": "EY: If error",
+            "on_load": true,
+            "conditions": "v_choose_request_type=System error",
+            "actions": [
+              {
+                "variable": "v_attach_your_evidence",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "b54cecce1b145a50514cbaef4b4bcb5f",
+            "short_description": "EY: Hide country in catalog item view",
+            "on_load": true,
+            "conditions": "vs_country_of_the_request=",
+            "actions": [
+              {
+                "variable": "vs_country_of_the_request",
+                "visible": "false",
+                "mandatory": "false",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "5c1944b11bd4d650514cbaef4b4bcb12",
+            "name": "EY: Fill employee",
+            "ajuste": "Nenhum: já VA Supported (preenche dados do set de solicitante)."
+          },
+          {
+            "sys_id": "a7afbb073b3f4e10924d0247f4e45a41",
+            "name": "EY:  View fields Hispana",
+            "ajuste": "Nenhum: já VA Supported."
+          },
+          {
+            "sys_id": "ead194671b334e10514cbaef4b4bcb25",
+            "name": "EY: hide fields onLoad",
+            "ajuste": "Nenhum: já VA Supported; trabalha em par com 'View fields Hispana'."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory field",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em v_choose_request_type e v_choose_your_request."
+          },
+          {
+            "origem": "EY: If question",
+            "tipo": "ui_policy",
+            "como": "Removida: única ação era em v_attach_your_file, variável inativa."
+          },
+          {
+            "origem": "EY: If classify is report",
+            "tipo": "ui_policy",
+            "como": "Ação sobre v_attach_your_file (inativa) removida; o resto mantido."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "051cbf0b1bafd190a530426fe54bcbd4",
+    "name": "OurTalents",
+    "status": "conversacional",
+    "motivo": "Mesmo desenho do MyPerformance: tipo de pedido, classificação, descrições condicionais e anexo em erro, tudo com policies sem script. Mantém a estrutura, converte a obrigatoriedade fixa em atributo, reescreve a condição com NQ como OR e remove a ação sobre variável inexistente.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_cont_start_ourtalents",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "faq_text",
+        "motivo": "Rich text orientando consultar o FAQ na base de conhecimento; a orientação passa para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Dúvida ou problema no OurTalents (comitê de talentos)",
+        "short_description": "Dúvidas, erros de sistema, relatórios e outros pedidos sobre o OurTalents, o comitê de desenvolvimento de talentos.",
+        "description": "<p>O OurTalents é o momento colegiado em que os líderes discutem o desenvolvimento e o futuro dos talentos. Use este item para dúvidas sobre o processo, erro no sistema (tenha um print da tela), pedido de relatório (por marca, país, nível de gestão, faixa, cargo, período) ou outros pedidos relacionados. A resposta para dúvidas do processo pode estar no FAQ da base de conhecimento.</p><p>Não use para metas e avaliação de desempenho: para isso use o item do MyPerformance.</p>",
+        "frases_exemplo": [
+          "dúvida sobre o comitê de talentos OurTalents",
+          "preciso de um relatório do OurTalents da minha área",
+          "erro no sistema do OurTalents",
+          "como funciona o OurTalents?",
+          "quando acontece o comitê de talentos?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_choose_request_type",
+            "order": 100,
+            "conversational_label": "O que você precisa: tirar uma dúvida sobre o processo, relatar um erro no sistema ou fazer outro pedido sobre o OurTalents?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_classify_request_type",
+            "order": 200,
+            "conversational_label": "O seu pedido é um relatório ou outro tipo de pedido?"
+          },
+          {
+            "name": "v_describe_your_need",
+            "order": 300,
+            "conversational_label": "Descreva o que você precisa."
+          },
+          {
+            "name": "v_attach_your_evidence",
+            "order": 400,
+            "conversational_label": "Envie um print da tela com o erro."
+          },
+          {
+            "name": "v_description_for_report",
+            "order": 500,
+            "conversational_label": "Quais informações você precisa no relatório e com quais filtros (marca, país, nível de gestão, faixa, cargo, período)?"
+          },
+          {
+            "name": "v_description_for_other",
+            "order": 600,
+            "conversational_label": "Descreva o que você precisa."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "98a054933bff4e10924d0247f4e45ad8",
+            "name": "EY: Request Hispana",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "8b5cc1231baf1990d1abda4ce54bcbd9",
+            "short_description": "EY: If field classify type",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about OurTalents",
+            "actions": [
+              {
+                "variable": "v_classify_request_type",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8564dd671b235990d1abda4ce54bcbbb",
+            "short_description": "EY: If classify is report",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about OurTalents^v_classify_request_type=Report",
+            "actions": [
+              {
+                "variable": "v_description_for_report",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "452691ef1b235990d1abda4ce54bcb5b",
+            "short_description": "EY: If classify is other",
+            "on_load": true,
+            "conditions": "v_choose_request_type=General requests about OurTalents^v_classify_request_type=Other Requests",
+            "actions": [
+              {
+                "variable": "v_description_for_other",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "4c9680bf1bfb59d4d1abda4ce54bcbc7",
+            "short_description": "EY: Field description",
+            "on_load": true,
+            "conditions": "v_choose_request_type=Question about the OurTalents process^ORv_choose_request_type=System error",
+            "actions": [
+              {
+                "variable": "v_describe_your_need",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a46400531b631590a530426fe54bcbbf",
+            "short_description": "EY: Field attach if error",
+            "on_load": true,
+            "conditions": "v_choose_request_type=System error",
+            "actions": [
+              {
+                "variable": "v_attach_your_evidence",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "6879b88a1bd45a50514cbaef4b4bcb27",
+            "short_description": "EY: Hide country in catalog item view",
+            "on_load": true,
+            "conditions": "vs_country_of_the_request=",
+            "actions": [
+              {
+                "variable": "vs_country_of_the_request",
+                "visible": "false",
+                "mandatory": "false",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "109c768d1bc4d650514cbaef4b4bcbf3",
+            "name": "EY: Hide fields onLoad",
+            "ajuste": "Nenhum: já VA Supported; trabalha em par com 'View fields Hispana'."
+          },
+          {
+            "sys_id": "34a117311b581a50514cbaef4b4bcb63",
+            "name": "EY: Fill employee",
+            "ajuste": "Nenhum: já VA Supported."
+          },
+          {
+            "sys_id": "924cf68d1bc4d650514cbaef4b4bcbcb",
+            "name": "EY: View fields Hispana",
+            "ajuste": "Nenhum: já VA Supported."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "visible/mandatory direto em v_choose_request_type; ação sobre choose_request_type (inexistente) descartada."
+          },
+          {
+            "origem": "EY: Field description",
+            "tipo": "ui_policy",
+            "como": "Condição com ^NQ reescrita como OR simples."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "90654bf41beb1558d1abda4ce54bcb6b",
+    "name": "Programa de Estágio",
+    "status": "dividido",
+    "motivo": "v_request_type separa intenções com perguntas e anexos próprios: contrato de estágio e relatório de atividades viram itens com o tipo fixo. As choices mostram mais dois tipos sem campos próprios (envio de comunicações e dados/indicadores), que ficam junto com informações de treinamento num item de informações onde o tipo continua sendo perguntado.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_cont_start_internship_program",
+        "motivo": "Container de layout."
+      },
+      {
+        "name": "faq_text",
+        "motivo": "Rich text com link para o FAQ; a referência passa para a descrição dos itens."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Contrato de estágio: enviar, aditar, prorrogar ou trocar gestor",
+        "short_description": "Envio do contrato de estágio assinado, aditivo, prorrogação, troca de gestor ou informações sobre o contrato.",
+        "description": "<p>Use se você é estagiário (ou gestor de estagiário) e precisa enviar o contrato de estágio assinado, pedir aditivo de contrato (estágio obrigatório ou não obrigatório), prorrogar o estágio, trocar o gestor que consta no contrato ou tirar dúvidas sobre o contrato. Na prorrogação, tenha em mãos o comprovante de vínculo com a instituição de ensino e a nova data de conclusão do curso.</p><p>Não use para relatório de atividades, que tem item próprio. Para jovem aprendiz, use o item do Programa Florescer.</p>",
+        "frases_exemplo": [
+          "quero prorrogar meu estágio",
+          "preciso enviar meu contrato de estágio assinado",
+          "mudou meu gestor, preciso atualizar no contrato de estágio",
+          "aditivo de contrato de estágio obrigatório",
+          "dúvida sobre meu contrato de estágio"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_request_type",
+            "value": "internship_contract"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_option_if_type_contract",
+            "order": 200,
+            "conversational_label": "O que você precisa no contrato de estágio: aditivo, troca de gestor, envio do contrato assinado, informação sobre o contrato ou prorrogação?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_new_period_course",
+            "order": 300,
+            "conversational_label": "Qual é a nova data prevista de conclusão do curso?"
+          },
+          {
+            "name": "v_description",
+            "order": 400,
+            "conversational_label": "Conte com mais detalhes o que você precisa."
+          },
+          {
+            "name": "v_attach_educ_institution_link",
+            "order": 500,
+            "conversational_label": "Envie o comprovante de vínculo com a instituição de ensino."
+          },
+          {
+            "name": "v_attach_your_signed_contract",
+            "order": 600,
+            "conversational_label": "Envie o contrato de estágio assinado."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "bf156c8e1ba8a510a530426fe54bcbf0",
+            "name": "EY: Basic data manager 1",
+            "order": 950
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "94bafff01bab5558d1abda4ce54bcb30",
+            "short_description": "Envio do contrato assinado: anexo",
+            "on_load": true,
+            "conditions": "v_option_if_type_contract=Submission of signed internship contract",
+            "actions": [
+              {
+                "variable": "v_attach_your_signed_contract",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c064cd891bef9558d1abda4ce54bcbfa",
+            "short_description": "Informação sobre contrato: descrição obrigatória",
+            "on_load": true,
+            "conditions": "v_option_if_type_contract=Information on internship contract",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "ignore",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c264ff741b2b5558d1abda4ce54bcb8a",
+            "short_description": "Prorrogação: nova data e comprovante",
+            "on_load": true,
+            "conditions": "v_option_if_type_contract=Request for extension of contract",
+            "actions": [
+              {
+                "variable": "v_new_period_course",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_attach_educ_institution_link",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "d7954d011b23d558d1abda4ce54bcb26",
+            "short_description": "Troca de gestor no contrato: dados do novo gestor",
+            "on_load": true,
+            "conditions": "v_option_if_type_contract=Change of manager in the internship contract",
+            "actions": [
+              {
+                "variable": "manager_name1",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "manager_id1",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "manager_email1",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: If Internship contract / EY: Field  request type mandatory",
+            "tipo": "ui_policy",
+            "como": "v_request_type fixo; mandatory direto em v_option_if_type_contract."
+          },
+          {
+            "origem": "EY: If Internship contract and amendment contract",
+            "tipo": "ui_policy",
+            "como": "Removida: única ação era em v_attach_your_request, variável inativa."
+          },
+          {
+            "origem": "EY: If internship contract and change manager",
+            "tipo": "ui_policy",
+            "como": "Ação sobre v_attach_your_request (inativa) removida; o resto mantido."
+          },
+          {
+            "origem": "EY: Clear Variables",
+            "tipo": "client_script",
+            "como": "Removido: v_request_type é fixo no item."
+          }
+        ]
+      },
+      {
+        "name": "Enviar relatório de atividades do estágio",
+        "short_description": "Envio do relatório de atividades do estágio assinado ou troca do gestor que consta no relatório.",
+        "description": "<p>Use para enviar o relatório de atividades do estágio assinado, referente a um período, ou para pedir a troca do gestor que aparece no relatório.</p><p>Não use para assuntos do contrato de estágio (prorrogação, aditivo, envio do contrato).</p>",
+        "frases_exemplo": [
+          "preciso enviar meu relatório de estágio assinado",
+          "entrega do relatório semestral de atividades do estágio",
+          "o gestor no meu relatório de estágio está errado",
+          "onde mando o relatório de atividades do estágio?"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_request_type",
+            "value": "activity_report"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_option_if_type_report",
+            "order": 200,
+            "conversational_label": "Você quer enviar o relatório assinado ou trocar o gestor do relatório?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_description",
+            "order": 300,
+            "conversational_label": "Quer acrescentar alguma informação?"
+          },
+          {
+            "name": "v_attach_your_signed_report_here",
+            "order": 400,
+            "conversational_label": "Envie o relatório de atividades assinado."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          },
+          {
+            "sys_id": "5b30c4cd1beb5558d1abda4ce54bcb29",
+            "name": "EY: Basic data manager ",
+            "order": 900
+          },
+          {
+            "sys_id": "f2e3f8cd1bab9558d1abda4ce54bcbeb",
+            "name": "Período",
+            "order": 1100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "7f0b0f061ba79d10d1abda4ce54bcbf0",
+            "short_description": "Envio do relatório: período",
+            "on_load": true,
+            "conditions": "v_option_if_type_report=Submission of signed activity report",
+            "actions": [
+              {
+                "variable": "start_date",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "end_date",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "e396bc851beb9558d1abda4ce54bcbe8",
+            "short_description": "Envio do relatório: anexo assinado",
+            "on_load": true,
+            "conditions": "v_option_if_type_report=Submission of signed activity report",
+            "actions": [
+              {
+                "variable": "v_attach_your_signed_report_here",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "b44978811b2f9558d1abda4ce54bcbe3",
+            "short_description": "Troca de gestor no relatório: período e gestor",
+            "on_load": true,
+            "conditions": "v_option_if_type_report=Manager change in activity report",
+            "actions": [
+              {
+                "variable": "start_date",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "end_date",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "manager_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "manager_id",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "manager_email",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: If activity is report / EY: Field  request type mandatory",
+            "tipo": "ui_policy",
+            "como": "v_request_type fixo; mandatory direto em v_option_if_type_report."
+          },
+          {
+            "origem": "EY: If activity report and manager change",
+            "tipo": "ui_policy",
+            "como": "Ação sobre v_attach_your_request (inativa) removida; o resto mantido."
+          },
+          {
+            "origem": "EY: Clear Variables",
+            "tipo": "client_script",
+            "como": "Removido: v_request_type é fixo no item."
+          }
+        ]
+      },
+      {
+        "name": "Informações sobre o programa de estágio",
+        "short_description": "Informações sobre treinamentos, comunicações e dados/indicadores do programa de estágio.",
+        "description": "<p>Use para pedir informações sobre os treinamentos do programa de estágio, sobre envio de comunicações aos estagiários ou sobre dados e indicadores do programa. Consulte também o FAQ na base de conhecimento.</p><p>Para contrato de estágio ou relatório de atividades, use os itens específicos.</p>",
+        "frases_exemplo": [
+          "quais treinamentos o estagiário precisa fazer?",
+          "preciso enviar um comunicado para os estagiários",
+          "quero os indicadores do programa de estágio",
+          "dúvida sobre o programa de estágio"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_request_type",
+            "order": 100,
+            "conversational_label": "Sobre o que é o seu pedido: treinamentos do programa, envio de comunicações ou dados e indicadores do programa de estágio?",
+            "overrides": {
+              "mandatory": true,
+              "hidden": false
+            }
+          },
+          {
+            "name": "v_description",
+            "order": 200,
+            "conversational_label": "Descreva a sua dúvida ou pedido."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "4121cdc91baf9558d1abda4ce54bcb9f",
+            "short_description": "Informação de treinamento: descrição obrigatória",
+            "on_load": true,
+            "conditions": "v_request_type=training_information",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "ignore",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Field  request type mandatory",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em v_request_type."
+          },
+          {
+            "origem": "EY: If training information",
+            "tipo": "ui_policy",
+            "como": "Ação sobre v_attach_your_request (inativa) removida; o resto mantido."
+          },
+          {
+            "origem": "EY: Clear Variables",
+            "tipo": "client_script",
+            "como": "Removido: as variáveis de opção dependentes não existem neste item."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "9f456ded1b3c2d14a530426fe54bcbc1",
+    "name": "Programa Florescer",
+    "status": "conversacional",
+    "motivo": "Item enxuto e sem bloqueador: tipo de pedido, descrição e, na troca de gestor/tutor, gestor e data. As choices mostram 5 tipos (incluindo envio de comunicações e dados/indicadores), refletidos no label e na descrição. O script que preenche ID e e-mail do gestor já é VA Supported e fica mantido.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "faq_text",
+        "motivo": "Rich text com link para o FAQ; a referência passa para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Programa Jovem Aprendiz (Florescer): dúvidas e troca de gestor",
+        "short_description": "Dúvidas sobre o programa de jovem aprendiz Florescer, eventos e treinamentos, comunicações, indicadores ou troca de gestor/tutor do aprendiz.",
+        "description": "<p>Use se você é jovem aprendiz do Programa Florescer ou gestor/tutor de um aprendiz, para tirar dúvidas sobre o programa, sobre eventos e treinamentos, pedir envio de comunicações, pedir dados e indicadores do programa ou pedir a troca do gestor ou tutor responsável. Consulte também o FAQ na base de conhecimento.</p><p>Não use para o programa de estágio, que tem itens próprios.</p>",
+        "frases_exemplo": [
+          "dúvida sobre o programa jovem aprendiz",
+          "preciso trocar o tutor do aprendiz",
+          "quando é o próximo treinamento do Florescer?",
+          "mudou o gestor do jovem aprendiz da minha área",
+          "quero os indicadores do programa de aprendizes"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_request_type",
+            "order": 100,
+            "conversational_label": "O que você precisa: informação sobre o programa jovem aprendiz, trocar o gestor/tutor, informação sobre eventos e treinamentos, envio de comunicações ou dados e indicadores?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_select_manager_name",
+            "order": 200,
+            "conversational_label": "Quem vai ser o novo gestor ou tutor?"
+          },
+          {
+            "name": "v_manager_id",
+            "order": 300,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_manager_email",
+            "order": 400,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_request_date",
+            "order": 500,
+            "conversational_label": "A partir de que data a troca deve valer?"
+          },
+          {
+            "name": "v_description",
+            "order": 600,
+            "conversational_label": "Qual é a sua dúvida?"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+            "name": "EY: Requester Data",
+            "order": 100
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "984c6da11bfc2d14a530426fe54bcb5d",
+            "short_description": "EY: Description",
+            "on_load": true,
+            "conditions": "v_request_type=information_jovem_aprendiz^ORv_request_type=information_events_trainings",
+            "actions": [
+              {
+                "variable": "v_description",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "a95be5ad1bbc2d14a530426fe54bcb5a",
+            "short_description": "EY: Change of manager/tutor",
+            "on_load": true,
+            "conditions": "v_request_type=manager_tutor_change",
+            "actions": [
+              {
+                "variable": "v_select_manager_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_request_date",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_manager_id",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_manager_email",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "c95439a91b706d14a530426fe54bcb85",
+            "name": "EY: Fill manager info",
+            "ajuste": "Já VA Supported; manter. Avaliar trocar por auto-populate (dependente de v_select_manager_name) em v_manager_id e v_manager_email."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory type",
+            "tipo": "ui_policy",
+            "como": "mandatory direto em v_request_type."
+          },
+          {
+            "origem": "EY: Description",
+            "tipo": "ui_policy",
+            "como": "Condição IN reescrita como OR."
+          }
+        ]
+      }
+    ]
+  }
+]

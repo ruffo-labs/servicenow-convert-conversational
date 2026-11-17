@@ -1,0 +1,210 @@
+{
+ "sys_id": "f7bc58b88741ba10ec360e530cbb3572",
+ "name": "Solicitação de Exceção para Payment Run",
+ "sys_name": "Exception Request for Payment Run",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "Virtual Agent Search, PTP_",
+ "short_description": "Para solicitar a inclusão ou exclusão de fornecedores na exceção do Payment Run",
+ "description": "Para solicitar a inclusão ou exclusão de fornecedores na exceção do Payment Run",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "12",
+   "bloqueadores": "0",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @attach_approval_label: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @select_the_avon_subsidiaries_that_will_be_impacted: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @select_the_avon_subsidiaries_that_will_be_impacted: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @select_the_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @which_brand_is_impacted: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @which_brand_is_impacted: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @select_the_natura_subsidiaries_that_will_be_impacted: List Collector: quebra se as opcoes vierem de filtro dinamico ou client script",
+   "reference_qualifier @select_the_natura_subsidiaries_that_will_be_impacted: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "who_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Who is your request for?",
+   "include_none": true,
+   "choices": [
+    "For me [=1]",
+    "For another employee [=2]"
+   ]
+  },
+  {
+   "name": "select_the_employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the employee",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ",
+   "include_none": true,
+   "choices": [
+    "Natura",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "which_brand_is_impacted",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Which brand is impacted?",
+   "reference": "sys_user",
+   "ref_qual": "question=5a567f3487013e10ec360e530cbb35f1",
+   "include_none": true
+  },
+  {
+   "name": "select_the_natura_subsidiaries_that_will_be_impacted",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Select the Natura subsidiaries that will be impacted",
+   "reference": "sys_user",
+   "ref_qual": "javascript: \"name=Todas^NQu_brand=Natura\"\r\n",
+   "include_none": true
+  },
+  {
+   "name": "select_the_avon_subsidiaries_that_will_be_impacted",
+   "type": "Coletor de Listas",
+   "type_code": "21",
+   "label": "Select the Avon subsidiaries that will be impacted",
+   "reference": "sys_user",
+   "ref_qual": "javascript: \"name=Todas^NQu_brand=Avon LATAM^countryINMexico,México,Chile,Brasil,Brazil,Uruguay,Uruguai^ORDERBYname\"",
+   "include_none": true
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request",
+   "include_none": true,
+   "choices": [
+    "Inclusion [=1]",
+    "Exclusion [=2]"
+   ]
+  },
+  {
+   "name": "suppliers_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's CNPJ",
+   "include_none": true
+  },
+  {
+   "name": "suppliers_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's name",
+   "include_none": true
+  },
+  {
+   "name": "suppliers_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's code",
+   "include_none": true
+  },
+  {
+   "name": "attach_approval_label",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach the approval"
+  },
+  {
+   "name": "attach_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the approval"
+  },
+  {
+   "name": "describe_the_justification_for_the_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the justification for the request",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Select the employee",
+   "when": "IO:who_is_your_request_for=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_employee: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Select the Avon subsidiaries that will be impacted",
+   "when": "IO:which_brand_is_impactedLIKE7ed7773c87013e10ec360e530cbb35b1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_avon_subsidiaries_that_will_be_impacted: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Readonly fields (record)",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "suppliers_code: readonly=true",
+    "select_the_natura_subsidiaries_that_will_be_impacted: readonly=true",
+    "which_brand_is_impacted: readonly=true",
+    "suppliers_name: readonly=true",
+    "select_the_avon_subsidiaries_that_will_be_impacted: readonly=true",
+    "describe_the_justification_for_the_request: readonly=true",
+    "suppliers_cnpj: readonly=true",
+    "type_of_request: readonly=true",
+    "select_the_employee: readonly=true",
+    "who_is_your_request_for: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Select the Natura subsidiaries that will be impacted",
+   "when": "IO:which_brand_is_impactedLIKE1466333487013e10ec360e530cbb35f9^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_natura_subsidiaries_that_will_be_impacted: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "who_is_your_request_for: mandatory=true",
+    "attach_approval_label: visible=true",
+    "suppliers_name: mandatory=true",
+    "type_of_request: mandatory=true",
+    "describe_the_justification_for_the_request: mandatory=true",
+    "suppliers_code: mandatory=true",
+    "suppliers_cnpj: mandatory=true",
+    "which_brand_is_impacted: mandatory=true",
+    "attach_approval: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

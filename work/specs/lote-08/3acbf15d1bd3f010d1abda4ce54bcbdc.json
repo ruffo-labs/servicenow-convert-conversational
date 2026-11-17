@@ -1,0 +1,176 @@
+{
+ "sys_id": "3acbf15d1bd3f010d1abda4ce54bcbdc",
+ "status": "dividido",
+ "motivo": "Duas intenções distintas — registrar a licença-paternidade e incluir o novo dependente nos benefícios — com perguntas diferentes; seguimos a divisão e os textos da 1ª análise. Mandatory e regex de CPF viraram props; o endereço do colaborador sai da conversa (fica em branco, preenchido pelo fluxo). O set Eligibilities Informative só tem variáveis de exibição (custom/HTML, sem dado) e não pode ser alterado nem removido de todos os derivados; fica no derivado de inclusão de dependente, sem perguntas geradas por ele.",
+ "divergencias": [
+  "erro_1a_analise",
+  "limite_formato"
+ ],
+ "vars": {
+  "type_license": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "start_date": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "desired_period": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "include_dependent_health_care": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "include_dependent_income_tax": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "include_dependent_dental_care": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "mother_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "dependent_gender": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "declaration_term_liability": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "declaration": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "dependent_cpf": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+   }
+  },
+  "date_birth": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "alive_birth_certificate": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "dependent_name": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "bank_code_refund": {
+   "label": "Qual é o código do banco para reembolso?"
+  },
+  "reimbursement_agency": {
+   "label": "Qual é a agência bancária para reembolso?"
+  },
+  "checking_account_reimbursement": {
+   "label": "Qual é a conta corrente para reembolso?"
+  },
+  "employee_home_address": {
+   "props": {
+    "not_available_conversation": true,
+    "default_value": "javascript:''"
+   }
+  }
+ },
+ "remover": {
+  "about_paternity_leave": "visual",
+  "information_start_date": "visual",
+  "attach_definitive_judicial_custody": "texto_movido_descricao",
+  "attach_birth_certificate": "texto_movido_descricao",
+  "informative_register_paternity": "visual",
+  "container_end": "visual",
+  "dependent_update_benefits": "visual",
+  "remuneration_information": "visual",
+  "term_liability": "visual",
+  "include_dependent_life_insurance": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "0ca993e21be9c910a530426fe54bcb0c": "remover",
+  "2a5b1d4b1b096d54d1abda4ce54bcbce": "remover",
+  "47acdf111b1bf010d1abda4ce54bcb2a": "remover",
+  "803ddf111b1bf010d1abda4ce54bcb33": "remover",
+  "d52f1b911b1bf010d1abda4ce54bcbde": {
+   "conditions": "include_dependent_dental_care=Yes^ORinclude_dependent_health_care=Yes",
+   "actions": {
+    "checking_account_reimbursement": {
+     "visible": true
+    },
+    "bank_code_refund": {
+     "visible": true
+    },
+    "reimbursement_agency": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "1ebf21b61b840910a530426fe54bcb46": {
+   "remover": "sem_efeito"
+  },
+  "a1f95bbf1bdbf010a530426fe54bcbbb": {
+   "converter": "regex"
+  },
+  "e95f56a91b533410d1abda4ce54bcbe7": {
+   "converter": "auto_populate"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "sem_vars": [
+    "include_dependent_income_tax",
+    "include_dependent_health_care",
+    "include_dependent_dental_care",
+    "mother_name",
+    "dependent_name",
+    "dependent_cpf",
+    "date_birth",
+    "dependent_gender",
+    "alive_birth_certificate",
+    "declaration",
+    "declaration_term_liability",
+    "bank_code_refund",
+    "reimbursement_agency",
+    "checking_account_reimbursement"
+   ],
+   "sem_sets": [
+    "5659d1691b000510d1abda4ce54bcb2f"
+   ],
+   "sem_policies": [
+    "d52f1b911b1bf010d1abda4ce54bcbde"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "sem_vars": [
+    "type_license",
+    "start_date",
+    "desired_period"
+   ]
+  }
+ ]
+}

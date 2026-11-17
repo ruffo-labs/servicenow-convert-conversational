@@ -1,0 +1,137 @@
+{
+ "sys_id": "17bab25687b95210ec360e530cbb3527",
+ "name": "Dúvidas, consultas, reclamações ou sugestões relacionadas à Frota",
+ "sys_name": "Questions, queries, complaints or suggestions related to Fleet",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Frota",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+ "description": "Utilize este formulário para expressar suas dúvidas, consultas, sugestões ou reclamações",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "20",
+   "bloqueadores": "1",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "2 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show error message, EY: Show error message"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @v_category: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_faqs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_faqs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_contact_reason",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Contact reason",
+   "include_none": true,
+   "choices": [
+    "Doubts/Consults [=doubts]",
+    "Suggestions [=suggestions]",
+    "Complaints [=complaints]"
+   ]
+  },
+  {
+   "name": "v_category",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Category",
+   "lookup": "x_nasm_hr_rules_hispanic_flota_questions",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true
+  },
+  {
+   "name": "v_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_category: mandatory=true",
+    "v_contact_reason: mandatory=true",
+    "v_details: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message",
+   "type": "onChange",
+   "on": "699df65a87b95210ec360e530cbb359a",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida o tamanho mínimo do texto digitado e monta a mensagem de erro traduzida conforme o idioma do usuário (inglês, português ou espanhol)."
+  },
+  {
+   "name": "EY: Show error message",
+   "type": "onSubmit",
+   "on": "699df65a87b95210ec360e530cbb359a",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que lê 'v_details' e monta a mensagem de erro no idioma do usuário ('Please check all the errors in the form' / 'Por favor...'), usada para barrar o envio quando o formulário tem pendências."
+  },
+  {
+   "name": "EY: Show  FAQs",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que carrega as FAQs pertinentes ao usuário. Chama EY_HTRUtils, método getUserDetails, via GlideAjax, passando o usuário logado, e usa o retorno para montar o bloco de perguntas frequentes."
+  }
+ ]
+}

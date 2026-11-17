@@ -1,0 +1,118 @@
+{
+ "sys_id": "e1726abf3b69d610b28dd047f4e45a14",
+ "status": "conversacional",
+ "motivo": "Um grupo com duas ofertas (Acordos e Sentenças, Reprocessamento de Folha) que compartilham o mesmo formulário.",
+ "vars": {
+  "coordenador_de_rh_responsavel": {
+   "label": "Quem é o coordenador de RH responsável?"
+  },
+  "existe_pagamento_de_multa_fgts_em_conta_vinculada": {
+   "label": "Existe pagamento de multa do FGTS em conta vinculada?"
+  },
+  "modalidade_do_desligamento": {
+   "label": "Qual foi a modalidade do desligamento?"
+  },
+  "ata_da_audiencia": {
+   "label": "Envie a ata da audiência."
+  },
+  "e_mail_do_rh": {
+   "label": "Qual é o e-mail do RH Ponta?"
+  },
+  "e_necessario_retificar_os_dados": {
+   "label": "Você precisa retificar os dados?"
+  },
+  "data_de_retorno": {
+   "label": "Qual é a data de retorno?"
+  },
+  "houve_pedido_de_rescisao_indireta": {
+   "label": "Houve pedido de rescisão indireta?"
+  },
+  "data_da_baixa_na_ctps": {
+   "label": "Qual é a data da baixa na CTPS?"
+  },
+  "ficha_de_registro": {
+   "label": "Envie a ficha de registro."
+  },
+  "necessario_encaminhar_os_documentos_rescisorios": {
+   "label": "Você precisa encaminhar os documentos rescisórios?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "formatter2": "visual",
+  "indirect_termination": "oferta_inativa",
+  "what_action_should_be_performed": "oferta_inativa",
+  "start": "visual"
+ },
+ "policies": {
+  "07623e043b516250b28dd047f4e45ad1": "remover",
+  "32747e3b3b2dd610b28dd047f4e45a1d": "remover",
+  "4425b3a93bbc2210b28dd047f4e45a3d": "remover",
+  "4c2820af282f8f903ac626bcc2085886": "remover",
+  "74d236773b2dd610b28dd047f4e45a0d": "remover",
+  "ca6af2f73b6dd610b28dd047f4e45ab8": "remover",
+  "cb21cf7d87117650182a0d440cbb35cf": "remover",
+  "d20deeb73be9d610b28dd047f4e45a94": "remover",
+  "e55feefb3be9d610b28dd047f4e45a1c": "remover",
+  "nova_g0_1": {
+   "short_description": "ALP - Anexo - Ficha de Registro",
+   "conditions": "ficha_de_registroISNOTEMPTY",
+   "actions": {
+    "ficha_de_registro": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Acordos e sentenças ou reprocessamento de folha",
+   "short_description": "Solicitar acordo, sentença ou reprocessamento de folha de rescisão",
+   "description": "Use para processos internos de rescisão: Acordos e Sentenças ou Reprocessamento de Folha de Pagamento. Informe modalidade do desligamento, datas e documentos conforme o caso.",
+   "frases_exemplo": [
+    "Preciso lançar um acordo trabalhista",
+    "Reprocessar a folha de uma rescisão",
+    "Sentença judicial de ex-colaborador",
+    "Refazer o pagamento da rescisão",
+    "Acordo da audiência para pagar"
+   ],
+   "vars": {
+    "modalidade_do_desligamento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "ata_da_audiencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "e_mail_do_rh": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "e_necessario_retificar_os_dados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "data_de_retorno": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "data_da_baixa_na_ctps": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "necessario_encaminhar_os_documentos_rescisorios": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

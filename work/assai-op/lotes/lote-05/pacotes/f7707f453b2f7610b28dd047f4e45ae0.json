@@ -1,0 +1,154 @@
+{
+ "sys_id": "f7707f453b2f7610b28dd047f4e45ae0",
+ "name": "Diversidade e Inclusão",
+ "category": "Gestor/RH Ponta",
+ "short_description": "Diversidade e Inclusão",
+ "description": "Diversidade e Inclus&atilde;o",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Protocolo de atendimento para Pessoa com Deficiência - Diversidade e Inclusão",
+     "sla": "SLA - GESTÃO DE GENTE - 72H",
+     "grupo_suporte": "RH - Diversidade"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "tema_do_protocolo",
+    "tipo_de_deficiencia"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Obs detalhadamente (Solicitante)",
+     "quando": "ocorrencia!="
+    },
+    {
+     "policy": "CSA - Ocorrência",
+     "quando": "tema_do_protocolo!="
+    },
+    {
+     "policy": "CSA - Descrição",
+     "quando": "ocorrencia!="
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "tema_do_protocolo",
+   "type": "Selecionar Caixa",
+   "question_text": "Tema do protocolo",
+   "choices": [
+    "Desenvolvimento",
+    "Comportamental",
+    "Gestão",
+    "Acessibilidade"
+   ]
+  },
+  {
+   "name": "ocorrencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Ocorrência",
+   "choices": [
+    "Situações de sofrimento emocional da Pessoa com Deficiência",
+    "Ocorrência de brincadeiras inconvenientes da Pessoa com Deficiência relacionadas à deficiência de outras pessoas",
+    "Episódio de comunicação agressiva ou ríspida da Pessoa com Deficiência e equipe",
+    "Atendimento ao cliente que tenha gerado desconforto ou conflito envolvendo da Pessoa com Deficiência",
+    "Dúvidas sobre legislação envolvendo Pessoa com Deficiência",
+    "Outros",
+    "Outros",
+    "Situações de isolamento social da Pessoa com Deficiência no ambiente de trabalho",
+    "Ruídos de comunicação da Pessoa com Deficiência que estejam prejudicando o trabalho",
+    "Dificuldades de interação entre a Pessoa com Deficiência e equipe",
+    "Situação de exposição, constrangimento ou piada coma Pessoa com Deficiência",
+    "Requisição de orientação para lidar com comportamento característico da deficiência que foge ao padrão esperado pela empresa",
+    "Resistência da equipe em orientar ou apoiar a Pessoa com Deficiência em atividades permitidas"
+   ]
+  },
+  {
+   "name": "tipo_de_deficiencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Tipo de deficiência",
+   "choices": [
+    "Auditiva",
+    "Reabilitados INSS",
+    "Física",
+    "Visual",
+    "Deficiência Múltipla",
+    "Neurodivergente",
+    "Intelectual"
+   ]
+  },
+  {
+   "name": "service_offering",
+   "type": "Referência",
+   "question_text": "O que você deseja?",
+   "reference": "service_offering",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "073064a287673a50182a0d440cbb35e0",
+   "name": "CSA - Clean Tema do protocolo",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa a variável tema_do_protocolo."
+  },
+  {
+   "sys_id": "2367186a87a33a50182a0d440cbb353a",
+   "name": "CSA - Clean Service Offering",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa tipo_de_deficiencia, tema_do_protocolo, ocorrencia e rh_description."
+  },
+  {
+   "sys_id": "b8bcdf3187637250182a0d440cbb3550",
+   "name": "CSA - Ocorrência",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa as opções da variável ocorrencia (deixando '-- None --') e, conforme o valor escolhido (tema do protocolo: 100, 200, 300, 400, ... 2700, 2800, 5000), recarrega as opções de ocorrência relacionadas à Pessoa com Deficiência (ex.: situação de exposição ou constrangimento, dificuldade de interação com a equipe, resistência da equipe em apoiar, necessidade de plano de desenvolvimento ajustado, dúvidas sobre legislação, Outros). Opções fixas no script."
+  }
+ ]
+}

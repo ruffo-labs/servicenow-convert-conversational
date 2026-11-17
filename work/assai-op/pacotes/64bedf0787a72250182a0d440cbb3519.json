@@ -1,0 +1,201 @@
+{
+ "sys_id": "64bedf0787a72250182a0d440cbb3519",
+ "name": "Programa Seja Bem-vindo ao Assaí",
+ "category": "Universidade Assaí",
+ "short_description": "Programa Seja Bem-vindo ao Assaí",
+ "description": "Solicita&ccedil;&otilde;es referentes ao Programa Seja Bem-vindo ao Assa&iacute;",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência na plataforma Neolude",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Pool de Serviços"
+    }
+   ],
+   "sai_do_formulario": [
+    "att_evidencia_indicador",
+    "v_justificativa_expurgo",
+    "v_colaborador_expansao",
+    "att_evidencia_expurgo"
+   ],
+   "passa_a_obrigatoria": [
+    "att_evidencia_divergencia",
+    "v_informe_divergencia"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Divergência no indicador do programa Seja Bem-vindo ao Assaí",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Escola de Atacado"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_justificativa_expurgo",
+    "att_evidencia_divergencia",
+    "att_evidencia_expurgo",
+    "v_informe_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "v_colaborador_expansao"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Colaborador expansão (Não)",
+     "quando": "v_colaborador_expansao=No"
+    },
+    {
+     "policy": "CSA - Colaborador expansão (Não) (Resolvedora)",
+     "quando": "v_colaborador_expansao=No"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de expurgo do indicador do programa Seja Bem-vindo ao Assaí",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Escola de Atacado"
+    }
+   ],
+   "sai_do_formulario": [
+    "att_evidencia_indicador",
+    "v_colaborador_expansao",
+    "att_evidencia_divergencia",
+    "v_informe_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "v_justificativa_expurgo"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "CSA - Anexo (Solicitação de expurgo)",
+     "quando": "v_justificativa_expurgo!="
+    },
+    {
+     "policy": "CSA - Demissão voluntária",
+     "quando": "v_justificativa_expurgo=1"
+    },
+    {
+     "policy": "CSA - Abandono de emprego",
+     "quando": "v_justificativa_expurgo=2"
+    },
+    {
+     "policy": "CSA - Anexo (Solicitação de expurgo) (Resolvedora)",
+     "quando": "v_justificativa_expurgo!="
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "att_evidencia_indicador",
+   "type": "Anexo",
+   "question_text": "Anexar evidência",
+   "choices": []
+  },
+  {
+   "name": "v_justificativa_expurgo",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe a justificativa para o expurgo",
+   "choices": [
+    "Demissão voluntária",
+    "Abandono de emprego"
+   ]
+  },
+  {
+   "name": "v_colaborador_expansao",
+   "type": "Sim/Não",
+   "question_text": "Colaborador é da Expansão?",
+   "choices": []
+  },
+  {
+   "name": "att_evidencia_divergencia",
+   "type": "Anexo",
+   "question_text": "Anexar evidência da divergência",
+   "choices": []
+  },
+  {
+   "name": "att_evidencia_expurgo",
+   "type": "Anexo",
+   "question_text": "Anexar evidência",
+   "choices": []
+  },
+  {
+   "name": "v_informe_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe a divergência",
+   "choices": [
+    "Turma não cadastrada",
+    "Não é possível cadastrar o(a) colaborador(a) na turma",
+    "Sistema indisponível"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "70ef76543b332690b28dd047f4e45a23",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "d6ef32543b332690b28dd047f4e45a3f",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

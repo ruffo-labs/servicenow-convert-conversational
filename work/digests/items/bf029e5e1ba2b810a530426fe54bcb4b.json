@@ -1,0 +1,156 @@
+{
+ "sys_id": "bf029e5e1ba2b810a530426fe54bcb4b",
+ "name": "Solicitação de Vale Transporte Extra",
+ "sys_name": "Request for Extra Transport Voucher",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Com este formulário você consegue realizar solicitações de Vale Transporte Extra.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "15",
+   "variaveis_ativas": "19",
+   "bloqueadores": "1",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "15"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": ACN: Mandatory Attachment"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @attach_template_employee_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @text_commitment_term: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @unit_value: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @transport_city: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @line_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 15 de 15 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "attach_template_employee_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "request_reason",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request reason",
+   "hidden": true,
+   "include_none": true,
+   "choices": [
+    "Workplace temporary change [=10]",
+    "Working hours change [=20]",
+    "Workday off scale [=30]",
+    "Occupational disease [=40]"
+   ]
+  },
+  {
+   "name": "comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comments"
+  },
+  {
+   "name": "text_commitment_term",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Text of Commitment Term"
+  },
+  {
+   "name": "statement_veracity",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Statement of Veracity"
+  },
+  {
+   "name": "declare_statement_veracity",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare to assume full responsibility for the accuracy of the information contained in this form."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "71d9ac631b57b010a530426fe54bcb7c",
+   "name": "Personal information - VT Extra",
+   "order": "100",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência, default): Employee",
+    "update_information_link (Rótulo de Rich Text): "
+   ]
+  },
+  {
+   "sys_id": "e3f03a161b66b810a530426fe54bcb49",
+   "name": "Vale Transporte Extra",
+   "order": "300",
+   "perguntas": [
+    "additional_request_start_date (Data/Hora): Start date",
+    "end_date_of_additional_request (Data/Hora): End date",
+    "transport_city (Caixa de Seleção de Pesquisa): Transport city",
+    "line_name (Caixa de Seleção de Pesquisa): Line Name",
+    "others (Texto de Linha Única): Enter below the city and line you want",
+    "quantity_one_way_day (Escala Numérica): Quantity one way/day",
+    "quantity_return_day (Escala Numérica): Quantity Return/Day",
+    "unit_value (Caixa de Seleção de Pesquisa): Unit value (R$)",
+    "city_and_line (Texto de Linha Única): Inform unit value below",
+    "already_have_vt_card (Sim/Não): Already have VT card?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN - All the fields from \"State of  veracity\"  and the field \"comment\" are hidden when \"Resquet for whom \" is \"Request for another employee\"",
+   "when": "IO:solicitation_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "attach_template_employee_information: visible=true"
+   ]
+  },
+  {
+   "name": "ACN - The variable set \"Transportation tickets\" and \"Request reason\"  just visible for \"Request for whom\" is My request\"",
+   "when": "IO:solicitation_whom=my_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "bono_de_transporte_adicional: visible=true,mandatory=true",
+    "request_reason: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Mandatory Attachment",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando a solicitação é para outro colaborador, com mensagem traduzida via getMessage e comentário explicando a regra."
+  },
+  {
+   "name": "ACN my request fill the variable set",
+   "type": "onChange",
+   "on": "84f9eca31b57b010a530426fe54bcb41",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o variable set automaticamente quando a solicitação é 'my_request' (para o próprio usuário)."
+  }
+ ]
+}

@@ -1,0 +1,1736 @@
+{
+ "sys_id": "bff27500330dcb9098331c07ee5c7b60",
+ "name": "Criação de Pedido de Compra ou Folha de Serviço",
+ "sys_name": "Creación de una orden de compra o una hoja de servicio",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "HUB de Pagamentos",
+ "catalogs": {
+  "_display_value": "PTP_",
+  "__text": "bfa3add11b95e118d1abda4ce54bcbfc"
+ },
+ "short_description": "Utilize este formulário para solicitar a abertura de um Pedido de Compra (Coupa/Linx) ou a emissão de uma Folha de Serviço",
+ "description": "Formulário de Criação de Pedido de Compra ou Folha de Serviço",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "90",
+   "variaveis_ativas": "97",
+   "bloqueadores": "0",
+   "avisos": "32",
+   "perguntas_sem_conversational_label": "90"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @u_download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @u_master_coupa_contract: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_cataloged_materials: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @u_general_ledger_account: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_materials_list: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @u_category_qualification: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @u_attach_approval_cad: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_prosecutor_natura_1: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @u_supplier_cnpj: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_attach_supplies_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @u_attach_sales_proposal: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_supplier_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_attach_approval_advance_payment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @u_template_suppliers: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @u_attach_email_supplier_proposal: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_qualification_category: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_cad_approval_email: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_prosecutor_natura_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @u_cost_center: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_allocation_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @u_witness_natura: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_attach_service_order: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @u_attach_form_request: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_select_physical_center: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @u_attach_director_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @u_attach_supplier_invoice: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @u_sap_supplier_code: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @u_subcompany_request: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 90 de 90 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 90 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 58 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "u_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_called_area",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which area will the call be opened?",
+   "include_none": true,
+   "choices": [
+    "Legal [=legal]",
+    "Corporate HR [=corporate_hr]",
+    "Investor relations [=investor_relations]",
+    "CSC [=csc]",
+    "Avon Industrial [=avon_industrial]",
+    "Controller [=controller]",
+    "Product Development [=product_development]",
+    "Sales Force [=sales_force]",
+    "Natura Institute [=natura_institute]",
+    "Market Intelligence [=market_intelligence]",
+    "Internationalization [=internationalization]",
+    "Natura Pay [=natura_pay]",
+    "O&L [=o_and_l]",
+    "Omnicanal [=omnicanal]",
+    "Proativa [=proativa]",
+    "Insurance [=insurance]",
+    "CSC Commercial Services [=csc_commercial_services]",
+    "Retail [=retail]",
+    "Sales and Journey Management Brazil [=sales_journey_management_brazil]",
+    "HR Benefits Wallet [=hr_benefits_wallet]",
+    "Chile [=chile]",
+    "Marketing and Innovation [=marketing]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "u_area_name_payment",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please specify the name of the area requesting payment"
+  },
+  {
+   "name": "u_type_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of request is it?",
+   "include_none": true,
+   "choices": [
+    "Create Linx order [=create_linx_order]",
+    "Request for regularization/change [=request_regularization_change]",
+    "Creating a Coupa Request [=creating_coupa_request]",
+    "Creation and acceptance of service sheet [=creation_acceptance_service]"
+   ]
+  },
+  {
+   "name": "u_type_purchase",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of purchase?",
+   "include_none": true,
+   "choices": [
+    "Cataloged [=cataloged]",
+    "Centralized [=centralized]",
+    "Decentralized [=decentralized]",
+    "Non-Negotiable [=non_negotiable]",
+    "Transgressive [=transgressive]"
+   ]
+  },
+  {
+   "name": "u_types_contracts",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Types of Contracts",
+   "include_none": true,
+   "choices": [
+    "New hire (RECURRING/SPOT) [=new_hire_recurring_spot]",
+    "Subcontracted [=subcontracted]",
+    "Contract readjustment and renewal [=contract_readjustment_renewal]",
+    "Retail [=retail]"
+   ]
+  },
+  {
+   "name": "u_subcompany_request",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request for?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'x_nasm_hr_brandISNOTEMPTY^ORx_nasm_hr_brand!=c8c57e561bd85910d1abda4ce54bcbce^x_nasm_hr_codeISNOTEMPTY^country=Brazil^ORcountry=Chile'"
+  },
+  {
+   "name": "u_select_physical_center",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the Physical Center",
+   "reference": "x_nasm_ptp_physical_center",
+   "ref_qual": "javascript:\"u_active=true^u_sub_company=\"+ current.variables.u_subcompany_request.x_nasm_hr_code;\r\n"
+  },
+  {
+   "name": "u_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_call_proposals_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this call for proposals for a one-time payment for a catalog that is currently inactive?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_attach_supplies_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Supplies approval history here to proceed with the expired catalog SPOT purchase"
+  },
+  {
+   "name": "u_invoice_issued",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Has the invoice already been issued?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_attach_supplier_invoice",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the supplier's invoice here"
+  },
+  {
+   "name": "u_attach_form_request",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the form with your request here"
+  },
+  {
+   "name": "u_on_behalf",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "On behalf of",
+   "reference": "x_nasm_ptp_coupa_users"
+  },
+  {
+   "name": "u_justification_contract",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Justification / Detailed description of the contract"
+  },
+  {
+   "name": "u_exclusive_supplier",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Exclusive supplier?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_attach_director_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here the Director's approval (From Band I) for exclusivity."
+  },
+  {
+   "name": "u_template_suppliers",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_code_concurrency_conc",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the code generated after filling out and submitting the \"Template for Concurrency\" here (The code starts with \"CONC\")",
+   "example": "Ex.: CONC12345"
+  },
+  {
+   "name": "u_currency",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Currency",
+   "include_none": true,
+   "choices": [
+    "USD - US Dollar [=usd_dollar]",
+    "EUR - Euro [=eur_euro]",
+    "GBP - British Pound [=gbp_british_pound]",
+    "CHF - Swiss Franc [=chf_swiss_franc]",
+    "MXN - Mexican Peso [=mxn_mexican_peso]",
+    "AUD - Australian Dollar [=aud_astralian_dollar]",
+    "BRL - Brazilian Real [=brl_brazilian_real]",
+    "CLP - Chilean Peso [=clp_chilean_peso]"
+   ]
+  },
+  {
+   "name": "u_total_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total Value",
+   "example": "Ex: 10.000,00"
+  },
+  {
+   "name": "u_advance_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will there be an advance payment?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_amount_advanced",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the amount to be advanced?",
+   "example": "Ex: 10.000,00"
+  },
+  {
+   "name": "u_attach_approval_advance_payment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the approval history here to process the advance payment"
+  },
+  {
+   "name": "u_sap_order",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "SAP order",
+   "example": "Ex: 4500000000"
+  },
+  {
+   "name": "u_payment_material_service",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is the payment for a Material or a Service?",
+   "include_none": true,
+   "choices": [
+    "Material [=material]",
+    "Service [=service]"
+   ]
+  },
+  {
+   "name": "u_provision_code_lc116",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Service Provision Code (LC116)",
+   "reference": "x_nasm_ptp_lc116"
+  },
+  {
+   "name": "u_s4_service_accounting_class",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "S4 Service and Accounting Class",
+   "reference": "x_nasm_ptp_lc116_s4"
+  },
+  {
+   "name": "u_location_service",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Location/Municipality where the Service is Provided",
+   "reference": "x_nasm_ptp_city"
+  },
+  {
+   "name": "u_materials_list",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_cataloged_materials",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_protocol_materials",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter here the protocol number generated after completing the \"Materials Table\" from the link above (The code starts with \"MAT\")",
+   "example": "Ex: MAT12345"
+  },
+  {
+   "name": "u_supplier_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Nome do Fornecedor",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_ptp.PTPUtils().getCompanyFilter(current.variables.u_payment_material_service);"
+  },
+  {
+   "name": "u_sap_supplier_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "SAP supplier code",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_vendor_id!=NULL'",
+   "include_none": true
+  },
+  {
+   "name": "u_supplier_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's CNPJ",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_cnpj!=NULL'",
+   "include_none": true
+  },
+  {
+   "name": "u_qualification_category_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Qualification / Category",
+   "default": "Verificar"
+  },
+  {
+   "name": "u_qualification_category",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Qualification / Category",
+   "reference": "sn_vdr_risk_asmt_qualification",
+   "ref_qual": "javascript: new x_nasm_ptp.PTPUtils().getQualificationQuery(current.variables.u_supplier_name);\r\n"
+  },
+  {
+   "name": "u_category_qualification",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Category / Qualification",
+   "reference": "sn_vdr_risk_asmt_taxonomy",
+   "ref_qual": "u_type=taxonomy^u_parentISNOTEMPTY^ORu_parent!=11db37a21b219990a530426fe54bcbc4^ORu_parent!=1ddb37a21b219990a530426fe54bcbc4^ORu_parent!=19db37a21b219"
+  },
+  {
+   "name": "u_payment_cost_center_account",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Will the payment be prorated/allocated across more than one cost center and/or general ledger account?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_allocation_link",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "u_protocol_allocation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter here the protocol generated after completing the \"allocation table\" (The code starts with \"RAT\")",
+   "example": "Ex.: RAT00000"
+  },
+  {
+   "name": "u_accounting_classification",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Accounting Classification",
+   "include_none": true,
+   "choices": [
+    "Cost Center (K) [=cost_center]",
+    "Project (P) [=project]",
+    "Natura Active Ingredient (Z) [=natura_active_ingredient]",
+    "Natura Active Service (Y) [=natura_active_service]"
+   ]
+  },
+  {
+   "name": "u_s4_accounting_classification",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "S4 Accounting Classification",
+   "include_none": true,
+   "choices": [
+    "Cost Center (K) [=cost_center]",
+    "Inventory (E) [=inventory]",
+    "Undefined (U) [=undefined]",
+    "CAPEX Project (PI) [=capex_project]",
+    "OPEX Project (PD) [=opex_project]"
+   ]
+  },
+  {
+   "name": "u_pep_s4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "PEP S4",
+   "example": "Ex: PRJ..."
+  },
+  {
+   "name": "u_pep",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "PEP",
+   "example": "Ex: PRJ..."
+  },
+  {
+   "name": "u_fixed_asset_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Fixed Asset Number"
+  },
+  {
+   "name": "u_cost_center",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Cost Center",
+   "reference": "x_nasm_ptp_cost_center_coupa",
+   "ref_qual": "javascript: new x_nasm_ptp.PTPUtils().getCostCenterQuery(current.variables.u_subcompany_request);"
+  },
+  {
+   "name": "u_general_ledger_account",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "General Ledger / Accounting Account",
+   "reference": "x_nasm_ptp_general_ledger",
+   "ref_qual": "javascript:\"chart_of_accounts_nameLIKE\"+ current.variables.u_subcompany_request.x_nasm_hr_code;"
+  },
+  {
+   "name": "u_catalog_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Catalog Name",
+   "reference": "x_nasm_ptp_supplier_catalog"
+  },
+  {
+   "name": "u_cad_been_approved",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Has the CAD (Committee for Expenditure Approval) budget been approved?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_attach_approval_cad",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the CAD (Expense Approval Committee) here"
+  },
+  {
+   "name": "u_cad_approval_email",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Please attach the CAD (Expense Approval Committee) approval history email here"
+  },
+  {
+   "name": "u_service_billing_supplier",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Should the service sheet be generated and the billing information sent to the supplier?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_start_provision_material",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Start of service provision/material supply"
+  },
+  {
+   "name": "u_end_provision_material",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End of service provision/material supply"
+  },
+  {
+   "name": "u_legal_risk",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Legal Risk"
+  },
+  {
+   "name": "u_risk_procurement_goods",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "The procurement of goods or services exceeds USD 100,000"
+  },
+  {
+   "name": "u_risk_personal_data",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Personal data (of consultants, collaborators, clients, etc.) is being shared in the transaction or activity"
+  },
+  {
+   "name": "u_risk_contracts_suppliers",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Contracts proposed by suppliers or third parties"
+  },
+  {
+   "name": "u_risk_access_confidential_information",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "It will grant access to confidential information from Natura&Co"
+  },
+  {
+   "name": "u_risk_intermediation_companies",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Contracting with outsourcing or labor intermediation companies (if applicable) e.g., hiring temporary workers"
+  },
+  {
+   "name": "u_risk_royalties_trademarks",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Contracts involving the payment of royalties, use of trademarks, patents or trade names and any process related to intellectual property"
+  },
+  {
+   "name": "u_risk_collection_agencies",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Contracts with collection agencies"
+  },
+  {
+   "name": "u_risk_commercial_relationship",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Any other commercial relationship that, in the sole opinion of the legal department, warrants the execution of a Contract"
+  },
+  {
+   "name": "u_risk_not_identified",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "No risks have been identified in the hiring process"
+  },
+  {
+   "name": "u_risk_company_facilities",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "The contracted service will be provided at the company's facilities. Example: payroll outsourcing"
+  },
+  {
+   "name": "u_iva",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "IVA",
+   "include_none": true,
+   "choices": [
+    "IVA 19% Imposto sobre o Valor Acrescentado [=iva_added_tax]",
+    "Material isento de impostos [=tax_free_material]"
+   ]
+  },
+  {
+   "name": "u_attach_sales_proposal",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the sales proposal/quote/measurement here."
+  },
+  {
+   "name": "u_provision_value",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Provision value?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_attach_email_supplier_proposal",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Please attach here the email that proves the supplier sent the commercial proposal"
+  },
+  {
+   "name": "u_code_request_subcontracting",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the code of the sourcing request/event that originated the subcontracting?"
+  },
+  {
+   "name": "u_risk_property_partnership_loan",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is there a financial risk? Property / Partnership / Loan",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_risk_bio_gov_agency_environment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is there a reputational risk? Biodiversity / government agency / environment?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_risk_intellectual_property",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is there a risk to Intellectual Property / P&D?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_risk_allocated_workforce",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is there a labor risk? Allocated Workforce",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_requesting_board_directors_vp",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Requesting area (Board of Directors and VP)"
+  },
+  {
+   "name": "u_object_contract",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the object/scope of the contract to be renewed or contracted?"
+  },
+  {
+   "name": "u_type_contract",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Contract?",
+   "include_none": true,
+   "choices": [
+    "New [=new]",
+    "Renewal [=renewal]"
+   ]
+  },
+  {
+   "name": "u_contractor_employees",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please specify how many of the contractor's employees are currently providing services"
+  },
+  {
+   "name": "u_natura_employee_similar_activities",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please inform us if there is a Natura employee who performs the same or similar activities to those assigned to the service provider",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_natura_employee_service_providers",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please indicate if there is a direct reporting relationship between the Natura employee and the service providers",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_natura_employee_subordinates",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Please specify if employees of the service provider have Natura employees as subordinates.",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_master_contract",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Do you have a Master contract?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "u_master_coupa_contract",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Master Coupa Contract",
+   "reference": "x_nasm_ptp_active_master_contract",
+   "ref_qual": "javascript: new x_nasm_ptp.PTPUtils().getContractFilter(current.variables.u_supplier_name, current.variables.u_types_contracts);"
+  },
+  {
+   "name": "u_attach_service_order",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here the Service Order (OS) signed between the parties"
+  },
+  {
+   "name": "u_coupa_contract",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Coupa Contract"
+  },
+  {
+   "name": "u_email_supplier_finance_department",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email address to contact the supplier's finance department"
+  },
+  {
+   "name": "u_contract_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Contract start date"
+  },
+  {
+   "name": "u_contract_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "End of contract term"
+  },
+  {
+   "name": "u_prosecutor_natura_1",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Prosecutor of Natura 1",
+   "reference": "sys_user_grmember",
+   "ref_qual": "javascript: 'group=bef0b3d833c183d098331c07ee5c7ba6^user.email!=' + current.variables.u_prosecutor_natura_2.user.email;"
+  },
+  {
+   "name": "u_prosecutor_natura_2",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Prosecutor of Natura 2",
+   "reference": "sys_user_grmember",
+   "ref_qual": "javascript: 'group=bef0b3d833c183d098331c07ee5c7ba6^user.email!=' + current.variables.u_prosecutor_natura_1.user.email;"
+  },
+  {
+   "name": "u_witness_natura",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Witness of Natura",
+   "reference": "sys_user",
+   "ref_qual": "active=true^nameISNOTEMPTY^EQ"
+  },
+  {
+   "name": "u_supplier_representative",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's representative (Full name)"
+  },
+  {
+   "name": "u_supplier_representative_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's representative (E-mail)"
+  },
+  {
+   "name": "u_supplier_witness_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's witness (Full name)"
+  },
+  {
+   "name": "u_supplier_witness_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's witness (E-mail)"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Show [u_amount_advanced,u_attach_approval_advance_payment]",
+   "when": "IO:u_advance_payment=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_amount_advanced: visible=true,mandatory=true",
+    "u_attach_approval_advance_payment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_sap_order]",
+   "when": "IO:u_type_request=creation_acceptance_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_sap_order: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_category_qualification]",
+   "when": "IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_type_purchase=non_negotiable^NQIO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_type_purchase=centralized^IO:u_types_contractsINnew_hire_recurring_spot,subcontracted,retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_category_qualification: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_start_provision_material][u_end_provision_material]",
+   "when": "IO:u_type_request=creating_coupa_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_start_provision_material: visible=true,mandatory=true",
+    "u_end_provision_material: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_supplies_approval]",
+   "when": "IO:u_call_proposals_payment=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_supplies_approval: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_code_concurrency_conc]",
+   "when": "IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_types_contractsINnew_hire_recurring_spot,retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_code_concurrency_conc: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_contract_start_date][u_contract_end_date][prosecutor_natura][witness_natura][prosecutor_supplier][witness_supplier]",
+   "when": "IO:u_called_area=marketing^IO:u_type_purchase=decentralized^IO:u_master_contract=no^IO:u_risk_property_partnership_loan=yes^NQIO:u_called_area=marketing^IO:u_type_purchase=decentralized^IO:u_master_contract=no^IO:u_risk_bio_gov_agency_environment=yes^NQIO:u_called_area=marketing^IO:u_type_purchase=decentralized^IO:u_master_contract=no^IO:u_risk_intellectual_property=yes^NQIO:u_called_area=marketing^IO:u_type_purchase=decentralized^IO:u_master_contract=no^IO:u_risk_allocated_workforce=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_supplier_witness_email: visible=true,mandatory=true",
+    "u_prosecutor_natura_1: visible=true,mandatory=true",
+    "u_witness_natura: visible=true,mandatory=true",
+    "u_prosecutor_natura_2: visible=true,mandatory=true",
+    "u_supplier_representative_email: visible=true,mandatory=true",
+    "u_contract_end_date: visible=true,mandatory=true",
+    "u_supplier_representative: visible=true,mandatory=true",
+    "u_supplier_witness_name: visible=true,mandatory=true",
+    "u_contract_start_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_type_purchase]",
+   "when": "IO:u_type_requestINcreate_linx_order,creating_coupa_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_type_purchase: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_fixed_asset_number]",
+   "when": "IO:u_accounting_classificationINnatura_active_ingredient,natura_active_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_fixed_asset_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_cost_center]",
+   "when": "IO:u_accounting_classification=cost_center^ORIO:u_s4_accounting_classification=cost_center^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_cost_center: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_select_physical_center]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_subcompany_requestISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_select_physical_center: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_materials_list]",
+   "when": "IO:u_called_area!=chile^IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_type_purchaseNOT INcataloged,non_negotiable^IO:u_types_contractsNOT INnew_hire_recurring_spot,contract_readjustment_renewal,retail^IO:u_payment_material_service=material^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_materials_list: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_cataloged_materials]",
+   "when": "IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_type_purchase=cataloged^IO:u_payment_material_service=material^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_cataloged_materials: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_pep]",
+   "when": "IO:u_accounting_classificationINproject,natura_active_ingredient,natura_active_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_pep: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_exclusive_supplier]",
+   "when": "IO:u_type_request!=create_linx_order^IO:u_types_contracts=new_hire_recurring_spot^ORIO:u_types_contracts=retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_exclusive_supplier: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_approval_cad]",
+   "when": "IO:u_cad_been_approved=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_approval_cad: visible=true,mandatory=true",
+    "u_cad_approval_email: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Hide [u_invoice_issued]",
+   "when": "IO:u_called_areaINretail,sales_journey_management_brazil,chile^NQIO:u_called_area=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_invoice_issued: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "Show [u_pep_s4]",
+   "when": "IO:u_s4_accounting_classificationINcapex_project,opex_project^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_pep_s4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_protocol_materials]",
+   "when": "IO:u_called_area!=chile^IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_type_purchase!=non_negotiable^ORIO:u_type_purchase!=^IO:u_types_contractsNOT INnew_hire_recurring_spot,contract_readjustment_renewal,retail^IO:u_payment_material_service=material^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_protocol_materials: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Hide [u_payment_cost_center_account]",
+   "when": "IO:u_called_area=retail^NQIO:u_called_area=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_payment_cost_center_account: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "Show [u_advance_payment]",
+   "when": "IO:u_called_area=sales_journey_management_brazil^IO:u_types_contracts=subcontracted^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_advance_payment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_sales_proposal]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_types_contractsNOT INnew_hire_recurring_spot,retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_sales_proposal: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_download_template]",
+   "when": "IO:u_type_request=create_linx_order^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_download_template: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_requesting_board][u_object_contract][u_type_contract][u_contractor_employees][u_natura_employee_sim][service_providers][employee_subordinates]",
+   "when": "IO:u_risk_allocated_workforce=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_natura_employee_service_providers: visible=true,mandatory=true",
+    "u_object_contract: visible=true,mandatory=true",
+    "u_contractor_employees: visible=true,mandatory=true",
+    "u_natura_employee_similar_activities: visible=true,mandatory=true",
+    "u_type_contract: visible=true,mandatory=true",
+    "u_natura_employee_subordinates: visible=true,mandatory=true",
+    "u_requesting_board_directors_vp: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_accounting_classification]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_payment_cost_center_account=no^IO:u_subcompany_request!=8c14f4d61b0acd10237642ece54bcb3e^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_accounting_classification: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_supplier_invoice]",
+   "when": "IO:u_invoice_issued=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_supplier_invoice: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_legal_risk][u_iva]",
+   "when": "IO:u_called_area=chile^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_iva: visible=true,mandatory=true",
+    "u_risk_collection_agencies: visible=true,mandatory=true",
+    "u_risk_contracts_suppliers: visible=true,mandatory=true",
+    "u_risk_access_confidential_information: visible=true,mandatory=true",
+    "u_risk_not_identified: visible=true,mandatory=true",
+    "u_risk_intermediation_companies: visible=true,mandatory=true",
+    "u_risk_personal_data: visible=true,mandatory=true",
+    "u_risk_procurement_goods: visible=true,mandatory=true",
+    "u_risk_commercial_relationship: visible=true,mandatory=true",
+    "u_risk_company_facilities: visible=true,mandatory=true",
+    "u_risk_royalties_trademarks: visible=true,mandatory=true",
+    "u_legal_risk: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Hide [u_currency][u_total_value][u_payment_material_service]",
+   "when": "IO:u_called_area=retail^NQIO:u_called_area=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_currency: visible=false,mandatory=false",
+    "u_payment_material_service: visible=false,mandatory=false",
+    "u_total_value: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "Show [u_area_name_payment]",
+   "when": "IO:u_called_area=others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_area_name_payment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_allocation_link]",
+   "when": "IO:u_payment_cost_center_account=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_allocation_link: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_master_coupa_contract][u_attach_service_order]",
+   "when": "IO:u_master_contract=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_master_coupa_contract: visible=true,mandatory=true",
+    "u_attach_service_order: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_risk_bio_gov_agency_environment][u_risk_intellectual_property][u_risk_allocated_workforce][u_risk_property_partnership_loan]",
+   "when": "IO:u_call_proposals_payment!=yes^IO:u_type_purchaseINcentralized,decentralized,transgressive^IO:u_type_request=creating_coupa_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_risk_bio_gov_agency_environment: visible=true,mandatory=true",
+    "u_risk_property_partnership_loan: visible=true,mandatory=true",
+    "u_risk_allocated_workforce: visible=true,mandatory=true",
+    "u_risk_intellectual_property: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_sap_supplier_code][u_supplier_cnpj][u_supplier_name]",
+   "when": "IO:u_called_areaINlegal,corporate_hr,investor_relations,csc,avon_industrial,controller,product_development,sales_force,natura_institute,market_intelligence,internationalization,natura_pay,o_and_l,omnicanal,proativa,insurance,csc_commercial_services,sales_journey_management_brazil,hr_benefits_wallet,chile,marketing,others^IO:u_type_requestINcreate_linx_order,request_regularization_change,creating_coupa_request,creation_acceptance_service^IO:u_call_proposals_payment=yes^ORIO:u_call_proposals_payment=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_supplier_name: visible=true,mandatory=true",
+    "u_supplier_cnpj: visible=true,mandatory=true",
+    "u_sap_supplier_code: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_catalog_name]",
+   "when": "IO:u_type_requestINrequest_regularization_change,creating_coupa_request,creation_acceptance_service^IO:u_type_purchase=cataloged^IO:u_payment_material_service=service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_catalog_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Hide [u_email_supplier_finance_department]",
+   "when": "IO:u_called_area=sales_journey_management_brazil^NQIO:u_called_area=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_email_supplier_finance_department: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "Hide [u_type_request]",
+   "when": "IO:u_called_area=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_type_request: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "Show [s4_service_accounting_class]",
+   "when": "IO:u_called_areaINlegal,corporate_hr,investor_relations,csc,avon_industrial,controller,product_development,sales_force,natura_institute,market_intelligence,internationalization,natura_pay,o_and_l,omnicanal,proativa,insurance,csc_commercial_services,sales_journey_management_brazil,hr_benefits_wallet,marketing,others^IO:u_type_request!=creation_acceptance_service^IO:u_payment_material_service=service^IO:u_subcompany_request=8c14f4d61b0acd10237642ece54bcb3e^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_s4_service_accounting_class: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_protocol_allocation]",
+   "when": "IO:u_payment_cost_center_account=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_protocol_allocation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_call_proposals_payment]",
+   "when": "IO:u_type_requestNOT INcreate_linx_order,request_regularization_change^IO:u_types_contracts=new_hire_recurring_spot^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_call_proposals_payment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_service_billing_supplier]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_invoice_issued=no^IO:u_payment_material_service=service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_service_billing_supplier: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_s4_accounting_classification]",
+   "when": "IO:u_subcompany_request=8c14f4d61b0acd10237642ece54bcb3e^IO:u_type_request=creating_coupa_request^IO:u_payment_cost_center_account=no^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_s4_accounting_classification: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_location_service]",
+   "when": "IO:u_called_areaINlegal,corporate_hr,investor_relations,csc,avon_industrial,controller,product_development,sales_force,natura_institute,market_intelligence,internationalization,natura_pay,o_and_l,omnicanal,proativa,insurance,csc_commercial_services,sales_journey_management_brazil,hr_benefits_wallet,marketing,others^IO:u_types_contracts!=retail^IO:u_payment_material_service=service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_location_service: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_template_suppliers]",
+   "when": "IO:u_types_contracts=new_hire_recurring_spot^ORIO:u_types_contracts=retail^IO:u_type_request!=create_linx_order^IO:u_call_proposals_payment=no^ORIO:u_call_proposals_payment=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_template_suppliers: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_qualification_category]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_type_purchaseNOT INcataloged,non_negotiable^IO:u_types_contractsNOT INnew_hire_recurring_spot,subcontracted,retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_qualification_category: visible=true,mandatory=true",
+    "u_qualification_taxonomy: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_provision_value]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_types_contractsNOT INnew_hire_recurring_spot,retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_provision_value: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_types_contracts]",
+   "when": "IO:u_type_purchase=centralized^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_types_contracts: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_justification_contract]",
+   "when": "IO:u_type_requestINcreating_coupa_request,creation_acceptance_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_justification_contract: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_coupa_contract]",
+   "when": "IO:u_called_areaNOT INsales_journey_management_brazil,marketing^IO:u_type_purchaseINdecentralized,transgressive^IO:u_master_contract=no^IO:u_risk_property_partnership_loan=yes^NQIO:u_called_areaNOT INsales_journey_management_brazil,marketing^IO:u_type_purchaseINdecentralized,transgressive^IO:u_master_contract=no^IO:u_risk_bio_gov_agency_environment=yes^NQIO:u_called_areaNOT INsales_journey_management_brazil,marketing^IO:u_type_purchaseINdecentralized,transgressive^IO:u_master_contract=no^IO:u_risk_intellectual_property=yes^NQIO:u_called_areaNOT INsales_journey_management_brazil,marketing^IO:u_type_purchaseINdecentralized,transgressive^IO:u_master_contract=no^IO:u_risk_allocated_workforce=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_coupa_contract: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_subcompany_request]",
+   "when": "IO:u_type_requestINcreating_coupa_request,creation_acceptance_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_subcompany_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_form_request]",
+   "when": "IO:u_called_area=retail^IO:u_type_requestINcreate_linx_order,request_regularization_change,creating_coupa_request,creation_acceptance_service^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_form_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_attach_email_supplier_proposal]",
+   "when": "IO:u_provision_value=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_email_supplier_proposal: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_cad_been_approved]",
+   "when": "IO:u_type_request!=create_linx_order^ORIO:u_type_request!=^ORIO:u_type_request!=request_regularization_change^IO:u_types_contracts=new_hire_recurring_spot^ORIO:u_types_contracts=contract_readjustment_renewal^ORIO:u_types_contracts=retail^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_cad_been_approved: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_general_ledger_account]",
+   "when": "IO:u_type_request=creating_coupa_request^IO:u_payment_cost_center_account=no^IO:u_subcompany_request!=8c14f4d61b0acd10237642ece54bcb3e^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_general_ledger_account: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_provision_code_lc116]",
+   "when": "IO:u_called_areaINlegal,corporate_hr,investor_relations,csc,avon_industrial,controller,product_development,sales_force,natura_institute,market_intelligence,internationalization,natura_pay,o_and_l,omnicanal,proativa,insurance,csc_commercial_services,sales_journey_management_brazil,hr_benefits_wallet,marketing,others^IO:u_type_request!=creation_acceptance_service^IO:u_payment_material_service=service^IO:u_subcompany_request!=8c14f4d61b0acd10237642ece54bcb3e^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_provision_code_lc116: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_code_request_subcontracting]",
+   "when": "IO:u_type_request!=create_linx_order^IO:u_types_contracts=subcontracted^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_code_request_subcontracting: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_called_area: visible=true,mandatory=true",
+    "u_qualification_category_2: visible=false"
+   ]
+  },
+  {
+   "name": "Show [u_attach_director_approval]",
+   "when": "IO:u_exclusive_supplier=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_attach_director_approval: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Show [u_on_behalf]",
+   "when": "IO:u_type_request=creating_coupa_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "u_on_behalf: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Set field if Supplier SAP Code change",
+   "type": "onChange",
+   "on": "e4858b0487450b90ec360e530cbb3568",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, havendo código SAP do fornecedor preenchido, desobriga e trava o campo como somente leitura — o dado veio de busca automática e não deve ser editado."
+  },
+  {
+   "name": "Clear value if Types of Contracts change",
+   "type": "onChange",
+   "on": "bcb44714874dcb90ec360e530cbb3544",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de contrato quando o tipo de contrato muda: valor da prestação, código de subcontratação, aprovação do CAD e contrato master."
+  },
+  {
+   "name": "Validate SAP order number",
+   "type": "onChange",
+   "on": "9434ba0c87410b90ec360e530cbb35a4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número do pedido SAP como exatamente 10 dígitos. Inválido: limpa o campo e mostra mensagem."
+  },
+  {
+   "name": "Set field if Supplier change",
+   "type": "onChange",
+   "on": "70a4438087450b90ec360e530cbb3576",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, ao trocar o fornecedor, limpa categoria de qualificação, código SAP e CNPJ, e trava os campos — para serem repreenchidos pela busca automática do novo fornecedor."
+  },
+  {
+   "name": "Hide Master Contract OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde e limpa 'u_master_contract' na abertura do formulário."
+  },
+  {
+   "name": "Clear values ​​if the area is changed",
+   "type": "onChange",
+   "on": "9a813ed48785cb90ec360e530cbb35d7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange e o maior deste lote: quando a área do chamado muda, limpa DEZENAS de campos dependentes — nome da área de pagamento, departamento contratante, subcategoria e todo o restante do formulário. Reset em cascata de um formulário de contratação inteiro."
+  },
+  {
+   "name": "Clear value if Currency Changed",
+   "type": "onChange",
+   "on": "702bda048749c790ec360e530cbb350b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa e esconde 'u_provision_code_lc116' quando a moeda muda. A condição `if (newValue || newValue == '')` é sempre verdadeira — o if é redundante."
+  },
+  {
+   "name": "Clear value in type request",
+   "type": "onChange",
+   "on": "41adf6d887c9cb90ec360e530cbb357f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa tipo de contrato, tipo de compra, sub-empresa e moeda quando o tipo de solicitação muda."
+  },
+  {
+   "name": "Autofill [u_master_contract] Risk Proper",
+   "type": "onChange",
+   "on": "baa3338c87c90b90ec360e530cbb35a1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche automaticamente os dados do contrato master para o risco 'Property'. Limpa e-mail do financeiro do fornecedor, datas de início e fim e os procuradores, e depois busca os valores do contrato correspondente. Um de quatro scripts quase idênticos, um por tipo de risco."
+  },
+  {
+   "name": "Clear value if Master Coupa Contract",
+   "type": "onChange",
+   "on": "d0b93700874d0b90ec360e530cbb3510",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o contrato master Coupa e o anexo de ordem de serviço."
+  },
+  {
+   "name": "Validate code MAT",
+   "type": "onChange",
+   "on": "4514034087450b90ec360e530cbb353c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o código MAT no padrão 'MAT' + 5 dígitos, convertendo para maiúsculas antes de testar. Casando, grava o valor formatado no campo de protocolo."
+  },
+  {
+   "name": "Autofill [u_master_contract] Risk Work",
+   "type": "onChange",
+   "on": "1134fbcc87c90b90ec360e530cbb351e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do autofill de contrato master para o risco 'Work'. Mesmo corpo do irmão, mudando o tipo de risco consultado."
+  },
+  {
+   "name": "Validate Date End Material",
+   "type": "onChange",
+   "on": "81e69f8c87c50b90ec360e530cbb3513",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data final da prestação de material contra a data inicial, convertendo ambas com getDateFromFormat e o formato de data do usuário. Impede fim anterior ao início."
+  },
+  {
+   "name": "Autofill Code LC116 ",
+   "type": "onChange",
+   "on": "156c728c87c10b90ec360e530cbb35b7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o código LC116 automaticamente. A regra: quando a moeda NÃO é real brasileiro e o tipo é 'service', busca o código e grava na nota. Lógica condicional de tributação de serviço internacional."
+  },
+  {
+   "name": "Validate code CONC",
+   "type": "onChange",
+   "on": "5cd796808709c790ec360e530cbb35fb",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o código CONC no padrão 'CONC' + 5 dígitos, convertendo para maiúsculas antes de testar. Gêmeo do validador MAT."
+  },
+  {
+   "name": "Validate Date Start Contract",
+   "type": "onChange",
+   "on": "e10cf7c4874d0b90ec360e530cbb35b0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de início do contrato contra a data de fim já preenchida, usando getDateFromFormat com o formato do usuário."
+  },
+  {
+   "name": "Set field if Supplier CNPJ change",
+   "type": "onChange",
+   "on": "5c96038487450b90ec360e530cbb3522",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, havendo CNPJ do fornecedor preenchido, desobriga e trava o campo como somente leitura. Gêmeo do script do código SAP."
+  },
+  {
+   "name": "Autofill Request and Purchase",
+   "type": "onChange",
+   "on": "9a813ed48785cb90ec360e530cbb35d7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que ajusta as opções de tipo de solicitação, removendo 'create_linx_order' e 'request_regularization_change' da lista, e preenche automaticamente campos de requisição e compra conforme o contexto."
+  },
+  {
+   "name": "Autofill [u_master_contract] Risk Loan ",
+   "type": "onChange",
+   "on": "a17273c887c90b90ec360e530cbb352a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do autofill de contrato master para o risco 'Loan'. Mesmo corpo dos irmãos."
+  },
+  {
+   "name": "Validate Contractor employees number",
+   "type": "onChange",
+   "on": "d2d6bf08870d0b90ec360e530cbb3550",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número de funcionários da contratada aceitando apenas dígitos. Inválido: limpa o campo e mostra mensagem."
+  },
+  {
+   "name": "Aoop: Validate Supplier Witness",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida representante e testemunha do fornecedor. Lê nome e e-mail dos dois (com trim) e compara — provavelmente para impedir que representante e testemunha sejam a mesma pessoa, o que invalidaria a assinatura do contrato."
+  },
+  {
+   "name": "Autofill [u_master_contract] Risk Gov",
+   "type": "onChange",
+   "on": "c803b7c887c90b90ec360e530cbb3546",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do autofill de contrato master para o risco 'Gov'. Quarto script quase idêntico da série."
+  },
+  {
+   "name": "Validate Format Number Amount Advanced",
+   "type": "onChange",
+   "on": "30e32684870dc790ec360e530cbb35cd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e formata o valor adiantado, aceitando apenas dígitos, ponto e vírgula (ex.: 1000 ou 1.000,00). Inválido: limpa o campo."
+  },
+  {
+   "name": "Validate and Format Number Total Value",
+   "type": "onChange",
+   "on": "13622e00870dc790ec360e530cbb3526",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e formata o valor total, com a mesma regra do irmão do valor adiantado."
+  },
+  {
+   "name": "Clear value if S4 Accounting Classificat",
+   "type": "onChange",
+   "on": "cfe3b0e287038790ec360e530cbb3589",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa centro de custo e PEP S4 quando a classificação contábil S4 muda."
+  },
+  {
+   "name": "Validate Fixed asset number",
+   "type": "onChange",
+   "on": "286253c087c50b90ec360e530cbb35d7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número do ativo fixo aceitando apenas dígitos. Inválido: limpa o campo e mostra mensagem."
+  },
+  {
+   "name": "Clear value if Risk Workforce Changed",
+   "type": "onChange",
+   "on": "1134fbcc87c90b90ec360e530cbb351e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os campos dependentes quando o risco de mão de obra (Risk Workforce) muda."
+  },
+  {
+   "name": "Validate code RAT",
+   "type": "onChange",
+   "on": "337f47c887850b90ec360e530cbb35ee",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o código RAT no padrão 'RAT' + 5 dígitos, convertendo para maiúsculas. Terceiro da série MAT/CONC/RAT."
+  },
+  {
+   "name": "Clear value if Payment Material Service ",
+   "type": "onChange",
+   "on": "156c728c87c10b90ec360e530cbb35b7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de pagamento de material/serviço: categoria de qualificação, nome do catálogo, fornecedor do faturamento e protocolo."
+  },
+  {
+   "name": "Clear value if Accounting Classification",
+   "type": "onChange",
+   "on": "4390538c87850b90ec360e530cbb3544",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa centro de custo, PEP, conta contábil e número do ativo fixo quando a classificação contábil muda."
+  },
+  {
+   "name": "Clear value if Request changed",
+   "type": "onChange",
+   "on": "41adf6d887c9cb90ec360e530cbb357f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de solicitação: tipo de compra, sub-empresa, em nome de quem, e início da prestação de material."
+  },
+  {
+   "name": "Autofill [u_master_contracts] if Supplie",
+   "type": "onChange",
+   "on": "70a4438087450b90ec360e530cbb3576",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que decide o contrato master a partir de três campos — área do chamado, tipo de contrato e nome do fornecedor — numa função auxiliar chamada no onChange. Diferente dos autofill por tipo de risco, este cruza a combinação dos três."
+  },
+  {
+   "name": "Validate Date End Contract",
+   "type": "onChange",
+   "on": "dd7cf308874d0b90ec360e530cbb3569",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de fim do contrato contra a data de início, usando getDateFromFormat com o formato do usuário."
+  },
+  {
+   "name": "Clear value if Purchase changed",
+   "type": "onChange",
+   "on": "34f0cfd4870dcb90ec360e530cbb35d1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa tipo de contrato e categoria de qualificação quando o tipo de compra muda."
+  },
+  {
+   "name": "Autofill [u_master_contracts] if contrac",
+   "type": "onChange",
+   "on": "bcb44714874dcb90ec360e530cbb3544",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script que decide o contrato master por área, tipo de contrato e fornecedor — disparado por outro campo. Praticamente idêntico ao irmão."
+  },
+  {
+   "name": "Validate Date Start Material",
+   "type": "onChange",
+   "on": "4656938c87c50b90ec360e530cbb3514",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data de início da prestação de material contra a data de fim já preenchida."
+  },
+  {
+   "name": "Autofill Code LC116 - Validate Currency",
+   "type": "onChange",
+   "on": "702bda048749c790ec360e530cbb350b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script de 8,8 KB que está INTEIRAMENTE COMENTADO — o corpo começa com /* e nunca é executado. Pela lógica comentada, definiria o código LC116 conforme tipo de solicitação, moeda e forma de pagamento. Código morto ocupando espaço no formulário."
+  },
+  {
+   "name": "Aoop: Show Qualification / Category",
+   "type": "onChange",
+   "on": "70a4438087450b90ec360e530cbb3576",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "onChange de fornecedor que decide qual dos dois campos de categoria de qualificação aparece. Sai cedo no carregamento e quando o valor fica vazio. Limpa `u_qualification_category_2` e `u_qualification_category`, lê `u_type_request` e `u_types_contracts` do formulário e chama o Script Include `x_nasm_ptp.AoopPTPUtils`, método `getQualificationQuery`, via GlideAjax, passando o fornecedor escolhido. Só age sobre o retorno quando o tipo de solicitação NÃO é 'creation_acceptance_service' e o tipo de …"
+  },
+  {
+   "name": "Clear value if Payment Cost Center Chang",
+   "type": "onChange",
+   "on": "decdc38487850b90ec360e530cbb3521",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa protocolo de rateio, classificação contábil, PEP e conta contábil quando o centro de custo de pagamento muda."
+  }
+ ]
+}

@@ -1,0 +1,539 @@
+{
+ "sys_id": "60a230ed1b201610514cbaef4b4bcbf9",
+ "name": "Solicitações de licença paternidade",
+ "sys_name": "Paternity Leave Requests",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licença Paternidade",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Utilize este formulário para solicitar Licença Paternidade",
+ "description": "Utilize este formulário para solicitar Licença Paternidade",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "37",
+   "variaveis_ativas": "44",
+   "bloqueadores": "0",
+   "avisos": "25",
+   "perguntas_sem_conversational_label": "37"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_which_paternity_leave: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_10: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_13: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_6: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_awareness_salary: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_5: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_2: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_help_3: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_3: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_4: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_7: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_11: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_9: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_help_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_help_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_help_4: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_help_5: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_12: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_8: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_details_of_service: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 37 de 37 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 37 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 25 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de licença paternidade. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "control_brand",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Brand",
+   "hidden": true
+  },
+  {
+   "name": "v_details_of_service",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_which_paternity_leave",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "What is the Paternity leave you want to request?",
+   "lookup": "x_nasm_hr_rules_hispanic_licencia_paternidad_solicitud",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee);",
+   "include_none": true,
+   "choices": [
+    "Paternity Leave [=paternity_leave]",
+    "Paternity Leave for Adoption [=paternity_leave_adoption]",
+    "Soft Landing [=soft_landing]",
+    "Natura License [=natura_license]",
+    "Natura and Paternity Leave [=natura_paternity_leave]",
+    "Paternity Leave for Natura and Adoption [=natura_adoption_leave]",
+    "BPS Paternity Leave [=bps_paternity_leave]"
+   ]
+  },
+  {
+   "name": "v_license_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "License start date"
+  },
+  {
+   "name": "v_license_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "License End Date"
+  },
+  {
+   "name": "v_number_of_days_of_your_license",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of your License"
+  },
+  {
+   "name": "v_help_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_help_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_help_3",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_1",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the Birth Certificate or a document that proves the Birth"
+  },
+  {
+   "name": "v_attach_2",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the certificate that BPS gives you for this License"
+  },
+  {
+   "name": "v_attach_3",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "You can attach below a document that supports your request (ex: certificate of probable delivery date)"
+  },
+  {
+   "name": "v_attach_4",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the notarial testimony of the decree issued by the competent Judge, certificate issued by the INAU or in case of adoption through notarial testimony of the respective public deed."
+  },
+  {
+   "name": "v_attach_5",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below some document that supports the adoption"
+  },
+  {
+   "name": "v_awareness_salary",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "I am aware that by opting for this benefit my salary will be reduced by 35%."
+  },
+  {
+   "name": "v_attach_6",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the birth certificate or certificate below"
+  },
+  {
+   "name": "v_attach_7",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below a document that certifies the mother's admission to a hospital or clinic"
+  },
+  {
+   "name": "v_attach_8",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the birth certificate below"
+  },
+  {
+   "name": "v_attach_9",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach your manager's approval below"
+  },
+  {
+   "name": "v_natura_license_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Natura License start date"
+  },
+  {
+   "name": "v_end_date_of_natura_license",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Natura License end date"
+  },
+  {
+   "name": "v_number_of_days_of_natura_license",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number of days of Natura License"
+  },
+  {
+   "name": "v_help_4",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Remember that paternity leave has a maximum of 40 days, including legal days and days for Natura benefits."
+  },
+  {
+   "name": "v_help_5",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_10",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the minor's Civil Registry"
+  },
+  {
+   "name": "v_attach_11",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach below the medical documentation with the clinical history"
+  },
+  {
+   "name": "v_attach_12",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the license certificate below"
+  },
+  {
+   "name": "v_attach_13",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the Bank certification below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show v_help_3",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=PER^ORIO:v_country=CHL^ORIO:v_country=COL^NQIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=ARG^IO:control_brand=Natura^ORIO:control_brand=Avon LATAM^NQIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf6^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_help_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_4",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_1",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf6^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_1: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show start_sate/end_date/number_days - Natura",
+   "when": "IO:v_which_paternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^ORIO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_number_of_days_of_natura_license: visible=true,mandatory=true",
+    "v_end_date_of_natura_license: visible=true,mandatory=true",
+    "v_natura_license_start_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_7",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=PER^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_7: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_10",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_10: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_13",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_13: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show ",
+   "when": "IO:v_which_paternity_leave=09454d001bf05650514cbaef4b4bcb44^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=PER^ORIO:v_country=CHL^ORIO:v_country=ECU^ORIO:v_country=URY^ORIO:v_country=COL^NQIO:v_which_paternity_leave=09454d001bf05650514cbaef4b4bcb44^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=ARG^IO:control_brand=Natura^ORIO:control_brand=Avon LATAM^NQIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^ORIO:v_country=COL^NQIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf6^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Show v_attach_2",
+   "when": "IO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf6^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_3",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=ARG^IO:control_brand=Natura^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_3: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_help_4",
+   "when": "IO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_help_4: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_8",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_8: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show start_sate/end_date/number_days",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=PER^ORIO:v_country=CHL^ORIO:v_country=ECU^ORIO:v_country=URY^ORIO:v_country=COL^NQIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=ARG^IO:control_brand=Natura^ORIO:control_brand=Avon LATAM^NQIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^ORIO:v_country=COL^NQIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf6^IO:v_country=URY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_license_start_date: visible=true,mandatory=true",
+    "v_license_end_date: visible=true,mandatory=true",
+    "v_number_of_days_of_your_license: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_help_5",
+   "when": "IO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_help_5: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_6",
+   "when": "IO:v_which_paternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:control_brand=Avon LATAM^NQIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^NQIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=ARG^IO:control_brand=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_6: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_11",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_11: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_help_2",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_help_2: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_5",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=PER^ORIO:v_country=CHL^ORIO:v_country=ECU^ORIO:v_country=URY^NQIO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^IO:v_country=ARG^IO:control_brand=Natura^ORIO:control_brand=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_12",
+   "when": "IO:v_which_paternity_leave=a85c110c1b745650514cbaef4b4bcbf3^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=2c5c110c1b745650514cbaef4b4bcbf5^ORIO:v_which_paternity_leave=8929d4321b645e10514cbaef4b4bcbe5^ORIO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=COL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_12: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show license to select",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_paternity_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_help_1",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^ORIO:v_which_paternity_leave=245c110c1b745650514cbaef4b4bcbf5^IO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_help_1: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_awareness_salary",
+   "when": "IO:v_which_paternity_leave=c529d4321b645e10514cbaef4b4bcbe5^IO:v_country=ARG^IO:control_brand=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_awareness_salary: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_attach_9",
+   "when": "IO:v_which_paternity_leave=888e23ae1bbcd690514cbaef4b4bcbe1^IO:v_country=CHL^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_9: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get control variables",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca as variáveis de controle do colaborador, chamando EYHispanic_Employee_Information via GlideAjax. O retorno decide o que o formulário exibe."
+  },
+  {
+   "name": "EY: Fill number of days License - Natura",
+   "type": "onChange",
+   "on": "36c0d9bd1b609610514cbaef4b4bcbe0",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias da licença Natura no formulário de paternidade."
+  },
+  {
+   "name": "EY: Fill number of days License - Natura",
+   "type": "onChange",
+   "on": "cc10d17d1b609610514cbaef4b4bcb48",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior (2,1 KB) do cálculo de dias da licença Natura, limpando 'v_number_of_days_of_natura_license' quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Clear All Fields On Change Paternity",
+   "type": "onChange",
+   "on": "0962457d1bec5610514cbaef4b4bcb62",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que faz o reset do formulário de paternidade quando o tipo muda: limpa data de início da licença e os campos dependentes."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "95c785791b209610514cbaef4b4bcb6c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias de licença, com validação por regex e recálculo apenas em mudança efetiva."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "1877cd391b209610514cbaef4b4bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias de licença que limpa 'v_number_of_days_of_your_license' quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Fill number of days License",
+   "type": "onChange",
+   "on": "434749391b209610514cbaef4b4bcbf9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante maior (2,1 KB) do mesmo cálculo de dias de licença."
+  },
+  {
+   "name": "EY: Fill number of days License - Natura",
+   "type": "onChange",
+   "on": "b840d17d1b609610514cbaef4b4bcb2d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do cálculo de dias da licença Natura, limpando o campo quando o valor fica vazio."
+  }
+ ]
+}

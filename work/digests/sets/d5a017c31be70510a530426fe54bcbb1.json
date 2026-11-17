@@ -1,0 +1,52 @@
+{
+ "sys_id": "d5a017c31be70510a530426fe54bcbb1",
+ "title": "Employee benefits",
+ "internal_name": "employee_benefits",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Alteração de Vale Refeição - VR, Alimentação - VA"
+ ],
+ "variaveis": [
+  {
+   "name": "employee_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Employee"
+  },
+  {
+   "name": "benefit_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Benefit Code"
+  },
+  {
+   "name": "product",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Product"
+  },
+  {
+   "name": "option_date",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Option Date"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: HTR All fields read only if doesn't change",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "option_date: readonly=true",
+    "employee_id: readonly=true",
+    "benefit_code: readonly=true",
+    "product: readonly=true",
+    "days_voucher: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

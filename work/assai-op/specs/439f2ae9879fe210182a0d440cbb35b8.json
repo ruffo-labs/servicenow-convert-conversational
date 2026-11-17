@@ -1,0 +1,138 @@
+{
+ "sys_id": "439f2ae9879fe210182a0d440cbb35b8",
+ "status": "dividido",
+ "motivo": "Divergência no desconto pede demonstrativo, pagamento e mês; análise de informe divergente pede o informe e o ano; pedido de informe de rendimentos só pede o ano de referência.",
+ "vars": {
+  "informe_de_rendimento_com_a_divergencia": {
+   "label": "Envie o informe de rendimentos que está com divergência."
+  },
+  "notificacao_da_receita_federal_se_houver": {
+   "label": "Envie a notificação da Receita Federal, se você recebeu alguma."
+  },
+  "informe_o_ano_da_divergencia": {
+   "label": "Em que ano está a divergência?"
+  },
+  "demonstrativo_de_pagamento_o_com_a_divergencia": {
+   "label": "Envie o demonstrativo de pagamento com a divergência."
+  },
+  "informe_em_qual_pagamento_esta_a_divergencia": {
+   "label": "Em qual pagamento está a divergência?"
+  },
+  "ano_de_referencia": {
+   "label": "De qual ano você precisa do informe?"
+  },
+  "informe_o_mes_da_divergencia": {
+   "label": "Em qual mês está a divergência?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "start": "visual",
+  "formatter2": "visual"
+ },
+ "policies": {
+  "0c1120aa87d17210182a0d440cbb35f9": "remover",
+  "456b2b6587572610182a0d440cbb3510": "remover",
+  "56154bad87132610182a0d440cbb350c": "remover",
+  "6eb5c7ed87132610182a0d440cbb356f": "remover",
+  "8fb4ebad3b532610b28dd047f4e45a31": "remover",
+  "d0b9a3a187572610182a0d440cbb3540": "remover",
+  "d295cfad87132610182a0d440cbb3569": "remover",
+  "e2d0246a87d17210182a0d440cbb354e": "remover",
+  "e52a63e187572610182a0d440cbb359c": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no desconto de Imposto de Renda",
+   "short_description": "Reportar divergência no desconto de Imposto de Renda",
+   "description": "Use quando o desconto de Imposto de Renda no contracheque estiver divergente. Corresponde à oferta Divergência no desconto de Imposto de Renda. Informe o mês, em qual pagamento está a divergência e anexe o demonstrativo.",
+   "frases_exemplo": [
+    "o desconto do imposto de renda veio errado",
+    "IR descontado a mais no meu pagamento",
+    "divergência no IR do contracheque",
+    "descontaram imposto de renda errado",
+    "valor do imposto de renda não bate"
+   ],
+   "sem_vars": [
+    "informe_de_rendimento_com_a_divergencia",
+    "notificacao_da_receita_federal_se_houver",
+    "informe_o_ano_da_divergencia",
+    "ano_de_referencia"
+   ],
+   "vars": {
+    "demonstrativo_de_pagamento_o_com_a_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "informe_em_qual_pagamento_esta_a_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "informe_o_mes_da_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Análise de informe de rendimentos com divergência",
+   "short_description": "Solicitar análise de informe de rendimentos com divergência",
+   "description": "Use quando o informe de rendimentos tiver valores divergentes. Corresponde à oferta Solicitação de análise de Informe de Rendimentos com divergência. Anexe o informe e indique o ano da divergência; a notificação da Receita Federal é opcional.",
+   "frases_exemplo": [
+    "meu informe de rendimentos está errado",
+    "valores divergentes no informe de rendimentos",
+    "preciso que analisem meu informe de IR",
+    "o informe não confere com o que recebi",
+    "recebi notificação da Receita sobre meu informe"
+   ],
+   "sem_vars": [
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "ano_de_referencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "vars": {
+    "informe_de_rendimento_com_a_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "informe_o_ano_da_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Solicitação de informe de rendimentos",
+   "short_description": "Solicitar o informe de rendimentos",
+   "description": "Use para pedir uma cópia do informe de rendimentos para o Imposto de Renda. Corresponde à oferta Solicitação de informe de rendimentos. Informe o ano de referência.",
+   "frases_exemplo": [
+    "preciso do meu informe de rendimentos",
+    "onde pego o informe de IR?",
+    "segunda via do informe de rendimentos",
+    "quero o informe para declarar imposto de renda",
+    "informe de rendimentos do ano passado"
+   ],
+   "sem_vars": [
+    "informe_de_rendimento_com_a_divergencia",
+    "notificacao_da_receita_federal_se_houver",
+    "informe_o_ano_da_divergencia",
+    "demonstrativo_de_pagamento_o_com_a_divergencia",
+    "informe_em_qual_pagamento_esta_a_divergencia",
+    "informe_o_mes_da_divergencia"
+   ],
+   "vars": {
+    "ano_de_referencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

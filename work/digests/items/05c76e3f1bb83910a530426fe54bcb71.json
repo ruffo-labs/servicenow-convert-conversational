@@ -1,0 +1,85 @@
+{
+ "sys_id": "05c76e3f1bb83910a530426fe54bcb71",
+ "name": "Resíduos",
+ "sys_name": "Waste",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Formulário para Solicitação de Emissão de Nota Fiscal de Vendas e Remessas (Doação)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "4",
+   "variaveis_ativas": "5",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "4"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_template_other_outputs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_company_is_the_request_for_customer: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 4 de 4 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 4 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_template_other_outputs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Template other outputs"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "77c5dffa1bb0f110d1abda4ce54bcbb8",
+   "name": "EY: Tax - Company Avon/Natura - Subcompany",
+   "order": "100",
+   "perguntas": [
+    "vs_which_company_is_your_request (Selecionar Caixa): Which company is your request for?",
+    "vs_which_sub_company_is_the_request_from (Referência): Which sub-company is the request from?"
+   ]
+  },
+  {
+   "sys_id": "d1dac2b01b45fd10a530426fe54bcb64",
+   "name": "EY: Tax - Company (Customer code)",
+   "order": "300",
+   "perguntas": [
+    "vs_which_company_is_the_request_for_customer (Referência): Which company is the request for? (Customer code)"
+   ]
+  },
+  {
+   "sys_id": "b3b65b7e1bb0f110d1abda4ce54bcb1b",
+   "name": "EY: Tax - Attachments",
+   "order": "800",
+   "perguntas": [
+    "vs_attach_template (Anexo): Attach template"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_template_other_outputs: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,113 @@
+{
+ "sys_id": "d145c5a93bd1b650b28dd047f4e45a31",
+ "status": "dividido",
+ "motivo": "Cada oferta pede dados distintos: divergência na cesta de Natal pede afastamento e motivo; não recebimento pede mês de concessão e afastamento; reembolso por falta injustificada não pede nenhum desses.",
+ "vars": {
+  "Month_which_the_loan_was_granted": {
+   "label": "Qual é o mês de concessão do crédito?"
+  },
+  "was_there_separation": {
+   "label": "Você teve afastamento?"
+  },
+  "reason_for_request": {
+   "label": "Qual é o motivo da sua solicitação?"
+  },
+  "v_ticket_number": {
+   "label": "Qual é o número do chamado?"
+  }
+ },
+ "remover": {
+  "formatter2": "visual",
+  "formatter": "visual",
+  "container_start": "visual",
+  "observation": "visual"
+ },
+ "policies": {
+  "099c0ded3b15b650b28dd047f4e45ace": "remover",
+  "0a10c6733b957690b28dd047f4e45a6e": "remover",
+  "b02101f73b9c4710b28dd047f4e45a21": "remover",
+  "c37d0da13b55b650b28dd047f4e45ab0": "remover",
+  "ce0c81ad3b15b650b28dd047f4e45a5b": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no valor da cesta de Natal",
+   "short_description": "Informar valor divergente na cesta de Natal",
+   "description": "Use quando o valor recebido da cesta de Natal está diferente do esperado, oferta 'Divergência no valor recebido da cesta de Natal'. Informe se houve afastamento e o motivo da solicitação. O pedido é atendido pelo RH - Vale-Compras Assaí.",
+   "frases_exemplo": [
+    "O valor da minha cesta de Natal veio errado",
+    "Recebi a cesta de Natal com valor diferente",
+    "Veio menos que o esperado na cesta de Natal",
+    "Quero contestar o valor da cesta de Natal",
+    "Divergência no crédito da cesta de Natal"
+   ],
+   "sem_vars": [
+    "Month_which_the_loan_was_granted",
+    "v_ticket_number"
+   ],
+   "vars": {
+    "was_there_separation": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reason_for_request": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Não recebimento do vale-compras Assaí",
+   "short_description": "Informar que o vale-compras Assaí não foi recebido",
+   "description": "Use quando você não recebeu o crédito do vale-compras Assaí, oferta 'Não recebimento do vale-compras Assaí'. Informe o mês de concessão do crédito e se houve afastamento. O pedido é atendido pelo RH - Vale-Compras Assaí.",
+   "frases_exemplo": [
+    "Não caiu meu vale-compras Assaí",
+    "Meu vale-compras não foi creditado este mês",
+    "Não recebi o crédito do vale-compras",
+    "Cadê meu vale-compras?",
+    "O vale-compras do mês não apareceu no meu cartão"
+   ],
+   "sem_vars": [
+    "reason_for_request",
+    "v_ticket_number"
+   ],
+   "vars": {
+    "Month_which_the_loan_was_granted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "was_there_separation": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reembolso de vale-compras por falta injustificada",
+   "short_description": "Solicitar reembolso de vale-compras por falta injustificada",
+   "description": "Use para solicitar reembolso do vale-compras Assaí por falta injustificada, oferta 'Solicitação de reembolso de vale-compras assaí (falta injustificada)'. O pedido é atendido pelo RH - Vale-Compras Assaí.",
+   "frases_exemplo": [
+    "Quero reembolso do vale-compras por falta injustificada",
+    "Fui descontado do vale-compras por uma falta",
+    "Preciso devolver o vale-compras de uma falta",
+    "Pedir reembolso do vale-compras Assaí",
+    "Tive falta injustificada e quero acertar o vale-compras"
+   ],
+   "sem_vars": [
+    "Month_which_the_loan_was_granted",
+    "was_there_separation"
+   ]
+  }
+ ],
+ "scripts": {
+  "812a01693b15b650b28dd047f4e45a78": {
+   "remover": {
+    "outro": "só limpa campos ao trocar a oferta; coberto pela estrutura dos derivados"
+   }
+  }
+ }
+}

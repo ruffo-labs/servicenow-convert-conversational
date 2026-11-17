@@ -1,0 +1,2004 @@
+[
+  {
+    "sys_id": "3acbf15d1bd3f010d1abda4ce54bcbdc",
+    "nome_atual": "Solicitação de Licença Paternidade",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 87,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "alto",
+    "prontidao_atual": 20,
+    "justificativa": "O item mistura duas intenções: registrar a licença-paternidade (natural ou por adoção) e incluir o novo dependente em Imposto de Renda, plano de saúde e odontológico, com dados bancários para reembolso. São 23 perguntas (acima do limite de 20, abre janela) e há bloqueadores no set \"Eligibilities Informative\" (variável Custom com widget e variável HTML). Separar deixa o registro da licença com 3-4 perguntas e a inclusão de dependente como pedido próprio, que também serve para quem não está em licença.",
+    "nome_sugerido": "Registrar licença-paternidade",
+    "short_description_sugerida": "Registre sua licença-paternidade por nascimento ou adoção.",
+    "descricao_sugerida": "Use para registrar a licença-paternidade no nascimento ou na adoção de um filho: informa o tipo (nascimento ou adoção), a data de início e o período desejado, e anexa a certidão de nascimento ou o termo de guarda. Para incluir o novo filho como dependente no Imposto de Renda, plano de saúde ou odontológico, use \"Incluir novo dependente nos benefícios\". Licença-maternidade e outras licenças têm itens próprios.",
+    "frases_exemplo": [
+      "Meu filho nasceu, quero registrar a licença-paternidade",
+      "Preciso tirar licença paternidade a partir de segunda",
+      "Vou adotar uma criança e quero a licença",
+      "Como peço os 20 dias de licença paternidade?",
+      "licença pai nascimento bebê"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "set:Eligibilities Informative / benefit_description",
+        "problema": "Variável Custom com widget de portal, não renderiza em conversa.",
+        "acao": "Remover o set deste item; as regras de elegibilidade do plano viram texto na descrição do item derivado de dependentes ou link de artigo de KB."
+      },
+      {
+        "onde": "set:Eligibilities Informative / benefit_description_value",
+        "problema": "Variável HTML não suportada.",
+        "acao": "Remover junto com o set; conteúdo vai para artigo de KB."
+      },
+      {
+        "onde": "include_dependent_life_insurance",
+        "problema": "É um Rich Text Label com texto de pergunta e está como mandatory na UI Policy: no formulário nunca recebe resposta.",
+        "acao": "Trocar para Yes/No com Include None (item derivado de dependentes) ou remover se o seguro de vida não for tratado aqui."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "ACN Validate Fax",
+        "acao": "remover",
+        "substituicao": "Valida fax em variável que não existe no item (órfão)."
+      },
+      {
+        "nome": "ACN: Validate CPF",
+        "acao": "converter",
+        "substituicao": "Validation Regex de CPF (000.000.000-00 ou 11 dígitos) direto em dependent_cpf."
+      },
+      {
+        "nome": "ACN: Add \"Employee home address\" details",
+        "acao": "converter",
+        "substituicao": "Auto-populate a partir do colaborador (employee) ou buscar o endereço no flow; não perguntar na conversa."
+      },
+      {
+        "nome": "EY: Mandatory fields",
+        "acao": "converter",
+        "substituicao": "Marcar mandatory direto em cada variável dos itens derivados."
+      },
+      {
+        "nome": "ACN: Show \"Dependent informations\" when \"Paternity leave continue\" is \"Yes\" AND \"Life insurance\" is \"Yes\"",
+        "acao": "remover",
+        "substituicao": "Condição sobre alive_birth_certificate=Yes (campo texto) e ação sobre life_insurance_form, que não existe: policy quebrada."
+      },
+      {
+        "nome": "ACN: Show \"Attach birth certificate\" / \"Attach definitive judicial custody\"",
+        "acao": "remover",
+        "substituicao": "Vira texto na descrição e anexo obrigatório no fim da conversa (anexo do record producer)."
+      },
+      {
+        "nome": "ACN: Show \"Dependent informations\" when ... \"Healh OR Dental Care\" is \"Yes\"",
+        "acao": "converter",
+        "substituicao": "No item derivado de dependentes os dados do dependente são sempre perguntados; policy sem script só para os dados bancários."
+      },
+      {
+        "nome": "ACN Elegibility is show ... / ACN - If request for is for another employee, the adress field is no show",
+        "acao": "remover",
+        "substituicao": "Set de elegibilidade sai do item; endereço vira derivado."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Nos derivados, habilitar anexo no record producer (Mandatory attachment) em vez de labels de instrução.",
+        "Manter o producer script (requested_for a partir do perfil e current.item) nos dois derivados."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Registrar licença-paternidade",
+        "short_description": "Registre sua licença-paternidade por nascimento ou adoção.",
+        "descricao": "Use para registrar a licença-paternidade no nascimento ou na adoção de um filho. Tenha em mãos a certidão de nascimento (ou o termo de guarda definitiva, na adoção) para anexar no final. Não use para incluir dependente nos benefícios nem para outras licenças.",
+        "frases_exemplo": [
+          "Meu filho nasceu, quero registrar a licença-paternidade",
+          "Preciso tirar licença paternidade",
+          "Adotei uma criança e quero a licença",
+          "licença pai bebê nasceu ontem"
+        ],
+        "fixar": "Sem campo fixo; o antigo container dependent_update_benefits e as variáveis de dependente saem deste item.",
+        "perguntas": [
+          {
+            "ordem": 1,
+            "variavel": "solicitation_whom (set:Informações pessoais)",
+            "conversational_label": "A licença é para você ou para outro colaborador?"
+          },
+          {
+            "ordem": 2,
+            "variavel": "type_license",
+            "conversational_label": "A licença é por nascimento ou por adoção?"
+          },
+          {
+            "ordem": 3,
+            "variavel": "start_date",
+            "conversational_label": "Qual a data de início da licença? (aaaa-mm-dd)"
+          },
+          {
+            "ordem": 4,
+            "variavel": "desired_period",
+            "conversational_label": "Qual período de licença você quer tirar?"
+          },
+          {
+            "ordem": 5,
+            "variavel": "anexo do record producer",
+            "conversational_label": "Anexe a certidão de nascimento ou o termo de guarda definitiva."
+          }
+        ]
+      },
+      {
+        "nome": "Incluir novo dependente nos benefícios",
+        "short_description": "Inclua seu novo filho ou filha como dependente no Imposto de Renda, plano de saúde e odontológico.",
+        "descricao": "Use depois do nascimento ou da adoção para incluir o novo dependente no Imposto de Renda, no plano de saúde e no plano odontológico. Pede os dados da criança e da mãe e a sua concordância com a coparticipação. Não registra licença: para isso use \"Registrar licença-paternidade\".",
+        "frases_exemplo": [
+          "Quero colocar meu filho no plano de saúde",
+          "Incluir dependente recém-nascido no convênio e no IR",
+          "Como adiciono meu bebê no plano odontológico?",
+          "meu filho nasceu, preciso incluir ele nos benefícios"
+        ],
+        "fixar": "nova: origem = paternidade (hidden) para o flow saber que é inclusão por nascimento/adoção.",
+        "perguntas": [
+          {
+            "ordem": 1,
+            "variavel": "include_dependent_income_tax",
+            "conversational_label": "Quer incluir o novo dependente no Imposto de Renda?"
+          },
+          {
+            "ordem": 2,
+            "variavel": "include_dependent_health_care",
+            "conversational_label": "Quer incluir o dependente no plano de saúde?"
+          },
+          {
+            "ordem": 3,
+            "variavel": "include_dependent_dental_care",
+            "conversational_label": "E no plano odontológico?"
+          },
+          {
+            "ordem": 4,
+            "variavel": "include_dependent_life_insurance",
+            "conversational_label": "Quer incluir o dependente no seguro de vida?"
+          },
+          {
+            "ordem": 5,
+            "variavel": "dependent_name",
+            "conversational_label": "Qual o nome completo do dependente?"
+          },
+          {
+            "ordem": 6,
+            "variavel": "dependent_cpf",
+            "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do dependente?"
+          },
+          {
+            "ordem": 7,
+            "variavel": "date_birth",
+            "conversational_label": "Qual a data de nascimento do dependente? (aaaa-mm-dd)"
+          },
+          {
+            "ordem": 8,
+            "variavel": "dependent_gender",
+            "conversational_label": "Qual o gênero do dependente?"
+          },
+          {
+            "ordem": 9,
+            "variavel": "mother_name",
+            "conversational_label": "Qual o nome completo da mãe do dependente?"
+          },
+          {
+            "ordem": 10,
+            "variavel": "alive_birth_certificate",
+            "conversational_label": "Qual o número da Declaração de Nascido Vivo que consta na certidão?"
+          },
+          {
+            "ordem": 11,
+            "variavel": "declaration",
+            "conversational_label": "Você está ciente de que haverá coparticipação sempre que você ou seus dependentes usarem consultas, pronto-socorro, exames e terapias?"
+          },
+          {
+            "ordem": 12,
+            "variavel": "declaration_term_liability",
+            "conversational_label": "Você se compromete a avisar imediatamente o RH sobre fatos que causem a perda do salário-família?"
+          }
+        ]
+      }
+    ],
+    "observacoes": "Variáveis a remover em ambos: employee_home_address (derivar), bank_code_refund, reimbursement_agency e checking_account_reimbursement (dados bancários devem vir do cadastro do colaborador; se o reembolso exigir conta diferente, perguntar só no derivado de dependentes com Validation Regex), todos os Rich Text Labels (information_start_date, informative_register_paternity, remuneration_information, term_liability etc. viram texto na descrição ou KB) e containers. declaration e declaration_term_liability são Checkbox: trocar para Yes/No com Include None. Labels atuais estão em inglês; os conversational labels devem ser em pt-BR. O reference qualifier de employee (set) é dinâmico; recomendação do set fica na análise separada."
+  },
+  {
+    "sys_id": "9a8e7d4d1b295190a530426fe54bcb85",
+    "nome_atual": "MAP",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro (0 no total e nos últimos 12 meses). O item não tem variáveis e o nome \"MAP\" não diz nada ao usuário; a short description fala em férias da Avon Chile, o que sugere um atalho para sistema externo publicado como record producer.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Irmãos sem volume no mesmo lote com o mesmo padrão (sem variáveis, só redirecionamento): \"planejador de férias\", \"We are Avon\", \"Somos Avon\", \"Solicitar aumento salarial\", \"Nossa Estrutura\", \"Site WEB Mutual\". Se a Avon Chile ainda precisa pedir férias por aqui, o caminho é um item de férias com nome claro (\"Solicitar férias\") e não este."
+  },
+  {
+    "sys_id": "a8404e051b695190a530426fe54bcb8b",
+    "nome_atual": "planejador de férias",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. Item sem variáveis, description \".\" e short description de férias da Natura Peru: parece atalho para sistema externo, não pedido de RH.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Mesmo padrão de \"MAP\" e \"We are Avon\" (férias por país). Se for mantido, virar link/KB \"Solicitar férias (Natura Peru)\"."
+  },
+  {
+    "sys_id": "1674195e1bbdd910d1abda4ce54bcb22",
+    "nome_atual": "We are Avon",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. Item sem variáveis, nome de marca (\"We are Avon\") que não expressa intenção e short description em inglês sobre férias da Avon Argentina.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Tem nome quase igual ao irmão \"Somos Avon\" (sys_name \" We are Avon\"), que trata de comprovante de pagamento: nomes duplicados confundem a busca por intenção. Os user criteria também são contraditórios (disponível para \"ACN: Users Argentina\" e indisponível para \"ACN Argentina Users\")."
+  },
+  {
+    "sys_id": "a70ab8c51b615190a530426fe54bcbe5",
+    "nome_atual": "Somos Avon",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. Item sem variáveis cujo texto fala em baixar comprovante de pagamento da Avon Argentina, algo que é consulta/autoatendimento em sistema externo, não caso de RH.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Nome colide com \"We are Avon\" (férias). Se o atalho for útil, publicar como artigo/link \"Baixar holerite (Avon Argentina)\"."
+  },
+  {
+    "sys_id": "ef4bc5581b567010d1abda4ce54bcbc4",
+    "nome_atual": "Solicitar aumento salarial",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. O item só redireciona para o Workday e não tem variáveis; manter como record producer faz a conversa abrir caso de RH vazio para um pedido sensível.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Se for mantido, usar link/KB para o Workday e avaliar marcar como non-conversational, já que o pedido de aumento é feito pelo gestor no Workday."
+  },
+  {
+    "sys_id": "abad07423ba4da10924d0247f4e45a63",
+    "nome_atual": "Envio de Novidades",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 409,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Item de uso restrito (áreas autorizadas a enviar novidades de folha nos países hispânicos) com volume relevante. Não há bloqueador, mas são 24 perguntas contando o set pessoal, categoria e subcategoria dependem de reference qualifiers scriptados e a validação de 40 caracteres é feita por 3 client scripts. Com o set enxuto e a validação em regex, a conversa fica com 8 perguntas.",
+    "nome_sugerido": "Enviar novidades para a folha de pagamento",
+    "short_description_sugerida": "Envie ao CSC (Centro de Serviços Compartilhados) as novidades que entram na folha de pagamento, como bônus, descontos e ajustes.",
+    "descricao_sugerida": "Uso exclusivo das áreas autorizadas a informar novidades de folha de pagamento (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Use para enviar lançamentos que afetam a folha de um ou mais colaboradores, como bônus, prêmios, descontos e ajustes, informando país, marca, categoria, quantidade de colaboradores e valor total. Não use para dúvidas sobre o seu próprio salário nem para pedidos de despesas; para despesas use \"Pedidos relacionados a despesas\".",
+    "frases_exemplo": [
+      "Preciso lançar um bônus na folha de março",
+      "Enviar novidade de folha para 15 colaboradores do Peru",
+      "Quero informar descontos para a folha da Natura Chile",
+      "novedad de nómina para cargar",
+      "lançar premiação da equipe na folha"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "category / subcategory",
+        "problema": "Lookup Select Box com reference qualifier scriptado (EY_Get_Hispanic_Categories) dependente de v_employee e país; a doc avisa que pode não resolver em conversa.",
+        "acao": "Testar em VA; se não resolver, trocar para Reference na tabela x_nasm_hr_rules_hispanic_novedades_solicitud com qualifier simples por país (sem depender do colaborador) e validar a elegibilidade no flow."
+      },
+      {
+        "onde": "EY: Show error message onSubmit/onChange + Hide error message onLoad",
+        "problema": "Validação de mínimo de 40 caracteres feita por 3 client scripts e uma legenda escondida.",
+        "acao": "Validation Regex ^[\\s\\S]{40,}$ em describe_tu_necesidad com mensagem própria; remover os scripts e a legenda v_min_characters."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "request_type",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Que tipo de novidade você quer enviar?"
+      },
+      {
+        "ordem": 2,
+        "variavel": "select_the_country_related_to_your_request",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Para qual país é a novidade?"
+      },
+      {
+        "ordem": 3,
+        "variavel": "select_the_brand_related_to_your_request",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De qual marca? (Natura ou Avon)"
+      },
+      {
+        "ordem": 4,
+        "variavel": "category",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual a categoria da novidade?",
+        "obs": "Reference qualifier scriptado: validar em conversa."
+      },
+      {
+        "ordem": 5,
+        "variavel": "subcategory",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "E a subcategoria?",
+        "obs": "Só aparece quando a categoria tem subcategoria; o client script \"EY: Check if Subcat exists\" pode virar policy sem script se a tabela indicar isso."
+      },
+      {
+        "ordem": 6,
+        "variavel": "indicate_the_number_of_employees_affected",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Single Line Text com Validation Regex",
+        "conversational_label": "Quantos colaboradores serão afetados?",
+        "obs": "Validation Regex numérica (^\\d+$)."
+      },
+      {
+        "ordem": 7,
+        "variavel": "monto_cantidad_total",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o valor ou a quantidade total?",
+        "obs": "Label em espanhol; aplicar Validation Regex de número/moeda."
+      },
+      {
+        "ordem": 8,
+        "variavel": "describe_tu_necesidad",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Descreva a novidade com os detalhes necessários (mínimo de 40 caracteres)."
+      },
+      {
+        "ordem": 9,
+        "variavel": "v_min_characters",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Legenda substituída pela Validation Regex."
+      },
+      {
+        "ordem": 10,
+        "variavel": "registration / attach / v_template",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels de instrução e modelo de planilha: o link do modelo vai para a descrição ou KB e a planilha preenchida vira anexo no fim da conversa. Hoje \"registration\" está como mandatory na policy, o que não faz sentido para um label."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Show error message onSubmit / onChange / Hide error message onLoad",
+        "acao": "remover",
+        "substituicao": "Validation Regex em describe_tu_necesidad."
+      },
+      {
+        "nome": "EY: Check if Subcat exists",
+        "acao": "converter",
+        "substituicao": "Se possível, flag \"tem subcategoria\" na tabela de regras com auto-populate e UI Policy sem script; senão manter (já é VA Supported)."
+      },
+      {
+        "nome": "EY: Read only - Target record",
+        "acao": "manter",
+        "substituicao": "Confirmar que está com \"Applies on Catalog Item view\" desmarcado; se aplicar no item, deixa tudo somente leitura e a conversa pula as perguntas. Remover a referência a select_the_brand_related_to_your_request_old (variável inexistente)."
+      },
+      {
+        "nome": "EY: Required fields",
+        "acao": "converter",
+        "substituicao": "Marcar mandatory direto nas variáveis; tirar registration e select_the_brand_related_to_your_request_old."
+      },
+      {
+        "nome": "EY: View Subcategory / EY: View Subcategory - Target record / EY: View category",
+        "acao": "manter",
+        "substituicao": "Policies sem script, compatíveis. Unificar as duas de subcategoria."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Habilitar anexo opcional no record producer para a planilha de novidades."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O público é hispânico: os conversational labels estão em pt-BR como pedido, mas o item precisa de tradução para espanhol. O resumo do producer script no digest fala em \"licença paternidade\" (provável cópia); conferir o script real. Evitar sobreposição com \"Pedidos relacionados Despesas\", cuja descrição atual também cita \"envio de notícias\"."
+  },
+  {
+    "sys_id": "4481ae831bb98910a530426fe54bcbaa",
+    "nome_atual": "Nossa Estrutura",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. Não tem variáveis nem categoria; a short description é só um passo a passo para ver o organograma no sistema, conteúdo de artigo de KB.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Transformar o texto em artigo de KB \"Como ver o organograma da minha área\"."
+  },
+  {
+    "sys_id": "290911003b501250924d0247f4e45a0e",
+    "nome_atual": "Outras solicitações de licença",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 572,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 50,
+    "justificativa": "Alto volume e intenção única (informar uma licença que não é maternidade nem paternidade), com poucas perguntas próprias: tipo de licença, datas, detalhe e anexo. O que pesa é o set pessoal (21 perguntas no total), o mínimo de 40 caracteres via client scripts e o anexo obrigatório condicionado por script. Com Validation Regex e anexo no fim da conversa, fica com 5 perguntas.",
+    "nome_sugerido": "Solicitar outras licenças",
+    "short_description_sugerida": "Informe licenças como casamento, luto, doação de sangue, mudança ou estudos (exceto maternidade e paternidade).",
+    "descricao_sugerida": "Use para informar ao RH uma licença que não seja maternidade nem paternidade, como casamento, falecimento de familiar, doação de sangue, mudança de domicílio ou prova/estudos, para colaboradores da Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Você informa o tipo de licença, a data de início e fim, descreve o motivo e anexa o comprovante quando exigido. Não use para licença-maternidade, licença-paternidade, férias ou atestado médico.",
+    "frases_exemplo": [
+      "Vou me casar e preciso da licença",
+      "Faleceu meu avô, como informo a licença por luto?",
+      "Quero informar licença por mudança de casa",
+      "Preciso de licença para fazer uma prova da faculdade",
+      "licencia por examen",
+      "doei sangue hoje, tenho direito a folga"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_attach_documentation",
+        "problema": "Variável Attachment exige tratamento à parte na conversa, e a obrigatoriedade vem de client script (EY: Mandatory Attachment) que consulta o Script Include de categorias.",
+        "acao": "Pedir o anexo no fim da conversa (anexo do record producer). Para a obrigatoriedade sem script: trocar v_leave para Reference, adicionar na tabela de regras um campo \"exige anexo\", auto-populate numa variável hidden e UI Policy sem script tornando o anexo obrigatório."
+      },
+      {
+        "onde": "EY: Show error message onSubmit/onChange",
+        "problema": "Mínimo de 40 caracteres implementado em client script com legenda escondida.",
+        "acao": "Validation Regex ^[\\s\\S]{40,}$ em v_details; remover scripts e v_minimun_characters."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_leave",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Reference",
+        "conversational_label": "Qual licença você quer informar?",
+        "obs": "Hoje é Lookup Select Box com qualifier scriptado por colaborador. Trocar para Reference permite auto-populate da flag de anexo; testar o qualifier em conversa."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_leave_start_date_requester",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual a data de início da licença? (aaaa-mm-dd)"
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_leave_end_date_requester",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "E a data de término? (aaaa-mm-dd)"
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_details",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Conte o motivo e os detalhes da licença (mínimo de 40 caracteres)."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_attach_documentation",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Anexo do record producer",
+        "conversational_label": "Anexe o comprovante da licença (certidão, atestado ou declaração).",
+        "obs": "Usar o anexo do record producer no fim da conversa."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_faq / v_attachment_info / v_minimun_characters",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels: FAQ vira link de KB na descrição; instrução de anexo vai para o label do anexo."
+      },
+      {
+        "ordem": 7,
+        "variavel": "nova_v_requires_attachment",
+        "origem": "item",
+        "acao": "nova",
+        "obs": "Hidden, auto-populate a partir de v_leave (campo novo na tabela de regras). Controla a UI Policy de anexo obrigatório."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Show error message onSubmit / onChange",
+        "acao": "remover",
+        "substituicao": "Validation Regex em v_details."
+      },
+      {
+        "nome": "EY: Mandatory Attachment",
+        "acao": "converter",
+        "substituicao": "Auto-populate de nova_v_requires_attachment + UI Policy sem script."
+      },
+      {
+        "nome": "EY: Hide error message onLoad + attach",
+        "acao": "remover",
+        "substituicao": "Visibilidade inicial definida direto nas variáveis."
+      },
+      {
+        "nome": "EY: Mandatory fields - Catalog item view",
+        "acao": "converter",
+        "substituicao": "Mandatory direto em v_details e nas datas."
+      },
+      {
+        "nome": "EY: View category",
+        "acao": "manter",
+        "substituicao": "Sem script, compatível."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Validar em VA a resolução do qualifier de v_leave antes de publicar."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: prever tradução para espanhol dos labels. O item \"Site WEB Mutual\" (sem volume, Natura Chile) fala em informar licenças e deve ser desativado para não competir com este. Validar data de término >= início no flow ou com UI Policy sem script, se a versão suportar."
+  },
+  {
+    "sys_id": "2a4bc3a71b283110a530426fe54bcbd4",
+    "nome_atual": "Adicionar ou Remover  membros em Grupos",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 443,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "O select v_type (Adicionar/Remover) muda o formulário via UI Policies e client scripts: para adicionar pergunta-se para quem e qual usuário, para remover pergunta-se qual membro do grupo. São duas intenções com volume relevante e vocabulário próprio (\"me coloca no grupo\" x \"tira fulano do grupo\"). Cada derivado fica com 3-4 perguntas e sem os scripts de limpeza.",
+    "nome_sugerido": "Adicionar ou remover membro de grupo de atendimento do CSC",
+    "short_description_sugerida": "Exclusivo para resolvedores e aprovadores do CSC (Centro de Serviços Compartilhados): incluir ou retirar pessoas de grupos de atendimento.",
+    "descricao_sugerida": "Uso exclusivo de resolvedores e aprovadores do CSC. Serve para incluir ou retirar um usuário de um grupo de atendimento da plataforma, com aprovação do gestor do grupo. Não serve para acesso de terceiros como solicitantes (use \"Liberar acesso de terceiro à Plataforma de Atendimento\") nem para acessos a outros sistemas.",
+    "frases_exemplo": [
+      "Preciso entrar no grupo de Benefícios do CSC",
+      "Adicionar a Maria no grupo de TDG",
+      "Remover um analista do grupo de atendimento",
+      "tirar fulano do grupo MDM",
+      "me inclui no grupo da fila de impostos"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "group",
+        "problema": "Reference qualifier scriptado depende de v_tower.",
+        "acao": "Perguntar só o grupo com qualifier estático (manager!=NULL e tipos permitidos) e derivar v_tower do grupo por auto-populate."
+      },
+      {
+        "onde": "v_group_members",
+        "problema": "Qualifier scriptado (EY_CR18().getMembers) depende do grupo.",
+        "acao": "Testar em conversa; alternativa é qualifier com sys_user_grmember via reference qualifier simples, ou validar no flow que o usuário é membro."
+      },
+      {
+        "onde": "client scripts",
+        "problema": "5 scripts de limpeza/ajuste de campos (EY: Check - User, EY: Check and Clear Values - Groups/User, EY: Populate Group Members, EY: HTR Manager group).",
+        "acao": "Com a divisão, as limpezas deixam de ser necessárias; o aprovador (manager) vira auto-populate de group.manager."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Show/Hide - Type None/Add, Type Add..., Type Remove, Type None",
+        "acao": "remover",
+        "substituicao": "Tipo fixo em cada item derivado."
+      },
+      {
+        "nome": "EY: Required fields",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis de cada derivado."
+      },
+      {
+        "nome": "EY: HTR Manager group",
+        "acao": "converter",
+        "substituicao": "Auto-populate de manager a partir de group (group.manager), read-only/oculto."
+      },
+      {
+        "nome": "EY: Check - User / EY: Check and Clear Values - User",
+        "acao": "converter",
+        "substituicao": "v_user com default gs.getUserID() quando for para mim; policy sem script se v_requests_for_whom = someone."
+      },
+      {
+        "nome": "EY: Populate Group Members / EY: Check and Clear Values - Groups",
+        "acao": "remover",
+        "substituicao": "A conversa não precisa limpar campos."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Manter o producer script (grava current.item) nos dois derivados."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Adicionar membro a grupo de atendimento do CSC",
+        "short_description": "Inclua você ou outro usuário em um grupo de atendimento do CSC.",
+        "descricao": "Exclusivo para resolvedores e aprovadores do CSC. Use para incluir você ou outra pessoa em um grupo de atendimento; o gestor do grupo aprova. Para retirar alguém, use \"Remover membro de grupo de atendimento do CSC\".",
+        "frases_exemplo": [
+          "Preciso entrar no grupo de Benefícios",
+          "Me adiciona no grupo de TDG",
+          "Incluir o João no grupo de impostos",
+          "novo analista precisa ser colocado no grupo"
+        ],
+        "fixar": "v_type = add (default/hidden)",
+        "perguntas": [
+          {
+            "ordem": 1,
+            "variavel": "group",
+            "conversational_label": "Em qual grupo de atendimento a pessoa deve entrar?"
+          },
+          {
+            "ordem": 2,
+            "variavel": "v_requests_for_whom",
+            "conversational_label": "É para incluir você ou outra pessoa?"
+          },
+          {
+            "ordem": 3,
+            "variavel": "v_user",
+            "conversational_label": "Quem deve ser incluído no grupo?"
+          },
+          {
+            "ordem": 4,
+            "variavel": "v_justify_your_request",
+            "conversational_label": "Por que essa pessoa precisa entrar no grupo?"
+          }
+        ]
+      },
+      {
+        "nome": "Remover membro de grupo de atendimento do CSC",
+        "short_description": "Retire um usuário de um grupo de atendimento do CSC.",
+        "descricao": "Exclusivo para resolvedores e aprovadores do CSC. Use para retirar um membro de um grupo de atendimento, por exemplo em mudança de área ou desligamento. Para incluir alguém, use \"Adicionar membro a grupo de atendimento do CSC\".",
+        "frases_exemplo": [
+          "Remover a Ana do grupo de MDM",
+          "Tirar um analista que saiu da equipe do grupo",
+          "excluir membro do grupo de benefícios",
+          "fulano mudou de área, tira ele do grupo"
+        ],
+        "fixar": "v_type = remove (default/hidden); v_requests_for_whom e v_user fora do item",
+        "perguntas": [
+          {
+            "ordem": 1,
+            "variavel": "group",
+            "conversational_label": "De qual grupo de atendimento a pessoa deve sair?"
+          },
+          {
+            "ordem": 2,
+            "variavel": "v_group_members",
+            "conversational_label": "Qual membro deve ser removido?"
+          },
+          {
+            "ordem": 3,
+            "variavel": "v_justify_your_request",
+            "conversational_label": "Qual o motivo da remoção?"
+          }
+        ]
+      }
+    ],
+    "observacoes": "v_tower e manager saem da conversa (derivados do grupo). Uso interno de baixa complexidade; se a conversa não resolver os qualifiers de grupo/membros, manter os derivados como formulário com nome e descrição sugeridos."
+  },
+  {
+    "sys_id": "9fdb37831b796d10a530426fe54bcb1a",
+    "nome_atual": "Liberação de acesso de terceiros como solicitante na Plataforma de Atendimento Natura &Co",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 132,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "Intenção única e clara (gestor libera um terceiro da equipe para abrir chamados), mas são 25 perguntas por causa do set \"EY VS - Empresas Natura\" e de campos do terceiro que um client script já preenche a partir do usuário selecionado. Trocando o script por auto-populate, a conversa fica com 4-5 perguntas.",
+    "nome_sugerido": "Liberar acesso de terceiro à Plataforma de Atendimento",
+    "short_description_sugerida": "Gestores liberam um terceiro da equipe para abrir chamados na Plataforma de Atendimento Natura &Co.",
+    "descricao_sugerida": "Use se você é gestor e precisa que um terceiro (consultor ou prestador) da sua equipe consiga abrir solicitações na Plataforma de Atendimento Natura &Co. O terceiro já precisa ter e-mail corporativo Natura, Avon ou The Body Shop. Você escolhe o terceiro, confirma CPF e cargo e declara que as informações são verdadeiras. Não serve para dar acesso a grupos de atendimento do CSC nem a outros sistemas.",
+    "frases_exemplo": [
+      "Preciso liberar um terceiro para abrir chamado no portal",
+      "Meu consultor não consegue abrir solicitação, como libero?",
+      "Dar acesso de solicitante para prestador da minha equipe",
+      "liberar terceiro na plataforma de atendimento",
+      "terceiro sem acesso ao portal de RH"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: Get Consultant informations",
+        "problema": "GlideAjax preenche nome, e-mail, setor, centro de custo, local, network ID e login a partir de v_selecionar_usuario.",
+        "acao": "Auto-populate a partir de v_selecionar_usuario (name, email, department, cost_center, location, user_name) e ocultar esses campos na conversa."
+      },
+      {
+        "onde": "set:EY VS - Empresas Natura",
+        "problema": "8 variáveis vs_which_sub_company_* com qualifiers dinâmicos e perguntas repetidas.",
+        "acao": "Recomendação específica: derivar empresa/sub-empresa do terceiro ou do gestor; tratar o set na análise separada."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_selecionar_usuario",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual terceiro você quer liberar? (nome ou e-mail corporativo)",
+        "obs": "Qualifier com condições em user_name e employee_number: validar em conversa."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_cpf_do_terceiro",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do terceiro?",
+        "obs": "Validation Regex de CPF."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_cargo",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o cargo ou função do terceiro?"
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_declaracao_de_veracidade",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Yes/No com Include None",
+        "conversational_label": "Você confirma que as informações do terceiro são verdadeiras?",
+        "obs": "Checkbox obrigatório; texto da declaração (v_declaracao) vai para a descrição."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_e_mail_do_terceiro",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de v_selecionar_usuario.email; a validação de domínio (Natura/Avon/TBS) vira Validation Regex."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_nome_completo",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de v_selecionar_usuario.name."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_setor",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de department; perguntar só se vier vazio."
+      },
+      {
+        "ordem": 8,
+        "variavel": "v_centro_de_custo",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de cost_center."
+      },
+      {
+        "ordem": 9,
+        "variavel": "v_local_de_trabalho",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de location."
+      },
+      {
+        "ordem": 10,
+        "variavel": "v_id_do_terceiro_network_id / v_login_do_terceiro",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate de user_name; login já é read-only."
+      },
+      {
+        "ordem": 11,
+        "variavel": "third_party_information / v_declaracao",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Get Consultant informations",
+        "acao": "converter",
+        "substituicao": "Auto-populate nas variáveis derivadas."
+      },
+      {
+        "nome": "EY: Get Manager Information",
+        "acao": "converter",
+        "substituicao": "v_opened_by com default gs.getUserID() e dados do gestor por auto-populate."
+      },
+      {
+        "nome": "EY:EmailTerceiroErrorMessage",
+        "acao": "converter",
+        "substituicao": "Validation Regex de domínio corporativo em v_e_mail_do_terceiro."
+      },
+      {
+        "nome": "EY: Required Fields",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis perguntadas."
+      },
+      {
+        "nome": "EY: Read Only Fields",
+        "acao": "converter",
+        "substituicao": "Read-only direto em v_login_do_terceiro e v_opened_by."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "O resumo do producer script no digest descreve \"adicionar/remover membros em grupos\" (provável cópia): conferir se o script real grava current.item e o solicitante corretos. Diferenciar na descrição do item \"Adicionar ou remover membro de grupo de atendimento do CSC\"."
+  },
+  {
+    "sys_id": "f60483ea1ba95990a530426fe54bcb99",
+    "nome_atual": "Site WEB Mutual",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Sem nenhum registro. Item sem variáveis; o nome cita o site da Mutual e a short description fala em informar licenças da Natura Chile, mensagem incoerente com o nome.",
+    "nome_sugerido": "",
+    "short_description_sugerida": "",
+    "descricao_sugerida": "",
+    "frases_exemplo": [],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Se for mantido, desativar o Record Producer e publicar o acesso ao sistema externo como link/artigo de KB, para não abrir caso de RH vazio pela conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O pedido de licença da Natura Chile já é atendido por \"Outras solicitações de licença\" (disponível para EY: Natura Chile). Se o site da Mutual for necessário, publicar como link/KB."
+  },
+  {
+    "sys_id": "85bfd7981b701a50514cbaef4b4bcb0b",
+    "nome_atual": "Pedidos relacionados Despesas",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 177,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Item simples com 3 perguntas próprias (para quem, tipo de pedido e detalhe) e sem bloqueadores. Os ajustes são: tirar a duplicidade entre who_is_this_request_for e o v_employee do set, trocar a validação de 40 caracteres por regex e reescrever a descrição, que hoje cita \"envio de notícias\" e se confunde com \"Envio de Novidades\".",
+    "nome_sugerido": "Pedidos sobre despesas corporativas",
+    "short_description_sugerida": "Peça simulações, documentos e outros serviços relacionados a despesas.",
+    "descricao_sugerida": "Use para pedidos relacionados a despesas nos países hispânicos, como simulação de valores, envio de documentação de despesas, correções e dúvidas sobre um lançamento de despesa. Descreva o que precisa em pelo menos 40 caracteres. Não use para enviar novidades de folha de pagamento (use \"Enviar novidades para a folha de pagamento\") nem para reembolsos de benefícios como energia, creche ou escola, que têm itens próprios.",
+    "frases_exemplo": [
+      "Preciso de uma simulação de despesas",
+      "Quero enviar a documentação de uma despesa",
+      "Tenho uma dúvida sobre uma despesa lançada",
+      "solicitud de gastos",
+      "preciso corrigir uma despesa"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: Show error message onSubmit/onChange + Hide error message onLoad",
+        "problema": "Mínimo de 40 caracteres via client scripts e legenda escondida.",
+        "acao": "Validation Regex ^[\\s\\S]{40,}$ em detail; remover scripts e v_min_characters."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "who_is_this_request_for",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Para quem é esta solicitação? (para você ou para outro colaborador)",
+        "obs": "Default com o perfil do usuário logado; o público inclui HRBPs que abrem por outros. Se o set já pergunta v_employee, manter só um dos dois."
+      },
+      {
+        "ordem": 2,
+        "variavel": "type_of_request",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Que tipo de pedido de despesa você quer fazer?"
+      },
+      {
+        "ordem": 3,
+        "variavel": "detail",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Descreva o que você precisa (mínimo de 40 caracteres)."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_min_characters",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Substituído por Validation Regex."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_employee",
+        "origem": "set:EY: Hispana Personal Information",
+        "acao": "derivar",
+        "obs": "Duplica who_is_this_request_for neste item: preencher a partir dele ou ocultar."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Hide error message onLoad / Show error message onSubmit / onChange",
+        "acao": "remover",
+        "substituicao": "Validation Regex em detail."
+      },
+      {
+        "nome": "EY: Madatory variables",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis."
+      },
+      {
+        "nome": "EY: Hide  v_who_is_this_request_for",
+        "acao": "converter",
+        "substituicao": "Visibilidade/obrigatoriedade definida direto no item (ou ocultar as variáveis do set via configuração da variável)."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: prever labels em espanhol. Revisar as opções de type_of_request para que casem com a descrição (simulação, documentação, outros)."
+  },
+  {
+    "sys_id": "13a1b0d287474390ec360e530cbb3512",
+    "nome_atual": "Solicitação de Liberação de Medicamento",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 4,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 60,
+    "justificativa": "Uso interno exclusivo da equipe do Serviço Médico Natura, com volume muito baixo (4 no ano) e anexo obrigatório de receita médica, que é dado de saúde sensível. Não compensa converter; basta melhorar nome e descrição para ser encontrado e aberto como formulário, sem enviar o conteúdo ao LLM.",
+    "nome_sugerido": "Liberar medicamento (Serviço Médico)",
+    "short_description_sugerida": "Uso exclusivo da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador.",
+    "descricao_sugerida": "Formulário da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador do Brasil, com a receita médica anexada. Colaboradores que precisam de medicamento devem procurar o Serviço Médico, não este formulário.",
+    "frases_exemplo": [
+      "Registrar liberação de medicamento para colaborador",
+      "Serviço médico: liberar remédio com receita",
+      "lançar liberação de medicamento",
+      "formulário de medicamento do ambulatório"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "attachment_medical_prescription",
+        "problema": "Attachment obrigatório com dado de saúde.",
+        "acao": "Manter no formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "employee_personal_email",
+        "origem": "item",
+        "acao": "manter",
+        "obs": "Adicionar Validation Regex de e-mail (o campo só tem exemplo)."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "Exibe campos de perfil somente quando colaborador for selecionado",
+        "acao": "manter",
+        "substituicao": "Pode virar auto-populate de id_global, cpf e phone a partir de requested_for."
+      },
+      {
+        "nome": "Campos obigatórios",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis (a condição opened_by ISNOTEMPTY é sempre verdadeira)."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": true,
+      "outras": [
+        "Dado sensível de saúde (receita médica): não enviar ao LLM."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Producer script está bem documentado e deve ser mantido."
+  },
+  {
+    "sys_id": "500a15313bacd610924d0247f4e45ad6",
+    "nome_atual": "Solicitação de Plano de Saúde, Cobertura Médica, Previdência Social, EPS",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 119,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 15,
+    "justificativa": "O item combina categoria (plano de saúde, cobertura médica, EPS) com 5 tipos de pedido e 12 legendas por país, marca, faixa e público, controladas por variáveis hidden preenchidas via GlideAjax. Tem variável Custom com widget de MRVS, 2 client scripts sem VA Supported (um deles usa sessionStorage) e 33 perguntas. O volume (119/ano) não justifica o redesenho; manter como formulário com nome e descrição melhores.",
+    "nome_sugerido": "Plano de saúde, cobertura médica ou EPS: adesão, dependentes, alteração ou cancelamento",
+    "short_description_sugerida": "Faça adesão, inclua dependentes, altere ou cancele seu plano de saúde, cobertura médica ou EPS (Argentina, Colômbia, Peru e Uruguai).",
+    "descricao_sugerida": "Use para pedir adesão ao plano de saúde, cobertura médica ou EPS (Entidade Promotora de Saúde), incluir dependentes, fazer alterações, pedir documentação ou cancelar o serviço, se você trabalha na Argentina, Colômbia, Peru ou Uruguai. As regras e documentos variam por país e marca e aparecem no formulário. Não use para reembolso de despesas de saúde (use \"Outros reembolsos de saúde\") nem para seguro de vida.",
+    "frases_exemplo": [
+      "Quero aderir ao plano de saúde",
+      "Preciso incluir meu filho na EPS",
+      "Como cancelo minha cobertura médica?",
+      "mudar de plano de saúde",
+      "alta de dependiente en la prepaga",
+      "preciso do certificado do plano de saúde"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "mrvs_monitor",
+        "problema": "Variável Custom com widget \"EY: MRV Macro widget Beneficiary 2\".",
+        "acao": "Motivo para manter como formulário."
+      },
+      {
+        "onde": "EY: Load choices OnChange / EY: Clear session OnLoad",
+        "problema": "Client scripts sem VA Supported; um remove/recoloca opções (5,4 KB) e outro usa sessionStorage.",
+        "acao": "Motivo para manter como formulário."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "A VA mostra o link para o formulário."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Caminho futuro, se o volume crescer: dividir por intenção (\"Aderir ao plano de saúde/EPS\", \"Incluir dependente no plano de saúde\", \"Cancelar plano de saúde\"), trocando as legendas por artigos de KB por país e a MRVS de dependentes por uma pergunta por dependente. A policy \"EY: Hide legendas - form\" referencia legendas inexistentes no set (legenda_1, _2, _5, _6, v_legenda_7, v_legenda_9). O nome atual cita \"Previdência Social\", que não aparece nas opções visíveis; conferir."
+  },
+  {
+    "sys_id": "117393421b605a10514cbaef4b4bcba5",
+    "nome_atual": "Solicitação de apólice de seguro / seguro de vida",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 31,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Intenção única com poucas perguntas próprias: tipo de pedido, formulário de seguro de vida anexo e aceite dos termos. As 6 legendas por país (algumas controladas por GlideAjax) não chegam ao LLM, então o link do formulário de cada país precisa ir para a descrição ou KB. Volume baixo, então a prioridade é baixa.",
+    "nome_sugerido": "Aderir ou alterar seguro de vida",
+    "short_description_sugerida": "Faça adesão ou altere beneficiários do seu seguro de vida (Argentina, Chile e Peru).",
+    "descricao_sugerida": "Use para aderir ao seguro de vida ou alterar a apólice, como a troca de beneficiários, se você trabalha na Argentina, no Chile ou no Peru. Baixe o formulário de seguro de vida do seu país (link no artigo de KB), preencha e anexe no final. Não use para plano de saúde, EPS ou seguro complementar de saúde e odontológico, que têm itens próprios.",
+    "frases_exemplo": [
+      "Quero aderir ao seguro de vida",
+      "Preciso trocar os beneficiários do meu seguro de vida",
+      "Como altero minha apólice?",
+      "seguro de vida alta",
+      "cambio de beneficiarios del seguro"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_life_insurance_form",
+        "problema": "Attachment obrigatório.",
+        "acao": "Anexo obrigatório do record producer no fim da conversa."
+      },
+      {
+        "onde": "EY : Show Forms ARG (onLoad/onChange)",
+        "problema": "GlideAjax para decidir quais legendas mostrar para Argentina.",
+        "acao": "Remover: legendas não chegam ao LLM; os links dos formulários por país vão para um artigo de KB citado na descrição."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_type_of_request",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Você quer aderir ao seguro de vida ou alterar sua apólice?"
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_checkbox_contractual",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Yes/No com Include None",
+        "conversational_label": "Você declara conhecer os termos e condições do contrato desse pedido?"
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_life_insurance_form",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Anexo do record producer",
+        "conversational_label": "Anexe o formulário de seguro de vida preenchido."
+      },
+      {
+        "ordem": 4,
+        "variavel": "FAQs / v_legend_two_arg_avon / v_legend_two_arg_new / v_legent_two_peru / v_legent_two_chile / v_legend_document",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Conteúdo vira artigo de KB por país."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY : Show Forms ARG (onChange e onLoad)",
+        "acao": "remover",
+        "substituicao": "KB por país."
+      },
+      {
+        "nome": "EY : Show Forms PER / EY : Show Forms CHI",
+        "acao": "remover",
+        "substituicao": "Legendas saem do item."
+      },
+      {
+        "nome": "EY: Mandatory variables",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis; anexo obrigatório no record producer."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Marcar \"Mandatory attachment\" no record producer."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: prever labels em espanhol. Producer script tem atribuição dupla de requested_for sem efeito (limpeza opcional)."
+  },
+  {
+    "sys_id": "c090328d1bc83d10a530426fe54bcbe2",
+    "nome_atual": "Adesão, Alteração ou Não Adesão da Previdência Privada",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 557,
+    "recomendacao": "manter_formulario",
+    "prioridade": "alta",
+    "esforco": "baixo",
+    "prontidao_atual": 15,
+    "justificativa": "O pedido depende de assinatura eletrônica (variável Custom com widget EY:Show_Signature, validada no onSubmit) e de vários termos legais que o colaborador precisa ler e aceitar (LGPD, pessoa politicamente exposta, Lei 14.803, regime de tributação). Os textos longos são Rich Text Labels que não chegam ao LLM, então a conversa perderia o conteúdo que dá validade ao aceite. O volume é alto, então a prioridade é o item ser encontrado e aberto pelo link.",
+    "nome_sugerido": "Aderir, alterar ou não aderir à previdência privada (Nossaprev)",
+    "short_description_sugerida": "Faça adesão, altere sua contribuição ou declare que não quer participar do plano de previdência privada Nossaprev.",
+    "descricao_sugerida": "Use para aderir ao plano de previdência privada Nossaprev do Grupo Natura &Co, alterar o percentual de contribuição básica ou adicional, escolher perfil de investimento e regime de tributação, ou declarar que não quer participar do plano. O formulário exige leitura dos termos e assinatura eletrônica. Não use para resgate ou portabilidade do saldo, nem para mudar o perfil de investimento fora de junho e dezembro (isso é feito no site da Nossaprev).",
+    "frases_exemplo": [
+      "Quero aderir à previdência privada",
+      "Como aumento minha contribuição na Nossaprev?",
+      "Não quero participar do plano de previdência",
+      "mudar percentual da previdência",
+      "quero entrar na nossaprev",
+      "alterar contribuição adicional da previdência"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "v_insert_signature",
+        "problema": "Variável Custom com widget de assinatura eletrônica.",
+        "acao": "Motivo para manter como formulário."
+      },
+      {
+        "onde": "Rich Text Labels de termos legais",
+        "problema": "22 labels com textos que sustentam o aceite (LGPD, PEP, tributação) e não chegam ao LLM.",
+        "acao": "Manter no formulário."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "has_signature_created",
+        "origem": "set:Tem Assinatura",
+        "acao": "manter",
+        "obs": "Yes/No sem Include None; marcar Include None mesmo mantendo como formulário."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Clear Limit 30% Field Nossaprev",
+        "acao": "manter",
+        "substituicao": "Corrigir: sai só no isLoading e limpa o campo também quando é esvaziado."
+      },
+      {
+        "nome": "EY: Hide \"TEXTO ATÉ 09/01/2024 - Opção de Tributação (Lei nº 11.053/04)\"",
+        "acao": "remover",
+        "substituicao": "Esconde sempre um texto vencido; remover a policy e a variável v_2_i_declare_that_on_this_date_i_became_aware_of_law_number_09_01_2024."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "A VA mostra o link para o formulário."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "A policy \"EY: Accession option\" referencia v_in_the_case_of_no_option, que não existe no item. Caminho futuro: um item conversacional só para \"Alterar percentual de contribuição\" poderia existir se a assinatura eletrônica puder ser feita depois, por tarefa no flow. v_taxation_option é Rich Text Label com reference sys_user (configuração sem sentido)."
+  },
+  {
+    "sys_id": "d3f7ba031b099a10514cbaef4b4bcb26",
+    "nome_atual": "Conexa (Psicologia Viva) - Inclusão, Alteração ou Cancelamento de Beneficiário / Rede de afeto",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 169,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Intenção única (gerenciar um beneficiário da rede de afeto no benefício Psicologia Viva) com 6 perguntas próprias e sem bloqueadores. As três ações (incluir, alterar, cancelar) usam praticamente os mesmos dados, então basta um select, sem dividir. Os ajustes são labels, regex de CPF e conferir a policy \"EY: Read Only\", que marca tudo como somente leitura.",
+    "nome_sugerido": "Incluir, alterar ou cancelar beneficiário da Psicologia Viva (Conexa)",
+    "short_description_sugerida": "Inclua, altere ou retire uma pessoa da sua rede de afeto no benefício de terapia online Psicologia Viva.",
+    "descricao_sugerida": "Use para indicar uma pessoa da sua rede de afeto (familiar, parceiro ou amigo) para usar o benefício de terapia online Psicologia Viva, da Conexa, ou para alterar ou cancelar esse beneficiário. Você informa nome completo, CPF, data de nascimento e e-mail da pessoa. Não use para plano de saúde, plano odontológico ou reembolso de terapia.",
+    "frases_exemplo": [
+      "Quero incluir minha mãe na Psicologia Viva",
+      "Como cadastro meu marido na Conexa?",
+      "Preciso cancelar o beneficiário da terapia online",
+      "trocar pessoa da rede de afeto",
+      "alterar e-mail do beneficiário da Psicologia Viva"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: Read Only",
+        "problema": "Policy \"(sempre)\" marca v_request_type, nome, CPF, data, e-mail e informações adicionais como somente leitura; se aplicar no item, a conversa pula todas as perguntas.",
+        "acao": "Confirmar que está só na visão do registro (Applies on Target Record) e desmarcar \"Applies on Catalog Item view\"."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_request_type",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Você quer incluir, alterar ou cancelar um beneficiário?"
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_full_name_no_abbreviations",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o nome completo do beneficiário, sem abreviações?"
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_beneficiary_cpf",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do beneficiário?",
+        "obs": "Validation Regex de CPF no lugar do client script."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_date_of_birth",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual a data de nascimento do beneficiário? (aaaa-mm-dd)"
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_beneficiary_email",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o e-mail do beneficiário?",
+        "obs": "Validation Regex de e-mail."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_additional_information",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar alguma informação? (opcional)"
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_help_text / v_more_informations_label / v_label_fill_request",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels: regras do benefício vão para a descrição ou KB."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: CPF Validation Regex",
+        "acao": "converter",
+        "substituicao": "Validation Regex direto em v_beneficiary_cpf (a regex do script já está correta)."
+      },
+      {
+        "nome": "EY: Mandatory",
+        "acao": "converter",
+        "substituicao": "Mandatory direto nas variáveis. No cancelamento, avaliar se data de nascimento e e-mail precisam ser obrigatórios (UI Policy sem script por v_request_type)."
+      },
+      {
+        "nome": "EY: Read Only",
+        "acao": "manter",
+        "substituicao": "Só na visão do registro."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "User criteria \"EY: Terceiros V2\": conferir o público. O producer script lê o perfil de RH mas grava requested_for como o usuário logado (resumo do digest cita \"troca de escala coletiva\", provável cópia); revisar."
+  },
+  {
+    "sys_id": "457d24431bbc9a90514cbaef4b4bcb32",
+    "nome_atual": "Pedido de Reembolso de Energia Elétrica",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 3273,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Maior volume do lote (3.273 no ano) e intenção única, com 6 perguntas próprias: periodicidade, número da fatura, mês, ano, valor e anexo. Não há bloqueador, mas 9 client scripts cuidam de lista de anos dinâmica, data composta, máscara de moeda e checagem de fatura duplicada via GlideAjax, e o total passa de 20 perguntas com o set. Levando essas regras para o servidor e para regex, a conversa fica curta e de alto ganho.",
+    "nome_sugerido": "Pedir reembolso de energia elétrica",
+    "short_description_sugerida": "Solicite o reembolso da sua conta de luz (vendas Natura Argentina).",
+    "descricao_sugerida": "Use para pedir o reembolso da conta de energia elétrica prevista para a equipe de vendas da Natura Argentina. Informe se a fatura é mensal ou bimestral, o número da fatura, o mês e o ano de vencimento e o valor, e anexe a conta no final. Cada fatura só pode ser reembolsada uma vez. Não use para reembolso de internet/conectividade, creche, escola ou saúde, que têm itens próprios.",
+    "frases_exemplo": [
+      "Quero pedir o reembolso da conta de luz",
+      "Reembolso da fatura de energia de março",
+      "Como envio minha conta de luz para reembolso?",
+      "reintegro de luz",
+      "mandar a boleta de electricidad",
+      "reembolso energia bimestral"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: Check invoce OnChange / EY: Check date OnChange / EY: Check date and invoice OnSubmit",
+        "problema": "Checagem de fatura/data duplicada no cliente via GlideAjax e JSON em v_records; em conversa, validação assíncrona no cliente é frágil.",
+        "acao": "Mover a checagem para o servidor: Business Rule before insert no x_nasm_hr_case (ou etapa inicial do flow) que rejeita/avisa fatura já reembolsada. v_records deixa de ser necessário no cliente."
+      },
+      {
+        "onde": "EY: Set years options",
+        "problema": "Opções de ano geradas por script onLoad.",
+        "acao": "Choices fixas de v_year (ano atual e anterior) atualizadas uma vez por ano, ou trocar mês+ano por uma única Date de vencimento."
+      },
+      {
+        "onde": "v_attachment",
+        "problema": "O comprovante é pedido por Rich Text Label (com label \"Electricity amount\" errado), não por anexo de verdade.",
+        "acao": "Anexo obrigatório do record producer no fim da conversa."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_frequency_of_your_invoice",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Sua fatura de energia é mensal ou bimestral?"
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_invoice_number",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o número da fatura?"
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_month",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Em que mês a fatura vence?"
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_year",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "E em que ano?",
+        "obs": "Choices fixas no lugar do script."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_electricity_amount",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual o valor da fatura?",
+        "obs": "Validation Regex de moeda (^\\d+([.,]\\d{1,2})?$) no lugar da máscara."
+      },
+      {
+        "ordem": 6,
+        "variavel": "nova_anexo_fatura",
+        "origem": "item",
+        "acao": "nova",
+        "conversational_label": "Anexe a fatura de energia (PDF ou foto).",
+        "obs": "Anexo obrigatório do record producer; substitui o label v_attachment."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_month_year",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Montar no producer script (servidor) a partir de v_month e v_year."
+      },
+      {
+        "ordem": 8,
+        "variavel": "v_records",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": "Já hidden; se a checagem for para o servidor, pode ser removida."
+      },
+      {
+        "ordem": 9,
+        "variavel": "v_legenda_1 / v_legenda_2 / v_legenda_3 / v_legenda_4 / v_attachment",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels; regras de bimestral viram texto na descrição."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Set complete date OnChange month / OnChange year",
+        "acao": "converter",
+        "substituicao": "Composição de v_month_year no producer script."
+      },
+      {
+        "nome": "EY: Check invoce OnChange / EY: Check date OnChange / EY: Check date and invoice OnSubmit / EY: Get date and invoice OnChange",
+        "acao": "converter",
+        "substituicao": "Business Rule/flow no servidor para duplicidade."
+      },
+      {
+        "nome": "EY: Clear values change",
+        "acao": "remover",
+        "substituicao": "Sem guarda isLoading: apaga valores ao reabrir. Desnecessário na conversa."
+      },
+      {
+        "nome": "EY: Set years options",
+        "acao": "converter",
+        "substituicao": "Choices fixas."
+      },
+      {
+        "nome": "EY: Máscara de Moeda",
+        "acao": "converter",
+        "substituicao": "Validation Regex em v_electricity_amount."
+      },
+      {
+        "nome": "EY: Show fields",
+        "acao": "converter",
+        "substituicao": "Visibilidade/mandatory direto nas variáveis (v_employee vem preenchido pelo set)."
+      },
+      {
+        "nome": "EY: Hide portal variables / EY: Show legendas",
+        "acao": "remover",
+        "substituicao": "v_month_year hidden direto; legendas saem."
+      },
+      {
+        "nome": "EY: readOnly country of residence / EY: Show employee ID",
+        "acao": "manter",
+        "substituicao": "Afetam o set; tratar na análise do set."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Marcar \"Mandatory attachment\" no record producer.",
+        "Testar em VA a mensagem de fatura duplicada vinda do servidor."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público argentino: os labels devem ser traduzidos para espanhol. Item de maior retorno do lote: priorizar."
+  },
+  {
+    "sys_id": "56bb98421b709290514cbaef4b4bcb82",
+    "nome_atual": "Solicitação de Outros Reembolsos de Saúde",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 57,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 30,
+    "justificativa": "Poucas perguntas próprias (tipo de reembolso e, para gravidez, mês e ano), mas as opções do tipo de reembolso são filtradas por país por dois client scripts, um deles sem VA Supported, o que bloqueia a conversa. Trocando o filtro por Lookup/Reference numa tabela de tipos por país e montando a data no servidor, o item fica conversacional. Volume baixo.",
+    "nome_sugerido": "Pedir outros reembolsos de saúde",
+    "short_description_sugerida": "Solicite reembolsos de saúde como lentes, gravidez ou coaching (Argentina, Colômbia e Peru).",
+    "descricao_sugerida": "Use para pedir reembolsos de saúde que não são cobertos pelo plano de saúde, como lentes e óculos, despesas de gravidez ou coaching, conforme as regras do seu país (Argentina, Colômbia ou Peru). Informe o tipo de reembolso e anexe o comprovante de pagamento. Não use para creche, escola ou energia elétrica, que têm itens próprios, nem para adesão ao plano de saúde.",
+    "frases_exemplo": [
+      "Quero reembolso das minhas lentes",
+      "Reembolso de despesas da gravidez",
+      "Como peço reembolso de óculos?",
+      "reintegro de lentes",
+      "reembolso de coaching"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "EY: SetOptions onChange",
+        "problema": "Client script sem VA Supported remove e recoloca opções de v_type_of_refund por país.",
+        "acao": "Trocar v_type_of_refund por Lookup Select Box/Reference numa tabela de tipos de reembolso por país, com qualifier simples pelo v_country do set; remover os scripts de opções."
+      },
+      {
+        "onde": "EY: Remove options onLoad",
+        "problema": "Mesma lógica no carregamento.",
+        "acao": "Remover junto."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_type_of_refund",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Lookup Select Box",
+        "conversational_label": "Que tipo de reembolso de saúde você quer pedir?",
+        "obs": "Opções por país vindas de tabela."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_month",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De que mês é o comprovante de pagamento?",
+        "obs": "Só para gravidez (policy sem script existente)."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_year",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "E de que ano?",
+        "obs": "Choices fixas no lugar de \"EY: Set year\"."
+      },
+      {
+        "ordem": 4,
+        "variavel": "nova_anexo_comprovante",
+        "origem": "item",
+        "acao": "nova",
+        "conversational_label": "Anexe o comprovante de pagamento.",
+        "obs": "Anexo do record producer; substitui a instrução em v_message_attach."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_month_year",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Montar no producer script."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_message_refund / v_message_attach",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich Text Labels."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: SetOptions onChange / EY: Remove options onLoad",
+        "acao": "converter",
+        "substituicao": "Lookup em tabela de tipos por país."
+      },
+      {
+        "nome": "EY: Set year",
+        "acao": "converter",
+        "substituicao": "Choices fixas."
+      },
+      {
+        "nome": "EY: Set complete date",
+        "acao": "converter",
+        "substituicao": "Producer script."
+      },
+      {
+        "nome": "EY: Mandatory fields / EY: Show month and year / EY: Hide portal variables",
+        "acao": "manter",
+        "substituicao": "Sem script; mover mandatory/hidden fixos para a variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Anexo obrigatório no record producer."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: labels em espanhol. Se a tabela por país não for viável, alternativa é aceitar todas as opções e validar a elegibilidade no flow."
+  },
+  {
+    "sys_id": "ab9d37c11b0d5ad0514cbaef4b4bcb23",
+    "nome_atual": "Solicitação de reembolso de creche ou berço",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1114,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Volume alto (1.114 no ano) e intenção clara, mas o item está bloqueado: widget Custom (mrv_monitor), MRVS \"Dados para fazer seu reembolso\" com scripts sem VA Supported (inclusive sessionStorage e leitura do formulário pai), 3 anexos por país e 32 perguntas. A proposta é reestruturar para um pedido por filho e por mês, trazendo os campos da MRVS para variáveis simples e movendo histórico e validações para o servidor.",
+    "nome_sugerido": "Pedir reembolso de creche ou berçário",
+    "short_description_sugerida": "Solicite o reembolso mensal de creche, berçário ou cuidadora do seu filho.",
+    "descricao_sugerida": "Use para pedir o reembolso mensal de creche, berçário (sala de berço) ou cuidadora de crianças para seu filho, conforme as regras do seu país (Argentina, Chile, Colômbia, Equador, Peru ou Uruguai). Faça um pedido por filho e por mês: informe o mês e o ano, o filho, o tipo de reembolso, o número da fatura ou do recibo e o valor, e anexe os comprovantes. Não use para reembolso escolar de filhos em idade escolar (use \"Pedir reembolso escolar\").",
+    "frases_exemplo": [
+      "Quero pedir o reembolso da creche do mês passado",
+      "Reembolso do berçário da minha filha",
+      "Como envio a fatura da creche?",
+      "reintegro de guardería",
+      "reembolso da babá do meu filho",
+      "sala cuna reembolso"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "mrv_monitor",
+        "problema": "Variável Custom com widget \"EY: MRV Monitor widget Daycare/Crib Room\".",
+        "acao": "Remover; o histórico de pedidos é consultado no servidor/flow."
+      },
+      {
+        "onde": "set:Dados para fazer seu reembolso (MRVS)",
+        "problema": "Multi-row com scripts sem VA Supported (EY: Validate Fiels, EY: Set employee) e qualifier scriptado de filhos.",
+        "acao": "Recomendação específica: substituir a MRVS neste item por variáveis simples (um filho por pedido): filho, tipo, fatura/recibo, valor."
+      },
+      {
+        "onde": "EY: Get Invoice History Info",
+        "problema": "Sem VA Supported; usa sessionStorage como cache de histórico.",
+        "acao": "Checagem de duplicidade no servidor (Business Rule/flow)."
+      },
+      {
+        "onde": "EY: Show error message (onChange/onSubmit)",
+        "problema": "Sem VA Supported; mensagem de tamanho mínimo por idioma.",
+        "acao": "Validation Regex com mensagem traduzida."
+      },
+      {
+        "onde": "v_attachment_1 / v_attachment_2 / v_attachment_3",
+        "problema": "Três Attachments condicionados por país e primeira vez.",
+        "acao": "Um anexo no fim da conversa; os documentos exigidos por país (AFIP, BPS, laudo médico) ficam explicados na descrição/KB, com UI Policy sem script tornando obrigatório quando v_first_time = yes."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_report_the_month",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De que mês é o reembolso?"
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_report_the_year",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "E de que ano?",
+        "obs": "Choices fixas no lugar de \"EY: Show Year Options\"."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_your_child_s_name",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Reference (variável simples, fora da MRVS)",
+        "conversational_label": "Para qual filho é o reembolso?",
+        "obs": "Trazer como variável simples do item; qualifier scriptado precisa de teste em conversa."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_what_type_of_refund_are_you_requesting",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Select Box (variável simples)",
+        "conversational_label": "Que tipo de reembolso é: creche, berçário ou cuidadora?"
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_first_time",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "É a primeira vez que você pede reembolso para essa instituição ou cuidadora?",
+        "obs": "Só Argentina e Uruguai (policy sem script existente)."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_invoice_number",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Single Line Text (variável simples)",
+        "conversational_label": "Qual o número da fatura?",
+        "obs": "Para creche/berçário."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_salary_receipt_number",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Single Line Text (variável simples)",
+        "conversational_label": "Qual o número do recibo de salário da cuidadora?",
+        "obs": "Para cuidadora."
+      },
+      {
+        "ordem": 8,
+        "variavel": "v_refund_amount",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Single Line Text (variável simples)",
+        "conversational_label": "Qual o valor a reembolsar?",
+        "obs": "Validation Regex de moeda."
+      },
+      {
+        "ordem": 9,
+        "variavel": "v_use_the_following_field_to_detail_your_need",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar algum detalhe?",
+        "obs": "Deixar opcional ou manter mínimo por Validation Regex."
+      },
+      {
+        "ordem": 10,
+        "variavel": "nova_anexo_comprovantes",
+        "origem": "item",
+        "acao": "nova",
+        "conversational_label": "Anexe a fatura ou recibo e, se for o primeiro pedido, a habilitação da instituição ou o registro da cuidadora.",
+        "obs": "Substitui v_attachment_1/2/3."
+      },
+      {
+        "ordem": 11,
+        "variavel": "dependent_date_birth",
+        "origem": "set:Dados para fazer seu reembolso",
+        "acao": "derivar",
+        "obs": "Auto-populate a partir do filho."
+      },
+      {
+        "ordem": 12,
+        "variavel": "mrv_monitor / v_faq / v_label_2..v_label_11 / v_attach_your_documents_below",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Widget e Rich Text Labels."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Show error message (onChange e onSubmit)",
+        "acao": "converter",
+        "substituicao": "Validation Regex."
+      },
+      {
+        "nome": "EY: Get Invoice History Info",
+        "acao": "converter",
+        "substituicao": "Checagem no servidor."
+      },
+      {
+        "nome": "EY: Show Year Options",
+        "acao": "converter",
+        "substituicao": "Choices fixas."
+      },
+      {
+        "nome": "EY: If Year Changes / EY: If Month Changes",
+        "acao": "converter",
+        "substituicao": "Data composta no producer script."
+      },
+      {
+        "nome": "EY: Show MRVS",
+        "acao": "remover",
+        "substituicao": "MRVS sai do item."
+      },
+      {
+        "nome": "EY: Variable v_label_5..v_label_11",
+        "acao": "remover",
+        "substituicao": "Legendas saem; conteúdo por país em KB."
+      },
+      {
+        "nome": "EY: Variable v_first_time / v_attachment_1 / v_attachment_2 / Show v_attachment_3",
+        "acao": "converter",
+        "substituicao": "Manter a de v_first_time; as de anexo viram uma policy sem script sobre o anexo único."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Validar com o time de RH a mudança para um pedido por filho e por mês (impacta o flow e os relatórios).",
+        "Habilitar anexo no record producer."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: labels em espanhol. Se a reestruturação da MRVS não for aprovada, a alternativa é marcar como non-conversational até lá, com nome e descrição sugeridos. Mesmo padrão do irmão \"Solicitação de Reembolso Escolar\"."
+  },
+  {
+    "sys_id": "cc899fa41b709a50514cbaef4b4bcbeb",
+    "nome_atual": "Solicitação de Reembolso Escolar",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 144,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "Intenção clara, mas bloqueada por widget Custom (mrvs_monitor) e pela MRVS \"Dados dos seus filhos\", cujos scripts sem VA Supported calculam o teto por filho, contam dependentes via sessionStorage e leem o formulário pai. Mesma reestruturação proposta para creche: um pedido por filho, teto e soma calculados no servidor. Volume médio.",
+    "nome_sugerido": "Pedir reembolso escolar",
+    "short_description_sugerida": "Solicite o reembolso de mensalidade ou matrícula escolar do seu filho (Natura Chile e Peru).",
+    "descricao_sugerida": "Use para pedir o reembolso escolar (matrícula ou mensalidade) do seu filho, se você trabalha na Natura Chile ou Peru. Faça um pedido por filho: informe o filho e o valor gasto e anexe o comprovante de pagamento (Chile) ou de matrícula com o nome do aluno (Peru). O valor reembolsado respeita o teto do benefício. Não use para creche ou berçário (use \"Pedir reembolso de creche ou berçário\").",
+    "frases_exemplo": [
+      "Quero pedir o reembolso escolar do meu filho",
+      "Reembolso da matrícula da escola",
+      "Como envio o comprovante da mensalidade escolar?",
+      "bono escolar reembolso",
+      "reembolso de útiles/escolaridad"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "mrvs_monitor",
+        "problema": "Variável Custom com widget \"EY: MRV Macro widget Beneficiary 3\".",
+        "acao": "Remover."
+      },
+      {
+        "onde": "set:Dados dos seus filhos (MRVS)",
+        "problema": "Scripts sem VA Supported (EY: Get tope..., EY: Count number of children, EY: Set employee, EY: Show help text) e qualifier scriptado de filhos.",
+        "acao": "Recomendação específica: trazer v_child_name e v_amount_of_schooling como variáveis simples (um filho por pedido); teto (v_tope) calculado no flow."
+      },
+      {
+        "onde": "EY: Clear Session item dependents_list_2",
+        "problema": "Sem VA Supported; manipula sessionStorage.",
+        "acao": "Remover."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_child_name",
+        "origem": "set:Dados dos seus filhos",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Reference (variável simples, fora da MRVS)",
+        "conversational_label": "Para qual filho é o reembolso escolar?",
+        "obs": "Qualifier scriptado precisa de teste em conversa."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_amount_of_schooling",
+        "origem": "set:Dados dos seus filhos",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Single Line Text (variável simples)",
+        "conversational_label": "Qual o valor gasto com a escola?",
+        "obs": "Validation Regex de moeda."
+      },
+      {
+        "ordem": 3,
+        "variavel": "nova_anexo_comprovante",
+        "origem": "item",
+        "acao": "nova",
+        "conversational_label": "Anexe o comprovante de pagamento ou de matrícula com o nome do aluno.",
+        "obs": "Substitui v_legenda_chile e v_legenda_peru (labels marcados como obrigatórios)."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_tope",
+        "origem": "set:Dados dos seus filhos",
+        "acao": "derivar",
+        "obs": "Calcular no flow/servidor."
+      },
+      {
+        "ordem": 5,
+        "variavel": "total_expenses",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Com um filho por pedido, é igual ao valor; senão somar no servidor."
+      },
+      {
+        "ordem": 6,
+        "variavel": "mrvs_monitor / v_faq / v_workday_message_chile / v_workday_message_peru / v_data_refund_message / v_legenda_chile / v_legenda_peru",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Widget e Rich Text Labels; mensagens do Workday viram texto na descrição/KB."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Clear Session item dependents_list_2",
+        "acao": "remover",
+        "substituicao": "Sem uso na conversa."
+      },
+      {
+        "nome": "EY: Clear beneficiary",
+        "acao": "remover",
+        "substituicao": "Desnecessário na conversa."
+      },
+      {
+        "nome": "EY: Sum the total amount",
+        "acao": "converter",
+        "substituicao": "Producer script/flow."
+      },
+      {
+        "nome": "EY: Show multirow",
+        "acao": "remover",
+        "substituicao": "MRVS sai do item."
+      },
+      {
+        "nome": "EY: Show variable Chile / EY: Show variables Peru",
+        "acao": "converter",
+        "substituicao": "Anexo obrigatório para os dois países; texto do comprovante na descrição."
+      },
+      {
+        "nome": "EY: Show v_data_refund_message / EY: Show Employee ID",
+        "acao": "remover",
+        "substituicao": "Label sai; Employee ID é do set."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Anexo obrigatório no record producer.",
+        "Validar com RH a mudança para um pedido por filho."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Público hispânico: labels em espanhol. O cálculo de teto repete o defeito `g_form.clearMessages;` sem parênteses; resolve-se ao mover para o servidor."
+  }
+]

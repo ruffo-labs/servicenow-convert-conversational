@@ -1,0 +1,52 @@
+{
+ "sys_id": "95cc20de1b44a598a530426fe54bcb9c",
+ "title": "EY: Bank data",
+ "internal_name": "ey_bank_data",
+ "description": "",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Solicitar reembolso de nota de crédito\t",
+  "Solicitação para tratativa de pagamentos Varejo"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_bank",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank"
+  },
+  {
+   "name": "vs_agency",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Agency"
+  },
+  {
+   "name": "vs_account",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank account"
+  },
+  {
+   "name": "vs_digit",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Digit"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_bank: mandatory=true",
+    "vs_digit: mandatory=true",
+    "vs_agency: mandatory=true",
+    "vs_account: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

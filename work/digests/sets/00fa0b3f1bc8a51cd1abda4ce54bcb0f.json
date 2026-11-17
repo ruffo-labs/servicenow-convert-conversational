@@ -1,0 +1,56 @@
+{
+ "sys_id": "00fa0b3f1bc8a51cd1abda4ce54bcb0f",
+ "title": "EY: Company  - Avon/Natura and Sub Company",
+ "internal_name": "ey_company_avon_natura_and_sub_company",
+ "description": "Company and sub company",
+ "usado_por": 4,
+ "itens_exemplo": [
+  "Solicitação de Verba Evento e Verba Mês - Força de Vendas",
+  "Solicitar aprovações para prêmios e comissões",
+  "Solicitação de adiantamento de comissão - líderes",
+  "Reparcelamento de título"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "For which company is the service being requested?",
+   "include_none": true,
+   "choices": [
+    "Avon [=Avon LATAM]",
+    "Natura"
+   ]
+  },
+  {
+   "name": "vs_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.vs_company + '^nameNOT LIKE331'"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_sub_company: mandatory=true",
+    "vs_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear sub-company",
+   "type": "onChange",
+   "on": "133b03731b0ca51cd1abda4ce54bcbe9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_sub_company'."
+  }
+ ]
+}

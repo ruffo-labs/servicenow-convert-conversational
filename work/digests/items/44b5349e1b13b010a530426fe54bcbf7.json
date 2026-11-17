@@ -1,0 +1,142 @@
+{
+ "sys_id": "44b5349e1b13b010a530426fe54bcbf7",
+ "name": "Solicitar Rescisão Complementar",
+ "sys_name": "Request Complementary Termination",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Desligamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Necessidade de pagamento complementar para ex-colaborador.",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "6",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "6"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @termination_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee_name_termination: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 6 de 6 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Rescisão Complementar. Lê o perfil em x_nasm_hr_profile pela variável 'employee' MAS define requested_for como o usuário logado (gs.getUserID) — a leitura do perfil acaba não sendo usada para o solicitante. Possível inconsistência: o registro fica no nome de quem abriu, não do colaborador informado.",
+ "variaveis": [
+  {
+   "name": "request_here",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request specifics"
+  },
+  {
+   "name": "release_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Release Type",
+   "choices": [
+    "Restricted actions [=Ações restritas]",
+    "Covid Assistance [=Auxílio Covid]",
+    "Childcare Assistance [=Auxilio creche]",
+    "Commission [=Comissão]",
+    "Loan return [=Devolução empréstimo]",
+    "Overtime difference/Nigh shift premium [=Diferença de H.E/Ad Noturno]",
+    "Stability [=Estabilidade]",
+    "Bonus [=Gratificação]",
+    "Operational bonus [=Gratificação operacional]",
+    "Package Payment [=Pagamento de Pacote]",
+    "Profit Sharing [=PLR]",
+    "Award [=Prêmio]",
+    "Miscellaneous refunds [=Reembolsos diversos]",
+    "Co-payment reimbursement [=Reembolso co participação]",
+    "Refund of absence / delay or early departure [=Reembolso de falta / atraso ou saída antecipada]",
+    "Product refund [=Reembolso de produto]",
+    "Chair Return Refund [=Reembolso Devolução de Cadeira]",
+    "Pharmacy Refund [=Reembolso Farmácia]",
+    "Mobility Reimbursement [=Reembolso Mobilidade]",
+    "Transportation vouchers reimbursement [=Reembolso VT]",
+    "Meal ticket reimbursement [=Reembolso VR]",
+    "-- None --",
+    "INSS Payment Reimbursement - Collective Agreement [=Reembolso Pagamento INSS - Convenção Coletiva]",
+    "Disclaimer [=Ressalva]",
+    "Permanent Fund Discount [=Desconto Fundo Permanente]",
+    "Corporate Card Cancellation [=Cancelamento Cartão Corporativo]",
+    "Fine/Use of Vehicle Discount [=Desconto Multa/Uso de Veículo]",
+    "Others [=Outros]"
+   ]
+  },
+  {
+   "name": "payment_description",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Payment description",
+   "hidden": true
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": "test"
+  },
+  {
+   "name": "info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "comments_termination_2",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Provide the justification that led to the supplemental termination:"
+  },
+  {
+   "name": "termination_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "3dd40d161b93b010a530426fe54bcb63",
+   "name": "Adicionar um ex-colaborador",
+   "order": "1000",
+   "perguntas": [
+    "employee_name_termination (Referência): Former employee's name",
+    "global_id (Texto de Linha Única, ro): Global ID",
+    "value_termination (Texto de Linha Única): Value"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: Field Request for Release Type is \"Other\"",
+   "when": "IO:release_type!=Outros^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "payment_description: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "release_type: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

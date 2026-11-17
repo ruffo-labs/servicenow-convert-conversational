@@ -1,0 +1,43 @@
+{
+ "sys_id": "acc8308d1bc1e9d0d1abda4ce54bcbf0",
+ "title": "Enter the number of the document to be cancelled",
+ "internal_name": "vs_enter_the_number_of_the_document_to_be_cancelled",
+ "description": "Enter the number of the document to be cancelled",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Reclassificação e Legalização de Adiantamentos a Colaboradores – LATAM"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_document_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document Number"
+  },
+  {
+   "name": "vs_document_year",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document Year"
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": [
+  {
+   "name": "Regex 9-10 caracter",
+   "type": "onChange",
+   "on": "9819308d1bc1e9d0d1abda4ce54bcb5b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número do documento como 9 ou 10 dígitos. Inválido: limpa 'vs_document_number' e mostra mensagem sobre o número mínimo de dígitos."
+  },
+  {
+   "name": "Regex date Year",
+   "type": "onChange",
+   "on": "ae897c011b05e9d0d1abda4ce54bcbc7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o ano do documento como exatamente 4 dígitos. Inválido: limpa 'vs_document_year' e mostra 'Ano inválido'. Válido: regrava o mesmo valor (passo redundante)."
+  }
+ ]
+}

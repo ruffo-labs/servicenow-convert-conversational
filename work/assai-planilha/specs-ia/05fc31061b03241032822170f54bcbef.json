@@ -1,0 +1,83 @@
+{
+ "sys_id": "05fc31061b03241032822170f54bcbef",
+ "status": "dividido",
+ "motivo": "Itens da planilha: Gestor - RH Ponta > Preciso reportar um problema > Problema sistêmico, 1 item em Admissão (1 oferta) e 1 em Férias (2 ofertas).",
+ "vars": {
+  "rh_request_number_rp": {
+   "label": "Qual é o número da Requisição de Pessoal (RP)?"
+  },
+  "rh_admission_request_number_ra": {
+   "label": "Qual é o número da Requisição de Admissão (RA)?"
+  },
+  "what_stage_is_admission_at": {
+   "label": "Em que fase a admissão está?"
+  }
+ },
+ "remover": {
+  "rh_ra_number": "oferta_inativa",
+  "rh_alert_2": "visual",
+  "rh_request_number": "oferta_inativa",
+  "rh_alert_1": "visual",
+  "rh_request_number_adp": "oferta_inativa"
+ },
+ "policies": {
+  "26fe0c651b1a069032822170f54bcbf5": "remover",
+  "8f893c381b6fa090eca40dcbe54bcb04": "remover",
+  "b066a12a1b8fe41032822170f54bcb25": "remover",
+  "e84f85e21b0fe41032822170f54bcbbd": "remover",
+  "fe5e0d621b0fe41032822170f54bcb19": "remover"
+ },
+ "itens": [
+  {
+   "name": "Problema sistêmico (admissão)",
+   "short_description": "Reportar travamento da admissão por problema no sistema.",
+   "description": "Use para reportar que o processo admissional travou por problema no sistema no novo fluxo de admissão (oferta Problema no processo admissional - Novo fluxo de admissão). Informe o número da solicitação e em que etapa a admissão está. Atendimento do RH - Admissão, SLA de 24h.",
+   "frases_exemplo": [
+    "A admissão do novo colaborador travou no sistema",
+    "Deu erro no novo fluxo de admissão",
+    "O sistema não deixa avançar a admissão",
+    "Reportar problema sistêmico na admissão",
+    "A admissão está parada numa etapa e não anda"
+   ],
+   "vars": {
+    "rh_request_number_rp": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_admission_request_number_ra": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "what_stage_is_admission_at": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "b06e94251b9a069032822170f54bcbcc",
+    "cbd465e51b52469032822170f54bcb74"
+   ]
+  },
+  {
+   "name": "Problema sistêmico (kit admissional)",
+   "short_description": "Reportar erro ou falha ao imprimir o kit admissional.",
+   "description": "Use para reportar problema no kit admissional: não conseguir imprimir pelo eXpert (oferta eXpert - Não consegue imprimir kit admissional) ou kit gerado com erro (oferta Kit admissional com erro). Informe o número da solicitação da admissão. Atendimento do RH - Admissão, SLA de 24h.",
+   "frases_exemplo": [
+    "Não consigo imprimir o kit admissional",
+    "O kit admissional saiu com erro",
+    "O eXpert não gera o kit do novo colaborador",
+    "Kit de admissão com dados errados",
+    "Preciso reportar falha no kit admissional"
+   ],
+   "sem_vars": [
+    "what_stage_is_admission_at"
+   ],
+   "sem_policies": [
+    "cbd465e51b52469032822170f54bcb74"
+   ]
+  }
+ ]
+}

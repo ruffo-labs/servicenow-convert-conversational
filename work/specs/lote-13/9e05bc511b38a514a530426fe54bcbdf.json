@@ -1,0 +1,44 @@
+{
+ "sys_id": "9e05bc511b38a514a530426fe54bcbdf",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida sobre reembolso, adiantamento, prestação de contas ou depósito) que se ramifica por UI policies conforme a escolha de público e processo. As duas policies onLoad sem condição viram mandatory direto nas variáveis, o script de validação de data vira regex, o script de limpeza é descartado, e variáveis puramente visuais (label/containers) são removidas. Variáveis de sets compartilhados mantêm seus labels e lógica originais.",
+ "vars": {
+  "v_doubt_about_which_process": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_which_audience_do_you_belong_to": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_describe_your_question": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_budget_reference_month": {
+   "props": {
+    "validation_regex": "^(0[1-9]|1[0-2])/?\\d{4}$"
+   }
+  }
+ },
+ "remover": {
+  "v_if_you_have_questions_about": "visual",
+  "v_questions_about_reimbursement": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "b6ca306d1b7ce554d1abda4ce54bcb15": "remover",
+  "d04a30e91b7ce554d1abda4ce54bcb14": "remover"
+ },
+ "scripts": {
+  "a933d9a51bf02954d1abda4ce54bcbe9": {
+   "remover": "sem_efeito"
+  },
+  "f235dd6a1b3ced10a530426fe54bcb9c": {
+   "converter": "regex"
+  }
+ }
+}

@@ -1,0 +1,129 @@
+{
+ "sys_id": "8d4c66653b1be210b28dd047f4e45a3b",
+ "name": "Adiantamento Salarial (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Adiantamento salarial",
+ "description": "Adiantamento salarial",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Adiantamento Salarial"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência no adiantamento salarial",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    },
+    {
+     "name": "Não recebimento do adiantamento salarial",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Adiantamento Salarial"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 32H",
+     "SLA - GESTÃO DE GENTE - 24H"
+    ],
+    "support_group": [
+     "RH - Atendimento Matriz",
+     "RH - Adiantamento Salarial"
+    ]
+   },
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência no valor do adiantamento salarial",
+     "description": "Use quando recebeu o adiantamento salarial, mas o valor veio diferente do esperado. Corresponde à oferta Divergência no adiantamento salarial. Você informa o mês da divergência e anexa o demonstrativo de pagamento em que ela aparece."
+    },
+    {
+     "name": "Não recebi o adiantamento salarial",
+     "description": "Use quando o adiantamento salarial não foi depositado na sua conta. Corresponde à oferta Não recebimento do adiantamento salarial. Você informa o mês em que não recebeu."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "mes_nao_recebimento",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês do não recebimento",
+   "choices": [
+    "Março",
+    "Junho",
+    "Fevereiro",
+    "Setembro",
+    "Abril",
+    "Maio",
+    "Agosto",
+    "Novembro",
+    "Outubro",
+    "Janeiro",
+    "Dezembro",
+    "Julho"
+   ],
+   "label_atual": "Em qual mês você não recebeu o adiantamento?"
+  },
+  {
+   "name": "demonstrativo_de_pagamento_com_a_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com a divergência",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento em que aparece a divergência."
+  },
+  {
+   "name": "informe_o_mes",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Novembro",
+    "Fevereiro",
+    "Junho",
+    "Março",
+    "Maio",
+    "Abril",
+    "Outubro",
+    "Janeiro",
+    "Julho",
+    "Dezembro",
+    "Agosto",
+    "Setembro"
+   ],
+   "label_atual": "Em qual mês ocorreu a divergência?"
+  }
+ ],
+ "client_scripts": []
+}

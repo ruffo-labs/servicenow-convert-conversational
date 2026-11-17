@@ -1,0 +1,80 @@
+{
+ "sys_id": "7ec5d61a1be12990d1abda4ce54bcb1b",
+ "title": "EY VS - Relatorios e consultas em geral",
+ "internal_name": "ey_vs_relatorios_e_consultas_em_geral",
+ "description": "EY VS - Relatorios e consultas em geral",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Relatorios e consultas em geral"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the type of request?",
+   "include_none": true,
+   "choices": [
+    "Query [=query]",
+    "Report [=report]"
+   ]
+  },
+  {
+   "name": "vs_information_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The information is about:",
+   "include_none": true,
+   "choices": [
+    "Cost [=cost]",
+    "Fixed Asset [=fixed_asset]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "vs_report_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Report Start Date"
+  },
+  {
+   "name": "vs_report_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Report End Date"
+  },
+  {
+   "name": "vs_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe the information you need"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY - Mandatory on CatItem",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_description: mandatory=true",
+    "vs_request_type: mandatory=true",
+    "vs_information_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY - ReadOnly on Target Record",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_report_start_date: readonly=true",
+    "vs_request_type: readonly=true",
+    "vs_report_end_date: readonly=true",
+    "vs_information_type: readonly=true",
+    "vs_description: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

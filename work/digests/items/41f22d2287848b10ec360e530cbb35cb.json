@@ -1,0 +1,91 @@
+{
+ "sys_id": "41f22d2287848b10ec360e530cbb35cb",
+ "name": "Fornecedores de Argentina – Cadastro de E-mail para Recebimento de Comprovantes de Retenção",
+ "sys_name": "Suppliers from Argentina – Email Registration for Receiving Withholding Tax Receipts",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Serviços Externos",
+ "catalogs": "Hire to Retire (HTR), PTP_",
+ "short_description": "",
+ "description": "Exclusivo para fornecedores da Argentina. Utilize este formulário para indicar o e-mail que deve receber os certificados de retenção de impostos das faturas pagas. (Este processo não altera os dados mestres do SAP).",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "3",
+   "variaveis_ativas": "4",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "3"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @question_important_info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 3 de 3 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de cadastro de e-mail para comprovantes de retenção (fornecedores da Argentina). Grava x_nasm_hr_item com o sysparm_id da URL e define o grupo de atendimento lendo o sys_id do grupo NTCO - PTP - Recebimento Fiscal LATAM de uma system property, em vez de cravá-lo no script.",
+ "variaveis": [
+  {
+   "name": "question_important_info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Info"
+  },
+  {
+   "name": "question_enter_cuit",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the company's CUIT (without special characters such as: . / -)"
+  },
+  {
+   "name": "question_enter_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the Company Name"
+  },
+  {
+   "name": "question_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email address for receiving the Withholding Receipt"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "[AOOP] Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "question_email: mandatory=true",
+    "question_enter_name: mandatory=true",
+    "question_enter_cuit: mandatory=true",
+    "question_important_info: mandatory=false,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "[AOOP] Sanitize entered CUIT",
+   "type": "onChange",
+   "on": "bc308ae6878c8b10ec360e530cbb3559",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que higieniza o CUIT (documento argentino): se houver qualquer caractere que não seja letra ou número, remove-o e regrava o valor limpo no campo. Corrige em vez de rejeitar."
+  },
+  {
+   "name": "[AOOP] Validate emails",
+   "type": "onChange",
+   "on": "48c1462687cc8b10ec360e530cbb3594",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida uma LISTA de e-mails separados por ponto e vírgula, não apenas um. A regex aceita um e-mail seguido de zero ou mais ocorrências de ';' + e-mail. Esconde a mensagem anterior antes de validar e usa getMessage para a mensagem traduzida."
+  }
+ ]
+}

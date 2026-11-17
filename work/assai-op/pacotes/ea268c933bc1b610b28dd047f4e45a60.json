@@ -1,0 +1,97 @@
+{
+ "sys_id": "ea268c933bc1b610b28dd047f4e45a60",
+ "name": "Auxílio-funeral",
+ "category": "Operação de Benefícios",
+ "short_description": "Auxílio-funeral",
+ "description": "Auxílio-funeral",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no desconto do auxílio-funeral",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Auxílio Funeral"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "payment_statement",
+    "reference_month"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": []
+  },
+  {
+   "name": "reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Setembro",
+    "Fevereiro",
+    "Março",
+    "Agosto",
+    "Outubro",
+    "Junho",
+    "Dezembro",
+    "Abril",
+    "Janeiro",
+    "Maio",
+    "Julho",
+    "Novembro"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "ecd1deb73bcdba10b28dd047f4e45a8b",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa reference_month, payment_statement, cancellation_form, Attachments e aux_widget (sempre)."
+  }
+ ]
+}

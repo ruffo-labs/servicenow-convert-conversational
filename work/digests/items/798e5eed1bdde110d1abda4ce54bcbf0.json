@@ -1,0 +1,218 @@
+{
+ "sys_id": "798e5eed1bdde110d1abda4ce54bcbf0",
+ "name": "Solicitar Pagamento de Serviço Internacional",
+ "sys_name": "Request Payment for International Service",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Formulário para solicitação de pagamento de serviço internacional para empresa Natura",
+ "description": "Formulário para solicitação de pagamento de serviço internacional para empresa Natura",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "18",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "13",
+   "perguntas_sem_conversational_label": "18"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_provider_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_invoice: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_copy_contract: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_manual_document: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_int_service_payment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_supplier_code: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_questions_about_process: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcategory2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 18 de 18 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 12 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pré-edição e Reembolso - Cliente Final. Grava apenas x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_questions_about_process",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ"
+  },
+  {
+   "name": "v_provider_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Provider's name",
+   "reference": "core_company",
+   "ref_qual": "u_source_system=ECC^customer=false^EQ"
+  },
+  {
+   "name": "v_supplier_code",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Supplier Code",
+   "lookup": "core_company",
+   "ref_qual": "javascript: 'u_vendor_id='+ current.variables.v_provider_name.u_vendor_id"
+  },
+  {
+   "name": "v_kind_of_payment",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What kind of payment?",
+   "include_none": true,
+   "choices": [
+    "Via Purchase Order [=purchase_order]"
+   ]
+  },
+  {
+   "name": "v_due_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Due date"
+  },
+  {
+   "name": "v_purchase_order_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purchase order number"
+  },
+  {
+   "name": "v_document_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Document number"
+  },
+  {
+   "name": "v_attach_manual_document",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach manual document"
+  },
+  {
+   "name": "v_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If you have questions about the process, click here to consult the FAQ"
+  },
+  {
+   "name": "v_attach_int_service_payment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach International Service Payment Form"
+  },
+  {
+   "name": "v_attach_invoice",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Invoice"
+  },
+  {
+   "name": "v_attach_copy_contract",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach a copy of the contract"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "b6290e291b19e110d1abda4ce54bcb04",
+   "name": "EY: Company: NTCO - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "v_country (Texto de Linha Única): Country",
+    "vs_which_company (Selecionar Caixa): The request is for which company?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "called_area_others (Texto de Linha Única): Add Area Name",
+    "vs_responsible_area2 (Selecionar Caixa): Indicate the area responsible for hiring",
+    "vs_subcategory2 (Referência): Subcategory",
+    "vs_which_sub_company (Referência): The request is for which sub-company?",
+    "vs_which_sub_company_2 (Referência): The request is for which sub-company?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Payment is Via Purchase Order - Resolver View",
+   "when": "IO:v_kind_of_payment=purchase_order^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Payment is Via Purchase Order - Catalog Item View",
+   "when": "IO:v_kind_of_payment=purchase_order^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Payment is Via Manual Payment - Resolver View",
+   "when": "IO:v_kind_of_payment=manual_payment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number: visible=true,readonly=true",
+    "v_attach_manual_document: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Payment is Via Manual Payment - Catalog Item View",
+   "when": "IO:v_kind_of_payment=manual_payment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_manual_document: visible=true,mandatory=true",
+    "v_document_number: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields in Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_provider_name: mandatory=true",
+    "v_attach_invoice: mandatory=true",
+    "v_due_date: mandatory=true",
+    "v_kind_of_payment: mandatory=true",
+    "v_supplier_code: readonly=true",
+    "v_attach_int_service_payment: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Variables in Resolver View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_supplier_code: readonly=true",
+    "v_kind_of_payment: readonly=true",
+    "v_attach_invoice: readonly=true",
+    "v_attach_int_service_payment: readonly=true",
+    "v_attach_copy_contract: readonly=true",
+    "v_provider_name: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Remove Company Options",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que remove a opção 'TBS' da lista de empresas. A linha que também removeria 'Avon LATAM' está comentada."
+  }
+ ]
+}

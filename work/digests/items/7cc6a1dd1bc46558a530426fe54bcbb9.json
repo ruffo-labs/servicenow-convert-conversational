@@ -1,0 +1,111 @@
+{
+ "sys_id": "7cc6a1dd1bc46558a530426fe54bcbb9",
+ "name": "Solicitar tratativa da loja",
+ "sys_name": "FORM0000361",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Varejo e Fechamento de Caixa",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para tratativa de inconsistência em lojas próprias e franqueadas.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "8",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_select_the_approving_supervisor: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_store_reference: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_select_the_approving_supervisor",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approving supervisor.",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=fc3dd6a687fd07d0ec360e530cbb354d^EQ"
+  },
+  {
+   "name": "select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Indicate the manager responsible for approval.",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^EQ"
+  },
+  {
+   "name": "v_request_detail",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Use the field below to describe your request in detail"
+  },
+  {
+   "name": "v_inform_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Inform your request"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4c55a4791bbfd154d1abda4ce54bcb1a",
+   "name": "EY: Opened by",
+   "order": "10",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by"
+   ]
+  },
+  {
+   "sys_id": "b9d4b5991bc86558a530426fe54bcba7",
+   "name": "EY: Company: Natura/TBS/Aesop",
+   "order": "20",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company is your request for?"
+   ]
+  },
+  {
+   "sys_id": "c0f13edd87f7a210ec360e530cbb352e",
+   "name": "EY: Store (Reference)",
+   "order": "30",
+   "perguntas": [
+    "vs_store_reference (Referência): Which store is your request for?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_approver: mandatory=true",
+    "v_inform_request: mandatory=true",
+    "v_select_the_approving_supervisor: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

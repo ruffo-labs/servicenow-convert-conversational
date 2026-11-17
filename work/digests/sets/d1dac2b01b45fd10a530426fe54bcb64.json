@@ -1,0 +1,34 @@
+{
+ "sys_id": "d1dac2b01b45fd10a530426fe54bcb64",
+ "title": "EY: Tax - Company (Customer code)",
+ "internal_name": "ey_tax_company_customer_code",
+ "description": "",
+ "usado_por": 3,
+ "itens_exemplo": [
+  "Resíduos",
+  "Nota Fiscal Outras Saídas",
+  "Cadastro preço Brasil/Cadastro de preço exportação"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_which_company_is_the_request_for_customer",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which company is the request for? (Customer code)",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=true"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company_is_the_request_for_customer: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

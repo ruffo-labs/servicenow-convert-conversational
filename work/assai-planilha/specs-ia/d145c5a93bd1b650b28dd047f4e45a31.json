@@ -1,0 +1,55 @@
+{
+ "sys_id": "d145c5a93bd1b650b28dd047f4e45a31",
+ "status": "conversacional",
+ "motivo": "Item da planilha: Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente, com 2 oferta(s). 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de reembolso de vale-compras assaí (falta injustificada).",
+ "vars": {
+  "Month_which_the_loan_was_granted": {
+   "label": "Qual é o mês de concessão do crédito?"
+  },
+  "was_there_separation": {
+   "label": "Você teve afastamento?"
+  },
+  "reason_for_request": {
+   "label": "Qual é o motivo da sua solicitação?"
+  }
+ },
+ "remover": {
+  "observation": "visual",
+  "v_ticket_number": "oferta_inativa"
+ },
+ "policies": {
+  "0a10c6733b957690b28dd047f4e45a6e": "remover",
+  "b02101f73b9c4710b28dd047f4e45a21": {
+   "conditions": "service_offering=b78ff0733b9c4710b28dd047f4e45a16",
+   "actions": {
+    "reason_for_request": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Vale-compras Assaí",
+   "short_description": "Reportar não recebimento do vale-compras Assaí ou divergência na cesta de Natal.",
+   "description": "Use quando você não recebeu o crédito do vale-compras Assaí ou o valor da cesta de Natal veio diferente do esperado. Atende as ofertas Não recebimento do vale-compras Assaí e Divergência no valor recebido da cesta de Natal.",
+   "frases_exemplo": [
+    "Não recebi meu vale-compras Assaí",
+    "O valor da cesta de Natal veio errado",
+    "Meu crédito do vale-compras não caiu",
+    "Cesta de Natal com valor diferente do combinado"
+   ],
+   "sem_policies": [
+    "b02101f73b9c4710b28dd047f4e45a21"
+   ]
+  }
+ ],
+ "scripts": {
+  "812a01693b15b650b28dd047f4e45a78": {
+   "remover": {
+    "outro": "só limpa campos ao trocar a oferta; coberto pela estrutura dos derivados"
+   }
+  }
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "sys_id": "52fcdbca1b0f241032822170f54bcbb5",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de correção de cadastro de afastamento.",
+ "vars": {
+  "rh_away_days": {
+   "label": "Dias de Afastamento"
+  },
+  "rh_last_job_date": {
+   "label": "Data do último dia trabalhado"
+  },
+  "rh_date_time_expertise": {
+   "label": "Data e horário da perícia"
+  },
+  "rh_info_job_return": {
+   "label": "Informar se houve retorno ao trabalho no caso de colaborador ponto livre"
+  },
+  "rh_center_cost_impacted": {
+   "label": "Centro de custo do impactado"
+  },
+  "rh_number_request_expertise": {
+   "label": "Número do requerimento da marcação de perícia"
+  },
+  "rh_date_expertise_medical": {
+   "label": "Data da realização da perícia"
+  },
+  "rh_date_correct_move_away": {
+   "label": "Data correta do afastamento"
+  },
+  "rh_store_name": {
+   "label": "Nome da loja do impactado"
+  },
+  "rh_benefit_number": {
+   "label": "Nº do benefício"
+  },
+  "rh_phone_number": {
+   "label": "Telefone atualizado do impactado com DDD"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_observation_2": "visual",
+  "rh_observation_4": "visual",
+  "rh_observation_6": "visual",
+  "rh_observation_1": "visual",
+  "rh_observation_3": "visual",
+  "rh_observation_5": "visual",
+  "rh_observation": "visual",
+  "rh_container_init": "visual"
+ },
+ "policies": {
+  "050d530e1b0f241032822170f54bcb1d": {
+   "conditions": "service_offering=f5d1af541b47649032822170f54bcb05",
+   "actions": {
+    "rh_number_request_expertise": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_date_time_expertise": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "0a9c1d5b1b832450eca40dcbe54bcb5f": "remover",
+  "450d530e1b0f241032822170f54bcb1a": {
+   "conditions": "service_offering=7dd1af541b47649032822170f54bcb01",
+   "actions": {
+    "rh_date_correct_move_away": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_away_days": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "4d7cd91b1b832450eca40dcbe54bcbf1": "remover",
+  "850d530e1b0f241032822170f54bcb17": {
+   "conditions": "service_offering=65d16f541b47649032822170f54bcbdf",
+   "actions": {
+    "rh_last_job_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "rh_info_job_return": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "8dcc159b1b832450eca40dcbe54bcb40": "remover"
+ },
+ "itens": [
+  {
+   "name": "Afastamento - Atualização (Medicina do trabalho - servico)",
+   "short_description": "Afastamento - Atualização",
+   "description": "Afastamento - Atualização",
+   "frases_exemplo": [
+    "Envio de comunicação de decisão do INSS",
+    "Envio de dados de agendamento perícia",
+    "Envio de documento de recurso/processo judicial",
+    "Solicitação de aposentadoria por invalidez",
+    "Solicitação de aviso de volta ao trabalho (AVT)"
+   ],
+   "sem_vars": [
+    "rh_away_days",
+    "rh_date_correct_move_away"
+   ],
+   "sem_policies": [
+    "450d530e1b0f241032822170f54bcb1a"
+   ]
+  },
+  {
+   "name": "Afastamento - Atualização (Medicina do trabalho - problema)",
+   "short_description": "Afastamento - Atualização",
+   "description": "Afastamento - Atualização",
+   "frases_exemplo": [
+    "Solicitação de correção de cadastro de afastamento"
+   ],
+   "sem_vars": [
+    "especie_do_beneficio_e_b91",
+    "rh_last_job_date",
+    "rh_date_time_expertise",
+    "rh_info_job_return",
+    "rh_number_request_expertise"
+   ],
+   "vars": {
+    "rh_away_days": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_center_cost_impacted": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_expertise_medical": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_date_correct_move_away": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_store_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_benefit_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_phone_number": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "050d530e1b0f241032822170f54bcb1d",
+    "090d530e1b0f241032822170f54bcb11",
+    "450d530e1b0f241032822170f54bcb1a",
+    "850d530e1b0f241032822170f54bcb17",
+    "9784ad071bfd861432822170f54bcb43",
+    "b1f2dfbe1ba20254347221bbe54bcb82",
+    "c50d530e1b0f241032822170f54bcb14",
+    "e6b5959b1b432450eca40dcbe54bcb70"
+   ]
+  }
+ ]
+}

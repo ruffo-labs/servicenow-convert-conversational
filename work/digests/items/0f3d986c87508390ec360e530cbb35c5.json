@@ -1,0 +1,180 @@
+{
+ "sys_id": "0f3d986c87508390ec360e530cbb35c5",
+ "name": "Celebrações e Eventos da Jornada da pessoa Colaboradora",
+ "sys_name": "Celebrações e Eventos da Jornada da pessoa Colaboradora",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Celebrações e Eventos da Jornada do Colaborador",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Informações ou Dúvidas Relacionadas a Celebrações e Eventos da Jornada da pessoa Colaboradora",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "8",
+   "bloqueadores": "1",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Add Option"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @more_info_text_item: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Celebrações e Eventos. Ramifica conforme a resposta 'para quem é a solicitação': sendo 'for_me', usa a variável do próprio colaborador como requested_for; caso contrário usa a variável da outra pessoa. Grava current.item nos dois ramos.",
+ "variaveis": [
+  {
+   "name": "more_info_text_item",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "who_is_this_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Who is this request for?",
+   "include_none": true,
+   "choices": [
+    "For me [=for_me]",
+    "To another colleague [=to_another_colleague]"
+   ]
+  },
+  {
+   "name": "employee_name_for_me",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee Name",
+   "default": "javascript:gs.getUserID();",
+   "reference": "sys_user"
+  },
+  {
+   "name": "employee_name_to_other_colleague",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee Name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "type_of_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of request?",
+   "reference": "sys_user",
+   "include_none": true,
+   "choices": [
+    "Complaints [=complaints]",
+    "Questions [=questions]",
+    "Suggestions [=suggestions]"
+   ]
+  },
+  {
+   "name": "select_the_celebration_event_below",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the celebration and/or event below",
+   "reference": "sys_user",
+   "include_none": true,
+   "choices": [
+    "Children's Day [=children_day]",
+    "Pregnant Women's Gathering [=pregnant_women_gathering]",
+    "Nursery Closing Ceremony [=nursery_closing_ceremony]",
+    "Family Party [=family_party]",
+    "End-of-Year Celebrations [=end_of_year_celebrations]",
+    "Wellness Week [=wellness_week]",
+    "Other [=other]"
+   ]
+  },
+  {
+   "name": "please_describe_the_celebration_event",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Please describe the celebration and/or event",
+   "reference": "sys_user",
+   "include_none": true
+  },
+  {
+   "name": "use_field_below_to_provide",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to provide details about your request",
+   "reference": "sys_user",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Aoop: Hide some fields at resolver view",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "more_info_text_item: visible=false"
+   ]
+  },
+  {
+   "name": "Aoop: Set some fields mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "use_field_below_to_provide: mandatory=true",
+    "select_the_celebration_event_below: mandatory=true",
+    "who_is_this_request_for: mandatory=true",
+    "type_of_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: This request is for me",
+   "when": "IO:who_is_this_request_for=for_me^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_name_for_me: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show field Please describe the event, if the choice option was selected as other",
+   "when": "IO:select_the_celebration_event_below=other^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "please_describe_the_celebration_event: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Aoop: This request is to another colleague",
+   "when": "IO:who_is_this_request_for=to_another_colleague^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_name_to_other_colleague: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Add Option",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que acrescenta a opção 'Celebrações de Pais e Mães' à lista, apenas quando o idioma do usuário é português ('pb'). Opção condicionada a idioma, não a país."
+  }
+ ]
+}

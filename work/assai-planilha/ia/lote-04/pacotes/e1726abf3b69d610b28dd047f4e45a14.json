@@ -1,0 +1,259 @@
+{
+ "sys_id": "e1726abf3b69d610b28dd047f4e45a14",
+ "name": "Processos internos de rescisão",
+ "category": "Processos internos - Gestão de Gente",
+ "short_description": "Solicitações relacionadas à Rescisão",
+ "description": "Solicita&ccedil;&otilde;es relacionadas &agrave; Rescis&atilde;o",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rhvs_company_impacted",
+    "rhvs_function_imp_inf",
+    "rhvs_user_id_impacted",
+    "rhvs_result_center",
+    "rhvs_department_rh",
+    "rhvs_locality_rh",
+    "rhvs_date_entry",
+    "rhvs_cpf_impacted",
+    "rhvs_local_cnpj",
+    "rhvs_not_found_collaborator",
+    "rhvs_cpf_impacted_wth_mask",
+    "rhvs_requested_for",
+    "rhvs_city_impacted",
+    "rhvs_email_impacted"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Processo Internos - Gestão de Gente",
+    "item": "Processos internos de Rescisão"
+   },
+   "ofertas": [
+    {
+     "name": "Acordos e Sentenças",
+     "sla": "SLA - GESTÃO DE GENTE - 240H",
+     "grupo_suporte": "RH - Desligamento N3"
+    },
+    {
+     "name": "Reprocessamento de Folha de Pagamento",
+     "sla": "SLA - GESTÃO DE GENTE - 80H",
+     "grupo_suporte": "RH - Reprocessamento "
+    },
+    {
+     "name": "Solicitação de dispensa judicial",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Desligamento N3"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 240H",
+     "SLA - GESTÃO DE GENTE - 80H",
+     "SLA - GESTÃO DE GENTE - 32H"
+    ],
+    "support_group": [
+     "RH - Desligamento N3",
+     "RH - Reprocessamento "
+    ],
+    "u_user_criteria": [
+     "",
+     "Ocultar - Reprocessamento de Folha de Pagamento "
+    ]
+   },
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Acordos e sentenças ou reprocessamento de folha",
+     "description": "Use para processos internos de rescisão: Acordos e Sentenças ou Reprocessamento de Folha de Pagamento. Informe modalidade do desligamento, datas e documentos conforme o caso."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "coordenador_de_rh_responsavel",
+   "type": "Referência",
+   "question_text": "Coordenador de RH responsável",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o coordenador de RH responsável?"
+  },
+  {
+   "name": "existe_pagamento_de_multa_fgts_em_conta_vinculada",
+   "type": "Sim/Não",
+   "question_text": "Existe pagamento de multa FGTS em conta vinculada?",
+   "choices": [],
+   "label_atual": "Existe pagamento de multa do FGTS em conta vinculada?"
+  },
+  {
+   "name": "modalidade_do_desligamento",
+   "type": "Selecionar Caixa",
+   "question_text": "Modalidade do desligamento",
+   "choices": [
+    "Desligamento sem justa causa",
+    "Pedido de Demissão (TRCT zerado)",
+    "Pedido de desligamento",
+    "Rescisão Indireta",
+    "Dispensa sem Justa Causa (TRCT zerado)",
+    "Dispensa por Justa Causa (Pagamento em FOPAG)",
+    "Dispensa por Justa Causa (TRCT Zerada)",
+    "Pedido de Demissão (Pagamento em FOPAG)",
+    "Pedido de Demissão (TRCT zerado)",
+    "Término de contrato (Período de experiência)",
+    "Desligamento com justa causa",
+    "Dispensa por Justa Causa (Pagamento em FOPAG)",
+    "Dispensa sem Justa Causa (Pagamento em FOPAG)",
+    "Pedido de Demissão (Pagamento em FOPAG)",
+    "Término de contrato (Aprendiz)"
+   ],
+   "label_atual": "Qual foi a modalidade do desligamento?"
+  },
+  {
+   "name": "ata_da_audiencia",
+   "type": "Anexo",
+   "question_text": "Ata da Audiência",
+   "choices": [],
+   "label_atual": "Envie a ata da audiência."
+  },
+  {
+   "name": "e_mail_do_rh",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail do RH Ponta",
+   "choices": [],
+   "label_atual": "Qual é o e-mail do RH Ponta?"
+  },
+  {
+   "name": "indirect_termination",
+   "type": "Selecionar Caixa",
+   "question_text": "Rescisão Indireta?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "e_necessario_retificar_os_dados",
+   "type": "Sim/Não",
+   "question_text": "É necessário retificar os dados?",
+   "choices": [],
+   "label_atual": "Você precisa retificar os dados?"
+  },
+  {
+   "name": "data_de_retorno",
+   "type": "Data",
+   "question_text": "Data de retorno",
+   "choices": [],
+   "label_atual": "Qual é a data de retorno?"
+  },
+  {
+   "name": "what_action_should_be_performed",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual ação deve ser realizada?",
+   "choices": [
+    "Dispensa sem justa causa",
+    "Suspensão de contrato"
+   ]
+  },
+  {
+   "name": "houve_pedido_de_rescisao_indireta",
+   "type": "Sim/Não",
+   "question_text": "Houve pedido de rescisão indireta?",
+   "choices": [],
+   "label_atual": "Houve pedido de rescisão indireta?"
+  },
+  {
+   "name": "data_da_baixa_na_ctps",
+   "type": "Data",
+   "question_text": "Data da baixa na CTPS",
+   "choices": [],
+   "label_atual": "Qual é a data da baixa na CTPS?"
+  },
+  {
+   "name": "ficha_de_registro",
+   "type": "Anexo",
+   "question_text": "Ficha de Registro",
+   "choices": [],
+   "label_atual": "Envie a ficha de registro."
+  },
+  {
+   "name": "necessario_encaminhar_os_documentos_rescisorios",
+   "type": "Sim/Não",
+   "question_text": "Necessário encaminhar os documentos rescisórios?",
+   "choices": [],
+   "label_atual": "Você precisa encaminhar os documentos rescisórios?"
+  }
+ ],
+ "tecnicas_ocultas": [
+  "v_parent_record",
+  "condicao_do_flow"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "5ce57ce93b184f50b28dd047f4e45ab9",
+   "name": "CAP - Existe pagamento de multa",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da pergunta de multa do FGTS, se a resposta for 'Yes', mostra uma dica no campo pedindo para descrever se a multa será de 40% ou o valor determinado pelo juiz; senão esconde a dica."
+  },
+  {
+   "sys_id": "88e729543be72a10b28dd047f4e45aae",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "95e72d143be72a10b28dd047f4e45a4c",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "d51ea8e13bd44f50b28dd047f4e45aed",
+   "name": "CAP - Data de retorno",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de data_de_retorno, converte a data usando o formato de data do usuário; se for anterior a hoje, limpa o campo e mostra 'A data de retorno não pode ser anterior à data atual.'."
+  }
+ ]
+}

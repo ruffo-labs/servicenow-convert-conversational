@@ -1,0 +1,160 @@
+{
+ "sys_id": "1d7ecc1c1be41a90514cbaef4b4bcba7",
+ "status": "dividido",
+ "motivo": "O item está bloqueado para conversa (widget custom mrvs_monitor tipo 14, e client scripts sem VA Supported ligados ao fluxo de inclusão de dependentes). Seguindo a 1ª análise, dividimos em 3: o fluxo de adesão/inclusão de dependentes continua como formulário não conversacional (evita os bloqueios do widget e do set de dependentes), e troca de plano e exclusão de dependente viram conversas simples, sem os sets e sem os elementos visuais/anexo que só fazem sentido no formulário de adesão.",
+ "vars": {
+  "type_of_request": {
+   "label": "Qual é o tipo de solicitação?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "apply_to_your_dependents": {
+   "label": "Esta solicitação é para algum dependente seu?"
+  },
+  "attach_form": {
+   "label": "Envie o formulário de seguro complementar preenchido"
+  },
+  "mrvs_monitor": {
+   "label": "Quais são os dados dos dependentes a incluir no seguro?"
+  },
+  "checkbox_one": {
+   "label": "Você confirma que conhece as condições contratuais desta solicitação?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "checkbox_two": {
+   "label": "Você assume responsabilidade pela veracidade das informações deste formulário?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "details": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "nova_confirmacao_declaracoes": {
+   "nova": {
+    "type": "1",
+    "question_text": "Você confirma que conhece as condições do contrato e que as informações são verdadeiras?",
+    "mandatory": true,
+    "order": 1250
+   }
+  },
+  "nova_dependentes_excluir": {
+   "nova": {
+    "type": "2",
+    "question_text": "Quais dependentes devem ser excluídos do seguro?",
+    "mandatory": true,
+    "order": 300
+   }
+  },
+  "nova_motivo_exclusao": {
+   "nova": {
+    "type": "2",
+    "question_text": "Qual o motivo da exclusão?",
+    "mandatory": true,
+    "order": 310
+   }
+  }
+ },
+ "policies": {
+  "3715892e1b2cda10514cbaef4b4bcb06": "remover",
+  "797469ad3ba85610924d0247f4e45acc": "remover",
+  "82e565613be85610924d0247f4e45add": "remover",
+  "7b3f1d8b3b11d210924d0247f4e45a30": "remover"
+ },
+ "scripts": {
+  "5cf429d23b8a5e50924d0247f4e45aad": {
+   "remover": "sem_efeito"
+  },
+  "bd0f55da3b0a5e50924d0247f4e45ac4": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "flags": {
+    "make_item_non_conversational": true
+   },
+   "sem_vars": [
+    "details",
+    "nova_confirmacao_declaracoes",
+    "nova_dependentes_excluir",
+    "nova_motivo_exclusao"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "type_of_request": "plan_change"
+   },
+   "sem_vars": [
+    "FAQs",
+    "mrvs_monitor",
+    "apply_to_your_dependents",
+    "legend_one",
+    "select_the_dependent",
+    "template",
+    "legend_attach",
+    "attach_form",
+    "v_container_start",
+    "checkbox_one",
+    "v_container_start_midle",
+    "checkbox_two",
+    "nova_dependentes_excluir",
+    "nova_motivo_exclusao"
+   ],
+   "sem_sets": [
+    "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+    "62cbed6d3be85610924d0247f4e45a0b"
+   ],
+   "sem_policies": [
+    "081bbd753b601a10924d0247f4e45a4a",
+    "1ff065d23b4a5e50924d0247f4e45ac4",
+    "207867f33bdd9a10924d0247f4e45a9f",
+    "2317eb7f3b9d9a10924d0247f4e45a8a",
+    "458aa3bb3bdd9a10924d0247f4e45a36",
+    "ba5482693bac5610924d0247f4e45af1",
+    "ebeec92d3be45610924d0247f4e45a42"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "type_of_request": "termination_dependents"
+   },
+   "sem_vars": [
+    "FAQs",
+    "mrvs_monitor",
+    "apply_to_your_dependents",
+    "legend_one",
+    "select_the_dependent",
+    "template",
+    "legend_attach",
+    "attach_form",
+    "v_container_start",
+    "checkbox_one",
+    "v_container_start_midle",
+    "checkbox_two",
+    "details"
+   ],
+   "sem_sets": [
+    "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+    "62cbed6d3be85610924d0247f4e45a0b"
+   ],
+   "sem_policies": [
+    "081bbd753b601a10924d0247f4e45a4a",
+    "1ff065d23b4a5e50924d0247f4e45ac4",
+    "207867f33bdd9a10924d0247f4e45a9f",
+    "2317eb7f3b9d9a10924d0247f4e45a8a",
+    "458aa3bb3bdd9a10924d0247f4e45a36",
+    "ba5482693bac5610924d0247f4e45af1",
+    "ebeec92d3be45610924d0247f4e45a42"
+   ]
+  }
+ ]
+}

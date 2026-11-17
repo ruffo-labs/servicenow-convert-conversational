@@ -1,0 +1,225 @@
+{
+ "sys_id": "7fd2d33987beb214ec360e530cbb35cf",
+ "name": "Solicitação de Pagamento Via SPR",
+ "sys_name": "Payment Request via SPR",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": {
+  "_display_value": "PTP_",
+  "__text": "bfa3add11b95e118d1abda4ce54bcbfc"
+ },
+ "short_description": "Criação de form para o fluxo de SPR - Pagamento Manual",
+ "description": "Solicitações de pagamentos manuais: impostos, taxas, processos jurídicos e judiciais.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "17",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "17"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_support_documentation: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_approval_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_form_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_here_spr_form: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_supplier: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_supplier_number: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_select_the_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_requesters_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 17 de 17 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Pagamento Via SPR. Faz só o mínimo: grava x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_info_about_spr",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Only one SPR request is allowed per ticket!"
+  },
+  {
+   "name": "v_emission_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Emission date"
+  },
+  {
+   "name": "v_accounting_only",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Apenas Contabilização"
+  },
+  {
+   "name": "v_supplier",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Supplier",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_ptp.EY_PTPUtils().getSupplierAvon(current.variables.vs_which_sub_company);"
+  },
+  {
+   "name": "v_supplier_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier's number",
+   "reference": "sn_customerservice_supplier_case"
+  },
+  {
+   "name": "v_payment_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Payment amount"
+  },
+  {
+   "name": "v_currency",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Currency",
+   "reference": "fx_currency"
+  },
+  {
+   "name": "v_payday",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Payday"
+  },
+  {
+   "name": "v_spr_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "SPR Number"
+  },
+  {
+   "name": "v_additional_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Detalhes Adicionais"
+  },
+  {
+   "name": "v_approval_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Approval attachment"
+  },
+  {
+   "name": "v_form_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download the form template here for filling out",
+   "read_only": true
+  },
+  {
+   "name": "v_attach_here_spr_form",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here the filled Global SPR form"
+  },
+  {
+   "name": "v_support_documentation",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach here any support documentation"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "4ab31bf987beb214ec360e530cbb354b",
+   "name": "EY VS - Requisição SPR",
+   "order": "100",
+   "perguntas": [
+    "vs_for_who (Selecionar Caixa): Who is the request for?",
+    "vs_select_the_collaborator (Referência, ro): Select the collaborator",
+    "vs_requesters_name (Referência): Requester's name",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company (Referência): Which sub-company is the request for?"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Check if the request is for Another user",
+   "when": "IO:vs_for_who=another_user^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_the_collaborator: visible=true,readonly=false"
+   ]
+  },
+  {
+   "name": "EY: Set variables to mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_here_spr_form: mandatory=true",
+    "vs_requesters_name: readonly=true",
+    "vs_which_company: mandatory=true",
+    "v_approval_attachment: mandatory=true",
+    "v_payday: mandatory=true",
+    "v_support_documentation: mandatory=false",
+    "v_supplier_number: readonly=true",
+    "v_spr_number: mandatory=true",
+    "v_info_about_spr: mandatory=true",
+    "v_emission_date: mandatory=true",
+    "v_payment_amount: mandatory=true",
+    "v_currency: mandatory=true",
+    "vs_which_sub_company: mandatory=true",
+    "v_supplier: ",
+    "vs_for_who: mandatory=true",
+    "v_form_template: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set Supplier Code",
+   "type": "onChange",
+   "on": "d3dd1b3d8772f214ec360e530cbb3580",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o código do fornecedor. Chama o Script Include EY_PTPUtils, método getSupplierCode, via GlideAjax, e preenche o campo com o retorno."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "1da123b987f2f214ec360e530cbb3500",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o valor do pagamento aceitando apenas dígitos, ponto e vírgula. Inválido: limpa 'v_payment_amount' e mostra mensagem traduzida via getMessage com callback. Observação: a linha `var regex = regex = /.../` faz atribuição dupla — funciona, mas é erro de digitação."
+  },
+  {
+   "name": "EY: Set requester name based on collabor",
+   "type": "onChange",
+   "on": "2344d37d87beb214ec360e530cbb35b2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que copia o colaborador selecionado para o campo de nome do solicitante."
+  },
+  {
+   "name": "EY: Cant select a payday before today",
+   "type": "onChange",
+   "on": "dc79eb7187b6f214ec360e530cbb3528",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que impede data de pagamento no passado. Zera as horas de hoje para comparar só a data e, se a data escolhida for anterior, rejeita. Validação de regra de negócio, não de formato."
+  },
+  {
+   "name": "EY: Set Requester name",
+   "type": "onChange",
+   "on": "ffc3d3f987beb214ec360e530cbb353d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que, ao escolher 'for_me', preenche tanto o nome do solicitante quanto o colaborador selecionado com o usuário logado; caso contrário, libera os campos para escolha manual."
+  }
+ ]
+}

@@ -1,0 +1,142 @@
+{
+ "sys_id": "91f83d788747be10017d65790cbb3540",
+ "name": "Solicitação de Alteração de Custo Padrão (Materiais Produtivos)",
+ "sys_name": "Request for Standard Cost Change (Productive Materials)",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Estoques e Custos",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicitar alteração do custo de Materiais Produtivos",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "17",
+   "variaveis_ativas": "18",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "17"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_select_the_innovation_finance_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_select_the_engineering_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_select_the_marketing_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 17 de 17 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_applicant_area",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Applicant's area"
+  },
+  {
+   "name": "v_type_of_change",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of change",
+   "include_none": true,
+   "choices": [
+    "Internal Production [=internal_production]",
+    "Third-Party Production [=thirdparty_production]"
+   ]
+  },
+  {
+   "name": "v_select_the_marketing_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the Marketing approver according to the material category",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_select_the_innovation_finance_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the Innovation Finance approver according to the material category",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_select_the_engineering_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the Engineering approver according to the material category",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_important_warning_label",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Important: only up to 10 materials can be sent for modification per request"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "55e3c9e887837a10017d65790cbb35d4",
+   "name": "EY: Informação do solicitante",
+   "order": "100",
+   "perguntas": [
+    "opened_by (Referência, default, ro): Opened By",
+    "request_for_who (Selecionar Caixa): Request for who?",
+    "employee (Referência): Employee's name"
+   ]
+  },
+  {
+   "sys_id": "40d87ef087c33250017d65790cbb35ca",
+   "name": "Insira aqui os dados dos materiais a serem alterados",
+   "order": "800",
+   "perguntas": [
+    "vs_material_type (Texto de Linha Única): Material Type",
+    "vs_material_code (Texto de Linha Única): Material Code",
+    "vs_material_description (Texto de Linha Única): Material Description",
+    "vs_center_country (Texto de Linha Única): Center/Country",
+    "vs_current_cost (Texto de Linha Única): Current Cost",
+    "vs_new_cost (Texto de Linha Única): New cost",
+    "vs_variation (Texto de Linha Única): Variation",
+    "vs_unit_of_measurement (Texto de Linha Única): Unit of measurement",
+    "vs_reason_for_change (Texto de Linha Única): Reason for change"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Set Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_change: mandatory=true",
+    "v_select_the_marketing_approver: mandatory=true",
+    "request_for_who: mandatory=true",
+    "v_applicant_area: mandatory=true",
+    "employee: mandatory=true",
+    "v_select_the_engineering_approver: visible=false",
+    "ey_enter_here_the_data_of_the_materials_to_be_changed: mandatory=true",
+    "v_select_the_innovation_finance_approver: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set visibility of engineer based on v_Type_of_change",
+   "when": "IO:v_type_of_change=internal_production^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_engineering_approver: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

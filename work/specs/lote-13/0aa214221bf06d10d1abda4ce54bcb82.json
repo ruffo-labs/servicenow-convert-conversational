@@ -1,0 +1,75 @@
+{
+ "sys_id": "0aa214221bf06d10d1abda4ce54bcb82",
+ "status": "conversacional",
+ "motivo": "Intenção única (alterar limite do cartão) com perguntas condicionais claras via UI policies existentes. País é derivado da empresa (script convertido em default_value) e sai da conversa; elementos visuais (labels/container) são removidos.",
+ "vars": {
+  "v_country": {
+   "props": {
+    "hidden": true,
+    "read_only": true,
+    "default_value": "javascript:new x_nasm_finance.EY_DataFinanceUtils().getCountry(current.variables.vs_company)"
+   }
+  },
+  "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_which_audience_does_the_card_holder_have": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_type_of_change_to_make": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_value_of_the_new_requested_limit": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{1,3}(\\.\\d{3})*,\\d{2}$"
+   }
+  },
+  "v_enter_the_reason_for_the_limit_change_request": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_label_if_have_questions_click_here": "visual",
+  "v_the_limit_of_the_corporate_card": "visual",
+  "v_label_template_download": "visual"
+ },
+ "policies": {
+  "886485b21b70a150d1abda4ce54bcb45": "remover",
+  "beca84b31b0129d4a530426fe54bcbaa": "remover",
+  "de1121661bf4ad10d1abda4ce54bcb2e": {
+   "conditions": "v_will_the_change_be_made_for_an_individual_employee_or_a_group_of_employees=v_employee_group",
+   "actions": {
+    "v_attach_the_request_template_for_changing_the_corporate_card_limit": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "278278921b55e910d1abda4ce54bcb0b": {
+   "remover": "sem_efeito"
+  },
+  "ace4c1e61bfc6d10d1abda4ce54bcb4a": {
+   "converter": "auto_populate"
+  },
+  "c99f305a1b59e910d1abda4ce54bcb14": {
+   "converter": "regex"
+  },
+  "dc22b0121b55e910d1abda4ce54bcb07": {
+   "remover": "sem_efeito"
+  },
+  "ed6f6cde1bd1e910d1abda4ce54bcb93": {
+   "remover": "sem_efeito"
+  }
+ }
+}

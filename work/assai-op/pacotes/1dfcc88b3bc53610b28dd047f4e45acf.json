@@ -1,0 +1,428 @@
+{
+ "sys_id": "1dfcc88b3bc53610b28dd047f4e45acf",
+ "name": "Vale-transporte (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Vale-transporte",
+ "description": "Solicita&ccedil;&otilde;es referentes ao vale-transporte",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados do reembolso de vale-transporte",
+   "perguntas": [
+    "v_utilization_start_date",
+    "v_number_fares_per_day",
+    "v_itinerary_code",
+    "v_describe_in_details_need_refund",
+    "v_utilization_end_date",
+    "v_utilization_month",
+    "v_value_of_fare",
+    "v_employee_name",
+    "v_total_value_of_reimbursement",
+    "v_employee_registration_number"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no valor do desconto do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "passa_a_obrigatoria": [
+    "v_payment_statement",
+    "v_reference_month"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte (Limpar Valor) - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Divergência no valor dos créditos do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired"
+   ],
+   "passa_a_obrigatoria": [
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_reference_month",
+    "v_transportation_voucher_card_number",
+    "v_transport_operator"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Afastamento ou Férias? - Divergência no valor dos créditos do vale-transporte",
+     "quando": "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing=v_yes"
+    },
+    {
+     "policy": "ALP - Afastamento ou Férias? (Limpar Valor) - Divergência no valor dos créditos do vale-transporte",
+     "quando": "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing=v_yes"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Não recebimento do valor dos créditos do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_depart_or_vacation",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form"
+   ],
+   "passa_a_obrigatoria": [
+    "v_disponibilization_method"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Houve alteração, cancelamento de férias ou retorno de afastamento? - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Operadora de transporte (Limpar Valor) - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - (Botao) - Extrato bancário  (Limpar Valor) - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_checking_account"
+    },
+    {
+     "policy": "ALP - Mês de referência - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte - Divergência no valor do desconto do vale-transporte",
+     "quando": "v_disponibilization_methodINv_credit_on_card,v_checking_account"
+    },
+    {
+     "policy": "ALP - Itinerário não recebido (Limpar Valor) - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_methodINv_credit_on_card,v_checking_account"
+    },
+    {
+     "policy": "ALP - Colaborador(a) é recém-admitido(a)? (Limpar Valor) - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_checking_account"
+    },
+    {
+     "policy": "ALP - Observacao (Extrato Bancario) - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_checking_account"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card^NQv_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte (Limpar Valor) - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card^NQv_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Itinerário não recebido - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_methodINv_credit_on_card,v_checking_account"
+    },
+    {
+     "policy": "ALP - Colaborador(a) é recém-admitido(a)? - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_checking_account"
+    },
+    {
+     "policy": "ALP - (Botao) - Extrato bancário - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_checking_account"
+    },
+    {
+     "policy": "ALP - Operadora de transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    }
+   ]
+  },
+  {
+   "k": 3,
+   "ofertas": [
+    {
+     "name": "Solicitação de cancelamento do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_reference_month",
+    "v_is_newly_hired",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "passa_a_obrigatoria": [
+    "v_cancelation_form"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte (Limpar Valor) - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    }
+   ]
+  },
+  {
+   "k": 4,
+   "ofertas": [
+    {
+     "name": "Solicitação de inclusão ou alteração de vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_reference_month",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "passa_a_obrigatoria": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_which_solution"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - É recém-admitido? (Limpar Valor) - Solicitação de inclusão ou alteração de vale-transporte",
+     "quando": "v_which_solution=v_new_solicitation_transportation_voucher"
+    },
+    {
+     "policy": "ALP - É necessário reembolso? (Limpar Valor) - Solicitação de inclusão ou alteração de vale-transporte",
+     "quando": "v_which_solution=v_new_solicitation_transportation_voucher^v_is_newly_hired=v_yes^NQv_which_solution=v_change_transportation_voucher_due_change_work_address^ORv_which_solution=v_change_transportation_voucher_due_incorrect_request"
+    },
+    {
+     "policy": "ALP - É necessário reembolso? - Solicitação de inclusão ou alteração de vale-transporte",
+     "quando": "v_which_solution=v_new_solicitation_transportation_voucher^v_is_newly_hired=v_yes^NQv_which_solution=v_change_transportation_voucher_due_change_work_address^ORv_which_solution=v_change_transportation_voucher_due_incorrect_request"
+    },
+    {
+     "policy": "ALP - VS. Dados do reembolso de vale-transporte - Solicitação de inclusão ou alteração de vale-transporte",
+     "quando": "v_which_solution=v_new_solicitation_transportation_voucher^v_is_refund_necessary=v_yes^v_is_newly_hired=v_yes^NQv_which_solution=v_change_transportation_voucher_due_change_work_address^ORv_which_solution=v_change_transportation_voucher_due_incorrect_request^v_is_refund_necessary=v_yes"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - Numero do cartao do vale-transporte (Limpar Valor) - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+     "quando": "v_disponibilization_method=v_credit_on_card"
+    },
+    {
+     "policy": "ALP - É recém-admitido? - Solicitação de inclusão ou alteração de vale-transporte",
+     "quando": "v_which_solution=v_new_solicitation_transportation_voucher"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_form_inclusion_update_transportation_voucher",
+   "type": "Anexo",
+   "question_text": "Formulário de inclusão ou alteração de vale-transporte",
+   "choices": []
+  },
+  {
+   "name": "v_is_refund_necessary",
+   "type": "Selecionar Caixa",
+   "question_text": "É necessário reembolso?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "v_payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": []
+  },
+  {
+   "name": "v_bank_statement",
+   "type": "Anexo",
+   "question_text": "Extrato bancário",
+   "choices": []
+  },
+  {
+   "name": "v_disponibilization_method",
+   "type": "Selecionar Caixa",
+   "question_text": "Forma de disponibilização",
+   "choices": [
+    "Créditos no cartão",
+    "Conta corrente"
+   ]
+  },
+  {
+   "name": "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve alteração, cancelamento de férias ou retorno de afastamento?",
+   "choices": [
+    "Não",
+    "Sim"
+   ]
+  },
+  {
+   "name": "v_depart_or_vacation",
+   "type": "Selecionar Caixa",
+   "question_text": "Afastamento ou Férias?",
+   "choices": [
+    "Férias",
+    "Afastamento"
+   ]
+  },
+  {
+   "name": "v_itinerary_not_received",
+   "type": "Texto de Linha Única",
+   "question_text": "Itinerário não recebido",
+   "choices": []
+  },
+  {
+   "name": "v_which_solution",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Alteração de vale-transporte devido aumento de tarifa",
+    "Alteração de vale-transporte devido mudança de local de trabalho",
+    "Alteração de vale-transporte devido mudança de endereço residencial",
+    "Nova solicitação de vale-transporte",
+    "Alteração de vale-transporte devido solicitação incorreta"
+   ]
+  },
+  {
+   "name": "v_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Março",
+    "Junho",
+    "Novembro",
+    "Fevereiro",
+    "Janeiro",
+    "Maio",
+    "Agosto",
+    "Julho",
+    "Setembro",
+    "Outubro",
+    "Abril",
+    "Dezembro"
+   ]
+  },
+  {
+   "name": "v_is_newly_hired",
+   "type": "Selecionar Caixa",
+   "question_text": "É recém-admitido?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "v_transportation_voucher_card_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do cartão do vale-transporte",
+   "choices": []
+  },
+  {
+   "name": "v_cancelation_form",
+   "type": "Anexo",
+   "question_text": "Formulário de cancelamento",
+   "choices": []
+  },
+  {
+   "name": "v_employee_is_newly_hired",
+   "type": "Selecionar Caixa",
+   "question_text": "Colaborador(a) é recém-admitido(a)?",
+   "choices": [
+    "Não",
+    "Sim"
+   ]
+  },
+  {
+   "name": "v_transport_operator",
+   "type": "Texto de Linha Única",
+   "question_text": "Operadora de transporte",
+   "choices": []
+  }
+ ],
+ "client_scripts": []
+}

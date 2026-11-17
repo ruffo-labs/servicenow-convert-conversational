@@ -1,0 +1,190 @@
+{
+ "sys_id": "02733af71bb43910d1abda4ce54bcb4c",
+ "name": "Emissão de Notas Fiscais de Industrialização",
+ "sys_name": "Issuance of Industrialization Invoices",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "",
+ "catalogs": "",
+ "short_description": "",
+ "description": "Solicitação de emissão de Nota Fiscal de remessa de Industrialização (Cobertura)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "12",
+   "bloqueadores": "2",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attachment"
+   }
+  ],
+  "avisos": [
+   "reference_qualifier @v_which_company_do_you_want_to_ship_to: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_pdf: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Emissao de Notas Fiscais de Industrializacao. Grava x_nasm_hr_item com o sysparm_id da URL e forca requested_for e opened_by para o usuario externo lido da system property 'x_nasm_tax.ey_user_external'. Diferente dos irmaos do TAX, nao trata o caso de usuario interno: TODO chamado deste item fica registrado no nome do usuario generico, mesmo quando aberto por alguem de dentro.",
+ "variaveis": [
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_cpf_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF or CNPJ"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact phone"
+  },
+  {
+   "name": "v_which_company_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Avon [=AVON Latam]",
+    "Natura"
+   ]
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which sub-company is the request from?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.v_which_company_is_your_request_for"
+  },
+  {
+   "name": "v_which_invoice_number_do_you_want_to_join",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which invoice number do you want to join?"
+  },
+  {
+   "name": "v_which_company_do_you_want_to_ship_to",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which company do you want to ship to?",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=true"
+  },
+  {
+   "name": "v_attach_pdf",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach Spreadsheet / PDF NF",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_attachment_confirmation",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Spreadsheet / PDF NF was attached in the field above?"
+  },
+  {
+   "name": "v_yes",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Yes"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_yes: mandatory=true",
+    "v_name: mandatory=true",
+    "v_cpf_cnpj: mandatory=true",
+    "v_email: mandatory=true",
+    "v_which_company_do_you_want_to_ship_to: mandatory=true",
+    "v_which_invoice_number_do_you_want_to_join: mandatory=true",
+    "v_which_company_is_your_request_for: mandatory=true",
+    "v_attachment: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clear subcompany",
+   "type": "onChange",
+   "on": "a83f9b1e1bcdb510a530426fe54bcbd3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_which_sub_company_is_the_request_from' quando o campo que o dispara muda. Variante praticamente idêntica a outro script do mesmo conjunto."
+  },
+  {
+   "name": "EY: Regex de Telefone ",
+   "type": "onChange",
+   "on": "f3b90e9e1b05b510a530426fe54bcb84",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida telefone com regex de formato brasileiro (DDI 55 opcional, DDD entre 11 e 99, número de 8 ou 9 dígitos). Sendo inválido, limpa 'v_phone' e exibe 'Telefone inválido' no campo."
+  },
+  {
+   "name": "EY: Regex Validation 9-1;3",
+   "type": "onChange",
+   "on": "3bf4f2bb1bb43910d1abda4ce54bcb8d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o numero da nota a juntar, exigindo 9 digitos, hifen e de 1 a 3 digitos. Invalido: limpa 'v_which_invoice_number_do_you_want_to_join' e mostra a mensagem com exemplos. Quarta variante do mesmo validador no catalogo TAX, mudando so o campo alvo."
+  },
+  {
+   "name": "EY: Regex de E-mail",
+   "type": "onChange",
+   "on": "339942de1b05b510a530426fe54bcb62",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail por regex. Sendo inválido, limpa 'v_email' e mostra 'E-mail Inválido' no campo."
+  },
+  {
+   "name": "EY: Regex CPF/CNPJ",
+   "type": "onChange",
+   "on": "1a7946de1b05b510a530426fe54bcb7a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita CPF OU CNPJ no mesmo campo, testando duas regex com o ponto corretamente escapado. Invalido nos dois formatos: limpa 'v_cpf_cnpj' e mostra mensagem com exemplo de cada formato. Valida apenas o FORMATO, sem conferir digitos verificadores."
+  }
+ ]
+}

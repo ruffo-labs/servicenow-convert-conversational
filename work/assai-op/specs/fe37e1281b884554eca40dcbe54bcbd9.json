@@ -1,0 +1,97 @@
+{
+ "sys_id": "fe37e1281b884554eca40dcbe54bcbd9",
+ "status": "dividido",
+ "motivo": "Mudança de Exames pede operadora, dados do candidato e data do exame; Auditoria de vidas e Reset de Senha não pedem esses campos.",
+ "vars": {
+  "what_is_the_operator": {
+   "label": "Qual é a operadora?"
+  },
+  "candidate_cpf": {
+   "label": "Qual é o CPF do candidato?"
+  },
+  "service_offering": {
+   "label": "O que você deseja?"
+  },
+  "candidate_name": {
+   "label": "Qual é o nome do candidato?"
+  },
+  "business_service": {
+   "label": "Qual é o serviço de negócio?"
+  },
+  "exam_data": {
+   "label": "Qual é a data do exame?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "start_1": "visual",
+  "formatter3": "visual",
+  "clinic_name": "oferta_inativa",
+  "formatter4": "visual",
+  "formatter2": "visual",
+  "start_2": "visual",
+  "clinic_address": "oferta_inativa"
+ },
+ "policies": {
+  "0af1f1a81b008554eca40dcbe54bcb19": "remover",
+  "2569dc6f1b82865032822170f54bcba8": "remover",
+  "3219106f1b82865032822170f54bcbfb": "remover",
+  "7fb85ceb1b82865032822170f54bcbfa": "remover",
+  "eb38d8ab1b82865032822170f54bcb09": "remover",
+  "f092b5a01b408554eca40dcbe54bcb2b": "remover"
+ },
+ "itens": [
+  {
+   "name": "Auditoria de vidas ou reset de senha do SOC",
+   "short_description": "Auditoria de vidas ou reset de senha no SOC",
+   "description": "Use para pedir auditoria de vidas ou reset de senha no sistema SOC. Corresponde às ofertas Auditoria de vidas e Reset de Senha, atendidas pelo RH - SOC.",
+   "frases_exemplo": [
+    "Preciso resetar minha senha do SOC",
+    "Esqueci a senha do SOC",
+    "Quero uma auditoria de vidas no SOC",
+    "Pedir auditoria de vidas",
+    "Não consigo entrar no SOC, resetar senha"
+   ],
+   "sem_vars": [
+    "what_is_the_operator",
+    "candidate_cpf",
+    "candidate_name",
+    "exam_data"
+   ]
+  },
+  {
+   "name": "Mudança de exames de candidato no SOC",
+   "short_description": "Mudança de exames no SOC",
+   "description": "Use para pedir mudança de exames de um candidato, informando operadora, dados do candidato e data do exame. Corresponde à oferta Mudança de Exames, atendida pelo RH - SOC.",
+   "frases_exemplo": [
+    "Preciso mudar os exames de um candidato",
+    "Alterar exame do candidato no SOC",
+    "Quero trocar a data do exame do candidato",
+    "Mudança de exames admissionais",
+    "Pedir alteração de exames"
+   ],
+   "vars": {
+    "what_is_the_operator": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "candidate_cpf": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "candidate_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "exam_data": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

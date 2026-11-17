@@ -1,0 +1,79 @@
+{
+ "sys_id": "d00642bf1bc8a11ca530426fe54bcbb0",
+ "status": "conversacional",
+ "motivo": "Uma pergunta inicial (serviço x dúvida) com policies condicionais cuidando dos ramos, sem necessidade de dividir. Labels visuais saem, validações de CPF/CNPJ viram regex, mandatory fixo vira prop e v_doubt passa a texto de várias linhas.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_demand": {
+   "label": "Você quer pedir um serviço de cartório ou tirar uma dúvida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_office": {
+   "label": "Para qual escritório é o pedido?"
+  },
+  "v_privy_or_corporate": {
+   "label": "É um pedido pessoal ou da empresa?"
+  },
+  "v_individuals_or_legal_entities": {
+   "label": "É para pessoa física ou jurídica?"
+  },
+  "v_cpf": {
+   "label": "Qual o CPF?",
+   "props": {
+    "validation_regex": "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$"
+   }
+  },
+  "v_cnpj": {
+   "label": "Qual o CNPJ?",
+   "props": {
+    "validation_regex": "^\\d{2}\\.?\\d{3}\\.?\\d{3}/?\\d{4}-?\\d{2}$"
+   }
+  },
+  "v_service_notary": {
+   "label": "Qual serviço de cartório você precisa?"
+  },
+  "v_cost_center_or_pep": {
+   "label": "Qual o centro de custo ou PEP (elemento PEP do projeto)?"
+  },
+  "v_withdraw_document": {
+   "label": "Vai ser preciso retirar o documento em algum lugar?"
+  },
+  "v_withdrawal_address": {
+   "label": "Qual o endereço de retirada?"
+  },
+  "v_doubt": {
+   "label": "Conte qual é a sua dúvida.",
+   "props": {
+    "type": "2"
+   }
+  },
+  "v_service": {
+   "label": "Descreva o serviço."
+  }
+ },
+ "remover": {
+  "v_faq": "visual",
+  "v_notary_info": "visual"
+ },
+ "policies": {
+  "2ac587081b18291ca530426fe54bcb61": "remover"
+ },
+ "scripts": {
+  "0c298a581ba82dd0d1abda4ce54bcba2": {
+   "converter": "regex"
+  },
+  "a919c2541ba82dd0d1abda4ce54bcb6e": {
+   "converter": "regex"
+  },
+  "d90d20c71ba02d90d1abda4ce54bcb8c": {
+   "remover": "sem_efeito"
+  },
+  "f3dde04b1ba02d90d1abda4ce54bcb90": {
+   "remover": "sem_efeito"
+  }
+ }
+}

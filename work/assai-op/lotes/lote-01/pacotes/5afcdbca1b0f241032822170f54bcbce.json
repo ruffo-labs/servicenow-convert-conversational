@@ -1,0 +1,223 @@
+{
+ "sys_id": "5afcdbca1b0f241032822170f54bcbce",
+ "name": "Afastamento - Retorno",
+ "category": "Medicina do Trabalho",
+ "short_description": "Afastamento - Retorno",
+ "description": "Afastamento - Retorno",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Cadastrar retorno de afastamento com alta antecipada",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Gestão de Afastados 2"
+    }
+   ],
+   "sai_do_formulario": [
+    "especie_do_beneficio_e_b91"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_personal_email_impacted",
+    "rh_phone_number",
+    "rh_benefit_number",
+    "rh_date_expertise_medical",
+    "rh_store_name",
+    "rh_center_cost_impacted"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de retorno de afastamento médico",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Gestão de Afastados 2"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_personal_email_impacted",
+    "rh_phone_number",
+    "rh_benefit_number",
+    "rh_date_expertise_medical",
+    "especie_do_beneficio_e_b91",
+    "rh_store_name",
+    "rh_center_cost_impacted"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_personal_email_impacted",
+   "type": "E-mail",
+   "question_text": "E-mail do Impactado (pessoal/externo, não deve ser informado o e-mail corporativo",
+   "choices": []
+  },
+  {
+   "name": "rh_phone_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone atualizado do impactado com DDD",
+   "choices": []
+  },
+  {
+   "name": "rh_benefit_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do benefício",
+   "choices": []
+  },
+  {
+   "name": "rh_date_expertise_medical",
+   "type": "Data",
+   "question_text": "Data da realização da perícia",
+   "choices": []
+  },
+  {
+   "name": "rh_store_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da loja do impactado",
+   "choices": []
+  },
+  {
+   "name": "rh_center_cost_impacted",
+   "type": "Referência",
+   "question_text": "Centro de custo do impactado",
+   "reference": "cmn_cost_center",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "267e69d43b2b2a10b28dd047f4e45abb",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "2ba440283b297a90b28dd047f4e45a35",
+   "name": "APL - Time2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de horário (HH:MM, janelas 9:00-12:00 e 14:00-17:00), aplicada à variável time_2."
+  },
+  {
+   "sys_id": "4f80c4603b297a90b28dd047f4e45abb",
+   "name": "APL - Date2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de 'até 3 dias úteis', aplicada à variável date_2."
+  },
+  {
+   "sys_id": "5c9491b43ba9fa90b28dd047f4e45a40",
+   "name": "ALP - Clear Medical ",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa date, date_2, date_3, time, time_2, time_3 e medical_report_detailing (sempre). Bloco de atendimento médico."
+  },
+  {
+   "sys_id": "69d255343ba9fa90b28dd047f4e45a4e",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa o bloco de atestado/afastamento médico: early_discharge, restrição médica, regional_medical_approver, return_to_work, rh_description, Attachments, medical_report_detailing e os campos date/date_2/date_3/time/time_2/time_3 (e outros do mesmo bloco). Roda tanto com valor quanto vazio."
+  },
+  {
+   "sys_id": "a1148ce43b297a90b28dd047f4e45aca",
+   "name": "APL - Time",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável time, exige formato HH:MM (24h) e horário dentro das janelas permitidas (9:00 a 12:00 ou 14:00 a 17:00, segundo a mensagem). Inválido: limpa o campo e mostra 'Por favor, informar um horário entre 9:00-12:00 ou 14:00-17:00.'."
+  },
+  {
+   "sys_id": "a1908c603b297a90b28dd047f4e45aa1",
+   "name": "APL - Date3",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de 'até 3 dias úteis', aplicada à variável date_3."
+  },
+  {
+   "sys_id": "b8a87b543be57a90b28dd047f4e45a90",
+   "name": "APL - Date",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável date, valida que a data informada esteja dentro de até 3 dias úteis a partir de hoje (funções internas parsePortalDate e calcMaxBusinessDate). Data inválida ou fora do limite: limpa o campo e mostra 'Por favor, informar uma data em até 3 dias úteis.'."
+  },
+  {
+   "sys_id": "c2587ebd1bbbec1032822170f54bcb0e",
+   "name": "ALP - OnChange validate Phone Number",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_number."
+  },
+  {
+   "sys_id": "e17e29d43b2b2a10b28dd047f4e45aee",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "f7c480283b297a90b28dd047f4e45a4f",
+   "name": "APL - Time3",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação de horário, aplicada à variável time_3."
+  }
+ ]
+}

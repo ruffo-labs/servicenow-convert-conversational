@@ -1,0 +1,124 @@
+{
+ "sys_id": "a42417fa3b013610b28dd047f4e45a39",
+ "name": "Auxílio-creche",
+ "category": "Operação de Benefícios",
+ "short_description": "Auxílio-creche",
+ "description": "Auxílio-creche",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Não recebimento ou divergência no valor do auxílio-creche",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Auxílio Creche"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_attachment_payment_invoice",
+    "v_all_dependents"
+   ],
+   "passa_a_obrigatoria": [
+    "v_reference_month",
+    "v_attachment_payment_statement"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de auxílio-creche",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Auxílio Creche"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_attachment_payment_statement"
+   ],
+   "passa_a_obrigatoria": [
+    "v_reference_month",
+    "v_attachment_payment_invoice",
+    "v_all_dependents"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Fevereiro",
+    "Maio",
+    "Outubro",
+    "Janeiro",
+    "Abril",
+    "Novembro",
+    "Setembro",
+    "Dezembro",
+    "Junho",
+    "Agosto",
+    "Julho",
+    "Março"
+   ]
+  },
+  {
+   "name": "v_attachment_payment_invoice",
+   "type": "Anexo",
+   "question_text": "Boleto ou nota fiscal",
+   "choices": []
+  },
+  {
+   "name": "v_attachment_payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento evidenciando a divergência",
+   "choices": []
+  },
+  {
+   "name": "v_all_dependents",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Informe os nomes de todos os dependentes para os quais você está solicitando o benefício",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "9e3ffd9f3b81f610b28dd047f4e45a70",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa v_all_dependents, v_reference_month, v_attachment_payment_invoice e v_attachment_payment_statement (sempre)."
+  }
+ ]
+}

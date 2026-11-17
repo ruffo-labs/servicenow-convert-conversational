@@ -1,0 +1,308 @@
+{
+ "sys_id": "215957c71b08a5d8a530426fe54bcbf1",
+ "status": "dividido",
+ "motivo": "Três intenções distintas por trás de uma única pergunta de demanda (dúvida, relatório/estudo, indicar posto): dividido em 3 itens com a demanda fixada por padrão em cada um. Elementos visuais/containers removidos; validações de CEP e telefone viram regex; a busca de matrícula vira auto-preenchimento por dot-walk (fica fora da conversa, pois já tem valor padrão); a validação de datas fica como client script (sem alternativa no-code).",
+ "vars": {
+  "v_what_kind_of_doubt_do_you_have": {
+   "label": "Sobre qual assunto é a sua dúvida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_your_question_": {
+   "label": "Conte qual é a sua dúvida.",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_enter_the_type_of_report_or_study_you_want_to_request": {
+   "label": "Qual relatório você precisa: uso do cartão, rede credenciada, estudo de capilaridade ou outro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_request_for_what_type_of_query": {
+   "label": "O relatório de uso é por colaborador ou por centro de custo?"
+  },
+  "v_enter_the_full_name_of_the_user_contributor": {
+   "label": "Qual o nome do colaborador?"
+  },
+  "v_enter_collaborater_registration_number": {
+   "props": {
+    "default_value": "javascript:current.variables.v_enter_the_full_name_of_the_user_contributor.employee_number",
+    "not_available_conversation": true
+   }
+  },
+  "v_enter_the_cost_center_number": {
+   "label": "Qual o número do centro de custo?"
+  },
+  "v_inform_start_date": {
+   "label": "Qual a data inicial do período?"
+  },
+  "v_inform_end_date": {
+   "label": "E a data final?"
+  },
+  "v_inform_the_state": {
+   "label": "Em qual estado?"
+  },
+  "v_inform_the_municipality": {
+   "label": "Em qual cidade?"
+  },
+  "v_if_you_wish_specify_the_neighborhood": {
+   "label": "Quer informar um bairro específico?"
+  },
+  "v_describe_desired_report": {
+   "label": "Descreva o relatório que você precisa."
+  },
+  "v_additional_information_": {
+   "label": "Quer acrescentar alguma informação?"
+  },
+  "v_fuel_station": {
+   "label": "Qual o nome do posto?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_zip_code_": {
+   "label": "Qual o CEP do posto?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\d{5}-?\\d{3}$"
+   }
+  },
+  "v_street_av_st": {
+   "label": "Qual a rua ou avenida?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_number": {
+   "label": "Qual o número?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_complement_": {
+   "label": "Tem complemento?"
+  },
+  "v_neighborhood_": {
+   "label": "Qual o bairro?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_city_": {
+   "label": "Qual a cidade?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_state_": {
+   "label": "E o estado?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_fuel_station_contact_name": {
+   "label": "Com quem falar no posto?",
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_inform_phone_post": {
+   "label": "Qual o telefone do posto?",
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$"
+   }
+  }
+ },
+ "remover": {
+  "v_template_frota_download": "visual",
+  "v_container_fuel_card_information_and_accredited_networks": "visual",
+  "v_label_acesse": "visual",
+  "v_tell_place_capilarity": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "baac567f1b80e11ca530426fe54bcb86": "remover",
+  "c57701eb1b806dd8a530426fe54bcb10": "remover",
+  "c49c49a71b046dd8a530426fe54bcb3d": "remover",
+  "6b663da71bcc6dd8a530426fe54bcb2b": "remover",
+  "470af9e71b00add8a530426fe54bcb4c": "remover",
+  "223df9a71b40add8a530426fe54bcb27": {
+   "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+   "actions": {
+    "v_inform_end_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_inform_start_date": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_request_for_what_type_of_query": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "510e75671b40add8a530426fe54bcbdc": {
+   "conditions": "v_request_for_what_type_of_query=v_individual_contributor^v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+   "actions": {
+    "v_enter_the_full_name_of_the_user_contributor": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_enter_collaborater_registration_number": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  },
+  "448ff1231b80add8a530426fe54bcbfc": {
+   "conditions": "v_request_for_what_type_of_query=v_cost_center_^v_enter_the_type_of_report_or_study_you_want_to_request=v_fuel_card_report",
+   "actions": {
+    "v_enter_the_cost_center_number": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "c268ce6f1b04add8a530426fe54bcbeb": {
+   "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_capilarity_study^ORv_enter_the_type_of_report_or_study_you_want_to_request=v_accredited_report",
+   "actions": {
+    "v_inform_the_municipality": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_inform_the_state": {
+     "visible": true,
+     "mandatory": true
+    },
+    "v_if_you_wish_specify_the_neighborhood": {
+     "visible": true
+    }
+   }
+  },
+  "bef9c6271b44add8a530426fe54bcbc2": {
+   "conditions": "v_enter_the_type_of_report_or_study_you_want_to_request=v_others_",
+   "actions": {
+    "v_describe_desired_report": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "12610d171b4829d8a530426fe54bcb93": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "95cbe4db1b4029d8a530426fe54bcb58": {
+   "converter": "auto_populate"
+  },
+  "f1aeec131bc029d8a530426fe54bcb9b": {
+   "converter": "regex"
+  },
+  "fce6ab081b50691ca530426fe54bcb84": {
+   "converter": "regex"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "v_what_is_the_demand_of_the_call": "v_remove_questions"
+   },
+   "sem_vars": [
+    "v_enter_the_type_of_report_or_study_you_want_to_request",
+    "v_request_for_what_type_of_query",
+    "v_enter_the_full_name_of_the_user_contributor",
+    "v_enter_collaborater_registration_number",
+    "v_enter_the_cost_center_number",
+    "v_inform_start_date",
+    "v_inform_end_date",
+    "v_inform_the_state",
+    "v_inform_the_municipality",
+    "v_if_you_wish_specify_the_neighborhood",
+    "v_describe_desired_report",
+    "v_additional_information_",
+    "v_fuel_station",
+    "v_zip_code_",
+    "v_street_av_st",
+    "v_number",
+    "v_complement_",
+    "v_neighborhood_",
+    "v_city_",
+    "v_state_",
+    "v_fuel_station_contact_name",
+    "v_inform_phone_post"
+   ],
+   "sem_policies": [
+    "223df9a71b40add8a530426fe54bcb27",
+    "510e75671b40add8a530426fe54bcbdc",
+    "448ff1231b80add8a530426fe54bcbfc",
+    "c268ce6f1b04add8a530426fe54bcbeb",
+    "bef9c6271b44add8a530426fe54bcbc2"
+   ],
+   "sem_scripts": [
+    "12610d171b4829d8a530426fe54bcb93"
+   ]
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "v_what_is_the_demand_of_the_call": "v_request_reports_studies"
+   },
+   "sem_vars": [
+    "v_what_kind_of_doubt_do_you_have",
+    "v_enter_your_question_",
+    "v_fuel_station",
+    "v_zip_code_",
+    "v_street_av_st",
+    "v_number",
+    "v_complement_",
+    "v_neighborhood_",
+    "v_city_",
+    "v_state_",
+    "v_fuel_station_contact_name",
+    "v_inform_phone_post"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "v_what_is_the_demand_of_the_call": "v_indicate_accredited_network"
+   },
+   "sem_vars": [
+    "v_what_kind_of_doubt_do_you_have",
+    "v_enter_your_question_",
+    "v_enter_the_type_of_report_or_study_you_want_to_request",
+    "v_request_for_what_type_of_query",
+    "v_enter_the_full_name_of_the_user_contributor",
+    "v_enter_collaborater_registration_number",
+    "v_enter_the_cost_center_number",
+    "v_inform_start_date",
+    "v_inform_end_date",
+    "v_inform_the_state",
+    "v_inform_the_municipality",
+    "v_if_you_wish_specify_the_neighborhood",
+    "v_describe_desired_report",
+    "v_additional_information_"
+   ],
+   "sem_policies": [
+    "223df9a71b40add8a530426fe54bcb27",
+    "510e75671b40add8a530426fe54bcbdc",
+    "448ff1231b80add8a530426fe54bcbfc",
+    "c268ce6f1b04add8a530426fe54bcbeb",
+    "bef9c6271b44add8a530426fe54bcbc2"
+   ],
+   "sem_scripts": [
+    "12610d171b4829d8a530426fe54bcb93"
+   ]
+  }
+ ]
+}

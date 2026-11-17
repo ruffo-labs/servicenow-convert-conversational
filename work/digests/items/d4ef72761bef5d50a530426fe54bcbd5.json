@@ -1,0 +1,173 @@
+{
+ "sys_id": "d4ef72761bef5d50a530426fe54bcbd5",
+ "name": "Criação de Novo Cargo",
+ "sys_name": "Creation of New Position",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Gestão de Pessoas e Estrutura",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicitar criação de novo Cargo na ADP",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "12",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_please_include_the_workplace_safety_approval_referring_to_the_job_risk_mapping: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @job_description: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de troca de escala coletiva. Lê o perfil de RH mas define requested_for como o usuário logado — mesma inconsistência do script de Rescisão Complementar.",
+ "variaveis": [
+  {
+   "name": "v_effective_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Effective Date"
+  },
+  {
+   "name": "v_job_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Job code"
+  },
+  {
+   "name": "job_name_in_portuguese",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Job Name in Portuguese"
+  },
+  {
+   "name": "job_description",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Job Description"
+  },
+  {
+   "name": "v_grade",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Grade"
+  },
+  {
+   "name": "v_management_level",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Management level",
+   "include_none": true,
+   "choices": [
+    "Training and Support [=Training_and_Support]",
+    "Consulting board [=Consulting_board]",
+    "Sales manager [=Sales_manager]",
+    "Senior Leadership [=Senior_Leadership]",
+    "Average Leadership [=Average_Leadership]",
+    "Associated Operator [=Associated_Operator]",
+    "Professional",
+    "Sales professional [=Sales_professional]",
+    "Development Program [=Development_Program]",
+    "Specialized technical [=Specialized_technical]"
+   ]
+  },
+  {
+   "name": "v_does_the_position_have_an_additional_risk_of_dangerous_or_unhealthy_work",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Does the position have an additional risk of Dangerous or Unhealthy Work?",
+   "include_none": true
+  },
+  {
+   "name": "v_inform_the_risk",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Inform the Risk:",
+   "include_none": true,
+   "choices": [
+    "Unhealthy [=unhealthy]",
+    "Dangerousness [=dangerousness]"
+   ]
+  },
+  {
+   "name": "v_risk_percentage",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Risk Percentage:",
+   "include_none": true,
+   "choices": [
+    "10%",
+    "20%",
+    "40%"
+   ]
+  },
+  {
+   "name": "v_enter_the_cost_center",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the Cost Center:"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_please_include_the_workplace_safety_approval_referring_to_the_job_risk_mapping",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Please include the Workplace Safety approval, referring to the job risk mapping."
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: make field visible - v_does_the_position_have_an_additional_risk_of_dangerous_or_unhealthy_work",
+   "when": "IO:v_does_the_position_have_an_additional_risk_of_dangerous_or_unhealthy_work=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_the_risk: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Fields mandatory - Creation of New Position",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_management_level: mandatory=true",
+    "v_grade: mandatory=true",
+    "job_description: mandatory=true",
+    "v_please_include_the_workplace_safety_approval_referring_to_the_job_risk_mapping: mandatory=true",
+    "job_name_in_portuguese: mandatory=true",
+    "v_description: mandatory=true",
+    "v_effective_date: mandatory=true",
+    "v_attachment: mandatory=true",
+    "v_job_code: mandatory=true",
+    "v_does_the_position_have_an_additional_risk_of_dangerous_or_unhealthy_work: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: make field visible - ",
+   "when": "IO:v_does_the_position_have_an_additional_risk_of_dangerous_or_unhealthy_work=Yes^IO:v_inform_the_risk=unhealthy^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_enter_the_cost_center: visible=true,mandatory=true",
+    "v_risk_percentage: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

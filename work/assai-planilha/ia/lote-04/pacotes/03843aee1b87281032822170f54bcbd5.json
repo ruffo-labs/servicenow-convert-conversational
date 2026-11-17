@@ -1,0 +1,110 @@
+{
+ "sys_id": "03843aee1b87281032822170f54bcbd5",
+ "name": "Pagamento Rescisório",
+ "category": "Rescisão",
+ "short_description": "Pagamento Rescisório",
+ "description": "Pagamento Rescisório",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Rescisão",
+    "item": "Pagamento Rescisório"
+   },
+   "ofertas": [
+    {
+     "name": "Não recebimento do Pagamento da Rescisão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Rescisão"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_date_termination"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Não recebi o pagamento da rescisão",
+     "description": "Use quando o pagamento da rescisão não foi recebido. Corresponde à oferta Não recebimento do Pagamento da Rescisão. Informe a data do desligamento."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_date_termination",
+   "type": "Data",
+   "question_text": "Data do desligamento",
+   "choices": [],
+   "label_atual": "Qual foi a data do desligamento?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "a8b3bd943b6b2a10b28dd047f4e45a6e",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "bfa3b5943b6b2a10b28dd047f4e45a65",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

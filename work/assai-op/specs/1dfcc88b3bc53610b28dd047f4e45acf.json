@@ -1,0 +1,446 @@
+{
+ "sys_id": "1dfcc88b3bc53610b28dd047f4e45acf",
+ "status": "dividido",
+ "motivo": "Cada oferta de vale-transporte pede dados próprios: desconto, créditos, não recebimento, cancelamento ou inclusão/alteração. 2 policy(ies) condicionais descartadas em grupos onde a variável da condição não existe.",
+ "vars": {
+  "v_form_inclusion_update_transportation_voucher": {
+   "label": "Envie o formulário de inclusão ou alteração do vale-transporte."
+  },
+  "v_is_refund_necessary": {
+   "label": "Você precisa de reembolso?"
+  },
+  "v_payment_statement": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "v_bank_statement": {
+   "label": "Envie o extrato bancário."
+  },
+  "v_disponibilization_method": {
+   "label": "Como o vale-transporte é disponibilizado para você?"
+  },
+  "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing": {
+   "label": "Houve alteração, cancelamento de férias ou retorno de afastamento?"
+  },
+  "v_depart_or_vacation": {
+   "label": "Foi afastamento ou férias?"
+  },
+  "v_itinerary_not_received": {
+   "label": "Qual itinerário você não recebeu?"
+  },
+  "v_which_solution": {
+   "label": "Qual solicitação de vale-transporte você quer fazer?"
+  },
+  "v_reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "v_is_newly_hired": {
+   "label": "Você é recém-admitido(a)?"
+  },
+  "v_transportation_voucher_card_number": {
+   "label": "Qual é o número do seu cartão de vale-transporte?"
+  },
+  "v_cancelation_form": {
+   "label": "Envie o formulário de cancelamento do vale-transporte."
+  },
+  "v_employee_is_newly_hired": {
+   "label": "O colaborador é recém-admitido(a)?"
+  },
+  "v_transport_operator": {
+   "label": "Qual é a operadora de transporte?"
+  }
+ },
+ "remover": {
+  "v_observation_cancel_transport_pass": "visual",
+  "v_observation_solicitation": "visual",
+  "split1": "visual",
+  "v_observation": "visual",
+  "formatter": "visual",
+  "v_container_start": "visual",
+  "v_atention_solicitation": "visual",
+  "v_atention": "visual",
+  "v_observation_payment": "visual"
+ },
+ "policies": {
+  "005c34573b89b610b28dd047f4e45acf": "remover",
+  "02e8bc223b1d3e50b28dd047f4e45abe": "remover",
+  "03aca23b3bc1fa10b28dd047f4e45a4c": "remover",
+  "07f874623b1d3e50b28dd047f4e45a39": "remover",
+  "0a89bca23b1d3e50b28dd047f4e45a0d": "remover",
+  "0c7938a23b1d3e50b28dd047f4e45a50": "remover",
+  "131e66fb3bc1fa10b28dd047f4e45ad0": "remover",
+  "2a587cee3bd93e50b28dd047f4e45a0d": "remover",
+  "2f36f4903b9d7e10b28dd047f4e45a94": "remover",
+  "6e39fc623b1d3e50b28dd047f4e45ab2": "remover",
+  "7319fc623b1d3e50b28dd047f4e45a80": "remover",
+  "774b05a73b093a10b28dd047f4e45a03": "remover",
+  "77983cee3bd93e50b28dd047f4e45aae": "remover",
+  "85c3c9d33bc9b610b28dd047f4e45a00": "remover",
+  "8ef65ddb3b4db610b28dd047f4e45ac3": "remover",
+  "9630fe733b05fa10b28dd047f4e45a37": "remover",
+  "9bacf8573b89b610b28dd047f4e45aa7": "remover",
+  "a48874223b1d3e50b28dd047f4e45ac4": "remover",
+  "a61c012b3b093a10b28dd047f4e45a51": "remover",
+  "ab9011133b4db610b28dd047f4e45ad4": "remover",
+  "b768fcee3bd93e50b28dd047f4e45a2f": "remover",
+  "c14ca2f73bc1fa10b28dd047f4e45a49": "remover",
+  "c1cbb8173b89b610b28dd047f4e45a82": "remover",
+  "d059f4a23b1d3e50b28dd047f4e45a13": "remover",
+  "d07705db3bc9b610b28dd047f4e45a9b": "remover",
+  "d79d49ab3b093a10b28dd047f4e45a1c": "remover",
+  "d7c8fc223b1d3e50b28dd047f4e45ac7": "remover",
+  "da384d1f3bc9b610b28dd047f4e45ae7": "remover",
+  "ddb909a33b093a10b28dd047f4e45a5e": "remover",
+  "e349c1633b093a10b28dd047f4e45a80": "remover",
+  "eec8091f3bc9b610b28dd047f4e45a7d": "remover",
+  "ef897cdf3b49b610b28dd047f4e45adc": "remover",
+  "f4fcaa3b3bc1fa10b28dd047f4e45ae0": "remover",
+  "fd62fef73b05fa10b28dd047f4e45aa9": "remover",
+  "nova_g1_1": {
+   "short_description": "ALP - Afastamento ou Férias? - Divergência no valor dos créditos do vale-transporte",
+   "conditions": "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing=v_yes",
+   "actions": {
+    "v_depart_or_vacation": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_1": {
+   "short_description": "ALP - Houve alteração, cancelamento de férias ou retorno de afastamento? - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_credit_on_card",
+   "actions": {
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_3": {
+   "short_description": "ALP - (Botao) - Extrato bancário  (Limpar Valor) - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_checking_account",
+   "actions": {
+    "v_bank_statement": {
+     "mandatory": true,
+     "clear": true
+    }
+   }
+  },
+  "nova_g2_4": {
+   "short_description": "ALP - Mês de referência - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte - Divergência no valor do desconto do vale-transporte",
+   "conditions": "v_disponibilization_methodINv_credit_on_card,v_checking_account",
+   "actions": {
+    "v_reference_month": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_8": {
+   "short_description": "ALP - Numero do cartao do vale-transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_credit_on_card^NQv_disponibilization_method=v_credit_on_card",
+   "actions": {
+    "v_transportation_voucher_card_number": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_10": {
+   "short_description": "ALP - Itinerário não recebido - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_methodINv_credit_on_card,v_checking_account",
+   "actions": {
+    "v_itinerary_not_received": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_11": {
+   "short_description": "ALP - Colaborador(a) é recém-admitido(a)? - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_checking_account",
+   "actions": {
+    "v_employee_is_newly_hired": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_12": {
+   "short_description": "ALP - (Botao) - Extrato bancário - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_checking_account",
+   "actions": {
+    "v_bank_statement": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g2_13": {
+   "short_description": "ALP - Operadora de transporte - Divergência no valor dos créditos do vale-transporte - Não recebimento do valor dos créditos do vale-transporte",
+   "conditions": "v_disponibilization_method=v_credit_on_card",
+   "actions": {
+    "v_transport_operator": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g4_3": {
+   "short_description": "ALP - É necessário reembolso? - Solicitação de inclusão ou alteração de vale-transporte",
+   "conditions": "v_which_solution=v_new_solicitation_transportation_voucher^v_is_newly_hired=v_yes^NQv_which_solution=v_change_transportation_voucher_due_change_work_address^ORv_which_solution=v_change_transportation_voucher_due_incorrect_request",
+   "actions": {
+    "v_is_refund_necessary": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g4_7": {
+   "short_description": "ALP - É recém-admitido? - Solicitação de inclusão ou alteração de vale-transporte",
+   "conditions": "v_which_solution=v_new_solicitation_transportation_voucher",
+   "actions": {
+    "v_is_newly_hired": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Divergência no desconto do vale-transporte",
+   "short_description": "Informar divergência no valor descontado do vale-transporte",
+   "description": "Use quando o desconto do vale-transporte no contracheque estiver diferente do esperado. Atende a oferta Divergência no valor do desconto do vale-transporte, tratada pelo RH - Vale-Transporte. Você informa o mês de referência e anexa o demonstrativo de pagamento.",
+   "frases_exemplo": [
+    "O desconto do meu vale-transporte veio errado",
+    "Descontaram demais de vale-transporte",
+    "Quero contestar o desconto do vale-transporte",
+    "Meu contracheque tem desconto de VT errado",
+    "Divergência no desconto do vale-transporte"
+   ],
+   "sem_vars": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "vars": {
+    "v_payment_statement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g2_1",
+    "nova_g2_3",
+    "nova_g2_4",
+    "nova_g2_8",
+    "nova_g2_10",
+    "nova_g2_11",
+    "nova_g2_12",
+    "nova_g2_13",
+    "nova_g4_3",
+    "nova_g4_7"
+   ]
+  },
+  {
+   "name": "Divergência nos créditos do vale-transporte",
+   "short_description": "Informar divergência no valor creditado do vale-transporte",
+   "description": "Use quando o valor creditado do vale-transporte estiver diferente do esperado. Atende a oferta Divergência no valor dos créditos do vale-transporte, tratada pelo RH - Vale-Transporte. Você informa o mês de referência, o número do cartão, a operadora e se houve alteração de férias ou afastamento.",
+   "frases_exemplo": [
+    "O crédito do meu vale-transporte veio menor",
+    "Recebi menos vale-transporte no cartão",
+    "Quero contestar o valor creditado de VT",
+    "O valor do crédito do vale-transporte está errado",
+    "Divergência nos créditos do vale-transporte"
+   ],
+   "sem_vars": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired"
+   ],
+   "vars": {
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_transportation_voucher_card_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_transport_operator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g2_1",
+    "nova_g2_3",
+    "nova_g2_4",
+    "nova_g2_8",
+    "nova_g2_10",
+    "nova_g2_11",
+    "nova_g2_12",
+    "nova_g2_13",
+    "nova_g4_3",
+    "nova_g4_7"
+   ]
+  },
+  {
+   "name": "Não recebi o crédito do vale-transporte",
+   "short_description": "Informar que o crédito do vale-transporte não foi recebido",
+   "description": "Use quando o crédito do vale-transporte não chegou, no cartão ou na conta corrente. Atende a oferta Não recebimento do valor dos créditos do vale-transporte, tratada pelo RH - Vale-Transporte. Você informa a forma de disponibilização e os dados que dependem dela.",
+   "frases_exemplo": [
+    "Não recebi meu vale-transporte",
+    "O crédito do VT não caiu no cartão",
+    "O vale-transporte não veio na minha conta",
+    "Meu vale-transporte não foi creditado este mês",
+    "Não recebimento do crédito do vale-transporte"
+   ],
+   "sem_vars": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_depart_or_vacation",
+    "v_which_solution",
+    "v_is_newly_hired",
+    "v_cancelation_form"
+   ],
+   "vars": {
+    "v_disponibilization_method": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g4_3",
+    "nova_g4_7"
+   ]
+  },
+  {
+   "name": "Cancelar vale-transporte",
+   "short_description": "Solicitar o cancelamento do vale-transporte",
+   "description": "Use para cancelar o vale-transporte. Atende a oferta Solicitação de cancelamento do vale-transporte, tratada pelo RH - Vale-Transporte. Você envia o formulário de cancelamento.",
+   "frases_exemplo": [
+    "Quero cancelar meu vale-transporte",
+    "Não vou mais usar vale-transporte",
+    "Como cancelo o VT?",
+    "Preciso cancelar o benefício de vale-transporte",
+    "Cancelamento de vale-transporte"
+   ],
+   "sem_vars": [
+    "v_form_inclusion_update_transportation_voucher",
+    "v_is_refund_necessary",
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_which_solution",
+    "v_reference_month",
+    "v_is_newly_hired",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "vars": {
+    "v_cancelation_form": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g2_1",
+    "nova_g2_3",
+    "nova_g2_4",
+    "nova_g2_8",
+    "nova_g2_10",
+    "nova_g2_11",
+    "nova_g2_12",
+    "nova_g2_13",
+    "nova_g4_3",
+    "nova_g4_7"
+   ]
+  },
+  {
+   "name": "Incluir ou alterar vale-transporte",
+   "short_description": "Solicitar inclusão ou alteração do vale-transporte",
+   "description": "Use para pedir um vale-transporte novo ou alterar o atual, por exemplo por aumento de tarifa, mudança de local de trabalho ou de endereço. Atende a oferta Solicitação de inclusão ou alteração de vale-transporte, tratada pelo RH - Vale-Transporte. Você escolhe o tipo de solicitação e envia o formulário.",
+   "frases_exemplo": [
+    "Quero pedir vale-transporte",
+    "Mudei de endereço e preciso alterar meu VT",
+    "Mudei de local de trabalho, como atualizo o vale-transporte?",
+    "Preciso incluir vale-transporte",
+    "Alteração de vale-transporte por aumento de tarifa"
+   ],
+   "sem_vars": [
+    "v_payment_statement",
+    "v_bank_statement",
+    "v_disponibilization_method",
+    "v_there_is_any_changes_cancellations_of_vacation_or_return_from_departing",
+    "v_depart_or_vacation",
+    "v_itinerary_not_received",
+    "v_reference_month",
+    "v_cancelation_form",
+    "v_employee_is_newly_hired",
+    "v_transport_operator"
+   ],
+   "vars": {
+    "v_form_inclusion_update_transportation_voucher": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_which_solution": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g2_1",
+    "nova_g2_3",
+    "nova_g2_4",
+    "nova_g2_8",
+    "nova_g2_10",
+    "nova_g2_11",
+    "nova_g2_12",
+    "nova_g2_13"
+   ]
+  }
+ ]
+}

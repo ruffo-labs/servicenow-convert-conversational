@@ -1,0 +1,261 @@
+{
+ "sys_id": "abad07423ba4da10924d0247f4e45a63",
+ "name": "Envio de Novidades",
+ "sys_name": "Sending News",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "News",
+ "catalogs": "Catálogo hispânico, Hire to Retire (HTR)",
+ "short_description": "Este serviço deve ser utilizado apenas por áreas autorizadas a enviar notícias da Folha de Pagamento.",
+ "description": "Este serviço deve ser utilizado apenas por áreas autorizadas a enviar notícias da Folha de Pagamento.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "24",
+   "variaveis_ativas": "28",
+   "bloqueadores": "0",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "24"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @registration: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @subcategory: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_min_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @category: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 24 de 24 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 24 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de licença paternidade. Resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Include [=include]",
+    "Update [=update]",
+    "Eliminate [=eliminate]"
+   ]
+  },
+  {
+   "name": "select_the_country_related_to_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the country related to your request",
+   "include_none": true,
+   "choices": [
+    "Argentina [=argentina]",
+    "Chile [=chile]",
+    "Colombia [=colombia]",
+    "Ecuador [=ecuador]",
+    "Peru [=peru]",
+    "Uruguai [=uruguai]"
+   ]
+  },
+  {
+   "name": "select_the_brand_related_to_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the brand related to your request",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "Avon LATAM [=avon_latam]",
+    "TBS [=tbs]"
+   ]
+  },
+  {
+   "name": "category",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Category",
+   "reference": "x_nasm_hr_rules_hispanic_novedades_solicitud",
+   "lookup": "x_nasm_hr_rules_hispanic_novedades_solicitud",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilityCategory(current.variables.v_employee, current.variables.select_the_country_relat",
+   "include_none": true
+  },
+  {
+   "name": "subcategory",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Subcategory",
+   "reference": "x_nasm_hr_rules_hispanic_novedades_solicitud",
+   "lookup": "x_nasm_hr_rules_hispanic_novedades_solicitud",
+   "ref_qual": "javascript: new x_nasm_hr.EY_Get_Hispanic_Categories().getElegibilitySubCategory(current.variables.v_employee, current.variables.category, current.var",
+   "include_none": true
+  },
+  {
+   "name": "indicate_the_number_of_employees_affected",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Indicate the number of employees affected"
+  },
+  {
+   "name": "monto_cantidad_total",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Monto/Cantidad Total"
+  },
+  {
+   "name": "describe_tu_necesidad",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe tu necesidad"
+  },
+  {
+   "name": "v_min_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "registration",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: View Subcategory",
+   "when": "IO:category!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "subcategory: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: View Subcategory - Target record",
+   "when": "IO:category!=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "subcategory: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Read only - Target record",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "registration: readonly=true",
+    "describe_tu_necesidad: readonly=true",
+    "subcategory: readonly=true",
+    "request_type: readonly=true",
+    "category: readonly=true",
+    "select_the_brand_related_to_your_request_old: readonly=true",
+    "select_the_country_related_to_your_request: readonly=true",
+    "indicate_the_number_of_employees_affected: readonly=true",
+    "monto_cantidad_total: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: View category ",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "category: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Required fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "select_the_brand_related_to_your_request: mandatory=true",
+    "request_type: mandatory=true",
+    "indicate_the_number_of_employees_affected: mandatory=true",
+    "select_the_country_related_to_your_request: mandatory=true",
+    "registration: mandatory=true",
+    "describe_tu_necesidad: mandatory=true",
+    "monto_cantidad_total: mandatory=true",
+    "select_the_brand_related_to_your_request_old: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Check if Subcat exists",
+   "type": "onChange",
+   "on": "aec457463be4da10924d0247f4e45a08",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script que verifica se existe subcategoria para a categoria escolhida, consultando o servidor com categoria, colaborador e item."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'describe_tu_necesidad' tem menos de 40 caracteres. Nome de variável em espanhol, fora do padrão v_ do catálogo."
+  },
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "1d361bca3be4da10924d0247f4e45a42",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange da validação de 40 caracteres sobre 'describe_tu_necesidad'."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda 'v_min_characters' na abertura."
+  }
+ ]
+}

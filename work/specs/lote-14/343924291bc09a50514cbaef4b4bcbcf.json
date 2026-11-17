@@ -1,0 +1,78 @@
+{
+ "sys_id": "343924291bc09a50514cbaef4b4bcbcf",
+ "status": "conversacional",
+ "motivo": "Item conversacional único: motivo do contato, categoria/subcategoria dinâmicas (mantidas como lookup, com label genérico, sem virar lista fixa) e detalhamento livre com mínimo de 40 caracteres via validation_regex, substituindo os scripts de mensagem de erro. v_who_is_this_request_for e v_employee pertencem ao variable set compartilhado, então a obrigatoriedade e a visibilidade condicional deles vêm de UI policies do item, não de props na variável. Pelo mesmo motivo, v_corporate_e_mail (também do set) continua sendo perguntado normalmente: não é possível aplicar default_value a uma variável de set a partir da spec do item para 'derivar' como a 1ª análise pedia.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_contact_reason": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_field_detail": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "FAQs": "visual",
+  "v_min_characters": "visual"
+ },
+ "policies": {
+  "6f6228f91b4cda50514cbaef4b4bcb65": "remover",
+  "d273e07d1b4cda50514cbaef4b4bcb1d": "remover",
+  "nova_obrigatorio_quem_e": {
+   "short_description": "Torna obrigatório informar para quem é o pedido",
+   "conditions": "v_who_is_this_request_forISEMPTY^ORv_who_is_this_request_forISNOTEMPTY",
+   "actions": {
+    "v_who_is_this_request_for": {
+     "mandatory": true
+    }
+   },
+   "origem": "406005901b6c1a90514cbaef4b4bcb6b"
+  },
+  "nova_visibilidade_funcionario": {
+   "short_description": "Mostrar colaborador quando o pedido é para outra pessoa",
+   "conditions": "v_who_is_this_request_for=for_somebody_else",
+   "actions": {
+    "v_employee": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "406005901b6c1a90514cbaef4b4bcb6b"
+  },
+  "nova_subcategoria_visivel": {
+   "short_description": "Mostrar subcategoria quando a categoria for selecionada",
+   "conditions": "v_select_categoryISNOTEMPTY",
+   "actions": {
+    "v_subcategory": {
+     "visible": true,
+     "mandatory": true
+    }
+   },
+   "origem": "53fc08c03bd49e10924d0247f4e45a88"
+  }
+ },
+ "scripts": {
+  "1a7424311b8cda50514cbaef4b4bcbeb": {
+   "remover": "sem_efeito"
+  },
+  "350424fd1b4cda50514cbaef4b4bcbc7": {
+   "converter": "regex"
+  },
+  "406005901b6c1a90514cbaef4b4bcb6b": {
+   "converter": "policy:nova_obrigatorio_quem_e"
+  },
+  "53fc08c03bd49e10924d0247f4e45a88": {
+   "converter": "policy:nova_subcategoria_visivel"
+  },
+  "e8c3a8bd1b4cda50514cbaef4b4bcbc9": {
+   "remover": "sem_efeito"
+  }
+ }
+}

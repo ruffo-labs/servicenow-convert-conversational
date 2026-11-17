@@ -1,0 +1,379 @@
+{
+ "sys_id": "ec3b98cb1b35861432822170f54bcbad",
+ "status": "dividido",
+ "motivo": "Cada oferta de temporários pede dados próprios: troca de aprovador, dúvida, erro no Conecta, falta no 1º dia ou validação de DS.",
+ "vars": {
+  "ds_gross_value": {
+   "label": "Qual é o valor bruto da DS?"
+  },
+  "unit_name": {
+   "label": "Qual é o nome da unidade?"
+  },
+  "name_registration_new_approver": {
+   "label": "Qual é o nome e a matrícula do novo aprovador?"
+  },
+  "start_date": {
+   "label": "Qual é a data de início do temporário?"
+  },
+  "cnpj_agency": {
+   "label": "Qual é o CNPJ da agência?"
+  },
+  "month_validity": {
+   "label": "Qual é o mês da vigência?"
+  },
+  "unit_cost_center": {
+   "label": "Qual é o centro de custo da unidade?"
+  },
+  "vacancy_ifood": {
+   "label": "A vaga é do iFood?"
+  },
+  "unit_cnpj": {
+   "label": "Qual é o CNPJ da unidade?"
+  },
+  "agency_name": {
+   "label": "Qual é o nome da agência da DS?"
+  },
+  "rh_email_responsible": {
+   "label": "Qual é o e-mail do RH responsável?"
+  },
+  "agency": {
+   "label": "Qual é a agência do temporário?"
+  },
+  "what_is_the_doubt": {
+   "label": "Qual é a sua dúvida?"
+  },
+  "call_number": {
+   "label": "Qual é o número do chamado do Conecta?"
+  },
+  "what_is_the_error": {
+   "label": "Qual erro você encontrou?"
+  },
+  "full_name_of_the_temp": {
+   "label": "Qual é o nome completo do temporário?"
+  },
+  "telephone_number_responsible_hr": {
+   "label": "Qual é o telefone do RH responsável?"
+  },
+  "amount_temporary": {
+   "label": "Quantos temporários são?"
+  },
+  "change_reason": {
+   "label": "Qual é o motivo da alteração?"
+  },
+  "temporary_cpf": {
+   "label": "Qual é o CPF do temporário?"
+  }
+ },
+ "remover": {
+  "formatter2": "visual",
+  "observation_ds": "visual",
+  "container_start_01": "visual",
+  "formatter": "visual",
+  "observation_attach_temporary_contract": "visual",
+  "observation_attach_error_print": "visual",
+  "observation_attach_print_informed_doubt": "visual"
+ },
+ "policies": {
+  "024d134c3bcede50b28dd047f4e45ad3": "remover",
+  "0c1f094f1bb9861432822170f54bcb9f": "remover",
+  "0f8d0d0b1bb9861432822170f54bcbc8": "remover",
+  "18a266503b8a5290b28dd047f4e45a49": "remover",
+  "1e606e1c3b4a5290b28dd047f4e45a90": "remover",
+  "2dadc14b1bb9861432822170f54bcb0a": "remover",
+  "2e9d9f4c3bcede50b28dd047f4e45a45": "remover",
+  "2f2980573b829650b28dd047f4e45a36": "remover",
+  "3a6c530c3bcede50b28dd047f4e45aa4": "remover",
+  "4145b59c3bc25290b28dd047f4e45a28": "remover",
+  "59075ad43b0a5290b28dd047f4e45a93": "remover",
+  "7e3a81031bb9861432822170f54bcbb9": "remover",
+  "84b316103b0a5290b28dd047f4e45a54": "remover",
+  "91cfe4453b0ad210b28dd047f4e45add": "remover",
+  "9622b9d43bc25290b28dd047f4e45a47": "remover",
+  "9a7059031bf9861432822170f54bcb09": "remover",
+  "9c9059031bf9861432822170f54bcbb4": "remover",
+  "ac8a05431bb9861432822170f54bcb26": "remover",
+  "beb4d6d03b0a5290b28dd047f4e45a89": "remover",
+  "c1bbdf883bcede50b28dd047f4e45abd": "remover",
+  "dd6a89031bb9861432822170f54bcbf0": "remover",
+  "e43f8d4f1bb9861432822170f54bcbdc": "remover",
+  "ebac970c3bcede50b28dd047f4e45ad5": "remover",
+  "nova_g4_2": {
+   "short_description": "ALP - Aprovadores Matriz Approver Name",
+   "conditions": "unit_nameSTARTSWITHMATRIZ",
+   "actions": {
+    "matriz_approver_name_n_manager": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g4_3": {
+   "short_description": "ALP - E-mail do RH Responsável",
+   "conditions": "unit_nameSTARTSWITHLOJA^ORunit_nameSTARTSWITHCD",
+   "actions": {
+    "rh_email_responsible": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Alterar ou delegar aprovador de temporários",
+   "short_description": "Alterar ou delegar o aprovador das solicitações de temporários",
+   "description": "Use para trocar ou delegar o aprovador de temporários. Atende a oferta Alteração/delegação de aprovador - Temporários, tratada pelo RH - Temporários. Você informa o novo aprovador e o motivo da alteração.",
+   "frases_exemplo": [
+    "Preciso trocar o aprovador de temporários",
+    "Quero delegar a aprovação de temporários para outra pessoa",
+    "Mudou o gestor e preciso alterar o aprovador",
+    "Como altero quem aprova os temporários da minha loja?",
+    "Alteração de aprovador de temporários"
+   ],
+   "sem_vars": [
+    "ds_gross_value",
+    "unit_name",
+    "start_date",
+    "cnpj_agency",
+    "month_validity",
+    "unit_cost_center",
+    "vacancy_ifood",
+    "unit_cnpj",
+    "agency_name",
+    "rh_email_responsible",
+    "agency",
+    "what_is_the_doubt",
+    "call_number",
+    "what_is_the_error",
+    "full_name_of_the_temp",
+    "telephone_number_responsible_hr",
+    "amount_temporary",
+    "temporary_cpf"
+   ],
+   "vars": {
+    "name_registration_new_approver": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "change_reason": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "nova_g4_3"
+   ]
+  },
+  {
+   "name": "Dúvidas sobre temporários",
+   "short_description": "Tirar dúvidas sobre temporários",
+   "description": "Use para tirar dúvidas sobre temporários, como substituição no Conecta, agência que não retorna ou vaga invalidada sem motivo. Atende a oferta Dúvidas - Temporários, tratada pelo RH - Temporários.",
+   "frases_exemplo": [
+    "Tenho uma dúvida sobre temporário",
+    "A agência não me retorna",
+    "Minha vaga foi invalidada sem motivo",
+    "Não consigo substituir um temporário no Conecta",
+    "Dúvidas sobre temporários"
+   ],
+   "sem_vars": [
+    "ds_gross_value",
+    "unit_name",
+    "name_registration_new_approver",
+    "start_date",
+    "cnpj_agency",
+    "month_validity",
+    "unit_cost_center",
+    "vacancy_ifood",
+    "unit_cnpj",
+    "agency_name",
+    "rh_email_responsible",
+    "agency",
+    "call_number",
+    "what_is_the_error",
+    "full_name_of_the_temp",
+    "telephone_number_responsible_hr",
+    "amount_temporary",
+    "change_reason",
+    "temporary_cpf"
+   ],
+   "vars": {
+    "what_is_the_doubt": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "nova_g4_3"
+   ]
+  },
+  {
+   "name": "Erro sistêmico no Conecta (temporários)",
+   "short_description": "Reportar erro no sistema Conecta para temporários",
+   "description": "Use para reportar erro no Conecta relacionado a temporários, como botão de reativação ausente, vaga que não aparece ou temporário fora da aba de contratados. Atende a oferta Erro sistêmico - Conecta - Temporários, tratada pelo RH - Temporários.",
+   "frases_exemplo": [
+    "O Conecta está com erro",
+    "O botão de reativação não aparece",
+    "Minha vaga não aparece no Conecta",
+    "O temporário não está na aba de contratados",
+    "Erro sistêmico no Conecta"
+   ],
+   "sem_vars": [
+    "ds_gross_value",
+    "unit_name",
+    "name_registration_new_approver",
+    "start_date",
+    "cnpj_agency",
+    "month_validity",
+    "unit_cost_center",
+    "vacancy_ifood",
+    "unit_cnpj",
+    "agency_name",
+    "rh_email_responsible",
+    "agency",
+    "what_is_the_doubt",
+    "call_number",
+    "full_name_of_the_temp",
+    "telephone_number_responsible_hr",
+    "amount_temporary",
+    "change_reason",
+    "temporary_cpf"
+   ],
+   "vars": {
+    "what_is_the_error": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "nova_g4_3"
+   ]
+  },
+  {
+   "name": "Temporário não compareceu no 1º dia",
+   "short_description": "Informar que o temporário não compareceu no primeiro dia",
+   "description": "Use quando o temporário não apareceu no primeiro dia de trabalho. Atende a oferta Temporário não compareceu no 1º dia - Temporários. Você informa a data de início, a agência, o chamado do Conecta e os dados do temporário.",
+   "frases_exemplo": [
+    "O temporário não veio no primeiro dia",
+    "Temporário faltou no dia de início",
+    "Preciso avisar que o temporário não compareceu",
+    "A agência mandou alguém que não apareceu hoje",
+    "Temporário não compareceu no 1º dia"
+   ],
+   "sem_vars": [
+    "ds_gross_value",
+    "unit_name",
+    "name_registration_new_approver",
+    "cnpj_agency",
+    "month_validity",
+    "unit_cost_center",
+    "vacancy_ifood",
+    "unit_cnpj",
+    "agency_name",
+    "rh_email_responsible",
+    "what_is_the_doubt",
+    "what_is_the_error",
+    "amount_temporary",
+    "change_reason"
+   ],
+   "vars": {
+    "start_date": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "agency": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "call_number": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "full_name_of_the_temp": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "telephone_number_responsible_hr": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "temporary_cpf": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g4_2",
+    "nova_g4_3"
+   ]
+  },
+  {
+   "name": "Validar Descrição de Serviço (DS) de temporários",
+   "short_description": "Solicitar a validação de uma Descrição de Serviço (DS)",
+   "description": "Use para validar uma Descrição de Serviço (DS) de temporários. Atende a oferta Validação de Descrição de Serviço (DS), tratada pelo RH - Orçamento. Você informa a unidade, a agência, o valor bruto, a vigência e a quantidade de temporários.",
+   "frases_exemplo": [
+    "Preciso validar uma DS de temporários",
+    "Quero validar a descrição de serviço",
+    "Como valido o valor bruto da DS?",
+    "Tenho uma DS de temporários para o orçamento aprovar",
+    "Validação de Descrição de Serviço"
+   ],
+   "sem_vars": [
+    "name_registration_new_approver",
+    "start_date",
+    "agency",
+    "what_is_the_doubt",
+    "call_number",
+    "what_is_the_error",
+    "full_name_of_the_temp",
+    "telephone_number_responsible_hr",
+    "change_reason",
+    "temporary_cpf"
+   ],
+   "vars": {
+    "ds_gross_value": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "unit_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "month_validity": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "vacancy_ifood": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "agency_name": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "amount_temporary": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

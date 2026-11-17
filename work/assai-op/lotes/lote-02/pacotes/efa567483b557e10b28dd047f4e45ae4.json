@@ -1,0 +1,224 @@
+{
+ "sys_id": "efa567483b557e10b28dd047f4e45ae4",
+ "name": "Assistência Odontológica (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Assistência Odontológica",
+ "description": "Assist&ecirc;ncia Odontol&oacute;gica",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Beneficiário(a) não consegue ser atendido(a)",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "payment_statement",
+    "proof_from_operator",
+    "reference_month"
+   ],
+   "passa_a_obrigatoria": [
+    "reason_service_being_performed",
+    "policyholder_or_dependent"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de reembolso de coparticipação de assistência odontológica",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Assistência Odontológica"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_service_being_performed"
+   ],
+   "passa_a_obrigatoria": [
+    "payment_statement",
+    "proof_from_operator",
+    "reference_month",
+    "policyholder_or_dependent"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "membership_form",
+   "type": "Anexo",
+   "question_text": "Formulário de adesão",
+   "choices": []
+  },
+  {
+   "name": "payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": []
+  },
+  {
+   "name": "reason_service_being_performed",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo do atendimento não realizado",
+   "choices": [
+    "Outros",
+    "Problemas para acessar o APP",
+    "Beneficiário(a) inativo(a) na operadora",
+    "Beneficiário(a) com carência",
+    "Beneficiário(a) com divergência nos dados"
+   ]
+  },
+  {
+   "name": "proof_from_operator",
+   "type": "Anexo",
+   "question_text": "Comprovante da operadora",
+   "choices": []
+  },
+  {
+   "name": "dependent_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do(a) dependente",
+   "choices": []
+  },
+  {
+   "name": "reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Março",
+    "Julho",
+    "Abril",
+    "Agosto",
+    "Junho",
+    "Novembro",
+    "Setembro",
+    "Fevereiro",
+    "Outubro",
+    "Janeiro",
+    "Dezembro",
+    "Maio"
+   ]
+  },
+  {
+   "name": "operator_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da operadora",
+   "choices": []
+  },
+  {
+   "name": "was_there_improper_discount",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve desconto indevido?",
+   "choices": [
+    "Sim",
+    "Não"
+   ]
+  },
+  {
+   "name": "policyholder_or_dependent",
+   "type": "Selecionar Caixa",
+   "question_text": "Titular ou dependente?",
+   "choices": [
+    "Titular",
+    "Dependente",
+    "Ambos"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "29d34da53bd1b650b28dd047f4e45aa7",
+   "name": "ALP - Clear form include",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa dependent_name (sempre)."
+  },
+  {
+   "sys_id": "313005213bd1b650b28dd047f4e45a19",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa um bloco grande de campos de plano/operadora: reason_service_being_performed, dependent_name, policyholder_or_dependent, operator_name, who_would_you_like_to_include/exclude, membership_form, Attachments, cancellation_form, statement_use, was_there_improper_discount, payment_statement, reference_month, proof_from_operator, reason_for_cancellation. Sempre, com ou sem valor."
+  },
+  {
+   "sys_id": "467305a53bd1b650b28dd047f4e45a69",
+   "name": "ALP - Clear form dependent name",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa dependent_name (sempre)."
+  },
+  {
+   "sys_id": "8d2449e53bd1b650b28dd047f4e45a72",
+   "name": "ALP - Clear form motivo cancelamento",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho (motivo do cancelamento), limpa was_there_improper_discount (sempre)."
+  },
+  {
+   "sys_id": "ac4e45653b55b650b28dd047f4e45a07",
+   "name": "APL - bloquearSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se reason_service_being_performed for '40' (Interodonto, acesso ao aplicativo), mostra mensagem orientando contato direto com a operadora (SAC 24h) e bloqueia o envio."
+  },
+  {
+   "sys_id": "dec385a53bd1b650b28dd047f4e45ae2",
+   "name": "ALP - Clear form exclude",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa dependent_name (sempre)."
+  },
+  {
+   "sys_id": "fc82a46e3ba57a10b28dd047f4e45a16",
+   "name": "APL - esconder obs",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se o valor escolhido for '10', oculta a variável observation_4; caso contrário, exibe."
+  }
+ ]
+}

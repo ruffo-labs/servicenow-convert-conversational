@@ -1,0 +1,194 @@
+{
+ "sys_id": "55d956d71b3711d4a530426fe54bcb29",
+ "name": "Solicitação de Adiantamento e Complemento Previdenciário",
+ "sys_name": "Advance Request and Social Security Supplement",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Licenças e Ausências",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicitar adiantamento ou complemento previdenciário para colaborador afastado pelo INSS",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "12",
+   "variaveis_ativas": "20",
+   "bloqueadores": "1",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "12"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Attach is mandatory"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_proof_of_scheduling_the_expertise: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_formulario_adiantamento_salario_afastamento: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_the_completed_social_security_advance_form: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_text_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_observation_expertise_this_month: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_observation_necessary_scheduled_expertise: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 12 de 12 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "container_start",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Your request"
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Social Security Advance",
+    "Pension Supplement"
+   ]
+  },
+  {
+   "name": "v_was_the_medical_examination_scheduled_at_the_inss",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Was the medical examination scheduled at the INSS?",
+   "include_none": true
+  },
+  {
+   "name": "v_observation_necessary_scheduled_expertise",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "According to the removal manual, to request the social security advance, it is necessary that you have already scheduled the expertise."
+  },
+  {
+   "name": "v_what_is_the_date_of_the_medical_examination",
+   "type": "Data",
+   "type_code": "9",
+   "label": "What is the date of the medical examination"
+  },
+  {
+   "name": "v_observation_expertise_this_month",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "If the inspection takes place in the same month as the request, the payment will not be made, as it must be made by the INSS."
+  },
+  {
+   "name": "v_formulario_adiantamento_salario_afastamento",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_the_completed_social_security_advance_form",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the completed Social Security Advance form"
+  },
+  {
+   "name": "v_attach_the_proof_of_scheduling_the_expertise",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the proof of scheduling the expertise"
+  },
+  {
+   "name": "v_text_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach the decision statement and letter of concession from the INSS"
+  },
+  {
+   "name": "formatter",
+   "type": "Final do contêiner",
+   "type_code": "20",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: make field visible - \"Attach the decision statement and letter of concession from the INSS\"",
+   "when": "IO:v_request_type=Pension Supplement^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_attach: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: make field visible - \"Social Security Advance\" condition and \"No\" INSS",
+   "when": "IO:v_request_type=Social Security Advance^IO:v_was_the_medical_examination_scheduled_at_the_inss=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_observation_necessary_scheduled_expertise: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: make field visible - \"Was the medical examination scheduled at the INSS?\"",
+   "when": "IO:v_request_type=Social Security Advance^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_was_the_medical_examination_scheduled_at_the_inss: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: make field visible - \"Social Security Advance\" condition and \"Yes\" INSS",
+   "when": "IO:v_request_type=Social Security Advance^IO:v_was_the_medical_examination_scheduled_at_the_inss=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_date_of_the_medical_examination: visible=true,mandatory=true",
+    "v_formulario_adiantamento_salario_afastamento: visible=true,mandatory=true",
+    "v_attach_the_proof_of_scheduling_the_expertise: visible=true,mandatory=true",
+    "v_download_the_form_below_to_fill_it_out: visible=true,mandatory=true",
+    "v_attach_the_completed_social_security_advance_form: visible=true,mandatory=true",
+    "v_observation_expertise_this_month: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Attach is mandatory",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando o tipo de solicitação é 'Pension Supplement'. Usa `this.document.getElementsByClassName` para inspecionar o DOM — frágil e fora do padrão da API g_form."
+  }
+ ]
+}

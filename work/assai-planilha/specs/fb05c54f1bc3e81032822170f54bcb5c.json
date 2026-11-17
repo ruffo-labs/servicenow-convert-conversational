@@ -1,0 +1,149 @@
+{
+ "sys_id": "fb05c54f1bc3e81032822170f54bcb5c",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "qual_operadora": {
+   "label": "Qual operadora?"
+  },
+  "nome_do_a_dependente": {
+   "label": "Nome do(a) dependente"
+  },
+  "attachment": {
+   "label": "Demonstrativo de pagamento"
+  },
+  "titular_ou_dependente": {
+   "label": "Titular ou dependente?"
+  },
+  "attachment_print_error": {
+   "label": "Evidência do erro"
+  },
+  "evidencia_da_operadora": {
+   "label": "Evidência da operadora"
+  },
+  "motivo_da_solicitacao": {
+   "label": "Motivo da solicitação"
+  },
+  "v_mes_referencia": {
+   "label": "Mês de referência"
+  },
+  "collaborator_email": {
+   "label": "Novo endereço de e-mail do(a) colaborador(a)"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "start": "visual",
+  "formatter4": "visual",
+  "formatter2": "visual",
+  "container_a": "visual",
+  "observacao_wellhub": "visual",
+  "divergencia": "visual",
+  "v_qual_plano_2": "oferta_inativa",
+  "observacao_totalpass": "visual",
+  "v_observacao_2": "visual",
+  "observacao_total_pass_block": "visual",
+  "formatter3": "visual",
+  "formatter5": "visual",
+  "formatter6": "visual"
+ },
+ "policies": {
+  "024de5931bfb199032822170f54bcb1c": "remover",
+  "3d2976431bb3d59032822170f54bcb14": "remover",
+  "bbf067a1877bae50182a0d440cbb35d1": "remover",
+  "c2bb465087bba650182a0d440cbb3513": "remover",
+  "f8cc42d087bba650182a0d440cbb35ac": "remover",
+  "nova_g0_1": {
+   "short_description": "ALP - E-mail colaborador",
+   "conditions": "qual_operadora=3",
+   "actions": {
+    "collaborator_email": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g0_2": {
+   "short_description": "CSA - Hide Description",
+   "conditions": "qual_operadora=2",
+   "actions": {
+    "rh_description": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  },
+  "nova_g0_3": {
+   "short_description": "CSA - Qual operadora para as ofertas de serviço Visão Resolvedora",
+   "conditions": "qual_operadora=2^ORqual_operadora=3",
+   "actions": {
+    "qual_operadora": {
+     "visible": true,
+     "readonly": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Academia (Operação de Benefícios - servico)",
+   "short_description": "Academia",
+   "description": "Academia",
+   "frases_exemplo": [
+    "Solicitação de atualização do e-mail cadastrado na academia"
+   ],
+   "sem_vars": [
+    "attachment",
+    "titular_ou_dependente",
+    "attachment_print_error",
+    "evidencia_da_operadora",
+    "motivo_da_solicitacao",
+    "v_mes_referencia"
+   ],
+   "vars": {
+    "qual_operadora": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "22547ac71b73d59032822170f54bcb28",
+    "2c1f61f987193650182a0d440cbb3538",
+    "36951ad487fba650182a0d440cbb35ed",
+    "467c1fa9873bae50182a0d440cbb3581",
+    "509f25bd87193650182a0d440cbb3556",
+    "5106db7287025210182a0d440cbb354c",
+    "65c9c29c877ba650182a0d440cbb357d",
+    "691e8e2b877baa10182a0d440cbb35ff",
+    "78090bb81b064610347221bbe54bcbbd",
+    "7a8ece6b877baa10182a0d440cbb358c",
+    "8242569c87bba650182a0d440cbb35ed",
+    "9bed07341b464610347221bbe54bcbb9",
+    "a8fc53e9873bae50182a0d440cbb35c5",
+    "bafc82a7877baa10182a0d440cbb3547",
+    "bed1de2387bbaa10182a0d440cbb3578",
+    "e98d0ee7877baa10182a0d440cbb3592",
+    "c857d29887fba650182a0d440cbb3541"
+   ]
+  },
+  {
+   "name": "Academia (Operação de Benefícios - problema)",
+   "short_description": "Academia",
+   "description": "Academia",
+   "frases_exemplo": [
+    "Problemas ao utilizar academia",
+    "Divergência nos valores descontados de academia"
+   ],
+   "sem_vars": [
+    "collaborator_email"
+   ],
+   "sem_policies": [
+    "nova_g0_1",
+    "nova_g0_2",
+    "nova_g0_3",
+    "78090bb81b064610347221bbe54bcbbd"
+   ]
+  }
+ ]
+}

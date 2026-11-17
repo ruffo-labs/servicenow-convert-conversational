@@ -1,0 +1,559 @@
+{
+ "sys_id": "c39b8a401bcd7910a530426fe54bcb12",
+ "name": "Impostos e Tributos de Serviços",
+ "sys_name": "Service Taxes and Fees",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Formulário de Solicitação de Informações, Dúvidas e Documentos sobre Impostos e Tributos Retenção na Fonte",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "26",
+   "variaveis_ativas": "29",
+   "bloqueadores": "6",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "26"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attach_pdf"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attach_pdf"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attach_1"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attach_1"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "v_attach_2"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "v_attach_2"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_attachment_1: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_2: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment_pdf: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_info_attachment: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_supplier: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attachment_pdf_info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 26 de 26 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 26 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer para Informe de Rendimentos, com tratamento de usuário externo. Lê três system properties que guardam sys_ids de usuários 'convidado'/externo e compara com current.opened_by. Se o solicitante for um desses, força tanto requested_for quanto opened_by para o usuário externo padrão e NÃO aplica as regras de VIP. Caso contrário mantém o usuário real e chama x_nasm_hr.EY_ProducerUtils para definir o solicitante pelo variable set e elevar prioridade se for VIP. Em ambos os casos grava x_nasm_hr_item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "v_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact email"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Contact phone"
+  },
+  {
+   "name": "v_which_company_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Natura",
+    "TBS",
+    "Avon [=Avon LATAM]"
+   ]
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the request from?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.v_which_company_is_your_request_for"
+  },
+  {
+   "name": "v_which_sub_company_is_the_request_from_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which sub-company is the request from?"
+  },
+  {
+   "name": "v_supplier",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Supplier",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY^vendor=false^customer=false"
+  },
+  {
+   "name": "v_supplier_text",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier"
+  },
+  {
+   "name": "v_supplier_cpf_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier CPF or CNPJ"
+  },
+  {
+   "name": "v_supplier_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier code"
+  },
+  {
+   "name": "v_supplier_tax_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier tax code"
+  },
+  {
+   "name": "v_what_s_the_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What's the request?",
+   "include_none": true,
+   "choices": [
+    "Question about withholding taxes [=question_about_withholding_taxes]",
+    "Proof of withholding taxes [=proof_of_withholding_taxes]",
+    "Service NFSe Cancellation Letter [=service_nfse_cancellation_letter]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_what_s_the_request_ext",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What's the request?",
+   "include_none": true,
+   "choices": [
+    "Question about withholding taxes [=question_about_withholding_taxes_ext]",
+    "Proof of withholding taxes [=proof_of_withholding_taxes_ext]",
+    "Service NFSe Cancellation Letter [=service_nfse_cancellation_letter_ext]",
+    "Others [=others_ext]"
+   ]
+  },
+  {
+   "name": "v_which_tax_do_you_want_information_on",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which tax do you want information on?",
+   "include_none": true,
+   "choices": [
+    "INSS [=inss]",
+    "ISS [=iss]",
+    "PIS [=pis]",
+    "COFINS [=cofins]",
+    "IRRF [=irrf]",
+    "PCC [=pcc]",
+    "All [=all]"
+   ]
+  },
+  {
+   "name": "v_invoice_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice of number"
+  },
+  {
+   "name": "v_date_of_issue",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of issue"
+  },
+  {
+   "name": "v_order",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Order:"
+  },
+  {
+   "name": "v_total_amount_nfse",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total amount NFSe"
+  },
+  {
+   "name": "v_info_attachment",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "OBS"
+  },
+  {
+   "name": "v_attachment_pdf",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "NF in PDF/Municipality model declaration"
+  },
+  {
+   "name": "v_attachment_pdf_info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "NF in PDF/Municipality model declaration"
+  },
+  {
+   "name": "v_attach_pdf",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "NF in PDF/Municipality model declaration",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_attachment_pdf_confirmation",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "NF in PDF/model declaration from the municipality was attached in the field above?"
+  },
+  {
+   "name": "v_pdf_yes",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Yes"
+  },
+  {
+   "name": "v_attachment_1",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment"
+  },
+  {
+   "name": "v_attach_1",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach 1",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_attachment_2",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment"
+  },
+  {
+   "name": "v_attach_2",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Attach 2",
+   "widget": "EY: Enable public attachment - TAX"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Hide which tax if empty",
+   "when": "IO:v_which_tax_do_you_want_information_on=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_tax_do_you_want_information_on: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide fields onload",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_info_attachment: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide attachment if questions",
+   "when": "IO:v_what_s_the_request=question_about_withholding_taxes^NQIO:v_what_s_the_request_ext=question_about_withholding_taxes_ext^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_pdf_yes: visible=false,mandatory=false",
+    "v_attachment_pdf_confirmation: visible=false,mandatory=false",
+    "v_attachment_pdf: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Hide external fields",
+   "when": "IO:v_nameISEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name: visible=false",
+    "v_description: visible=false",
+    "v_attachment_docs_confirmation: visible=false",
+    "v_pdf_yes: visible=false",
+    "v_phone: visible=false",
+    "v_attach_pdf: visible=true,mandatory=true",
+    "v_docs_yes: visible=false",
+    "v_attachment_docs_info: visible=false",
+    "v_email: visible=false",
+    "v_supplier_text: visible=false",
+    "v_attachment_pdf_info: visible=false",
+    "v_attach_2: visible=false,mandatory=false",
+    "v_supplier_cpf_cnpj: visible=false",
+    "v_which_sub_company_is_the_request_from_text: visible=false",
+    "v_attachment_pdf_confirmation: visible=false",
+    "v_what_s_the_request_ext: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide internal fields",
+   "when": "IO:v_nameISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_1: visible=false,mandatory=false",
+    "vs_description: visible=false",
+    "v_what_s_the_request: visible=false",
+    "v_supplier_tax_code: visible=false",
+    "v_supplier: visible=false,mandatory=false",
+    "v_attachment_pdf: visible=false,mandatory=false",
+    "v_supplier_code: visible=false",
+    "v_which_sub_company_is_the_request_from: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Hide fields - None/Others",
+   "when": "IO:v_what_s_the_request=others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_total_amount_nfse: visible=false,mandatory=false",
+    "v_date_of_issue: visible=false,mandatory=false",
+    "v_order: visible=false,mandatory=false",
+    "v_invoice_number: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Hide invoice fields on resolver view",
+   "when": "IO:v_what_s_the_request_ext=others_ext^NQIO:v_what_s_the_request=others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_total_amount_nfse: visible=false,mandatory=false",
+    "v_attachment_1: visible=false,mandatory=false",
+    "v_invoice_number: visible=false,mandatory=false",
+    "v_attachment_pdf: visible=false,mandatory=false",
+    "v_date_of_issue: visible=false,mandatory=false",
+    "v_pdf_yes: visible=false,mandatory=false",
+    "v_order: visible=false,mandatory=false",
+    "v_attachment_pdf_confirmation: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Show which tax",
+   "when": "IO:v_what_s_the_requestINquestion_about_withholding_taxes,proof_of_withholding_taxes^ORIO:v_what_s_the_request_extINquestion_about_withholding_taxes_ext,proof_of_withholding_taxes_ext^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_tax_do_you_want_information_on: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields - None/Others (ext)",
+   "when": "IO:v_what_s_the_request_ext=others_ext^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_order: visible=false,mandatory=false",
+    "v_total_amount_nfse: visible=false,mandatory=false",
+    "v_date_of_issue: visible=false,mandatory=false",
+    "v_invoice_number: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Show letter cancel",
+   "when": "IO:v_what_s_the_request=service_nfse_cancellation_letter^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment_pdf: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Number Regex",
+   "type": "onChange",
+   "on": "ad64920c1b01b910a530426fe54bcb94",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que aceita apenas dígitos em 'v_invoice_number'. Contendo qualquer outro caractere, limpa o campo e mostra 'Use somente números.'"
+  },
+  {
+   "name": "EY: Clear subcompany",
+   "type": "onChange",
+   "on": "d468e3161b41f510a530426fe54bcb6c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_which_sub_company_is_the_request_from' quando o campo que o dispara muda. Variante praticamente idêntica a outro script do mesmo conjunto."
+  },
+  {
+   "name": "EY: Public fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad, o maior deste grupo, que monta o formulário conforme o usuário ser logado ou 'guest'. Sempre exige a empresa. Logado: exige o tipo de solicitação interno, esconde nome/e-mail/telefone, exige sub-empresa e esconde a maior parte dos campos de anexo em PDF. Deslogado: troca para o tipo de solicitação externo e pede a identificação manual, liberando os campos de anexo correspondentes."
+  },
+  {
+   "name": "EY: Number Regex",
+   "type": "onChange",
+   "on": "c5d4d60c1b01b910a530426fe54bcb35",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Igual ao irmão de validação numérica, mas sobre 'v_order'. Só dígitos; caso contrário limpa e mostra 'Use somente números.'"
+  },
+  {
+   "name": "EY: Clear fields invoice (request - ext)",
+   "type": "onChange",
+   "on": "dc4a86331bd5f150d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera o bloco de dados da nota quando a escolha anterior muda: limpa tipo de imposto, número da nota, data de emissão, pedido e valor total."
+  },
+  {
+   "name": "EY: Read only fields",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Trava como somente leitura 'v_supplier_code' e 'v_supplier_tax_code', preenchidos automaticamente por outro script."
+  },
+  {
+   "name": "EY: Validate value",
+   "type": "onChange",
+   "on": "e8f45e0c1b01b910a530426fe54bcb24",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário no formato brasileiro (milhar com ponto opcional e dois decimais após vírgula). Inválido: limpa 'v_total_amount_nfse' e mostra 'Valor inválido'."
+  },
+  {
+   "name": "EY: Fields option others",
+   "type": "onChange",
+   "on": "e7521a001b01b910a530426fe54bcb43",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange para a opção 'others'. Lê o usuário e o tipo de solicitação: sendo 'guest' com pedido 'others', esconde e desobriga todo o bloco de anexos em PDF e anexos alternativos. Para os demais casos aplica o tratamento oposto."
+  },
+  {
+   "name": "EY: Clear fields invoice (tax)",
+   "type": "onChange",
+   "on": "2066f4ab1b15f550a530426fe54bcbc3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os dados da nota (número, data de emissão, pedido e valor total) quando a seleção anterior muda. Versão reduzida do irmão, sem limpar o tipo de imposto."
+  },
+  {
+   "name": "EY: Fields option questions/proof (ext)",
+   "type": "onChange",
+   "on": "dc4a86331bd5f150d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange para o fluxo externo, opções de dúvida ou comprovante de retenção. Sendo 'guest' com uma dessas opções, esconde e desobriga o bloco de anexos em PDF e os anexos alternativos; caso contrário, aplica o inverso."
+  },
+  {
+   "name": "EY: Hide field on resolver view",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde e desobriga 'v_attachment_2' e 'v_attachment_pdf_info' na visão do resolvedor. Metade do script está comentada, incluindo linhas marcadas como '//test' — código de teste deixado no registro."
+  },
+  {
+   "name": "EY: Fields option cancel",
+   "type": "onChange",
+   "on": "e7521a001b01b910a530426fe54bcb43",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange para a opção de carta de cancelamento de NFSe. Sendo 'guest' com esse pedido, exibe o bloco de anexo em PDF e torna obrigatória a confirmação do anexo; para os demais, esconde."
+  },
+  {
+   "name": "EY: Fields option cancel (ext)",
+   "type": "onChange",
+   "on": "dc4a86331bd5f150d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Mesma regra de carta de cancelamento do irmão, na versão externa: lê 'v_what_s_the_request_ext' e trata a opção terminada em '_ext', exibindo o bloco de anexo em PDF e os campos de informação do anexo e escondendo o bloco alternativo."
+  },
+  {
+   "name": "EY: Set supplier code and TAX code",
+   "type": "onChange",
+   "on": "e9d15a8c1bcd7910a530426fe54bcb0a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca os dados do fornecedor. Chama x_nasm_tax.EY_DataTaxUtils, método getSupplierData, via GlideAjax, e grava o retorno JSON em 'v_supplier_code' (code_id) e 'v_supplier_tax_code' (cnpj). Gêmeo do script de PJ/MEI, mudando apenas os campos de destino."
+  },
+  {
+   "name": "EY: Fields option others (ext)",
+   "type": "onChange",
+   "on": "dc4a86331bd5f150d1abda4ce54bcb4b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange para a opção 'others' no fluxo externo. Sendo 'guest' com 'others_ext', esconde e desobriga o bloco de anexos em PDF e anexos alternativos; caso contrário, o inverso."
+  },
+  {
+   "name": "EY: Clear fields invoice (request)",
+   "type": "onChange",
+   "on": "e7521a001b01b910a530426fe54bcb43",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera o bloco de dados da nota quando a escolha anterior muda: limpa tipo de imposto, número da nota, data de emissão, pedido e valor total."
+  },
+  {
+   "name": "EY: Number Regex",
+   "type": "onChange",
+   "on": "e8f45e0c1b01b910a530426fe54bcb24",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'v_value'. Inválido: limpa o campo e mostra 'Valor inválido'. Observação: o script se chama 'Number Regex' mas valida moeda, não número simples."
+  },
+  {
+   "name": "EY: Fields option questions/proof",
+   "type": "onChange",
+   "on": "e7521a001b01b910a530426fe54bcb43",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange para dúvida ou comprovante de retenção no fluxo interno. Sendo 'guest' com uma dessas opções, esconde e desobriga o bloco de anexos em PDF e os anexos alternativos; caso contrário, aplica o inverso. Par interno do script equivalente '_ext'."
+  }
+ ]
+}

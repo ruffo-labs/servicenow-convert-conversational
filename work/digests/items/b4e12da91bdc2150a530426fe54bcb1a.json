@@ -1,0 +1,189 @@
+{
+ "sys_id": "b4e12da91bdc2150a530426fe54bcb1a",
+ "name": "Informações ou dúvidas relacionadas à Férias",
+ "sys_name": "Generic Vacation",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Férias",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Este formulário é destinado a dúvidas relacionadas às férias, para situações onde as informações não foram encontradas na Norma STD-00536 - Férias de Colaboradores localizada no Portal docs",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "5",
+   "variaveis_ativas": "8",
+   "bloqueadores": "5",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "5"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "macro",
+    "detail": "variavel usa UI Macro, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "contextual_search_results"
+   },
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "ai_search_assist"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "ai_search_assist"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @Info: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @mandatory_vacations_txt: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @programming_vacations_txt: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 5 de 5 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "Info",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_description_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  },
+  {
+   "name": "contextual_search_results",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Contextual Search Results",
+   "macro": "cxs_rp_search",
+   "widget": "Pesquisa contextual: Resultados em Linha"
+  },
+  {
+   "name": "ai_search_assist",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "AI Search Assist",
+   "widget": "Assistência para pesquisa com IA"
+  },
+  {
+   "name": "request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Request type",
+   "include_none": true,
+   "choices": [
+    "Complaints [=complaints]",
+    "Questions [=questions]",
+    "Suggestions [=suggestions]"
+   ]
+  },
+  {
+   "name": "selecione_o_tema",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the topic",
+   "include_none": true,
+   "choices": [
+    "Intern recess [=intern_recess]",
+    "Leaves and vacation [=leaves_vacation]",
+    "Mandatory vacation [=mandatory_vacation]",
+    "Vacation payment and calculation [=vacation_payment]",
+    "Collective vacation [=collective_vacation]",
+    "Vacation scheduling [=vacation_scheduling]"
+   ]
+  },
+  {
+   "name": "mandatory_vacations_txt",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "programming_vacations_txt",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_have_you_already_searched_the_portals_search_engine: mandatory=true",
+    "v_have_you_tried_searching_the_knowledge_base: mandatory=true",
+    "v_description_details: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Theme = Schudele Vacation",
+   "when": "IO:selecione_o_tema=vacation_scheduling^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "programming_vacations_txt: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory select boxes",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "selecione_o_tema: mandatory=true",
+    "request_type: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Theme = Mandatory vacation",
+   "when": "IO:selecione_o_tema=mandatory_vacation^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "mandatory_vacations_txt: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show kb link",
+   "when": "IO:v_have_you_tried_searching_the_knowledge_base=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "link_kb: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Minimum caracter ",
+   "type": "onSubmit",
+   "on": "01e1e9e91bdc2150a530426fe54bcb3a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."
+  }
+ ]
+}

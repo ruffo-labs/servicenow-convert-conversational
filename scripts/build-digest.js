@@ -72,7 +72,8 @@ function variavel(v, ctx) {
   for (const k of VAR_BOOL) if (v[k] === 'true') q[k] = true;
   if (dv(v.macro)) q.macro = dv(v.macro);
   if (dv(v.sp_widget)) q.sp_widget = dv(v.sp_widget);
-  const ch = (v.question_choices || []).filter((c) => c.inactive !== 'true').sort((a, b) => +a.order - +b.order)
+  // reference_choices (variável de referência que age como select box) é tratado como question_choices.
+  const ch = (v.question_choices || v.reference_choices || []).filter((c) => c.inactive !== 'true').sort((a, b) => +a.order - +b.order)
     .map((c) => { const t = clean(c.text); return c.value && c.value !== t ? `${t} [=${c.value}]` : t; });
   if (ch.length) q.choices = ch;
   return q;

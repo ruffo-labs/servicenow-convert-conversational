@@ -1,0 +1,59 @@
+{
+ "sys_id": "2c07a9771ba48510a530426fe54bcbb9",
+ "name": "Declaração de vínculo ou lotação e escala de trabalho",
+ "sys_name": "Declaration of employment or employment and work schedule",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Declarações e Documentos",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "2",
+   "variaveis_ativas": "3",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "2"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 2 de 2 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "escolha_o_tipo_de_declaracao",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Choose the declaration type",
+   "include_none": true,
+   "choices": [
+    "Bond Declaration [=declaracao_vinculo]",
+    "Declaration of capacity and work schedule [=declaracao_lotacao_escala_trabalho]"
+   ]
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "0fbd2b391b177010d1abda4ce54bcb90",
+   "name": "Suas informações pessoais",
+   "order": "100",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "update_information_link (Rótulo de Rich Text): "
+   ]
+  }
+ ],
+ "ui_policies": [],
+ "client_scripts": []
+}

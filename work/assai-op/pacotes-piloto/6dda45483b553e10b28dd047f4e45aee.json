@@ -1,0 +1,90 @@
+{
+ "sys_id": "6dda45483b553e10b28dd047f4e45aee",
+ "name": "Férias",
+ "category": "Autoatendimento - Gestão de Gente",
+ "short_description": "Férias",
+ "description": "Férias",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no cálculo das férias",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "what_the_point_divergence"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Não recebimento do pagamento das férias",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [
+    "what_the_point_divergence"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "what_the_point_divergence",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual é a divergência?",
+   "choices": [
+    "Valor",
+    "Período de gozo",
+    "Remuneração variável/média de férias",
+    "Quantidade de dias"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "9b4f45c03b953e10b28dd047f4e45a36",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa a variável what_the_point_divergence (sempre)."
+  }
+ ]
+}

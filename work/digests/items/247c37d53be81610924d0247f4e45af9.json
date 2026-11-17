@@ -1,0 +1,146 @@
+{
+ "sys_id": "247c37d53be81610924d0247f4e45af9",
+ "name": "Serviço de transporte para ir ao trabalho",
+ "sys_name": "Work transportation service",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Transporte para chegar ao trabalho",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Use este formulário para fazer solicitações de transporte para o trabalho",
+ "description": "Use este formulário para fazer solicitações de transporte para o trabalho",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "20",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @FAQs: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 7 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de apólice de seguro / seguro de vida. Define o solicitante chamando o Script Include EY_Get_Hispanic_Categories, método getUserRequestedFor, passando a variável 'v_employee'. Grava x_nasm_hr_item e item com o sysparm_id da URL. Observação: a linha faz atribuição dupla (`current.requested_for = current.requested_for = ...`), erro de digitação sem efeito prático, e há um gs.getUserID() comentado ao lado.",
+ "variaveis": [
+  {
+   "name": "category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Category",
+   "include_none": true,
+   "choices": [
+    "Commute to work [=translado_trabalho]",
+    "Cabify [=cabify]"
+   ]
+  },
+  {
+   "name": "FAQs",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "detail_request",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  },
+  {
+   "name": "checkbox_declaracao",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I have prior knowledge and agree that the costs of the trip undertaken will be the responsibility of the cost center to which I belong."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Hide unfilled fields",
+   "when": "IO:v_who_is_this_request_for=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_who_is_this_request_for: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Visibility checkbox ",
+   "when": "IO:v_country_of_residenceINargentina,chile^IO:category=cabify^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "checkbox_declaracao: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show category",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "category: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide fields > for me",
+   "when": "IO:v_who_is_this_request_for=for_me^ORIO:v_who_is_this_request_for=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_reason_on_behalf: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Country is Argentina",
+   "when": "IO:v_country_of_residence=argentina^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "FAQs: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Conditions for the Category Field",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange de 3,8 KB que monta a lista de categorias conforme o usuário. Começa removendo as opções 'cabify' e 'translado_trabalho' e depois recoloca o que for pertinente ao perfil de quem abriu."
+  }
+ ]
+}

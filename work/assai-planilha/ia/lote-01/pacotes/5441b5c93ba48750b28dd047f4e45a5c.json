@@ -1,0 +1,224 @@
+{
+ "sys_id": "5441b5c93ba48750b28dd047f4e45a5c",
+ "name": "Acessos Portal da Nossa Gente",
+ "category": "Gestor/RH Ponta",
+ "short_description": "Acessos Portal da Nossa Gente",
+ "description": "Acessos Portal da Nossa Gente",
+ "sets": [
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Acessos Portal da Nossa Gente",
+    "item": "Acessos Portal da Nossa Gente"
+   },
+   "ofertas": [
+    {
+     "name": "Problemas ao acessar o Portal da Nossa Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Acessos Portal Nossa Gente"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_name_collaborator_impacted",
+    "v_access_profile_to_grant",
+    "v_number_collaborator_impacted",
+    "v_request_type",
+    "v_keep_current_access_profile"
+   ],
+   "passa_a_obrigatoria": [
+    "anexo",
+    "informe_o_erro_problema"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Problemas ao acessar o Portal da Nossa Gente",
+     "description": "Use quando o Portal da Nossa Gente apresenta erro, falta de visibilidade ou está fora do ar. Corresponde à oferta Problemas ao acessar o Portal da Nossa Gente, atendida pelo RH - Acessos Portal Nossa Gente."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Acessos Portal da Nossa Gente",
+    "item": "Acessos Portal da Nossa Gente"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de concessão, revogação ou troca de perfil de acesso - Prestador de Serviço - Acessos Portal da Nossa Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Acessos Portal Nossa Gente"
+    },
+    {
+     "name": "Solicitação de concessão, revogação ou troca de perfil de acesso - Acessos Portal da Nossa Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Acessos Portal Nossa Gente"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "u_user_criteria": [
+     "",
+     "ALP - Estabelecimento 305"
+    ]
+   },
+   "sai_do_formulario": [
+    "anexo",
+    "informe_o_erro_problema"
+   ],
+   "passa_a_obrigatoria": [
+    "v_request_type"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Deseja manter o perfil de acesso que já possui?",
+     "quando": "v_request_type=grant_access"
+    },
+    {
+     "policy": "ALP - Perfil a ser concedido",
+     "quando": "v_request_type=grant_access^ORv_request_type=change_access_profile"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Conceder, revogar ou trocar perfil de acesso no Portal da Nossa Gente",
+     "description": "Use para conceder, revogar ou trocar o perfil de acesso de um colaborador ou prestador de serviço no Portal da Nossa Gente. Corresponde às ofertas de concessão, revogação ou troca de perfil de acesso (colaborador e prestador de serviço), atendidas pelo RH - Acessos Portal Nossa Gente."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_name_collaborator_impacted",
+   "type": "Referência",
+   "question_text": "Nome do usuário impactado",
+   "mandatory": true,
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o usuário impactado?"
+  },
+  {
+   "name": "v_access_profile_to_grant",
+   "type": "Selecionar Caixa",
+   "question_text": "Perfil a ser concedido",
+   "choices": [
+    "EQUIPE RECRUTAMENTO E SELECAO",
+    "PARAMETROS",
+    "DEMISSAO",
+    "ADMISSAO",
+    "EXPANSAO E BANCO",
+    "MEDICINA",
+    "FOLHA EXECUTIVOS",
+    "RH SERVICOS DOCUMENTAÇÃO",
+    "INVESTIGACOES",
+    "REMUNERACAO ESTRATEGIA NEGOCIO",
+    "BENEFICIOS PDO - EQUIPE",
+    "JORNADA - EQUIPE",
+    "ATENDIMENTO RH N2 - GESTAO",
+    "ADMINISTRADOR RECRUTAMENTO E SELECAO",
+    "BENEFICIOS PDO - GESTAO"
+   ],
+   "label_atual": "Qual perfil de acesso deve ser concedido?"
+  },
+  {
+   "name": "v_number_collaborator_impacted",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula do usuário impactado",
+   "choices": [],
+   "label_atual": "Qual é a matrícula do usuário impactado?"
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Concessão de acesso",
+    "Revogação de acesso",
+    "Troca de perfil de acesso"
+   ],
+   "label_atual": "O que você quer fazer: conceder, revogar ou trocar o perfil de acesso?"
+  },
+  {
+   "name": "anexo",
+   "type": "Anexo",
+   "question_text": "Anexo",
+   "choices": [],
+   "label_atual": "Envie um anexo que mostre o problema."
+  },
+  {
+   "name": "informe_o_erro_problema",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o erro/problema",
+   "choices": [
+    "Visibilidade/Funcionalidade",
+    "Sistema inoperante",
+    "Outros"
+   ],
+   "label_atual": "Que tipo de problema você está tendo?"
+  },
+  {
+   "name": "matr_cula_do_colaborador_impactado",
+   "type": "Referência",
+   "question_text": "Nome do colaborador impactado",
+   "mandatory": true,
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o colaborador impactado?"
+  },
+  {
+   "name": "nome_do_colaborador_impactado",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula do colaborador impactado",
+   "choices": [],
+   "label_atual": "Qual é a matrícula do colaborador impactado?"
+  },
+  {
+   "name": "v_keep_current_access_profile",
+   "type": "Sim/Não",
+   "question_text": "Deseja manter o perfil de acesso que já possui?",
+   "choices": [],
+   "label_atual": "Você quer manter o perfil de acesso que já possui?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "97176ee9876c4310182a0d440cbb3598",
+   "name": "onLoad rh_name_requester",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "false",
+   "resumo": "No onLoad, limpa a variável rh_name_requester (a checagem com newValue/isLoading não tem efeito em onLoad)."
+  },
+  {
+   "sys_id": "c446aea9876c4310182a0d440cbb3514",
+   "name": "onChange rh_name_requester",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "false",
+   "resumo": "No onChange de rh_name_requester, se o valor for igual ao usuário logado (g_user.userID), limpa o campo e mostra 'O solicitante não pode ser o mesmo usuário que está logado.'."
+  }
+ ]
+}

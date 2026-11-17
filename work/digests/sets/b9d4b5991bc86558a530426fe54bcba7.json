@@ -1,0 +1,38 @@
+{
+ "sys_id": "b9d4b5991bc86558a530426fe54bcba7",
+ "title": "EY: Company: Natura/TBS/Aesop",
+ "internal_name": "ey_company_natura_tbs_aesop",
+ "description": "Company: Natura/TBS/Aesop",
+ "usado_por": 3,
+ "itens_exemplo": [
+  "Solicitação para tratativa de pagamentos Varejo",
+  "Solicitar tratativa da loja",
+  "Solicitação para tratativa de caixa Lojas"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "reference": "core_company",
+   "include_none": true,
+   "choices": [
+    "Natura Comercial LTDA (Brazil) [=natura]",
+    "The Body Shop Brasil Franquias LTDA (Brazil) [=tbs]"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_company: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

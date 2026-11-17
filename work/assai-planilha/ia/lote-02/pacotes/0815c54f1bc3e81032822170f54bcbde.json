@@ -1,0 +1,146 @@
+{
+ "sys_id": "0815c54f1bc3e81032822170f54bcbde",
+ "name": "Compra+ Assaí (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Compra+ Assaí",
+ "description": "Compra+ Assa&iacute;",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios",
+    "item": "Compra+"
+   },
+   "ofertas_de_outro_item": [
+    "Compra+ Assaí sem limite de utilização"
+   ],
+   "ofertas": [
+    {
+     "name": "Compra+ Assaí sem limite de utilização",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Compra+"
+    },
+    {
+     "name": "Solicitação de análise de desconto do Compra+ Assaí",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Compra+"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Análise de desconto do Compra+ Assaí",
+     "description": "Use quando o desconto do Compra+ Assaí de um colaborador parecer incorreto e o RH - Compra+ precisar analisar. Informe o mês de referência e envie o extrato de utilização e o demonstrativo de pagamento."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Maio",
+    "Dezembro",
+    "Janeiro",
+    "Fevereiro",
+    "Outubro",
+    "Abril",
+    "Agosto",
+    "Novembro",
+    "Março",
+    "Julho",
+    "Setembro",
+    "Junho"
+   ],
+   "label_atual": "Qual é o mês de referência?"
+  },
+  {
+   "name": "v_payment_statement",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento."
+  },
+  {
+   "name": "v_usage_statement",
+   "type": "Anexo",
+   "question_text": "Extrato de utilização",
+   "choices": [],
+   "label_atual": "Envie o extrato de utilização do Compra+."
+  }
+ ],
+ "tecnicas_ocultas": [
+  "valor_do_reembolso"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "2741f99c3b2b2a10b28dd047f4e45a31",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "d0513d9c3b2b2a10b28dd047f4e45a00",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

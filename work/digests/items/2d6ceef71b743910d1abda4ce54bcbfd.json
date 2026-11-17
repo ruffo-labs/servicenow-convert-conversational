@@ -1,0 +1,109 @@
+{
+ "sys_id": "2d6ceef71b743910d1abda4ce54bcbfd",
+ "name": "Emissão de Notas Fiscais de Devolução",
+ "sys_name": "FORM0000580",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Solicitação de Retorno de Mercadoria para o Fornecedor",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "5",
+   "variaveis_ativas": "6",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "5"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_download_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @vs_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_company_do_you_want_to_ship_to: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 5 de 5 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_which_invoice_number_do_you_want_to_return",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which invoice number do you want to return?"
+  },
+  {
+   "name": "v_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the template that should be used in the field below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "77c5dffa1bb0f110d1abda4ce54bcbb8",
+   "name": "EY: Tax - Company Avon/Natura - Subcompany",
+   "order": "100",
+   "perguntas": [
+    "vs_which_company_is_your_request (Selecionar Caixa): Which company is your request for?",
+    "vs_which_sub_company_is_the_request_from (Referência): Which sub-company is the request from?"
+   ]
+  },
+  {
+   "sys_id": "6e11a7481b89b910a530426fe54bcb34",
+   "name": "EY: Tax - Company want to ship",
+   "order": "300",
+   "perguntas": [
+    "vs_which_company_do_you_want_to_ship_to (Referência): Which company do you want to ship to?"
+   ]
+  },
+  {
+   "sys_id": "b3b65b7e1bb0f110d1abda4ce54bcb1b",
+   "name": "EY: Tax - Attachments",
+   "order": "500",
+   "perguntas": [
+    "vs_attach_template (Anexo): Attach template"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show field",
+   "when": "IO:vs_which_sub_company_is_the_request_from=8c14f4d61b0acd10237642ece54bcb6e^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_template: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_which_invoice_number_do_you_want_to_return: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Regex Validation 9-1;3",
+   "type": "onChange",
+   "on": "390fa6bf1b743910d1abda4ce54bcb36",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o número da nota a devolver. Aplica a regex /^\\d{9}-\\d{1,3}$/ (9 dígitos, hífen, 1 a 3 dígitos). Não casando, limpa 'v_which_invoice_number_do_you_want_to_return' e mostra mensagem de erro com exemplos do formato aceito."
+  }
+ ]
+}

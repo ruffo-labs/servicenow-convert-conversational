@@ -1,0 +1,185 @@
+{
+ "sys_id": "b81351591b08a558d1abda4ce54bcbdd",
+ "name": "Tratamento e Regularização das Contas de FGTS",
+ "sys_name": "Treatment and Regularization of FGTS Accounts",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Para solicitar correções e/ou atualização de dados cadastrais ou financeiros do FGTS.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "17",
+   "variaveis_ativas": "22",
+   "bloqueadores": "0",
+   "avisos": "7",
+   "perguntas_sem_conversational_label": "17"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_pis: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_text_fgts: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_updated: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_fgts: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 17 de 17 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_fgts",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Treatment and Regularization of FGTS Accounts"
+  },
+  {
+   "name": "v_what_is_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is your request?",
+   "include_none": true,
+   "choices": [
+    "Data rectification (need to change FGTS registration data) [=v_data_rectification]",
+    "Account merger (you have more than one active FGTS account and want to unify the balance) [=v_account_merger]",
+    "I couldn't find my FGTS deposit on my Caixa Econômica Federal statement [=v_couldnt_find]"
+   ]
+  },
+  {
+   "name": "v_text_checkbox",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "What data needs to be rectified with Caixa Econômica Federal?"
+  },
+  {
+   "name": "v_name_fgts",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Name"
+  },
+  {
+   "name": "v_date_of_birth_fgts",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Date of birth"
+  },
+  {
+   "name": "v_mother_name_fgts",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Mother's name"
+  },
+  {
+   "name": "v_pis_fgts",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "PIS"
+  },
+  {
+   "name": "v_ctps_fgts",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "CTPS - Work Record Booklet"
+  },
+  {
+   "name": "v_description_fgts",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_attach_pis",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the PIS document"
+  },
+  {
+   "name": "v_attach_updated",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach updated proof of data to be rectified"
+  },
+  {
+   "name": "v_attach_fgts",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "If you have different FGTS accounts in the same employment contract, attach the statements for these accounts, issued by Caixa Econômica Federal, so that we can unify them."
+  },
+  {
+   "name": "v_text_fgts",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Simply access the Caixa website or the FGTS application, enter the requested data, click on “Complete Statement”, select the periods and print.\nHyperlink: https://www.caixa.gov.br/beneficios-trabalhador/fgts/extrato-fgts/PAGINAS/DEFAULT.ASPX"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Fields mandatory when rectification",
+   "when": "IO:v_what_is_your_request=v_data_rectification^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_checkbox: visible=true,mandatory=true",
+    "v_ctps_fgts: visible=true",
+    "v_mother_name_fgts: visible=true",
+    "v_date_of_birth_fgts: visible=true",
+    "v_name_fgts: visible=true",
+    "v_attach_updated: visible=true,mandatory=true",
+    "v_pis_fgts: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Filds Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_pis: mandatory=true",
+    "v_what_is_your_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Fields mandatory if  unification",
+   "when": "IO:v_what_is_your_request=v_account_merger^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_unification: ",
+    "v_attach_fgts: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Fields mandatory if FGTS extract",
+   "when": "IO:v_what_is_your_request=v_fgts_extract^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_text_fgts: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,1458 @@
+[
+  {
+    "sys_id": "8c25974c1b1c291ca530426fe54bcbff",
+    "nome_atual": "Informar orçamentos de viagens e suplementação orçamentaria para Centro de Custo ou PEP",
+    "tabela": "x_nasm_finance_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 30,
+    "justificativa": "Nenhum chamado nos últimos 12 meses (516 no histórico total), o que indica que o processo migrou para outro canal ou deixou de existir. O item tem 31 perguntas, 5 anexos e ramos cruzados (orçamento x suplementação, centro de custo x PEP, um ou vários), então não compensa convertê-lo sem confirmar que ainda é usado.",
+    "nome_sugerido": "Informar orçamento ou pedir suplementação de verba de viagens",
+    "short_description_sugerida": "Envio do orçamento anual de viagens ou pedido de verba extra de viagens para um centro de custo ou PEP.",
+    "descricao_sugerida": "Use para enviar o orçamento de viagens de um centro de custo ou de um PEP (Elemento do Plano de Estrutura de Projeto), ou para pedir suplementação (verba extra) de viagens. Não use para cadastro ou reativação no app de táxi e viagens corporativas: para isso existe um item próprio.",
+    "frases_exemplo": [
+      "preciso informar o orçamento de viagens do meu centro de custo",
+      "quero pedir suplementação de verba de viagem para o PEP",
+      "acabou a verba de viagem do projeto",
+      "como envio o budget de viagens da área?"
+    ],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Confirmar com a área de Viagens Corporativas se o processo ainda existe. Se não existir, desativar o item e tirá-lo do catálogo Virtual Agent Search."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Se o processo continuar ativo, o caminho indicado é dividir em 'Informar orçamento de viagens' e 'Pedir suplementação de verba de viagens'. Cada um teria uma pergunta 'centro de custo ou PEP', o número, o valor e o anexo ao final. As 4 perguntas 'um ou vários' seriam trocadas por um único anexo de planilha. Enquanto isso não for decidido, o item pode ficar como formulário."
+  },
+  {
+    "sys_id": "dad4109c1b9c691ca530426fe54bcb24",
+    "nome_atual": "Solicitar cadastro e reativação de app de Táxi e Viagens Corporativas",
+    "tabela": "x_nasm_finance_case",
+    "volume_12m": 230,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 70,
+    "justificativa": "O item tem uma intenção clara e poucas perguntas específicas (demanda, centro de custo/PEP, CPF, celular e novo celular). Não há bloqueador: o script de CPF já é VA Supported, mas dá para trocá-lo por Validation Regex. Os ajustes que faltam são conversational labels, descrição de negócio, tirar o rich text de FAQ e passar as policies onLoad de obrigatoriedade para a própria variável.",
+    "nome_sugerido": "Cadastrar ou reativar acesso ao app de táxi e viagens corporativas",
+    "short_description_sugerida": "Cadastro, reativação ou troca do celular cadastrado no aplicativo corporativo de táxi e viagens.",
+    "descricao_sugerida": "Use quando precisar ser cadastrado no aplicativo corporativo de táxi e viagens, reativar um acesso bloqueado ou inativo, ou trocar o número de celular cadastrado no app. Vão ser pedidos o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto), o CPF e o celular. Não use para enviar orçamento de viagens nem para pedir suplementação de verba: para isso existe outro item.",
+    "frases_exemplo": [
+      "preciso de cadastro no app de táxi da empresa",
+      "meu acesso ao app de viagens corporativas foi bloqueado",
+      "quero reativar minha conta do táxi corporativo",
+      "troquei de celular e preciso atualizar o número no app de táxi",
+      "não consigo pedir táxi pelo app da empresa, acho que meu cadastro expirou"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variavel v_label_if_you_have_questions",
+        "problema": "Rich Text Label com link para o FAQ: na conversa a mídia se perde e o texto não chega ao LLM.",
+        "acao": "Remover da conversa: colocar o link do artigo de FAQ na descrição do item ou tornar a variável visível só no portal."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_what_is_the_demand_of_the_call",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "O que você precisa: cadastro novo, reativação do acesso ou troca do celular cadastrado?",
+        "obs": "Marcar mandatory direto na variável, já que hoje isso é feito pela policy 'EY: Mandatory Fields'. Revisar os textos das opções em pt-BR. O LLM costuma preencher esta resposta a partir da primeira frase do usuário."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_report_cost_center_pep",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o centro de custo ou PEP (Elemento do Plano de Estrutura de Projeto) para as corridas?",
+        "obs": "Marcar mandatory na variável. Se o centro de custo existir no perfil do usuário, avaliar default value (auto-populate) e deixar só a confirmação."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_enter_your_cpf",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o seu CPF?",
+        "obs": "Trocar o client script 'EY: CPF Validation' por Validation Regex (000.000.000-00 ou 11 dígitos). Se o CPF já estiver no perfil de RH/sys_user, derivar por auto-populate e não perguntar."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_enter_your_phone_number_mobile",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o seu número de celular (com DDD)?",
+        "obs": "Pôr default value com o mobile_phone do usuário, para a VA só confirmar. Colocar Validation Regex de telefone. É redundante com vs_phone_number do set de solicitante: avaliar usar só um."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_enter_the_new_phone_number_mobile",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o novo número de celular que deve ficar cadastrado no app?",
+        "obs": "Só é perguntada quando a demanda é troca de celular (policy VA Supported, pode ficar). Pôr a mesma Validation Regex de telefone."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_additional_information",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quer acrescentar mais alguma informação?",
+        "obs": "Opcional."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_label_if_you_have_questions",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich text informativo. O link do FAQ passa para a descrição."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: CPF Validation",
+        "acao": "converter",
+        "substituicao": "Validation Regex na variável v_enter_your_cpf, com o padrão ^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$."
+      },
+      {
+        "nome": "EY: Mandatory Fields",
+        "acao": "converter",
+        "substituicao": "Marcar mandatory=true direto em v_what_is_the_demand_of_the_call, v_report_cost_center_pep, v_enter_your_cpf e v_enter_your_phone_number_mobile, e remover a policy onLoad."
+      },
+      {
+        "nome": "EY: If selected Phone Change Registered in Whats is the demand",
+        "acao": "manter",
+        "substituicao": "Policy sem script e VA Supported, que mostra o novo celular só na troca de número."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "O set 'EY: Company - Subcompany' (vs_subcompany) tem reference qualifier dinâmico. O ajuste fica na análise de variable sets."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O item tem 3 flows associados, entre eles um 'Copy of': vale limpar os que estão inativos. A descrição tem que deixar clara a diferença para o item irmão de orçamento e suplementação de viagens."
+  },
+  {
+    "sys_id": "8dc994c41b1cda10514cbaef4b4bcb44",
+    "nome_atual": "Solicitação de acesso aos sistemas de RH",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 111,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "O item é simples: uma escolha do sistema/opção e uma descrição com no mínimo 40 caracteres. Está bloqueado por um client script onChange de 4,4 KB sem VA Supported, que filtra e esconde as opções de v_choose_the_option. O resto das validações pode virar Validation Regex, e a descrição do item é genérica e repete a short description.",
+    "nome_sugerido": "Solicitar acesso a sistema de RH",
+    "short_description_sugerida": "Pedido de liberação de acesso a um sistema de Recursos Humanos (RH).",
+    "descricao_sugerida": "Use quando você (ou alguém da sua equipe) precisar de acesso a um sistema de Recursos Humanos (RH), por exemplo para consultar ou lançar informações de colaboradores. Informe qual sistema e o que você precisa fazer nele. Não use para dúvidas sobre folha de pagamento, benefícios ou dados pessoais: esses assuntos têm itens próprios.",
+    "frases_exemplo": [
+      "preciso de acesso ao sistema de RH",
+      "quero liberar acesso ao Workday para um colaborador novo",
+      "não tenho perfil no sistema de recursos humanos",
+      "necesito acceso a los sistemas de RRHH",
+      "como peço acesso ao sistema de RH para minha equipe?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "client script EY: Condition for v_choose_the_option",
+        "problema": "onChange de 4,4 KB sem VA Supported, que muda as opções e a visibilidade de v_choose_the_option conforme o contexto. Com ele ativo, o item não conversa.",
+        "acao": "Trocar a filtragem por dependência de choices (campo 'Dependent value' nas opções da select box, ligado à variável de contexto, por exemplo o país) ou por UI Policy sem script. Se o script não mexer em DOM e só usar g_form.addOption/removeOption, avaliar marcar VA Supported depois de testar."
+      },
+      {
+        "onde": "variavel v_faq / v_minimun_characters",
+        "problema": "Rich Text Labels (FAQ e aviso de mínimo de caracteres) não chegam ao LLM.",
+        "acao": "Remover da conversa. O link do FAQ vai para a descrição e a regra de 40 caracteres vira Validation Regex."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_choose_the_option",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "A qual sistema de RH você precisa de acesso?",
+        "obs": "Tirar a lógica de opções do client script, como descrito em bloqueadores. Revisar os textos das opções para nomes de sistema reconhecíveis e sem siglas soltas."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_field_detail",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Conte o que você precisa fazer no sistema e qual perfil de acesso é necessário.",
+        "obs": "Marcar mandatory na variável e substituir os 3 scripts de 40 caracteres por Validation Regex ^[\\s\\S]{40,}$ com mensagem clara."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_faq",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Rich text sem label. O link do FAQ vai para a descrição."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_minimun_characters",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "A mensagem de mínimo passa a vir da Validation Regex."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Condition for v_choose_the_option",
+        "acao": "converter",
+        "substituicao": "Dependência de choices ou UI Policy sem script, ou marcar VA Supported depois de revisar o código."
+      },
+      {
+        "nome": "EY: Hide options v_choose_the_option",
+        "acao": "remover",
+        "substituicao": "Controlar a visibilidade inicial pelo atributo da variável ou por UI Policy sem script."
+      },
+      {
+        "nome": "EY: Hide error message onLoad",
+        "acao": "remover",
+        "substituicao": "Deixa de ser necessário quando v_minimun_characters sai."
+      },
+      {
+        "nome": "EY: Show error message onSubmit",
+        "acao": "converter",
+        "substituicao": "Validation Regex de no mínimo 40 caracteres em v_field_detail."
+      },
+      {
+        "nome": "EY: Show error message onChange",
+        "acao": "converter",
+        "substituicao": "Mesma Validation Regex (remover)."
+      },
+      {
+        "nome": "EY: Mandatory v_field_detail",
+        "acao": "converter",
+        "substituicao": "Marcar mandatory direto na variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Os usuários são de países hispânicos (Argentina, Chile, Colômbia, Equador, Peru, Uruguai). Os conversational labels e a descrição também precisam de tradução para espanhol (sys_translated_text).",
+        "O set 'EY: Hispana Personal Information' tem v_employee com reference qualifier dinâmico. O ajuste fica na análise de variable sets."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O resumo do producer script fala em 'dúvidas sobre Frota' e repete a atribuição de requested_for: é copy-paste de um item irmão. Revisar o script e remover a atribuição duplicada."
+  },
+  {
+    "sys_id": "0c6f995a1b679150a530426fe54bcba6",
+    "nome_atual": "Acompanhamento de Beneficio (Cartão de Vale Transporte)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 133,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "A intenção é única: saber da entrega do cartão de benefício ou pedir que ele seja entregue em algum lugar. Mas o item passa de 20 perguntas, porque o endereço sai quebrado em 8 campos, e a descrição é só '.'. A 2ª via não gera chamado, é só um aviso para ligar para a Sodexo, então deve virar orientação na descrição/KB. Os dados do colaborador já são default e read-only.",
+    "nome_sugerido": "Acompanhar entrega do cartão de vale-transporte ou benefício",
+    "short_description_sugerida": "Consulta sobre a entrega do cartão de vale-transporte (ou de outro benefício) e indicação do local de entrega.",
+    "descricao_sugerida": "Use quando o seu cartão de vale-transporte (ou outro cartão de benefício) ainda não chegou e você quer acompanhar a entrega ou informar onde prefere recebê-lo: em casa, na unidade ou na loja. Para 2ª via ou bloqueio do cartão, ligue direto para a central da Sodexo (3003-5083 em capitais e regiões metropolitanas, 0800 728-5083 nas demais localidades) ou use o app Sodexo Club. Não use para aderir, alterar ou cancelar o vale-transporte, nem para pedir vale-transporte extra: esses pedidos têm itens próprios.",
+    "frases_exemplo": [
+      "meu cartão de vale transporte ainda não chegou",
+      "quero saber onde está meu cartão VT",
+      "onde retiro meu cartão de vale-transporte?",
+      "quero receber o cartão do benefício em casa",
+      "cadê meu cartão da Sodexo?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variaveis de endereço (v_zip_code, v_street, v_number, v_complement, v_city, v_neighborhood, v_region)",
+        "problema": "São 21 perguntas, acima do limite de 20 (glide.sc.va.inline_render.question.limit). Nesse caso a VA abre janela em vez de conversar.",
+        "acao": "Criar a nova pergunta nova_confirmar_endereco_cadastrado, que mostra o endereço do perfil de RH (x_nasm_hr_profile) e pergunta se é para entregar lá. Os campos de endereço só aparecem se a resposta for 'Não'. Tirar v_region, que dá para derivar do CEP/cidade."
+      },
+      {
+        "onde": "variavel v_2_copy_label / opção de 2ª via em v_enter_the_option",
+        "problema": "É um ramo que não gera trabalho para o RH, só um aviso para ligar para a Sodexo, e o Rich Text não chega ao LLM.",
+        "acao": "Tirar a opção de 2ª via do item e deixar a orientação na descrição ou em artigo de KB (a VA pode responder pela KB)."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_type_of_benefit",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "De qual cartão de benefício você está falando?",
+        "obs": "Marcar mandatory na variável (hoje vem da policy onLoad). Pelo nome do flow, as opções parecem ser vale-refeição, vale-alimentação e vale-transporte: revisar os textos. Se o item for só de vale-transporte, pôr default e ocultar."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_enter_the_option",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "O que você precisa sobre o cartão?",
+        "obs": "Tirar a opção de 2ª via. Se sobrar só uma opção (entrega), remover a variável e fixar o valor por default."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_has_the_benefit_claimed",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Você já pediu a adesão ao vale-transporte?",
+        "obs": "Yes/No com Include None, já está ok. Se a resposta for 'Não', a descrição/resposta orienta usar o item de adesão."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_where_do_you_want_to_receive_your_card",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Onde você quer receber o cartão: no seu endereço ou no seu local de trabalho?"
+      },
+      {
+        "ordem": 5,
+        "variavel": "nova_confirmar_endereco_cadastrado",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Sim/Não (Include None)",
+        "conversational_label": "Podemos entregar no endereço que está no seu cadastro?",
+        "obs": "Nova. Só aparece quando a entrega for no endereço. O endereço vem do perfil de RH (auto-populate em variáveis read-only)."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_zip_code",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o CEP do endereço de entrega?",
+        "obs": "Só se nova_confirmar_endereco_cadastrado = Não. Pôr Validation Regex de CEP."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_street",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é a rua?"
+      },
+      {
+        "ordem": 8,
+        "variavel": "v_number",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o número?"
+      },
+      {
+        "ordem": 9,
+        "variavel": "v_complement",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Tem complemento (apartamento, bloco)?",
+        "obs": "Opcional."
+      },
+      {
+        "ordem": 10,
+        "variavel": "v_neighborhood",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o bairro?"
+      },
+      {
+        "ordem": 11,
+        "variavel": "v_city",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é a cidade?"
+      },
+      {
+        "ordem": 12,
+        "variavel": "v_region",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Redundante com cidade/CEP."
+      },
+      {
+        "ordem": 13,
+        "variavel": "v_workplace",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Você trabalha em unidade/escritório ou em loja?",
+        "obs": "Só quando a entrega for no local de trabalho."
+      },
+      {
+        "ordem": 14,
+        "variavel": "v_choose_the_location",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Em qual unidade você quer retirar o cartão?"
+      },
+      {
+        "ordem": 15,
+        "variavel": "v_departament",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o seu departamento?",
+        "obs": "Avaliar derivar do perfil do usuário (department)."
+      },
+      {
+        "ordem": 16,
+        "variavel": "v_responsible",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quem pode receber o cartão por você na unidade?"
+      },
+      {
+        "ordem": 17,
+        "variavel": "v_store",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Em qual loja você trabalha?",
+        "obs": "O reference qualifier é estático (company=...), o que funciona na conversa. Conferir se a tabela cmn_location filtrada não fica grande demais para a busca."
+      },
+      {
+        "ordem": 18,
+        "variavel": "v_other_store",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Se a sua loja não apareceu na lista, qual é o nome dela?",
+        "obs": "Opcional."
+      },
+      {
+        "ordem": 19,
+        "variavel": "employee_s_name",
+        "origem": "item",
+        "acao": "ocultar_na_conversa",
+        "obs": "Tem default gs.getUserID() e é read-only, então a VA pula. Marcar read-only na própria variável em vez de na policy onLoad."
+      },
+      {
+        "ordem": 20,
+        "variavel": "v_id",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Default via script, read-only. Pode continuar oculta."
+      },
+      {
+        "ordem": 21,
+        "variavel": "v_company",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Default via script, read-only."
+      },
+      {
+        "ordem": 22,
+        "variavel": "v_2_copy_label",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "O conteúdo vai para a descrição/KB."
+      },
+      {
+        "ordem": 23,
+        "variavel": "v_hyperlink_transport_voucher_label",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Orientação para usar o item de adesão, que vai para a descrição."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Name`s Employee and Company Read Only and Type of benefit",
+        "acao": "converter",
+        "substituicao": "Marcar read-only em employee_s_name, v_id e v_company e mandatory em v_type_of_benefit direto nas variáveis."
+      },
+      {
+        "nome": "EY: 2 copy Visible label / EY: Benefit has claimed is No Visible and Mandatory",
+        "acao": "remover",
+        "substituicao": "Deixam de ser necessárias quando os labels saem."
+      },
+      {
+        "nome": "Demais UI policies de visibilidade (endereço, workplace, loja, local)",
+        "acao": "manter",
+        "substituicao": "São policies sem script e VA Supported. Incluir a condição nova_confirmar_endereco_cadastrado = Não na policy de endereço."
+      },
+      {
+        "nome": "6 client scripts 'EY: Fields Clear ...'",
+        "acao": "remover",
+        "substituicao": "Só limpam campos quando a resposta anterior muda. A conversa multi-turn já trata correções, e policies com 'Clear the variable value' cobrem o portal."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Hoje o item está disponível só para 'EY: Terceiros V2': confirmar o público-alvo."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "A descrição tem que separar bem este item dos irmãos 'Aderir, alterar ou cancelar vale-transporte' e 'Vale-transporte extra'. O nome do flow cita vale-refeição e alimentação: se o item cobre esses cartões, ajustar o nome para 'cartão de benefício'."
+  },
+  {
+    "sys_id": "23094fd91bfab990d1abda4ce54bcb29",
+    "nome_atual": "Adesão, Alteração ou Cancelamento do Vale Transporte",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1900,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 20,
+    "justificativa": "É o item de maior volume do lote e junta 4 intenções diferentes em v_select_option: adesão, alteração, cancelamento e 'novo colaborador que não quer aderir'. Cada uma é cruzada com 3 tipos de benefício (vale-transporte, fretado ou ambos). O resultado são 44 perguntas, 29 policies onLoad, um modal spModal sem VA Supported e 9 checkboxes de termo. Dividindo por intenção, o cancelamento fica trivial e a adesão e a alteração ficam enxutas.",
+    "nome_sugerido": "Vale-transporte e fretado (adesão, alteração, cancelamento)",
+    "short_description_sugerida": "Pedidos de adesão, alteração ou cancelamento de vale-transporte e fretado.",
+    "descricao_sugerida": "Item agrupador substituído por itens por intenção: aderir, alterar, cancelar ou recusar (novo colaborador) o vale-transporte e/ou o fretado. Para acompanhar a entrega do cartão ou pedir vale-transporte extra, use os itens próprios.",
+    "frases_exemplo": [
+      "quero aderir ao vale transporte",
+      "mudei de endereço e preciso trocar as linhas do VT",
+      "quero cancelar meu vale-transporte",
+      "sou novo e não quero vale transporte"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "client script EY: Pop UP - Form Adesão",
+        "problema": "onLoad de 5,6 KB sem VA Supported que abre um modal spModal com orientações sobre adesão ao fretado. Não tem como funcionar na conversa.",
+        "acao": "Remover o script. O conteúdo vai para um artigo de KB com link na descrição do item 'Aderir ao vale-transporte ou fretado'."
+      },
+      {
+        "onde": "variaveis attach_your_transport_card_photo_here / if_you_have_more_than_one_transport_card_attach_it_here",
+        "problema": "Variáveis Attachment não aceitam linguagem natural.",
+        "acao": "Juntar numa única variável Attachment ao final da conversa ('Envie a foto do(s) seu(s) cartão(ões) de transporte'), ou usar o anexo padrão do set 'EY: Document repository'."
+      },
+      {
+        "onde": "9 checkboxes de termo (v_checkbox_transport_voucher_1..3, checkbox_vt_responsability, v_checkbox_chartered_1, _2, _4, v_checkbox_chartered_responsability, v_checkbox_responsability)",
+        "problema": "Checkboxes não se agrupam na conversa e os textos jurídicos longos viram perguntas enormes. A validação depende de um onSubmit ('EY: Checkbox mandatory').",
+        "acao": "Trocar por uma única variável Sim/Não (Include None, mandatory) por item derivado: 'Você leu e aceita o termo de responsabilidade?'. O texto do termo (desconto de 6%, uso só no trajeto casa-trabalho, regras do fretado NM-0018) fica em KB com link na descrição."
+      },
+      {
+        "onde": "variable set 'Vale transporte' (transport_voucher) e 'chartered'",
+        "problema": "As linhas são informadas num conjunto tipo multi-row (uma linha por vez), com lookup select boxes em cascata e reference qualifiers dinâmicos (v_line_name depende de v_state, v_unitary_value depende de v_line_name). O set 'chartered' é citado nas policies mas não aparece no digest.",
+        "acao": "Testar o suporte a multi-row variable set e a lookups em cascata na versão da instância. Se não funcionar, manter o formulário apenas nos derivados de adesão/alteração e usar o link do formulário na conversa."
+      },
+      {
+        "onde": "13 Rich Text Labels (link, v_label_*, legenda_*)",
+        "problema": "Não chegam ao LLM.",
+        "acao": "Remover da conversa e levar as orientações para a descrição de cada item derivado ou para KB."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Pop UP - Form Adesão",
+        "acao": "remover",
+        "substituicao": "Artigo de KB com link na descrição."
+      },
+      {
+        "nome": "EY: Checkbox mandatory (onSubmit)",
+        "acao": "remover",
+        "substituicao": "Uma variável Sim/Não mandatory de aceite do termo em cada derivado."
+      },
+      {
+        "nome": "EY: Set transport voucher and chartered / EY: Benefity type mandatory or read only / EY: If transport only",
+        "acao": "remover",
+        "substituicao": "Com a divisão, v_select_option vira valor fixo de cada item e v_benefit_type fica como pergunta simples. A visibilidade dos sets de linhas passa para UI Policy sem script, condicionada a v_benefit_type."
+      },
+      {
+        "nome": "EY: Clear value attachment field / EY: Clear values",
+        "acao": "remover",
+        "substituicao": "Desnecessários na conversa. No portal, usar 'Clear the variable value' nas policies."
+      },
+      {
+        "nome": "29 UI policies onLoad de combinação opção x benefício",
+        "acao": "converter",
+        "substituicao": "Em cada derivado sobram 2 ou 3 policies simples por v_benefit_type. As de mandatory/read-only fixo passam para o atributo da variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Depois de publicar os derivados, tirar o item original do catálogo Virtual Agent Search (ou desativar), para o LLM não escolher o agrupador.",
+        "Manter o flow 'EY: Adhesion, Amendment or Cancellation of the Transport Voucher and Chartered' funcionando: cada derivado grava v_select_option pelo default hidden. Ajustar o trigger (current.item) para aceitar os novos sys_ids, ou manter item = sys_id do produtor original no producer script.",
+        "Set 'Suas informações pessoais': tudo read-only com default, então a VA pula. Não precisa de ação no item."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Aderir ao vale-transporte ou fretado",
+        "short_description": "Adesão ao vale-transporte, ao fretado ou aos dois.",
+        "descricao": "Use para começar a receber vale-transporte e/ou usar o fretado da empresa no trajeto casa-trabalho. Você vai informar as linhas de ônibus/metrô que usa (uma de cada vez), quantas passagens por dia e, se já tiver, a foto do cartão de transporte. O vale-transporte tem desconto de 6% do salário (Lei 7.418/85). Não use para trocar linhas de um benefício que você já tem (use 'Alterar vale-transporte ou fretado') nem para vale-transporte extra.",
+        "frases_exemplo": [
+          "quero aderir ao vale transporte",
+          "preciso começar a receber VT",
+          "quero usar o fretado da empresa",
+          "como faço para ter vale-transporte?",
+          "quero pedir VT e fretado"
+        ],
+        "fixar": "v_select_option = membership (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_benefit_type", "conversational_label": "Você quer vale-transporte, fretado ou os dois?" },
+          { "ordem": 2, "variavel": "set:Vale transporte (v_state, v_line_name, v_number_tickets_day, v_unitary_value ...)", "conversational_label": "Em qual estado fica a linha que você usa? / Qual é a operadora e a linha? / Quantas passagens você usa por dia nessa linha?" },
+          { "ordem": 3, "variavel": "set:chartered", "conversational_label": "Qual linha/rota do fretado você vai usar?" },
+          { "ordem": 4, "variavel": "v_already_have_a_vt_card", "conversational_label": "Você já tem cartão de transporte?" },
+          { "ordem": 5, "variavel": "nova_anexo_cartao_transporte", "conversational_label": "Envie a foto do(s) seu(s) cartão(ões) de transporte." },
+          { "ordem": 6, "variavel": "nova_aceite_termo", "conversational_label": "Você leu e aceita o termo de responsabilidade do benefício (link na descrição)?" }
+        ]
+      },
+      {
+        "nome": "Alterar linhas do vale-transporte ou fretado",
+        "short_description": "Troca, inclusão ou exclusão de linhas do vale-transporte ou da rota do fretado.",
+        "descricao": "Use quando você já tem vale-transporte e/ou fretado e precisa mudar algo: trocar ou incluir linha, mudar a quantidade de passagens por mudança de endereço ou de local de trabalho, ou tirar um dos benefícios mantendo o outro. Não use para cancelar tudo (use 'Cancelar vale-transporte ou fretado') nem para acompanhar a entrega do cartão.",
+        "frases_exemplo": [
+          "mudei de endereço e preciso trocar as linhas do VT",
+          "quero incluir mais uma linha de ônibus no vale transporte",
+          "mudou minha rota do fretado",
+          "preciso alterar a quantidade de passagens do VT",
+          "quero sair do fretado mas continuar com o vale"
+        ],
+        "fixar": "v_select_option = amendment (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_benefit_type", "conversational_label": "A alteração é no vale-transporte, no fretado ou nos dois?" },
+          { "ordem": 2, "variavel": "set:Vale transporte", "conversational_label": "Quais linhas você vai passar a usar? (informe uma de cada vez)" },
+          { "ordem": 3, "variavel": "set:chartered", "conversational_label": "Qual é a nova rota do fretado?" },
+          { "ordem": 4, "variavel": "v_already_have_a_vt_card", "conversational_label": "Você já tem cartão de transporte?" },
+          { "ordem": 5, "variavel": "nova_anexo_cartao_transporte", "conversational_label": "Envie a foto do(s) seu(s) cartão(ões) de transporte." },
+          { "ordem": 6, "variavel": "nova_aceite_termo", "conversational_label": "Você confirma que as informações estão corretas e aceita o termo de responsabilidade?" }
+        ]
+      },
+      {
+        "nome": "Cancelar vale-transporte ou fretado",
+        "short_description": "Cancelamento do vale-transporte, do fretado ou dos dois.",
+        "descricao": "Use para deixar de receber o vale-transporte e/ou deixar de usar o fretado. Se cancelar os dois, todos os benefícios de transporte em vigor são excluídos. Para tirar só uma linha ou só um dos benefícios, use 'Alterar linhas do vale-transporte ou fretado'.",
+        "frases_exemplo": [
+          "quero cancelar meu vale-transporte",
+          "não uso mais o fretado, quero cancelar",
+          "vou de carro agora, pode cortar o VT",
+          "cancelar VT e fretado"
+        ],
+        "fixar": "v_select_option = cancellation (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_benefit_type", "conversational_label": "O que você quer cancelar: vale-transporte, fretado ou os dois?" },
+          { "ordem": 2, "variavel": "nova_aceite_termo", "conversational_label": "Você está ciente de que os benefícios cancelados deixam de valer e confirma o cancelamento?" }
+        ]
+      },
+      {
+        "nome": "Recusar vale-transporte (novo colaborador)",
+        "short_description": "Declaração do novo colaborador de que não quer vale-transporte nem fretado.",
+        "descricao": "Use se você acabou de entrar na empresa e não quer receber vale-transporte nem usar o fretado. Essa declaração fica registrada pelo RH. Se mudar de ideia depois, use 'Aderir ao vale-transporte ou fretado'.",
+        "frases_exemplo": [
+          "sou novo e não quero vale transporte",
+          "não vou precisar de VT, acabei de ser contratado",
+          "quero declarar que não uso vale-transporte",
+          "recém-admitido, não quero fretado"
+        ],
+        "fixar": "v_select_option = new_employee_do_not_join (default/hidden); v_benefit_type não perguntado",
+        "perguntas": [
+          { "ordem": 1, "variavel": "nova_aceite_termo", "conversational_label": "Você confirma que não quer receber vale-transporte nem usar o fretado?" }
+        ]
+      }
+    ],
+    "observacoes": "É a maior prioridade do lote (1900 chamados em 12 meses). Sugestão de ordem: começar pelos derivados de cancelamento e de recusa, que não dependem de multi-row nem de lookup em cascata e ficam prontos com esforço baixo. Adesão e alteração dependem do teste com os sets de linhas. O set 'Vale transporte' tem um client script sem nome que formata moeda: tratar isso na análise de sets."
+  },
+  {
+    "sys_id": "bf029e5e1ba2b810a530426fe54bcb4b",
+    "nome_atual": "Solicitação de Vale Transporte Extra",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 21,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 40,
+    "justificativa": "A intenção é única e clara (vale-transporte extra por um período), mas o item está bloqueado por um onSubmit sem VA Supported que exige anexo quando o pedido é para outro colaborador. Além disso, usa checkbox de veracidade, Data/Hora onde bastaria Data e Escala Numérica para quantidade. O volume é baixo, então os ajustes devem ser os mínimos para liberar a conversa.",
+    "nome_sugerido": "Solicitar vale-transporte extra",
+    "short_description_sugerida": "Pedido de vale-transporte adicional por um período determinado.",
+    "descricao_sugerida": "Use quando você precisar de passagens de vale-transporte além das habituais por um período, por exemplo ao trabalhar temporariamente em outra unidade, fazer treinamento fora ou cobrir outro turno. Informe o período, a cidade/linha e quantas viagens de ida e volta por dia. Não use para aderir, alterar ou cancelar o vale-transporte fixo, nem para acompanhar a entrega do cartão.",
+    "frases_exemplo": [
+      "preciso de vale transporte extra para a semana que vem",
+      "vou trabalhar em outra unidade por um mês, preciso de VT adicional",
+      "quero pedir passagem extra de ônibus para um treinamento",
+      "VT extra para cobrir outro turno",
+      "como peço vale-transporte a mais?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "client script ACN: Mandatory Attachment",
+        "problema": "onSubmit sem VA Supported que exige anexo quando solicitation_whom = another_employee.",
+        "acao": "Criar a variável Attachment nova_anexo_dados_colaborador, obrigatória por UI Policy sem script quando solicitation_whom = another_employee, e remover o script. Outra opção: restringir o item ao próprio colaborador e fixar solicitation_whom = my_request."
+      },
+      {
+        "onde": "variavel declare_statement_veracity",
+        "problema": "Checkbox não se agrupa na conversa.",
+        "acao": "Trocar por Sim/Não com Include None e mandatory."
+      },
+      {
+        "onde": "variaveis attach_template_employee_information / text_commitment_term / update_information_link",
+        "problema": "Rich Text Labels não chegam ao LLM.",
+        "acao": "Remover da conversa. O link do template e o termo vão para a descrição/KB."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "solicitation_whom",
+        "origem": "set:Personal information - VT Extra",
+        "acao": "manter",
+        "conversational_label": "O vale-transporte extra é para você ou para outro colaborador?",
+        "obs": "Específico deste item, porque decide a obrigatoriedade do anexo."
+      },
+      {
+        "ordem": 2,
+        "variavel": "request_reason",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é o motivo do vale-transporte extra?",
+        "obs": "Está marcada como hidden mas fica visível e obrigatória pela policy. Tirar o hidden e deixar só a condição."
+      },
+      {
+        "ordem": 3,
+        "variavel": "additional_request_start_date",
+        "origem": "set:Vale Transporte Extra",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Data",
+        "conversational_label": "A partir de que dia você vai precisar do vale extra?",
+        "obs": "A hora não é relevante: Data simplifica a conversa."
+      },
+      {
+        "ordem": 4,
+        "variavel": "end_date_of_additional_request",
+        "origem": "set:Vale Transporte Extra",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Data",
+        "conversational_label": "Até que dia?"
+      },
+      {
+        "ordem": 5,
+        "variavel": "transport_city / line_name / unit_value",
+        "origem": "set:Vale Transporte Extra",
+        "acao": "manter",
+        "conversational_label": "Em qual cidade é a linha? / Qual é a linha de ônibus ou metrô? / Qual é o valor da passagem?",
+        "obs": "São lookups com reference qualifier dinâmico: testar na conversa (ajuste na análise de sets)."
+      },
+      {
+        "ordem": 6,
+        "variavel": "quantity_one_way_day / quantity_return_day",
+        "origem": "set:Vale Transporte Extra",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Selecionar Caixa (1 a 4)",
+        "conversational_label": "Quantas passagens de ida por dia? / E quantas de volta?",
+        "obs": "Escala Numérica é ruim na conversa."
+      },
+      {
+        "ordem": 7,
+        "variavel": "comments",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quer deixar alguma observação?",
+        "obs": "Opcional."
+      },
+      {
+        "ordem": 8,
+        "variavel": "declare_statement_veracity",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Sim/Não (Include None)",
+        "conversational_label": "Você confirma que as informações estão corretas e assume a responsabilidade por elas?"
+      },
+      {
+        "ordem": 9,
+        "variavel": "nova_anexo_dados_colaborador",
+        "origem": "item",
+        "acao": "nova",
+        "tipo_sugerido": "Anexo",
+        "conversational_label": "Envie a planilha com os dados do colaborador (modelo no link da descrição).",
+        "obs": "Nova. Só quando solicitation_whom = another_employee, e substitui o onSubmit."
+      },
+      {
+        "ordem": 10,
+        "variavel": "attach_template_employee_information",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "O link do template vai para a descrição."
+      },
+      {
+        "ordem": 11,
+        "variavel": "text_commitment_term",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "O termo vai para a KB/descrição."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "ACN: Mandatory Attachment",
+        "acao": "converter",
+        "substituicao": "Nova variável Attachment com UI Policy sem script (mandatory quando solicitation_whom = another_employee)."
+      },
+      {
+        "nome": "ACN my request fill the variable set",
+        "acao": "manter",
+        "substituicao": "Já é VA Supported. Avaliar trocar por auto-populate/default value nas variáveis do set."
+      },
+      {
+        "nome": "ACN - ... 'Request for whom' is 'My request'",
+        "acao": "manter",
+        "substituicao": "Policy sem script. Conferir a ação sobre 'bono_de_transporte_adicional', que não aparece nas variáveis do item (provável nome interno do set)."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "Os nomes das policies em inglês estão invertidos em relação à ação real ('are hidden' mas a ação é visible=true): vale revisar. A descrição tem que diferenciar bem este item do item de adesão/alteração."
+  },
+  {
+    "sys_id": "340f1a9a1bd8c110a530426fe54bcb5d",
+    "nome_atual": "Alterar dados de conta bancária",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 10,
+    "justificativa": "Nenhum chamado em 12 meses (1 no histórico). O item não cria caso: o onSubmit sempre bloqueia o envio e redireciona para o Workday, então funciona só como atalho. Na conversa isso não faz sentido, e um artigo de KB ou link de conteúdo atende melhor.",
+    "nome_sugerido": "Alterar dados bancários (Workday)",
+    "short_description_sugerida": "Orientação para atualizar sua conta bancária de pagamento direto no Workday.",
+    "descricao_sugerida": "A alteração da conta bancária em que você recebe o salário é feita por você mesmo no Workday. Este canal só orienta e leva até a plataforma, não abre chamado.",
+    "frases_exemplo": [
+      "quero trocar a conta onde recebo o salário",
+      "mudei de banco, como atualizo meus dados bancários?",
+      "alterar conta salário",
+      "preciso mudar minha conta bancária no RH"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "client script EY: hide submit button",
+        "problema": "onSubmit que sempre retorna false e redireciona para uma URL externa. O item nunca gera registro.",
+        "acao": "Substituir por artigo de KB (ou Content Item/link externo) com o passo a passo no Workday, e desativar o record producer."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: hide submit button",
+        "acao": "remover",
+        "substituicao": "Artigo de KB com link para o Workday."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": true,
+      "outras": [
+        "Se o item continuar ativo como atalho, tirar do catálogo Virtual Agent Search e deixar a VA responder pela KB. Dados bancários são sensíveis e não devem ser coletados em conversa."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O item não tem categoria nem user criteria de disponibilidade."
+  },
+  {
+    "sys_id": "c7573a6f1b8f3c10a530426fe54bcb07",
+    "nome_atual": "Logística de Ações de Aprendizagem",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 218,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "alto",
+    "prontidao_atual": 15,
+    "justificativa": "A pergunta qual_solicitacao separa 3 pedidos diferentes: logística completa de treinamento, envio de convite na agenda e envio de comunicado/ativação por e-mail. Cada um tem campos próprios, e isso gera 43 perguntas, 6 anexos, 33 policies onLoad e um script de data retroativa sem VA Supported. Dividindo, o convite e o comunicado ficam conversacionais. A logística completa continua pesada e fica como formulário.",
+    "nome_sugerido": "Logística de treinamentos e ações de aprendizagem",
+    "short_description_sugerida": "Pedidos de apoio logístico do CSC (Centro de Serviços Compartilhados) para treinamentos.",
+    "descricao_sugerida": "Item agrupador substituído por 3 itens: logística completa de treinamento, envio de convite de treinamento na agenda e envio de comunicado de treinamento por e-mail.",
+    "frases_exemplo": [
+      "preciso organizar um treinamento presencial",
+      "quero que o CSC envie o convite do treinamento",
+      "preciso disparar um e-mail de comunicação de um curso"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "client script EY: Retroactive date lock",
+        "problema": "onChange sem VA Supported que bloqueia data retroativa.",
+        "acao": "Se o script usar só g_form (showFieldMsg/clearValue) e getMessage, sem DOM, marcar VA Supported depois de testar. Se não, validar a data no flow e devolver para o solicitante."
+      },
+      {
+        "onde": "anexos attach_form_workday, email_convidados, attach_sodexo, peca_comunicacao_texto_email, mailing_destinatarios",
+        "problema": "Attachment não aceita linguagem natural, e há até 3 anexos obrigatórios no mesmo caminho.",
+        "acao": "Nos derivados conversacionais, deixar no máximo um anexo ao final. email_convidados pode virar texto multilinha com os e-mails."
+      },
+      {
+        "onde": "UI policies ACN legadas",
+        "problema": "Várias policies agem sobre variáveis que não existem mais (training_type, coffee_1, room_htr, which_platform, specific_assessment, educational_material, investment_value etc.). Outras usam condição quebrada (additional_information LIKE sys_id, additional_information=8/10 para mostrar descricao/descricao_2).",
+        "acao": "Remover as policies órfãs e as variáveis descricao/descricao_2/assessment_deadline, cuja condição nunca é atendida."
+      },
+      {
+        "onde": "variaveis template_workday, template_sodexo, other_format_coment, update_information_link",
+        "problema": "Rich Text Labels não chegam ao LLM.",
+        "acao": "Pôr os links dos templates na descrição do derivado."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Retroactive date lock",
+        "acao": "converter",
+        "substituicao": "Marcar VA Supported depois da revisão, ou fazer a validação no flow."
+      },
+      {
+        "nome": "EY: Qual a solicitação? control / EY: Workday ou Convite na agenda control",
+        "acao": "remover",
+        "substituicao": "Com a divisão, qual_solicitacao fica fixo por item (default/hidden). O controle de Workday x convite vira UI Policy sem script dentro do derivado de logística."
+      },
+      {
+        "nome": "ACN: Validate Provider: Telephone / ACN: Date Criteria",
+        "acao": "manter",
+        "substituicao": "São VA Supported. Conferir se ainda apontam para variáveis existentes e remover se estiverem órfãs."
+      },
+      {
+        "nome": "Policies ACN órfãs e 'If Others, show description', 'If Assestmente Application is Other'",
+        "acao": "remover",
+        "substituicao": "Não têm efeito."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Depois de criar os derivados, tirar o item original do Virtual Agent Search.",
+        "O flow 'ACN: Training Request' tem que tratar os 3 novos itens (qual_solicitacao por default hidden)."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar logística completa de treinamento",
+        "short_description": "Organização completa de um treinamento: sala, datas, instrutor, inscrições, convite e coffee break.",
+        "descricao": "Use quando você é responsável por um treinamento e precisa que o CSC (Centro de Serviços Compartilhados) cuide da logística completa: cadastro no Workday, sala e layout, datas e horários, instrutor interno ou externo, inscrições ou convite na agenda e pedido de coffee break. Como tem muitos detalhes e anexos (formulário do Workday, pedido de coffee), este pedido abre como formulário. Para só enviar um convite ou um comunicado por e-mail, use os itens específicos.",
+        "frases_exemplo": [
+          "preciso organizar um treinamento presencial para minha equipe",
+          "quero reservar sala e coffee para um curso",
+          "logística de treinamento com instrutor externo",
+          "preciso cadastrar um treinamento no Workday e montar a turma"
+        ],
+        "fixar": "qual_solicitacao = logistica_completa_treinamento (default/hidden); manter como formulário (make_item_non_conversational = true)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "categoria_de_aprendizagem", "conversational_label": "Qual é a categoria de aprendizagem (Núcleo, HUB, Portas de Entrada ou Células)?" },
+          { "ordem": 2, "variavel": "training_responsible", "conversational_label": "Quem é o responsável pelo treinamento?" },
+          { "ordem": 3, "variavel": "training_is_registered_workday", "conversational_label": "O treinamento já está cadastrado no Workday?" },
+          { "ordem": 4, "variavel": "training_name", "conversational_label": "Qual é o nome do treinamento?" },
+          { "ordem": 5, "variavel": "start_date / start_time / end_date / end_time", "conversational_label": "Quando começa e quando termina (data e horário)?" },
+          { "ordem": 6, "variavel": "facilitation_type", "conversational_label": "A facilitação é interna ou externa?" },
+          { "ordem": 7, "variavel": "class_capacity", "conversational_label": "Quantas pessoas cabem na turma?" },
+          { "ordem": 8, "variavel": "do_you_need_to_request_coffee", "conversational_label": "Vai precisar de coffee break?" }
+        ]
+      },
+      {
+        "nome": "Enviar convite de treinamento na agenda",
+        "short_description": "Envio, pelo CSC, do convite de agenda de um treinamento para os participantes.",
+        "descricao": "Use quando o treinamento já está organizado e você só precisa que o CSC envie o convite na agenda (Outlook) para os participantes. Informe o título e a descrição do convite, data, horário, local e a lista de e-mails dos convidados. Não use para organizar sala, coffee ou instrutor (use 'Solicitar logística completa de treinamento').",
+        "frases_exemplo": [
+          "preciso que enviem o convite do treinamento na agenda",
+          "mandar convite de outlook para os participantes do curso",
+          "quero que o CSC dispare o convite da turma",
+          "envio de convite de treinamento para 30 pessoas"
+        ],
+        "fixar": "qual_solicitacao = envio_convite_agenda (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "categoria_de_aprendizagem", "conversational_label": "Qual é a categoria de aprendizagem do treinamento?" },
+          { "ordem": 2, "variavel": "seleciona_o_hub / nome_da_celula", "conversational_label": "Qual é o HUB? / Qual é o nome da célula?" },
+          { "ordem": 3, "variavel": "training_responsible", "conversational_label": "Quem é o responsável pelo treinamento?" },
+          { "ordem": 4, "variavel": "start_date", "conversational_label": "Em que data começa o treinamento?" },
+          { "ordem": 5, "variavel": "start_time", "conversational_label": "Que horas começa?" },
+          { "ordem": 6, "variavel": "end_date", "conversational_label": "Em que data termina?" },
+          { "ordem": 7, "variavel": "end_time", "conversational_label": "Que horas termina?" },
+          { "ordem": 8, "variavel": "training_location", "conversational_label": "Onde vai ser (sala, endereço ou link)?" },
+          { "ordem": 9, "variavel": "titulo_convite", "conversational_label": "Qual é o título do convite?" },
+          { "ordem": 10, "variavel": "descricao_convite", "conversational_label": "Qual texto deve ir no corpo do convite?" },
+          { "ordem": 11, "variavel": "email_convidados", "conversational_label": "Quais são os e-mails dos convidados? (pode colar a lista ou anexar a planilha)" },
+          { "ordem": 12, "variavel": "informacao_adicional", "conversational_label": "Tem mais alguma informação para o CSC?" }
+        ]
+      },
+      {
+        "nome": "Enviar comunicado de treinamento por e-mail",
+        "short_description": "Disparo, pelo CSC, de comunicado ou e-mail de ativação de uma ação de aprendizagem.",
+        "descricao": "Use quando você precisa que o CSC dispare um comunicado ou e-mail de ativação sobre um treinamento ou ação de aprendizagem para um público. Você vai informar o título, a data e o canal de envio e anexar a peça de comunicação (ou o texto do e-mail) e o mailing dos destinatários. Não use para convite de agenda nem para organizar a logística do treinamento.",
+        "frases_exemplo": [
+          "preciso disparar um e-mail de comunicação de um curso",
+          "quero enviar comunicado de ativação da trilha de aprendizagem",
+          "mandar e-mail marketing do treinamento para a lista",
+          "divulgar treinamento por e-mail para os colaboradores"
+        ],
+        "fixar": "qual_solicitacao = envio_comunicacao_ativacao_email (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "categoria_de_aprendizagem", "conversational_label": "Qual é a categoria de aprendizagem?" },
+          { "ordem": 2, "variavel": "training_responsible", "conversational_label": "Quem é o responsável pela ação?" },
+          { "ordem": 3, "variavel": "training_name", "conversational_label": "Qual é o nome do treinamento ou da ação?" },
+          { "ordem": 4, "variavel": "titulo_comunicado", "conversational_label": "Qual é o título do comunicado?" },
+          { "ordem": 5, "variavel": "data_envio", "conversational_label": "Em que data o comunicado deve ser enviado?" },
+          { "ordem": 6, "variavel": "canal_envio", "conversational_label": "Por qual canal deve ser enviado?" },
+          { "ordem": 7, "variavel": "peca_comunicacao_texto_email", "conversational_label": "Envie a peça de comunicação ou o texto do e-mail." },
+          { "ordem": 8, "variavel": "mailing_destinatarios", "conversational_label": "Envie a lista de destinatários (mailing)." },
+          { "ordem": 9, "variavel": "informacao_adicional", "conversational_label": "Tem mais alguma informação para o CSC?" }
+        ]
+      }
+    ],
+    "observacoes": "O derivado de comunicado tem 2 anexos obrigatórios. Se a conversa não tratar bem 2 anexos, juntar os dois numa variável só ou mantê-lo como formulário. A variável instructor_ssn ('SSN') recebe documento pessoal do instrutor externo: trocar o label por CPF/RG e avaliar não coletar em conversa. O sys_name é 'Training Request' e o nome é 'Logística de Ações de Aprendizagem': alinhar os dois."
+  },
+  {
+    "sys_id": "2fbbb06a1ba79550a530426fe54bcbc8",
+    "nome_atual": "MyPerformance",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 429,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 55,
+    "justificativa": "É o item de RH de maior volume do lote depois do vale-transporte. A estrutura é simples (tipo de pedido e descrição), mas usa duas select boxes encadeadas (v_choose_request_type e v_classify_the_request_type) e três campos de descrição quase iguais. A descrição do item é '.', e o nome 'MyPerformance' sozinho não casa com o que o usuário escreve ('avaliação de desempenho', 'metas').",
+    "nome_sugerido": "Dúvida ou problema na avaliação de desempenho (MyPerformance)",
+    "short_description_sugerida": "Dúvidas, erros de sistema, relatórios e outros pedidos sobre o processo de metas e avaliação de desempenho MyPerformance.",
+    "descricao_sugerida": "Use para qualquer assunto do MyPerformance, o processo de metas e avaliação de desempenho: dúvidas sobre prazos e etapas, erro no sistema ao lançar ou aprovar metas, pedido de relatório (por marca, país, nível, cargo, período) ou outros pedidos. Se for erro, tenha em mãos um print da tela. Não use para o OurTalents (comitês de talentos e plano de desenvolvimento), que tem item próprio.",
+    "frases_exemplo": [
+      "não consigo cadastrar minhas metas no MyPerformance",
+      "dúvida sobre o prazo da avaliação de desempenho",
+      "preciso de um relatório das avaliações da minha área",
+      "o sistema de metas está dando erro ao aprovar",
+      "como funciona a calibração do MyPerformance?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variavel v_attach_your_evidence",
+        "problema": "Attachment obrigatório quando o pedido é erro de sistema.",
+        "acao": "Deixar como a última pergunta da conversa, 'Envie um print do erro'. As policies também citam v_attach_your_file, que não existe: remover essas ações."
+      },
+      {
+        "onde": "variavel faq_text",
+        "problema": "Rich Text Label não chega ao LLM.",
+        "acao": "Remover da conversa. O link do FAQ vai para a descrição."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_choose_your_request",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Sobre qual etapa do MyPerformance é o seu pedido?",
+        "obs": "É mandatory, mas as opções não constam no digest. Revisar se elas representam a etapa do ciclo. Se duplicarem v_choose_request_type, remover."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_choose_request_type",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Selecionar Caixa com opções achatadas: Dúvida sobre o processo, Erro no sistema, Relatório, Outro pedido",
+        "conversational_label": "O que você precisa: tirar uma dúvida, relatar um erro no sistema, pedir um relatório ou outra coisa?",
+        "obs": "Absorve v_classify_the_request_type (Report / Other Requests), para ficar uma pergunta só. Ajustar o flow 'EY: MyPerformance' para os novos valores."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_classify_the_request_type",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Absorvida por v_choose_request_type."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_describe",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Descreva o que você precisa. Se for relatório, diga quais informações e filtros (marca, país, nível, cargo, período).",
+        "obs": "Vira o único campo de descrição, obrigatório para todos os tipos."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_description_report",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Junta com v_describe. As orientações de filtro ficam no conversational label."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_description_for_other",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Duplicada com v_describe."
+      },
+      {
+        "ordem": 7,
+        "variavel": "v_attach_your_evidence",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Envie um print da tela com o erro.",
+        "obs": "Só para 'Erro no sistema', ao final."
+      },
+      {
+        "ordem": 8,
+        "variavel": "faq_text",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "O link do FAQ vai para a descrição."
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: If classify is report / EY: If Type = General and Classify is Other / EY: If type = General Requests about MyPerformance",
+        "acao": "remover",
+        "substituicao": "Deixam de ser necessárias com a descrição única e a select achatada."
+      },
+      {
+        "nome": "EY: Description for error or question / EY: If error / EY: If question",
+        "acao": "converter",
+        "substituicao": "v_describe fica mandatory direto na variável. Sobra uma policy sem script para mostrar e exigir v_attach_your_evidence quando o tipo é 'Erro no sistema'."
+      },
+      {
+        "nome": "EY: Mandatory field",
+        "acao": "converter",
+        "substituicao": "mandatory direto nas variáveis."
+      },
+      {
+        "nome": "EY: Fill employee / EY: View fields Hispana / EY: hide fields onLoad",
+        "acao": "manter",
+        "substituicao": "São scripts do set de solicitante e já VA Supported. A troca por auto-populate fica na análise de variable sets."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "O item também atende países hispânicos (Argentina, Chile, Colômbia, Peru, Uruguai, Equador): traduzir labels e descrição para espanhol."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "O producer script é o mesmo do OurTalents e o resumo cita 'OurTalents': conferir se está correto. MyPerformance e OurTalents têm estrutura idêntica. Não vale consolidar, porque são processos distintos e o nome/descrição separados ajudam o LLM, mas vale padronizar os dois do mesmo jeito."
+  },
+  {
+    "sys_id": "051cbf0b1bafd190a530426fe54bcbd4",
+    "nome_atual": "OurTalents",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 11,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Tem o mesmo desenho do MyPerformance: tipo de pedido encadeado com classificação, três campos de descrição e anexo em caso de erro. O volume é baixo, então basta aplicar o mesmo padrão de ajustes do MyPerformance e dar nome e descrição que expliquem o que é o OurTalents.",
+    "nome_sugerido": "Dúvida ou problema no OurTalents (comitê de talentos)",
+    "short_description_sugerida": "Dúvidas, erros de sistema, relatórios e outros pedidos sobre o OurTalents, o comitê de desenvolvimento de talentos.",
+    "descricao_sugerida": "O OurTalents é o momento colegiado em que os líderes discutem o desenvolvimento e o futuro dos talentos (comitê de talentos, potencial, sucessão). Use este item para dúvidas sobre o processo, erro no sistema, pedido de relatório (por marca, país, nível, faixa, cargo, período) ou outros pedidos relacionados. Não use para metas e avaliação de desempenho: para isso use o item do MyPerformance.",
+    "frases_exemplo": [
+      "dúvida sobre o comitê de talentos OurTalents",
+      "preciso de um relatório do OurTalents da minha área",
+      "erro no sistema do OurTalents",
+      "como funciona a avaliação de potencial?",
+      "quando acontece o comitê de talentos?"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variavel v_attach_your_evidence",
+        "problema": "Attachment obrigatório em caso de erro de sistema.",
+        "acao": "Deixar como última pergunta, só para 'Erro no sistema'."
+      },
+      {
+        "onde": "variavel faq_text",
+        "problema": "Rich Text Label com orientação sobre a FAQ não chega ao LLM.",
+        "acao": "Remover da conversa e pôr a orientação na descrição."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_choose_request_type",
+        "origem": "item",
+        "acao": "alterar_tipo",
+        "tipo_sugerido": "Selecionar Caixa com opções achatadas: Dúvida sobre o processo, Erro no sistema, Relatório, Outro pedido",
+        "conversational_label": "O que você precisa: tirar uma dúvida, relatar um erro no sistema, pedir um relatório ou outra coisa?",
+        "obs": "Absorve v_classify_request_type. Ajustar o flow 'EY: OurTalents'."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_classify_request_type",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Absorvida por v_choose_request_type."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_describe_your_need",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Descreva o que você precisa. Se for relatório, diga quais informações e filtros (marca, país, nível, faixa, cargo, período).",
+        "obs": "Único campo de descrição, obrigatório."
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_description_for_report",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Junta com v_describe_your_need."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_description_for_other",
+        "origem": "item",
+        "acao": "remover",
+        "obs": "Duplicada."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_attach_your_evidence",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Envie um print da tela com o erro.",
+        "obs": "Só para 'Erro no sistema'."
+      },
+      {
+        "ordem": 7,
+        "variavel": "faq_text",
+        "origem": "item",
+        "acao": "remover"
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: If classify is other / EY: If classify is report / EY: If field classify type",
+        "acao": "remover",
+        "substituicao": "Desnecessárias com a select achatada e a descrição única."
+      },
+      {
+        "nome": "EY: Field description",
+        "acao": "converter",
+        "substituicao": "mandatory direto em v_describe_your_need. A condição atual usa NQ (OR) de forma confusa."
+      },
+      {
+        "nome": "EY: Mandatory fields",
+        "acao": "converter",
+        "substituicao": "mandatory direto em v_choose_request_type. A ação sobre 'choose_request_type' aponta para uma variável inexistente: remover."
+      },
+      {
+        "nome": "EY: Field attach if error",
+        "acao": "manter",
+        "substituicao": "Policy sem script, VA Supported."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Traduzir labels e descrição para espanhol (também disponível para países hispânicos)."
+      ]
+    },
+    "itens_derivados": [],
+    "observacoes": "Aplicar o mesmo padrão do MyPerformance para que os dois itens fiquem consistentes."
+  },
+  {
+    "sys_id": "90654bf41beb1558d1abda4ce54bcb6b",
+    "nome_atual": "Programa de Estágio",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 219,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "v_request_type separa 3 intenções com perguntas e anexos próprios: contrato de estágio (envio, aditivo, prorrogação, informação, troca de gestor), relatório de atividades (envio assinado, troca de gestor) e informações gerais sobre o programa. Juntas, dão 23 perguntas, acima do limite de 20, com 20 policies onLoad e dois sets de gestor duplicados. Dividindo, cada item fica com 3 a 6 perguntas e casa melhor com frases como 'prorrogar meu estágio' ou 'enviar relatório de estágio'.",
+    "nome_sugerido": "Programa de Estágio",
+    "short_description_sugerida": "Pedidos de estagiários sobre contrato, relatório de atividades e informações do programa de estágio.",
+    "descricao_sugerida": "Item agrupador substituído por 3 itens: contrato de estágio, relatório de atividades do estágio e dúvidas sobre o programa de estágio. Para jovem aprendiz, use o item do Programa Florescer.",
+    "frases_exemplo": [
+      "quero prorrogar meu estágio",
+      "preciso enviar meu relatório de atividades assinado",
+      "dúvida sobre o programa de estágio"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variaveis v_attach_your_signed_contract / v_attach_educ_institution_link / v_attach_your_signed_report_here",
+        "problema": "Anexos obrigatórios conforme a opção. As policies também citam v_attach_your_request, que não existe.",
+        "acao": "Em cada derivado, deixar o anexo (ou os anexos) como última pergunta. Remover as ações órfãs sobre v_attach_your_request."
+      },
+      {
+        "onde": "sets 'EY: Basic data manager' e 'EY: Basic data manager 1'",
+        "problema": "Dois sets idênticos de gestor (manager_name/manager_name1), usados em ramos diferentes. Duplicam a pergunta e a manutenção.",
+        "acao": "Usar um set só nos derivados, com manager_id e manager_email preenchidos por auto-populate a partir de manager_name e read-only."
+      },
+      {
+        "onde": "variavel faq_text",
+        "problema": "Rich Text Label não chega ao LLM.",
+        "acao": "Link do FAQ na descrição."
+      }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Clear Variables",
+        "acao": "remover",
+        "substituicao": "Desnecessário com a divisão."
+      },
+      {
+        "nome": "12 UI policies por combinação de v_request_type e opção",
+        "acao": "converter",
+        "substituicao": "Em cada derivado sobram 1 a 3 policies sem script sobre a opção interna. O que é sempre obrigatório passa para o atributo da variável."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": true,
+      "turn_off_nowassist_conversation": false,
+      "outras": [
+        "Depois de criar os derivados, tirar o original do Virtual Agent Search.",
+        "O flow 'EY : InternshipProgram' tem que aceitar os novos itens, com v_request_type por default hidden."
+      ]
+    },
+    "itens_derivados": [
+      {
+        "nome": "Contrato de estágio: enviar, aditar, prorrogar ou trocar gestor",
+        "short_description": "Envio do contrato de estágio assinado, aditivo, prorrogação, troca de gestor ou informações sobre o contrato.",
+        "descricao": "Use se você é estagiário (ou gestor de estagiário) e precisa enviar o contrato de estágio assinado, pedir aditivo de contrato (estágio obrigatório ou não obrigatório), prorrogar o estágio, trocar o gestor que consta no contrato ou tirar dúvidas sobre o contrato. Na prorrogação, tenha em mãos o comprovante de vínculo com a instituição de ensino. Não use para relatório de atividades, que tem item próprio.",
+        "frases_exemplo": [
+          "quero prorrogar meu estágio",
+          "preciso enviar meu contrato de estágio assinado",
+          "mudou meu gestor, preciso atualizar no contrato de estágio",
+          "aditivo de contrato de estágio obrigatório",
+          "dúvida sobre meu contrato de estágio"
+        ],
+        "fixar": "v_request_type = internship_contract (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_option_if_type_contract", "conversational_label": "O que você precisa no contrato: enviar o contrato assinado, fazer um aditivo, prorrogar, trocar o gestor ou tirar uma dúvida?" },
+          { "ordem": 2, "variavel": "v_new_period_course", "conversational_label": "Qual é a nova data prevista de conclusão do curso?" },
+          { "ordem": 3, "variavel": "manager_name", "conversational_label": "Quem é o novo gestor?" },
+          { "ordem": 4, "variavel": "v_description", "conversational_label": "Conte com mais detalhes o que você precisa." },
+          { "ordem": 5, "variavel": "v_attach_educ_institution_link", "conversational_label": "Envie o comprovante de vínculo com a instituição de ensino." },
+          { "ordem": 6, "variavel": "v_attach_your_signed_contract", "conversational_label": "Envie o contrato de estágio assinado." }
+        ]
+      },
+      {
+        "nome": "Enviar relatório de atividades do estágio",
+        "short_description": "Envio do relatório de atividades do estágio assinado ou troca do gestor que consta no relatório.",
+        "descricao": "Use para enviar o relatório de atividades do estágio assinado, referente a um período, ou para pedir a troca do gestor que aparece no relatório. Não use para assuntos do contrato de estágio (prorrogação, aditivo, envio do contrato).",
+        "frases_exemplo": [
+          "preciso enviar meu relatório de estágio assinado",
+          "entrega do relatório semestral de atividades",
+          "o gestor no meu relatório de estágio está errado",
+          "onde mando o relatório de atividades do estágio?"
+        ],
+        "fixar": "v_request_type = activity_report (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_option_if_type_report", "conversational_label": "Você quer enviar o relatório assinado ou trocar o gestor do relatório?" },
+          { "ordem": 2, "variavel": "start_date", "origem": "set:Período", "conversational_label": "Qual é a data de início do período do relatório?" },
+          { "ordem": 3, "variavel": "end_date", "origem": "set:Período", "conversational_label": "E a data de fim?" },
+          { "ordem": 4, "variavel": "manager_name", "conversational_label": "Quem é o gestor correto?" },
+          { "ordem": 5, "variavel": "v_attach_your_signed_report_here", "conversational_label": "Envie o relatório de atividades assinado." }
+        ]
+      },
+      {
+        "nome": "Dúvidas sobre o programa de estágio",
+        "short_description": "Informações gerais e treinamentos do programa de estágio.",
+        "descricao": "Use para tirar dúvidas gerais sobre o programa de estágio: regras, benefícios do estagiário, calendário e treinamentos do programa. Para contrato ou relatório de atividades, use os itens específicos.",
+        "frases_exemplo": [
+          "dúvida sobre o programa de estágio",
+          "quais treinamentos o estagiário precisa fazer?",
+          "quantos dias de recesso o estagiário tem?",
+          "quero informações sobre o estágio"
+        ],
+        "fixar": "v_request_type = training_information (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_description", "conversational_label": "Qual é a sua dúvida sobre o programa de estágio?" }
+        ]
+      }
+    ],
+    "observacoes": "O resumo do producer script cita 'OurTalents' (copy-paste). Conferir. O item está disponível só para 'EY: Users Brazil'. Diferenciar do Programa Florescer (jovem aprendiz) na descrição."
+  },
+  {
+    "sys_id": "9f456ded1b3c2d14a530426fe54bcbc1",
+    "nome_atual": "Programa Florescer",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 84,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 65,
+    "justificativa": "É um item enxuto: tipo de pedido, descrição e, na troca de gestor/tutor, o gestor e a data. Não tem bloqueador. O problema principal é o nome: 'Florescer' é um nome interno que o usuário não vai escrever, e a descrição é '.'. O client script que preenche ID e e-mail do gestor pode virar auto-populate.",
+    "nome_sugerido": "Programa Jovem Aprendiz (Florescer): dúvidas e troca de gestor",
+    "short_description_sugerida": "Dúvidas sobre o programa de jovem aprendiz Florescer, eventos e treinamentos, ou troca de gestor/tutor do aprendiz.",
+    "descricao_sugerida": "Use se você é jovem aprendiz do Programa Florescer ou gestor/tutor de um aprendiz, para tirar dúvidas sobre o programa, sobre eventos e treinamentos, ou para pedir a troca do gestor ou tutor responsável. Não use para o programa de estágio, que tem itens próprios.",
+    "frases_exemplo": [
+      "dúvida sobre o programa jovem aprendiz",
+      "preciso trocar o tutor do aprendiz",
+      "quando é o próximo treinamento do Florescer?",
+      "mudou o gestor do jovem aprendiz da minha área",
+      "informações sobre o programa de aprendizes"
+    ],
+    "bloqueadores": [
+      {
+        "onde": "variavel faq_text",
+        "problema": "Rich Text Label não chega ao LLM.",
+        "acao": "Link do FAQ na descrição."
+      }
+    ],
+    "perguntas": [
+      {
+        "ordem": 1,
+        "variavel": "v_request_type",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "O que você precisa: informação sobre o programa jovem aprendiz, informação sobre eventos e treinamentos, ou trocar o gestor/tutor?",
+        "obs": "Marcar mandatory direto na variável."
+      },
+      {
+        "ordem": 2,
+        "variavel": "v_select_manager_name",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Quem vai ser o novo gestor ou tutor?",
+        "obs": "Só na troca de gestor/tutor. O reference qualifier é estático (user.active), mas a tabela x_nasm_hr_profile pode ser grande: conferir a busca na conversa."
+      },
+      {
+        "ordem": 3,
+        "variavel": "v_request_date",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "A partir de que data a troca deve valer?"
+      },
+      {
+        "ordem": 4,
+        "variavel": "v_description",
+        "origem": "item",
+        "acao": "manter",
+        "conversational_label": "Qual é a sua dúvida?",
+        "obs": "Só nos tipos de informação."
+      },
+      {
+        "ordem": 5,
+        "variavel": "v_manager_id",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate a partir de v_select_manager_name (dependent variable) e read-only. A VA pula."
+      },
+      {
+        "ordem": 6,
+        "variavel": "v_manager_email",
+        "origem": "item",
+        "acao": "derivar",
+        "obs": "Auto-populate a partir de v_select_manager_name e read-only."
+      },
+      {
+        "ordem": 7,
+        "variavel": "faq_text",
+        "origem": "item",
+        "acao": "remover"
+      }
+    ],
+    "scripts_e_policies": [
+      {
+        "nome": "EY: Fill manager info",
+        "acao": "converter",
+        "substituicao": "Auto-populate (Dependent question = v_select_manager_name) em v_manager_id e v_manager_email."
+      },
+      {
+        "nome": "EY: Mandatory type",
+        "acao": "converter",
+        "substituicao": "mandatory direto em v_request_type."
+      },
+      {
+        "nome": "EY: Description / EY: Change of manager/tutor",
+        "acao": "manter",
+        "substituicao": "Policies sem script, VA Supported."
+      }
+    ],
+    "configuracoes": {
+      "make_item_non_conversational": false,
+      "turn_off_nowassist_conversation": false,
+      "outras": []
+    },
+    "itens_derivados": [],
+    "observacoes": "O resumo do producer script cita 'OurTalents' (copy-paste). Conferir. A descrição precisa separar este item do Programa de Estágio."
+  }
+]

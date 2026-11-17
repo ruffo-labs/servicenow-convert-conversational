@@ -1,0 +1,107 @@
+{
+ "sys_id": "9045899c87fc0f90ec360e530cbb35fb",
+ "name": "Solicitar Aplicação de Acordo Coletivo",
+ "sys_name": "Solicitar Aplicação de Acordo Coletivo",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Relações Trabalhistas, Sindicais,  Atualização de CCT e Novos Estabelecimentos (CNPJ)",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Este formulário é especifico para envio de diretrizes de aplicação de acordo coletivo",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "8",
+   "variaveis_ativas": "8",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "8"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_label_attach_collective_agreement_doc: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_location: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 8 de 8 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Aplicação de Acordo Coletivo. Grava item com o sysparm_id e define requested_for a partir da variável 'v_opened_by'. A linha que delegaria isso ao Script Include EY_ProducerUtils está comentada — o padrão dos irmãos foi trocado por atribuição direta.",
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened By",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "v_union_of_the_category",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Union of the category"
+  },
+  {
+   "name": "v_base_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Base date"
+  },
+  {
+   "name": "v_observations_for_guideline",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Observations for Guideline"
+  },
+  {
+   "name": "v_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Comments"
+  },
+  {
+   "name": "v_label_attach_collective_agreement_doc",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "To complete your request, you must attach the collective agreement document."
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "1857891887304f90ec360e530cbb3553",
+   "name": "Informe quais empresas deverão aplicar o acordo coletivo",
+   "order": "100",
+   "perguntas": [
+    "v_location (Referência): Location",
+    "v_company (Referência): Company"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "please_specify_which_companies_will_be_required_to_implement_the_collective_agre: mandatory=true",
+    "v_label_attach_collective_agreement_doc: mandatory=true",
+    "v_union_of_the_category: mandatory=true",
+    "v_opened_by: mandatory=true,readonly=true",
+    "v_observations_for_guideline: mandatory=true",
+    "v_base_date: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,157 @@
+{
+ "sys_id": "3a4932df87544b14ec360e530cbb3516",
+ "name": "Solicitação de Prévia de Rescisão",
+ "sys_name": "Solicitação de Prévia de Rescisão",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Desligamento",
+ "catalogs": {
+  "_display_value": "Hire to Retire (HTR)",
+  "__text": "d48274d01b167010d1abda4ce54bcb5d"
+ },
+ "short_description": "Este formulário deve ser utilizado exclusivamente para prévia de rescisão de diretores e cargos acima, além de colaboradores com mais de 20 anos de relação ou com pacotes de desligamento.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "10",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @reason_requesting_preliminary_approval: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @select_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Prévia de Rescisão. Grava item com o sysparm_id e define requested_for como o usuário logado.",
+ "variaveis": [
+  {
+   "name": "select_collaborator",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the collaborator",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Global ID",
+   "reference": "sys_user"
+  },
+  {
+   "name": "name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "date_admission",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of Admission"
+  },
+  {
+   "name": "reason_requesting_preliminary_approval",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for requesting the Preliminary Approval",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.nameISNOTEMPTY^EQ",
+   "include_none": true,
+   "choices": [
+    "Employee experience [=employee_experience]",
+    "Financial impact [=financial_impact]"
+   ]
+  },
+  {
+   "name": "expected_shutdown_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Expected Shutdown Date"
+  },
+  {
+   "name": "termination_fee",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Will there be a termination fee?",
+   "include_none": true
+  },
+  {
+   "name": "additional_payment",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Will there be any additional payment?",
+   "include_none": true
+  },
+  {
+   "name": "additional_payment_included_termination_settlement",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe what additional payment will be included in the termination settlement."
+  },
+  {
+   "name": "additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Aoop: Show mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "additional_payment: mandatory=true",
+    "date_admission: readonly=true",
+    "termination_fee: mandatory=true",
+    "expected_shutdown_date: mandatory=true",
+    "reason_requesting_preliminary_approval: mandatory=true",
+    "select_collaborator: mandatory=true",
+    "name: readonly=true",
+    "global_id: readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Show Describe what additional payment",
+   "when": "IO:additional_payment=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "additional_payment_included_termination_settlement: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Aoop: Validate Expected Shutdown Date",
+   "type": "onChange",
+   "on": "4cb5df9787108b14ec360e530cbb356c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida a data prevista de desligamento chamando o Script Include RequestProcess via GlideAjax."
+  },
+  {
+   "name": "Aoop: Set Date of Admission",
+   "type": "onChange",
+   "on": "a832835b87584b14ec360e530cbb35be",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche a data de admissão chamando x_nasm_hr.ACN_ValidateUtils via GlideAjax."
+  }
+ ]
+}

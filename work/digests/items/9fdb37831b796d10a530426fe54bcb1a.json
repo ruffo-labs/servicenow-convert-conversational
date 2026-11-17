@@ -1,0 +1,211 @@
+{
+ "sys_id": "9fdb37831b796d10a530426fe54bcb1a",
+ "name": "Liberação de acesso de terceiros como solicitante na Plataforma de Atendimento Natura &Co",
+ "sys_name": "Release of third-party access as a requester on the Natura &Co Service Platform",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Outros",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Liberar acesso de um terceiro de sua equipe à Plataforma de Atendimento Natura & Co",
+ "description": "Completar as informações necessárias para liberar acesso de um terceiro de sua equipe à Plataforma de Atendimento Natura & Co",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "25",
+   "variaveis_ativas": "27",
+   "bloqueadores": "0",
+   "avisos": "17",
+   "perguntas_sem_conversational_label": "25"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_local_de_trabalho: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_setor: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_declaracao: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @third_party_information: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_selecionar_usuario: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 25 de 25 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 25 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de adicionar/remover membros em grupos. Faz só o mínimo: grava item com o sysparm_id da URL.",
+ "variaveis": [
+  {
+   "name": "third_party_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Third party information"
+  },
+  {
+   "name": "v_selecionar_usuario",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select user",
+   "reference": "sys_user",
+   "ref_qual": "employee_number=Consultant^user_nameLIKE@avon.com^NQemployee_numberISEMPTY^user_nameLIKE@natura.net^user_nameLIKE.a^ORuser_nameLIKE.b^ORuser_nameLIKE."
+  },
+  {
+   "name": "v_e_mail_do_terceiro",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Third party email (Natura/Avon/TBS corporate email)"
+  },
+  {
+   "name": "v_nome_completo",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name"
+  },
+  {
+   "name": "v_setor",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Sector",
+   "reference": "cmn_department",
+   "ref_qual": "u_status=active^EQ"
+  },
+  {
+   "name": "v_centro_de_custo",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost center"
+  },
+  {
+   "name": "v_local_de_trabalho",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Location",
+   "reference": "cmn_location",
+   "ref_qual": "nameISNOTEMPTY^u_location_codeISNOTEMPTY^u_status=active^EQ"
+  },
+  {
+   "name": "v_id_do_terceiro_network_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Third Party ID (Network ID)"
+  },
+  {
+   "name": "v_cpf_do_terceiro",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Third party's CPF"
+  },
+  {
+   "name": "v_login_do_terceiro",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Third party login",
+   "read_only": true
+  },
+  {
+   "name": "v_cargo",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Role"
+  },
+  {
+   "name": "v_declaracao_de_veracidade",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Statement of veracity"
+  },
+  {
+   "name": "v_declaracao",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_login_do_terceiro: readonly=true",
+    "v_opened_by: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Required Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company: mandatory=true",
+    "v_selecionar_usuario: mandatory=true",
+    "v_cpf_do_terceiro: mandatory=true",
+    "v_centro_de_custo: mandatory=true",
+    "v_setor: mandatory=true",
+    "v_declaracao_de_veracidade: mandatory=true",
+    "v_nome_completo: mandatory=true",
+    "v_e_mail_do_terceiro: mandatory=true",
+    "v_local_de_trabalho: mandatory=true",
+    "v_id_do_terceiro_network_id: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Get Consultant informations",
+   "type": "onChange",
+   "on": "a31e7b0b1b796d10a530426fe54bcb6a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca as informações do consultor a partir do solicitante selecionado."
+  },
+  {
+   "name": "EY: Get Manager Information",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que busca as informações do gestor a partir de 'v_opened_by'. Tem uma linha de depuração com alert comentada."
+  },
+  {
+   "name": "EY:EmailTerceiroErrorMessage",
+   "type": "onChange",
+   "on": "2f50005f1b796d10a530426fe54bcb15",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de 1,7 KB que valida o e-mail de terceiro e monta a mensagem de erro correspondente."
+  }
+ ]
+}

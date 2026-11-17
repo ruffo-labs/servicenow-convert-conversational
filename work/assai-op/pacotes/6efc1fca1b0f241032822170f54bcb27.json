@@ -1,0 +1,140 @@
+{
+ "sys_id": "6efc1fca1b0f241032822170f54bcb27",
+ "name": "Orientação Médica",
+ "category": "Medicina do Trabalho",
+ "short_description": "Orientação Médica",
+ "description": "Orientação Médica",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de orientação médica",
+     "sla": "SLA - GESTÃO DE GENTE - 48H",
+     "grupo_suporte": "RH - Saúde e Medicina 1"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_name_store_impacted",
+    "rh_store_number",
+    "rh_regional",
+    "rh_description",
+    "rh_reason",
+    "regional_medical_approver"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_name_store_impacted",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da loja do impactado",
+   "choices": []
+  },
+  {
+   "name": "rh_store_number",
+   "type": "Texto de Linha Única",
+   "question_text": "N° da Loja",
+   "choices": []
+  },
+  {
+   "name": "rh_regional",
+   "type": "Texto de Linha Única",
+   "question_text": "Regional",
+   "choices": []
+  },
+  {
+   "name": "rh_description",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição",
+   "choices": []
+  },
+  {
+   "name": "rh_reason",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo",
+   "choices": [
+    "Veracidade de atestado médico",
+    "Retorno de afastamento com restrição",
+    "Avaliação médica para troca de EPI",
+    "Solicitação de Avaliação Ocupacional",
+    "Outros",
+    "Analise de atestados com CID´s correlatos",
+    "Alterações de exames complementares",
+    "ASO inapto",
+    "Análise de Posto de Trabalho",
+    "Restrição Médica"
+   ]
+  },
+  {
+   "name": "regional_medical_approver",
+   "type": "Referência",
+   "question_text": "Aprovador Médico Regional",
+   "reference": "sys_user_group",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "50af61983b2b2a10b28dd047f4e45a40",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "5daf61983b2b2a10b28dd047f4e45a7b",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

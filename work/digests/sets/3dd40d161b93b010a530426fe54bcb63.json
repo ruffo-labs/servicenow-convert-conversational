@@ -1,0 +1,54 @@
+{
+ "sys_id": "3dd40d161b93b010a530426fe54bcb63",
+ "title": "Add an ex-collaborator",
+ "internal_name": "add_ex_collaborator",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitar Rescisão Complementar"
+ ],
+ "variaveis": [
+  {
+   "name": "employee_name_termination",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Former employee's name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=false^user.employee_numberISNOTEMPTY^user.u_employee_end_dateISNOTEMPTY^user.u_employee_end_date<=javascript:gs.endOfToday()^EQ^ORDERBYemp"
+  },
+  {
+   "name": "global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Global ID",
+   "read_only": true
+  },
+  {
+   "name": "value_termination",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Value"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY:Campos Obrigatórios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee_name_termination: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: GetUserGlobalID",
+   "type": "onChange",
+   "on": "961545561b93b010a530426fe54bcb81",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o ID global do usuário chamando o Script Include ACN_ValidateUtils via GlideAjax."
+  }
+ ]
+}

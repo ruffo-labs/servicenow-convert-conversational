@@ -1,0 +1,692 @@
+[
+  {
+    "sys_id": "43b02a8c3bf8da50924d0247f4e45a51",
+    "nome_atual": "Solicitações Relacionadas a Férias",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 1503,
+    "recomendacao": "dividir",
+    "prioridade": "alta",
+    "esforco": "alto",
+    "prontidao_atual": 25,
+    "justificativa": "Item de maior volume do lote (1503 em 12 meses) que mistura três intenções bem diferentes no v_category (registrar férias, cancelar férias e vender dias), cada uma com perguntas e anexos próprios, além de categorias genéricas. Tem 33 perguntas (acima do limite de 20 da VA) e um client script sem VA Supported que monta as opções de categoria. Separar por intenção reduz cada item a 4–8 perguntas e deixa o nome casar com o que o colaborador pede.",
+    "nome_sugerido": "Outras solicitações sobre férias",
+    "short_description_sugerida": "Dúvidas e pedidos sobre férias que não sejam registrar, cancelar ou vender dias de férias.",
+    "descricao_sugerida": "Use para dúvidas ou pedidos sobre férias que não têm item próprio, como consulta de saldo de dias, dúvidas sobre pagamento de férias ou correção de um registro. Não use para registrar novas férias (use 'Registrar férias'), para cancelar férias já programadas (use 'Cancelar férias registradas') nem para vender dias de férias (use 'Vender dias de férias'). Disponível para colaboradores dos países hispânicos.",
+    "frases_exemplo": [
+      "tenho uma dúvida sobre minhas férias",
+      "quero saber quantos dias de férias eu tenho",
+      "meu pagamento de férias veio errado",
+      "preciso corrigir o período das minhas férias",
+      "consulta sobre férias"
+    ],
+    "bloqueadores": [
+      { "onde": "client script: EY: Load category options OnChange", "problema": "Sem VA Supported; monta as opções de v_category conforme o colaborador e esconde/desobriga o campo.", "acao": "Com a divisão, as categorias register/cancel/sell viram itens próprios. No item pai, filtrar as opções restantes com opções fixas ou Lookup Select Box por tabela de regras; remover o script." },
+      { "onde": "client script: EY: Hide category options OnLoad", "problema": "Remove register/cancel/sell da lista na abertura via script.", "acao": "Remover: essas opções deixam de existir no item pai após a divisão." },
+      { "onde": "variável: muitas perguntas", "problema": "33 perguntas; acima de 20 a VA abre janela em vez de conversar.", "acao": "Dividir por intenção (ver itens_derivados)." },
+      { "onde": "variáveis v_manager_approval, v_vacation_sale_request, v_attach_document", "problema": "Anexos exigem tratamento à parte na conversa.", "acao": "Manter só nos itens derivados que precisam, como Attachment OOB pedido ao final da conversa." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_category", "origem": "item", "acao": "manter", "conversational_label": "Sobre qual assunto de férias é a sua solicitação?", "obs": "Somente as categorias genéricas (sem register/cancel/sell)." },
+      { "ordem": 2, "variavel": "v_detail", "origem": "item", "acao": "manter", "conversational_label": "Conte com detalhes o que você precisa.", "obs": "" },
+      { "ordem": 0, "variavel": "v_faq", "origem": "item", "acao": "remover", "obs": "Texto informativo; o conteúdo vai para a descrição do item." },
+      { "ordem": 0, "variavel": "control_brand", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Controle interno preenchido pelo GlideAjax 'EY: Get control variables'." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Load category options OnChange", "acao": "remover", "substituicao": "Divisão do item + opções fixas/Lookup no pai." },
+      { "nome": "EY: Hide category options OnLoad", "acao": "remover", "substituicao": "Opções register/cancel/sell deixam de existir no pai." },
+      { "nome": "EY: Get control variables", "acao": "manter", "substituicao": "VA Supported; alimenta v_country/v_public/control_brand usados pelas policies dos derivados. Avaliar trocar por auto-populate a partir do perfil de RH." },
+      { "nome": "EY: Set number of days regex / EY: Set number of days regex - money", "acao": "converter", "substituicao": "Validation Regex na própria variável (^[0-9]{1,2}$) em v_number_of_days e v_number_of_days_in_cash." },
+      { "nome": "EY: Hide fields OnLoad", "acao": "converter", "substituicao": "Definir visible=false direto nas variáveis ou removê-las do item conforme o derivado." },
+      { "nome": "EY: Mandatory variables", "acao": "converter", "substituicao": "Marcar mandatory direto nas variáveis v_employee e v_corporate_e_mail do set." },
+      { "nome": "EY: Block past dates", "acao": "manter", "substituicao": "Policy sem ações; revisar. Preferir validação de data mínima no item derivado de registro." },
+      { "nome": "EY: Show cancelation fields OnChange", "acao": "remover", "substituicao": "Vai para o derivado 'Cancelar férias registradas' com v_ticket_number sempre visível." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Traduzir nome, descrição e conversational labels para espanhol (catálogo hispânico) via tabelas de tradução, mantendo a versão pt-BR."] },
+    "itens_derivados": [
+      {
+        "nome": "Registrar férias",
+        "short_description": "Informe o período das suas férias para registro pelo RH.",
+        "descricao": "Use para registrar ou programar um novo período de férias: datas de início e fim, dias em dinheiro quando o seu país permitir e aprovação do gestor. Não use para cancelar férias já registradas nem para vender dias de férias. Disponível para colaboradores dos países hispânicos.",
+        "frases_exemplo": ["quero tirar férias", "registrar minhas férias de 10 a 24 de janeiro", "programar férias", "vou sair de férias mês que vem", "preciso lançar minhas férias"],
+        "fixar": "v_category = register (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_start_date", "conversational_label": "Em que data começam suas férias?" },
+          { "ordem": 2, "variavel": "v_end_date", "conversational_label": "Em que data terminam suas férias?" },
+          { "ordem": 3, "variavel": "v_return_to_work_date", "conversational_label": "Em que data você volta ao trabalho? (somente Colômbia)" },
+          { "ordem": 4, "variavel": "v_number_of_days", "conversational_label": "Quantos dias de férias você vai tirar? (Equador e Chile)" },
+          { "ordem": 5, "variavel": "v_request_paid_vacation", "conversational_label": "Você quer receber parte das férias em dinheiro? (Colômbia)" },
+          { "ordem": 6, "variavel": "v_number_of_days_in_cash", "conversational_label": "Quantos dias você quer receber em dinheiro?" },
+          { "ordem": 7, "variavel": "v_want_to_receive_vacation_pay", "conversational_label": "Você quer receber o adiantamento de férias? (Uruguai e Argentina)" },
+          { "ordem": 8, "variavel": "v_when_receive_vacation_pay", "conversational_label": "Quando você quer receber o pagamento das férias? (Colômbia)" },
+          { "ordem": 9, "variavel": "v_request_step_detention", "conversational_label": "Você vai solicitar Step Detention? (Argentina, Natura, Sales Professional)" },
+          { "ordem": 10, "variavel": "v_sales_cycle", "conversational_label": "Em qual ciclo de vendas?" },
+          { "ordem": 11, "variavel": "v_manager_approval", "conversational_label": "Envie o anexo com a aprovação do seu gestor." },
+          { "ordem": 12, "variavel": "v_attach_document", "conversational_label": "Envie o documento exigido para férias no Chile." },
+          { "ordem": 13, "variavel": "v_detail", "conversational_label": "Quer acrescentar alguma observação?" }
+        ]
+      },
+      {
+        "nome": "Cancelar férias registradas",
+        "short_description": "Cancele um período de férias já registrado informando o número do chamado.",
+        "descricao": "Use para cancelar férias já registradas por um chamado anterior. Todo o período solicitado é cancelado; depois do encerramento, abra um novo registro com as datas corretas. Não use para registrar novas férias. Colaboradores do Brasil devem usar 'Cancelar férias programadas no ADP'. Disponível para colaboradores dos países hispânicos.",
+        "frases_exemplo": ["quero cancelar minhas férias", "cancelar o chamado de férias", "não vou mais sair de férias", "preciso desmarcar minhas férias"],
+        "fixar": "v_category = cancel (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_ticket_number", "conversational_label": "Qual é o número do chamado das férias que você quer cancelar?" },
+          { "ordem": 2, "variavel": "v_detail", "conversational_label": "Qual o motivo do cancelamento?" }
+        ]
+      },
+      {
+        "nome": "Vender dias de férias",
+        "short_description": "Solicite a venda (pagamento em dinheiro) de dias de férias.",
+        "descricao": "Use para pedir a venda de dias de férias, ou seja, receber em dinheiro em vez de descansar, quando o seu país permitir (hoje, Equador). Não use para registrar ou cancelar férias.",
+        "frases_exemplo": ["quero vender minhas férias", "vender 5 dias de férias", "receber férias em dinheiro", "abono de férias"],
+        "fixar": "v_category = sell (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "v_number_of_days", "conversational_label": "Quantos dias de férias você quer vender?" },
+          { "ordem": 2, "variavel": "v_vacation_sale_request", "conversational_label": "Envie o formulário de venda de férias preenchido." },
+          { "ordem": 3, "variavel": "v_detail", "conversational_label": "Quer acrescentar alguma observação?" }
+        ]
+      }
+    ],
+    "observacoes": "O v_file_download (Rich Text com o modelo de venda de férias) perde a mídia na conversa; colocar o link do modelo na descrição do derivado 'Vender dias de férias'. O resumo do producer_script no digest cita 'Frota', provável cópia; confirmar que o script resolve requested_for pelo EY_Get_Hispanic_Categories. Perguntas condicionais por país dependem de v_country/v_public do set 'EY: Hispana Personal Information', que é avaliado em separado."
+  },
+  {
+    "sys_id": "f12b20081b482dd4a530426fe54bcb40",
+    "nome_atual": "Solicitar Cancelamento de Férias Programadas",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 528,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 45,
+    "justificativa": "Intenção única e clara, com bom volume (528 em 12 meses). O bloqueio é um client script onSubmit com inspeção de DOM para exigir anexo, além de descrição vazia ('.') e campos de identificação que podem ser derivados. Com anexo OOB e auto-populate, a conversa fica em 3–4 perguntas.",
+    "nome_sugerido": "Cancelar férias programadas no ADP",
+    "short_description_sugerida": "Cancele férias já programadas e aprovadas no portal ADP para poder reprogramar.",
+    "descricao_sugerida": "Use para cancelar férias que já foram programadas e aprovadas no ADP, para você ou para alguém da sua equipe, e assim poder fazer uma nova programação. O cancelamento precisa ser pedido com pelo menos 40 dias de antecedência do início das férias e exige a aprovação do gestor em anexo. Não use para tirar dúvidas sobre férias nem para programar férias novas, que é feito direto no ADP. Disponível para colaboradores do Brasil.",
+    "frases_exemplo": [
+      "quero cancelar minhas férias",
+      "preciso cancelar as férias que marquei no ADP",
+      "cancelar férias do meu funcionário",
+      "desmarcar férias aprovadas",
+      "não vou mais tirar férias em março, como cancelo?"
+    ],
+    "bloqueadores": [
+      { "onde": "client script: EY: Attach mandatory", "problema": "onSubmit sem VA Supported que exige anexo inspecionando o DOM por classe CSS.", "acao": "Remover o script e criar variável Attachment OOB (nova_aprovacao_gestor) obrigatória, pedida ao final da conversa." },
+      { "onde": "variável v_attach_vacation", "problema": "Rich Text Label de instrução ('Attach manager approval below'); a mídia não chega ao LLM.", "acao": "Remover; a instrução vira o label da nova variável de anexo." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_solicitation_to_whom", "origem": "item", "acao": "manter", "conversational_label": "O cancelamento é das suas férias ou de alguém da sua equipe?", "obs": "Slot filling resolve frases como 'minhas férias'." },
+      { "ordem": 2, "variavel": "v_vacation_start_date", "origem": "item", "acao": "manter", "conversational_label": "Qual a data de início das férias que você quer cancelar?", "obs": "Regra de 40 dias mantida pelo script 'EY: Block befor 40 days' (VA Supported)." },
+      { "ordem": 3, "variavel": "v_comment_vacation", "origem": "item", "acao": "manter", "conversational_label": "Qual o motivo do cancelamento?", "obs": "" },
+      { "ordem": 4, "variavel": "nova_aprovacao_gestor", "origem": "item", "acao": "nova", "tipo_sugerido": "Attachment", "conversational_label": "Envie o anexo com a aprovação do seu gestor.", "obs": "Substitui v_attach_vacation + script de DOM." },
+      { "ordem": 0, "variavel": "v_employee", "origem": "item", "acao": "derivar", "obs": "Auto-populate do perfil de RH do usuário logado quando 'para mim'; read-only." },
+      { "ordem": 0, "variavel": "v_id", "origem": "item", "acao": "derivar", "obs": "Auto-populate a partir de v_employee." },
+      { "ordem": 0, "variavel": "v_company", "origem": "item", "acao": "derivar", "obs": "Auto-populate a partir de v_employee." },
+      { "ordem": 0, "variavel": "v_current_date", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Já tem default e é read-only." },
+      { "ordem": 0, "variavel": "v_attach_vacation", "origem": "item", "acao": "remover", "obs": "Instrução de anexo." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Attach mandatory", "acao": "remover", "substituicao": "Variável Attachment OOB obrigatória." },
+      { "nome": "EY: Autofill data", "acao": "converter", "substituicao": "Auto-populate (dot-walk) de v_id e v_company a partir de v_employee." },
+      { "nome": "EY:My request", "acao": "converter", "substituicao": "Default value de v_employee = perfil do usuário logado + UI Policy sem script." },
+      { "nome": "EY: Block befor 40 days", "acao": "manter", "substituicao": "VA Supported. Alternativa no-code: UI Policy com condição de data relativa exibindo mensagem." },
+      { "nome": "EY: Field personal information / EY: If my team / EY: Attach", "acao": "converter", "substituicao": "Definir read-only/mandatory direto nas variáveis; manter só a condição por v_solicitation_to_whom, sem onLoad." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher o campo description (hoje '.')."] },
+    "itens_derivados": [],
+    "observacoes": "Para 'my_team' o set '(+) Adicionar Colaborador' repete nome, ID, empresa e datas; se for multi-row, a conversa fica ruim. Sugestão: para equipe, perguntar só o colaborador (Reference) e a data de início, derivando o resto. Item irmão hispânico '43b02a8c…' (categoria cancel) atende outro público; as descrições deixam isso explícito."
+  },
+  {
+    "sys_id": "2bd570a487788310ec360e530cbb35c8",
+    "nome_atual": "CARTÃO COMBUSTÍVEL -  2º VIA, DESBLOQUEIO E ALTERAÇÃO DE LIMITE",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 22,
+    "recomendacao": "dividir",
+    "prioridade": "media",
+    "esforco": "medio",
+    "prontidao_atual": 25,
+    "justificativa": "O próprio nome já junta três intenções (segunda via, desbloqueio, alteração de limite) escolhidas em question_request_type, cada uma com um bloco de perguntas diferente. Tem 25 perguntas (acima de 20) e um script de CEP sem VA Supported. O volume ainda é baixo, mas cresce rápido (20 dos 22 nos últimos 90 dias), o que justifica itens enxutos.",
+    "nome_sugerido": "Cartão combustível",
+    "short_description_sugerida": "Segunda via, desbloqueio ou alteração de limite do cartão combustível da frota.",
+    "descricao_sugerida": "Item agrupador; cada pedido do cartão combustível tem item próprio: segunda via, desbloqueio de cartão novo e alteração de limite.",
+    "frases_exemplo": ["problema com cartão combustível", "cartão de combustível"],
+    "bloqueadores": [
+      { "onde": "client script: [AOOP][Fill fields according to ZIP]", "problema": "Sem VA Supported; preenche o endereço pelo CEP e trava os campos via função auxiliar.", "acao": "Reescrever sem manipulação de layout (só g_form.setValue) e marcar VA Supported, ou perguntar o endereço completo numa única variável multilinha no derivado de segunda via." },
+      { "onde": "variáveis question_attach_collaborators, question_attach_manager, question_attach_finance", "problema": "Três anexos no ramo de alteração de limite.", "acao": "Manter como Attachment OOB só no derivado de alteração de limite, pedidos ao final." },
+      { "onde": "variáveis question_permanent_template, question_oneoff_template, question_info_address", "problema": "Rich Text com link de modelo/instrução; a mídia é removida.", "acao": "Levar os links dos modelos para a descrição do derivado de alteração de limite; remover question_info_address." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "[AOOP][Fill Collaborator when Myself]", "acao": "converter", "substituicao": "Default value question_collaborator = gs.getUserID() e UI Policy sem script para 'someone'." },
+      { "nome": "[AOOP][Get Public from Collaborator]", "acao": "converter", "substituicao": "Auto-populate de question_public, question_collaborator_name, question_id_global e question_email a partir de question_collaborator (ou ocultar na conversa)." },
+      { "nome": "[AOOP][Show Fields when request Type is ...] (DUPLICATE, UNLOCK, LIMIT CHANGE)", "acao": "remover", "substituicao": "Com a divisão, cada derivado já tem apenas as suas variáveis." },
+      { "nome": "[AOOP][Default Form Behavior]", "acao": "converter", "substituicao": "Mandatory/read-only direto nas variáveis." },
+      { "nome": "[AOOP][Show Fields when GROUP OF COLLABORATORS]", "acao": "remover", "substituicao": "Policy sem ações." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Após criar os derivados, desativar o item atual ou mantê-lo oculto só para histórico dos flows."] },
+    "itens_derivados": [
+      {
+        "nome": "Solicitar segunda via do cartão combustível",
+        "short_description": "Peça um novo cartão combustível por perda, roubo ou dano.",
+        "descricao": "Use quando o cartão combustível do veículo corporativo foi perdido, roubado ou danificado e você precisa de um novo cartão entregue no seu endereço. Não use para desbloquear um cartão que já chegou nem para mudar o limite. Disponível para colaboradores do Brasil.",
+        "frases_exemplo": ["perdi meu cartão combustível", "preciso de segunda via do cartão de combustível", "meu cartão de combustível quebrou", "roubaram meu cartão da frota"],
+        "fixar": "question_request_type = duplicate (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "question_request_who", "conversational_label": "O cartão é para você ou para outro colaborador?" },
+          { "ordem": 2, "variavel": "question_collaborator", "conversational_label": "Para qual colaborador?" },
+          { "ordem": 3, "variavel": "question_reissuing_reason", "conversational_label": "Por que você precisa de um novo cartão?" },
+          { "ordem": 4, "variavel": "question_zip_code", "conversational_label": "Qual o CEP do endereço de entrega?" },
+          { "ordem": 5, "variavel": "question_number", "conversational_label": "Qual o número do endereço?" },
+          { "ordem": 6, "variavel": "question_complement", "conversational_label": "Tem complemento? Se sim, qual?" }
+        ]
+      },
+      {
+        "nome": "Desbloquear cartão combustível",
+        "short_description": "Peça o desbloqueio do cartão combustível novo que você recebeu.",
+        "descricao": "Use quando você recebeu um cartão combustível novo e precisa que ele seja desbloqueado para uso. Não use para pedir segunda via nem alterar limite. Disponível para colaboradores do Brasil.",
+        "frases_exemplo": ["recebi o cartão combustível, como desbloqueio?", "desbloquear cartão de combustível", "meu cartão novo da frota está bloqueado", "ativar cartão combustível"],
+        "fixar": "question_request_type = unlock (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "question_request_who", "conversational_label": "O cartão é seu ou de outro colaborador?" },
+          { "ordem": 2, "variavel": "question_collaborator", "conversational_label": "De qual colaborador?" },
+          { "ordem": 3, "variavel": "question_card_number", "conversational_label": "Qual o número do cartão combustível que você recebeu?" }
+        ]
+      },
+      {
+        "nome": "Alterar limite do cartão combustível",
+        "short_description": "Peça aumento permanente ou complemento pontual do limite do cartão combustível.",
+        "descricao": "Use para mudar o limite do cartão combustível de um colaborador ou de um grupo, de forma permanente ou como complemento pontual em um mês. Exige aprovação do gestor e do Financeiro em anexo; para grupos, anexe a planilha de colaboradores (modelos: <links dos modelos permanente e pontual>). Não use para segunda via nem desbloqueio. Disponível para colaboradores do Brasil.",
+        "frases_exemplo": ["preciso aumentar o limite do cartão combustível", "o limite do cartão de combustível não está dando", "complemento de limite para este mês", "alterar limite do cartão da equipe"],
+        "fixar": "question_request_type = limit_change (default/hidden)",
+        "perguntas": [
+          { "ordem": 1, "variavel": "question_individual_group", "conversational_label": "A alteração é para um colaborador ou para um grupo?" },
+          { "ordem": 2, "variavel": "question_collaborator", "conversational_label": "Para qual colaborador?" },
+          { "ordem": 3, "variavel": "question_change_type", "conversational_label": "A alteração é permanente ou um complemento pontual?" },
+          { "ordem": 4, "variavel": "question_new_limit", "conversational_label": "Qual o novo limite desejado, em reais?" },
+          { "ordem": 5, "variavel": "question_value_supplementation", "conversational_label": "Qual o valor do complemento, em reais?" },
+          { "ordem": 6, "variavel": "question_month_change", "conversational_label": "Em qual mês o complemento deve valer?" },
+          { "ordem": 7, "variavel": "question_request_reason", "conversational_label": "Qual o motivo da alteração do limite?" },
+          { "ordem": 8, "variavel": "question_attach_collaborators", "conversational_label": "Envie a planilha com a lista de colaboradores." },
+          { "ordem": 9, "variavel": "question_attach_manager", "conversational_label": "Envie a aprovação do gestor." },
+          { "ordem": 10, "variavel": "question_attach_finance", "conversational_label": "Envie a aprovação do Financeiro." }
+        ]
+      }
+    ],
+    "observacoes": "question_street, question_neighborhood, question_city e question_state ficam derivados do CEP (ocultos na conversa) se o script de CEP for reescrito com VA Supported; caso contrário, trocar o bloco de endereço por uma variável multilinha 'Endereço completo de entrega'. question_collaborator_name, question_id_global, question_email e question_public: derivar/ocultar na conversa. O producer_script depende de question_collaborator; manter o nome da variável nos derivados. O ramo de alteração de limite para grupo pode ficar como formulário se a conversa não lidar bem com os três anexos."
+  },
+  {
+    "sys_id": "17bab25687b95210ec360e530cbb3527",
+    "nome_atual": "Dúvidas, consultas, reclamações ou sugestões relacionadas à Frota",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 176,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Item simples (motivo, categoria e detalhe) com volume médio. Bloqueado só por dois client scripts de mensagem de erro traduzida sem VA Supported, que podem ser trocados por validação no-code. Precisa de descrição de negócio que o diferencie de 'Solicitações relacionadas à Frota'.",
+    "nome_sugerido": "Tirar dúvida ou registrar reclamação sobre a frota",
+    "short_description_sugerida": "Dúvidas, consultas, reclamações ou sugestões sobre o veículo corporativo e a frota.",
+    "descricao_sugerida": "Use para perguntar, consultar, reclamar ou sugerir algo sobre o veículo corporativo e a frota (por exemplo, regras de uso, manutenção, multas ou atendimento do fornecedor). Não use para pedir um serviço ou reembolso da frota; nesse caso use 'Solicitações relacionadas à Frota'. Disponível para colaboradores elegíveis na Argentina.",
+    "frases_exemplo": [
+      "tenho uma dúvida sobre o carro da empresa",
+      "quero reclamar da oficina da frota",
+      "sugestão para o programa de frota",
+      "como funciona a manutenção do veículo corporativo?",
+      "consulta sobre multa no carro da empresa"
+    ],
+    "bloqueadores": [
+      { "onde": "client script: EY: Show error message (onChange)", "problema": "Sem VA Supported; valida tamanho mínimo e monta mensagem traduzida.", "acao": "Remover e usar Validation Regex na variável v_details (ex.: ^[\\s\\S]{30,}$) com mensagem traduzida no registro de regex." },
+      { "onde": "client script: EY: Show error message (onSubmit)", "problema": "Sem VA Supported; bloqueia o envio com mensagem por idioma.", "acao": "Remover; a Validation Regex já barra o envio." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_contact_reason", "origem": "item", "acao": "manter", "conversational_label": "É uma dúvida, consulta, reclamação ou sugestão?", "obs": "Slot filling costuma resolver pela primeira frase." },
+      { "ordem": 2, "variavel": "v_category", "origem": "item", "acao": "manter", "conversational_label": "Sobre qual assunto da frota?", "obs": "Lookup Select Box com ref qual dinâmico por elegibilidade; testar resolução na conversa." },
+      { "ordem": 3, "variavel": "v_details", "origem": "item", "acao": "manter", "conversational_label": "Conte com detalhes o que aconteceu ou o que você precisa.", "obs": "" },
+      { "ordem": 0, "variavel": "v_faqs", "origem": "item", "acao": "remover", "obs": "Bloco de FAQ montado por script; na conversa, o AI Search já oferece artigos." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show error message (onChange/onSubmit)", "acao": "remover", "substituicao": "Validation Regex em v_details." },
+      { "nome": "EY: Show  FAQs", "acao": "remover", "substituicao": "Remover junto com v_faqs; no portal, usar link de KB na descrição." },
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto em v_contact_reason, v_category e v_details." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Traduzir labels para espanhol (catálogo hispânico)."] },
+    "itens_derivados": [],
+    "observacoes": "Irmão brasileiro 'Informações ou dúvidas relacionadas à frota' (c421e340…) tem outro público (Brasil); os nomes ficam distintos pela descrição e user criteria."
+  },
+  {
+    "sys_id": "c421e34087cfb610ec360e530cbb3581",
+    "nome_atual": "Informações ou dúvidas relacionadas à frota",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 31,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 70,
+    "justificativa": "Sem bloqueadores, com 3 perguntas próprias e scripts VA Supported. Falta descrição (vazia) e conversational labels; o volume é baixo, mas o ajuste é barato.",
+    "nome_sugerido": "Tirar dúvida sobre veículo corporativo",
+    "short_description_sugerida": "Dúvidas sobre veículo corporativo: multas, manutenção, devolução, elegibilidade, upgrade e desconto em folha.",
+    "descricao_sugerida": "Use para tirar dúvidas sobre os processos de veículos corporativos, como multas, manutenção, devolução do veículo, elegibilidade, upgrade de modelo e descontos na folha de pagamento. Não use para pedir segunda via, desbloqueio ou alteração de limite do cartão combustível (há itens próprios). Disponível para colaboradores do Brasil.",
+    "frases_exemplo": [
+      "recebi uma multa no carro da empresa, o que faço?",
+      "como devolvo o veículo corporativo?",
+      "tenho direito a carro da empresa?",
+      "dúvida sobre desconto do carro na folha",
+      "quando posso trocar de carro?"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_request_type", "origem": "item", "acao": "manter", "conversational_label": "Sobre qual assunto do veículo corporativo é a sua dúvida?", "obs": "" },
+      { "ordem": 2, "variavel": "v_select_option", "origem": "item", "acao": "manter", "conversational_label": "Qual opção descreve melhor a sua dúvida?", "obs": "Se as opções dependem de v_request_type, usar 'dependent value' nas choices (no-code)." },
+      { "ordem": 3, "variavel": "v_detail_your_request", "origem": "item", "acao": "manter", "conversational_label": "Descreva sua dúvida com detalhes.", "obs": "" }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Set Variables properties", "acao": "converter", "substituicao": "Mandatory/read-only direto nas variáveis, sem policy onLoad." },
+      { "nome": "EY: Check for_who variable and fill form", "acao": "converter", "substituicao": "Default value vs_select_the_collaborator = gs.getUserID() (recomendação do set avaliada em separado)." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher description."] },
+    "itens_derivados": [],
+    "observacoes": "O producer_script lê a variável 'employee', que não aparece no item nem no set 'EY: Informação Básica do colaborador'; verificar se o requested_for está sendo gravado."
+  },
+  {
+    "sys_id": "d93159141b688910a530426fe54bcb56",
+    "nome_atual": "Informar direito a solicitar novo veículo (chamado informativo para fornecedor)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Nenhum registro em 12 meses (nem no total histórico), sem variáveis e sem producer script. Parece um item informativo para terceiros que nunca foi usado; avaliar desativação antes de qualquer conversão.",
+    "nome_sugerido": "Informar fornecedor sobre direito a veículo corporativo",
+    "short_description_sugerida": "Avisar o fornecedor de frota que um colaborador passou a ter direito a veículo (promoção ou contratação).",
+    "descricao_sugerida": "Uso interno: avisar o fornecedor de frota que um colaborador passou a ter direito a veículo corporativo por promoção ou contratação.",
+    "frases_exemplo": ["informar fornecedor que colaborador tem direito a carro", "colaborador promovido ganhou direito a veículo"],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Se mantido, retirar do catálogo 'Virtual Agent Search' para não concorrer com itens de frota de colaboradores."] },
+    "itens_derivados": [],
+    "observacoes": "Sem variáveis, o chamado sai sem nenhum dado do colaborador; se o processo existir, precisa ao menos de colaborador (Reference) e motivo (promoção/contratação)."
+  },
+  {
+    "sys_id": "b6b5e07a3b355210924d0247f4e45a73",
+    "nome_atual": "Solicitações relacionadas à Frota",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 630,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "alta",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Volume alto (630 em 12 meses) e poucas perguntas próprias, mas bloqueado por 4 client scripts sem VA Supported (lembrete e mensagem de erro traduzidos). Tipo e subcategoria vêm de uma tabela de regras por elegibilidade, então dividir quebraria essa lógica guiada por dados; o melhor é limpar scripts, remover legendas e dar nome e descrição claros.",
+    "nome_sugerido": "Solicitar serviço ou reembolso da frota",
+    "short_description_sugerida": "Pedidos sobre o veículo corporativo, inclusive reembolso de despesas da frota.",
+    "descricao_sugerida": "Use para pedir serviços relacionados ao veículo corporativo e à frota, como reembolso de despesas (informando mês, ano e valor total dos comprovantes) e outros pedidos da tabela de tipos. Não use para dúvidas, reclamações ou sugestões sobre a frota; nesse caso use 'Tirar dúvida ou registrar reclamação sobre a frota'. Disponível para colaboradores elegíveis na Argentina.",
+    "frases_exemplo": [
+      "quero reembolso do combustível do carro da empresa",
+      "preciso pedir manutenção do veículo corporativo",
+      "reembolsar despesas da frota de março",
+      "solicitação para o carro da empresa",
+      "lançar gastos do veículo"
+    ],
+    "bloqueadores": [
+      { "onde": "client scripts: EY: Show remember message (onLoad e onChange)", "problema": "Sem VA Supported; exibem lembrete traduzido quando é para outra pessoa.", "acao": "Remover; mover o lembrete para a descrição do item ou para o label da pergunta do set." },
+      { "onde": "client scripts: EY: Show error message (onChange e onSubmit)", "problema": "Sem VA Supported; validam tamanho mínimo de v_details com mensagem por idioma.", "acao": "Remover e usar Validation Regex em v_details." },
+      { "onde": "variáveis v_type_of_request e v_subcategory", "problema": "Lookup Select Box com reference qualifier javascript dinâmico.", "acao": "Testar em conversa; se não resolver, manter a lookup e simplificar o qualifier para filtro por país/público vindo de variáveis já preenchidas." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_type_of_request", "origem": "item", "acao": "manter", "conversational_label": "Que tipo de solicitação de frota você quer fazer?", "obs": "" },
+      { "ordem": 2, "variavel": "v_subcategory", "origem": "item", "acao": "manter", "conversational_label": "Qual opção descreve melhor o seu pedido?", "obs": "" },
+      { "ordem": 3, "variavel": "v_month", "origem": "item", "acao": "manter", "conversational_label": "A despesa é de qual mês?", "obs": "Só para os tipos de reembolso." },
+      { "ordem": 4, "variavel": "v_year", "origem": "item", "acao": "manter", "conversational_label": "E de qual ano?", "obs": "Trocar o script 'EY: Set year' por choices mantidas (ano atual e anterior) ou manter o script, que é VA Supported." },
+      { "ordem": 5, "variavel": "v_total", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor total dos comprovantes?", "obs": "Trocar a máscara de moeda por Validation Regex numérica." },
+      { "ordem": 6, "variavel": "v_details", "origem": "item", "acao": "manter", "conversational_label": "Conte com detalhes o que você precisa.", "obs": "" },
+      { "ordem": 0, "variavel": "v_month_year", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Derivado no onSubmit a partir de mês e ano." },
+      { "ordem": 0, "variavel": "v_faqs", "origem": "item", "acao": "remover", "obs": "FAQ montado por script." },
+      { "ordem": 0, "variavel": "v_legenda_1", "origem": "item", "acao": "remover", "obs": "Legendas informativas: levar o texto relevante para a descrição." },
+      { "ordem": 0, "variavel": "v_legenda_2", "origem": "item", "acao": "remover", "obs": "Idem." },
+      { "ordem": 0, "variavel": "v_legenda_3", "origem": "item", "acao": "remover", "obs": "Idem." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show remember message (x2)", "acao": "remover", "substituicao": "Texto na descrição." },
+      { "nome": "EY: Show error message (x2)", "acao": "remover", "substituicao": "Validation Regex em v_details." },
+      { "nome": "EY: Máscara de Moeda", "acao": "converter", "substituicao": "Validation Regex numérica em v_total (script tem erro 'var regex = regex =')." },
+      { "nome": "EY: Show  FAQs", "acao": "remover", "substituicao": "Link de KB na descrição." },
+      { "nome": "EY: Set complete date", "acao": "manter", "substituicao": "VA Supported; alternativa: montar a data no flow a partir de v_month e v_year." },
+      { "nome": "EY: Clean variables", "acao": "manter", "substituicao": "VA Supported." },
+      { "nome": "EY: Hide portal variables / EY: Mandatory v_type_of_request and v_subcategory", "acao": "converter", "substituicao": "Hidden/mandatory direto nas variáveis." },
+      { "nome": "EY: Show v_legenda_1 / EY: Show v_legenda_3", "acao": "remover", "substituicao": "Legendas removidas." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Traduzir labels para espanhol (catálogo hispânico)."] },
+    "itens_derivados": [],
+    "observacoes": "Se o reembolso de despesas for a maior parte do volume, vale criar depois um item 'Pedir reembolso de despesas da frota' com v_type_of_request fixo; hoje as opções são sys_ids da tabela x_nasm_hr_rules_hispanic_request_flota e não dá para confirmar a distribuição pelo digest."
+  },
+  {
+    "sys_id": "15b5791d1bc0e558d1abda4ce54bcb48",
+    "nome_atual": "Admissão e Movimentação Internacional",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 8,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 40,
+    "justificativa": "Uso interno de gestão de RH, com volume muito baixo (8 em 12 meses) e fluxo baseado em baixar um modelo específico por opção e anexá-lo preenchido. Os modelos são Rich Text (a mídia não chega à conversa). Não compensa converter; basta nome e descrição para ser encontrado e aberto como link.",
+    "nome_sugerido": "Solicitar admissão ou movimentação internacional",
+    "short_description_sugerida": "Admissão com movimentação internacional, admissão no exterior (EUA e França), expatriação e repatriação.",
+    "descricao_sugerida": "Use para pedir admissão com movimentação internacional, admissão no exterior (Estados Unidos e França), expatriação ou repatriação de colaborador. Exige preencher e anexar o modelo correspondente, disponível no formulário. Não use para transferências dentro do Brasil nem para dúvidas gerais de movimentação de pessoal.",
+    "frases_exemplo": [
+      "preciso expatriar um colaborador",
+      "admissão de funcionário nos Estados Unidos",
+      "repatriação de colaborador para o Brasil",
+      "movimentação internacional",
+      "contratar alguém na França"
+    ],
+    "bloqueadores": [
+      { "onde": "variáveis v_template_international, v_template_expatriation, v_template_abroad", "problema": "Rich Text com modelo para download; na conversa só sobra a URL.", "acao": "Manter formulário; se um dia converter, colocar os links dos modelos na descrição." },
+      { "onde": "variável v_attach_the_completed_template_here", "problema": "Anexo obrigatório do modelo preenchido.", "acao": "Manter no formulário." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Read Only / EY:  id", "acao": "converter", "substituicao": "Policies duplicadas; definir read-only direto em v_id." },
+      { "nome": "EY: Fill Global Id", "acao": "converter", "substituicao": "Auto-populate de v_id a partir de v_name_other." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["Preencher description."] },
+    "itens_derivados": [],
+    "observacoes": "A opção 'v_admission _abroad' tem espaço no valor; as policies dependem dele, cuidado ao corrigir. A policy 'EY: Text mandatory when option != none' só vale para expatriação (nome enganoso)."
+  },
+  {
+    "sys_id": "d4ef72761bef5d50a530426fe54bcbd5",
+    "nome_atual": "Criação de Novo Cargo",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 6,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 55,
+    "justificativa": "Pedido técnico de RH (código, grade, nível, risco de insalubridade/periculosidade, descrição do cargo em anexo) com volume irrisório (6 em 12 meses). Não tem bloqueador, mas o ganho da conversa é pequeno e o público é restrito; manter formulário e melhorar nome e descrição.",
+    "nome_sugerido": "Solicitar criação de novo cargo no ADP",
+    "short_description_sugerida": "Criar um novo cargo no ADP com código, grade, nível de gestão e mapeamento de risco.",
+    "descricao_sugerida": "Use para pedir a criação de um novo cargo no ADP, informando código, nome em português, grade, nível de gestão, data de vigência e se há adicional de periculosidade ou insalubridade (com aprovação de Segurança do Trabalho). Anexe a descrição do cargo. Não use para mudar o cargo de um colaborador existente nem para promoções.",
+    "frases_exemplo": ["criar um cargo novo", "cadastrar novo cargo no ADP", "preciso de um código de cargo novo", "abrir novo cargo com insalubridade"],
+    "bloqueadores": [
+      { "onde": "variável job_description", "problema": "Anexo obrigatório.", "acao": "Manter no formulário." },
+      { "onde": "variável v_please_include_the_workplace_safety_approval_referring_to_the_job_risk_mapping", "problema": "Rich Text Label marcado como obrigatório pela policy (não tem efeito) e sem anexo correspondente.", "acao": "Criar variável Attachment (nova_aprovacao_seguranca) visível quando há risco, ou deixar a instrução na descrição." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Fields mandatory - Creation of New Position", "acao": "converter", "substituicao": "Mandatory direto nas variáveis; remover referência a v_attachment, que não existe no item." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["Preencher description (hoje '.')."] },
+    "itens_derivados": [],
+    "observacoes": "A policy de risco compara 'Yes' em variável Sim/Não; conferir o valor (normalmente 'Yes'/'No'). O resumo do producer_script no digest fala em 'troca de escala coletiva', provável cópia de outro item; revisar."
+  },
+  {
+    "sys_id": "3399d0941ba5c610a530426fe54bcbfb",
+    "nome_atual": "Informações ou dúvidas relacionadas a movimentação de pessoal e estrutura",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 219,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 75,
+    "justificativa": "Item genérico de uma pergunta, sem bloqueadores, com volume médio. Falta descrição, o texto 'quando usar' está num Rich Text que não chega ao LLM, e o label está em inglês. Ajuste rápido de texto.",
+    "nome_sugerido": "Tirar dúvida sobre movimentação de pessoal e estrutura",
+    "short_description_sugerida": "Dúvidas sobre transferência, promoção, mudança de cargo, gestor ou estrutura sem formulário específico.",
+    "descricao_sugerida": "Use para tirar dúvidas sobre movimentação de pessoal e estrutura organizacional (transferência, promoção, mudança de cargo, troca de gestor, centro de custo, estrutura de equipe) quando não houver um formulário específico nem resposta na base de conhecimento. Não use para pedir a criação de cargo nem admissão ou movimentação internacional, que têm itens próprios. Disponível para colaboradores do Brasil.",
+    "frases_exemplo": [
+      "dúvida sobre transferência de área",
+      "como funciona a promoção de um colaborador?",
+      "quero saber sobre mudança de gestor",
+      "pergunta sobre estrutura da minha equipe",
+      "não achei o formulário de movimentação"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_description_details", "origem": "item", "acao": "manter", "conversational_label": "Qual é a sua dúvida sobre movimentação de pessoal ou estrutura?", "obs": "Validação de tamanho mínimo: trocar o onSubmit por Validation Regex." },
+      { "ordem": 0, "variavel": "when_use_this_form", "origem": "item", "acao": "remover", "obs": "O texto 'quando usar' vai para a descrição do item." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Minimum caracter", "acao": "converter", "substituicao": "Validation Regex em v_description_details." },
+      { "nome": "Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto na variável." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher description."] },
+    "itens_derivados": [],
+    "observacoes": "O resumo do producer_script no digest cita 'Controle de Jornada' (script reaproveitado); só define requested_for e item, sem impacto."
+  },
+  {
+    "sys_id": "807f9a661b860510a530426fe54bcb4f",
+    "nome_atual": "Gestão de Pessoas e Estrutura",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Nenhum registro histórico, sem variáveis nem script; parece um agrupador de temas (movimentação, transferência, mérito etc.) publicado como record producer. Concorre na busca por intenção com itens reais de movimentação; avaliar desativação ou troca por categoria/página de KB.",
+    "nome_sugerido": "Gestão de Pessoas e Estrutura",
+    "short_description_sugerida": "Temas de movimentação de pessoal, transferência, posições, seleção, mérito, desempenho e estrutura.",
+    "descricao_sugerida": "Agrupador de temas de Gestão de Pessoas e Estrutura; os pedidos devem ser feitos nos itens específicos.",
+    "frases_exemplo": ["gestão de pessoas", "movimentação de pessoal"],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Se mantido, retirar do catálogo 'Virtual Agent Search' para não desviar pedidos de 'Tirar dúvida sobre movimentação de pessoal e estrutura'."] },
+    "itens_derivados": [],
+    "observacoes": "Categoria 'Iniciando na Natura &Co' não combina com o tema; indício de item de navegação legado."
+  },
+  {
+    "sys_id": "a3acf64e1b439550d1abda4ce54bcb66",
+    "nome_atual": "My Benefits (FAQ - Hispanic - ARG)",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 0,
+    "recomendacao": "avaliar_desativacao",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 50,
+    "justificativa": "Nenhum registro histórico e sem variáveis; é uma página de FAQ de benefícios da Argentina publicada como record producer. Conteúdo informativo cabe melhor num artigo de KB, que o AI Search já entrega na conversa.",
+    "nome_sugerido": "Benefícios - perguntas frequentes (Argentina)",
+    "short_description_sugerida": "Informações e materiais de apoio sobre benefícios para colaboradores da Argentina.",
+    "descricao_sugerida": "Conteúdo informativo sobre benefícios para colaboradores da Argentina; recomenda-se migrar para artigo de base de conhecimento.",
+    "frases_exemplo": ["quais são meus benefícios", "beneficios Argentina"],
+    "bloqueadores": [],
+    "perguntas": [],
+    "scripts_e_policies": [],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Migrar conteúdo para KB e retirar do catálogo 'Virtual Agent Search'."] },
+    "itens_derivados": [],
+    "observacoes": ""
+  },
+  {
+    "sys_id": "90fbc7543bb09e50924d0247f4e45a7a",
+    "nome_atual": "Solicitações relacionadas a Alívio Fiscal, Contribuições Voluntárias e Liberações",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 24,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "baixa",
+    "esforco": "medio",
+    "prontidao_atual": 35,
+    "justificativa": "Poucas perguntas reais (categoria, tipo de pedido, valor, detalhe e anexo), mas bloqueado por um client script que monta as opções de v_what_request sem VA Supported, que pode ser substituído por choices dependentes. Há policies conflitantes em v_amount e cinco legendas que não chegam ao LLM. Volume baixo (24).",
+    "nome_sugerido": "Solicitar alívio fiscal ou contribuição voluntária",
+    "short_description_sugerida": "Incluir, alterar ou cancelar contribuições voluntárias e deduções para reduzir a retenção na fonte.",
+    "descricao_sugerida": "Use para incluir, alterar ou cancelar contribuições voluntárias (pensão voluntária, poupança para moradia/AFC) ou deduções na folha, e para enviar comprovantes que reduzem a retenção na fonte. Não use para dúvidas gerais de folha de pagamento. Disponível para colaboradores da Colômbia (exceto estagiários).",
+    "frases_exemplo": [
+      "quero fazer contribuição voluntária para pensão",
+      "cancelar desconto de poupança na folha",
+      "enviar comprovante para diminuir a retenção",
+      "incluir aporte voluntário",
+      "quiero reducir mi retención en la fuente"
+    ],
+    "bloqueadores": [
+      { "onde": "client script: EY: Load options OnChange", "problema": "Sem VA Supported; monta as opções de v_what_request conforme v_category.", "acao": "Remover e configurar as choices de v_what_request com 'Dependent value' de v_category (no-code)." },
+      { "onde": "policies EY: Set amaount Read Only x EY: Show amount field", "problema": "Uma deixa v_amount sempre read-only e a outra obrigatória; na conversa a pergunta pode ser pulada.", "acao": "Remover 'EY: Set amaount Read Only' e manter só a policy condicional." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_category", "origem": "item", "acao": "manter", "conversational_label": "Seu pedido é sobre qual tipo de contribuição ou dedução?", "obs": "" },
+      { "ordem": 2, "variavel": "v_what_request", "origem": "item", "acao": "manter", "conversational_label": "Você quer incluir, alterar ou cancelar?", "obs": "Choices dependentes de v_category." },
+      { "ordem": 3, "variavel": "v_amount", "origem": "item", "acao": "manter", "conversational_label": "Qual o valor da contribuição?", "obs": "Validation Regex numérica no lugar de 'EY: Set numeric field regex'; remover include_none." },
+      { "ordem": 4, "variavel": "v_detail", "origem": "item", "acao": "manter", "conversational_label": "Descreva o seu pedido com detalhes.", "obs": "Mínimo de 30 caracteres via Validation Regex." },
+      { "ordem": 5, "variavel": "v_attach_document", "origem": "item", "acao": "manter", "conversational_label": "Envie o documento de suporte.", "obs": "Pedido ao final da conversa." },
+      { "ordem": 0, "variavel": "FAQs", "origem": "item", "acao": "remover", "obs": "Informativo." },
+      { "ordem": 0, "variavel": "v_legenda_1", "origem": "item", "acao": "remover", "obs": "Legendas 1 a 5 com label 'Amount' (copiado); levar as regras relevantes para a descrição." },
+      { "ordem": 0, "variavel": "v_legenda_2", "origem": "item", "acao": "remover", "obs": "Idem." },
+      { "ordem": 0, "variavel": "v_legenda_3", "origem": "item", "acao": "remover", "obs": "Idem." },
+      { "ordem": 0, "variavel": "v_legenda_4", "origem": "item", "acao": "remover", "obs": "Idem." },
+      { "ordem": 0, "variavel": "v_legenda_5", "origem": "item", "acao": "remover", "obs": "Idem." },
+      { "ordem": 0, "variavel": "v_minimun_characters", "origem": "item", "acao": "remover", "obs": "Mensagem de erro em Rich Text; substituída pela Validation Regex." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Load options OnChange", "acao": "remover", "substituicao": "Choices dependentes." },
+      { "nome": "EY: Show error message onSubmit / onChange / EY: Hide error message onLoad", "acao": "converter", "substituicao": "Validation Regex de 30 caracteres em v_detail." },
+      { "nome": "EY: Set numeric field regex", "acao": "converter", "substituicao": "Validation Regex numérica em v_amount." },
+      { "nome": "EY: Set amaount Read Only", "acao": "remover", "substituicao": "Conflita com 'EY: Show amount field'." },
+      { "nome": "EY: Show legenda 1..5", "acao": "remover", "substituicao": "Legendas removidas." },
+      { "nome": "EY: Set Read Only fields", "acao": "converter", "substituicao": "Read-only direto em v_country_of_residence (set)." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Traduzir labels para espanhol (catálogo hispânico)."] },
+    "itens_derivados": [],
+    "observacoes": "Os nomes das categorias no digest (voluntary_persons, promotion_savings, payroll, other) foram usados para a descrição; conferir os rótulos reais. O resumo do producer_script cita 'Frota' (cópia do padrão hispânico)."
+  },
+  {
+    "sys_id": "42785fd61bac9a10514cbaef4b4bcbf3",
+    "nome_atual": "Solicitações de licença maternidade",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 116,
+    "recomendacao": "manter_formulario",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 5,
+    "justificativa": "Formulário muito grande (62 perguntas, 74 variáveis) com regras por país (ARG, CHL, COL, ECU, PER, URY), empresa (Natura/Avon) e público, cerca de 19 anexos condicionais, cálculo de dias por script e dois scripts sem VA Supported. Converter exigiria reescrever o item. Manter como formulário com nome e descrição claros; a divisão por país pode ser um projeto futuro.",
+    "nome_sugerido": "Solicitar licença maternidade",
+    "short_description_sugerida": "Informe gravidez, peça licença maternidade, adoção ou retorno gradual (soft landing).",
+    "descricao_sugerida": "Use para comunicar gravidez, solicitar licença maternidade (legal ou benefício Natura), licença por adoção, extensão do benefício ou retorno gradual ao trabalho (soft landing), e para pedir assinatura do formulário 2.55 (Argentina). O formulário pede documentos diferentes conforme o país. Não use para licença paternidade nem para dúvidas gerais de licenças. Disponível para colaboradores dos países hispânicos.",
+    "frases_exemplo": [
+      "estou grávida, como informo?",
+      "quero pedir licença maternidade",
+      "licença por adoção",
+      "solicitar soft landing na volta da licença",
+      "necesito la licencia por maternidad"
+    ],
+    "bloqueadores": [
+      { "onde": "client script: EY: Hide Notificar Embarazo option", "problema": "Sem VA Supported; remove opção dentro de isLoading (comportamento invertido).", "acao": "Trocar por choices dependentes / filtro na lookup v_which_maternity_leave." },
+      { "onde": "client script: EY: Show Soft Landing options", "problema": "Sem VA Supported; mesma lógica invertida.", "acao": "Choices dependentes de v_which_maternity_leave." },
+      { "onde": "formulário", "problema": "62 perguntas e ~19 anexos condicionais; acima do limite de 20 da VA.", "acao": "Manter formulário (non-conversational)." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Fill number of days License* (15 scripts de cálculo)", "acao": "manter", "substituicao": "No formulário continuam funcionando; consolidar em um script único por tipo de licença numa futura revisão." },
+      { "nome": "EY: Hide Fields onLoad (9,1 KB)", "acao": "converter", "substituicao": "Definir hidden direto nas variáveis e deixar as UI Policies exibirem." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["A VA mostra o link do formulário a partir do nome e da descrição.", "Futuro: avaliar um item por país, com 5 a 8 perguntas cada."] },
+    "itens_derivados": [],
+    "observacoes": "Policy 'EY: Field Rules v_address' está duplicada (uma usa v_where_do_you_need_to_receive_your_form_v4, outra _2_v4). v_label_3_v4 é referenciada em policy mas não aparece na lista de variáveis."
+  },
+  {
+    "sys_id": "60a230ed1b201610514cbaef4b4bcbf9",
+    "nome_atual": "Solicitações de licença paternidade",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 22,
+    "recomendacao": "manter_formulario",
+    "prioridade": "baixa",
+    "esforco": "baixo",
+    "prontidao_atual": 25,
+    "justificativa": "Mesmo desenho do formulário de maternidade: uma lookup de tipo de licença e 13 anexos condicionais por país e marca, com cálculo de dias por script. Não tem bloqueador técnico, mas a conversa ficaria cheia de pedidos de anexo e o volume é baixo (22). Manter formulário com descrição melhor.",
+    "nome_sugerido": "Solicitar licença paternidade",
+    "short_description_sugerida": "Peça licença paternidade, por nascimento ou adoção, com os documentos do seu país.",
+    "descricao_sugerida": "Use para solicitar licença paternidade (legal ou benefício Natura) por nascimento ou adoção, anexando os documentos exigidos no seu país (certidão de nascimento, atestados, aprovação do gestor). Não use para licença maternidade nem para dúvidas gerais de licenças. Disponível para colaboradores dos países hispânicos.",
+    "frases_exemplo": [
+      "meu filho nasceu, quero tirar licença",
+      "licença paternidade",
+      "pedir licença por adoção",
+      "vou ser pai, como peço a licença?",
+      "licencia por paternidad"
+    ],
+    "bloqueadores": [
+      { "onde": "variáveis v_attach_1 a v_attach_13", "problema": "13 anexos condicionais por país/tipo.", "acao": "Manter formulário." },
+      { "onde": "variável v_which_paternity_leave", "problema": "Lookup com reference qualifier javascript dinâmico.", "acao": "Sem ação enquanto for formulário." }
+    ],
+    "perguntas": [],
+    "scripts_e_policies": [
+      { "nome": "EY: Fill number of days License* (6 scripts)", "acao": "manter", "substituicao": "Consolidar numa revisão futura." },
+      { "nome": "EY: Show (sem nome, sem ações)", "acao": "remover", "substituicao": "Policy vazia." }
+    ],
+    "configuracoes": { "make_item_non_conversational": true, "turn_off_nowassist_conversation": false, "outras": ["A VA mostra o link do formulário."] },
+    "itens_derivados": [],
+    "observacoes": "Se a maternidade for dividida por país no futuro, aplicar o mesmo modelo aqui."
+  },
+  {
+    "sys_id": "a5aff3f81beb5558d1abda4ce54bcbad",
+    "nome_atual": "Documentos para procedimentos junto ao INSS",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 89,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 65,
+    "justificativa": "Poucas perguntas, sem bloqueadores. São só duas opções (enviar documento ou solicitar documento), então basta ajustar em vez de dividir. Precisa de descrição (hoje '.'), conversational labels, correção de uma policy que aponta para variável inexistente e de um anexo para quem envia documento.",
+    "nome_sugerido": "Enviar ou solicitar documentos de afastamento pelo INSS",
+    "short_description_sugerida": "Envie ao RH ou peça documentos ligados a afastamento pelo INSS (atestados, perícia, CAT, benefício).",
+    "descricao_sugerida": "Use para enviar ao RH documentos de afastamento pelo INSS (atestado, resultado de perícia, comunicado de benefício) ou para pedir ao RH documentos necessários para dar entrada no INSS. Não use para atestados médicos de poucos dias sem afastamento pelo INSS nem para dúvidas gerais de licenças e ausências. Disponível para colaboradores do Brasil e terceiros.",
+    "frases_exemplo": [
+      "preciso enviar o resultado da perícia do INSS",
+      "quero mandar meu comunicado de benefício do INSS",
+      "preciso de documento da empresa para dar entrada no INSS",
+      "afastamento pelo INSS, onde envio os papéis?",
+      "pedir formulário para o INSS"
+    ],
+    "bloqueadores": [],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_document_or_request", "origem": "item", "acao": "manter", "conversational_label": "Você quer enviar um documento ou solicitar um documento ao RH?", "obs": "" },
+      { "ordem": 2, "variavel": "v_enter_the_type_of_document", "origem": "item", "acao": "manter", "conversational_label": "Qual documento você está enviando?", "obs": "Quando envio." },
+      { "ordem": 3, "variavel": "v_enter_the_type_of_document_2", "origem": "item", "acao": "manter", "conversational_label": "Qual documento você precisa?", "obs": "Quando solicitação." },
+      { "ordem": 4, "variavel": "v_inform_which_document", "origem": "item", "acao": "manter", "conversational_label": "Qual é o documento?", "obs": "Só quando 'outros'." },
+      { "ordem": 5, "variavel": "v_description", "origem": "item", "acao": "manter", "conversational_label": "Quer acrescentar alguma informação?", "obs": "" },
+      { "ordem": 6, "variavel": "nova_documento_inss", "origem": "item", "acao": "nova", "tipo_sugerido": "Attachment", "conversational_label": "Envie o documento.", "obs": "Visível e obrigatória quando v_document_or_request = document_delivery; hoje não há campo de anexo." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Show others if type request", "acao": "converter", "substituicao": "Aponta para v_inform_which_document_2, que não existe; a policy 'EY: Show others field if delivery' já cobre os dois casos com v_inform_which_document. Remover." },
+      { "nome": "EY: Mandatory fields", "acao": "converter", "substituicao": "Mandatory direto em v_description e v_document_or_request." },
+      { "nome": "EY: Get user manager", "acao": "manter", "substituicao": "VA Supported; avaliar auto-populate." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher description (hoje '.')."] },
+    "itens_derivados": [],
+    "observacoes": "Documentos de saúde são sensíveis; avaliar com o jurídico/privacidade se o conteúdo pode passar pelo LLM. Se não, marcar turn_off_nowassist_conversation."
+  },
+  {
+    "sys_id": "71d664751b542550d1abda4ce54bcb0f",
+    "nome_atual": "Informações ou dúvidas relacionadas à Licenças e Ausências",
+    "tabela": "x_nasm_hr_case",
+    "volume_12m": 264,
+    "recomendacao": "conversacional_com_ajustes",
+    "prioridade": "media",
+    "esforco": "baixo",
+    "prontidao_atual": 30,
+    "justificativa": "Na prática é um item de uma pergunta, mas está bloqueado por duas variáveis Custom com widget (contextual_search_results e ai_search_assist) que fazem busca de artigos no portal. Na conversa, essa deflexão já é feita pela VA/AI Search, então elas podem sair do fluxo conversacional. Volume médio (264).",
+    "nome_sugerido": "Tirar dúvida sobre licenças e ausências",
+    "short_description_sugerida": "Dúvidas sobre licenças, afastamentos e ausências sem formulário específico.",
+    "descricao_sugerida": "Use para tirar dúvidas sobre licenças e ausências (licença médica, licença gala, nojo, doação de sangue, afastamentos, abono de faltas) quando não houver formulário específico nem resposta na base de conhecimento. Não use para enviar documentos de afastamento pelo INSS (use 'Enviar ou solicitar documentos de afastamento pelo INSS'). Disponível para colaboradores do Brasil e terceiros.",
+    "frases_exemplo": [
+      "tenho dúvida sobre licença",
+      "quantos dias de licença casamento eu tenho?",
+      "como justificar uma falta?",
+      "dúvida sobre afastamento médico",
+      "posso faltar para doar sangue?"
+    ],
+    "bloqueadores": [
+      { "onde": "variável contextual_search_results", "problema": "Tipo Custom com UI Macro/widget de portal; não renderiza em conversa.", "acao": "Remover do item ou ocultar na conversa (a busca contextual do portal continua via widget da página)." },
+      { "onde": "variável ai_search_assist", "problema": "Tipo Custom com widget de portal.", "acao": "Remover ou ocultar na conversa; na VA o AI Search já sugere artigos antes de abrir o item." }
+    ],
+    "perguntas": [
+      { "ordem": 1, "variavel": "v_description_details", "origem": "item", "acao": "manter", "conversational_label": "Qual é a sua dúvida sobre licenças ou ausências?", "obs": "Trocar o onSubmit de mínimo de caracteres por Validation Regex." },
+      { "ordem": 0, "variavel": "contextual_search_results", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Custom/widget." },
+      { "ordem": 0, "variavel": "ai_search_assist", "origem": "item", "acao": "ocultar_na_conversa", "obs": "Custom/widget." },
+      { "ordem": 0, "variavel": "Info", "origem": "item", "acao": "remover", "obs": "Rich Text informativo; texto vai para a descrição." }
+    ],
+    "scripts_e_policies": [
+      { "nome": "EY: Mandatory Fields", "acao": "converter", "substituicao": "Deixar só v_description_details mandatory direto na variável; v_have_you_already_searched_the_portals_search_engine e v_have_you_tried_searching_the_knowledge_base não existem no item." },
+      { "nome": "EY: Show kb link", "acao": "remover", "substituicao": "Referencia variáveis inexistentes (v_have_you_tried_searching_the_knowledge_base, link_kb)." },
+      { "nome": "EY: minimum caracter", "acao": "converter", "substituicao": "Validation Regex em v_description_details." }
+    ],
+    "configuracoes": { "make_item_non_conversational": false, "turn_off_nowassist_conversation": false, "outras": ["Preencher description (hoje '.').", "Se não for possível ocultar as variáveis Custom apenas na conversa, removê-las e usar AI Search no portal."] },
+    "itens_derivados": [],
+    "observacoes": "Variável 'formatter' (fim de contêiner) sem início correspondente; limpar. O resumo do producer_script cita 'Controle de Jornada' (script reaproveitado)."
+  }
+]

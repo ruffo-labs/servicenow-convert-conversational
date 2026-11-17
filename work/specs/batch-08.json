@@ -1,0 +1,2212 @@
+[
+  {
+    "sys_id": "3acbf15d1bd3f010d1abda4ce54bcbdc",
+    "name": "Solicitação de Licença Paternidade",
+    "status": "dividido",
+    "motivo": "O item junta duas intenções: registrar a licença-paternidade (nascimento ou adoção) e incluir o novo dependente em Imposto de Renda, plano de saúde e odontológico, somando 23 perguntas (acima do limite de 20). Divide em dois itens; os dois mantêm o producer script (requested_for pelo perfil e current.item) e o flow precisa reconhecer os dois novos sys_ids.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "about_paternity_leave",
+        "motivo": "Container Start, só layout."
+      },
+      {
+        "name": "container_end",
+        "motivo": "Container End, só layout."
+      },
+      {
+        "name": "dependent_update_benefits",
+        "motivo": "Container Start, só layout."
+      },
+      {
+        "name": "formatter2",
+        "motivo": "Container End, só layout."
+      },
+      {
+        "name": "information_start_date",
+        "motivo": "Rich Text Label informativo sobre a data de início; a orientação foi movida para a descrição do item de licença."
+      },
+      {
+        "name": "attach_definitive_judicial_custody",
+        "motivo": "Rich Text Label pedindo o termo de guarda definitiva; a instrução foi movida para a descrição do item de licença (anexo no fim da conversa)."
+      },
+      {
+        "name": "attach_birth_certificate",
+        "motivo": "Rich Text Label pedindo a certidão de nascimento; a instrução foi movida para a descrição do item de licença (anexo no fim da conversa)."
+      },
+      {
+        "name": "informative_register_paternity",
+        "motivo": "Rich Text Label informativo; o conteúdo relevante foi movido para a descrição do item de licença."
+      },
+      {
+        "name": "remuneration_information",
+        "motivo": "Rich Text Label informativo sobre salário-família; o conteúdo foi movido para a descrição do item de dependentes."
+      },
+      {
+        "name": "term_liability",
+        "motivo": "Rich Text Label com o texto do termo de responsabilidade; o resumo foi movido para a descrição do item de dependentes e a concordância continua em declaration_term_liability."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Registrar licença-paternidade",
+        "short_description": "Registre sua licença-paternidade por nascimento ou adoção.",
+        "description": "Use para registrar a licença-paternidade no nascimento ou na adoção de um filho: informe o tipo (nascimento ou adoção), a data de início e o período desejado (5, 20 ou 40 dias). No final, anexe a certidão de nascimento ou, na adoção, o termo de guarda judicial definitiva. Para incluir o novo filho como dependente no Imposto de Renda, plano de saúde ou odontológico, use \"Incluir novo dependente nos benefícios\". Licença-maternidade e outras licenças têm itens próprios.",
+        "frases_exemplo": [
+          "Meu filho nasceu, quero registrar a licença-paternidade",
+          "Preciso tirar licença paternidade a partir de segunda",
+          "Vou adotar uma criança e quero a licença",
+          "Como peço os 20 dias de licença paternidade?",
+          "licença pai nascimento bebê"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "type_license",
+            "order": 100,
+            "conversational_label": "A licença é por nascimento ou por adoção?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "start_date",
+            "order": 200,
+            "conversational_label": "Qual a data de início da licença? (aaaa-mm-dd)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "desired_period",
+            "order": 300,
+            "conversational_label": "Quantos dias de licença você quer tirar: 5, 20 ou 40?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+            "name": "Informações pessoais",
+            "order": 50
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em type_license, start_date e desired_period; as demais variáveis da policy foram para o item de dependentes."
+          },
+          {
+            "origem": "ACN: Show \"Attach birth certificate\" when \"Type of license\" is \"Paternity leave\"",
+            "tipo": "ui_policy",
+            "como": "Removida: atuava sobre Rich Text Label; a instrução de anexar a certidão está na descrição do item."
+          },
+          {
+            "origem": "ACN: Show \"Attach definitive judicial custody\" when \"Type of license\" is \"Paternity leave by adoption\"",
+            "tipo": "ui_policy",
+            "como": "Removida: atuava sobre Rich Text Label; a instrução de anexar o termo de guarda está na descrição do item."
+          }
+        ]
+      },
+      {
+        "name": "Incluir novo dependente nos benefícios",
+        "short_description": "Inclua seu novo filho ou filha como dependente no Imposto de Renda, plano de saúde e odontológico.",
+        "description": "Use depois do nascimento ou da adoção de um filho para incluí-lo como dependente no Imposto de Renda, no plano de saúde, no plano odontológico e no seguro de vida. Pede os dados da criança e da mãe, dados bancários para reembolso (quando houver inclusão em saúde ou odontológico) e a sua concordância com a coparticipação nos planos e com o termo de responsabilidade do salário-família (avisar o RH sobre fatos que causem a perda do benefício). Não registra a licença: para isso use \"Registrar licença-paternidade\".",
+        "frases_exemplo": [
+          "Quero colocar meu filho no plano de saúde",
+          "Incluir dependente recém-nascido no convênio e no IR",
+          "Como adiciono meu bebê no plano odontológico?",
+          "meu filho nasceu, preciso incluir ele nos benefícios"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "type_license",
+            "order": 100,
+            "conversational_label": "O novo dependente chegou por nascimento ou por adoção?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "include_dependent_income_tax",
+            "order": 200,
+            "conversational_label": "Quer incluir o novo dependente no Imposto de Renda?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "include_dependent_health_care",
+            "order": 300,
+            "conversational_label": "Quer incluir o dependente no plano de saúde?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "include_dependent_dental_care",
+            "order": 400,
+            "conversational_label": "E no plano odontológico?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "include_dependent_life_insurance",
+            "order": 500,
+            "conversational_label": "Quer incluir o dependente no seguro de vida?",
+            "overrides": {
+              "type": "1",
+              "include_none": true,
+              "mandatory": true,
+              "question_text": "Do you want to include the new dependent on Life Insurance?"
+            }
+          },
+          {
+            "name": "mother_name",
+            "order": 600,
+            "conversational_label": "Qual o nome completo da mãe do dependente?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "dependent_name",
+            "order": 700,
+            "conversational_label": "Qual o nome completo do dependente?"
+          },
+          {
+            "name": "dependent_cpf",
+            "order": 800,
+            "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do dependente?",
+            "overrides": {
+              "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+            }
+          },
+          {
+            "name": "date_birth",
+            "order": 900,
+            "conversational_label": "Qual a data de nascimento do dependente? (aaaa-mm-dd)"
+          },
+          {
+            "name": "dependent_gender",
+            "order": 1000,
+            "conversational_label": "Qual o gênero do dependente: feminino ou masculino?"
+          },
+          {
+            "name": "alive_birth_certificate",
+            "order": 1100,
+            "conversational_label": "Qual o número da Declaração de Nascido Vivo que consta na certidão?"
+          },
+          {
+            "name": "bank_code_refund",
+            "order": 1200,
+            "conversational_label": "Qual o código do banco para o reembolso?"
+          },
+          {
+            "name": "reimbursement_agency",
+            "order": 1300,
+            "conversational_label": "Qual a agência para o reembolso?"
+          },
+          {
+            "name": "checking_account_reimbursement",
+            "order": 1400,
+            "conversational_label": "Qual a conta corrente para o reembolso?"
+          },
+          {
+            "name": "employee_home_address",
+            "order": 1500,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "declaration",
+            "order": 1600,
+            "conversational_label": "Você está ciente de que haverá coparticipação sempre que você ou seus dependentes usarem consultas, pronto-socorro, exames e terapias?"
+          },
+          {
+            "name": "declaration_term_liability",
+            "order": 1700,
+            "conversational_label": "Você se compromete a avisar o RH imediatamente sobre fatos que causem a perda do salário-família?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+            "name": "Informações pessoais",
+            "order": 50
+          },
+          {
+            "sys_id": "5659d1691b000510d1abda4ce54bcb2f",
+            "name": "Eligibilities Informative",
+            "order": 1950
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "d52f1b911b1bf010d1abda4ce54bcbde",
+            "short_description": "Dados do dependente e do reembolso quando incluir em saúde ou odontológico",
+            "on_load": true,
+            "conditions": "include_dependent_dental_care=Yes^ORinclude_dependent_health_care=Yes",
+            "actions": [
+              {
+                "variable": "dependent_name",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "dependent_cpf",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "date_birth",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "dependent_gender",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "alive_birth_certificate",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "declaration",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "bank_code_refund",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "reimbursement_agency",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "checking_account_reimbursement",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "0ca993e21be9c910a530426fe54bcb0c",
+            "short_description": "Endereço do colaborador visível (somente leitura) no pedido próprio com saúde ou odontológico",
+            "on_load": true,
+            "conditions": "solicitation_whom=my_request^include_dependent_dental_care=Yes^ORinclude_dependent_health_care=Yes",
+            "actions": [
+              {
+                "variable": "employee_home_address",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "e95f56a91b533410d1abda4ce54bcbe7",
+            "name": "ACN: Add \"Employee home address\" details",
+            "ajuste": "Mantido (já VA Supported) para preencher employee_home_address a partir do colaborador; a variável não é perguntada na conversa. Avaliar trocar por auto-populate ou busca no flow."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em include_dependent_income_tax, include_dependent_health_care, include_dependent_dental_care, include_dependent_life_insurance, mother_name, type_license e declaration_term_liability; dependent_gender e declaration ficam obrigatórios pela policy condicional, onde já aparecem."
+          },
+          {
+            "origem": "ACN: Validate CPF",
+            "tipo": "client_script",
+            "como": "Validation Regex de CPF (000.000.000-00 ou 11 dígitos) em dependent_cpf."
+          },
+          {
+            "origem": "ACN Validate Fax",
+            "tipo": "client_script",
+            "como": "Removido: valida variável que não existe no item (órfão)."
+          },
+          {
+            "origem": "ACN: Show \"Dependent informations\" when \"Paternity leave continue\" is \"Yes\" AND \"Life insurance\" is \"Yes\"",
+            "tipo": "ui_policy",
+            "como": "Removida: condição sobre campo texto (alive_birth_certificate=Yes) e ação sobre life_insurance_form, variável inativa; policy quebrada."
+          },
+          {
+            "origem": "ACN Elegibility is show when  \"paternity_leave_continue\" is yes and dental or health is yes",
+            "tipo": "ui_policy",
+            "como": "Removida: mostrava o set informativo de elegibilidade (widget/HTML de apresentação); o set fica no item por referência e não gera pergunta."
+          },
+          {
+            "origem": "include_dependent_life_insurance",
+            "tipo": "ui_policy",
+            "como": "Era Rich Text Label com texto de pergunta e mandatory na policy (nunca recebia resposta); passa a Yes/No com Include None."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "9a8e7d4d1b295190a530426fe54bcb85",
+    "name": "MAP",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem variáveis e sem nenhum registro, com nome que não expressa intenção (férias da Avon Chile). Decidir se desativa ou se vira link/artigo de KB para o sistema externo de férias, em vez de abrir caso de RH vazio pela conversa.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "a8404e051b695190a530426fe54bcb8b",
+    "name": "planejador de férias",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem variáveis, sem descrição útil e sem nenhum registro (férias da Natura Peru). Decidir se desativa ou se publica o acesso ao sistema externo como link/artigo de KB.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "1674195e1bbdd910d1abda4ce54bcb22",
+    "name": "We are Avon",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem variáveis e sem registros (férias da Avon Argentina), com nome de marca que colide com \"Somos Avon\" e user criteria contraditórios. Decidir se desativa ou vira link/artigo de KB.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "a70ab8c51b615190a530426fe54bcbe5",
+    "name": "Somos Avon",
+    "status": "analise_humana",
+    "motivo": "Item-atalho sem variáveis e sem registros para baixar comprovante de pagamento da Avon Argentina (autoatendimento externo, não caso de RH). Decidir se desativa ou publica como link/artigo de KB \"Baixar holerite (Avon Argentina)\".",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "ef4bc5581b567010d1abda4ce54bcbc4",
+    "name": "Solicitar aumento salarial",
+    "status": "analise_humana",
+    "motivo": "Item sem variáveis e sem registros que só redireciona para o Workday; pela conversa abriria caso de RH vazio para um pedido sensível. Decidir se desativa ou vira link/KB para o Workday (eventualmente non-conversational).",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "abad07423ba4da10924d0247f4e45a63",
+    "name": "Envio de Novidades",
+    "status": "conversacional",
+    "motivo": "Item restrito às áreas autorizadas, sem bloqueador. Validação de 40 caracteres vira Validation Regex, mandatory vai direto nas variáveis e as policies de categoria/subcategoria continuam; o client script que checa subcategoria fica por depender de consulta ao servidor.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_min_characters",
+        "motivo": "Rich Text Label com a legenda de mínimo de caracteres; substituída pela Validation Regex em describe_tu_necesidad e citada no label da pergunta."
+      },
+      {
+        "name": "registration",
+        "motivo": "Rich Text Label de instrução; a orientação foi movida para a descrição do item."
+      },
+      {
+        "name": "attach",
+        "motivo": "Rich Text Label pedindo o anexo da planilha; a instrução foi movida para a descrição do item (anexo no fim da conversa)."
+      },
+      {
+        "name": "v_template",
+        "motivo": "Rich Text Label com o modelo de planilha; a referência ao modelo foi movida para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Enviar novidades para a folha de pagamento",
+        "short_description": "Envie ao CSC (Centro de Serviços Compartilhados) as novidades que entram na folha de pagamento, como bônus, descontos e ajustes.",
+        "description": "Uso exclusivo das áreas autorizadas a informar novidades de folha de pagamento (Argentina, Chile, Colômbia, Equador, Peru e Uruguai). Use para incluir, atualizar ou eliminar lançamentos que afetam a folha de um ou mais colaboradores, como bônus, prêmios, descontos e ajustes, informando país, marca, categoria, quantidade de colaboradores e valor total. Anexe no final a planilha de novidades preenchida conforme o modelo da área. Não use para dúvidas sobre o seu próprio salário nem para pedidos de despesas.",
+        "frases_exemplo": [
+          "Preciso lançar um bônus na folha de março",
+          "Enviar novidade de folha para 15 colaboradores do Peru",
+          "Quero informar descontos para a folha da Natura Chile",
+          "novedad de nómina para cargar",
+          "lançar premiação da equipe na folha"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "request_type",
+            "order": 100,
+            "conversational_label": "Você quer incluir, atualizar ou eliminar uma novidade?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "select_the_country_related_to_your_request",
+            "order": 200,
+            "conversational_label": "Para qual país é a novidade?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "select_the_brand_related_to_your_request",
+            "order": 300,
+            "conversational_label": "De qual marca: Natura, Avon LATAM ou TBS?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "category",
+            "order": 400,
+            "conversational_label": "Qual a categoria da novidade?"
+          },
+          {
+            "name": "subcategory",
+            "order": 500,
+            "conversational_label": "E a subcategoria?"
+          },
+          {
+            "name": "indicate_the_number_of_employees_affected",
+            "order": 600,
+            "conversational_label": "Quantos colaboradores serão afetados?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^\\d+$"
+            }
+          },
+          {
+            "name": "monto_cantidad_total",
+            "order": 700,
+            "conversational_label": "Qual o valor ou a quantidade total?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "describe_tu_necesidad",
+            "order": 800,
+            "conversational_label": "Descreva a novidade com os detalhes necessários (mínimo de 40 caracteres).",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[\\s\\S]{40,}$"
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "d465b7ca3b2cda10924d0247f4e45a40",
+            "short_description": "EY: View category",
+            "on_load": true,
+            "conditions": "v_employeeISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "category",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "02267f4e3b2cda10924d0247f4e45a2a",
+            "short_description": "EY: View Subcategory",
+            "on_load": true,
+            "conditions": "categoryISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "subcategory",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "7de9552e3b60de10924d0247f4e45abc",
+            "short_description": "EY: View Subcategory - Target record",
+            "on_load": true,
+            "conditions": "categoryISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "subcategory",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "bedcdf863b68da10924d0247f4e45a23",
+            "short_description": "EY: Read only - Target record",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "request_type",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "select_the_country_related_to_your_request",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "select_the_brand_related_to_your_request",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "category",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "subcategory",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "indicate_the_number_of_employees_affected",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "monto_cantidad_total",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "describe_tu_necesidad",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "0fd47f8a3b2cda10924d0247f4e45ab2",
+            "name": "EY: Check if Subcat exists",
+            "ajuste": "Mantido (já VA Supported): consulta o servidor para saber se a categoria tem subcategoria. Validar em conversa; se a tabela de regras ganhar um indicador de subcategoria, trocar por UI policy sem script."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Required fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em request_type, país, marca, quantidade de colaboradores, valor total e descrição; removidas as ações sobre registration (label) e select_the_brand_related_to_your_request_old (inativa)."
+          },
+          {
+            "origem": "EY: Read only - Target record",
+            "tipo": "ui_policy",
+            "como": "Mantida só para a visão do registro de destino (não aplica no item); troquei a variável inativa _old pela marca atual e tirei o label registration."
+          },
+          {
+            "origem": "EY: Show error message onSubmit",
+            "tipo": "client_script",
+            "como": "Validation Regex de no mínimo 40 caracteres em describe_tu_necesidad."
+          },
+          {
+            "origem": "EY: Show error message onChange",
+            "tipo": "client_script",
+            "como": "Substituído pela Validation Regex em describe_tu_necesidad."
+          },
+          {
+            "origem": "EY: Hide error message onLoad",
+            "tipo": "client_script",
+            "como": "Removido: a legenda v_min_characters saiu do item."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "4481ae831bb98910a530426fe54bcbaa",
+    "name": "Nossa Estrutura",
+    "status": "analise_humana",
+    "motivo": "Item sem variáveis, sem categoria e sem registros; o texto é só um passo a passo para ver o organograma no sistema. Decidir se desativa e transforma em artigo de KB \"Como ver o organograma da minha área\".",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "290911003b501250924d0247f4e45a0e",
+    "name": "Outras solicitações de licença",
+    "status": "conversacional",
+    "motivo": "Intenção única e de alto volume, com poucas perguntas próprias. A validação de 40 caracteres vira Validation Regex, o mandatory vai direto nas variáveis e o anexo continua como variável; o script de anexo obrigatório fica porque depende da regra da licença no servidor.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_faq",
+        "motivo": "Rich Text Label com link da FAQ; a referência à FAQ foi movida para a descrição do item."
+      },
+      {
+        "name": "v_minimun_characters",
+        "motivo": "Rich Text Label com a legenda de mínimo de 40 caracteres; substituída pela Validation Regex em v_details e citada no label da pergunta."
+      },
+      {
+        "name": "v_attachment_info",
+        "motivo": "Rich Text Label com instrução de anexo; a orientação foi movida para a descrição e para o label de v_attach_documentation."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Solicitar outras licenças",
+        "short_description": "Informe licenças como casamento, luto, doação de sangue, mudança ou estudos (exceto maternidade e paternidade).",
+        "description": "Use para informar ao RH uma licença que não seja maternidade nem paternidade, como casamento, falecimento de familiar, doação de sangue, mudança de domicílio ou prova/estudos, para colaboradores da Argentina, Chile, Colômbia, Equador, Peru e Uruguai. Você informa o tipo de licença, a data de início e de fim, descreve o motivo (mínimo de 40 caracteres) e anexa o comprovante quando a licença exigir. Antes de abrir, consulte a FAQ de licenças na base de conhecimento. Não use para licença-maternidade, licença-paternidade, férias ou atestado médico.",
+        "frases_exemplo": [
+          "Vou me casar e preciso da licença",
+          "Faleceu meu avô, como informo a licença por luto?",
+          "Quero informar licença por mudança de casa",
+          "Preciso de licença para fazer uma prova da faculdade",
+          "licencia por examen",
+          "doei sangue hoje, tenho direito a folga"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_leave",
+            "order": 100,
+            "conversational_label": "Qual licença você quer informar?"
+          },
+          {
+            "name": "v_leave_start_date_requester",
+            "order": 200,
+            "conversational_label": "Qual a data de início da licença? (aaaa-mm-dd)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_leave_end_date_requester",
+            "order": 300,
+            "conversational_label": "E a data de término? (aaaa-mm-dd)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_details",
+            "order": 400,
+            "conversational_label": "Conte o motivo e os detalhes da licença (mínimo de 40 caracteres).",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[\\s\\S]{40,}$"
+            }
+          },
+          {
+            "name": "v_attach_documentation",
+            "order": 500,
+            "conversational_label": "Anexe o comprovante da licença (certidão, atestado ou declaração), se tiver."
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "792682e11b681610514cbaef4b4bcbd1",
+            "short_description": "EY: View category",
+            "on_load": true,
+            "conditions": "v_employeeISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "v_leave",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "c8c94ee51b681610514cbaef4b4bcbb3",
+            "name": "EY: Mandatory Attachment",
+            "ajuste": "Mantido (já VA Supported): torna v_attach_documentation obrigatório quando a regra da licença exige anexo. Ajustar para só mudar o mandatory (o campo deixa de ser escondido no onLoad) e conferir o UI type para rodar também no Service Portal/VA. Alternativa futura: indicador de anexo na tabela de regras + auto-populate + UI policy."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields - Catalog item view",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em v_details, v_leave_start_date_requester e v_leave_end_date_requester."
+          },
+          {
+            "origem": "EY: Show error message onSubmit",
+            "tipo": "client_script",
+            "como": "Validation Regex de no mínimo 40 caracteres em v_details."
+          },
+          {
+            "origem": "EY: Show error message onChange",
+            "tipo": "client_script",
+            "como": "Substituído pela Validation Regex em v_details."
+          },
+          {
+            "origem": "EY: Hide error message onLoad + attach",
+            "tipo": "client_script",
+            "como": "Removido: a legenda saiu do item e o anexo fica visível (opcional), com o mandatory definido pelo script de anexo obrigatório."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "2a4bc3a71b283110a530426fe54bcbd4",
+    "name": "Adicionar ou Remover  membros em Grupos",
+    "status": "dividido",
+    "motivo": "O tipo (Adicionar/Remover) muda o formulário inteiro: para adicionar pergunta-se para quem e qual usuário; para remover, qual membro do grupo. Cada ação vira um item com v_type fixo; os dois mantêm o producer script (grava current.item) e o flow precisa reconhecer os novos sys_ids.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "name": "Adicionar membro a grupo de atendimento do CSC",
+        "short_description": "Inclua você ou outro usuário em um grupo de atendimento do CSC (Centro de Serviços Compartilhados).",
+        "description": "Exclusivo para resolvedores e aprovadores do CSC (Centro de Serviços Compartilhados). Use para incluir você ou outra pessoa em um grupo de atendimento da plataforma, escolhendo a torre e o grupo; o gestor do grupo aprova. Para retirar alguém, use \"Remover membro de grupo de atendimento do CSC\". Não serve para liberar terceiros como solicitantes nem para acessos a outros sistemas.",
+        "frases_exemplo": [
+          "Preciso entrar no grupo de Benefícios do CSC",
+          "Me adiciona no grupo de TDG",
+          "Incluir o João no grupo de impostos",
+          "novo analista precisa ser colocado no grupo"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_type",
+            "value": "add"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_tower",
+            "order": 100,
+            "conversational_label": "De qual torre é o grupo de atendimento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "group",
+            "order": 200,
+            "conversational_label": "Em qual grupo de atendimento a pessoa deve entrar?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "manager",
+            "order": 300,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_requests_for_whom",
+            "order": 400,
+            "conversational_label": "É para incluir você ou outra pessoa?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_user",
+            "order": 500,
+            "conversational_label": "Quem deve ser incluído no grupo?"
+          },
+          {
+            "name": "v_justify_your_request",
+            "order": 600,
+            "conversational_label": "Por que essa pessoa precisa entrar no grupo?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [
+          {
+            "origem_sys_id": "88e088731bec3110a530426fe54bcb1a",
+            "short_description": "Usuário visível e obrigatório depois de escolher para quem é",
+            "on_load": true,
+            "conditions": "v_requests_for_whom=forme^ORv_requests_for_whom=someone",
+            "actions": [
+              {
+                "variable": "v_user",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "d18444bb1bec3110a530426fe54bcbd0",
+            "name": "EY: HTR Manager group",
+            "ajuste": "Mantido (já VA Supported) para preencher o aprovador (manager) a partir do grupo; avaliar troca por auto-populate group.manager."
+          },
+          {
+            "sys_id": "c942c4771bec3110a530426fe54bcb9b",
+            "name": "EY: Check and Clear Values - User",
+            "ajuste": "Mantido (já VA Supported): preenche/limpa v_user conforme v_requests_for_whom. Remover a linha de depuração comentada."
+          },
+          {
+            "sys_id": "559234c41bb83110a530426fe54bcb3a",
+            "name": "EY: Check - User",
+            "ajuste": "Mantido (já VA Supported) para o caso 'para mim'; avaliar trocar por default value de v_user."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Required fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em v_tower, group e v_justify_your_request; v_type é fixo no item."
+          },
+          {
+            "origem": "EY: Show/Hide - Type None/Add",
+            "tipo": "ui_policy",
+            "como": "Removida: v_group_members não faz parte do item de inclusão."
+          },
+          {
+            "origem": "EY: Show/Hide - Type Remove",
+            "tipo": "ui_policy",
+            "como": "Removida: o ramo de remoção virou item próprio."
+          },
+          {
+            "origem": "EY: Show/Hide - Type None",
+            "tipo": "ui_policy",
+            "como": "Removida: v_type é fixo em add; a visibilidade de v_user fica na policy por v_requests_for_whom."
+          },
+          {
+            "origem": "EY: Populate Group Members",
+            "tipo": "client_script",
+            "como": "Removido: v_group_members não faz parte deste item."
+          },
+          {
+            "origem": "EY: Check and Clear Values - Groups",
+            "tipo": "client_script",
+            "como": "Removido: limpeza de formulário desnecessária na conversa; group depende de v_tower pelo reference qualifier."
+          }
+        ]
+      },
+      {
+        "name": "Remover membro de grupo de atendimento do CSC",
+        "short_description": "Retire um usuário de um grupo de atendimento do CSC (Centro de Serviços Compartilhados).",
+        "description": "Exclusivo para resolvedores e aprovadores do CSC (Centro de Serviços Compartilhados). Use para retirar um membro de um grupo de atendimento, por exemplo em mudança de área ou desligamento, escolhendo a torre, o grupo e o membro; o gestor do grupo aprova. Para incluir alguém, use \"Adicionar membro a grupo de atendimento do CSC\".",
+        "frases_exemplo": [
+          "Remover a Ana do grupo de MDM",
+          "Tirar um analista que saiu da equipe do grupo",
+          "excluir membro do grupo de benefícios",
+          "fulano mudou de área, tira ele do grupo"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [
+          {
+            "name": "v_type",
+            "value": "remove"
+          }
+        ],
+        "variables": [
+          {
+            "name": "v_tower",
+            "order": 100,
+            "conversational_label": "De qual torre é o grupo de atendimento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "group",
+            "order": 200,
+            "conversational_label": "De qual grupo de atendimento a pessoa deve sair?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "manager",
+            "order": 300,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_group_members",
+            "order": 400,
+            "conversational_label": "Qual membro deve ser removido do grupo?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_justify_your_request",
+            "order": 500,
+            "conversational_label": "Qual o motivo da remoção?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "d18444bb1bec3110a530426fe54bcbd0",
+            "name": "EY: HTR Manager group",
+            "ajuste": "Mantido (já VA Supported) para preencher o aprovador (manager) a partir do grupo; avaliar troca por auto-populate group.manager."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Required fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em v_tower, group e v_justify_your_request; v_type é fixo no item."
+          },
+          {
+            "origem": "EY: Show/Hide - Type None/Add",
+            "tipo": "ui_policy",
+            "como": "Removida: no ramo de remoção v_group_members é sempre visível e obrigatório (aplicado direto na variável)."
+          },
+          {
+            "origem": "EY: Show/Hide - Type Remove",
+            "tipo": "ui_policy",
+            "como": "Removida: v_requests_for_whom e v_user não fazem parte do item de remoção."
+          },
+          {
+            "origem": "EY: Show/Hide - Type Add or requests for whom is for me/ for someone else",
+            "tipo": "ui_policy",
+            "como": "Removida: pertence ao ramo de inclusão."
+          },
+          {
+            "origem": "EY: Show/Hide - Type None",
+            "tipo": "ui_policy",
+            "como": "Removida: v_type é fixo em remove."
+          },
+          {
+            "origem": "EY: Populate Group Members",
+            "tipo": "client_script",
+            "como": "Removido: só limpava v_group_members ao trocar o grupo; o reference qualifier já filtra os membros do grupo escolhido."
+          },
+          {
+            "origem": "EY: Check and Clear Values - Groups",
+            "tipo": "client_script",
+            "como": "Removido: limpeza de formulário desnecessária na conversa."
+          },
+          {
+            "origem": "EY: Check - User / EY: Check and Clear Values - User",
+            "tipo": "client_script",
+            "como": "Removidos deste item: atuam sobre v_requests_for_whom/v_user, que só existem no item de inclusão."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "9fdb37831b796d10a530426fe54bcb1a",
+    "name": "Liberação de acesso de terceiros como solicitante na Plataforma de Atendimento Natura &Co",
+    "status": "conversacional",
+    "motivo": "Intenção única (gestor libera um terceiro da equipe para abrir chamados). Mandatory e read-only vão direto nas variáveis; os dados do terceiro continuam sendo preenchidos pelo script a partir do usuário escolhido (pergunta pré-preenchida é pulada) e a validação de e-mail fica no script até a lista de domínios virar regex.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "third_party_information",
+        "motivo": "Rich Text Label de título de seção, só apresentação."
+      },
+      {
+        "name": "v_declaracao",
+        "motivo": "Rich Text Label com o texto da declaração de veracidade; o resumo foi movido para a descrição do item e a concordância continua em v_declaracao_de_veracidade."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Liberar acesso de terceiro à Plataforma de Atendimento",
+        "short_description": "Gestores liberam um terceiro da equipe para abrir chamados na Plataforma de Atendimento Natura &Co.",
+        "description": "Use se você é gestor e precisa que um terceiro (consultor ou prestador) da sua equipe consiga abrir solicitações na Plataforma de Atendimento Natura &Co. O terceiro já precisa ter e-mail corporativo Natura, Avon ou The Body Shop. Você escolhe o terceiro, confirma nome, e-mail, CPF, setor, centro de custo, local, ID de rede e cargo, e declara que as informações são verdadeiras. Não serve para dar acesso a grupos de atendimento do CSC nem a outros sistemas.",
+        "frases_exemplo": [
+          "Preciso liberar um terceiro para abrir chamado no portal",
+          "Meu consultor não consegue abrir solicitação, como libero?",
+          "Dar acesso de solicitante para prestador da minha equipe",
+          "liberar terceiro na plataforma de atendimento",
+          "terceiro sem acesso ao portal de RH"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_selecionar_usuario",
+            "order": 100,
+            "conversational_label": "Qual terceiro você quer liberar? (nome ou e-mail corporativo)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_e_mail_do_terceiro",
+            "order": 200,
+            "conversational_label": "Qual o e-mail corporativo (Natura, Avon ou TBS) do terceiro?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_nome_completo",
+            "order": 300,
+            "conversational_label": "Qual o nome completo do terceiro?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_cpf_do_terceiro",
+            "order": 400,
+            "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do terceiro?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+            }
+          },
+          {
+            "name": "v_setor",
+            "order": 500,
+            "conversational_label": "Em qual setor o terceiro trabalha?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_centro_de_custo",
+            "order": 600,
+            "conversational_label": "Qual o centro de custo do terceiro?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_local_de_trabalho",
+            "order": 700,
+            "conversational_label": "Qual o local de trabalho do terceiro?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_id_do_terceiro_network_id",
+            "order": 800,
+            "conversational_label": "Qual o ID de rede (Network ID) do terceiro?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_login_do_terceiro",
+            "order": 900,
+            "overrides": {
+              "read_only": true,
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_cargo",
+            "order": 1000,
+            "conversational_label": "Qual o cargo ou função do terceiro?"
+          },
+          {
+            "name": "v_declaracao_de_veracidade",
+            "order": 1100,
+            "conversational_label": "Você confirma que as informações do terceiro são verdadeiras?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "65c549651b99e510a530426fe54bcb58",
+            "name": "EY VS - Empresas Natura ",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "5fa404171bb96d10a530426fe54bcb1b",
+            "short_description": "EY: Read Only Fields (variável do set)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_opened_by",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "c20588171bb96d10a530426fe54bcb0f",
+            "short_description": "EY: Required Fields (variável do set)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "vs_which_company",
+                "visible": "ignore",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "16c6ccd71bb96d10a530426fe54bcbde",
+            "name": "EY: Get Consultant informations",
+            "ajuste": "Mantido (já VA Supported): preenche e-mail, nome, setor, centro de custo, local, ID e login a partir do terceiro escolhido. Avaliar troca por auto-populate a partir de v_selecionar_usuario."
+          },
+          {
+            "sys_id": "7ec7049b1bb96d10a530426fe54bcbf9",
+            "name": "EY: Get Manager Information",
+            "ajuste": "Mantido (já VA Supported); remover a linha de alert comentada."
+          },
+          {
+            "sys_id": "d567c05b1bb96d10a530426fe54bcbb6",
+            "name": "EY:EmailTerceiroErrorMessage",
+            "ajuste": "Mantido (já VA Supported) até a lista de domínios corporativos aceitos virar Validation Regex em v_e_mail_do_terceiro."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Required Fields",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto nas variáveis do item; a policy fica só para vs_which_company, que é do variable set."
+          },
+          {
+            "origem": "EY: Read Only Fields",
+            "tipo": "ui_policy",
+            "como": "Read-only aplicado direto em v_login_do_terceiro; a policy fica só para v_opened_by, que é do variable set."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "f60483ea1ba95990a530426fe54bcb99",
+    "name": "Site WEB Mutual",
+    "status": "analise_humana",
+    "motivo": "Item sem variáveis e sem registros, com nome (site da Mutual) incoerente com a descrição (informar licenças da Natura Chile), que compete com \"Outras solicitações de licença\". Decidir se desativa ou publica o site da Mutual como link/artigo de KB.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "85bfd7981b701a50514cbaef4b4bcb0b",
+    "name": "Pedidos relacionados Despesas",
+    "status": "conversacional",
+    "motivo": "Item simples, sem bloqueadores, com 3 perguntas próprias. A validação de 40 caracteres vira Validation Regex, o mandatory vai direto nas variáveis e a descrição deixa de citar \"envio de notícias\" para não competir com \"Envio de Novidades\".",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_min_characters",
+        "motivo": "Rich Text Label com a legenda de mínimo de 40 caracteres; substituída pela Validation Regex em detail e citada no label da pergunta."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Pedidos sobre despesas corporativas",
+        "short_description": "Peça simulações, lançamentos de saídas, documentação e outros serviços relacionados a despesas.",
+        "description": "Use para pedidos relacionados a despesas nos países hispânicos (Argentina, Chile, Colômbia, Equador, Peru e Uruguai): simulações, novas saídas, documentação de saída e outros assuntos de despesas. Escolha o colaborador, o tipo de pedido e descreva o que precisa em pelo menos 40 caracteres. Não use para enviar novidades de folha de pagamento (use \"Enviar novidades para a folha de pagamento\") nem para reembolsos de benefícios, que têm itens próprios.",
+        "frases_exemplo": [
+          "Preciso de uma simulação de despesas",
+          "Quero enviar a documentação de uma despesa",
+          "Tenho uma dúvida sobre uma despesa lançada",
+          "solicitud de gastos",
+          "preciso corrigir uma despesa"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "who_is_this_request_for",
+            "order": 100,
+            "conversational_label": "Para qual colaborador é esta solicitação?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "type_of_request",
+            "order": 200,
+            "conversational_label": "Que tipo de pedido é: simulação, novas saídas, documentação de saída ou despesas?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "detail",
+            "order": 300,
+            "conversational_label": "Descreva o que você precisa (mínimo de 40 caracteres).",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[\\s\\S]{40,}$"
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "e45460bc1bb89a50514cbaef4b4bcbc5",
+            "short_description": "EY: Hide v_who_is_this_request_for (variáveis do set)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_who_is_this_request_for",
+                "visible": "false",
+                "mandatory": "false",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_reason_on_behalf",
+                "visible": "false",
+                "mandatory": "false",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Madatory variables",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em who_is_this_request_for, type_of_request e detail."
+          },
+          {
+            "origem": "EY: Hide  v_who_is_this_request_for",
+            "tipo": "ui_policy",
+            "como": "Mantida: atua sobre variáveis do variable set, que não podem ser alteradas direto no item."
+          },
+          {
+            "origem": "EY: Show error message onSubmit",
+            "tipo": "client_script",
+            "como": "Validation Regex de no mínimo 40 caracteres em detail."
+          },
+          {
+            "origem": "EY: Show error message onChange",
+            "tipo": "client_script",
+            "como": "Substituído pela Validation Regex em detail."
+          },
+          {
+            "origem": "EY: Hide error message onLoad",
+            "tipo": "client_script",
+            "como": "Removido: a legenda v_min_characters saiu do item."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "13a1b0d287474390ec360e530cbb3512",
+    "name": "Solicitação de Liberação de Medicamento",
+    "status": "conversacional",
+    "motivo": "Uso interno da equipe do Serviço Médico, volume muito baixo e anexo de receita médica (dado de saúde sensível): fica como formulário (non-conversational) e sem envio ao LLM, só com nome, descrição e atributos ajustados.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "name": "Liberar medicamento (Serviço Médico)",
+        "short_description": "Uso exclusivo da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador.",
+        "description": "Formulário da equipe do Serviço Médico Natura para registrar a liberação de medicamento a um colaborador do Brasil, com a descrição do pedido, o e-mail pessoal do colaborador e a receita médica anexada. Colaboradores que precisam de medicamento devem procurar o Serviço Médico, não este formulário.",
+        "frases_exemplo": [
+          "Registrar liberação de medicamento para colaborador",
+          "Serviço médico: liberar remédio com receita",
+          "lançar liberação de medicamento",
+          "formulário de medicamento do ambulatório"
+        ],
+        "make_item_non_conversational": true,
+        "turn_off_nowassist_conversation": true,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "opened_by",
+            "order": 100,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "requested_for",
+            "order": 200,
+            "conversational_label": "Para qual colaborador é a liberação do medicamento?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "id_global",
+            "order": 300,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "cpf",
+            "order": 400,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "phone",
+            "order": 500,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "employee_personal_email",
+            "order": 600,
+            "conversational_label": "Qual o e-mail pessoal do colaborador?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+            }
+          },
+          {
+            "name": "description",
+            "order": 700,
+            "conversational_label": "Descreva o pedido de liberação do medicamento.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "attachment_medical_prescription",
+            "order": 800,
+            "conversational_label": "Anexe a receita médica.",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [],
+        "ui_policies": [
+          {
+            "origem_sys_id": "3f0cceaa338f0f9098331c07ee5c7be9",
+            "short_description": "Exibe campos de perfil somente quando colaborador for selecionado",
+            "on_load": true,
+            "conditions": "requested_forISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "cpf",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "id_global",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "phone",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "Campos obigatórios",
+            "tipo": "ui_policy",
+            "como": "A condição opened_by ISNOTEMPTY é sempre verdadeira (default gs.getUserID()); mandatory aplicado direto em requested_for, employee_personal_email, description e attachment_medical_prescription."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "500a15313bacd610924d0247f4e45ad6",
+    "name": "Solicitação de Plano de Saúde, Cobertura Médica, Previdência Social, EPS",
+    "status": "analise_humana",
+    "motivo": "Formulário complexo: 12 legendas por país, marca, faixa e público controladas por variáveis hidden preenchidas via GlideAjax, variável Custom com widget de MRVS de dependentes, client scripts sem VA Supported (um usa sessionStorage) e montagem dinâmica das opções. Decidir se mantém como formulário (non-conversational, com nome e descrição novos) ou se redesenha por intenção (adesão, inclusão de dependente, cancelamento) com as legendas em KB por país.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "117393421b605a10514cbaef4b4bcba5",
+    "name": "Solicitação de apólice de seguro / seguro de vida",
+    "status": "conversacional",
+    "motivo": "Intenção única com 3 perguntas próprias (tipo de pedido, formulário anexo e aceite dos termos). As legendas por país saem do item (conteúdo para a descrição/KB), junto com as policies e scripts que só as mostravam; o mandatory vai direto nas variáveis.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "FAQs",
+        "motivo": "Rich Text Label com link da FAQ; a referência foi movida para a descrição do item."
+      },
+      {
+        "name": "v_legend_two_arg_avon",
+        "motivo": "Rich Text Label com o formulário de seguro de vida da Avon Argentina; o link deve ir para o artigo de KB por país citado na descrição."
+      },
+      {
+        "name": "v_legend_two_arg_new",
+        "motivo": "Rich Text Label com o formulário de seguro de vida da Natura Argentina; o link deve ir para o artigo de KB por país citado na descrição."
+      },
+      {
+        "name": "v_legent_two_peru",
+        "motivo": "Rich Text Label com o formulário de seguro de vida do Peru; o link deve ir para o artigo de KB por país citado na descrição."
+      },
+      {
+        "name": "v_legent_two_chile",
+        "motivo": "Rich Text Label com o formulário de seguro de vida do Chile; o link deve ir para o artigo de KB por país citado na descrição."
+      },
+      {
+        "name": "v_legend_document",
+        "motivo": "Rich Text Label de instrução sobre documentos; a orientação foi movida para a descrição do item."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Aderir ou alterar seguro de vida",
+        "short_description": "Faça adesão, altere a cobertura ou os beneficiários do seu seguro de vida (Argentina, Chile e Peru).",
+        "description": "Use para aderir ao seguro de vida, alterar a cobertura ou trocar os beneficiários da apólice, se você trabalha na Argentina, no Chile ou no Peru. Baixe o formulário de seguro de vida do seu país (link no artigo de KB de seguro de vida), preencha, anexe no pedido e confirme que conhece os termos e condições do contrato. Não use para plano de saúde, EPS ou seguro complementar de saúde e odontológico, que têm itens próprios.",
+        "frases_exemplo": [
+          "Quero aderir ao seguro de vida",
+          "Preciso trocar os beneficiários do meu seguro de vida",
+          "Como altero minha apólice?",
+          "seguro de vida alta",
+          "cambio de beneficiarios del seguro"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_type_of_request",
+            "order": 100,
+            "conversational_label": "Você quer aderir ao seguro de vida, alterar a cobertura ou trocar os beneficiários?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_life_insurance_form",
+            "order": 200,
+            "conversational_label": "Anexe o formulário de seguro de vida preenchido.",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_checkbox_contractual",
+            "order": 300,
+            "conversational_label": "Você declara conhecer os termos e condições do contrato desse pedido?",
+            "overrides": {
+              "mandatory": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory variables",
+            "tipo": "ui_policy",
+            "como": "Visible e mandatory aplicados direto em v_type_of_request, v_life_insurance_form e v_checkbox_contractual."
+          },
+          {
+            "origem": "EY : Show Forms PER",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava a legenda do Peru, que saiu do item (formulário por país na KB)."
+          },
+          {
+            "origem": "EY : Show Forms CHI",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava a legenda do Chile, que saiu do item (formulário por país na KB)."
+          },
+          {
+            "origem": "EY : Show Forms ARG (onChange)",
+            "tipo": "client_script",
+            "como": "Removido: só mostrava/escondia as legendas da Argentina via GlideAjax; formulários por país passam para a KB."
+          },
+          {
+            "origem": "EY : Show Forms ARG (onLoad)",
+            "tipo": "client_script",
+            "como": "Removido pelo mesmo motivo da versão onChange."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "c090328d1bc83d10a530426fe54bcbe2",
+    "name": "Adesão, Alteração ou Não Adesão da Previdência Privada",
+    "status": "analise_humana",
+    "motivo": "O pedido depende de assinatura eletrônica (variável Custom com widget EY:Show_Signature validada no onSubmit) e do aceite de vários termos legais em Rich Text Labels longos (LGPD, pessoa politicamente exposta, Lei 14.803, regime de tributação) que não chegam ao LLM. Decidir se mantém como formulário (non-conversational, com nome e descrição novos) ou se a assinatura pode ir para uma tarefa posterior no flow, permitindo um item conversacional só para alterar contribuição.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "d3f7ba031b099a10514cbaef4b4bcb26",
+    "name": "Conexa (Psicologia Viva) - Inclusão, Alteração ou Cancelamento de Beneficiário / Rede de afeto",
+    "status": "conversacional",
+    "motivo": "Intenção única, sem bloqueadores; incluir, alterar e cancelar usam os mesmos dados, então fica um item com o tipo como primeira pergunta. O script de CPF vira Validation Regex, o mandatory vai direto nas variáveis e o read-only continua só na visão do registro.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_help_text",
+        "motivo": "Rich Text Label de ajuda; as regras do benefício foram movidas para a descrição do item."
+      },
+      {
+        "name": "v_more_informations_label",
+        "motivo": "Rich Text Label informativo; o conteúdo relevante foi movido para a descrição do item."
+      },
+      {
+        "name": "v_label_fill_request",
+        "motivo": "Rich Text Label de instrução de preenchimento, só apresentação."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Incluir, alterar ou cancelar beneficiário da Psicologia Viva (Conexa)",
+        "short_description": "Inclua, altere ou retire uma pessoa da sua rede de afeto no benefício de terapia online Psicologia Viva.",
+        "description": "Use para indicar uma pessoa da sua rede de afeto (familiar, parceiro ou amigo) para usar o benefício de terapia online Psicologia Viva, da Conexa, ou para alterar ou cancelar esse beneficiário. Você informa nome completo sem abreviações, CPF, data de nascimento e e-mail da pessoa. Não use para plano de saúde, plano odontológico ou reembolso de terapia.",
+        "frases_exemplo": [
+          "Quero incluir minha mãe na Psicologia Viva",
+          "Como cadastro meu marido na Conexa?",
+          "Preciso cancelar o beneficiário da terapia online",
+          "trocar pessoa da rede de afeto",
+          "alterar e-mail do beneficiário da Psicologia Viva"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_request_type",
+            "order": 100,
+            "conversational_label": "Você quer incluir, alterar ou cancelar um beneficiário?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_full_name_no_abbreviations",
+            "order": 200,
+            "conversational_label": "Qual o nome completo do beneficiário, sem abreviações?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_beneficiary_cpf",
+            "order": 300,
+            "conversational_label": "Qual o CPF (Cadastro de Pessoa Física) do beneficiário?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^(\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}|\\d{11})$"
+            }
+          },
+          {
+            "name": "v_date_of_birth",
+            "order": 400,
+            "conversational_label": "Qual a data de nascimento do beneficiário? (aaaa-mm-dd)",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_beneficiary_email",
+            "order": 500,
+            "conversational_label": "Qual o e-mail do beneficiário?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+            }
+          },
+          {
+            "name": "v_additional_information",
+            "order": 600,
+            "conversational_label": "Quer acrescentar alguma informação? (opcional)"
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "07cd7a4b1b499a10514cbaef4b4bcbb5",
+            "name": "User Informations - Variable Set",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "5ee927cb1bcd9a10514cbaef4b4bcb13",
+            "short_description": "EY: Read Only (visão do registro)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_request_type",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_full_name_no_abbreviations",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_beneficiary_cpf",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_date_of_birth",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_beneficiary_email",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              },
+              {
+                "variable": "v_additional_information",
+                "visible": "ignore",
+                "mandatory": "ignore",
+                "disabled": "true"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory",
+            "tipo": "ui_policy",
+            "como": "Mandatory aplicado direto em v_request_type, v_full_name_no_abbreviations, v_beneficiary_cpf, v_date_of_birth e v_beneficiary_email."
+          },
+          {
+            "origem": "EY: Read Only",
+            "tipo": "ui_policy",
+            "como": "Mantida só na visão do registro de destino (não aplica no item)."
+          },
+          {
+            "origem": "EY: CPF Validation Regex",
+            "tipo": "client_script",
+            "como": "Validation Regex de CPF (000.000.000-00 ou 11 dígitos) em v_beneficiary_cpf."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "457d24431bbc9a90514cbaef4b4bcb32",
+    "name": "Pedido de Reembolso de Energia Elétrica",
+    "status": "conversacional",
+    "motivo": "Intenção única e maior volume do lote, sem bloqueador. Mandatory vai direto nas variáveis, a máscara de moeda vira Validation Regex e as legendas saem; os scripts que montam a lista de anos, a data completa e a checagem de fatura duplicada (GlideAjax) ficam, porque são necessários e não têm equivalente no-code.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_legenda_1",
+        "motivo": "Rich Text Label informativo; as regras do reembolso foram movidas para a descrição do item."
+      },
+      {
+        "name": "v_legenda_2",
+        "motivo": "Rich Text Label informativo; o conteúdo foi movido para a descrição do item."
+      },
+      {
+        "name": "v_legenda_3",
+        "motivo": "Rich Text Label com orientação para fatura bimestral; movida para a descrição do item."
+      },
+      {
+        "name": "v_legenda_4",
+        "motivo": "Rich Text Label com orientação para fatura bimestral; movida para a descrição do item."
+      },
+      {
+        "name": "v_attachment",
+        "motivo": "Rich Text Label com a instrução de anexar a fatura; substituída por nova_anexo_fatura."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Pedir reembolso de energia elétrica",
+        "short_description": "Solicite o reembolso da sua conta de luz (energia elétrica).",
+        "description": "Use para pedir o reembolso da conta de energia elétrica previsto no benefício (equipe de vendas da Natura Argentina). Informe se a fatura é mensal ou bimestral, o número da fatura, o mês e o ano de vencimento e o valor, e anexe a conta. Na fatura bimestral, informe o mês de vencimento da fatura. Cada fatura só pode ser reembolsada uma vez. Não use para reembolso de internet/conectividade, creche, escola ou saúde, que têm itens próprios.",
+        "frases_exemplo": [
+          "Quero pedir o reembolso da conta de luz",
+          "Reembolso da fatura de energia de março",
+          "Como envio minha conta de luz para reembolso?",
+          "reintegro de luz",
+          "mandar a boleta de electricidad",
+          "reembolso energia bimestral"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_frequency_of_your_invoice",
+            "order": 100,
+            "conversational_label": "Sua fatura de energia é mensal ou bimestral?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_invoice_number",
+            "order": 200,
+            "conversational_label": "Qual o número da fatura?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_month",
+            "order": 300,
+            "conversational_label": "Em que mês a fatura vence?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_year",
+            "order": 400,
+            "conversational_label": "E em que ano?",
+            "overrides": {
+              "mandatory": true
+            }
+          },
+          {
+            "name": "v_month_year",
+            "order": 500,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "v_electricity_amount",
+            "order": 600,
+            "conversational_label": "Qual o valor da fatura?",
+            "overrides": {
+              "mandatory": true,
+              "validation_regex": "^\\d+([.,]\\d{1,2})?$"
+            }
+          },
+          {
+            "name": "nova_anexo_fatura",
+            "order": 700,
+            "conversational_label": "Anexe a fatura de energia (PDF ou foto).",
+            "nova": {
+              "type": "33",
+              "question_text": "Attach the electricity invoice",
+              "mandatory": false
+            }
+          },
+          {
+            "name": "v_records",
+            "order": 10000,
+            "overrides": {
+              "hidden": true,
+              "not_available_conversation": true
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "285d3c4b1b30da90514cbaef4b4bcbf6",
+            "short_description": "EY: Hide portal variables",
+            "on_load": true,
+            "conditions": "v_month_yearISEMPTY",
+            "actions": [
+              {
+                "variable": "v_month_year",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "4691491b1b781e90514cbaef4b4bcb63",
+            "short_description": "EY: readOnly country of residence (variável do set)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_country_of_residence",
+                "visible": "ignore",
+                "mandatory": "false",
+                "disabled": "true"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "5253f8cf1bbc9a90514cbaef4b4bcb68",
+            "short_description": "EY: Show employee ID (variável do set)",
+            "on_load": true,
+            "conditions": "",
+            "actions": [
+              {
+                "variable": "v_employee_id",
+                "visible": "true",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "a41eb4cb1b30da90514cbaef4b4bcb99",
+            "name": "EY: Set years options",
+            "ajuste": "Mantido (já VA Supported): v_year não tem choices fixas; o script monta ano atual e anterior. Alternativa: cadastrar choices e remover o script."
+          },
+          {
+            "sys_id": "00cdbc8b1b30da90514cbaef4b4bcbaf",
+            "name": "EY: Set complete date OnChange month",
+            "ajuste": "Mantido: monta v_month_year, usado na checagem de duplicidade. Conferir UI type (hoje 1) para rodar no Service Portal/VA; alternativa é montar no producer script."
+          },
+          {
+            "sys_id": "84f28c9b3b8d9a10924d0247f4e45a97",
+            "name": "EY: Set complete date OnChange year",
+            "ajuste": "Mesmo ajuste do script de mês."
+          },
+          {
+            "sys_id": "17c90c573bcd9a10924d0247f4e45af2",
+            "name": "EY: Get date and invoice OnChange",
+            "ajuste": "Mantido: carrega em v_records o histórico de faturas do colaborador (GlideAjax). Conferir UI type para VA; alternativa futura é checagem no servidor (Business Rule/flow)."
+          },
+          {
+            "sys_id": "020a23873b0d9a10924d0247f4e45a6b",
+            "name": "EY: Check invoce OnChange",
+            "ajuste": "Mantido: bloqueia fatura já reembolsada. Conferir UI type para VA e a mensagem de erro em conversa."
+          },
+          {
+            "sys_id": "0b1248d73b8d9a10924d0247f4e45ab9",
+            "name": "EY: Check date OnChange",
+            "ajuste": "Mantido: bloqueia data de fatura já reembolsada. Conferir UI type para VA."
+          },
+          {
+            "sys_id": "b327102f3bcd1e10924d0247f4e45a80",
+            "name": "EY: Check date and invoice OnSubmit",
+            "ajuste": "Mantido: impede registro duplicado no envio. Conferir UI type para VA."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Show fields",
+            "tipo": "ui_policy",
+            "como": "v_employee vem preenchido pelo set: visible/mandatory aplicados direto em v_frequency_of_your_invoice, v_invoice_number, v_month, v_year e v_electricity_amount; as ações sobre labels saíram."
+          },
+          {
+            "origem": "EY: Show legendas",
+            "tipo": "ui_policy",
+            "como": "Removida: só mostrava as legendas de fatura bimestral, cujo texto foi para a descrição."
+          },
+          {
+            "origem": "EY: Hide portal variables",
+            "tipo": "ui_policy",
+            "como": "Mantida; v_month_year também marcada como não disponível na conversa."
+          },
+          {
+            "origem": "EY: readOnly country of residence / EY: Show employee ID",
+            "tipo": "ui_policy",
+            "como": "Mantidas: atuam sobre variáveis do variable set."
+          },
+          {
+            "origem": "EY: Máscara de Moeda",
+            "tipo": "client_script",
+            "como": "Validation Regex de valor (dígitos com até 2 decimais, ponto ou vírgula) em v_electricity_amount."
+          },
+          {
+            "origem": "EY: Clear values change",
+            "tipo": "client_script",
+            "como": "Removido: sem guarda isLoading apagava valores ao reabrir; limpeza desnecessária na conversa."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "56bb98421b709290514cbaef4b4bcb82",
+    "name": "Solicitação de Outros Reembolsos de Saúde",
+    "status": "conversacional",
+    "motivo": "Poucas perguntas próprias e intenção única. As policies sem script continuam (tipo obrigatório, mês/ano só para gravidez); o filtro das opções de reembolso por país continua em script porque não há equivalente no-code sem uma tabela nova, e o script onChange precisa ser marcado VA Supported.",
+    "variaveis_nao_utilizadas": [
+      {
+        "name": "v_message_refund",
+        "motivo": "Rich Text Label informativo; as regras do reembolso foram movidas para a descrição do item."
+      },
+      {
+        "name": "v_message_attach",
+        "motivo": "Rich Text Label com a instrução de anexar o comprovante; substituída por nova_anexo_comprovante."
+      }
+    ],
+    "novos_itens": [
+      {
+        "name": "Pedir outros reembolsos de saúde",
+        "short_description": "Solicite reembolsos de saúde como lentes e armações, bem-estar na gravidez, coaching ou medicamentos.",
+        "description": "Use para pedir reembolsos de saúde que não são cobertos pelo plano de saúde, como lentes e armações, bem-estar durante a gravidez, sessões de coaching ou medicamentos (fora da gravidez), conforme as regras do seu país. Informe o tipo de reembolso e, no caso de gravidez, o mês e o ano do comprovante, e anexe o comprovante de pagamento. Não use para creche, escola ou energia elétrica, que têm itens próprios, nem para adesão ao plano de saúde.",
+        "frases_exemplo": [
+          "Quero reembolso das minhas lentes",
+          "Reembolso de despesas da gravidez",
+          "Como peço reembolso de óculos?",
+          "reintegro de lentes",
+          "reembolso de coaching"
+        ],
+        "make_item_non_conversational": false,
+        "turn_off_nowassist_conversation": false,
+        "variaveis_fixas": [],
+        "variables": [
+          {
+            "name": "v_type_of_refund",
+            "order": 100,
+            "conversational_label": "Que tipo de reembolso de saúde você quer pedir?"
+          },
+          {
+            "name": "v_month",
+            "order": 200,
+            "conversational_label": "De que mês é o comprovante de pagamento?"
+          },
+          {
+            "name": "v_year",
+            "order": 300,
+            "conversational_label": "E de que ano?"
+          },
+          {
+            "name": "v_month_year",
+            "order": 400,
+            "overrides": {
+              "not_available_conversation": true
+            }
+          },
+          {
+            "name": "nova_anexo_comprovante",
+            "order": 500,
+            "conversational_label": "Anexe o comprovante de pagamento.",
+            "nova": {
+              "type": "33",
+              "question_text": "Attach the payment receipt",
+              "mandatory": false
+            }
+          }
+        ],
+        "variable_sets": [
+          {
+            "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+            "name": "EY: Hispana Personal Information",
+            "order": 50
+          }
+        ],
+        "ui_policies": [
+          {
+            "origem_sys_id": "2123a8821b349290514cbaef4b4bcbe4",
+            "short_description": "EY: Mandatory fields",
+            "on_load": true,
+            "conditions": "v_employeeISNOTEMPTY",
+            "actions": [
+              {
+                "variable": "v_type_of_refund",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "44004d8e1b3c9290514cbaef4b4bcbbc",
+            "short_description": "EY: Show month and year",
+            "on_load": true,
+            "conditions": "v_type_of_refund=pregnancy",
+            "actions": [
+              {
+                "variable": "v_month",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              },
+              {
+                "variable": "v_year",
+                "visible": "true",
+                "mandatory": "true",
+                "disabled": "ignore"
+              }
+            ]
+          },
+          {
+            "origem_sys_id": "8af8f8c21bf89290514cbaef4b4bcbb9",
+            "short_description": "EY: Hide portal variables",
+            "on_load": true,
+            "conditions": "v_month_yearISEMPTY",
+            "actions": [
+              {
+                "variable": "v_month_year",
+                "visible": "false",
+                "mandatory": "ignore",
+                "disabled": "ignore"
+              }
+            ]
+          }
+        ],
+        "client_scripts_mantidos": [
+          {
+            "sys_id": "32e245ca1b7c9290514cbaef4b4bcb3f",
+            "name": "EY: Remove options onLoad",
+            "ajuste": "Mantido (já VA Supported): esconde as opções de tipo de reembolso até saber o país do colaborador."
+          },
+          {
+            "sys_id": "a143cd0e1b7c9290514cbaef4b4bcb49",
+            "name": "EY: SetOptions onChange",
+            "ajuste": "Marcar VA Supported e testar em conversa: recoloca as opções de tipo de reembolso válidas para o país do colaborador. Alternativa futura: Lookup Select Box numa tabela de tipos por país."
+          },
+          {
+            "sys_id": "4dbe748a1b3c9290514cbaef4b4bcbde",
+            "name": "EY: Set year",
+            "ajuste": "Mantido (já VA Supported): v_year não tem choices fixas; monta ano atual e anterior."
+          },
+          {
+            "sys_id": "b5d001061b7c9290514cbaef4b4bcb37",
+            "name": "EY: Set complete date",
+            "ajuste": "Mantido (já VA Supported): monta v_month_year no envio; alternativa é montar no producer script."
+          }
+        ],
+        "conversoes": [
+          {
+            "origem": "EY: Mandatory fields",
+            "tipo": "ui_policy",
+            "como": "Mantida só para v_type_of_refund (visível e obrigatório depois de identificar o colaborador); as ações sobre os labels saíram."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sys_id": "ab9d37c11b0d5ad0514cbaef4b4bcb23",
+    "name": "Solicitação de reembolso de creche ou berço",
+    "status": "analise_humana",
+    "motivo": "Bloqueado por widget Custom (mrv_monitor), MRVS \"Dados para fazer seu reembolso\" com scripts sem VA Supported (histórico de faturas via sessionStorage), 3 anexos e 8 legendas por país. Deixar conversacional exige trazer os campos da MRVS para variáveis simples (um pedido por filho e por mês) e mover histórico e validações para o servidor; o RH precisa aprovar essa reestruturação, que muda flow e relatórios.",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  },
+  {
+    "sys_id": "cc899fa41b709a50514cbaef4b4bcbeb",
+    "name": "Solicitação de Reembolso Escolar",
+    "status": "analise_humana",
+    "motivo": "Bloqueado por widget Custom (mrvs_monitor) e pela MRVS \"Dados dos seus filhos\", com teto por filho, soma no onSubmit e script sem VA Supported usando sessionStorage; os anexos por país são só labels. Deixar conversacional exige um pedido por filho com teto e soma calculados no servidor; o RH precisa aprovar essa reestruturação (mesmo caso de creche/berço).",
+    "variaveis_nao_utilizadas": [],
+    "novos_itens": [
+      {
+        "copiar_original": true
+      }
+    ]
+  }
+]

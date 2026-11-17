@@ -1,0 +1,206 @@
+{
+ "sys_id": "8cbd6aa21b87281032822170f54bcbe9",
+ "name": "Alteração ou Cancelamento",
+ "category": "Férias",
+ "short_description": "Alteração ou Cancelamento",
+ "description": "Alteração ou Cancelamento",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de alteração ou cancelamento de férias devido afastamento",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_protocol_number"
+   ],
+   "passa_a_obrigatoria": [
+    "what_is_a_request"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Adiantamento 13º? - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    },
+    {
+     "policy": "ALP - Quantidade de dias - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de cancelamento de férias – justa causa",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [
+    "what_is_a_request"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_protocol_number"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Adiantamento 13º? - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    },
+    {
+     "policy": "ALP - Quantidade de dias - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de cancelamento de férias – pedido de demissão",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Férias"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_protocol_number",
+    "what_is_a_request"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [
+    {
+     "policy": "ALP - Adiantamento 13º? - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    },
+    {
+     "policy": "ALP - Quantidade de dias - Qual é a solicitação=Alteração OR Solicitação de inclusão de férias fora prazo",
+     "quando": "what_is_a_request=1"
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "new_start_date",
+   "type": "Data",
+   "question_text": "Nova data de início",
+   "choices": []
+  },
+  {
+   "name": "end_date_of_the_period",
+   "type": "Data",
+   "question_text": "Data fim do período de gozo",
+   "choices": []
+  },
+  {
+   "name": "date_start_of_the_enjoyment_period",
+   "type": "Data",
+   "question_text": "Data início do período de gozo",
+   "choices": []
+  },
+  {
+   "name": "current_start_date",
+   "type": "Data",
+   "question_text": "Data início atual",
+   "choices": []
+  },
+  {
+   "name": "rh_protocol_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Informar número do protocolo com confirmação do jurídico",
+   "choices": []
+  },
+  {
+   "name": "number_of_days",
+   "type": "Texto de Linha Única",
+   "question_text": "Quantidade de dias",
+   "choices": []
+  },
+  {
+   "name": "advance_13",
+   "type": "Sim/Não",
+   "question_text": "Adiantamento 13º?",
+   "choices": []
+  },
+  {
+   "name": "what_is_a_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual é a solicitação?",
+   "choices": [
+    "Cancelamento",
+    "Alteração"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "09ab2ddc3be72a10b28dd047f4e45a8e",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "92abe1103b2b2a10b28dd047f4e45a0c",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  }
+ ]
+}

@@ -1,0 +1,335 @@
+{
+ "sys_id": "f22df8601b519910347221bbe54bcbad",
+ "status": "dividido",
+ "motivo": "Cada solicitação de Jovem Aprendiz pede dados próprios: divergência (instituição, RA, divergência), afastamento (dias, certidão, acidente, último dia), desligamento (motivo do atraso, data fim) e prorrogação (motivo); vale-transporte e alistamento militar não pedem dados extras. 1 policy(ies) condicionais descartadas em grupos onde a variável da condição não existe.",
+ "vars": {
+  "reason_for_shutdown_delay": {
+   "label": "Qual foi o motivo do atraso no desligamento?"
+  },
+  "clearance_number": {
+   "label": "Qual é o número do chamado de afastamento?"
+  },
+  "what_is_the_discrepancy_to_be_corrected": {
+   "label": "Qual é a divergência que precisa ser corrigida?"
+  },
+  "end_date_of_the_impacted_partys_contract": {
+   "label": "Qual é a data de fim do contrato do aprendiz?"
+  },
+  "work_accident": {
+   "label": "O afastamento foi por acidente de trabalho?"
+  },
+  "number_cat": {
+   "label": "Qual é o número do chamado de solicitação da CAT?"
+  },
+  "name_of_educational_institution": {
+   "label": "Qual é o nome da instituição de ensino?"
+  },
+  "last_day_worked": {
+   "label": "Qual foi o último dia trabalhado?"
+  },
+  "expected_date_of_delivery": {
+   "label": "Qual é a data prevista do parto?"
+  },
+  "reason_for_extension": {
+   "label": "Qual é o motivo da prorrogação?"
+  },
+  "ra_or_apprentice_enrollment": {
+   "label": "Qual é o RA ou a matrícula do aprendiz?"
+  }
+ },
+ "remover": {
+  "observation_aditivo_contratual": "visual",
+  "formatter2": "visual",
+  "observation_4": "visual",
+  "observation_12": "visual",
+  "observation_1": "visual",
+  "formatter": "visual",
+  "container_start": "visual",
+  "expected_return_date": "oferta_inativa",
+  "observation_instituicao": "visual",
+  "observation_2": "visual",
+  "formatter3": "visual",
+  "observation_gestac": "visual",
+  "observation_3": "visual"
+ },
+ "policies": {
+  "010d8bc31b2df9d0347221bbe54bcbc6": "remover",
+  "0a2805ec1b519910347221bbe54bcbca": "remover",
+  "1c0985201b919910347221bbe54bcb84": "remover",
+  "43cc49a41b919910347221bbe54bcb93": "remover",
+  "4ac9ee831ba5f9d0347221bbe54bcb86": "remover",
+  "61ec05e41b919910347221bbe54bcbfb": "remover",
+  "7488c1201b919910347221bbe54bcb68": "remover",
+  "811d47bc1b86061032822170f54bcb6f": "remover",
+  "83894d601b919910347221bbe54bcbd4": "remover",
+  "897c05a41b919910347221bbe54bcb30": "remover",
+  "8e8a05e01b919910347221bbe54bcb4f": "remover",
+  "a4bc41a41b919910347221bbe54bcb86": "remover",
+  "cb5bc5e01b919910347221bbe54bcbf7": "remover",
+  "d22a45601b919910347221bbe54bcb62": "remover",
+  "de2ac5b61b55591032822170f54bcbb4": "remover",
+  "f07ccfb53b056210b28dd047f4e45af0": "remover",
+  "5f7df3231be13114347221bbe54bcbfa": "remover",
+  "f620578f1b2df9d0347221bbe54bcb7d": {
+   "conditions": "work_accident=Yes",
+   "actions": {
+    "number_cat": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g5_1": {
+   "short_description": "ALP - Data prevista do parto",
+   "conditions": "reason_for_extension=Gestação",
+   "actions": {
+    "expected_date_of_delivery": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Divergência na admissão de Jovem Aprendiz",
+   "short_description": "Correção de divergência na admissão do Jovem Aprendiz",
+   "description": "Use quando houver divergência na admissão de Jovem Aprendiz que precisa ser corrigida. Informe a instituição de ensino, o RA ou matrícula e a divergência.",
+   "frases_exemplo": [
+    "Tem erro na admissão do jovem aprendiz",
+    "Dados do aprendiz admitido vieram errados",
+    "Preciso corrigir a admissão do jovem aprendiz",
+    "Divergência no cadastro do aprendiz"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1"
+   ],
+   "vars": {
+    "what_is_the_discrepancy_to_be_corrected": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "name_of_educational_institution": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "ra_or_apprentice_enrollment": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g5_1",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc",
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  },
+  {
+   "name": "Alterar vale-transporte do Jovem Aprendiz",
+   "short_description": "Solicitação de alteração de vale-transporte para Jovem Aprendiz",
+   "description": "Use para solicitar a alteração do vale-transporte de Jovem Aprendiz, no atendimento aos processos de Jovem Aprendiz.",
+   "frases_exemplo": [
+    "Quero mudar o vale-transporte do aprendiz",
+    "Alterar VT do jovem aprendiz",
+    "O aprendiz mudou de endereço e precisa trocar o vale-transporte",
+    "Ajuste de vale transporte para jovem aprendiz"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "sem_policies": [
+    "nova_g5_1",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc",
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  },
+  {
+   "name": "Cadastrar afastamento acima de 15 dias de Jovem Aprendiz",
+   "short_description": "Cadastro de afastamento maior que 15 dias de Jovem Aprendiz",
+   "description": "Use para cadastrar afastamento de Jovem Aprendiz por mais de 15 dias. Informe o total de dias, o último dia trabalhado, se foi acidente de trabalho e anexe o atestado.",
+   "frases_exemplo": [
+    "Aprendiz vai ficar afastado mais de 15 dias",
+    "Cadastrar afastamento longo do jovem aprendiz",
+    "Meu aprendiz está de atestado há semanas",
+    "Preciso lançar afastamento de aprendiz"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "what_is_the_discrepancy_to_be_corrected",
+    "end_date_of_the_impacted_partys_contract",
+    "name_of_educational_institution",
+    "reason_for_extension",
+    "ra_or_apprentice_enrollment"
+   ],
+   "vars": {
+    "total_number_of_days_away": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "single_certificate_sum_certificates": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "work_accident": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "last_day_worked": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "attchament_1": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g5_1",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc"
+   ]
+  },
+  {
+   "name": "Cadastrar licença por alistamento militar de Jovem Aprendiz",
+   "short_description": "Cadastro de licença por alistamento militar de Jovem Aprendiz",
+   "description": "Use para cadastrar a licença por alistamento militar de Jovem Aprendiz, no atendimento aos processos de Jovem Aprendiz.",
+   "frases_exemplo": [
+    "Aprendiz foi convocado para o serviço militar",
+    "Cadastrar licença militar do jovem aprendiz",
+    "Meu aprendiz vai se alistar no exército",
+    "Licença por alistamento do aprendiz"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "sem_policies": [
+    "nova_g5_1",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc",
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  },
+  {
+   "name": "Desligar Jovem Aprendiz após o prazo",
+   "short_description": "Desligamento de Jovem Aprendiz depois do prazo",
+   "description": "Use para solicitar o desligamento de Jovem Aprendiz depois do prazo. Informe a data fim do contrato e o motivo do atraso no desligamento.",
+   "frases_exemplo": [
+    "Esqueci de desligar o jovem aprendiz no prazo",
+    "Desligamento do aprendiz atrasado",
+    "Preciso desligar aprendiz fora do prazo",
+    "O contrato do aprendiz já acabou e não foi desligado"
+   ],
+   "sem_vars": [
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "reason_for_extension",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "vars": {
+    "reason_for_shutdown_delay": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "end_date_of_the_impacted_partys_contract": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g5_1",
+    "2c0be2c71ba5f9d0347221bbe54bcbdc",
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  },
+  {
+   "name": "Prorrogar contrato de Jovem Aprendiz por afastamento",
+   "short_description": "Prorrogação de contrato de Jovem Aprendiz por afastamento",
+   "description": "Use para solicitar a prorrogação do contrato de Jovem Aprendiz em razão de afastamento (auxílio doença, mudança de calendário da instituição, licença militar, acidente de trabalho ou gestação).",
+   "frases_exemplo": [
+    "Quero prorrogar o contrato do aprendiz",
+    "Aprendiz ficou afastado e o contrato precisa estender",
+    "Prorrogação de contrato de jovem aprendiz",
+    "Contrato do aprendiz acaba logo mas ele esteve afastado"
+   ],
+   "sem_vars": [
+    "reason_for_shutdown_delay",
+    "total_number_of_days_away",
+    "attchament_3",
+    "what_is_the_discrepancy_to_be_corrected",
+    "single_certificate_sum_certificates",
+    "attchament_2",
+    "end_date_of_the_impacted_partys_contract",
+    "work_accident",
+    "name_of_educational_institution",
+    "last_day_worked",
+    "attchament_1",
+    "ra_or_apprentice_enrollment"
+   ],
+   "vars": {
+    "reason_for_extension": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "f620578f1b2df9d0347221bbe54bcb7d"
+   ]
+  }
+ ],
+ "scripts": {
+  "0d8d89281b919910347221bbe54bcb1f": {
+   "remover": {
+    "outro": "limpa campos conforme a oferta; coberto pela estrutura dos derivados"
+   }
+  }
+ }
+}

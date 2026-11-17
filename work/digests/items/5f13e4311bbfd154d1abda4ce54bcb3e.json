@@ -1,0 +1,236 @@
+{
+ "sys_id": "5f13e4311bbfd154d1abda4ce54bcb3e",
+ "name": "Regularização de Título em aberto/duplicidade - Cartão ou Pix",
+ "sys_name": "Open title regularization/duplicity - Card or Pix",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "Título não baixado no sistema e pagamento em duplicidade efetuado no cartão ou Pix",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "18",
+   "variaveis_ativas": "19",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "18"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 18 de 18 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 6 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "reference": "sys_user"
+  },
+  {
+   "name": "which_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is your request for which company?",
+   "include_none": true,
+   "choices": [
+    "Avon LATAM",
+    "Natura [=natura]",
+    "TBS"
+   ]
+  },
+  {
+   "name": "which_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which sub-company is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript:'u_brand='+current.variables.which_company + '^nameNOT LIKE331'"
+  },
+  {
+   "name": "document_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the type of document",
+   "include_none": true,
+   "choices": [
+    "CNPJ [=cnpj]",
+    "CPF [=cpf]"
+   ]
+  },
+  {
+   "name": "document_number_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the document number"
+  },
+  {
+   "name": "document_number_cnpj",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the document number"
+  },
+  {
+   "name": "full_name_franchisees",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Franchisee's full name"
+  },
+  {
+   "name": "full_name_consultant_representative",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name of the consultant/representative"
+  },
+  {
+   "name": "code_consultant",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Consultant Code"
+  },
+  {
+   "name": "code_franchisee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Franchisee Code"
+  },
+  {
+   "name": "email_consultant",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Consultant email"
+  },
+  {
+   "name": "email_franchisee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Franchisee email"
+  },
+  {
+   "name": "v_type_deal",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of deal?",
+   "include_none": true,
+   "choices": [
+    "Double payment [=double_payment]",
+    "Open title [=open_title]"
+   ]
+  },
+  {
+   "name": "v_title_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the title number?"
+  },
+  {
+   "name": "select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=c45be7b43b869250924d0247f4e45a87^user.active=true^EQ"
+  },
+  {
+   "name": "v_attach_evidence",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Attaching evidence is mandatory, use the Add attachments option at the bottom of the page"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "8e26636e1bb79594d1abda4ce54bcb23",
+   "name": "EY: Payment method - Order",
+   "order": "1400",
+   "perguntas": [
+    "vs_payment_method (Selecionar Caixa): What is the payment method?",
+    "vs_order_number (Texto de Linha Única): What is the order number?"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "2000",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: CNPJ",
+   "when": "IO:document_type=cnpj^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "document_number_cnpj: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: CPF",
+   "when": "IO:document_type=cpf^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "document_number_cpf: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Natura || Avon Latam",
+   "when": "IO:which_company=natura^ORIO:which_company=Avon LATAM^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "email_consultant: visible=true,mandatory=true",
+    "code_consultant: visible=true,mandatory=true",
+    "full_name_consultant_representative: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: TBS",
+   "when": "IO:which_company=TBS^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "full_name_franchisees: visible=true,mandatory=true",
+    "email_franchisee: visible=true,mandatory=true",
+    "code_franchisee: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_title_number: mandatory=true",
+    "which_sub_company: visible=true,mandatory=true",
+    "select_the_approver: mandatory=true",
+    "which_company: visible=true,mandatory=true",
+    "v_type_deal: mandatory=true",
+    "document_type: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Set Opened By OnLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que trava 'opened_by' como somente leitura e preenche com o usuário logado. Passa a string 'true' em vez do booleano para setReadOnly."
+  }
+ ]
+}

@@ -1,0 +1,513 @@
+{
+ "sys_id": "c93db36a1bbfd194a530426fe54bcb02",
+ "name": "Atendimento Saúde",
+ "sys_name": "Health Care",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Assistência médica e odontológica",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Informações relacionadas aos benefícios de Assistência Médica e Odontológica (dúvidas gerais, reembolsos, co-participação), Programa Gestante, maior idade de dependentes e check-up",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "29",
+   "variaveis_ativas": "42",
+   "bloqueadores": "0",
+   "avisos": "10",
+   "perguntas_sem_conversational_label": "29"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_label_register_download: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_university_proof: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_the_term_of_consent_and_the_medical_report: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_download_termo_anuencia: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_download_reembolso: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 29 de 29 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 29 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 26 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_benefits",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Health Care"
+  },
+  {
+   "name": "v_what_is_the_subject_of_your_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the subject of your request?",
+   "include_none": true,
+   "choices": [
+    "Procedure authorizations [=1]",
+    "Accredited network search [=2]",
+    "Co-participation [=4]",
+    "Travel letter [=3]",
+    "Check-up [=5]",
+    "General doubts [=6]",
+    "Plan extension for older children [=7]",
+    "Maternity Program enrollment [=8]",
+    "Refund preview [=9]",
+    "Card number request [=10]",
+    "Refund request [=11]"
+   ]
+  },
+  {
+   "name": "v_label_you_can_request_reimbursements",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "You can request reimbursements directly through the Bradesco Seguros APP, or on the SITE, for the following types of events: medical consultation, outpatient examination, surgery, clinical hospitalization, psychotherapy, speech therapy, physiotherapy, occupational therapy, acupuncture, RPG and nutrition.\r\nSimply access the exclusive Bradesco Saúde beneficiary area on the website https://wwws.brade…"
+  },
+  {
+   "name": "v_download_reembolso",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_label_procedure_authorizations",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Procedure authorizations are requested by the provider directly to the operator, the analysis period is counted from the date of receipt by the operator: complex exams 7 working days - surgeries 21 working days"
+  },
+  {
+   "name": "v_procedure_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Procedure name"
+  },
+  {
+   "name": "v_request_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Request date"
+  },
+  {
+   "name": "v_procedure_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Procedure Date"
+  },
+  {
+   "name": "V_provider",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Provider"
+  },
+  {
+   "name": "v_label_medial_dental_card",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "The medical/dental plan card is digital, therefore, it is necessary to download the operator's App (available for iOS and Android) and perform the first access. In addition to your digital card, you will have access to those of your dependents (if any)."
+  },
+  {
+   "name": "v_type_of_care",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of care",
+   "include_none": true,
+   "choices": [
+    "Medical specialty [=1]",
+    "Procedure with medical order [=2]"
+   ]
+  },
+  {
+   "name": "v_region",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Region"
+  },
+  {
+   "name": "v_label_register_download",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "To register, you must download the form in accordance with your provider (see email with links) and send it together with an updated medical report informing the gestational age (in weeks) and the expected date of delivery (day/month/year), remembering that no The prenatal card and examination reports are accepted in place of the medical report.\r\nRegistration will only be completed upon receipt of…"
+  },
+  {
+   "name": "v_download_termo_anuencia",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_type_of_care2",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of care",
+   "include_none": true,
+   "choices": [
+    "Doubts [=1]",
+    "Enrollment [=2]"
+   ]
+  },
+  {
+   "name": "v_attach_the_term_of_consent_and_the_medical_report",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the term of consent and the medical report"
+  },
+  {
+   "name": "v_label_employees_band",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "All employees in band G and/or above are entitled to a check-up, which is carried out annually at Hospital Albert Einstein e Fleury. In the case of new admissions or promotions, the benefit is extended to the employee in the following month.\r\nAlbert Einstein Hospital Scheduling Center\r\nTelephone: (11) 2151-1233 option 2 and then 3 check-up.\r\nE-mail: schedulecheckup@einstein.br\r\nWhatsapp: (11) 3620…"
+  },
+  {
+   "name": "v_label_request_prior",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "To request a prior request, it is necessary to attach to the website or the Bradesco Seguros App > Facilities > Calculate Reimbursement Amount, the medical request along with the provider's budget, stamped and signed, informing the patient's name, codes of the procedures to be performed (TUSS mandatory) and their unit values. Describe the amount charged by each member of the medical team.\r\nIf the …"
+  },
+  {
+   "name": "v_attach_university_proof",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach university proof"
+  },
+  {
+   "name": "v_label_copayment_drawing",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Co-payment Drawing\r\nConsultations - 25%\r\nSimple Exams - 25%\r\nTherapies - 25%\r\nService in OS - 30%\r\nOther procedures such as surgeries, hospitalization, exams and complex procedures do not have co-payment.\r\nThe co-participation statement is available on the operators' app or portal:\r\nBradesco Saúde: https://www.bradescoseguros.com.br/clientes/produtos/plano-saude, App Bradesco Saúde\r\nNational Unime…"
+  },
+  {
+   "name": "v_label_sending_information",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "After sending the information, the letter will be issued within 72 working hours"
+  },
+  {
+   "name": "v_full_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Full name",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Email",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_telephone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Telephone",
+   "example": "Informe número com DDD"
+  },
+  {
+   "name": "v_destination_country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Destination country"
+  },
+  {
+   "name": "v_shipment_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Shipment date"
+  },
+  {
+   "name": "return_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Return date"
+  },
+  {
+   "name": "v_full_home_address",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Full home address"
+  },
+  {
+   "name": "v_incase_companion",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "In case of companion, inform CPF/full name"
+  },
+  {
+   "name": "v_inform_the_desired_language_in_the_letter",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Inform the desired language in the letter",
+   "include_none": true,
+   "choices": [
+    "Spanish [=1]",
+    "English [=2]",
+    "Portuguese [=3]"
+   ]
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Attachment Medical Report Type of care is Enrollment",
+   "when": "IO:v_type_of_care2=2^IO:v_what_is_the_subject_of_your_request=8^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_the_term_of_consent_and_the_medical_report: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Make description Visible",
+   "when": "IO:v_what_is_the_subject_of_your_requestIN1,4,5,6,7,9,10,11^ORIO:v_type_of_care=1^ORIO:v_type_of_care2=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Description and Attachment  If Subject is General Doubts",
+   "when": "IO:v_what_is_the_subject_of_your_request=6^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment: visible=true"
+   ]
+  },
+  {
+   "name": "EY: VS Requester Data Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_solicitation_to_whom: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Subject Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_subject_of_your_request: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Attachment proof and Description If Subject is Plan extension for older children",
+   "when": "IO:v_what_is_the_subject_of_your_request=7^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_university_proof: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Subject is Procedure Authorizations",
+   "when": "IO:v_what_is_the_subject_of_your_request=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment: visible=true",
+    "v_label_procedure_authorizations: visible=true",
+    "V_provider: visible=true,mandatory=true",
+    "v_procedure_date: visible=true,mandatory=true",
+    "v_request_date: visible=true,mandatory=true",
+    "v_procedure_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Drawing  Visible If Subject is Co-participation",
+   "when": "IO:v_what_is_the_subject_of_your_request=4^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_copayment_drawing: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Region",
+   "when": "IO:v_type_of_care=1^ORIO:v_type_of_care=2^IO:v_what_is_the_subject_of_your_request=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_region: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Attachment Mandatory if Type of care Procedure with medical order",
+   "when": "IO:v_type_of_care=2^IO:v_what_is_the_subject_of_your_request=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attachment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Description Visible if Medical Speciality ",
+   "when": "IO:v_type_of_care=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Description and Label  If Subject is Checkup",
+   "when": "IO:v_what_is_the_subject_of_your_request=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_employees_band: visible=true"
+   ]
+  },
+  {
+   "name": "EY:Data of Travel Letter If Subject is  Travel Letter",
+   "when": "IO:v_what_is_the_subject_of_your_request=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_shipment_date: visible=true,mandatory=true",
+    "v_incase_companion: visible=true",
+    "return_date: visible=true,mandatory=true",
+    "v_email: visible=true,mandatory=true",
+    "v_telephone: visible=true,mandatory=true",
+    "v_full_name: visible=true,mandatory=true",
+    "v_destination_country: visible=true,mandatory=true",
+    "v_cpf: visible=true,mandatory=true",
+    "v_inform_the_desired_language_in_the_letter: visible=true,mandatory=true",
+    "v_label_sending_information: visible=true",
+    "v_full_home_address: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Type of care is Doubts ",
+   "when": "IO:v_type_of_care2=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Description , Attachment and Label If Subject is Refund Preview",
+   "when": "IO:v_what_is_the_subject_of_your_request=9^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_request_prior: visible=true",
+    "v_attachment: visible=true"
+   ]
+  },
+  {
+   "name": "EY:  If Subject is Refund Request",
+   "when": "IO:v_what_is_the_subject_of_your_request=11^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_you_can_request_reimbursements: visible=true",
+    "v_download_reembolso: visible=true",
+    "v_attachment: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If Subject is  Card number request",
+   "when": "IO:v_what_is_the_subject_of_your_request=10^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_medial_dental_card: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If Subject is Accredited network search",
+   "when": "IO:v_what_is_the_subject_of_your_request=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_care: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Label Register and Type of Care2 Visible if Maternity Program enrollment",
+   "when": "IO:v_what_is_the_subject_of_your_request=8^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_termo_anuencia: visible=true",
+    "v_type_of_care2: visible=true,mandatory=true",
+    "v_label_register_download: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Make description Mandatory",
+   "when": "IO:v_what_is_the_subject_of_your_requestIN5,6,11^ORIO:v_type_of_care2=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: End Date cannot be before Start Date",
+   "type": "onChange",
+   "on": "1fa6d1f21bbb5594a530426fe54bcbb8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que impede a data final de ser anterior à data inicial do turno."
+  },
+  {
+   "name": "EY: Fill CPF Field",
+   "type": "onChange",
+   "on": "6594153a1b7b5594a530426fe54bcb90",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o CPF a partir do colaborador selecionado, limpando quando o valor fica vazio."
+  },
+  {
+   "name": "EY: fill field email",
+   "type": "onChange",
+   "on": "6594153a1b7b5594a530426fe54bcb90",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o e-mail a partir do colaborador selecionado."
+  }
+ ]
+}

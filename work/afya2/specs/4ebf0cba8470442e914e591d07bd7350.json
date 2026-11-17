@@ -1,0 +1,108 @@
+{
+ "sys_id": "4ebf0cba8470442e914e591d07bd7350",
+ "status": "dividido",
+ "motivo": "Sala virtual pede o serviço (Teams, Zoom ou Youtube) e reserva de equipamentos; sala física pede local, dia e horário do evento. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_qual_e_o_servico": {
+   "label": "Qual serviço será usado na sala virtual?"
+  },
+  "v_havera_necessidade_de_reserva_de_equip": {
+   "label": "Será preciso reservar equipamentos para a sala virtual?"
+  },
+  "v_quais_equipamentos": {
+   "label": "Quais equipamentos você precisa?"
+  },
+  "v_descricao": {
+   "label": "Descreva sua solicitação com o máximo de detalhes."
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_qual_o_local": {
+   "label": "Em qual local será o evento?"
+  },
+  "v_qual_o_dia_e_horario_do_evento": {
+   "label": "Qual o dia e horário do evento?"
+  },
+  "v_havera_necessidade_de_reserva_de_eq_2": {
+   "label": "Será preciso reservar equipamentos para a sala física? Quais?"
+  }
+ },
+ "policies": {
+  "d72035bc22d74f6a8ff2dfce79b229e3": "remover",
+  "7b942641ecdd4963b8993595223def94": "remover"
+ },
+ "itens": [
+  {
+   "name": "Criar sala virtual para evento",
+   "short_description": "Peça a criação de uma sala virtual para um evento.",
+   "description": "Use para eventos online. Corresponde à opção Criar Sala Virtual para Evento. Informe o serviço (Teams, Zoom ou Youtube), se há reserva de equipamentos e descreva o evento.",
+   "frases_exemplo": [
+    "Preciso de uma sala virtual para um evento",
+    "Quero criar uma sala no Teams para um evento",
+    "Dá pra montar uma transmissão no Youtube?",
+    "Vou fazer um evento online e preciso de uma sala Zoom",
+    "Preciso de suporte para um evento virtual"
+   ],
+   "sem_vars": [
+    "v_qual_o_local",
+    "v_qual_o_dia_e_horario_do_evento",
+    "v_havera_necessidade_de_reserva_de_eq_2"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Criar Sala Virtual para Evento"
+   },
+   "vars": {
+    "v_qual_e_o_servico": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_havera_necessidade_de_reserva_de_equip": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Preparar sala física para evento",
+   "short_description": "Peça o preparo de uma sala física para um evento.",
+   "description": "Use para eventos presenciais. Corresponde à opção Preparar Sala Física para Evento. Informe o local, o dia e horário, os equipamentos necessários e descreva o evento.",
+   "frases_exemplo": [
+    "Preciso preparar uma sala para um evento presencial",
+    "Quero montar o auditório para uma palestra",
+    "Preciso de projetor e som numa sala amanhã",
+    "Vai ter um evento e preciso da sala pronta",
+    "Pode preparar a sala de reunião para um treinamento?"
+   ],
+   "sem_vars": [
+    "v_qual_e_o_servico",
+    "v_havera_necessidade_de_reserva_de_equip"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Preparar Sala Física para Evento"
+   },
+   "vars": {
+    "v_qual_o_local": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_qual_o_dia_e_horario_do_evento": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_havera_necessidade_de_reserva_de_eq_2": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

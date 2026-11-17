@@ -1,0 +1,63 @@
+{
+ "sys_id": "ea268c933bc1b610b28dd047f4e45a60",
+ "status": "conversacional",
+ "motivo": "Uma única oferta, sem variação de formulário.",
+ "vars": {
+  "payment_statement": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "reference_month": {
+   "label": "Qual é o mês de referência?"
+  }
+ },
+ "remover": {
+  "Observation_2": "visual",
+  "formatter2": "visual",
+  "cancellation_form": "oferta_inativa",
+  "Observation_3": "visual",
+  "container_start": "visual",
+  "observation": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "1ba20d133bc9b610b28dd047f4e45a4a": "remover",
+  "25b38d933bc9b610b28dd047f4e45a9f": "remover",
+  "589441573bc9b610b28dd047f4e45a17": "remover",
+  "a04341933bc9b610b28dd047f4e45ae1": "remover",
+  "a4f3cdd33bc9b610b28dd047f4e45ac8": "remover",
+  "c92449d33bc9b610b28dd047f4e45a06": "remover",
+  "cc6489173bc9b610b28dd047f4e45a18": "remover"
+ },
+ "itens": [
+  {
+   "name": "Divergência no desconto do auxílio-funeral",
+   "short_description": "Divergência no desconto do auxílio-funeral",
+   "description": "Use quando o desconto do auxílio-funeral estiver divergente. Informe o mês de referência e anexe o demonstrativo de pagamento.",
+   "frases_exemplo": [
+    "Desconto do auxílio-funeral errado",
+    "Descontaram auxílio-funeral a mais",
+    "Divergência no auxílio-funeral",
+    "Não concordo com o desconto do funeral"
+   ],
+   "vars": {
+    "payment_statement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ],
+ "scripts": {
+  "ecd1deb73bcdba10b28dd047f4e45a8b": {
+   "remover": {
+    "outro": "limpa campos sempre no onChange; coberto pela estrutura do derivado"
+   }
+  }
+ }
+}

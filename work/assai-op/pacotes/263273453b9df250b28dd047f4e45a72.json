@@ -1,0 +1,191 @@
+{
+ "sys_id": "263273453b9df250b28dd047f4e45a72",
+ "name": "Reembolso de óculos (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Reembolso de Óculos ou Lentes Corretivas",
+ "description": "Reembolso de &Oacute;culos ou Lentes Corretivas",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - CEP",
+   "perguntas": [
+    "vs_city_not_found",
+    "vs_cep",
+    "vs_country",
+    "vs_city",
+    "vs_number_cep",
+    "vs_address_street",
+    "vs_state",
+    "vs_state_not_found",
+    "vs_street_not_found",
+    "vs_neighbor_not_found",
+    "vs_complement",
+    "vs_neighborhood"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Não recebimento do reembolso de óculos ou lentes corretivas",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Reembolso de Óculos"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_proof_bank_details",
+    "v_agency",
+    "v_purchase_invoice",
+    "v_proof_address",
+    "v_position",
+    "v_medical_call",
+    "v_checking_account",
+    "v_bank"
+   ],
+   "passa_a_obrigatoria": [
+    "v_refund_request_number",
+    "v_attach_bank_statement"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação reembolso de óculos ou lentes corretivas",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Reembolso de Óculos"
+    }
+   ],
+   "sai_do_formulario": [
+    "v_refund_request_number",
+    "v_attach_bank_statement"
+   ],
+   "passa_a_obrigatoria": [
+    "v_proof_bank_details",
+    "v_agency",
+    "v_purchase_invoice",
+    "v_proof_address",
+    "v_position",
+    "v_medical_call",
+    "v_checking_account",
+    "v_bank"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_proof_bank_details",
+   "type": "Anexo",
+   "question_text": "Comprovante dos dados bancários",
+   "choices": []
+  },
+  {
+   "name": "v_agency",
+   "type": "Texto de Linha Única",
+   "question_text": "Agência",
+   "choices": []
+  },
+  {
+   "name": "v_purchase_invoice",
+   "type": "Anexo",
+   "question_text": "Nota fiscal da compra",
+   "choices": []
+  },
+  {
+   "name": "v_refund_request_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de reembolso",
+   "choices": []
+  },
+  {
+   "name": "v_proof_address",
+   "type": "Anexo",
+   "question_text": "Comprovante de endereço",
+   "choices": []
+  },
+  {
+   "name": "v_attach_bank_statement",
+   "type": "Anexo",
+   "question_text": "Anexar o comprovante bancário demonstrando o não recebimento do reembolso",
+   "choices": []
+  },
+  {
+   "name": "v_position",
+   "type": "Selecionar Caixa",
+   "question_text": "Cargo",
+   "choices": [
+    "Diretor",
+    "Gerente",
+    "Diretor Geral",
+    "Colaborador"
+   ]
+  },
+  {
+   "name": "v_medical_call",
+   "type": "Anexo",
+   "question_text": "Pedido médico (com carimbo e CRM do médico)",
+   "choices": []
+  },
+  {
+   "name": "v_checking_account",
+   "type": "Texto de Linha Única",
+   "question_text": "Conta Corrente (com dígito, se houver)",
+   "choices": []
+  },
+  {
+   "name": "v_bank",
+   "type": "Selecionar Caixa",
+   "question_text": "Banco",
+   "choices": [
+    "033 - Banco Santander S.A",
+    "047 - Banco do Estado de Sergipe S.A",
+    "237 - Bradesco BBI S.A",
+    "318 - Banco BMG S.A",
+    "323 - Mercadopago.Com Representacoes Ltda",
+    "341 - Itaú Unibanco Banco Múltiplo S.A",
+    "707 - Banco Daycoval S.A.",
+    "037 - Banco do Estado do Pará S.A",
+    "336 - Banco C6 S.A",
+    "004 - Banco do Nordeste do Brasil S.A",
+    "104 - Caixa Econômica Federal",
+    "041 - Banco do Estado do Rio Grande do Sul S.A (Banrisul)",
+    "077 - Banco Inter S.A",
+    "422 - Banco Safra S.A",
+    "745 - Banco Citibank S.A"
+   ]
+  }
+ ],
+ "tecnicas_ocultas": [
+  "v_open_case_account_sap"
+ ],
+ "client_scripts": []
+}

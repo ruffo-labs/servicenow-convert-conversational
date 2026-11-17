@@ -1,0 +1,380 @@
+{
+ "sys_id": "d11728221bff861007caeca12b4bcb08",
+ "name": "Movimentação de Pessoal - Lojas",
+ "category": "Movimentação de Pessoal",
+ "short_description": "Movimentação de Pessoal - Lojas",
+ "description": "Movimenta&ccedil;&atilde;o de Pessoal - Lojas",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Colaborador impactado 1",
+   "perguntas": [
+    "vs_employee_name_1",
+    "vs_employee_id_1",
+    "vs_employee_cpf_1",
+    "vs_will_there_be_a_salary_change",
+    "vs_employee_lg_position_code_1",
+    "vs_employee_cr_1",
+    "vs_employee_department_1",
+    "vs_current_salary_employee_1",
+    "vs_employee_establishment_1",
+    "vs_employee_role_1",
+    "vs_proposed_salary_employee_1",
+    "vs_employee_localization_1"
+   ]
+  },
+  {
+   "title": "Colaborador impactado 2",
+   "perguntas": [
+    "vs_employee_name_2",
+    "vs_current_salary_employee_2",
+    "vs_employee_cpf_2",
+    "vs_employee_id_2",
+    "vs_proposed_salary_employee_2",
+    "vs_will_there_be_a_salary_change_2",
+    "vs_employee_department_2",
+    "vs_employee_localization_2",
+    "vs_employee_lg_position_code_2",
+    "vs_employee_cr_2",
+    "vs_employee_role_2",
+    "vs_employee_establishment_2"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Remuneração e Estrutura",
+    "item": "Lojas - Movimentação de Pessoal"
+   },
+   "ofertas": [
+    {
+     "name": "Lojas - Movimentação de Pessoal - Solicitação de movimentação casada - Loja",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Remuneração"
+    },
+    {
+     "name": "Lojas - Movimentação de Pessoal - Solicitação de aprovação de movimentação de pessoal",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Remuneração e Estrutura N3"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 40H",
+     "SLA - GESTÃO DE GENTE - 24H"
+    ],
+    "support_group": [
+     "RH - Remuneração e Estrutura N3",
+     "RH - Remuneração"
+    ]
+   },
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Movimentação casada de pessoal em Loja",
+     "description": "Use para pedir a movimentação casada de pessoal em Lojas (oferta \"Lojas - Movimentação de Pessoal - Solicitação de movimentação casada - Loja\"). Informe a data de referência e os gerentes envolvidos quando necessário. O atendimento é do RH - Remuneração, com SLA de 24h."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_store_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente da Loja colaborador 2",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente da loja do colaborador 2?"
+  },
+  {
+   "name": "aprovador_1",
+   "type": "Referência",
+   "question_text": "Aprovador 1",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o primeiro aprovador da movimentação?"
+  },
+  {
+   "name": "v_divisional_hr_service_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional colaborador 1",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional do colaborador 1?"
+  },
+  {
+   "name": "v_store_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente da Loja colaborador 1",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente da loja do colaborador 1?"
+  },
+  {
+   "name": "estaacima_de_90_da_faixa_fora_da_politica",
+   "type": "Sim/Não",
+   "question_text": "Movimentação está fora da política?",
+   "choices": [],
+   "label_atual": "A movimentação está fora da política?"
+  },
+  {
+   "name": "v_regional_operations_manager",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Regional",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações regional?"
+  },
+  {
+   "name": "impacto_financeiro",
+   "type": "Sim/Não",
+   "question_text": "Impacto financeiro?",
+   "choices": []
+  },
+  {
+   "name": "aprovador_3",
+   "type": "Referência",
+   "question_text": "Aprovador 3",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "v_divisional_hr_service_manager",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional?"
+  },
+  {
+   "name": "aprovador_2",
+   "type": "Referência",
+   "question_text": "Aprovador 2",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "v_regional_operations_manager_employee_1",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Regional colaborador 1",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações regional do colaborador 1?"
+  },
+  {
+   "name": "v_movement_reference_date",
+   "type": "Data",
+   "question_text": "Data de referência da movimentação",
+   "choices": [],
+   "label_atual": "Qual é a data de referência da movimentação?"
+  },
+  {
+   "name": "v_divisional_hr_service_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente de Atendimento RH Divisional colaborador 2",
+   "reference": "sys_user_group",
+   "choices": [],
+   "label_atual": "Qual é o grupo do gerente de atendimento RH divisional do colaborador 2?"
+  },
+  {
+   "name": "v_store_manager",
+   "type": "Referência",
+   "question_text": "Gerente da Loja",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente da loja?"
+  },
+  {
+   "name": "aprovador_4",
+   "type": "Referência",
+   "question_text": "Aprovador 4",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "aprovador_5",
+   "type": "Referência",
+   "question_text": "Aprovador 5",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "aprovador_6",
+   "type": "Referência",
+   "question_text": "Aprovador 6",
+   "reference": "sys_user",
+   "choices": []
+  },
+  {
+   "name": "approver_group",
+   "type": "Referência",
+   "question_text": "Grupo Aprovador",
+   "reference": "sys_user_group",
+   "choices": []
+  },
+  {
+   "name": "v_regional_operations_manager_employee_2",
+   "type": "Referência",
+   "question_text": "Gerente de Operações Regional colaborador 2",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Quem é o gerente de operações regional do colaborador 2?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "0ed5158d87e00b10182a0d440cbb35e4",
+   "name": "ALP - Ocultar Informacoes do Impactado",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma lógica de ocultar informações do impactado, agora com a propriedade x_asat_csc.service_offering.sys_id.solicitacao_movimentacao_casada_loja (movimentação casada em Lojas): se a oferta escolhida for a da propriedade, oculta, desobriga e limpa os campos do impactado; senão, exibe e exige."
+  },
+  {
+   "sys_id": "1eadbdbe1bf74a1007caeca12b4bcbc9",
+   "name": "Aprovador 4",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_4, esconde as mensagens; se aprovador_3 estiver vazio, limpa aprovador_4 a 6 e mostra 'Necessário aprovador 3' em aprovador_4."
+  },
+  {
+   "sys_id": "43139cab87c15e10182a0d440cbb35d4",
+   "name": "ALP - Change Variable Name",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Igual ao script anterior, mas chama x_asat_csc.CSAAjax.getOffering com sysparm_cd_or_loja='loja'. Se o retorno for igual ao service_offering atual, rotula aprovador_1 como 'Aprovador'; senão 'Aprovador 1'. Versão para Lojas."
+  },
+  {
+   "sys_id": "60a275d03b6b2a10b28dd047f4e45a5c",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "617df1be1bf74a1007caeca12b4bcb83",
+   "name": "Aprovador 3",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_3, esconde as mensagens; se aprovador_2 estiver vazio, limpa aprovador_3 a 6 e mostra 'Necessário aprovador 2' em aprovador_3."
+  },
+  {
+   "sys_id": "724df97e1bf74a1007caeca12b4bcbfe",
+   "name": "Aprovador 2",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_2, esconde as mensagens dos aprovadores; se aprovador_1 estiver vazio, limpa aprovador_2 a 6 e mostra 'Necessário aprovador 1' em aprovador_2."
+  },
+  {
+   "sys_id": "77edbd321b3b4a1007caeca12b4bcbd9",
+   "name": "Aprovador 6",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_6, esconde as mensagens; se aprovador_5 estiver vazio, limpa aprovador_6 e mostra 'Necessário aprovador 5' em aprovador_6."
+  },
+  {
+   "sys_id": "83dcbdfa1bf74a1007caeca12b4bcb99",
+   "name": "Field Validation",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Verifica a cadeia de aprovadores 2 a 6: se um aprovador posterior está preenchido com o anterior vazio, mostra 'Não pode ter aprovador anterior vazio ao posterior' e bloqueia o envio."
+  },
+  {
+   "sys_id": "b79275d03b6b2a10b28dd047f4e45ab1",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "bacdf5fe1bf74a1007caeca12b4bcb95",
+   "name": "Aprovador 5",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_5, esconde as mensagens; se aprovador_4 estiver vazio, limpa aprovador_5 e 6 e mostra 'Necessário aprovador 4' em aprovador_5."
+  },
+  {
+   "sys_id": "d01a949d3bcfb250b28dd047f4e45acc",
+   "name": "CSA - Clean Grupo Aprovador",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa a variável approver_group."
+  },
+  {
+   "sys_id": "dc2d317e1bf74a1007caeca12b4bcbb8",
+   "name": "Aprovador 1",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de aprovador_1, esconde as mensagens de aprovador_2 a aprovador_6 e limpa os valores de aprovador_2 a aprovador_6 (alterar o primeiro aprovador zera a cadeia seguinte)."
+  },
+  {
+   "sys_id": "e7030dae1bf3c61007caeca12b4bcb95",
+   "name": "Variable Clean",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, se impacto_financeiro for 'No', limpa estaacima_de_90_da_faixa_fora_da_politica, aprovador_1 a aprovador_6 e approver_group."
+  }
+ ]
+}

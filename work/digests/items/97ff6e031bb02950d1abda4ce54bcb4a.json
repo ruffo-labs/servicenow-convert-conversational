@@ -1,0 +1,532 @@
+{
+ "sys_id": "97ff6e031bb02950d1abda4ce54bcb4a",
+ "name": "Logística de Transferência - Força de Vendas Natura",
+ "sys_name": "Transfer Logistics - Natura Sales Force",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Suporte à força de vendas",
+ "catalogs": "OTC Suporte à Força de Vendas e Recebíveis, Virtual Agent Search",
+ "short_description": "",
+ "description": "Chamado para solicitar auxilio para Logística de Transferência de Setor de Força de Vendas",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "36",
+   "variaveis_ativas": "46",
+   "bloqueadores": "0",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "36"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_proof_of_approval_from_your_area_hr: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_3st_quotation: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attention: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_1st_quotation: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_if_have_questions_about: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_2st_quotation: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_inform_the_new_sales_management: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_subcompany: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 36 de 36 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 36 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_if_have_questions_about",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_transfer_logistics_natura_sales_force",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Transfer Logistics - Natura Sales Force"
+  },
+  {
+   "name": "v_what_is_the_demand_for_the_call",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the demand for the call?",
+   "include_none": true,
+   "choices": [
+    "Ask questions about transfer [=ask_questions_about_transfer]",
+    "Request assistance in sector transfer [=request_assistance_in_sector_transfer]"
+   ]
+  },
+  {
+   "name": "v_inform_the_target_market",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Inform the target market",
+   "include_none": true,
+   "choices": [
+    "Mercado Amazônia [=mercado_amazonia]",
+    "Mercado Atlântica [=mercado_atlantica]",
+    "Mercado Araucária [=mercado_araucaria]",
+    "Mercado Cerrado [=mercado_cerrado]",
+    "Mercado Caatinga [=mercado_caatinga]"
+   ]
+  },
+  {
+   "name": "v_inform_the_new_sales_management",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Inform the new Sales Management",
+   "lookup": "x_nasm_finance_market_sector",
+   "ref_qual": "javascript:'market='+current.variables.v_inform_the_target_market",
+   "include_none": true
+  },
+  {
+   "name": "v_if_you_cannot_find_the_new_sales_management",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "If you cannot find the new Sales Management, type it here"
+  },
+  {
+   "name": "v_if_you_cannot_find_the_new_sector",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "If you cannot find the new Sector, type it here"
+  },
+  {
+   "name": "v_area_hr_hr_bp_responsible_for_the_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Area HR (HR BP) responsible for the employee"
+  },
+  {
+   "name": "v_proof_of_approval_from_your_area_hr",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach proof of approval from your area HR"
+  },
+  {
+   "name": "v_enter_your_origin_address_below",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Enter your origin address below"
+  },
+  {
+   "name": "v_zip_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Zip code",
+   "example": "00000-000"
+  },
+  {
+   "name": "v_street_av_park",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Street/Av/Park"
+  },
+  {
+   "name": "v_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Number"
+  },
+  {
+   "name": "v_complement",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complement"
+  },
+  {
+   "name": "v_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "v_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "City"
+  },
+  {
+   "name": "v_state",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "State"
+  },
+  {
+   "name": "v_destination_address_below",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Enter the destination address below"
+  },
+  {
+   "name": "v_transportation_required_by_personal_vehicle",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is transportation required by personal vehicle?",
+   "include_none": true
+  },
+  {
+   "name": "v_inform_vehicle_brand",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform vehicle brand"
+  },
+  {
+   "name": "v_inform_vehicle_model",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform vehicle model"
+  },
+  {
+   "name": "v_enter_the_year_of_the_vehicle",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Enter the year of the vehicle"
+  },
+  {
+   "name": "v_license_plate",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the license plate",
+   "example": "AAA0000 or AAA0A00"
+  },
+  {
+   "name": "v_transportation_required_for_corporate_vehicle",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is transportation required for corporate vehicle?",
+   "include_none": true
+  },
+  {
+   "name": "v_corporate_vehicle_supplier",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Inform the Corporate Vehicle supplier",
+   "include_none": true,
+   "choices": [
+    "Arval [=arval]",
+    "Leaseplan [=leaseplan]"
+   ]
+  },
+  {
+   "name": "v_the_quote_for_the_corporate_vehicle",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "The quote for the corporate vehicle will be carried out by the Natura&CO Fleet supplier."
+  },
+  {
+   "name": "v_is_a_trailer_required_for_moving",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Is a trailer required for moving?",
+   "include_none": true
+  },
+  {
+   "name": "v_3_different_quotes_for_shipping",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Attach 3 different quotes for shipping."
+  },
+  {
+   "name": "v_attention",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_attach_1st_quotation",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach 1st quotation"
+  },
+  {
+   "name": "v_attach_2st_quotation",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach 2st quotation"
+  },
+  {
+   "name": "v_attach_3st_quotation",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach 3st quotation"
+  },
+  {
+   "name": "v_type_of_doubt_do_you_have",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What type of doubt do you have?",
+   "include_none": true,
+   "choices": [
+    "Air [=air]",
+    "Reel hiring [=reel_hiring]",
+    "Accommodation [=accommodation]",
+    "Process Rules [=process_rules]",
+    "Corporate Car Transport [=corporate_car_transport]",
+    "Personal Car Transport [=personal_car_transport]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_inform_your_doubt",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "inform your doubt"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "724f41271b446dd8a530426fe54bcb28",
+   "name": "EY: Opened by - Requested for data",
+   "order": "200",
+   "perguntas": [
+    "vs_opened_by (Referência, default, ro): Opened by",
+    "vs_requested_for (Referência, default): Requested for",
+    "vs_registration (Texto de Linha Única, ro): Matriculation",
+    "vs_area (Referência): Inform the area",
+    "vs_email (Texto de Linha Única): Inform the email",
+    "vs_phone_number (Texto de Linha Única): Inform contact phone number"
+   ]
+  },
+  {
+   "sys_id": "2c876b8b1b0ca5d8a530426fe54bcbdc",
+   "name": "EY: Company: Natura/Avon/TBS - Subcompany",
+   "order": "300",
+   "perguntas": [
+    "vs_company (Selecionar Caixa): Which company?",
+    "vs_subcompany (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "9385c79d1bb71d14a530426fe54bcb24",
+   "name": "EY: Additional information",
+   "order": "4300",
+   "perguntas": [
+    "vs_additional_information (Texto de Várias Linhas): Additional information"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "4400",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If \"Enter the name of the new sector\" is \"Other\"",
+   "when": "IO:v_enter_the_name_of_the_new_sector=OUTRO^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_if_you_cannot_find_the_new_sector: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Is a Reel Needed for Moving?\" for \"Yes\"",
+   "when": "IO:v_is_a_trailer_required_for_moving=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attention: visible=true",
+    "v_attach_3st_quotation: visible=true,mandatory=true",
+    "v_attach_2st_quotation: visible=true,mandatory=true",
+    "v_3_different_quotes_for_shipping: visible=true",
+    "v_attach_1st_quotation: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Inform new Sales Management\" is \"Other\"",
+   "when": "IO:v_inform_the_new_sales_management=OUTRA^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_if_you_cannot_find_the_new_sales_management: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Is transportation required for corporate vehicle?\" for \"Yes\"",
+   "when": "IO:v_transportation_required_for_corporate_vehicle=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_corporate_vehicle_supplier: visible=true,mandatory=true",
+    "v_the_quote_for_the_corporate_vehicle: visible=true"
+   ]
+  },
+  {
+   "name": "EY: What is the demand for the call?",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_is_the_demand_for_the_call: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"What demand of the calling?\" for \"Ask questions about transfer\"",
+   "when": "IO:v_what_is_the_demand_for_the_call=ask_questions_about_transfer^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_doubt_do_you_have: visible=true,mandatory=true",
+    "v_inform_your_doubt: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"What demand of the calling?\" for \"Request Sector Transfer Assistance\"",
+   "when": "IO:v_what_is_the_demand_for_the_call=request_assistance_in_sector_transfer^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_city_destination: visible=true,mandatory=true",
+    "v_neighborhood_destination: visible=true,mandatory=true",
+    "v_enter_the_name_of_the_new_sector: visible=true,mandatory=true",
+    "v_complement_destination: visible=true",
+    "v_inform_the_target_market: visible=true,mandatory=true",
+    "v_destination_zip_code: visible=true,mandatory=true",
+    "v_street_av_park: visible=true,mandatory=true",
+    "v_transportation_required_for_corporate_vehicle: visible=true,mandatory=true",
+    "v_state: visible=true,mandatory=true",
+    "v_number: visible=true,mandatory=true",
+    "v_city: visible=true,mandatory=true",
+    "v_area_hr_hr_bp_responsible_for_the_employee: visible=true,mandatory=true",
+    "v_is_a_trailer_required_for_moving: visible=true,mandatory=true",
+    "v_neighborhood: visible=true,mandatory=true",
+    "v_state_destination: visible=true,mandatory=true",
+    "v_proof_of_approval_from_your_area_hr: visible=true,mandatory=true",
+    "v_inform_the_new_sales_management: visible=true,mandatory=true",
+    "v_transportation_required_by_personal_vehicle: visible=true,mandatory=true",
+    "v_complement: visible=true",
+    "v_zip_code: visible=true,mandatory=true",
+    "v_number_destination: visible=true,mandatory=true",
+    "v_enter_your_origin_address_below: visible=true",
+    "v_destination_address_below: visible=true",
+    "v_street_av_park_destination: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Personal vehicle transportation required?\" for \"Yes\"",
+   "when": "IO:v_transportation_required_by_personal_vehicle=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_vehicle_model: visible=true,mandatory=true",
+    "v_inform_vehicle_brand: visible=true,mandatory=true",
+    "v_enter_the_year_of_the_vehicle: visible=true,mandatory=true",
+    "v_license_plate: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate license plate",
+   "type": "onChange",
+   "on": "940e90541b5de118a530426fe54bcb19",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida placa de veículo. A regex aceita três letras, um dígito, um caractere que pode ser letra ou dígito e mais dois dígitos — cobre tanto placa antiga quanto Mercosul. Inválido: limpa 'v_license_plate' e mostra erro."
+  },
+  {
+   "name": "EY: Clear Field Doubt",
+   "type": "onChange",
+   "on": "59b2a81c1b9de118a530426fe54bcbca",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_inform_your_doubt' quando o campo anterior muda."
+  },
+  {
+   "name": "EY: Clear field Market",
+   "type": "onChange",
+   "on": "0eaaa3731b016dd4a530426fe54bcb8c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de mercado: nova gerência de vendas, alternativa quando a gerência não é encontrada, nome do novo setor e a alternativa correspondente."
+  },
+  {
+   "name": "EY: Clear field corporate vehicle",
+   "type": "onChange",
+   "on": "9bee14981b5de118a530426fe54bcb24",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_corporate_vehicle_supplier'."
+  },
+  {
+   "name": "EY: Clear destination zip code",
+   "type": "onChange",
+   "on": "0b3ef4441b9dadd4a530426fe54bcb54",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa número e complemento do endereço de destino quando o CEP de destino muda."
+  },
+  {
+   "name": "EY: clear zip code",
+   "type": "onChange",
+   "on": "4fb7348c1bd9add4a530426fe54bcb57",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa número e complemento do endereço quando o CEP muda."
+  },
+  {
+   "name": "EY: Clear Fields",
+   "type": "onChange",
+   "on": "0b39e7f71bcd2dd4a530426fe54bcb2b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de limpeza ampla: informações adicionais, tipo de dúvida, descrição da dúvida, mercado alvo e demais campos dependentes."
+  },
+  {
+   "name": "EY: Clear Field Trailer",
+   "type": "onChange",
+   "on": "174024101b9de118a530426fe54bcba2",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa as três cotações anexadas (1ª, 2ª e 3ª) quando o campo anterior muda. Observação: os nomes das variáveis estão como '2st' e '3st' em vez de '2nd' e '3rd'."
+  },
+  {
+   "name": "EY: Validate zip code destination",
+   "type": "onChange",
+   "on": "0b3ef4441b9dadd4a530426fe54bcb54",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o CEP de destino exigindo o hífen (00000-000). Inválido: limpa e mostra 'CEP Inválido'. Mais restrito que outros validadores de CEP do projeto, que aceitam o hífen como opcional."
+  },
+  {
+   "name": "EY: Clear Field sector",
+   "type": "onChange",
+   "on": "a6de68481b19add4a530426fe54bcb01",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_if_you_cannot_find_the_new_sector'."
+  },
+  {
+   "name": "EY: Validate zip code",
+   "type": "onChange",
+   "on": "4fb7348c1bd9add4a530426fe54bcb57",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida CEP exigindo o hífen (00000-000). Inválido: limpa 'v_zip_code' e mostra 'CEP Inválido'."
+  },
+  {
+   "name": "EY: Clear field personal vehicle",
+   "type": "onChange",
+   "on": "c75d18901b5de118a530426fe54bcb7f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os dados do veículo pessoal: marca, modelo, ano e placa."
+  },
+  {
+   "name": "EY: Clear Field Sales management",
+   "type": "onChange",
+   "on": "d09864441b95add4a530426fe54bcb3b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_if_you_cannot_find_the_new_sales_management'."
+  }
+ ]
+}

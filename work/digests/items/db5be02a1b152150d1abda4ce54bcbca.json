@@ -1,0 +1,187 @@
+{
+ "sys_id": "db5be02a1b152150d1abda4ce54bcbca",
+ "name": "Pagamento de Pré-edição",
+ "sys_name": "FORM0000472",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Pagamentos",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Solicite o pagamento manual para um fornecedor, impostos ou taxas",
+ "description": "Solicite o pagamento manual para um fornecedor, impostos ou taxas",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "23",
+   "variaveis_ativas": "24",
+   "bloqueadores": "1",
+   "avisos": "14",
+   "perguntas_sem_conversational_label": "23"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Approver PopUp"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @label_obrigatoriedade_anexos: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_select_the_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 23 de 23 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 23 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_select_the_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user",
+   "ref_qual": "active=true^x_nasm_hr_range>=G^EQ"
+  },
+  {
+   "name": "label_obrigatoriedade_anexos",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "1e8472371bd5ad50a530426fe54bcb5e",
+   "name": "EY VS - Solicitar Pagamentos Manuais Variable",
+   "order": "200",
+   "perguntas": [
+    "v_what_is_the_payment_category (Selecionar Caixa): What is the payment category",
+    "v_document_number (Texto de Linha Única): Document number",
+    "v_currency (Selecionar Caixa): Currency",
+    "v_value (Texto de Linha Única): Value",
+    "v_payment_date (Data): Payment Date",
+    "v_due_date (Data): Due date",
+    "v_payment_description (Texto de Várias Linhas): Payment Description"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "300",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read Only Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "ey_vs_empresas_natura: readonly=true",
+    "ey_vs_informa_oes_anexo: readonly=true",
+    "ey_vs_solicitar_pagamentos_manuais_variable: readonly=true"
+   ]
+  },
+  {
+   "name": "Descrição do Pagamento Visible",
+   "when": "IO:v_what_is_the_payment_category=others^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_description: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Variavies Obrigatorias ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_description: ",
+    "v_additional_information: ",
+    "v_is_your_request_for_which_company: ",
+    "v_currency: mandatory=true",
+    "v_what_is_the_payment_category: mandatory=true",
+    "v_document_number: mandatory=true",
+    "v_opened_by: ",
+    "v_attachment: mandatory=true",
+    "v_due_date: mandatory=true",
+    "v_payment_date: mandatory=true",
+    "v_country: ",
+    "v_which_sub_company_is_the_service_for: ",
+    "v_value: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Exibir type of request",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_type_of_request: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Approver",
+   "when": "IO:vs_which_sub_company!=8c14f4d61b0acd10237642ece54bcb3e^IO:vs_which_sub_company!=9b4951991b58d250514cbaef4b4bcbc8^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_the_approver: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Clean Approver Field",
+   "type": "onChange",
+   "on": "60be47c81b29a590a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o aprovador selecionado quando a escolha cai em um de dois sys_ids fixos no código."
+  },
+  {
+   "name": "EY: Approver PopUp",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que exibe um aviso de mudança de processo, traduzido por idioma: informa que as aprovações passam a ser feitas no próprio ticket e pede a seleção de um gestor nível G+. Tem uma data de expiração cravada no código ('2026-07-24') — data já passada, então vale conferir se o aviso ainda deveria estar aparecendo."
+  }
+ ]
+}

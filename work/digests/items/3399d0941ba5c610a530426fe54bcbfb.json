@@ -1,0 +1,67 @@
+{
+ "sys_id": "3399d0941ba5c610a530426fe54bcbfb",
+ "name": "Informações ou dúvidas relacionadas a movimentação de pessoal e estrutura",
+ "sys_name": "Information or questions related to the movement of personnel and structure",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Gestão de Pessoas e Estrutura",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Este é um formulário para temas sem formulário específico e/ou não contemplados nos materiais de apoio disponíveis sobre Informações ou Dúvidas relacionadas a movimentação de pessoal e estrutura",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "1",
+   "variaveis_ativas": "2",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "1"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @when_use_this_form: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 1 de 1 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Controle de Jornada. Define requested_for como o usuário logado e grava item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "when_use_this_form",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "\"Quando usar este formulário:\r\n- Quando você acredita que este é um serviço que a CSC (Centro de Serviços Compartilhados) fornece.\r\n- Quando não encontra o serviço que procura no Catálogo de Serviços.\r\n- Quando não encontra o serviço que procura na Base de Conhecimentos.\""
+  },
+  {
+   "name": "v_description_details",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the field below to detail your request"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_description_details: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Minimum caracter ",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que valida o tamanho mínimo de 'v_description_details' antes de permitir o envio."
+  }
+ ]
+}

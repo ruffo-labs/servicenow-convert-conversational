@@ -1,0 +1,17 @@
+[{
+  "sys_id": "f0c3ffec20724a7b909e3c5083aa6cf1",
+  "titulo": "Dados do solicitante",
+  "usado_por": 122,
+  "recomendacao": "ajustar",
+  "esforco": "baixo",
+  "resumo": "Set compartilhado pelos 122 itens: ajustar uma vez resolve todos. Não tem UI policy e tem 1 client script (e-mail) ainda não implementado.",
+  "perguntas": [
+    { "variavel": "vs_solicitado_por", "acao": "ocultar_na_conversa", "obs": "Tem default gs.getUserID(): pode sair da conversa (not_available_conversation) sem perda de dado." },
+    { "variavel": "vs_email", "acao": "ocultar_na_conversa", "obs": "Somente leitura, derivado do solicitante. Trocar o client script por auto-populate/default (script marcado como ainda não implementado)." },
+    { "variavel": "vs_alterar_filial_atendimento", "acao": "manter", "conversational_label": "Você quer alterar a filial de atendimento?", "obs": "Sim/Não com default No. Incluir 'Include None' se for perguntada." },
+    { "variavel": "vs_filial", "acao": "manter", "conversational_label": "Para qual filial será o atendimento?", "obs": "Só faz sentido se vs_alterar_filial_atendimento = Sim: criar UI policy no set (visible/mandatory condicionais)." },
+    { "variavel": "vs_numero_telefone", "acao": "manter", "conversational_label": "Qual o seu telefone para contato?", "obs": "Obrigatória. Avaliar preencher pelo cadastro do usuário para não perguntar." },
+    { "variavel": "vs_disponibilidade_contato", "acao": "manter", "conversational_label": "Em que horário podemos falar com você?", "obs": "Select box com default Business hours; pode ser assumido sem perguntar." }
+  ],
+  "observacoes": "A decisão sobre o set é do time de ServiceNow: a spec dos itens não altera variáveis de set (o set é compartilhado)."
+}]

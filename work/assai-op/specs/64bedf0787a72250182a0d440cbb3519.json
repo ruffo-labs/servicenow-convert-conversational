@@ -1,0 +1,175 @@
+{
+ "sys_id": "64bedf0787a72250182a0d440cbb3519",
+ "status": "dividido",
+ "motivo": "Três ofertas: divergência na Neolude (evidência e tipo), divergência no indicador (evidência e se é da Expansão) e expurgo (justificativa).",
+ "vars": {
+  "att_evidencia_indicador": {
+   "label": "Envie a evidência do indicador."
+  },
+  "v_justificativa_expurgo": {
+   "label": "Qual é a justificativa para o expurgo?"
+  },
+  "v_colaborador_expansao": {
+   "label": "O colaborador é da Expansão?"
+  },
+  "att_evidencia_divergencia": {
+   "label": "Envie a evidência da divergência."
+  },
+  "att_evidencia_expurgo": {
+   "label": "Envie a evidência do expurgo."
+  },
+  "v_informe_divergencia": {
+   "label": "Qual é a divergência?"
+  }
+ },
+ "remover": {
+  "obs_divergencia_indicador": "visual",
+  "obs_demissao_voluntaria": "visual",
+  "obs_evidencia_divergencia": "visual",
+  "obs_abandono_emprego": "visual"
+ },
+ "policies": {
+  "1bf204e387ef6250182a0d440cbb35f4": "remover",
+  "3e4808eb87ef6250182a0d440cbb359c": "remover",
+  "409704eb87ef6250182a0d440cbb35bf": "remover",
+  "65e744eb87ef6250182a0d440cbb35a3": "remover",
+  "7e088ceb87ef6250182a0d440cbb359b": "remover",
+  "8d220ffd87117650182a0d440cbb358e": "remover",
+  "95f5c4e787ef6250182a0d440cbb3581": "remover",
+  "c7714bbd87117650182a0d440cbb3523": "remover",
+  "ca4500e787ef6250182a0d440cbb3558": "remover",
+  "e9c1c3fd87117650182a0d440cbb35d0": "remover",
+  "f86348e387ef6250182a0d440cbb3591": "remover",
+  "nova_g1_1": {
+   "short_description": "CSA - Colaborador expansão (Não)",
+   "conditions": "v_colaborador_expansao=No",
+   "actions": {
+    "att_evidencia_indicador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_2": {
+   "short_description": "CSA - Colaborador expansão (Não) (Resolvedora)",
+   "conditions": "v_colaborador_expansao=No",
+   "actions": {
+    "att_evidencia_indicador": {
+     "visible": true
+    }
+   }
+  },
+  "nova_g2_1": {
+   "short_description": "CSA - Anexo (Solicitação de expurgo)",
+   "conditions": "v_justificativa_expurgo!=",
+   "actions": {
+    "att_evidencia_expurgo": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g2_4": {
+   "short_description": "CSA - Anexo (Solicitação de expurgo) (Resolvedora)",
+   "conditions": "v_justificativa_expurgo!=",
+   "actions": {
+    "att_evidencia_expurgo": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Divergência na plataforma Neolude",
+   "short_description": "Reportar divergência na plataforma Neolude",
+   "description": "Use quando há problema de cadastro ou turma na plataforma Neolude no Programa Seja Bem-vindo ao Assaí. Corresponde à oferta Divergência na plataforma Neolude.",
+   "frases_exemplo": [
+    "Não consigo cadastrar na turma da Neolude",
+    "Turma não aparece na Neolude",
+    "Neolude está indisponível",
+    "Colaborador sem turma no Seja Bem-vindo"
+   ],
+   "sem_vars": [
+    "att_evidencia_indicador",
+    "v_justificativa_expurgo",
+    "v_colaborador_expansao",
+    "att_evidencia_expurgo"
+   ],
+   "vars": {
+    "att_evidencia_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_informe_divergencia": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_2",
+    "nova_g2_1",
+    "nova_g2_4"
+   ]
+  },
+  {
+   "name": "Divergência no indicador do Seja Bem-vindo",
+   "short_description": "Reportar divergência no indicador do programa",
+   "description": "Use quando o indicador do programa Seja Bem-vindo ao Assaí está divergente. Corresponde à oferta Divergência no indicador do programa Seja Bem-vindo ao Assaí.",
+   "frases_exemplo": [
+    "O indicador do programa está errado",
+    "Meu indicador do Seja Bem-vindo não bate",
+    "Divergência no indicador de integração",
+    "Contestar o indicador do programa"
+   ],
+   "sem_vars": [
+    "v_justificativa_expurgo",
+    "att_evidencia_divergencia",
+    "att_evidencia_expurgo",
+    "v_informe_divergencia"
+   ],
+   "vars": {
+    "v_colaborador_expansao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g2_1",
+    "nova_g2_4"
+   ]
+  },
+  {
+   "name": "Expurgar colaborador do indicador Seja Bem-vindo",
+   "short_description": "Solicitar expurgo do indicador do programa",
+   "description": "Use para retirar um colaborador do indicador do programa, por demissão voluntária ou abandono de emprego. Corresponde à oferta Solicitação de expurgo do indicador do programa.",
+   "frases_exemplo": [
+    "Tirar colaborador do indicador",
+    "Expurgo por pedido de demissão",
+    "Expurgar quem abandonou o emprego",
+    "Solicitar expurgo no Seja Bem-vindo"
+   ],
+   "sem_vars": [
+    "att_evidencia_indicador",
+    "v_colaborador_expansao",
+    "att_evidencia_divergencia",
+    "v_informe_divergencia"
+   ],
+   "vars": {
+    "v_justificativa_expurgo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_2"
+   ]
+  }
+ ]
+}

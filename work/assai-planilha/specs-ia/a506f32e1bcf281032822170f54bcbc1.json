@@ -1,0 +1,161 @@
+{
+ "sys_id": "a506f32e1bcf281032822170f54bcbc1",
+ "status": "dividido",
+ "motivo": "Item da planilha: Gestor - RH Ponta > Preciso reportar um problema > Folha de Pagamento, com 7 oferta(s); Gestor - RH Ponta > Preciso de um serviço de RH > Folha de Pagamento, com 9 oferta(s). 1 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): ALP - Solicitação de alteração/ atualização de feriados.",
+ "vars": {
+  "rh_month_payment": {
+   "label": "Em que mês foi o pagamento?"
+  },
+  "rh_previous_requesting": {
+   "label": "Qual é o número do chamado anterior que pediu a isenção?"
+  },
+  "v_union_mandate": {
+   "label": "Envie o mandato sindical."
+  },
+  "rh_contribution_type": {
+   "label": "Qual é o tipo de contribuição?"
+  },
+  "rh_cnpj_store": {
+   "label": "Qual é o CNPJ da loja?"
+  },
+  "v_month": {
+   "label": "Qual é a competência (mês)?"
+  },
+  "rh_branch": {
+   "label": "Qual é a filial?"
+  },
+  "rh_business_date": {
+   "label": "Qual é a data do dia do comerciário?"
+  },
+  "rh_union_region": {
+   "label": "Qual região o sindicato atende?"
+  },
+  "v_what_payment": {
+   "label": "A qual pagamento isso se refere?"
+  },
+  "rh_union_name": {
+   "label": "Qual é o nome do sindicato?"
+  },
+  "event_date": {
+   "label": "Qual é a data do evento?"
+  },
+  "rh_cnpj_union": {
+   "label": "Qual é o CNPJ do sindicato?"
+  },
+  "rh_holiday_changed": {
+   "label": "Qual feriado deve ser alterado?"
+  },
+  "csa_attatchment": {
+   "label": "Envie o anexo."
+  },
+  "rh_discount_month": {
+   "label": "Em que mês foi o desconto?"
+  }
+ },
+ "remover": {
+  "rh_observation_queue_brasilia_dourados": "visual",
+  "formatter4": "visual",
+  "rh_observation_sheet_standard": "visual",
+  "rh_observation_convention": "visual",
+  "rh_observation_payment_ticket": "visual",
+  "rh_observation_letter_docs": "visual",
+  "rh_observation_payment_withdrawal": "visual",
+  "observacao_desconto_domingo_e_feriado": "visual",
+  "rh_observation_opposition_letter": "visual",
+  "rh_protocol_number": "oferta_inativa",
+  "rh_observation_adhesion_signed": "visual",
+  "start_container": "visual",
+  "rh_observacao_domingo_feriado": "visual",
+  "rh_observation_doc_additional": "visual",
+  "formatter3": "visual",
+  "rh_observation_form_central": "visual"
+ },
+ "policies": {
+  "0011c84b1b036050eca40dcbe54bcbd9": "remover",
+  "074e67761b030690347221bbe54bcbb7": "remover",
+  "1f7e426a1bca7590347221bbe54bcb66": {
+   "conditions": "service_offering=051b0e621bca7590347221bbe54bcb2c",
+   "actions": {
+    "aux_widget": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "2939083a1b83681032822170f54bcbe7": "remover",
+  "2c738c831b436050eca40dcbe54bcb9a": "remover",
+  "6939083a1b83681032822170f54bcbe4": {
+   "conditions": "service_offering=b5d1af541b47649032822170f54bcb1b",
+   "actions": {
+    "rh_holiday_changed": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "80df80bc1b852d1032822170f54bcb54": "remover",
+  "85ef3bb61b036050eca40dcbe54bcbba": "remover",
+  "89c380c31b436050eca40dcbe54bcb49": "remover",
+  "9850000b1b036050eca40dcbe54bcbcf": "remover",
+  "c961c0cb1b036050eca40dcbe54bcb91": "remover",
+  "e482c88f1b036050eca40dcbe54bcb20": "remover",
+  "e922cc4f1b036050eca40dcbe54bcb51": "remover"
+ },
+ "itens": [
+  {
+   "name": "Sindicatos (reportar problema)",
+   "short_description": "Reportar divergência, não recebimento ou desconto indevido em pagamentos sindicais.",
+   "description": "Use para reportar problemas de pagamento ligados a sindicatos: desconto indevido de contribuição assistencial, divergência de bônus ou gratificação, não recebimento de quebra de caixa, de gratificação ou do dia do comerciário, e pagamento ou desconto indevido de gratificação de domingos e feriados. Também serve para pedir confirmação de pagamentos de obrigações sindicais.",
+   "frases_exemplo": [
+    "Colaborador não recebeu a quebra de caixa",
+    "Descontaram contribuição assistencial indevidamente",
+    "O dia do comerciário veio com valor errado",
+    "Gratificação de domingo foi paga errado",
+    "Preciso confirmar o pagamento das obrigações sindicais"
+   ],
+   "sem_vars": [
+    "v_union_mandate",
+    "event_date",
+    "rh_holiday_changed",
+    "csa_attatchment"
+   ],
+   "sem_policies": [
+    "3dd8833187917650182a0d440cbb3557",
+    "6939083a1b83681032822170f54bcbe4",
+    "c44b64e5878812900ac543370cbb3500",
+    "e8784f891b9b6510347221bbe54bcb5f"
+   ]
+  },
+  {
+   "name": "Sindicatos (solicitação)",
+   "short_description": "Pedir serviços de RH ligados a sindicatos, como contribuições, gratificações e mandatos.",
+   "description": "Use para solicitar serviços sindicais: envio de boletos e guias, adesão ou isenção de contribuições, pagamento e contabilização de gratificação de domingos, feriados e inventário, alteração de feriados, adiantamento de auxílio-doença ou acidente (CCT) e cadastro de mandato ou estabilidade sindical.",
+   "frases_exemplo": [
+    "Preciso dos boletos das contribuições sindicais",
+    "Quero lançar o pagamento da gratificação de domingo",
+    "Cadastrar mandato sindical de um colaborador",
+    "Pedir adesão às contribuições sindicais",
+    "Solicitar adiantamento de auxílio-doença pela CCT"
+   ],
+   "sem_vars": [
+    "rh_previous_requesting",
+    "v_month",
+    "rh_branch",
+    "rh_business_date",
+    "rh_union_region",
+    "v_what_payment",
+    "rh_discount_month",
+    "formatter_start",
+    "formatter",
+    "formatter2"
+   ],
+   "sem_policies": [
+    "72519f1f1bae911032822170f54bcb71",
+    "9b21d71f1bae911032822170f54bcb7b",
+    "a939083a1b83681032822170f54bcbe1",
+    "e0cd6b851ba65910347221bbe54bcb4a",
+    "e939083a1b83681032822170f54bcbde"
+   ]
+  }
+ ]
+}

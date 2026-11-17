@@ -1,0 +1,146 @@
+{
+ "sys_id": "d145c5a93bd1b650b28dd047f4e45a31",
+ "name": "Vale-compras Assaí (Autoatendimento)",
+ "category": "Operação de Benefícios",
+ "short_description": "Vale-compras Assaí",
+ "description": "Vale-compras Assa&iacute;",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Divergência no valor recebido da cesta de Natal",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Assaí"
+    }
+   ],
+   "sai_do_formulario": [
+    "Month_which_the_loan_was_granted",
+    "v_ticket_number"
+   ],
+   "passa_a_obrigatoria": [
+    "was_there_separation",
+    "reason_for_request"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Não recebimento do vale-compras Assaí",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Assaí"
+    }
+   ],
+   "sai_do_formulario": [
+    "reason_for_request",
+    "v_ticket_number"
+   ],
+   "passa_a_obrigatoria": [
+    "Month_which_the_loan_was_granted",
+    "was_there_separation"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 2,
+   "ofertas": [
+    {
+     "name": "Solicitação de reembolso de vale-compras assaí (falta injustificada) - Vale-compras Assai",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Compras Assaí"
+    }
+   ],
+   "sai_do_formulario": [
+    "Month_which_the_loan_was_granted",
+    "was_there_separation"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "Month_which_the_loan_was_granted",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de concessão do crédito",
+   "choices": [
+    "Outubro",
+    "Agosto",
+    "Fevereiro",
+    "Dezembro",
+    "Novembro",
+    "Junho",
+    "Março",
+    "Setembro",
+    "Maio",
+    "Julho",
+    "Janeiro",
+    "Abril"
+   ]
+  },
+  {
+   "name": "was_there_separation",
+   "type": "Selecionar Caixa",
+   "question_text": "Houve afastamento?",
+   "choices": [
+    "Não",
+    "Sim"
+   ]
+  },
+  {
+   "name": "reason_for_request",
+   "type": "Selecionar Caixa",
+   "question_text": "Motivo da solicitação",
+   "choices": [
+    "Não recebimento do crédito",
+    "Divergência no valor recebido"
+   ]
+  },
+  {
+   "name": "v_ticket_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "812a01693b15b650b28dd047f4e45a78",
+   "name": "ALP - Clear form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa reason_for_request, was_there_separation e Month_which_the_loan_was_granted (sempre)."
+  }
+ ]
+}

@@ -1,0 +1,375 @@
+{
+ "sys_id": "bd7ff4121bb41690514cbaef4b4bcb86",
+ "name": "Solicitação de modificação de Dados Pessoais",
+ "sys_name": "Request for Modification of Personal Data",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Dados Pessoais",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Uso exclusivo público operacional: Utilize este formulário para solicitar modificações em dados pessoais",
+ "description": "Uso exclusivo público operacional: Utilize este formulário para solicitar modificações em dados pessoais",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "34",
+   "variaveis_ativas": "39",
+   "bloqueadores": "1",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "34"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Add options onChange"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_message_2: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_minimum_characters: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_message_physical_bank: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_message_data: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_message_1: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 34 de 34 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 34 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "v_select_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select category",
+   "include_none": true,
+   "choices": [
+    "Personal data [=data]",
+    "Change bank account [=bank]",
+    "Address [=address]",
+    "Dependents [=dependents]"
+   ]
+  },
+  {
+   "name": "v_cbu",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CBU",
+   "include_none": true
+  },
+  {
+   "name": "v_bank_account_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank Account Number",
+   "include_none": true
+  },
+  {
+   "name": "v_bank_account_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Bank Account Type",
+   "include_none": true,
+   "choices": [
+    "Savings Account [=saving]",
+    "Current Account [=current]",
+    "Checking Account [=checking]",
+    "Others [=others]"
+   ]
+  },
+  {
+   "name": "v_message_data",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_bank_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank Name"
+  },
+  {
+   "name": "v_message_physical_bank",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_calle",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Calle"
+  },
+  {
+   "name": "v_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Nº"
+  },
+  {
+   "name": "v_floor",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Floor"
+  },
+  {
+   "name": "v_dept",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Dept"
+  },
+  {
+   "name": "v_between_streets",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Between Streets"
+  },
+  {
+   "name": "v_neighborhood",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Neighborhood"
+  },
+  {
+   "name": "v_location_form",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Location"
+  },
+  {
+   "name": "v_party",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Party"
+  },
+  {
+   "name": "v_postal_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Postal Code"
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone (cell phone or landline)"
+  },
+  {
+   "name": "v_full_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full address (Remember to specify the name of the building, neighborhood, floor, tower, apartment, municipality, housing department)"
+  },
+  {
+   "name": "v_declare_checkbox",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare under oath that the information contained in this statement is true and I take responsibility for its veracity."
+  },
+  {
+   "name": "v_detail",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use the following field to detail your need"
+  },
+  {
+   "name": "v_minimum_characters",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_message_1",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_message_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show category",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_select_category: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_bank_account_number, v_bank_account_type e v_message_2",
+   "when": "IO:v_select_category=bank^IO:v_country=COL^ORIO:v_country=CHL^ORIO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_message_2: visible=true",
+    "v_bank_account_number: visible=true,mandatory=true",
+    "v_bank_account_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_declare_checkbox",
+   "when": "IO:v_select_category=address^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_declare_checkbox: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_cbu e v_message_physical_bank",
+   "when": "IO:v_select_category=bank^IO:v_country=ARG^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_cbu: visible=true,mandatory=true",
+    "v_message_physical_bank: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show location data",
+   "when": "IO:v_select_category=address^IO:v_country=ARG^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_postal_code: visible=true,mandatory=true",
+    "v_neighborhood: visible=true",
+    "v_between_streets: visible=true,mandatory=true",
+    "v_floor: visible=true",
+    "v_calle: visible=true,mandatory=true",
+    "v_party: visible=true,mandatory=true",
+    "v_dept: visible=true",
+    "v_number: visible=true,mandatory=true",
+    "v_location_form: visible=true,mandatory=true",
+    "v_phone: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_full_address",
+   "when": "IO:v_select_category=address^IO:v_country=COL^ORIO:v_country=CHL^ORIO:v_country=ECU^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_full_address: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_message_1",
+   "when": "IO:v_select_category=dependents^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_message_1: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_detail",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_detail: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show v_message_data e v_bank_name",
+   "when": "IO:v_select_category=bank^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_bank_name: visible=true,mandatory=true",
+    "v_message_data: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Show error message onChange",
+   "type": "onChange",
+   "on": "26a857a21b3cd690514cbaef4b4bcbdd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Par onChange de validação de tamanho mínimo sobre 'v_detail'."
+  },
+  {
+   "name": "EY: Regex to set CBU",
+   "type": "onChange",
+   "on": "b8ca86561b345690514cbaef4b4bcb43",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida o CBU (código bancário argentino) exigindo exatamente 22 dígitos. Inválido: limpa o campo."
+  },
+  {
+   "name": "EY: Remove option onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onLoad que remove as opções 'saving', 'current' e outras do tipo de conta bancária na abertura."
+  },
+  {
+   "name": "EY: Show error message onSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que bloqueia o envio quando 'v_detail' tem menos de 40 caracteres, exibindo a legenda 'v_minimum_characters'."
+  },
+  {
+   "name": "EY: Add options onChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "false",
+   "ui_type": "1",
+   "what": "Par onChange do script de tipo de conta bancária: remove as opções e recoloca as pertinentes conforme a escolha, tratando também o ramo de valor vazio."
+  },
+  {
+   "name": "EY: Clear values on catagory changes",
+   "type": "onChange",
+   "on": "3f1906de1bf05690514cbaef4b4bcbf3",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os campos dependentes quando a categoria muda."
+  },
+  {
+   "name": "EY: Hide error message onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde a legenda 'v_minimum_characters' na abertura."
+  }
+ ]
+}

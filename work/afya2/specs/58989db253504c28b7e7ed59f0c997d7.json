@@ -1,0 +1,220 @@
+{
+ "sys_id": "58989db253504c28b7e7ed59f0c997d7",
+ "status": "dividido",
+ "motivo": "Agendar pede recorrência e janela; alterar parametrização pede parâmetro, valor atual e novo; reprocessar pede data e motivo; credencial pede o sistema afetado. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_robo_processo_afetado": {
+   "label": "Qual robô ou processo é o alvo?"
+  },
+  "v_recorrencia_janela_desejada": {
+   "label": "Com que recorrência ou em qual janela deve rodar?"
+  },
+  "v_justificativa": {
+   "label": "Qual a justificativa do pedido?"
+  },
+  "v_robo_processo_afetado_2": {
+   "label": "Qual robô ou processo terá o parâmetro alterado ou será reprocessado?"
+  },
+  "v_parametro_a_alterar": {
+   "label": "Qual parâmetro deve ser alterado?"
+  },
+  "v_valor_atual": {
+   "label": "Qual o valor atual do parâmetro?"
+  },
+  "v_valor_novo": {
+   "label": "Qual o novo valor do parâmetro?"
+  },
+  "v_data_hora_da_execucao_alvo": {
+   "label": "Qual a data e hora da execução a reprocessar?"
+  },
+  "v_motivo_do_reprocessamento": {
+   "label": "Qual o motivo do reprocessamento?"
+  },
+  "v_sistema_credencial_afetada": {
+   "label": "Qual sistema ou credencial precisa ser atualizado?"
+  }
+ },
+ "policies": {
+  "45b1401de9524f6b86c332fd8f7c8ba0": "remover",
+  "b24b42760e834ba5abcc0c5060c39cff": "remover",
+  "982162c6f4954864b66b1beb3b8eabee": "remover",
+  "c2501a124f4b4a7e8b3631a4a9ae0a83": "remover",
+  "993001fbb7164399af19cd1a349655ba": "remover",
+  "956251d4f28c450399da559d49982ddb": "remover",
+  "9ff9383c5ad54f4b8862830beec9a4ec": "remover"
+ },
+ "itens": [
+  {
+   "name": "Agendar ou reagendar a execução de um robô RPA",
+   "short_description": "Pedir agendamento ou novo horário para a execução de um robô.",
+   "description": "Use quando um robô existente precisa rodar em um horário ou recorrência definidos. As opções atendidas são Agendar execução e Reagendar execução. Informe o robô, a recorrência ou janela e a justificativa.",
+   "frases_exemplo": [
+    "Preciso agendar a execução de um robô",
+    "Quero reagendar o robô para outro horário",
+    "O robô deve rodar toda semana, podem agendar?",
+    "Mudar a janela de execução do robô",
+    "Preciso que o robô rode sob demanda amanhã"
+   ],
+   "sem_vars": [
+    "v_robo_processo_afetado_2",
+    "v_parametro_a_alterar",
+    "v_valor_atual",
+    "v_valor_novo",
+    "v_data_hora_da_execucao_alvo",
+    "v_motivo_do_reprocessamento",
+    "v_sistema_credencial_afetada"
+   ],
+   "vars": {
+    "v_robo_processo_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_recorrencia_janela_desejada": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Alterar parametrização de um robô RPA",
+   "short_description": "Pedir mudança no valor de um parâmetro de um robô.",
+   "description": "Use quando um robô existente precisa de um parâmetro diferente. A opção atendida é Alterar parametrização de robô. Informe o robô, o parâmetro, o valor atual, o novo valor e a justificativa.",
+   "frases_exemplo": [
+    "Preciso mudar um parâmetro do robô",
+    "Quero alterar o valor de configuração do robô",
+    "O robô usa um limite errado, podem ajustar?",
+    "Trocar o parâmetro do robô de 10 para 20",
+    "Pedido de mudança de parametrização no RPA"
+   ],
+   "sem_vars": [
+    "v_robo_processo_afetado",
+    "v_recorrencia_janela_desejada",
+    "v_data_hora_da_execucao_alvo",
+    "v_motivo_do_reprocessamento",
+    "v_sistema_credencial_afetada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Alterar parametrização de robô"
+   },
+   "vars": {
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_robo_processo_afetado_2": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_parametro_a_alterar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_valor_atual": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_valor_novo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Reprocessar ou reexecutar um robô RPA",
+   "short_description": "Pedir que um robô seja executado de novo para uma execução específica.",
+   "description": "Use quando uma execução precisa ser refeita. A opção atendida é Reprocessar / reexecutar robô. Informe o robô, a data e hora da execução e o motivo do reprocessamento. Se o robô falhou, abra um incidente.",
+   "frases_exemplo": [
+    "Preciso reprocessar a execução de ontem do robô",
+    "Quero reexecutar o robô de conciliação",
+    "O robô rodou com dado errado, podem rodar de novo?",
+    "Pedido de reprocessamento do RPA",
+    "Reexecutar a rotina de ontem às 8h"
+   ],
+   "sem_vars": [
+    "v_robo_processo_afetado",
+    "v_recorrencia_janela_desejada",
+    "v_justificativa",
+    "v_parametro_a_alterar",
+    "v_valor_atual",
+    "v_valor_novo",
+    "v_sistema_credencial_afetada"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Reprocessar / reexecutar robô"
+   },
+   "vars": {
+    "v_robo_processo_afetado_2": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_hora_da_execucao_alvo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_motivo_do_reprocessamento": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Atualizar credencial ou acesso de um robô RPA",
+   "short_description": "Pedir atualização de credencial ou acesso usado por um robô.",
+   "description": "Use quando um robô precisa de uma credencial ou acesso novo. A opção atendida é Solicitar atualização de credencial / acesso do robô. Informe o robô, o sistema ou credencial afetada e a justificativa.",
+   "frases_exemplo": [
+    "A senha do robô mudou, preciso atualizar",
+    "Quero atualizar o acesso do robô a um sistema",
+    "O robô perdeu acesso, preciso renovar a credencial",
+    "Atualização de credencial do RPA",
+    "Pedido de novo acesso para o robô"
+   ],
+   "sem_vars": [
+    "v_recorrencia_janela_desejada",
+    "v_robo_processo_afetado_2",
+    "v_parametro_a_alterar",
+    "v_valor_atual",
+    "v_valor_novo",
+    "v_data_hora_da_execucao_alvo",
+    "v_motivo_do_reprocessamento"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Solicitar atualização de credencial / acesso do robô"
+   },
+   "vars": {
+    "v_robo_processo_afetado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_justificativa": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_sistema_credencial_afetada": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

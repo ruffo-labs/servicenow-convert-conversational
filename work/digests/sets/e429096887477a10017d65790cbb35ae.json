@@ -1,0 +1,50 @@
+{
+ "sys_id": "e429096887477a10017d65790cbb35ae",
+ "title": "EY: Training Info",
+ "internal_name": "ey_training_info",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Treinamentos Normativos"
+ ],
+ "variaveis": [
+  {
+   "name": "enter_employee_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee (Search by ID, Name, or Email)",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  },
+  {
+   "name": "id_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Registration",
+   "reference": "sys_user",
+   "ref_qual": "active=true^EQ"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Training Info Default",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "id_number: readonly=true",
+    "enter_employee_name: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Populate ID",
+   "type": "onChange",
+   "on": "ee49896c87477a10017d65790cbb3568",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o ID do usuário via GlideAjax."
+  }
+ ]
+}

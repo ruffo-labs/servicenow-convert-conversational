@@ -1,0 +1,92 @@
+{
+ "sys_id": "d82e257e870dd610182a0d440cbb3582",
+ "status": "dividido",
+ "motivo": "Envio de documentação digital pede descrição, tipo e situação do colaborador; envio do prontuário físico pede o formulário de mobilização.",
+ "vars": {
+  "rh_description": {
+   "label": "Descreva o que você está enviando."
+  },
+  "rh_document_type": {
+   "label": "Qual é o tipo de documento?"
+  },
+  "observations": {
+   "label": "Tem alguma observação?"
+  },
+  "Description": {
+   "label": "Quer detalhar o que está enviando?"
+  },
+  "v_formulario_de_mobilizacao_do_arquivo_fisico": {
+   "label": "Envie o formulário de mobilização do arquivo físico."
+  },
+  "rh_disconnected_collaborator": {
+   "label": "O colaborador está ativo ou desligado?"
+  }
+ },
+ "remover": {
+  "formatter": "visual",
+  "rh_container_init": "visual",
+  "v_observacao": "visual"
+ },
+ "policies": {
+  "008b37c687fc4310182a0d440cbb354c": "remover",
+  "72eaafc7878c0350182a0d440cbb3583": "remover",
+  "f7d01ef287811a10182a0d440cbb3599": "remover"
+ },
+ "itens": [
+  {
+   "name": "Enviar documentação ao prontuário do colaborador",
+   "short_description": "Enviar documentos digitais ao prontuário",
+   "description": "Use para enviar documentos ao prontuário digital de um colaborador, ativo ou desligado. Corresponde à oferta Envio de documentação - Prontuário do colaborador.",
+   "frases_exemplo": [
+    "Quero anexar documentos ao prontuário",
+    "Enviar kit admissional do colaborador",
+    "Subir documentos rescisórios no prontuário",
+    "Mandar documentação de ex-colaborador"
+   ],
+   "sem_vars": [
+    "Description",
+    "v_formulario_de_mobilizacao_do_arquivo_fisico"
+   ],
+   "vars": {
+    "rh_description": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_document_type": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_disconnected_collaborator": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Enviar prontuário físico do colaborador",
+   "short_description": "Solicitar envio do prontuário físico",
+   "description": "Use para pedir o envio do prontuário físico de um colaborador ao arquivo. Corresponde à oferta Envio do prontuário físico do colaborador.",
+   "frases_exemplo": [
+    "Preciso enviar o prontuário físico",
+    "Mandar a pasta física do colaborador",
+    "Mobilizar arquivo físico do prontuário",
+    "Enviar prontuário em papel"
+   ],
+   "sem_vars": [
+    "rh_description",
+    "rh_document_type",
+    "rh_disconnected_collaborator"
+   ],
+   "vars": {
+    "v_formulario_de_mobilizacao_do_arquivo_fisico": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

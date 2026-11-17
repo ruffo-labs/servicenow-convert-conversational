@@ -1,0 +1,288 @@
+{
+ "sys_id": "1906f32e1bcf281032822170f54bcb75",
+ "status": "dividido",
+ "motivo": "Cada oferta de pagamento mensal pede um mês diferente (referência, saldo insuficiente, não recebido, desconto indevido) ou valor de reembolso; as demais não pedem dado extra. Pendências: Prazos de abertura (parcelamento até dia 15; quebra de caixa e desconto Caixa Gerente até dia 16) continuam só nos client scripts: confirmar se a regra deve ser mantida na conversa.",
+ "vars": {
+  "u_month_year_referring": {
+   "label": "Qual é o mês e ano de referência?"
+  },
+  "v_reimbursement_value": {
+   "label": "Qual é o valor do reembolso?"
+  },
+  "v_month_referring_to_insufficient_balance": {
+   "label": "Qual é o mês da insuficiência de saldo?"
+  },
+  "mes_do_pagamento_mensal_nao_recebido": {
+   "label": "Qual é o mês do pagamento não recebido?"
+  },
+  "v_month_about_improper_discount": {
+   "label": "Qual é o mês do desconto indevido?"
+  }
+ },
+ "remover": {
+  "rh_date_event_rejected": "oferta_inativa",
+  "v_observacao": "visual",
+  "u_atention": "visual",
+  "v_observacao_2": "visual",
+  "v_informar_chamado": "oferta_inativa",
+  "rh_observation_social_service": "visual",
+  "rh_bank_data": "oferta_inativa",
+  "v_rh_observation_caixa_gerente": "visual",
+  "rh_observation": "visual",
+  "rh_observation_spreadsheet": "visual",
+  "v_observacao_1": "visual",
+  "v_colaborador_falta_dez": "oferta_inativa"
+ },
+ "policies": {
+  "1a8231131b3f199032822170f54bcb34": "remover",
+  "366f666b1b874a90347221bbe54bcb69": "remover",
+  "46ff008b1b4fa81032822170f54bcbfc": "remover",
+  "5a71f15f1bfb199032822170f54bcbd8": "remover",
+  "af5d7df83b174710b28dd047f4e45a4f": "remover",
+  "bb36c0af1b26d11032822170f54bcb48": "remover",
+  "bfbf4c8b1b4fa81032822170f54bcb75": "remover",
+  "c2d484b11ba59d5032822170f54bcbf7": "remover",
+  "c49640231b66d11032822170f54bcb63": "remover",
+  "d4b2bfd31bf6425032822170f54bcb36": "remover",
+  "d939083a1b83681032822170f54bcbae": "remover",
+  "d942d8e71bfa425032822170f54bcb6f": "remover",
+  "decd2a0a87304310182a0d440cbb35fa": "remover",
+  "e55ca8171b28251032822170f54bcb63": "remover",
+  "f1c1b91f1bfb199032822170f54bcbf6": "remover",
+  "nova_g6_1": {
+   "short_description": "ALP - Ocultar quando criado pelo botão \"Gerar chamado\" - Attachment / Acompanhar solicitacao",
+   "conditions": "rh_descriptionLIKEfoi criado de forma automática a partir do chamado",
+   "actions": {
+    "follow_request": {
+     "mandatory": false
+    },
+    "Attachments": {
+     "visible": false,
+     "mandatory": false
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Dúvida no cálculo ou desconto de Imposto de Renda",
+   "short_description": "Dúvida no cálculo/desconto de Imposto de Renda no pagamento mensal",
+   "description": "Use quando o colaborador tem dúvida sobre o cálculo ou o desconto de Imposto de Renda no pagamento mensal. Corresponde à oferta Dúvida no calculo/desconto de Imposto de Renda. Informe o mês do desconto em questão.",
+   "frases_exemplo": [
+    "O desconto de IR no meu holerite parece errado",
+    "Tenho dúvida no cálculo do imposto de renda",
+    "Quero entender o desconto de IR deste mês",
+    "Meu imposto de renda veio diferente do esperado"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido"
+   ],
+   "vars": {
+    "v_month_about_improper_discount": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Insuficiência de saldo com divergência",
+   "short_description": "Insuficiência de saldo com divergência no pagamento mensal",
+   "description": "Use quando houve insuficiência de saldo no pagamento mensal e o valor apresenta divergência. Corresponde à oferta Insuficiência de saldo com divergência. Informe o mês referente à insuficiência.",
+   "frases_exemplo": [
+    "Meu saldo ficou insuficiente e o valor está divergente",
+    "Deu insuficiência de saldo no meu pagamento",
+    "Tem divergência na insuficiência de saldo do mês",
+    "Fui cobrado por saldo insuficiente e acho errado"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "mes_do_pagamento_mensal_nao_recebido",
+    "v_month_about_improper_discount"
+   ],
+   "vars": {
+    "v_month_referring_to_insufficient_balance": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Pagamento mensal com divergência",
+   "short_description": "Pagamento mensal com divergência de valor",
+   "description": "Use quando o pagamento mensal foi feito com valor diferente do esperado. Corresponde à oferta Pagamento mensal com divergência. Informe o mês do desconto ou valor divergente.",
+   "frases_exemplo": [
+    "Meu salário veio com valor errado",
+    "O pagamento do mês veio divergente",
+    "Recebi menos do que deveria",
+    "Tem diferença no meu pagamento mensal",
+    "Houve um desconto que não reconheço"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido"
+   ],
+   "vars": {
+    "v_month_about_improper_discount": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Pagamento mensal não recebido",
+   "short_description": "Pagamento mensal não recebido",
+   "description": "Use quando o colaborador não recebeu o pagamento mensal. Corresponde à oferta Pagamento mensal não recebido. Informe o mês do pagamento que não caiu.",
+   "frases_exemplo": [
+    "Meu salário não caiu",
+    "Não recebi o pagamento do mês",
+    "O pagamento mensal não entrou na conta",
+    "Cadê meu salário deste mês?"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "v_month_about_improper_discount"
+   ],
+   "vars": {
+    "mes_do_pagamento_mensal_nao_recebido": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Solicitar demonstrativo de pagamento",
+   "short_description": "Solicitação de demonstrativo de pagamento",
+   "description": "Use quando precisar do demonstrativo de pagamento (holerite). Corresponde à oferta Solicitação de demonstrativo de pagamento.",
+   "frases_exemplo": [
+    "Preciso do meu holerite",
+    "Quero o demonstrativo de pagamento",
+    "Pode me enviar o contracheque?",
+    "Preciso de uma cópia do demonstrativo do mês"
+   ],
+   "sem_vars": [
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido",
+    "v_month_about_improper_discount"
+   ],
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Solicitar desconto - Caixa Gerente",
+   "short_description": "Solicitação de desconto - Caixa Gerente",
+   "description": "Use para solicitar um desconto referente a Caixa Gerente. Corresponde à oferta Solicitação de desconto - Caixa Gerente.",
+   "frases_exemplo": [
+    "Preciso lançar um desconto de caixa gerente",
+    "Quero solicitar desconto do caixa gerente",
+    "Tem desconto de caixa para lançar",
+    "Abrir pedido de desconto - Caixa Gerente"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido",
+    "v_month_about_improper_discount"
+   ],
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Lançar desconto de quebra de caixa",
+   "short_description": "Solicitação de lançamento de descontos de quebra de caixa",
+   "description": "Use para solicitar o lançamento de descontos de quebra de caixa. Corresponde à oferta Solicitação de lançamento de descontos de quebra de caixa.",
+   "frases_exemplo": [
+    "Preciso lançar quebra de caixa",
+    "Quero descontar uma quebra de caixa",
+    "Tem uma quebra de caixa para lançar na folha",
+    "Lançamento de desconto por quebra de caixa"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido",
+    "v_month_about_improper_discount"
+   ]
+  },
+  {
+   "name": "Parcelar insuficiência de saldo",
+   "short_description": "Solicitação de parcelamento de insuficiência de saldo",
+   "description": "Use para solicitar o parcelamento de uma insuficiência de saldo. Corresponde à oferta Solicitação de parcelamento de insuficiência de saldo.",
+   "frases_exemplo": [
+    "Quero parcelar a insuficiência de saldo",
+    "Dá para dividir o saldo insuficiente em parcelas?",
+    "Preciso parcelar o valor negativo",
+    "Parcelamento de saldo insuficiente"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_reimbursement_value",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido",
+    "v_month_about_improper_discount"
+   ],
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  },
+  {
+   "name": "Reembolso de desconto indevido de quebra de caixa",
+   "short_description": "Solicitação de reembolso referente a desconto indevido de quebra de caixa",
+   "description": "Use quando houve desconto indevido de quebra de caixa e é preciso solicitar o reembolso. Corresponde à oferta Solicitação de reembolso referente a desconto indevido de quebra de caixa. Informe o mês do desconto e o valor do reembolso.",
+   "frases_exemplo": [
+    "Descontaram quebra de caixa indevidamente",
+    "Quero reembolso de um desconto de caixa errado",
+    "Preciso ser reembolsado pela quebra de caixa",
+    "Cobraram quebra de caixa que não era minha"
+   ],
+   "sem_vars": [
+    "u_month_year_referring",
+    "v_month_referring_to_insufficient_balance",
+    "mes_do_pagamento_mensal_nao_recebido"
+   ],
+   "vars": {
+    "v_reimbursement_value": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_month_about_improper_discount": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "nova_g6_1"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,171 @@
+{
+ "sys_id": "350894e51b76f990d1abda4ce54bcb15",
+ "title": "Transport voucher",
+ "internal_name": "transport_voucher",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Adesão, Alteração ou Cancelamento do Vale Transporte"
+ ],
+ "variaveis": [
+  {
+   "name": "v_state",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "State",
+   "lookup": "x_nasm_hr_rates",
+   "include_none": true
+  },
+  {
+   "name": "v_line_name",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Operator name + modality",
+   "lookup": "x_nasm_hr_rates",
+   "ref_qual": "javascript:'indexISEMPTY^uf=' + current.variables.v_state",
+   "include_none": true
+  },
+  {
+   "name": "v_didnt_find_the_line",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "I didn't find the line I was looking for",
+   "include_none": true
+  },
+  {
+   "name": "v_line_city",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Line City"
+  },
+  {
+   "name": "v_inform_name_city_line",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Qual operadora de transporte você utiliza?"
+  },
+  {
+   "name": "v_number_tickets_day",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Number of tickets used for each day of the carrier selected above",
+   "include_none": true,
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ]
+  },
+  {
+   "name": "v_unitary_value",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Unitary value",
+   "lookup": "x_nasm_hr_rates",
+   "ref_qual": "javascript: 'indexISEMPTY^line_name='+current.variables.v_line_name",
+   "include_none": true
+  },
+  {
+   "name": "v_inform_unitary_value",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the unitary value below"
+  },
+  {
+   "name": "v_additional_comments",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Additional comments"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Read only field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_line_city: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_didnt_find_the_line: mandatory=true",
+    "v_state: mandatory=true",
+    "v_number_tickets_day: mandatory=true",
+    "v_number_tickets_day_back: mandatory=true",
+    "v_already_have_vt_card: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Inform City Name and Line",
+   "when": "IO:v_didnt_find_the_line=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_unitary_value: visible=true,mandatory=true",
+    "v_inform_name_city_line: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Line City",
+   "when": "IO:v_didnt_find_the_line=Yes^ORIO:v_didnt_find_the_line=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_unitary_value: visible=true,mandatory=true",
+    "v_line_city: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Line name mandatory",
+   "when": "IO:v_didnt_find_the_line=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_line_name: visible=false,mandatory=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "",
+   "type": "onChange",
+   "on": "23ca2cad1b3af990d1abda4ce54bcba8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange SEM NOME (o campo de nome do registro está vazio) que formata valor como moeda por uma função interna formatarMoeda. Registro sem nome dificulta manutenção e rastreio."
+  },
+  {
+   "name": "EY: Get Line City",
+   "type": "onChange",
+   "on": "8ca818291b76f990d1abda4ce54bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a cidade a partir da linha selecionada."
+  },
+  {
+   "name": "EY: Clear values",
+   "type": "onChange",
+   "on": "7ea0ec291bb6f990d1abda4ce54bcbd1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa os campos quando a resposta é 'No'."
+  },
+  {
+   "name": "EY: Clear Line Name if Checked",
+   "type": "onChange",
+   "on": "7ea0ec291bb6f990d1abda4ce54bcbd1",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o nome da linha quando a resposta é 'No'."
+  }
+ ]
+}

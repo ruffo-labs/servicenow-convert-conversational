@@ -1,0 +1,419 @@
+{
+ "sys_id": "30c718e51b091ed0514cbaef4b4bcb43",
+ "name": "Solicitar reembolsos de conectividade",
+ "sys_name": "Request Connectivity Refunds",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Reembolsos",
+ "catalogs": "Hire to Retire (HTR), Catálogo hispânico",
+ "short_description": "Use este formulário para solicitar seu Reembolso de Conectividade | Internet",
+ "description": "Use este formulário para solicitar seu Reembolso de Conectividade | Internet",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "28",
+   "variaveis_ativas": "36",
+   "bloqueadores": "0",
+   "avisos": "12",
+   "perguntas_sem_conversational_label": "28"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @legenda_attach: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_faq: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @dados_legenda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_completar_campos: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_tope: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_amount_legenda: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_datos_factura: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @legenda_reintegro_60: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 28 de 28 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 28 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 8 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de dúvidas sobre Frota. Mesmo padrão dos irmãos hispânicos: resolve o solicitante via EY_Get_Hispanic_Categories.getUserRequestedFor e grava x_nasm_hr_item e item com o sysparm_id. Repete a mesma atribuição dupla de requested_for.",
+ "variaveis": [
+  {
+   "name": "sales_force_user",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Sales Force User"
+  },
+  {
+   "name": "v_faq",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "dados_legenda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Data to process your connectivity refund"
+  },
+  {
+   "name": "invoice_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Invoice Number"
+  },
+  {
+   "name": "what_month_does_the_invoice_expire",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What month does the invoice expire?",
+   "include_none": true,
+   "choices": [
+    "January [=01]",
+    "February [=02]",
+    "March [=03]",
+    "April [=04]",
+    "May [=05]",
+    "June [=06]",
+    "July [=07]",
+    "August [=08]",
+    "September [=09]",
+    "October [=10]",
+    "November [=11]",
+    "December [=12]"
+   ]
+  },
+  {
+   "name": "what_year_does_the_invoice_due_correspond_to",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What year does the invoice due correspond to?",
+   "include_none": true
+  },
+  {
+   "name": "v_month_year",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complete date"
+  },
+  {
+   "name": "v_tope",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Tope"
+  },
+  {
+   "name": "legenda_reintegro_60",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_tope",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_datos_factura",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "legenda_completar_campos",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_amount_legenda",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "monto_internet",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Internet Amount"
+  },
+  {
+   "name": "monto_television",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Television Amount"
+  },
+  {
+   "name": "monto_celular",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cell Phone Amount"
+  },
+  {
+   "name": "monto_otros",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Amount of other services (andline, additional services, etc.)."
+  },
+  {
+   "name": "monto_total",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Total Discount Amount (if applicable)"
+  },
+  {
+   "name": "legenda_attach",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_records",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Records",
+   "hidden": true
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "c7f8837e1b3f0a10514cbaef4b4bcb2b",
+   "name": "EY: Hispana Personal Information",
+   "order": "100",
+   "perguntas": [
+    "v_unionized_employee (Texto de Linha Única, hidden): Unionized Employee",
+    "v_created_by (Referência): Created by",
+    "v_who_is_this_request_for (Selecionar Caixa): Who is this request for?",
+    "v_reason_on_behalf (Selecionar Caixa): Reason for opening on behalf or another person:",
+    "v_employee (Referência): Employee",
+    "v_employee_id (Texto de Linha Única): Employee ID",
+    "v_corporate_e_mail (Texto de Linha Única): Corporate e-mail",
+    "v_country_of_residence (Selecionar Caixa): Country of Residence",
+    "v_country (Texto de Linha Única): Country",
+    "v_manager_name (Texto de Linha Única): Manager Name",
+    "v_company (Texto de Linha Única): Company",
+    "v_location (Texto de Linha Única): Location",
+    "v_admission_date (Data): Admission Date",
+    "v_identity_document (Texto de Linha Única): Identity Document",
+    "v_position (Texto de Linha Única): Position",
+    "v_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Show internet field",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "monto_internet: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY:  Visible ID Employee",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_employee_id: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Hide Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "sales_force_user: visible=false",
+    "v_tope: visible=false",
+    "v_month_year: visible=false"
+   ]
+  },
+  {
+   "name": "EY: ReadOnly Fields ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_country_of_residence: mandatory=false,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show television, celular, otros and total fields",
+   "when": "IO:v_employeeISNOTEMPTY^IO:v_country=ARG^IO:sales_force_user=true^NQIO:v_country!=ARG^IO:sales_force_user=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_amount_legenda: visible=false",
+    "monto_total: visible=true,mandatory=true",
+    "legenda_completar_campos: visible=true",
+    "monto_celular: visible=true,mandatory=true",
+    "monto_otros: visible=true,mandatory=true",
+    "monto_television: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show fields ",
+   "when": "IO:v_employeeISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "legenda_datos_factura: visible=true",
+    "what_year_does_the_invoice_due_correspond_to: visible=true,mandatory=true",
+    "legenda_tope: visible=true",
+    "legenda_reintegro_60: ",
+    "invoice_number: visible=true,mandatory=true",
+    "what_month_does_the_invoice_expire: visible=true,mandatory=true",
+    "legenda_attach: visible=true",
+    "dados_legenda: visible=true",
+    "click_here_legenda: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Check User Sales Force",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que verifica se o usuário pertence à força de vendas. Chama o Script Include EYGetUserRange, método validateSalesForceUser, via GlideAjax, e ajusta o formulário conforme o retorno."
+  },
+  {
+   "name": "EY: Check date onChange",
+   "type": "onChange",
+   "on": "3dcbadbb1b451250514cbaef4b4bcbce",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que valida a data informada contra regras do colaborador e do formulário, consultando o servidor com o colaborador, a data e o sys_id do item."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "05dbb5291b495ed0514cbaef4b4bcba4",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que formata valor como moeda. Aceita apenas dígitos, vírgula e ponto; fora disso simplesmente retorna sem avisar o usuário. Um de seis scripts 'Máscara de Moeda' quase idênticos neste catálogo."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "e19bb9a51b495ed0514cbaef4b4bcb85",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de máscara de moeda, mudando apenas o campo alvo."
+  },
+  {
+   "name": "EY: Show legenda_reintegro_60",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que exibe a legenda de reintegro de 60%, consultando EY_HTRUtils via GlideAjax com o colaborador para decidir se a legenda se aplica."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "b5fe65e51b855ed0514cbaef4b4bcbfd",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de máscara de moeda."
+  },
+  {
+   "name": "EY: Get tope - onChange ",
+   "type": "onChange",
+   "on": "702249e11bcd1ed0514cbaef4b4bcbdd",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que calcula o teto (tope) de reembolso do colaborador. Monta a data de referência fixando o dia em '01' e consulta o servidor com o colaborador para obter o limite aplicável."
+  },
+  {
+   "name": "EY: Clear values",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o bloco de fatura: número, mês e ano de vencimento. Observação: NÃO tem a guarda `if (isLoading)` que todos os irmãos têm — logo também dispara durante o carregamento do formulário, apagando valores já preenchidos ao reabrir."
+  },
+  {
+   "name": "EY: Check invoice onChange",
+   "type": "onChange",
+   "on": "dabc74651b8d1ed0514cbaef4b4bcb57",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que verifica se a fatura informada já foi usada, consultando o servidor com o colaborador, o número da fatura e o sys_id do formulário. Evita reembolso duplicado."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "c61bb1251b495ed0514cbaef4b4bcb7e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de máscara de moeda."
+  },
+  {
+   "name": "EY: Get date and invoice OnChange",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que, ao escolher o colaborador, busca data e fatura correspondentes no servidor via GlideAjax."
+  },
+  {
+   "name": "EY: Set bills to 0 for ARG ADM",
+   "type": "onChange",
+   "on": "103c87b21b7f0a10514cbaef4b4bcb1b",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que zera a contagem de faturas para usuários ARG ADM. Consulta EY_HTRUtils via GlideAjax com o perfil do usuário e aplica a regra conforme o retorno."
+  },
+  {
+   "name": "EY: Set Options - Year",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que monta a lista de anos dinamicamente: calcula o ano atual e o anterior e os acrescenta como opções, em vez de deixá-los cravados. Esconde também a legenda de reintegro."
+  },
+  {
+   "name": "EY: Set complete date onChange month ",
+   "type": "onChange",
+   "on": "5f0ff82d1b8d1ed0514cbaef4b4bcbe8",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que monta a data completa a partir do mês escolhido e do ano já preenchido."
+  },
+  {
+   "name": "EY: Check date and invoice OnSubmit",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onSubmit que valida duplicidade antes de enviar. Faz parse do JSON das linhas já registradas ('v_records') e compara com o número da fatura e a data informados, impedindo registro repetido."
+  },
+  {
+   "name": "EY: Get tope - onChange ",
+   "type": "onChange",
+   "on": "5f0ff82d1b8d1ed0514cbaef4b4bcbe8",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que calcula o teto (tope) de reembolso do colaborador. Monta a data de referência fixando o dia em '01' e consulta o servidor com o colaborador para obter o limite aplicável."
+  },
+  {
+   "name": "EY: Set complete date onChange year",
+   "type": "onChange",
+   "on": "702249e11bcd1ed0514cbaef4b4bcbdd",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Par do script de data completa, disparado pela mudança do ano em vez do mês."
+  },
+  {
+   "name": "EY: Máscara de Moeda",
+   "type": "onChange",
+   "on": "555bb9e11b495ed0514cbaef4b4bcbc8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Variante do script de máscara de moeda."
+  }
+ ]
+}

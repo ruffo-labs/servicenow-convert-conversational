@@ -1,0 +1,124 @@
+{
+ "sys_id": "401a5cce2f090b90e653f01cbfa4e387",
+ "name": "Atestado Médico (Autoatendimento)",
+ "category": "Medicina do Trabalho",
+ "short_description": "Veracidade de atestado médico",
+ "description": "Veracidade de atestado m&eacute;dico",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Medicina do Trabalho"
+   },
+   "ofertas": [
+    {
+     "name": "Verificação da veracidade de atestado médico",
+     "sla": "SLA - GESTÃO DE GENTE - 400H",
+     "grupo_suporte": "RH - Saúde e Medicina Atestados"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "v_name_collaborator_impacted",
+    "v_what_is_the_reason_for_the_veracity_request",
+    "v_medical_certificate"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Verificar a veracidade de um atestado médico",
+     "description": "Use para pedir a verificação da veracidade de um atestado médico de um colaborador. Atende a oferta Verificação da veracidade de atestado médico, tratada pelo RH - Saúde e Medicina Atestados."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Medicina do Trabalho"
+   },
+   "ofertas": [
+    {
+     "name": "Verificação da veracidade de atestado médico",
+     "sla": "SLA - GESTÃO DE GENTE - 400H",
+     "grupo_suporte": "RH - Saúde e Medicina Atestados"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "v_name_collaborator_impacted",
+    "v_what_is_the_reason_for_the_veracity_request",
+    "v_medical_certificate"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Verificar a veracidade de um atestado médico",
+     "description": "Use para pedir a verificação da veracidade de um atestado médico de um colaborador. Atende a oferta Verificação da veracidade de atestado médico, tratada pelo RH - Saúde e Medicina Atestados."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "v_name_collaborator_impacted",
+   "type": "Referência",
+   "question_text": "Nome do colaborador impactado",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Qual é o colaborador do atestado?"
+  },
+  {
+   "name": "v_what_is_the_reason_for_the_veracity_request",
+   "type": "Texto de Linha Única",
+   "question_text": "Qual o motivo da solicitação de veracidade?",
+   "choices": [],
+   "label_atual": "Por que você quer verificar a veracidade do atestado?"
+  },
+  {
+   "name": "v_medical_certificate",
+   "type": "Anexo",
+   "question_text": "Atestado Médico",
+   "choices": [],
+   "label_atual": "Envie o atestado médico."
+  },
+  {
+   "name": "v_number_collaborator_impacted",
+   "type": "Texto de Linha Única",
+   "question_text": "Matrícula do colaborador impactado",
+   "reference": "sys_user",
+   "choices": [],
+   "label_atual": "Qual é a matrícula do colaborador do atestado?"
+  }
+ ],
+ "client_scripts": []
+}

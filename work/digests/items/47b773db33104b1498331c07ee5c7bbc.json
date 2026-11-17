@@ -1,0 +1,128 @@
+{
+ "sys_id": "47b773db33104b1498331c07ee5c7bbc",
+ "name": "Solicitação de Registro de Faturas - Outros Clientes",
+ "sys_name": "Request for Invoice Posting - Other Customers   ",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Tratativa de pedidos e pagamento de vendas",
+ "catalogs": {
+  "_display_value": "OTC Suporte à Força de Vendas e Recebíveis",
+  "__text": "90c6e4ac1bbfd9d0d1abda4ce54bcb34"
+ },
+ "short_description": "Utilize este formulário para solicitar o registro de novos lançamentos de contas a receber de outros clientes.",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "7",
+   "variaveis_ativas": "7",
+   "bloqueadores": "0",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "7"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @market_approver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @which_subsidiary_is_the_service_for: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 7 de 7 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 2 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Registro de Faturas - Outros Clientes. Faz só o mínimo: grava x_nasm_hr_item com o sysparm_id da URL, que é o campo usado pelas triggers de flow para identificar a origem. Não define solicitante nem prioridade.",
+ "variaveis": [
+  {
+   "name": "which_company_is_your_request_for",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Which company is your request for?",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "Avon Latam [=avon_latam]"
+   ]
+  },
+  {
+   "name": "which_subsidiary_is_the_service_for",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which subsidiary is the service for?",
+   "reference": "core_company",
+   "ref_qual": "javascript: new x_nasm_rtr.EY_RTRUtils().getAllSubcompanies(current.variables.which_company_is_your_request_for, current.cat_item);"
+  },
+  {
+   "name": "country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country",
+   "read_only": true
+  },
+  {
+   "name": "market_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Market Approver",
+   "reference": "sys_user_grmember",
+   "ref_qual": "group=1d5c379f33504b1498331c07ee5c7b3b^EQ"
+  },
+  {
+   "name": "supplier_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supplier Name"
+  },
+  {
+   "name": "additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional Information"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "bab48139871c47d0ec360e530cbb3575",
+   "name": "Aoop: Aberto Por",
+   "order": "50",
+   "perguntas": [
+    "opened_by (Referência, default): Opened by"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "Aoop: Show field Country",
+   "when": "IO:which_subsidiary_is_the_service_forISNOTEMPTY^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "country: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "Aoop: Set Fields Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "which_company_is_your_request_for: mandatory=true",
+    "supplier_name: mandatory=true",
+    "opened_by: mandatory=true",
+    "which_subsidiary_is_the_service_for: mandatory=true",
+    "market_approver: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Aoop: Clear values on change",
+   "type": "onChange",
+   "on": "2889f71333504b1498331c07ee5c7be5",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'which_subsidiary_is_the_service_for' tanto quando o valor fica vazio quanto quando recebe qualquer valor — ou seja, limpa em todos os casos. Os dois ramos do if fazem a mesma coisa."
+  }
+ ]
+}

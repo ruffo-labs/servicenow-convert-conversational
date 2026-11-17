@@ -1,0 +1,89 @@
+{
+ "sys_id": "dd8e82cc1ba12590a530426fe54bcb41",
+ "title": "EY VS -  Capitalização de Projeto em Curso (Alta)",
+ "internal_name": "ey_vs_capitaliza_o_de_projeto_em_curso_alta",
+ "description": "Variable Set referente ao Form Capitalização de Projeto em Curso (Alta)",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Ativação de Projeto em Curso (Alta)"
+ ],
+ "variaveis": [
+  {
+   "name": "v_enter_the_number_of_assets",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the number of assets (according to the attached template)",
+   "map_to_field": true,
+   "include_none": true,
+   "choices": [
+    "1 - 10 [=1_10]",
+    "11 - 20 [=11_20]",
+    "21 - 30 [=21_30]",
+    "31 - 40 [=31_40]",
+    "41 - 50 [=41_50]",
+    "51 - 60 [=51_60]",
+    "61 - 70 [=61_70]",
+    "71 - 80 [=71_80]",
+    "81 - 90 [=81_90]",
+    "91 - 100 [=91_100]"
+   ]
+  },
+  {
+   "name": "v_download_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_download_template_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Download Template - Activating Projects in Progress (High)"
+  },
+  {
+   "name": "v_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request"
+  },
+  {
+   "name": "v_attach_file",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Template"
+  },
+  {
+   "name": "v_informative_note_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_file: mandatory=true",
+    "v_comments: mandatory=true",
+    "v_attach_email_with_approval: mandatory=true",
+    "v_enter_the_number_of_assets: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_file: readonly=true",
+    "v_attach_email_with_approval: readonly=true",
+    "v_enter_the_number_of_assets: readonly=true",
+    "v_comments: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

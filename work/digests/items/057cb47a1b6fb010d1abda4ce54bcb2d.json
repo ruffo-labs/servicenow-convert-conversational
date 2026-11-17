@@ -1,0 +1,107 @@
+{
+ "sys_id": "057cb47a1b6fb010d1abda4ce54bcb2d",
+ "name": "Solicitação de Acordo do Saldo Devedor",
+ "sys_name": "Debit Balance Agreement Request",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Após retorno do seu afastamento e no caso de existir saldo devedor, você poderá solicitar o parcelamento através da abertura desse chamado",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "3",
+   "variaveis_ativas": "6",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "3"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @orientation: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 3 de 3 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Lê o registro de x_nasm_hr_profile indicado pela variável 'employee' e grava o campo 'user' desse perfil em current.requested_for, definindo o solicitante do caso. Grava também current.item com o sysparm_id vindo da URL, que é o sys_id do próprio record producer — é esse campo que as triggers de flow usam para identificar de qual item o registro veio.",
+ "variaveis": [
+  {
+   "name": "msg_container_personal_info",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Your personal information:",
+   "read_only": true
+  },
+  {
+   "name": "way_remove_balance",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What way do you want to remove or do you have a creditor balance?",
+   "include_none": true,
+   "choices": [
+    "1. Comprehensive discount [=1]",
+    "2.Pay at sight [=2]",
+    "3. Parcel payment [=3]"
+   ]
+  },
+  {
+   "name": "orientation",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "add_more_info",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "If you want to provide more information, use this field:"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "0fbd2b391b177010d1abda4ce54bcb90",
+   "name": "Suas informações pessoais",
+   "order": "300",
+   "perguntas": [
+    "employee (Referência, default): Employee",
+    "update_information_link (Rótulo de Rich Text): "
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "way_remove_balance: mandatory=true"
+   ]
+  },
+  {
+   "name": "ACN: Show field \"ORIENTATION\" if \"WAY REMOVE BALANCE = Comprehensive discount\"",
+   "when": "IO:way_remove_balance=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "orientation: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Block req. Agreement debit balance",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que BLOQUEIA o envio conforme a forma escolhida de remoção de saldo ('way_remove_balance'), impedindo a solicitação de acordo de saldo devedor em certos casos."
+  }
+ ]
+}

@@ -1,0 +1,424 @@
+{
+ "sys_id": "86d773ee1bcf281032822170f54bcba5",
+ "name": "Manutenção de dados pessoais",
+ "category": "Manutenção Cadastral",
+ "short_description": "Manutenção de dados pessoais",
+ "description": "Manutenção de dados pessoais",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Localidade do cliente RH",
+   "perguntas": [
+    "vs_number",
+    "public_place",
+    "neighbor_not_found",
+    "country",
+    "city_not_found",
+    "neighbor",
+    "state_not_found",
+    "city",
+    "state",
+    "street_not_found",
+    "complement",
+    "cep"
+   ]
+  },
+  {
+   "title": "Informações de Dependentes",
+   "perguntas": [
+    "rh_dependent_civil_status",
+    "rh_dependent_birthday",
+    "rh_dependent_registry_info",
+    "rh_dependent_notarys_office",
+    "rh_dependent_kindred",
+    "rh_dependent_height",
+    "rh_dependent_date_last_donation",
+    "rh_dependent_delivery_date",
+    "rh_dependent_mother_name",
+    "rh_dependent_cns",
+    "rh_dependent_is_donor",
+    "rh_dependent_blood_group",
+    "rh_dependent_date_school_attendance"
+   ]
+  },
+  {
+   "title": "Colaborador ou Dependente - RH",
+   "perguntas": [
+    "what_data_want_change_collaborator",
+    "what_data_want_change_dependent",
+    "colaborador_ou_dependente"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de exclusão de dependentes do IR",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Manutenção Cadastral"
+    }
+   ],
+   "sai_do_formulario": [
+    "attach_pis_research_active"
+   ],
+   "passa_a_obrigatoria": [
+    "rh_dependent_exclusion"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de RDT - Retificação dos dados do trabalhador - Manutenção de dados pessoais",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Manutenção Cadastral"
+    }
+   ],
+   "sai_do_formulario": [
+    "rh_dependent_exclusion"
+   ],
+   "passa_a_obrigatoria": [
+    "attach_pis_research_active"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_dispatch_cnh",
+   "type": "Texto de Linha Única",
+   "question_text": "Expedição CNH",
+   "choices": []
+  },
+  {
+   "name": "rh_number_address",
+   "type": "Texto de Linha Única",
+   "question_text": "Número",
+   "choices": []
+  },
+  {
+   "name": "rh_cnh",
+   "type": "Texto de Linha Única",
+   "question_text": "Carteira de habilitação",
+   "choices": []
+  },
+  {
+   "name": "rh_complement",
+   "type": "Texto de Linha Única",
+   "question_text": "Complemento",
+   "choices": []
+  },
+  {
+   "name": "rh_dependent_exclusion",
+   "type": "Texto de Linha Única",
+   "question_text": "Dependente que deve ser excluso",
+   "choices": []
+  },
+  {
+   "name": "rh_oc",
+   "type": "Texto de Linha Única",
+   "question_text": "Número Inscrição Órgão de Classe (OC)",
+   "choices": []
+  },
+  {
+   "name": "rh_second_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone secundário",
+   "choices": []
+  },
+  {
+   "name": "rh_cell_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Celular",
+   "choices": []
+  },
+  {
+   "name": "rh_first_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone",
+   "choices": []
+  },
+  {
+   "name": "rh_color_race",
+   "type": "Selecionar Caixa",
+   "question_text": "Raça/cor",
+   "choices": [
+    "Preta",
+    "Branca",
+    "Indígena",
+    "Amarela",
+    "Parda"
+   ]
+  },
+  {
+   "name": "rh_dispatch_oc",
+   "type": "Texto de Linha Única",
+   "question_text": "Expedição órgão de classe (OC)",
+   "choices": []
+  },
+  {
+   "name": "rh_rg",
+   "type": "Texto de Linha Única",
+   "question_text": "RG",
+   "choices": []
+  },
+  {
+   "name": "rh_address",
+   "type": "Texto de Linha Única",
+   "question_text": "Endereço",
+   "choices": []
+  },
+  {
+   "name": "rh_ric",
+   "type": "Texto de Linha Única",
+   "question_text": "Registro de Identidade Único (RIC)",
+   "choices": []
+  },
+  {
+   "name": "rh_part_emitter_ric",
+   "type": "Texto de Linha Única",
+   "question_text": "Órgão emissor RIC",
+   "choices": []
+  },
+  {
+   "name": "rh_neighborhood",
+   "type": "Texto de Linha Única",
+   "question_text": "Bairro",
+   "choices": []
+  },
+  {
+   "name": "rh_city",
+   "type": "Texto de Linha Única",
+   "question_text": "Município",
+   "choices": []
+  },
+  {
+   "name": "rh_business_mail",
+   "type": "E-mail",
+   "question_text": "E-mail corporativo",
+   "choices": []
+  },
+  {
+   "name": "rh_mail",
+   "type": "E-mail",
+   "question_text": "E-mail",
+   "choices": []
+  },
+  {
+   "name": "rh_reference_contact",
+   "type": "Texto de Linha Única",
+   "question_text": "Contato para referência",
+   "choices": []
+  },
+  {
+   "name": "rh_part_emitter_cnh",
+   "type": "Texto de Linha Única",
+   "question_text": "Órgão emissor CNH",
+   "choices": []
+  },
+  {
+   "name": "rh_dispatch_ric",
+   "type": "Texto de Linha Única",
+   "question_text": "Expedição RIC",
+   "choices": []
+  },
+  {
+   "name": "rh_name_father",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome do pai",
+   "choices": []
+  },
+  {
+   "name": "rh_emergency_contact",
+   "type": "Texto de Linha Única",
+   "question_text": "Contato para emergência",
+   "choices": []
+  },
+  {
+   "name": "rh_uf",
+   "type": "Selecionar Caixa",
+   "question_text": "UF",
+   "choices": [
+    "Roraima",
+    "Bahia",
+    "Paraíba",
+    "Maranhão",
+    "São Paulo",
+    "Mato Grosso do Sul",
+    "Amazonas",
+    "Rondônia",
+    "Rio de Janeiro",
+    "Sergipe",
+    "Rio Grande do Norte",
+    "Tocantins",
+    "Distrito Federal",
+    "Rio Grande do Sul (*)",
+    "Amapá"
+   ]
+  },
+  {
+   "name": "rh_degree_education",
+   "type": "Selecionar Caixa",
+   "question_text": "Grau de instrução",
+   "choices": [
+    "Superior - Incompleto",
+    "Fundamental - Completo",
+    "Fundamental - Incompleto",
+    "Pós-graduação (Stricto sensu, nível mestrado) - Incompleto",
+    "Pós-graduação (Lato senso) - Completo",
+    "Médio - Completo",
+    "Pós-graduação (Stricto sensu, nível doutor) - Completo",
+    "Pós-graduação (Lato senso) - Incompleto",
+    "Pós-graduação (Stricto sensu, nível doutor) - Incompleto",
+    "Médio - Incompleto",
+    "Superior - Completo",
+    "Pós-graduação (Stricto sensu, nível mestrado) - Completo"
+   ]
+  },
+  {
+   "name": "rh_part_emitter",
+   "type": "Texto de Linha Única",
+   "question_text": "Órgão emissor",
+   "choices": []
+  },
+  {
+   "name": "rh_cep",
+   "type": "Texto de Linha Única",
+   "question_text": "CEP",
+   "choices": []
+  },
+  {
+   "name": "rh_cnh_category",
+   "type": "Texto de Linha Única",
+   "question_text": "Categoria carteira de habilitação",
+   "choices": []
+  },
+  {
+   "name": "rh_cnh_validate",
+   "type": "Data",
+   "question_text": "Validade carteira de habilitação",
+   "choices": []
+  },
+  {
+   "name": "attach_pis_research_active",
+   "type": "Anexo",
+   "question_text": "Anexar pesquisa do PIS Ativo e Extrato Analítico",
+   "choices": []
+  },
+  {
+   "name": "rh_oc_validate",
+   "type": "Data",
+   "question_text": "Validade órgão de classe (OC)",
+   "choices": []
+  },
+  {
+   "name": "rh_part_emitter_oc",
+   "type": "Texto de Linha Única",
+   "question_text": "Órgão emissor OC",
+   "choices": []
+  },
+  {
+   "name": "rh_place_type",
+   "type": "Texto de Linha Única",
+   "question_text": "Tipo de Logradouro",
+   "choices": []
+  },
+  {
+   "name": "rh_mother_name",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da mãe",
+   "choices": []
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "220e61943b2b2a10b28dd047f4e45ab5",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "8f2c3e751bfbec1032822170f54bcb79",
+   "name": "ALP - OnChange validate First Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_first_phone."
+  },
+  {
+   "sys_id": "964cb2b51bfbec1032822170f54bcb54",
+   "name": "ALP - OnChange validate Second Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_second_phone."
+  },
+  {
+   "sys_id": "be1ee9943b2b2a10b28dd047f4e45a79",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "d62b2d261bdbe810eca40dcbe54bcba6",
+   "name": "ALP - OnChange CPF Validate",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "Mesma validação de CPF aplicada a rh_cpf_university_dependent (dependente da universidade)."
+  }
+ ]
+}

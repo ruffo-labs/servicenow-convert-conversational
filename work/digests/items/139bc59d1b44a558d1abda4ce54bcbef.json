@@ -1,0 +1,58 @@
+{
+ "sys_id": "139bc59d1b44a558d1abda4ce54bcbef",
+ "name": "Solicitações Diversas sobre Encargos (Jurídico)",
+ "sys_name": "Miscellaneous Requests on Charges (Legal)",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Para solicitações relativas a processos judiciais registre seu chamado aqui",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "1",
+   "variaveis_ativas": "2",
+   "bloqueadores": "0",
+   "avisos": "2",
+   "perguntas_sem_conversational_label": "1"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "sem_conversational_label: 1 de 1 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Encargos (Jurídico). Define requested_for como o usuário logado e grava current.item. As duas primeiras linhas, que buscariam o colaborador em x_nasm_hr_profile, estão comentadas — o comportamento atual ignora a variável de colaborador do formulário.",
+ "variaveis": [
+  {
+   "name": "v_cont_start_legal",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Miscellaneous Requests on Charges (Legal)"
+  },
+  {
+   "name": "v_describe_legal",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your need with as much detail as possible in the field below"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Field mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_describe_legal: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,277 @@
+{
+ "sys_id": "23c6b2b51b886198d1abda4ce54bcb70",
+ "name": "Solicitação Salário Substituição / Exercício Temporário",
+ "sys_name": "Request Replacement Salary / Temporary Exercise",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Caso precise solicitar pagamento de Salário Substituição abra seu chamado aqui",
+ "description": "Caso precise solicitar pagamento de Salário Substituição abra seu chamado aqui",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "25",
+   "bloqueadores": "1",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Attach mandatory"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_download_massive: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_your_request_will_be_valid_from_the: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 10 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer OurTalents. Grava current.item com o sysparm_id da URL e delega a definição do solicitante ao Script Include x_nasm_hr.EY_ProducerUtils, método setRequestedFor.",
+ "variaveis": [
+  {
+   "name": "v_your_request_will_be_valid_from_the",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_substitute_employee_salary",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Substitute employee salary"
+  },
+  {
+   "name": "v_request_replacement_salary_temporary_exercise",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Request Replacement Salary / Temporary Exercise"
+  },
+  {
+   "name": "v_is_this_request_individual_or_in_bulk",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Is this request individual or massive?",
+   "include_none": true,
+   "choices": [
+    "Individual. [=individual]",
+    "Massive [=massive]"
+   ]
+  },
+  {
+   "name": "v_replaced_employee_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Replaced employee name",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_overridden_collaborator_global_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Overridden Collaborator Global ID"
+  },
+  {
+   "name": "v_salary_of_replaced_employee",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Salary of replaced employee"
+  },
+  {
+   "name": "v_office",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Office"
+  },
+  {
+   "name": "v_band",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Band"
+  },
+  {
+   "name": "v_replacement_start_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Replacement start date"
+  },
+  {
+   "name": "v_prezade_solicitante",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Dear applicant: We have identified that your replacement salary payment request indicates a retroactive date. In view of this condition, your request is subject to approval by the business management and the execution SLA will start from the moment we receive this approval."
+  },
+  {
+   "name": "v_replacement_end_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Replacement end date"
+  },
+  {
+   "name": "v_date_of_return_to_original_post",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of return to original post"
+  },
+  {
+   "name": "v_reason_for_replacement",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Reason for replacement",
+   "include_none": true,
+   "choices": [
+    "Accident at work/commuting [=accident_at_work_commuting]",
+    "Vacation [=vacation]",
+    "INSS license [=inss_license]",
+    "Maternity Leave or Paternity Leave [=maternity_leave_or_paternity_leave]"
+   ]
+  },
+  {
+   "name": "v_additional_risk_of_the_position",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Additional risk of the position",
+   "include_none": true,
+   "choices": [
+    "Hazard pay [=hazard_pay]",
+    "Additional for Dangerous Work [=additional_for_dangerous_work]",
+    "No additional risk [=no_additional_risk]"
+   ]
+  },
+  {
+   "name": "v_download_massive",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "a0ace4471bafdd50a530426fe54bcbd2",
+   "name": "EY: Requester Data",
+   "order": "100",
+   "perguntas": [
+    "vs_solicitation_to_whom (Selecionar Caixa): Solicitation to Whom?",
+    "vs_employee_status (Selecionar Caixa): Employee status",
+    "vs_employee (Referência): Employee",
+    "vs_id (Texto de Linha Única): ID",
+    "vs_name (Texto de Linha Única): Name",
+    "vs_personal_email (Texto de Linha Única): Personal email",
+    "vs_external_user (Caixa de seleção, hidden): External user"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: If \"Massive\" is selected",
+   "when": "IO:v_is_this_request_individual_or_in_bulk=massive^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_download_massive: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If \"Individual\" is selected",
+   "when": "IO:v_is_this_request_individual_or_in_bulk=individual^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_salary_of_replaced_employee: visible=true",
+    "v_additional_risk_of_the_position: visible=true,mandatory=true",
+    "v_reason_for_replacement: visible=true,mandatory=true",
+    "v_office: visible=true,readonly=true",
+    "v_replaced_employee_name: visible=true,mandatory=true",
+    "v_substitute_employee_salary: visible=true",
+    "v_overridden_collaborator_global_id: visible=true,readonly=true",
+    "v_band: visible=true,readonly=true",
+    "v_replacement_start_date: visible=true,mandatory=true",
+    "v_replacement_end_date: visible=true,mandatory=true",
+    "v_date_of_return_to_original_post: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Retroactive date",
+   "when": "IO:v_replacement_start_date<javascript:gs.beginningOfToday()^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_prezade_solicitante: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When \"For Me\" or \"For Another Contributor\" is selected",
+   "when": "IO:vs_solicitation_to_whom=my_request^ORIO:vs_solicitation_to_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_is_this_request_individual_or_in_bulk: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Attach mandatory",
+   "type": "onSubmit",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que exige anexo quando a solicitação é em massa ('massive'). Usa `this.document.getElementsByClassName` para inspecionar o DOM — além de frágil, o uso de `this.document` é incomum e pode não resolver em todos os contextos."
+  },
+  {
+   "name": "EY: Clear employee",
+   "type": "onChange",
+   "on": "2cac8fb11b40a198d1abda4ce54bcb86",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o colaborador substituído."
+  },
+  {
+   "name": "EY: Clear fields ",
+   "type": "onChange",
+   "on": "d9dbb6bd1bc86198d1abda4ce54bcb64",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o colaborador substituto e campos relacionados."
+  },
+  {
+   "name": "EY: Get Title",
+   "type": "onChange",
+   "on": "2cac8fb11b40a198d1abda4ce54bcb86",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o título (cargo) do usuário, limpando o campo quando o valor fica vazio."
+  },
+  {
+   "name": "EY: Add 1 Day to start date",
+   "type": "onChange",
+   "on": "6d705f751b80a198d1abda4ce54bcb33",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que soma um dia à data selecionada — usado para calcular a data seguinte ao início."
+  },
+  {
+   "name": "EY: Get Range ",
+   "type": "onChange",
+   "on": "2cac8fb11b40a198d1abda4ce54bcb86",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca a faixa (range) do usuário, limpando o campo quando o valor fica vazio. Gêmeo do script que busca o título."
+  },
+  {
+   "name": "EY: Get ID Global",
+   "type": "onChange",
+   "on": "2cac8fb11b40a198d1abda4ce54bcb86",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que busca o ID global do usuário, limpando o campo quando o valor fica vazio. Variante da família de scripts de busca de dados do colaborador."
+  }
+ ]
+}

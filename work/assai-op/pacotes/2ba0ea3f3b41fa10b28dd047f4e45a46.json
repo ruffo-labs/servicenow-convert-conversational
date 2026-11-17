@@ -1,0 +1,135 @@
+{
+ "sys_id": "2ba0ea3f3b41fa10b28dd047f4e45a46",
+ "name": "Divergência no Ponto (Autoatendimento)",
+ "category": "Jornada de Trabalho",
+ "short_description": "Divergência no ponto",
+ "description": "Diverg&ecirc;ncia no ponto",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Dados da divergência",
+   "perguntas": [
+    "vs_entry_01",
+    "vs_entry_02",
+    "vs_date_of_occurrence_set_2",
+    "vs_how_many_entries_do_you_want_to_report",
+    "vs_employee_registration_set_2",
+    "vs_entry_06",
+    "vs_employees_name_set_2",
+    "vs_reason_2",
+    "vs_entry_04",
+    "vs_entry_03",
+    "vs_entry_05"
+   ]
+  },
+  {
+   "title": "Dados da divergência",
+   "perguntas": [
+    "vs_marking_3",
+    "vs_amount_of_hours_set",
+    "vs_employee_registration_set",
+    "vs_marking_2",
+    "vs_marking_1",
+    "vs_include_timekeeping_justification_for_absence",
+    "vs_code_description_of_occurrence_set",
+    "vs_employees_name_set",
+    "vs_marking_4",
+    "vs_order",
+    "vs_marking_5",
+    "vs_how_many_appointments_do_you_want_to_enter",
+    "vs_reason",
+    "vs_justification_for_absence",
+    "vs_marking_6",
+    "vs_date_of_occurrence_set"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de correção de divergência no ponto",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de pagamento de hora extra ou adicional noturno",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Divergência de Pagamento"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [],
+ "client_scripts": [
+  {
+   "sys_id": "211d2bbf3bc9fa10b28dd047f4e45aea",
+   "name": "ALP - Instance g_form",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, guarda a referência g_form em this.get_form, para que outros scripts do mesmo formulário (ex.: onSubmit) possam usar this.get_form."
+  },
+  {
+   "sys_id": "361254cc3bddfa10b28dd047f4e45a75",
+   "name": "ALP - Clear Form",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange da variável gatilho, limpa vs_request_correction_point e vs_request_payment_overtime (sempre)."
+  },
+  {
+   "sys_id": "a5b9fb773b4dfa10b28dd047f4e45ab7",
+   "name": "ALP - Edit variable set",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onLoad, lê o service_offering por getReference e, após 1 segundo, se a oferta for 'Solicitação de correção de divergência no ponto' e o campo state do formulário não for 10 nem 8, libera a edição (setReadOnly false) de vs_request_correction_point."
+  },
+  {
+   "sys_id": "eef47fb93ba08710b28dd047f4e45aa7",
+   "name": "ALP - Set Order in MRVS",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Lê o MRVS vs_request_correction_point (JSON), numera cada linha gravando vs_order = posição (1, 2, ...) e regrava o JSON na variável. Libera o envio."
+  }
+ ]
+}

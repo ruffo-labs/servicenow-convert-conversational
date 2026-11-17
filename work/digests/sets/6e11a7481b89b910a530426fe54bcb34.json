@@ -1,0 +1,33 @@
+{
+ "sys_id": "6e11a7481b89b910a530426fe54bcb34",
+ "title": "EY: Tax - Company want to ship",
+ "internal_name": "ey_tax_company_want_to_ship",
+ "description": "",
+ "usado_por": 2,
+ "itens_exemplo": [
+  "Emissão de Notas de Venda de Mercadoria",
+  "Emissão de Notas Fiscais de Devolução"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_which_company_do_you_want_to_ship_to",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Which company do you want to ship to?",
+   "reference": "core_company",
+   "ref_qual": "u_source_systemISNOTEMPTY"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory field",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_which_company_do_you_want_to_ship_to: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

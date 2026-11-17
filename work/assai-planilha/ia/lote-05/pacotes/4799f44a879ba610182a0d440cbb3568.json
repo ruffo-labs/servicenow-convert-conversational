@@ -1,0 +1,160 @@
+{
+ "sys_id": "4799f44a879ba610182a0d440cbb3568",
+ "name": "Sindicatos (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Sindicatos",
+ "description": "Sindicatos",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Sindicatos"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de análise de desconto indevido de contribuições - Sindicatos - Autoatendimento - Gestão de Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Sindicatos"
+    }
+   ],
+   "sai_do_formulario": [
+    "carta_de_adesao",
+    "carta_de_oposicao"
+   ],
+   "passa_a_obrigatoria": [
+    "demonstrativo_de_pagamento_com_o_desconto",
+    "informe_o_mes_do_desconto",
+    "informe_n_mero_do_chamado_de_isen_o"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Análise de desconto indevido de contribuição sindical",
+     "description": "Use quando houve desconto de contribuição sindical que você considera indevido, oferta 'Solicitação de análise de desconto indevido de contribuições - Sindicatos'. Informe o mês do desconto, anexe o demonstrativo de pagamento e informe o número do chamado de isenção. O pedido é atendido pelo RH - Sindicatos."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Sindicatos"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de adesão a contribuições - Sindicatos - Autoatendimento - Gestão de Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Sindicatos"
+    },
+    {
+     "name": "Solicitação de isenção de contribuições - Sindicatos - Autoatendimento - Gestão de Gente",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Sindicatos"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 16H",
+     "SLA - GESTÃO DE GENTE - 32H"
+    ]
+   },
+   "sai_do_formulario": [
+    "demonstrativo_de_pagamento_com_o_desconto",
+    "informe_o_mes_do_desconto",
+    "informe_n_mero_do_chamado_de_isen_o"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Adesão a contribuições sindicais",
+     "description": "Use para solicitar a adesão a contribuições sindicais, oferta 'Solicitação de adesão a contribuições - Sindicatos'. Você precisa enviar a carta de adesão. O pedido é atendido pelo RH - Sindicatos."
+    },
+    {
+     "name": "Isenção de contribuições sindicais",
+     "description": "Use para pedir isenção de contribuições sindicais, oferta 'Solicitação de isenção de contribuições - Sindicatos'. Você precisa enviar a carta de oposição. O pedido é atendido pelo RH - Sindicatos."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "demonstrativo_de_pagamento_com_o_desconto",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com o desconto",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento em que aparece o desconto."
+  },
+  {
+   "name": "informe_o_mes_do_desconto",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês do desconto",
+   "choices": [
+    "Dezembro",
+    "Novembro",
+    "Julho",
+    "Setembro",
+    "Janeiro",
+    "Março",
+    "Agosto",
+    "Maio",
+    "Outubro",
+    "Junho",
+    "Fevereiro",
+    "Abril"
+   ],
+   "label_atual": "Em que mês ocorreu o desconto?"
+  },
+  {
+   "name": "carta_de_adesao",
+   "type": "Anexo",
+   "question_text": "Carta de adesão",
+   "choices": [],
+   "label_atual": "Envie a sua carta de adesão."
+  },
+  {
+   "name": "informe_n_mero_do_chamado_de_isen_o",
+   "type": "Texto de Linha Única",
+   "question_text": "Informe número do chamado de isenção",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado de isenção?"
+  },
+  {
+   "name": "carta_de_oposicao",
+   "type": "Anexo",
+   "question_text": "Carta de oposição",
+   "choices": [],
+   "label_atual": "Envie a sua carta de oposição."
+  }
+ ],
+ "client_scripts": []
+}

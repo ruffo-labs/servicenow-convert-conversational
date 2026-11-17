@@ -1,0 +1,135 @@
+{
+ "sys_id": "d82e257e870dd610182a0d440cbb3582",
+ "name": "Prontuário Digital",
+ "category": "Documentação",
+ "short_description": "Prontuário Digital",
+ "description": "Prontu&aacute;rio Digital",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Documentação",
+    "item": "Prontuário Digital"
+   },
+   "ofertas": [
+    {
+     "name": "Envio de documentação - Prontuário do colaborador",
+     "sla": "SLA - GESTÃO DE GENTE - 240H",
+     "grupo_suporte": "RH - Prontuário Digital"
+    }
+   ],
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [
+    "rh_description",
+    "rh_document_type",
+    "rh_disconnected_collaborator"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Enviar documentação ao prontuário do colaborador",
+     "description": "Use para enviar documentos ao prontuário digital de um colaborador, ativo ou desligado. Corresponde à oferta Envio de documentação - Prontuário do colaborador."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rh_description",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição",
+   "choices": [],
+   "label_atual": "Descreva o que você está enviando."
+  },
+  {
+   "name": "rh_document_type",
+   "type": "Selecionar Caixa",
+   "question_text": "Tipo de documento",
+   "choices": [
+    "Documentos rescisórios",
+    "Kit admissional",
+    "Prontuário completo",
+    "Outros"
+   ],
+   "label_atual": "Qual é o tipo de documento?"
+  },
+  {
+   "name": "observations",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Observações",
+   "choices": [],
+   "label_atual": "Tem alguma observação?"
+  },
+  {
+   "name": "rh_disconnected_collaborator",
+   "type": "Selecionar Caixa",
+   "question_text": "Colaborador ativo ou desligado?",
+   "choices": [
+    "Ativo",
+    "Desligado"
+   ],
+   "label_atual": "O colaborador está ativo ou desligado?"
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "4729a1983be72a10b28dd047f4e45aa3",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "c629ed583be72a10b28dd047f4e45a0c",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  }
+ ]
+}

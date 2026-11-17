@@ -1,0 +1,246 @@
+{
+ "sys_id": "59a2d0171bef9190d1abda4ce54bcb98",
+ "name": "Documentos para Processo Trabalhista, Auditoria e Fiscalização",
+ "sys_name": "Documents for Labor Process, Audit and Supervision",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Declarações e Documentos",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Solicitação de documentos para defesa trabalhista, auditoria e fiscalização",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "20",
+   "variaveis_ativas": "22",
+   "bloqueadores": "0",
+   "avisos": "3",
+   "perguntas_sem_conversational_label": "20"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "reference_qualifier @v_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 20 de 20 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Documentos para Processo Trabalhista. Lê o perfil pela variável do nome do reclamante e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "v_div_variables_labor",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Documents for Labor Process, Audit and Supervision"
+  },
+  {
+   "name": "v_claimant_s_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Claimant's name",
+   "default": "javascript:gs.getUserID()",
+   "reference": "x_nasm_hr_profile"
+  },
+  {
+   "name": "v_enter_the_type_of_process",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Enter the type of process",
+   "include_none": true,
+   "choices": [
+    "Audit [=2]",
+    "Supervision [=3]",
+    "Labor [=1]"
+   ]
+  },
+  {
+   "name": "v_date_of_admission",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of admission"
+  },
+  {
+   "name": "v_dismissal_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Dismissal date"
+  },
+  {
+   "name": "v_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Company",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS [=tbs]"
+   ]
+  },
+  {
+   "name": "v_sub_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Sub-Empresa",
+   "reference": "core_company",
+   "lookup": "core_company",
+   "ref_qual": "javascript:\"u_brand=\"+current.variables. v_company\r\n",
+   "include_none": true
+  },
+  {
+   "name": "v_text_checkbox",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Inform the documents"
+  },
+  {
+   "name": "v_early_warning",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Early warning"
+  },
+  {
+   "name": "v_employment_contract_and_any_additions",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Employment contract and any additions"
+  },
+  {
+   "name": "v_timecards",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Timecards"
+  },
+  {
+   "name": "v_job_description",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Job description"
+  },
+  {
+   "name": "v_fgts_and_analytical_extract_and_payments_upon_termination",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "FGTS and analytical extract and payments upon termination"
+  },
+  {
+   "name": "v_complete_registration_form",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Complete registration form"
+  },
+  {
+   "name": "v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "PPE delivery forms (including received through biometrics and equipment approval certificate)"
+  },
+  {
+   "name": "v_payslips",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Payslips"
+  },
+  {
+   "name": "v_ppp",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "PPP"
+  },
+  {
+   "name": "v_trct_and_proof_of_payment",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "TRCT and proof of payment"
+  },
+  {
+   "name": "v_others",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "Others"
+  },
+  {
+   "name": "v_inform_the_document",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Inform the document"
+  },
+  {
+   "name": "v_specify_the_required_documents",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Specify the required documents"
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY:  Mandatory",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company: visible=true,mandatory=true",
+    "v_enter_the_type_of_process: visible=true,mandatory=true",
+    "v_claimant_s_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Specify the required documents Visible ",
+   "when": "IO:v_enter_the_type_of_process=2^ORIO:v_enter_the_type_of_process=3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_specify_the_required_documents: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: If type = trabalhista and doc=other",
+   "when": "IO:v_enter_the_type_of_process=1^IO:v_others=true^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_inform_the_document: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Set Sub-Company",
+   "when": "IO:v_companyINnatura,tbs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_sub_company: visible=true"
+   ]
+  },
+  {
+   "name": "EY: If type is trabalhista",
+   "when": "IO:v_enter_the_type_of_process=1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_others: visible=true",
+    "v_date_of_admission: visible=true,mandatory=true",
+    "v_fgts_and_analytical_extract_and_payments_upon_termination: visible=true",
+    "v_timecards: visible=true",
+    "v_trct_and_proof_of_payment: visible=true",
+    "v_early_warning: visible=true",
+    "v_ppp: visible=true",
+    "v_payslips: visible=true,mandatory=true",
+    "v_employment_contract_and_any_additions: visible=true",
+    "v_complete_registration_form: visible=true",
+    "v_job_description: visible=true",
+    "v_dismissal_date: visible=true,mandatory=true",
+    "v_ppe_delivery_forms_including_received_through_biometrics_and_equipment_approval_certificate: visible=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

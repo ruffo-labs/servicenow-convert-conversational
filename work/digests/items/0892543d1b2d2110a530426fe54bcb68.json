@@ -1,0 +1,184 @@
+{
+ "sys_id": "0892543d1b2d2110a530426fe54bcb68",
+ "name": "Estorno de Lançamento Contábil",
+ "sys_name": "Accounting Entry Reversal",
+ "tipo": "record_producer",
+ "table": "x_nasm_rtr_case",
+ "category": "Lançamentos Contábeis",
+ "catalogs": {
+  "_display_value": "RTR",
+  "__text": "6169c5f31b15a110d1abda4ce54bcbec"
+ },
+ "short_description": "Solicite o estorno de um lançamento contábil",
+ "description": "Solicite o estorno de um lançamento contábil",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "24",
+   "variaveis_ativas": "24",
+   "bloqueadores": "0",
+   "avisos": "13",
+   "perguntas_sem_conversational_label": "24"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_sub_company_2: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_6: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_7: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_3: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_4: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_8: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_opened_by: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_which_sub_company_5: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 24 de 24 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 24 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 15 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer, de mapeamento. Grava em current.x_nasm_hr_item o sysparm_id da URL, que é o sys_id do próprio record producer. É esse campo que as triggers de flow usam para identificar de qual item o caso veio.",
+ "variaveis": [
+  {
+   "name": "v_attach_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Approval"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "65c549651b99e510a530426fe54bcb58",
+   "name": "EY VS - Empresas Natura ",
+   "order": "100",
+   "perguntas": [
+    "v_opened_by (Referência): Opened By",
+    "v_type_of_request (Selecionar Caixa): Type of request",
+    "vs_which_company (Selecionar Caixa): Is your request for which company?",
+    "vs_which_sub_company_2 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_6 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_7 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_3 (Referência): Which sub-company is the service for?",
+    "called_area (Selecionar Caixa): For which area will the call be opened?",
+    "vs_which_sub_company_4 (Referência): Para qual sub-empresa é o serviço?",
+    "vs_which_sub_company_8 (Referência): Which sub-company is the service for?",
+    "vs_which_sub_company_5 (Referência): Para qual sub-empresa é o serviço?",
+    "called_area_others (Texto de Linha Única): Adicione o nome da área",
+    "vs_which_sub_company (Referência): Which sub-company is the service for?",
+    "v_country (Texto de Linha Única): Country"
+   ]
+  },
+  {
+   "sys_id": "a782884b1bf986d0a530426fe54bcb7f",
+   "name": "EY VS - Sox",
+   "order": "150",
+   "perguntas": [
+    "does_this_request_have_sox_control_attached (Selecionar Caixa): Does this request have sox control attached?",
+    "sox_control_name (Texto de Linha Única): Sox Control Name"
+   ]
+  },
+  {
+   "sys_id": "82e2107d1b2d2110a530426fe54bcbce",
+   "name": "EY VS - Estorno de Lançamento Contábil",
+   "order": "200",
+   "perguntas": [
+    "v_request_type (Texto de Várias Linhas): Request type",
+    "v_what_is_the_withdrawal_date (Data): What is the withdrawal date?"
+   ]
+  },
+  {
+   "sys_id": "3609d1021b69a110a530426fe54bcbdc",
+   "name": "Informe o número documento a ser estornado - Natura ou TBS",
+   "order": "300",
+   "perguntas": [
+    "v_document_number_natura_tbs (Texto de Linha Única): Document Number",
+    "v_document_year (Texto de Linha Única): Document Year"
+   ]
+  },
+  {
+   "sys_id": "5702d5c21b29a110a530426fe54bcbae",
+   "name": "Informe o número documento a ser estornado - AVON LATAM",
+   "order": "300",
+   "perguntas": [
+    "v_batch_number (Texto de Linha Única): Batch Number",
+    "v_document_number_avon_latam (Texto de Linha Única): Document Number"
+   ]
+  },
+  {
+   "sys_id": "e8c645691b99e510a530426fe54bcb60",
+   "name": "EY VS - Informaçoes/anexo",
+   "order": "400",
+   "perguntas": [
+    "v_additional_information (Texto de Várias Linhas): Additional Information"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Obrigatorio",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_approval: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show Multirow VS - Natura or TBS",
+   "when": "IO:vs_which_company=natura^ORIO:vs_which_company=tbs^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "document_number_to_be_reversed_natura_or_tbs: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Show VS Avon Latam Multirow",
+   "when": "IO:vs_which_companyLIKEAvon^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "document_number_to_be_reversed_avon_latam: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read-Only",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "document_number_to_be_reversed_avon_latam: readonly=true",
+    "v_attach_approval: readonly=true",
+    "document_number_to_be_reversed_natura_or_tbs: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Set multirows invisible onLoad",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad. Esconde, na abertura do formulário, as variáveis 'document_number_to_be_reversed_avon_latam' e 'document_number_to_be_reversed_natura_or_tbs' — os campos de número de documento a estornar, que só aparecem depois conforme a empresa escolhida."
+  },
+  {
+   "name": "Show Multirow AVON LATAM OnChange",
+   "type": "onChange",
+   "on": "797e07881b29a590a530426fe54bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange sobre a empresa. Sai no carregamento. Se o valor for vazio, ou 'natura', ou 'tbs', esconde e desobriga 'document_number_to_be_reversed_avon_latam'. Se for 'Avon LATAM', exibe e torna obrigatório esse mesmo campo."
+  },
+  {
+   "name": "Hide Multirow VS - AVON LATAM",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad de variable set. Esconde e desobriga 'document_number_to_be_reversed_avon_latam' na abertura, deixando o campo oculto até que outro script o revele."
+  }
+ ]
+}

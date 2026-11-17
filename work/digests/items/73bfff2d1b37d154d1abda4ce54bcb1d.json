@@ -1,0 +1,361 @@
+{
+ "sys_id": "73bfff2d1b37d154d1abda4ce54bcb1d",
+ "name": "Solicitação ou Desistência de Vaga no Berçário",
+ "sys_name": "Vacancy Request or Withdrawal",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Berçários",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Para solicitações de vaga ou desistência de vaga nos berçários das unidades NASP e Cajamar.",
+ "description": "Para solicitações de vaga ou desistência de vaga nos berçários das unidades NASP e Cajamar.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "19",
+   "variaveis_ativas": "22",
+   "bloqueadores": "0",
+   "avisos": "9",
+   "perguntas_sem_conversational_label": "19"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_eligibility_for: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_name_of_the_person_in_charge_waiver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_label_wk: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_child_s_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @v_name_of_the_person_in_charge: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_attach_holidays_to_maternity_leave: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @v_childs_name_waiver: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 19 de 19 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 11 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Admissão e Movimentação Internacional. Define requested_for como o usuário logado e grava current.item com o sysparm_id.",
+ "variaveis": [
+  {
+   "name": "v_vacancy_request_or_withdrawal",
+   "type": "Início do Contêiner",
+   "type_code": "19",
+   "label": "Vacancy Request or Withdrawal"
+  },
+  {
+   "name": "v_request_type",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "request type",
+   "include_none": true,
+   "choices": [
+    "Vacancy waiver [=vacancy_waiver]",
+    "Vacancy request [=vacancy_request]"
+   ]
+  },
+  {
+   "name": "v_eligibility_for",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_shift",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Shift",
+   "include_none": true,
+   "choices": [
+    "1st Shift [=1st_shift]",
+    "ADM [=adm]"
+   ]
+  },
+  {
+   "name": "v_nursery_unit",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Nursery unit",
+   "include_none": true,
+   "choices": [
+    "Cajamar [=cajamar]",
+    "NASP [=nasp]"
+   ]
+  },
+  {
+   "name": "v_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Phone",
+   "example": "Enter your number here with DDD"
+  },
+  {
+   "name": "v_complete_address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Complete address"
+  },
+  {
+   "name": "v_private_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Private email"
+  },
+  {
+   "name": "v_corporate_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Corporate email"
+  },
+  {
+   "name": "v_name_of_the_person_in_charge",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name of the person in charge",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^EQ"
+  },
+  {
+   "name": "has_the_child_been_born",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Has the child been born?",
+   "include_none": true,
+   "choices": [
+    "No [=no]",
+    "Yes [=yes]"
+   ]
+  },
+  {
+   "name": "are_you_registered_with_wd",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Are you registered with WorkDay?",
+   "include_none": true,
+   "choices": [
+    "No [=no]",
+    "Yes [=yes]"
+   ]
+  },
+  {
+   "name": "v_label_wk",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "v_child_s_name",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Child's name",
+   "reference": "x_nasm_hr_beneficiary",
+   "lookup": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript:\"employee=\"+current.variables.v_name_of_the_person_in_charge+ \"^relationshipSTARTSWITHChild^ORrelationshipSTARTSWITHSon^ORrelationshipSTART",
+   "include_none": true
+  },
+  {
+   "name": "probable_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Data de nascimento da criança"
+  },
+  {
+   "name": "v_childs_date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of birth of the child or Probable date of delivery"
+  },
+  {
+   "name": "v_prediction_of_start_to_nursery",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Prediction of start to nursery"
+  },
+  {
+   "name": "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "In case of return of leave, do you intend to attach vacation to the Maternity Leave?",
+   "include_none": true
+  },
+  {
+   "name": "v_attach_holidays_to_maternity_leave",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach holidays to Maternity Leave"
+  },
+  {
+   "name": "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date",
+   "type": "Caixa de seleção",
+   "type_code": "7",
+   "label": "I declare that I am giving up the vacancy from this date and I am aware that I will be subject to the availability of a vacancy for future use."
+  },
+  {
+   "name": "v_name_of_the_person_in_charge_waiver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name of the person in charge",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "v_childs_name_waiver",
+   "type": "Caixa de Seleção de Pesquisa",
+   "type_code": "18",
+   "label": "Child's name",
+   "reference": "x_nasm_hr_beneficiary",
+   "lookup": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript:\"employee=\"+current.variables.v_name_of_the_person_in_charge_waiver + \"^relationshipSTARTSWITHChild^ORrelationshipSTARTSWITHSon^ORrelations",
+   "include_none": true
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: When to show the Data de nascimento da criança field",
+   "when": "IO:has_the_child_been_born=yes^EQ",
+   "on_load": false,
+   "va_supported": "true",
+   "actions": [
+    "v_childs_date_of_birth: visible=true,mandatory=true",
+    "probable_date_of_birth: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Rule for read only bith date child",
+   "when": "IO:are_you_registered_with_wd=yes^EQ",
+   "on_load": false,
+   "va_supported": "true",
+   "actions": [
+    "v_childs_date_of_birth: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Vacancy Request or Withdrawal",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_type: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When Yes to attach vacation to maternity leave",
+   "when": "IO:v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_holidays_to_maternity_leave: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: when: vacancy waiver",
+   "when": "IO:v_request_type=vacancy_waiver^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_i_declare_that_i_am_giving_up_the_vacancy_from_this_date: visible=true,mandatory=true",
+    "v_name_of_the_person_in_charge_waiver: visible=true,mandatory=true",
+    "v_childs_name_waiver: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Validate _prediction_of_start_to_nursery to not be retroactive",
+   "when": "IO:v_prediction_of_start_to_nursery<javascript:gs.beginningOfToday()^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Validate probable date of birth to not be retroactive",
+   "when": "IO:probable_date_of_birth<javascript:gs.beginningOfToday()^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Hide the v_childs_date_of_birth or probable_date_of_birth in the resolver vision",
+   "when": "IO:has_the_child_been_born=yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_childs_date_of_birth: visible=true",
+    "probable_date_of_birth: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Validate the  v_prediction_of_start_to_nursery field",
+   "when": "IO:v_prediction_of_start_to_nurseryLESSTHANIO:probable_date_of_birth@month@after@4^ORIO:v_prediction_of_start_to_nurseryLESSTHANIO:v_childs_date_of_birth@month@after@4^ORIO:v_prediction_of_start_to_nurseryLESSTHANIO:probable_date_of_birth@year@before@1^ORIO:v_prediction_of_start_to_nurseryLESSTHANIO:v_childs_date_of_birth@year@before@1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Show child name ",
+   "when": "IO:has_the_child_been_born=yes^IO:v_request_type=vacancy_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "are_you_registered_with_wd: visible=true,mandatory=true",
+    "v_child_s_name: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: When it is \"Job Request\"",
+   "when": "IO:v_request_type=vacancy_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_eligibility_for: visible=true,mandatory=true",
+    "v_nursery_unit: visible=true,mandatory=true",
+    "v_shift: visible=true,mandatory=true",
+    "v_probable_date_of_delivery: visible=false",
+    "has_the_child_been_born: visible=true,mandatory=true",
+    "v_name_of_the_person_in_charge: visible=true,mandatory=true",
+    "v_phone: visible=true,mandatory=true",
+    "v_corporate_email: visible=true,mandatory=true",
+    "v_prediction_of_start_to_nursery: visible=true,mandatory=true",
+    "v_in_case_of_return_of_leave_do_you_intend_to_attach_vacation_to_the_maternity_leave: visible=true,mandatory=true",
+    "v_complete_address: visible=true,mandatory=true",
+    "v_private_email: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Hide child filtes ",
+   "when": "IO:has_the_child_been_born=no^IO:v_request_type=vacancy_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_child_s_name: visible=false,mandatory=false",
+    "are_you_registered_with_wd: visible=false",
+    "v_label_wk: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hidden the data fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "probable_date_of_birth: visible=false",
+    "v_childs_date_of_birth: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN Fill Add beneficiary data",
+   "type": "onChange",
+   "on": "2f0535171b7791d4d1abda4ce54bcb6a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do beneficiário adicionado."
+  },
+  {
+   "name": "EY: Hide filde",
+   "type": "onLoad",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que esconde o nome da criança e uma legenda. BUG: passa a STRING \"false\" em vez do booleano false para setDisplay — como string não vazia é valor verdadeiro, o campo pode acabar sendo EXIBIDO em vez de escondido, o oposto da intenção."
+  }
+ ]
+}

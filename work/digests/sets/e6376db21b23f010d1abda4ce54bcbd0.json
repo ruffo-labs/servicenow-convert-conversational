@@ -1,0 +1,83 @@
+{
+ "sys_id": "e6376db21b23f010d1abda4ce54bcbd0",
+ "title": "Beneficiary(ies) data (The sum of the participation percentages must be 100%.)",
+ "internal_name": "beneficiary_data",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Seguro de Vida Complementar"
+ ],
+ "variaveis": [
+  {
+   "name": "full_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Full name"
+  },
+  {
+   "name": "cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "CPF"
+  },
+  {
+   "name": "birth_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Birth Date"
+  },
+  {
+   "name": "affinity",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Affinity"
+  },
+  {
+   "name": "participation",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Participation",
+   "example": " Between 1% and 100%"
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "ACN: A date later than the current date cannot be entered.",
+   "when": "IO:birth_date>javascript:gs.endOfToday()^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": []
+  },
+  {
+   "name": "EY: Campos Obrigatorios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "birth_date: mandatory=true",
+    "full_name: mandatory=true",
+    "cpf: mandatory=true",
+    "affinity: mandatory=true",
+    "participation: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Aoop: Validate Percentage",
+   "type": "onChange",
+   "on": "a818e5361b23f010d1abda4ce54bcb8a",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o percentual informado, normalizando o valor antes de testar."
+  },
+  {
+   "name": "Validate CPF",
+   "type": "onChange",
+   "on": "c92f9ea21b45c110a530426fe54bcb84",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o CPF do beneficiário com máscara, documentado por comentário."
+  }
+ ]
+}

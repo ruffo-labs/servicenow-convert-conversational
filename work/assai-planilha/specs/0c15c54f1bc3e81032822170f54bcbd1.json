@@ -1,0 +1,85 @@
+{
+ "sys_id": "0c15c54f1bc3e81032822170f54bcbd1",
+ "status": "conversacional",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "there_was_a_removal": {
+   "label": "Houve afastamento?"
+  },
+  "rh_reference_month": {
+   "label": "Mês de concessão do crédito"
+  },
+  "rh_absence_was_corrected_through_a_call_with_a_workday": {
+   "label": "Houve correção da falta via chamado?"
+  },
+  "reason_for_request": {
+   "label": "Motivo da solicitação"
+  },
+  "rh_full_name_child": {
+   "label": "Nome completo e idade do filho (menor de 5 anos)"
+  },
+  "rh_request_number": {
+   "label": "Número do chamado"
+  }
+ },
+ "remover": {
+  "container_1": "visual",
+  "formatter2": "visual",
+  "attention_app": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "046dc3be3b539e50b28dd047f4e45a9e": "remover",
+  "21350d8f1bc3e81032822170f54bcb85": "remover",
+  "3ca3d9f11bef3410eca40dcbe54bcb0d": "remover",
+  "61350d8f1bc3e81032822170f54bcb82": "remover",
+  "fe14c4f73b504710b28dd047f4e45a00": "remover",
+  "nova_g0_1": {
+   "short_description": "ALP - Número do chamado",
+   "conditions": "rh_absence_was_corrected_through_a_call_with_a_workday=yes",
+   "actions": {
+    "rh_request_number": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Vale-Compras Mamãe",
+   "short_description": "Vale-compras Mamãe",
+   "description": "Vale-Compras Mam e",
+   "frases_exemplo": [
+    "Não recebimento do crédito do Vale-Compras Mamãe"
+   ],
+   "vars": {
+    "there_was_a_removal": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_absence_was_corrected_through_a_call_with_a_workday": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reason_for_request": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "rh_full_name_child": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

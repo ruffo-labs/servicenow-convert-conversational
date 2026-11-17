@@ -1,0 +1,268 @@
+{
+ "sys_id": "c7573a6f1b8f3c10a530426fe54bcb07",
+ "status": "dividido",
+ "motivo": "Item agrupador com 3 intenções distintas (logística completa, convite de agenda, comunicado por e-mail) controladas por qual_solicitacao. A logística completa tem muitos campos interdependentes (Workday, instrutor, sala, coffee) e fica como formulário (make_item_non_conversational); os outros dois derivados viram fluxos conversacionais enxutos. O client script sem VA Supported (bloqueador) é ajustado para marcar va_supported.",
+ "vars": {
+  "categoria_de_aprendizagem": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "training_responsible": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "seleciona_o_hub": {
+   "label": "Qual é o HUB?"
+  },
+  "nome_da_celula": {
+   "label": "Qual é o nome da célula?"
+  },
+  "informacao_adicional": {
+   "label": "Tem mais alguma informação para o CSC?"
+  },
+  "informe_classe_contabil": {
+   "label": "Qual é a classe contábil?"
+  },
+  "titulo_convite": {
+   "label": "Qual é o título do convite?"
+  },
+  "training_objective": {
+   "label": "Qual é o objetivo do treinamento?"
+  },
+  "instructor_email": {
+   "label": "Qual é o e-mail do instrutor?"
+  },
+  "descricao_2": {
+   "label": "Descreva os detalhes adicionais."
+  },
+  "end_time": {
+   "label": "Que horas termina?"
+  },
+  "total_workload": {
+   "label": "Qual é a carga horária total (HH:mm)?"
+  },
+  "instructor_name": {
+   "label": "Qual é o nome do instrutor?"
+  },
+  "attach_sodexo": {
+   "label": "Envie o formulário de solicitação de coffee break."
+  },
+  "mailing_destinatarios": {
+   "label": "Envie a lista de destinatários (mailing)."
+  },
+  "end_date": {
+   "label": "Em que data termina?"
+  },
+  "attach_form_workday": {
+   "label": "Envie o formulário do Workday preenchido."
+  },
+  "peca_comunicacao_texto_email": {
+   "label": "Envie a peça de comunicação ou o texto do e-mail."
+  },
+  "canal_envio": {
+   "label": "Por qual canal deve ser enviado?"
+  },
+  "titulo_comunicado": {
+   "label": "Qual é o título do comunicado?"
+  },
+  "assessment_deadline": {
+   "label": "Qual é o prazo para aplicar a avaliação?"
+  },
+  "descricao_convite": {
+   "label": "Qual texto deve ir no corpo do convite?"
+  },
+  "additional_information": {
+   "label": "Tem alguma informação adicional (material de sala, brindes, intérprete de libras etc.)?"
+  },
+  "start_date": {
+   "label": "Em que data começa o treinamento?"
+  },
+  "data_envio": {
+   "label": "Em que data o comunicado deve ser enviado?"
+  },
+  "descricao": {
+   "label": "Descreva os detalhes."
+  },
+  "start_time": {
+   "label": "Que horas começa?"
+  },
+  "forward_invitation": {
+   "label": "Você quer que o CSC encaminhe o convite?"
+  },
+  "inscricoes_workday_direto_agenda": {
+   "label": "As inscrições serão feitas pelo Workday ou por convite direto na agenda?"
+  },
+  "email_convidados": {
+   "label": "Quais são os e-mails dos convidados? (pode colar a lista ou anexar a planilha)"
+  }
+ },
+ "remover": {
+  "training_specifics": "visual",
+  "formatter": "visual"
+ },
+ "policies": {
+  "3ac6121f1b8121d4a530426fe54bcb16": "remover",
+  "73a055a81b800110d1abda4ce54bcbe8": "remover",
+  "754037f91b3c0210a530426fe54bcb80": "remover",
+  "f40d23751b3c0210a530426fe54bcb53": "remover",
+  "74a214cc1b53bc10a530426fe54bcb2a": "remover"
+ },
+ "scripts": {
+  "fd8491dc1b610a10a530426fe54bcb1a": {
+   "ajustar": [
+    "va_supported"
+   ]
+  },
+  "3c83eb33339fb61098331c07ee5c7b0e": {
+   "remover": "sem_efeito"
+  },
+  "ac3288538736b250ec360e530cbb35e7": {
+   "remover": "sem_efeito"
+  }
+ },
+ "itens": [
+  {
+   "de_1a": 0,
+   "fixas": {
+    "qual_solicitacao": "logistica_completa_treinamento"
+   },
+   "flags": {
+    "make_item_non_conversational": true
+   }
+  },
+  {
+   "de_1a": 1,
+   "fixas": {
+    "qual_solicitacao": "envio_convite_agenda"
+   },
+   "vars": {
+    "titulo_convite": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "descricao_convite": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "email_convidados": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_vars": [
+    "training_is_registered_workday",
+    "template_workday",
+    "attach_form_workday",
+    "training_name",
+    "training_objective",
+    "facilitation_type",
+    "instructor_name",
+    "instructor_email",
+    "instructor_ssn",
+    "descricao",
+    "descricao_2",
+    "room_layout",
+    "total_workload",
+    "class_capacity",
+    "inscricoes_workday_direto_agenda",
+    "forward_invitation",
+    "do_you_need_to_request_coffee",
+    "template_sodexo",
+    "attach_sodexo",
+    "cost_center",
+    "informe_classe_contabil",
+    "titulo_comunicado",
+    "peca_comunicacao_texto_email",
+    "mailing_destinatarios",
+    "data_envio",
+    "canal_envio",
+    "assessment_deadline",
+    "other_format_coment",
+    "additional_information"
+   ],
+   "sem_policies": [
+    "09125c17873eb250ec360e530cbb3594",
+    "39ce43a73397f21098331c07ee5c7b8b",
+    "453f07ab3397f21098331c07ee5c7b0a",
+    "5152c59f87323650ec360e530cbb3578",
+    "8663cf6333d3f21098331c07ee5c7b37",
+    "9d5f989f87f2f250ec360e530cbb3588",
+    "a02e901387f2f250ec360e530cbb3573",
+    "a13b7c601b400110d1abda4ce54bcbf3",
+    "c030205b8736f250ec360e530cbb35a3",
+    "c4744a633bdcda90924d0247f4e45a66",
+    "c5e195533b985a90924d0247f4e45a99",
+    "cb5ecf273397f21098331c07ee5c7b26",
+    "0041ffbf1bcf7c10a530426fe54bcb2d",
+    "30c5705f873ef250ec360e530cbb3568"
+   ]
+  },
+  {
+   "de_1a": 2,
+   "fixas": {
+    "qual_solicitacao": "envio_comunicacao_ativacao_email"
+   },
+   "sem_vars": [
+    "seleciona_o_hub",
+    "nome_da_celula",
+    "training_is_registered_workday",
+    "template_workday",
+    "attach_form_workday",
+    "training_objective",
+    "facilitation_type",
+    "instructor_name",
+    "instructor_email",
+    "instructor_ssn",
+    "descricao",
+    "descricao_2",
+    "room_layout",
+    "start_date",
+    "start_time",
+    "end_date",
+    "end_time",
+    "training_location",
+    "total_workload",
+    "class_capacity",
+    "inscricoes_workday_direto_agenda",
+    "forward_invitation",
+    "titulo_convite",
+    "descricao_convite",
+    "email_convidados",
+    "do_you_need_to_request_coffee",
+    "template_sodexo",
+    "attach_sodexo",
+    "cost_center",
+    "informe_classe_contabil",
+    "assessment_deadline",
+    "other_format_coment",
+    "additional_information"
+   ],
+   "sem_policies": [
+    "09125c17873eb250ec360e530cbb3594",
+    "20d148938736b250ec360e530cbb35e6",
+    "30c5705f873ef250ec360e530cbb3568",
+    "39ce43a73397f21098331c07ee5c7b8b",
+    "453f07ab3397f21098331c07ee5c7b0a",
+    "52f6a01b87b6f250ec360e530cbb351b",
+    "7cae2097877af250ec360e530cbb35f9",
+    "8663cf6333d3f21098331c07ee5c7b37",
+    "9d5f989f87f2f250ec360e530cbb3588",
+    "a13b7c601b400110d1abda4ce54bcbf3",
+    "c030205b8736f250ec360e530cbb35a3",
+    "c4744a633bdcda90924d0247f4e45a66",
+    "c5e195533b985a90924d0247f4e45a99",
+    "cb5ecf273397f21098331c07ee5c7b26",
+    "e65108138736b250ec360e530cbb35cf",
+    "0041ffbf1bcf7c10a530426fe54bcb2d"
+   ],
+   "sem_scripts": [
+    "fd8491dc1b610a10a530426fe54bcb1a"
+   ]
+  }
+ ]
+}

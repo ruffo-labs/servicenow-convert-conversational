@@ -1,0 +1,954 @@
+{
+ "sys_id": "1815094f1bc3e81032822170f54bcb44",
+ "name": "Vale-transporte (Gestor/RH Ponta)",
+ "category": "Operação de Benefícios",
+ "short_description": "Vale-transporte",
+ "description": "Vale-transporte",
+ "sets": [
+  {
+   "title": "Informações do Impactado",
+   "perguntas": [
+    "rh_cpf_impacted",
+    "rh_email_impacted",
+    "requested_for",
+    "vs_locality_rh",
+    "rh_user_id_impacted",
+    "vs_result_center",
+    "rh_city_impacted",
+    "vs_local_cnpj",
+    "vs_function_imp_inf",
+    "not_found_collaborator_vs",
+    "rh_company_impacted",
+    "rh_date_entry",
+    "vs_department_rh"
+   ]
+  },
+  {
+   "title": "Informações do Solicitante",
+   "perguntas": [
+    "rh_originating",
+    "rh_name_requester",
+    "follow_request",
+    "rh_email_requester",
+    "rh_user_id_requester"
+   ]
+  },
+  {
+   "title": "RH Default",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "Adipar reembolso",
+   "perguntas": [
+    "valor_unit_rio_da_tarifa",
+    "motivo_detalhado_do_reembolso",
+    "name",
+    "m_s_de_refer_ncia",
+    "c_digo_do_itiner_rio",
+    "valor_de_reembolso",
+    "fim_per_odo_de_utiliza_o_do_reembolso",
+    "matricula",
+    "quantidade_de_passagens_por_dia",
+    "inicio_per_odo_de_utiliza_o_do_reembolso"
+   ]
+  },
+  {
+   "title": "Require Attachments",
+   "perguntas": [
+    "Attachments",
+    "aux_widget"
+   ]
+  },
+  {
+   "title": "Descrição de Solicitação",
+   "perguntas": [
+    "rh_description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso reportar um problema > Operação de Benefícios",
+    "item": "Vale-transporte"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência no valor do desconto do vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Divergência no valor dos créditos do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Itinerário não localizado na tabela",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Não recebimento do cartão de vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Não recebimento de vale transporte de papel",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Não recebimento do valor dos créditos do vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de análise de gestão de saldo",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 32H",
+     "SLA - GESTÃO DE GENTE - 24H",
+     "SLA - GESTÃO DE GENTE - 40H"
+    ],
+    "support_group": [
+     "RH - Vale-Transporte",
+     "RH - Operadora  VT"
+    ]
+   },
+   "sai_do_formulario": [
+    "rh_extract_type",
+    "numero_do_chamado",
+    "rh_pending_reference_month",
+    "csa_transport_card",
+    "rh_period_end_load",
+    "numero_do_cartao_de_vale_transporte",
+    "rh_value_activation",
+    "rh_card_sic",
+    "rh_first_period",
+    "qual_a_solicita_o",
+    "csa_anexo",
+    "anexo",
+    "rh_period_start_load",
+    "colaborador_desligado",
+    "address_change_call_number",
+    "csa_numero_nf",
+    "card_association_calling_number",
+    "rh_what_is_the_request_select_box",
+    "existe_chamado_alteracao_endereco",
+    "rh_card_modality",
+    "rh_refund_required",
+    "rh_final_period",
+    "csa_shipping_company",
+    "comprovante_de_transferencia"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência no valor do desconto do vale-transporte",
+     "description": "Use quando o valor descontado do colaborador a título de vale-transporte parece errado. Corresponde à oferta Divergência no valor do desconto do vale transporte e exige o demonstrativo de pagamento e o mês de referência."
+    },
+    {
+     "name": "Divergência no valor dos créditos do vale-transporte",
+     "description": "Use quando o valor creditado no cartão de vale-transporte não confere com o esperado. Corresponde à oferta Divergência no valor dos créditos do vale-transporte e pede cartão, operadora e mês de referência."
+    },
+    {
+     "name": "Itinerário de VT não localizado na tabela",
+     "description": "Use quando o trajeto do colaborador não aparece na tabela de itinerários. Corresponde à oferta Itinerário não localizado na tabela e pede dados da linha, da empresa de transporte e da tarifa."
+    },
+    {
+     "name": "Não recebi o vale-transporte de papel",
+     "description": "Use quando o colaborador não recebeu o vale-transporte de papel. Corresponde à oferta Não recebimento de vale transporte de papel e pede ocorrências, mês de referência e descrição."
+    },
+    {
+     "name": "Não recebi o cartão de vale-transporte",
+     "description": "Use quando o cartão de vale-transporte não foi recebido pelo colaborador. Corresponde à oferta Não recebimento do cartão de vale transporte e pede operadora e mês de referência."
+    },
+    {
+     "name": "Não recebi os créditos do vale-transporte",
+     "description": "Use quando o valor do vale-transporte não foi disponibilizado, seja em crédito no cartão ou em conta corrente. Corresponde à oferta Não recebimento do valor dos créditos do vale-transporte."
+    },
+    {
+     "name": "Análise de gestão de saldo de vale-transporte",
+     "description": "Use para solicitar a análise de gestão de saldo de vale-transporte. Corresponde à oferta Solicitação de análise de gestão de saldo e pede a chave PIX e os dados bancários do colaborador."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Gestor - RH Ponta > Preciso de um serviço de RH > Operação de Benefícios",
+    "item": "Vale-transporte"
+   },
+   "ofertas": [
+    {
+     "name": "Envio de declaração com ciência da pendência de VT",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Solicitação de associação do cartão de vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de ativação de viagens intermunicipais - RIOCARD",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de cancelamento de vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 48H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Solicitação de carta análise de vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de desassociação do cartão de vale-transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de extrato de cartão de vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de inclusão/alteração de vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 45H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Solicitação de inclusão/cancelamento de fretado",
+     "sla": "SLA - GESTÃO DE GENTE - 45H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Solicitação de reativação de créditos expirados",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Operadora  VT"
+    },
+    {
+     "name": "Solicitação de carta de reembolso – RioCard - Vale transporte",
+     "sla": "SLA - GESTÃO DE GENTE - 56H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    },
+    {
+     "name": "Solicitação de reembolso de vale transporte após regularização (Excluído do pedido)",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Vale-Transporte"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 16H",
+     "SLA - GESTÃO DE GENTE - 24H",
+     "SLA - GESTÃO DE GENTE - 48H",
+     "SLA - GESTÃO DE GENTE - 40H",
+     "SLA - GESTÃO DE GENTE - 56H",
+     "SLA - GESTÃO DE GENTE - 45H"
+    ],
+    "support_group": [
+     "RH - Vale-Transporte",
+     "RH - Operadora  VT"
+    ],
+    "u_user_criteria": [
+     "",
+     "Solicitação fretado (RH)"
+    ]
+   },
+   "sai_do_formulario": [
+    "csa_random_key",
+    "rh_balance_management_employee",
+    "rh_itinerary_received",
+    "houve_alteracao_cancelamento_retorno",
+    "rh_occurrence",
+    "agency_code",
+    "csa_email",
+    "demonstrativo_de_pagamento",
+    "csa_cpf",
+    "rh_carrier_bus",
+    "numero_do_cartao_vale_transporte",
+    "bank_details",
+    "rh_reference_month",
+    "colaborador_a_recem_admitido_a",
+    "rh_municipal_path",
+    "rh_paper_card",
+    "itinerario_nao_recebido",
+    "mes_de_referencia",
+    "account_number",
+    "rh_collaborator_excluded",
+    "rh_quantity_contributors",
+    "rh_tariff_value",
+    "forma_disponibilizacao",
+    "csa_phone",
+    "rh_business_address",
+    "afastamento_ou_ferias",
+    "extrato_bancario",
+    "operadora_de_transporte",
+    "rh_occurrence_description",
+    "pix_key",
+    "rh_business_phone",
+    "rh_line_transport",
+    "rh_shipping_company_opt_no_receipt",
+    "consta_na_lista_excluidos_saldo"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Declaração de ciência da pendência de VT",
+     "description": "Use para enviar a declaração em que o colaborador toma ciência de uma pendência de vale-transporte. Corresponde à oferta Envio de declaração com ciência da pendência de VT e pede o mês de referência da pendência."
+    },
+    {
+     "name": "Associar cartão de vale-transporte ao colaborador",
+     "description": "Use para associar um cartão de vale-transporte ao colaborador. Corresponde à oferta Solicitação de associação do cartão de vale transporte e pede cartão, operadora e anexo."
+    },
+    {
+     "name": "Ativar viagens intermunicipais no RioCard",
+     "description": "Use para pedir a ativação de viagens intermunicipais no cartão RioCard. Corresponde à oferta Solicitação de ativação de viagens intermunicipais - RIOCARD."
+    },
+    {
+     "name": "Cancelar vale-transporte",
+     "description": "Use quando o colaborador deixa de usar vale-transporte e o benefício precisa ser cancelado. Corresponde à oferta Solicitação de cancelamento de vale transporte."
+    },
+    {
+     "name": "Carta de análise de vale-transporte",
+     "description": "Use para solicitar a carta de análise de vale-transporte. Corresponde à oferta Solicitação de carta análise de vale-transporte e pede a operadora e o número do cartão."
+    },
+    {
+     "name": "Carta de reembolso RioCard de vale-transporte",
+     "description": "Use para solicitar a carta de reembolso do RioCard referente a vale-transporte. Corresponde à oferta Solicitação de carta de reembolso – RioCard - Vale transporte e pede número do cartão, anexo e se o colaborador foi desligado."
+    },
+    {
+     "name": "Desassociar cartão de vale-transporte",
+     "description": "Use para desfazer a associação de um cartão de vale-transporte com o colaborador. Corresponde à oferta Solicitação de desassociação do cartão de vale-transporte."
+    },
+    {
+     "name": "Extrato do cartão de vale-transporte",
+     "description": "Use para obter o extrato de recarga ou de utilização do cartão de vale-transporte em um período. Corresponde à oferta Solicitação de extrato de cartão de vale transporte."
+    },
+    {
+     "name": "Incluir ou alterar vale-transporte",
+     "description": "Use para incluir vale-transporte ou alterar o itinerário por mudança de endereço, transferência de loja, reintegração, admissão ou aumento de tarifa. Corresponde à oferta Solicitação de inclusão/alteração de vale transporte."
+    },
+    {
+     "name": "Incluir ou cancelar fretado",
+     "description": "Use para incluir ou cancelar o uso de transporte fretado pelo colaborador. Corresponde à oferta Solicitação de inclusão/cancelamento de fretado."
+    },
+    {
+     "name": "Reativar créditos expirados de vale-transporte",
+     "description": "Use para pedir a reativação de créditos expirados no cartão de vale-transporte. Corresponde à oferta Solicitação de reativação de créditos expirados e pede cartão, modalidade, período e valor."
+    },
+    {
+     "name": "Reembolso de VT após regularização",
+     "description": "Use para solicitar o reembolso de vale-transporte depois que o colaborador foi regularizado, quando antes ele havia sido excluído do pedido. Corresponde à oferta Solicitação de reembolso de vale transporte após regularização (Excluído do pedido)."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "csa_random_key",
+   "type": "Texto de Linha Única",
+   "question_text": "Chave aleatória",
+   "choices": [],
+   "label_atual": "Qual é a chave aleatória PIX?"
+  },
+  {
+   "name": "rh_extract_type",
+   "type": "Selecionar Caixa",
+   "question_text": "Tipo de extrato",
+   "choices": [
+    "Recarga",
+    "Utilização"
+   ],
+   "label_atual": "Você quer o extrato de recarga ou de utilização?"
+  },
+  {
+   "name": "numero_do_chamado",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado aberto anteriormente do cancelamento do vale-transporte",
+   "reference": "sc_req_item",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado anterior de cancelamento do VT?"
+  },
+  {
+   "name": "rh_pending_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência da pendência",
+   "choices": [
+    "Junho",
+    "Setembro",
+    "Agosto",
+    "Julho",
+    "Abril",
+    "Maio",
+    "Janeiro",
+    "Fevereiro",
+    "Outubro",
+    "Dezembro",
+    "Novembro",
+    "Março"
+   ],
+   "label_atual": "Qual é o mês de referência da pendência?"
+  },
+  {
+   "name": "rh_balance_management_employee",
+   "type": "Selecionar Caixa",
+   "question_text": "Colaborador(a) consta na lista de gestão de saldos?",
+   "choices": [
+    "Não",
+    "Sim"
+   ],
+   "label_atual": "O colaborador consta na lista de gestão de saldos?"
+  },
+  {
+   "name": "rh_itinerary_received",
+   "type": "Texto de Linha Única",
+   "question_text": "Itinerário não recebido",
+   "choices": [],
+   "label_atual": "Qual itinerário não foi recebido?"
+  },
+  {
+   "name": "houve_alteracao_cancelamento_retorno",
+   "type": "Sim/Não",
+   "question_text": "Houve alteração, cancelamento de férias ou retorno de afastamento?",
+   "choices": [],
+   "label_atual": "Houve alteração, cancelamento de férias ou retorno de afastamento?"
+  },
+  {
+   "name": "rh_occurrence",
+   "type": "Selecionar Caixa",
+   "question_text": "Teve ocorrência de alteração, cancelamento de férias ou retorno de afastamento?",
+   "choices": [
+    "Não",
+    "Sim"
+   ],
+   "label_atual": "Houve alteração, cancelamento de férias ou retorno de afastamento neste caso?"
+  },
+  {
+   "name": "csa_transport_card",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do cartão do vale transporte",
+   "choices": [],
+   "label_atual": "Qual é o número do cartão de VT a associar?"
+  },
+  {
+   "name": "agency_code",
+   "type": "Texto de Linha Única",
+   "question_text": "Código da Agência",
+   "choices": [],
+   "label_atual": "Qual é o código da agência?"
+  },
+  {
+   "name": "rh_shipping_company",
+   "type": "Texto de Linha Única",
+   "question_text": "Operadora de transporte",
+   "choices": [],
+   "label_atual": "Qual é a operadora de transporte?"
+  },
+  {
+   "name": "csa_email",
+   "type": "Texto de Linha Única",
+   "question_text": "E-mail",
+   "choices": [],
+   "label_atual": "Qual é o e-mail para a chave PIX?"
+  },
+  {
+   "name": "demonstrativo_de_pagamento",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento com o desconto."
+  },
+  {
+   "name": "csa_cpf",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF",
+   "choices": [],
+   "label_atual": "Qual é o CPF da chave PIX?"
+  },
+  {
+   "name": "rh_period_end_load",
+   "type": "Data",
+   "question_text": "Período final para reativação (recargas expiradas)",
+   "choices": [],
+   "label_atual": "Até que data as recargas devem ser reativadas?"
+  },
+  {
+   "name": "numero_do_cartao_de_vale_transporte",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do cartão de vale-transporte",
+   "choices": [],
+   "label_atual": "Qual é o número do cartão de VT para a carta de reembolso?"
+  },
+  {
+   "name": "rh_carrier_bus",
+   "type": "Texto de Linha Única",
+   "question_text": "Viação / Operadora do impactado",
+   "choices": [],
+   "label_atual": "Qual é a viação ou operadora do colaborador?"
+  },
+  {
+   "name": "numero_do_cartao_vale_transporte",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do cartão de vale-transporte",
+   "choices": [],
+   "label_atual": "Qual é o número do cartão de VT com crédito divergente?"
+  },
+  {
+   "name": "rh_value_activation",
+   "type": "Texto de Linha Única",
+   "question_text": "Valor para reativação",
+   "choices": [],
+   "label_atual": "Qual valor você quer reativar?"
+  },
+  {
+   "name": "rh_card_sic",
+   "type": "Texto de Linha Única",
+   "question_text": "Nº do SIC (informar todos os números, inclusive o zero)",
+   "choices": [],
+   "label_atual": "Qual é o número do SIC, incluindo o zero?"
+  },
+  {
+   "name": "rh_first_period",
+   "type": "Data",
+   "question_text": "Período inicial solicitado",
+   "choices": [],
+   "label_atual": "Qual é o início do período do extrato?"
+  },
+  {
+   "name": "operadora_de_transporte_associacao",
+   "type": "Texto de Linha Única",
+   "question_text": "Operadora de transporte",
+   "choices": [],
+   "label_atual": "Qual é a operadora de transporte do cartão?"
+  },
+  {
+   "name": "bank_details",
+   "type": "Texto de Linha Única",
+   "question_text": "Banco",
+   "choices": [],
+   "label_atual": "Qual é o banco do colaborador?"
+  },
+  {
+   "name": "qual_a_solicita_o",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação",
+   "choices": [
+    "Cancelamento de fretado",
+    "Inclusão de fretado"
+   ],
+   "label_atual": "Você quer incluir ou cancelar o fretado?"
+  },
+  {
+   "name": "rh_reference_month",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Março",
+    "Novembro",
+    "Maio",
+    "Julho",
+    "Setembro",
+    "Agosto",
+    "Fevereiro",
+    "Outubro",
+    "Abril",
+    "Dezembro",
+    "Junho",
+    "Janeiro"
+   ],
+   "label_atual": "Qual é o mês de referência?"
+  },
+  {
+   "name": "colaborador_a_recem_admitido_a",
+   "type": "Sim/Não",
+   "question_text": "Colaborador(a) é recém-admitido(a)?",
+   "choices": [],
+   "label_atual": "O colaborador é recém-admitido?"
+  },
+  {
+   "name": "csa_anexo",
+   "type": "Anexo",
+   "question_text": "Anexo",
+   "choices": [],
+   "label_atual": "Envie o anexo da associação do cartão."
+  },
+  {
+   "name": "rh_transport_card",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do cartão do vale-transporte",
+   "choices": [],
+   "label_atual": "Qual é o número do cartão de VT?"
+  },
+  {
+   "name": "rh_municipal_path",
+   "type": "Selecionar Caixa",
+   "question_text": "Trajeto",
+   "choices": [
+    "Intermunicipal",
+    "Municipal"
+   ],
+   "label_atual": "O trajeto é municipal ou intermunicipal?"
+  },
+  {
+   "name": "anexo",
+   "type": "Anexo",
+   "question_text": "Anexo",
+   "choices": [],
+   "label_atual": "Envie o anexo da carta de reembolso."
+  },
+  {
+   "name": "rh_period_start_load",
+   "type": "Data",
+   "question_text": "Período inicial para reativação (recargas expiradas)",
+   "choices": [],
+   "label_atual": "A partir de que data as recargas devem ser reativadas?"
+  },
+  {
+   "name": "rh_paper_card",
+   "type": "Texto de Linha Única",
+   "question_text": "Papel ou cartão?",
+   "choices": [],
+   "label_atual": "O benefício é em papel ou cartão?"
+  },
+  {
+   "name": "itinerario_nao_recebido",
+   "type": "Texto de Linha Única",
+   "question_text": "Itinerário não recebido",
+   "choices": [],
+   "label_atual": "Qual itinerário não foi recebido?"
+  },
+  {
+   "name": "mes_de_referencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Mês de referência",
+   "choices": [
+    "Setembro",
+    "Abril",
+    "Julho",
+    "Agosto",
+    "Novembro",
+    "Outubro",
+    "Maio",
+    "Dezembro",
+    "Fevereiro",
+    "Março",
+    "Janeiro",
+    "Junho"
+   ],
+   "label_atual": "Qual é o mês de referência dos créditos?"
+  },
+  {
+   "name": "account_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da Conta",
+   "choices": [],
+   "label_atual": "Qual é o número da conta?"
+  },
+  {
+   "name": "colaborador_desligado",
+   "type": "Sim/Não",
+   "question_text": "Colaborador(a) Desligado(a)?",
+   "choices": [],
+   "label_atual": "O colaborador foi desligado?"
+  },
+  {
+   "name": "address_change_call_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado da alteração de endereço",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado de alteração de endereço?"
+  },
+  {
+   "name": "descreva_o_motivo_da_solicitacao_2_via",
+   "type": "Texto de Linha Única",
+   "question_text": "Descreva o motivo da solicitação",
+   "choices": [],
+   "label_atual": "Descreva o motivo da solicitação."
+  },
+  {
+   "name": "rh_collaborator_excluded",
+   "type": "Selecionar Caixa",
+   "question_text": "Colaborador(a) consta na lista de excluídos?",
+   "choices": [
+    "Não",
+    "Sim"
+   ],
+   "label_atual": "O colaborador consta na lista de excluídos?"
+  },
+  {
+   "name": "rh_quantity_contributors",
+   "type": "Texto de Linha Única",
+   "question_text": "Quantidade de colaboradores que utilizarão esta linha",
+   "choices": [],
+   "label_atual": "Quantos colaboradores vão usar esta linha?"
+  },
+  {
+   "name": "csa_numero_nf",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da NF",
+   "choices": [],
+   "label_atual": "Qual é o número da NF?"
+  },
+  {
+   "name": "card_association_calling_number",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado para associação do cartão",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado de associação do cartão?"
+  },
+  {
+   "name": "rh_what_is_the_request_select_box",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a solicitação?",
+   "choices": [
+    "Alteração de itinerário devido preenchimento incorreto de formulário",
+    "Nova solicitação de vale transporte (não possuía o benefício)",
+    "Reintegração",
+    "Alteração de itinerário devido mudança de endereço",
+    "Alteração de itinerário devido transferência de loja",
+    "Solicitação de vale transporte para recém-admitidos",
+    "Alteração devido aumento da tarifa da operadora"
+   ],
+   "label_atual": "O que você precisa solicitar no vale-transporte?"
+  },
+  {
+   "name": "rh_tariff_value",
+   "type": "Texto de Linha Única",
+   "question_text": "Valor da tarifa",
+   "choices": [],
+   "label_atual": "Qual é o valor da tarifa?"
+  },
+  {
+   "name": "forma_disponibilizacao",
+   "type": "Selecionar Caixa",
+   "question_text": "Forma de disponibilização",
+   "choices": [
+    "Créditos no cartão",
+    "Conta corrente"
+   ],
+   "label_atual": "Como o VT deveria ter sido disponibilizado?"
+  },
+  {
+   "name": "existe_chamado_alteracao_endereco",
+   "type": "Sim/Não",
+   "question_text": "Existe chamado de alteração de endereço?",
+   "choices": [],
+   "label_atual": "Já existe chamado de alteração de endereço?"
+  },
+  {
+   "name": "csa_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Celular",
+   "choices": [],
+   "label_atual": "Qual é o celular para a chave PIX?"
+  },
+  {
+   "name": "rh_business_address",
+   "type": "Texto de Linha Única",
+   "question_text": "Endereço da empresa de transporte",
+   "choices": [],
+   "label_atual": "Qual é o endereço da empresa de transporte?"
+  },
+  {
+   "name": "afastamento_ou_ferias",
+   "type": "Selecionar Caixa",
+   "question_text": "Afastamento ou Férias?",
+   "choices": [
+    "Afastamento",
+    "Férias"
+   ],
+   "label_atual": "A alteração foi por afastamento ou férias?"
+  },
+  {
+   "name": "rh_card_modality",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual a modalidade do cartão?",
+   "choices": [
+    "Metropolitano",
+    "Urbano"
+   ],
+   "label_atual": "Qual é a modalidade do cartão?"
+  },
+  {
+   "name": "extrato_bancario",
+   "type": "Anexo",
+   "question_text": "Extrato bancário",
+   "choices": [],
+   "label_atual": "Envie o extrato bancário."
+  },
+  {
+   "name": "n_mero_do_chamado_de_reintegra_o",
+   "type": "Texto de Linha Única",
+   "question_text": "Número do chamado de reintegração",
+   "choices": [],
+   "label_atual": "Qual é o número do chamado de reintegração?"
+  },
+  {
+   "name": "operadora_de_transporte",
+   "type": "Texto de Linha Única",
+   "question_text": "Operadora de transporte",
+   "choices": [],
+   "label_atual": "Qual é a operadora de transporte dos créditos?"
+  },
+  {
+   "name": "rh_refund_required",
+   "type": "Selecionar Caixa",
+   "question_text": "Necessário reembolso?",
+   "choices": [
+    "Sim",
+    "Não"
+   ],
+   "label_atual": "É necessário reembolso?"
+  },
+  {
+   "name": "rh_final_period",
+   "type": "Data",
+   "question_text": "Período final solicitado",
+   "choices": [],
+   "label_atual": "Qual é o fim do período do extrato?"
+  },
+  {
+   "name": "rh_occurrence_description",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Descrição da ocorrência",
+   "choices": [],
+   "label_atual": "Descreva a ocorrência."
+  },
+  {
+   "name": "pix_key",
+   "type": "Selecionar Caixa",
+   "question_text": "Chave PIX do(a) colaborador(a)",
+   "choices": [
+    "E-mail",
+    "Não possui chave PIX cadastrada",
+    "Chave aleatória",
+    "Celular",
+    "CPF"
+   ],
+   "label_atual": "Qual é o tipo da chave PIX do colaborador?"
+  },
+  {
+   "name": "rh_business_phone",
+   "type": "Texto de Linha Única",
+   "question_text": "Telefone da empresa de transporte",
+   "choices": [],
+   "label_atual": "Qual é o telefone da empresa de transporte?"
+  },
+  {
+   "name": "rh_line_transport",
+   "type": "Texto de Várias Linhas",
+   "question_text": "Itinerário (Linha de Transporte)",
+   "choices": [],
+   "label_atual": "Qual é o itinerário (linha de transporte)?"
+  },
+  {
+   "name": "rh_shipping_company_opt_no_receipt",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome da empresa de transporte",
+   "choices": [],
+   "label_atual": "Qual é o nome da empresa de transporte?"
+  },
+  {
+   "name": "consta_na_lista_excluidos_saldo",
+   "type": "Sim/Não",
+   "question_text": "Consta na lista de excluídos ou gestão de saldo?",
+   "choices": [],
+   "label_atual": "O colaborador consta na lista de excluídos ou de gestão de saldo?"
+  },
+  {
+   "name": "csa_shipping_company",
+   "type": "Texto de Linha Única",
+   "question_text": "Operadora de transporte",
+   "choices": [],
+   "label_atual": "Qual é a operadora de transporte do cartão?"
+  },
+  {
+   "name": "comprovante_de_transferencia",
+   "type": "Anexo",
+   "question_text": "Comprovante de transferência",
+   "choices": [],
+   "label_atual": "Envie o comprovante de transferência de loja."
+  }
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "264842451b1c4dd8eca40dcbe54bcbfa",
+   "name": "ALP - Organização",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, executa uma função que adiciona repetidas vezes a opção '--' à variável qual_a_solicitaco (várias chamadas idênticas de addOption). Na prática não cria opções úteis; parece código residual."
+  },
+  {
+   "sys_id": "359dba791bfbec1032822170f54bcb1c",
+   "name": "ALP - OnChange validate Business Phone",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange de rh_business_phone, remove não-dígitos e valida o telefone brasileiro (DDD + 8 ou 9 dígitos). Inválido: limpa e mostra 'Número de telefone inválido!'. Válido: aplica máscara (DD) XXXX-XXXX ou (DD) XXXXX-XXXX."
+  },
+  {
+   "sys_id": "68d131103b6b2a10b28dd047f4e45a17",
+   "name": "ALP - RH Default Validation User Change",
+   "type": "onChange",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onChange, carrega o UI Script x_asat_csc.RhDefaultValidation e chama validate(g_form). A validação em si está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "a2caf33b87dc7610182a0d440cbb359f",
+   "name": "CSA - Clear field Número do chamado",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa a variável numero_do_chamado."
+  },
+  {
+   "sys_id": "bb8e000d1bce061032822170f54bcbee",
+   "name": "CSA -limpar var caso valor não for igual",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, compara rh_user_id_impacted com matricula; se forem diferentes, limpa a variável adipar_reembolso."
+  },
+  {
+   "sys_id": "ddd179103b6b2a10b28dd047f4e45a0a",
+   "name": "ALP - RH Default Validation User Load",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ativo": "true",
+   "resumo": "No onLoad, carrega o UI Script x_asat_csc.RhDefaultValidation e chama checkCatalogItem(g_form). A lógica está no UI Script, não lida aqui."
+  },
+  {
+   "sys_id": "ee7d76791bfbec1032822170f54bcb04",
+   "name": "ALP - OnChange validate Phone Contact",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "Mesma validação e máscara de telefone aplicada a rh_phone_contact."
+  },
+  {
+   "sys_id": "fc893ff787dc7610182a0d440cbb3548",
+   "name": "CSA - Clear field",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange, limpa colaborador_desligado, numero_do_cartao_de_vale_transporte e numero_do_chamado."
+  }
+ ]
+}

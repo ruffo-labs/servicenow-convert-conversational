@@ -1,0 +1,214 @@
+{
+ "sys_id": "efa567483b557e10b28dd047f4e45ae4",
+ "status": "dividido",
+ "motivo": "Dois formulários: atendimento negado pede o motivo, e reembolso de coparticipação pede demonstrativo, comprovante da operadora e mês de referência.",
+ "vars": {
+  "membership_form": {
+   "label": "Envie o formulário de adesão."
+  },
+  "payment_statement": {
+   "label": "Envie o demonstrativo de pagamento."
+  },
+  "reason_service_being_performed": {
+   "label": "Qual foi o motivo de o atendimento não ser realizado?"
+  },
+  "proof_from_operator": {
+   "label": "Envie o comprovante da operadora."
+  },
+  "dependent_name": {
+   "label": "Qual é o nome do dependente?"
+  },
+  "reference_month": {
+   "label": "Qual é o mês de referência?"
+  },
+  "operator_name": {
+   "label": "Qual é o nome da operadora?"
+  },
+  "was_there_improper_discount": {
+   "label": "Houve desconto indevido?"
+  },
+  "policyholder_or_dependent": {
+   "label": "O atendimento é para o titular ou para um dependente?"
+  }
+ },
+ "remover": {
+  "observation_3": "visual",
+  "attention": "visual",
+  "container_start": "visual",
+  "observation_4": "visual",
+  "attention_2": "visual",
+  "who_would_you_like_to_exclude": "oferta_inativa",
+  "cancellation_form": "oferta_inativa",
+  "observation": "visual",
+  "reason_for_cancellation": "oferta_inativa",
+  "observation_2": "visual",
+  "statement_use": "oferta_inativa",
+  "observation_5": "visual",
+  "formatter": "visual",
+  "formatter2": "visual",
+  "observation_6": "visual",
+  "who_would_you_like_to_include": "oferta_inativa"
+ },
+ "policies": {
+  "462a3c2f3bd1f290b28dd047f4e45a50": "remover",
+  "52e174ef3b91f290b28dd047f4e45a50": "remover",
+  "906338633bd1f290b28dd047f4e45a46": "remover",
+  "9d5c1db787953a10182a0d440cbb350c": "remover",
+  "9db5b8673bd1f290b28dd047f4e45a40": "remover",
+  "a121386f3b91f290b28dd047f4e45a6a": "remover",
+  "aaac59f787953a10182a0d440cbb3575": "remover",
+  "aeef6cab3b91f290b28dd047f4e45a1a": "remover",
+  "d8dea8e73b91f290b28dd047f4e45a76": "remover",
+  "f8c430273bd1f290b28dd047f4e45a52": "remover",
+  "ffbd1dfb87953a10182a0d440cbb35bd": "remover",
+  "1f72b0233bd1f290b28dd047f4e45a58": {
+   "conditions": "who_would_you_like_to_includeIN20,30",
+   "actions": {
+    "Attachments": {
+     "visible": true,
+     "mandatory": true
+    },
+    "aux_widget": {
+     "visible": true
+    }
+   }
+  },
+  "29e2bc233bd1f290b28dd047f4e45a17": {
+   "conditions": "who_would_you_like_to_include=10",
+   "actions": {
+    "membership_form": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "463f517387d53a10182a0d440cbb3572": {
+   "conditions": "who_would_you_like_to_include=10",
+   "actions": {
+    "membership_form": {
+     "visible": true
+    }
+   }
+  },
+  "57dfd9b387d53a10182a0d440cbb3586": {
+   "conditions": "who_would_you_like_to_includeIN20,30",
+   "actions": {
+    "aux_widget": {
+     "visible": true
+    }
+   }
+  },
+  "939134af3b91f290b28dd047f4e45acf": "remover"
+ },
+ "itens": [
+  {
+   "name": "Beneficiário odontológico não consegue ser atendido",
+   "short_description": "Beneficiário(a) não consegue ser atendido(a) na assistência odontológica",
+   "description": "Use quando você ou um dependente não conseguiu atendimento odontológico. Atende a oferta Beneficiário(a) não consegue ser atendido(a), com SLA de 32h no RH de Assistência Odontológica.",
+   "frases_exemplo": [
+    "Meu dentista não quis me atender",
+    "Não consigo atendimento odontológico pelo plano",
+    "O plano odontológico não está funcionando para mim",
+    "Meu dependente foi recusado no dentista",
+    "Estou com problema para usar o plano odontológico"
+   ],
+   "sem_vars": [
+    "payment_statement",
+    "proof_from_operator",
+    "reference_month"
+   ],
+   "vars": {
+    "reason_service_being_performed": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "policyholder_or_dependent": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1a7430e33bd1f290b28dd047f4e45a9b",
+    "1f72b0233bd1f290b28dd047f4e45a58",
+    "29e2bc233bd1f290b28dd047f4e45a17",
+    "463f517387d53a10182a0d440cbb3572",
+    "57dfd9b387d53a10182a0d440cbb3586",
+    "8e4034eb3b91f290b28dd047f4e45a1f"
+   ]
+  },
+  {
+   "name": "Reembolso de coparticipação odontológica",
+   "short_description": "Reembolso de coparticipação de assistência odontológica",
+   "description": "Use para pedir o reembolso de coparticipação cobrada na assistência odontológica. Atende a oferta Solicitação de reembolso de coparticipação de assistência odontológica, com SLA de 40h no RH de Assistência Odontológica.",
+   "frases_exemplo": [
+    "Quero reembolso da coparticipação do dentista",
+    "Fui cobrado a mais no plano odontológico",
+    "Preciso pedir reembolso de coparticipação odontológica",
+    "Tive desconto indevido do plano odontológico",
+    "Como peço de volta a coparticipação do dentista?"
+   ],
+   "sem_vars": [
+    "reason_service_being_performed"
+   ],
+   "vars": {
+    "payment_statement": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "proof_from_operator": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "reference_month": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "policyholder_or_dependent": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1a7430e33bd1f290b28dd047f4e45a9b",
+    "1f72b0233bd1f290b28dd047f4e45a58",
+    "29e2bc233bd1f290b28dd047f4e45a17",
+    "463f517387d53a10182a0d440cbb3572",
+    "57dfd9b387d53a10182a0d440cbb3586",
+    "8e4034eb3b91f290b28dd047f4e45a1f"
+   ]
+  }
+ ],
+ "scripts": {
+  "29d34da53bd1b650b28dd047f4e45aa7": {
+   "remover": {
+    "outro": "só limpa campo conforme a oferta; coberto pelo derivado"
+   }
+  },
+  "313005213bd1b650b28dd047f4e45a19": {
+   "remover": {
+    "outro": "só limpa campos conforme a oferta; coberto pelo derivado"
+   }
+  },
+  "467305a53bd1b650b28dd047f4e45a69": {
+   "remover": {
+    "outro": "só limpa campo conforme a oferta; coberto pelo derivado"
+   }
+  },
+  "8d2449e53bd1b650b28dd047f4e45a72": {
+   "remover": {
+    "outro": "só limpa campo conforme a oferta; coberto pelo derivado"
+   }
+  },
+  "dec385a53bd1b650b28dd047f4e45ae2": {
+   "remover": {
+    "outro": "só limpa campo conforme a oferta; coberto pelo derivado"
+   }
+  }
+ }
+}

@@ -1,0 +1,243 @@
+{
+ "sys_id": "f563d0e81b5ef910a530426fe54bcbd9",
+ "title": "EY VS - Solicitação de RPE",
+ "internal_name": "ey_vs_solicita_o_de_rpe",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Solicitação de RPE"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_requester_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Requester name",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "vs_approver_user",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Approver",
+   "reference": "sys_user"
+  },
+  {
+   "name": "vs_recipient_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Recipient's name",
+   "reference": "sys_user",
+   "ref_qual": "company=c153f8961b0acd10237642ece54bcb1d^ORcompany=8c14f4d61b0acd10237642ece54bcb3e^ORcompany=0814f4d61b0acd10237642ece54bcb69^EQ"
+  },
+  {
+   "name": "vs_recipient_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Recipient's CPF",
+   "read_only": true
+  },
+  {
+   "name": "vs_recipient_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Recipient's Email",
+   "read_only": true
+  },
+  {
+   "name": "vs_label_2",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "vs_company",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Company",
+   "reference": "core_company",
+   "ref_qual": "u_brandISNOTEMPTY^nameLIKE2000^ORnameLIKEBR10 Ind. Com. Cosm. Natura Ltda. (Brazil)^ORnameLIKE8000^ORnameLIKE3000 Ind. Com. Cosm. Natura Ltda. (Brazil"
+  },
+  {
+   "name": "vs_cost_center",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Cost Center",
+   "reference": "cmn_cost_center",
+   "ref_qual": "u_blocked=false^EQ"
+  },
+  {
+   "name": "vs_cost_center_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Center name",
+   "read_only": true
+  },
+  {
+   "name": "vs_did_you_find_the_cost_center",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Did you find the Cost center?",
+   "include_none": true
+  },
+  {
+   "name": "vs_cost_class",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cost Class"
+  },
+  {
+   "name": "vs_purpose",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Purpose"
+  },
+  {
+   "name": "vs_justification",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Justification"
+  },
+  {
+   "name": "vs_center_cd",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Center / CD",
+   "include_none": true,
+   "choices": [
+    "5700 [=5700_cabreuva]"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields Catalog Item View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_recipient_name: mandatory=true",
+    "vs_requester_name: mandatory=true,readonly=true",
+    "vs_sap_customer_code: readonly=true",
+    "vs_cost_center: mandatory=true",
+    "vs_company: mandatory=true",
+    "vs_did_you_find_the_cost_center: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Hide CPF on Portal",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_recipient_cpf: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Show Cost Class and Purpose",
+   "when": "IO:vs_did_you_find_the_cost_center=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_purpose: visible=true,readonly=true",
+    "vs_cost_class: visible=true,readonly=true"
+   ]
+  },
+  {
+   "name": "EY: \"Did you find the Cost center?\" is \"No\"",
+   "when": "IO:vs_did_you_find_the_cost_center=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_label: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Hide Cost Center when not find",
+   "when": "IO:vs_did_you_find_the_cost_center=No^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_cost_center: visible=false,mandatory=false",
+    "vs_cost_center_name: visible=false"
+   ]
+  },
+  {
+   "name": "EY: \"Did you find the Cost center?\" is \"Yes\"",
+   "when": "IO:vs_did_you_find_the_cost_center=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_justification: visible=true,mandatory=true",
+    "vs_quantity_required: visible=true,mandatory=true",
+    "vs_sales_code: visible=true,mandatory=true",
+    "vs_find_sales_code: visible=true,mandatory=true",
+    "vs_add_more: visible=true",
+    "vs_delivery_location: visible=true,mandatory=true",
+    "vs_center_cd: visible=true,mandatory=true",
+    "vs_approver: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: \"Did you find the sales code?\" is \"Yes\"",
+   "when": "IO:vs_did_you_find_the_cost_center=Yes^IO:vs_find_sales_code=Yes^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_material_code: visible=true,mandatory=true,readonly=true",
+    "vs_product_description: visible=true,mandatory=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Fill CPF and email",
+   "type": "onChange",
+   "on": "28700c1f1b820650d1abda4ce54bcb71",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que busca CPF e e-mail do usuário. Chama x_nasm_finance.EY_DataFinanceUtils, método getInfoUser, via GlideAjax, e preenche os campos com o JSON retornado."
+  },
+  {
+   "name": "EY: Auto Fill Sap Custumer Code",
+   "type": "onChange",
+   "on": "1f051ce81b5ef910a530426fe54bcb1e",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche o código SAP do cliente. Limpa 'vs_sap_customer_code' e usa g_form.getReference no destinatário/solicitante para ler o campo u_vendor_id do registro referenciado e gravá-lo no campo."
+  },
+  {
+   "name": "EY: Clear sales code",
+   "type": "onChange",
+   "on": "2745eed91b1a75d0d1abda4ce54bcbc8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'vs_sales_code' quando a resposta a 'encontrou o código de vendas' é 'No'."
+  },
+  {
+   "name": "EY: Clear cost center",
+   "type": "onChange",
+   "on": "3b2610201b9ef910a530426fe54bcbde",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa o centro de custo e o nome do centro de custo quando a resposta a 'encontrou o centro de custo' é 'No'."
+  },
+  {
+   "name": "EY: Auto Fill Fields Based on Sales Code",
+   "type": "onChange",
+   "on": "0c152e991b1a75d0d1abda4ce54bcbe9",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche codigo de material e descricao do produto a partir do codigo de vendas. Limpa os dois campos e usa g_form.getReference no campo de codigo de vendas, preenchendo-os no callback com os dados do registro referenciado. Gemeo do outro script de mesmo nome, mudando os campos de destino (sem o sufixo _mr). Observacao: le os campos do registro como u_codigo_de_material e u_descricao_do_produto, com acento no nome da coluna."
+  },
+  {
+   "name": "EY: Get Centro de Custo e Finalidade",
+   "type": "onChange",
+   "on": "6e065c6c1b5ef910a530426fe54bcb35",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche finalidade, classe de custo e nome a partir do centro de custo. Limpa os três campos e então usa g_form.getReference no centro de custo, preenchendo-os no callback com os dados do registro referenciado."
+  }
+ ]
+}

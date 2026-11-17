@@ -1,0 +1,80 @@
+{
+ "sys_id": "1506f32e1bcf281032822170f54bcb82",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui.",
+ "vars": {
+  "rh_pensioner_account": {
+   "label": "Conta-Corrente da pensionista"
+  },
+  "rh_pensioner_cpf": {
+   "label": "CPF da pensionista"
+  },
+  "rh_pensioner_bank": {
+   "label": "Banco da pensionista"
+  },
+  "rh_pensioner_name": {
+   "label": "Nome completo da pensionista"
+  },
+  "rh_pensioner_agency": {
+   "label": "Agencia da pensionista (com dígito, se houver)"
+  },
+  "rh_date_register": {
+   "label": "Data de cadastro"
+  },
+  "rh_bank_data": {
+   "label": "Dados bancários corretos"
+  },
+  "rh_event_date": {
+   "label": "Data do evento de pagamento rejeitado"
+  }
+ },
+ "remover": {
+  "rh_observation_craft": "visual",
+  "formatter": "visual",
+  "rh_container_init": "visual",
+  "rh_observation_bank_data": "visual"
+ },
+ "policies": {
+  "2b8390071b8fa81032822170f54bcba7": "remover",
+  "93b390071b8fa81032822170f54bcbae": "remover"
+ },
+ "itens": [
+  {
+   "name": "Pensão Alimentícia (Folha de Pagamento - problema)",
+   "short_description": "Pensão alimentícia",
+   "description": "Pens o aliment cia",
+   "frases_exemplo": [
+    "Solicitação de regularização de rejeição bancária - Pensionista",
+    "Não recebimento ou contestação de valor pago/recebido de pensão alimentícia"
+   ],
+   "sem_vars": [
+    "rh_pensioner_account",
+    "rh_pensioner_cpf",
+    "rh_pensioner_bank",
+    "rh_pensioner_agency",
+    "rh_date_register"
+   ],
+   "sem_policies": [
+    "5139083a1b83681032822170f54bcbc4",
+    "d939083a1b83681032822170f54bcbb4"
+   ]
+  },
+  {
+   "name": "Pensão Alimentícia (Folha de Pagamento - servico)",
+   "short_description": "Pensão alimentícia",
+   "description": "Pens o aliment cia",
+   "frases_exemplo": [
+    "Solicitação de alteração de dados bancários da pensionista",
+    "Solicitação de cadastro de exclusão de pensão alimentícia",
+    "Solicitação de cadastro de pensão alimentícia"
+   ],
+   "sem_vars": [
+    "rh_bank_data",
+    "rh_event_date"
+   ],
+   "sem_policies": [
+    "1139083a1b83681032822170f54bcbc7"
+   ]
+  }
+ ]
+}

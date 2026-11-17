@@ -1,0 +1,9 @@
+{
+ "sys_id": "cc899fa41b709a50514cbaef4b4bcbeb",
+ "status": "analise_humana",
+ "criterio": "formulario_complexo",
+ "motivo": "O item usa uma MRVS ('Your children's data') com widget custom (mrvs_monitor) que gerencia linhas de filhos e provavelmente o anexo do comprovante, além de 6 catalog client scripts sem VA Supported que calculam o teto de reembolso por país e resolvem o colaborador a partir do formulário pai. A 1ª análise pede tirar v_child_name e v_amount_of_schooling do variable set (tornando-os variáveis simples fora da MRVS) para viabilizar 'um pedido por filho', mas o formato de spec não permite alterar nem mover variável de set (variable set é compartilhado). Sem essa reestruturação não é possível reproduzir com segurança a regra de um pedido por filho e o anexo por criança sem risco de perda de dado ou duplicidade; recomenda-se decisão humana sobre como reconstruir este item.",
+ "divergencias": [
+  "limite_formato"
+ ]
+}

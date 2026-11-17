@@ -1,0 +1,134 @@
+{
+ "sys_id": "374a53851b550510d1abda4ce54bcb1c",
+ "title": "Dependent Data",
+ "internal_name": "dependent_data",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Adesão, inclusão ou exclusão dos Benefícios de Assistência Médica e Odontológica"
+ ],
+ "variaveis": [
+  {
+   "name": "beneficiary_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Beneficiary Name",
+   "reference": "x_nasm_hr_beneficiary",
+   "ref_qual": "javascript: new x_nasm_hr.ACN_ValidateUtils().getBeneficiaryQuery()"
+  },
+  {
+   "name": "plan_options",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Plan options",
+   "include_none": true,
+   "choices": [
+    "Health Care [=10]",
+    "Dental Care [=20]",
+    "Health + Dental Care [=30]"
+   ]
+  },
+  {
+   "name": "dependent_live_birth_certificate",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Dependents Live Birth Certificate"
+  },
+  {
+   "name": "rg",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "RG",
+   "read_only": true
+  },
+  {
+   "name": "ssn",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "SSN",
+   "read_only": true
+  },
+  {
+   "name": "dependentes_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Dependent ID",
+   "read_only": true
+  },
+  {
+   "name": "marital_status2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Marital Status",
+   "read_only": true
+  },
+  {
+   "name": "relationship",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Relationship",
+   "read_only": true
+  },
+  {
+   "name": "genero",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Gende",
+   "read_only": true
+  },
+  {
+   "name": "date_of_birth",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Date of Birth",
+   "read_only": true
+  },
+  {
+   "name": "mother_name2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Mother's Name",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Campos Obrigatorios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "surname: visible=false",
+    "plan_options: mandatory=true",
+    "beneficiary_name: mandatory=true",
+    "status: visible=false",
+    "beneficiary_type: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN Fill Add beneficiary data",
+   "type": "onChange",
+   "on": "39badb851b550510d1abda4ce54bcbd8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do beneficiário adicionado. Versão maior do irmão de mesmo nome."
+  },
+  {
+   "name": "EY: Validar dependente duplicado",
+   "type": "onChange",
+   "on": "39badb851b550510d1abda4ce54bcbd8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida dependente duplicado. Observação: guarda `this` numa variável 'spThis' — padrão usado para acessar o contexto do Service Portal de dentro de funções internas."
+  },
+  {
+   "name": "EY: Marcar checkbox atraves do plans_opt",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onSubmit que marca os checkboxes de benefício automaticamente a partir da escolha em 'plan_options', distinguindo planos médicos de odontológicos. Nomes de variáveis em português no código."
+  }
+ ]
+}

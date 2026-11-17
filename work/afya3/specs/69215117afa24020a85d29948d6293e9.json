@@ -1,0 +1,350 @@
+{
+ "sys_id": "69215117afa24020a85d29948d6293e9",
+ "status": "dividido",
+ "motivo": "Avaliar DR pede escopo, BIA, dependências e responsáveis; alta disponibilidade pede bancos, arquitetura e plano de retorno; replicação pede origem, destino e retenção; teste de DR pede plano aprovado, cenário e comunicação. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_servicos_em_escopo": {
+   "label": "Quais serviços estão no escopo?"
+  },
+  "v_impacto_no_negocio_bia": {
+   "label": "Qual o impacto no negócio se o serviço parar?"
+  },
+  "v_rto_rpo_atual_e_desejado": {
+   "label": "Quais são o RTO e o RPO atuais e desejados?"
+  },
+  "v_dependencias_mapeadas": {
+   "label": "Quais dependências do serviço já foram mapeadas?"
+  },
+  "v_responsaveis": {
+   "label": "Quem são os responsáveis pelo serviço?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_banco_s_envolvido_s": {
+   "label": "Quais bancos de dados estão envolvidos?"
+  },
+  "v_rto_rpo_desejado": {
+   "label": "Quais são o RTO e o RPO desejados?"
+  },
+  "v_arquitetura_proposta": {
+   "label": "Qual a arquitetura proposta?"
+  },
+  "v_plano_de_testes": {
+   "label": "Qual o plano de testes?"
+  },
+  "v_janela_de_manutencao": {
+   "label": "Qual a janela de manutenção?"
+  },
+  "v_plano_de_retorno": {
+   "label": "Qual o plano de retorno se algo der errado?"
+  },
+  "v_banco_de_origem": {
+   "label": "Qual o banco de origem da replicação?"
+  },
+  "v_banco_de_destino": {
+   "label": "Qual o banco de destino da replicação?"
+  },
+  "v_objetos_replicados": {
+   "label": "Quais objetos serão replicados?"
+  },
+  "v_frequencia": {
+   "label": "Com que frequência a replicação deve ocorrer?"
+  },
+  "v_seguranca_dos_dados": {
+   "label": "Quais cuidados de segurança dos dados serão adotados?"
+  },
+  "v_retencao": {
+   "label": "Por quanto tempo os dados serão retidos?"
+  },
+  "v_plano_aprovado_anexar": {
+   "label": "Envie o plano aprovado."
+  },
+  "v_cenario_do_teste": {
+   "label": "Qual o cenário do teste?"
+  },
+  "v_participantes": {
+   "label": "Quem vai participar do teste?"
+  },
+  "v_janela_de_execucao": {
+   "label": "Qual a janela de execução do teste?"
+  },
+  "v_criterios_de_aceite": {
+   "label": "Quais os critérios de aceite do teste?"
+  },
+  "v_plano_de_comunicacao": {
+   "label": "Qual o plano de comunicação do teste?"
+  }
+ },
+ "policies": {
+  "688a1970a25f4c60b78842228bd487e0": "remover",
+  "00caa0f90c40437f99f6b8e7ffd6087a": "remover",
+  "c10992235957432e8602233c4e026245": "remover",
+  "9e145736ddd7451b818f9569fc48f40a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Avaliar recuperação de desastre de um serviço",
+   "short_description": "Peça uma avaliação de recuperação de desastre para serviços críticos.",
+   "description": "Use para avaliar a recuperação de desastre de serviços críticos. Corresponde à opção Avaliar recuperação de desastre. Informe serviços em escopo, impacto no negócio, RTO/RPO, dependências e responsáveis.",
+   "frases_exemplo": [
+    "Preciso avaliar a recuperação de desastre de um serviço",
+    "Quero um diagnóstico de DR para um sistema crítico",
+    "Como está nosso plano de recuperação de desastre?",
+    "Preciso mapear RTO e RPO de um serviço",
+    "Quero avaliar o impacto se um sistema parar"
+   ],
+   "sem_vars": [
+    "v_banco_s_envolvido_s",
+    "v_rto_rpo_desejado",
+    "v_arquitetura_proposta",
+    "v_plano_de_testes",
+    "v_janela_de_manutencao",
+    "v_plano_de_retorno",
+    "v_banco_de_origem",
+    "v_banco_de_destino",
+    "v_objetos_replicados",
+    "v_frequencia",
+    "v_seguranca_dos_dados",
+    "v_retencao",
+    "v_plano_aprovado_anexar",
+    "v_cenario_do_teste",
+    "v_participantes",
+    "v_janela_de_execucao",
+    "v_criterios_de_aceite",
+    "v_plano_de_comunicacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Avaliar recuperação de desastre"
+   },
+   "vars": {
+    "v_servicos_em_escopo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_no_negocio_bia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_rto_rpo_atual_e_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_dependencias_mapeadas": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_responsaveis": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Configurar alta disponibilidade de banco de dados",
+   "short_description": "Solicite a configuração de alta disponibilidade para bancos de dados.",
+   "description": "Use para configurar alta disponibilidade. Corresponde à opção Configurar alta disponibilidade. Informe bancos envolvidos, RTO/RPO desejado, arquitetura proposta, plano de testes, janela de manutenção e plano de retorno.",
+   "frases_exemplo": [
+    "Quero configurar alta disponibilidade para um banco",
+    "Preciso de HA no banco de produção",
+    "Dá pra montar um cluster para esse banco?",
+    "Quero reduzir o tempo de indisponibilidade do banco",
+    "Preciso implantar alta disponibilidade"
+   ],
+   "sem_vars": [
+    "v_servicos_em_escopo",
+    "v_impacto_no_negocio_bia",
+    "v_rto_rpo_atual_e_desejado",
+    "v_dependencias_mapeadas",
+    "v_responsaveis",
+    "v_banco_de_origem",
+    "v_banco_de_destino",
+    "v_objetos_replicados",
+    "v_frequencia",
+    "v_seguranca_dos_dados",
+    "v_retencao",
+    "v_plano_aprovado_anexar",
+    "v_cenario_do_teste",
+    "v_participantes",
+    "v_janela_de_execucao",
+    "v_criterios_de_aceite",
+    "v_plano_de_comunicacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Configurar alta disponibilidade"
+   },
+   "vars": {
+    "v_banco_s_envolvido_s": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_rto_rpo_desejado": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_arquitetura_proposta": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_testes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_manutencao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_retorno": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Configurar replicação de dados entre bancos",
+   "short_description": "Solicite a configuração de replicação de dados entre bancos.",
+   "description": "Use para replicar dados de um banco para outro. Corresponde à opção Configurar replicação de dados. Informe banco de origem e destino, objetos replicados, frequência, segurança e retenção.",
+   "frases_exemplo": [
+    "Preciso configurar replicação de um banco",
+    "Quero replicar tabelas para outro banco",
+    "Dá pra replicar os dados a cada hora?",
+    "Preciso de uma cópia replicada do banco de produção",
+    "Quero abrir pedido de replicação de dados"
+   ],
+   "sem_vars": [
+    "v_servicos_em_escopo",
+    "v_impacto_no_negocio_bia",
+    "v_rto_rpo_atual_e_desejado",
+    "v_dependencias_mapeadas",
+    "v_responsaveis",
+    "v_banco_s_envolvido_s",
+    "v_rto_rpo_desejado",
+    "v_arquitetura_proposta",
+    "v_plano_de_testes",
+    "v_janela_de_manutencao",
+    "v_plano_de_retorno",
+    "v_plano_aprovado_anexar",
+    "v_cenario_do_teste",
+    "v_participantes",
+    "v_janela_de_execucao",
+    "v_criterios_de_aceite",
+    "v_plano_de_comunicacao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Configurar replicação de dados"
+   },
+   "vars": {
+    "v_banco_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_banco_de_destino": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_objetos_replicados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_frequencia": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_seguranca_dos_dados": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_retencao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Executar teste de recuperação de desastre",
+   "short_description": "Agende e execute um teste de recuperação de desastre.",
+   "description": "Use para executar um teste de DR já planejado. Corresponde à opção Executar teste de recuperação de desastre. Informe plano aprovado, cenário, participantes, janela, critérios de aceite e plano de comunicação.",
+   "frases_exemplo": [
+    "Quero executar um teste de DR",
+    "Preciso agendar um teste de recuperação de desastre",
+    "Vamos testar o plano de contingência do sistema",
+    "Tenho um plano aprovado e quero testar",
+    "Preciso de um teste de DR numa janela de fim de semana"
+   ],
+   "sem_vars": [
+    "v_servicos_em_escopo",
+    "v_impacto_no_negocio_bia",
+    "v_rto_rpo_atual_e_desejado",
+    "v_dependencias_mapeadas",
+    "v_responsaveis",
+    "v_banco_s_envolvido_s",
+    "v_rto_rpo_desejado",
+    "v_arquitetura_proposta",
+    "v_plano_de_testes",
+    "v_janela_de_manutencao",
+    "v_plano_de_retorno",
+    "v_banco_de_origem",
+    "v_banco_de_destino",
+    "v_objetos_replicados",
+    "v_frequencia",
+    "v_seguranca_dos_dados",
+    "v_retencao"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Executar teste de recuperação de desastre"
+   },
+   "vars": {
+    "v_plano_aprovado_anexar": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_cenario_do_teste": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_participantes": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_janela_de_execucao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_criterios_de_aceite": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_plano_de_comunicacao": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}

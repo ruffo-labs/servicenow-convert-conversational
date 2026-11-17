@@ -1,0 +1,66 @@
+{
+ "sys_id": "33f3cde33bc53a10b28dd047f4e45a1d",
+ "motivo": "Divergência de desconto pede operadora, mês de referência e comprovantes; problemas de uso pedem motivo, evidência do erro e operadora (com titular/dependente na TotalPass); atualização de e-mail pede só a operadora e o novo e-mail.",
+ "derivados": [
+  {
+   "k": 0,
+   "name": "Divergência nos valores descontados de academia",
+   "short_description": "Contestar valor descontado em folha da academia",
+   "description": "Use quando o valor descontado em folha pela academia está diferente do esperado. Corresponde à oferta Divergência nos valores descontados de academia. Você informa a operadora (Wellhub ou TotalPass), o mês de referência e anexa o demonstrativo de pagamento e a evidência da operadora.",
+   "frases_exemplo": [
+    "O desconto da academia veio errado",
+    "Estão descontando a mais da minha Wellhub",
+    "Valor da TotalPass no meu holerite está diferente",
+    "Quero contestar o desconto da academia deste mês",
+    "Fui cobrado em duplicidade pela academia"
+   ]
+  },
+  {
+   "k": 1,
+   "name": "Problemas ao utilizar a academia (Wellhub ou TotalPass)",
+   "short_description": "Relatar problema de acesso, bloqueio ou inscrição na academia",
+   "description": "Use quando você tem problema para usar o benefício de academia, como bloqueio, falha de acesso ao cadastro ou de inscrição. Corresponde à oferta Problemas ao utilizar academia. Você informa a operadora, o motivo e anexa a evidência do erro; na TotalPass, também se é titular ou dependente.",
+   "frases_exemplo": [
+    "Não consigo acessar meu cadastro da academia",
+    "Meu benefício de academia está bloqueado",
+    "Não consigo me inscrever na TotalPass",
+    "Deu erro na inscrição da Wellhub",
+    "Minha academia não está funcionando pelo app"
+   ]
+  },
+  {
+   "k": 2,
+   "name": "Atualizar e-mail cadastrado na academia",
+   "short_description": "Pedir troca do e-mail do cadastro da academia",
+   "description": "Use para atualizar o e-mail cadastrado no benefício de academia. Corresponde à oferta Solicitação de atualização do e-mail cadastrado na academia. Você informa a operadora e o novo e-mail.",
+   "frases_exemplo": [
+    "Quero trocar o e-mail da minha academia",
+    "Preciso atualizar o e-mail da Wellhub",
+    "Mudei de e-mail e quero alterar na TotalPass",
+    "Meu e-mail cadastrado na academia está errado",
+    "Como atualizo o e-mail do benefício de academia?"
+   ]
+  }
+ ],
+ "labels": {
+  "new_email": "Qual é o novo e-mail que você quer cadastrar?",
+  "reason_for_request": "Qual é o motivo da sua solicitação?",
+  "reference_month": "De qual mês é o desconto?",
+  "evidence_of_the_error": "Envie uma imagem ou arquivo que mostre o erro.",
+  "policyholder_or_dependent": "O problema é do titular, do dependente ou de ambos?",
+  "which_operator": "Qual operadora de academia você usa?",
+  "payment_statement": "Envie o demonstrativo de pagamento do mês.",
+  "carrier_evidence": "Envie a evidência da operadora, como a cobrança ou o extrato.",
+  "dependent_name": "Qual é o nome do dependente?"
+ },
+ "scripts": {
+  "6b387af73b45fa10b28dd047f4e45a7d": {
+   "remover": "sem_efeito"
+  }
+ },
+ "pendencias": [
+  "bloquearSubmit bloqueia o envio da oferta fixa de atualização de e-mail quando a operadora é TotalPass (fila exclusiva Wellhub); decidir se vira policy ou mensagem no derivado k=2.",
+  "Scripts ALP - Clear form (3) limpam campos conforme gatilho; com campos distintos por derivado pode ser desnecessário, mas gatilhos não estão claros; omitidos.",
+  "Derivado k=1: policy de titular/dependente existe só para TotalPass; label de policyholder_or_dependent assume essa regra."
+ ]
+}

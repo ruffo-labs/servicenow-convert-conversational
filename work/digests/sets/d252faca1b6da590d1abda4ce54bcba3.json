@@ -1,0 +1,77 @@
+{
+ "sys_id": "d252faca1b6da590d1abda4ce54bcba3",
+ "title": "EY VS - Lancamento Contabil - Natura + TBS",
+ "internal_name": "ey_vs_lancamento_contabil_natura_tbs",
+ "description": "Lancamento Contabil - Natura + TBS",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Lançamento Contábil - Natura + TBS"
+ ],
+ "variaveis": [
+  {
+   "name": "vs_approver",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Select the approver",
+   "reference": "sys_user",
+   "ref_qual": "javascript: new global.FilterApproversUtils().validarRange(current.variables.v_opened_by)"
+  },
+  {
+   "name": "vs_attachment_information",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "vs_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach template file"
+  },
+  {
+   "name": "vs_attachment_avon",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach Support Document"
+  },
+  {
+   "name": "vs_repository_pb",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "vs_repository_es",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY - ReadOnly on Target Record",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_attachment: readonly=true",
+    "vs_repository_es: readonly=true",
+    "vs_attachment_information: readonly=true",
+    "vs_approver: readonly=true",
+    "vs_repository_pb: readonly=true"
+   ]
+  },
+  {
+   "name": "EY - Mandatory on CatItem View",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_approver: mandatory=true",
+    "vs_attachment: mandatory=true",
+    "vs_attachment_avon: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

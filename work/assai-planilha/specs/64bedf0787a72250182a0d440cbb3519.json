@@ -1,0 +1,150 @@
+{
+ "sys_id": "64bedf0787a72250182a0d440cbb3519",
+ "status": "dividido",
+ "motivo": "Separação pela planilha do cliente (etapa 1). Textos provisórios, a etapa de IA os substitui. 2 policy(ies) da oferta saíram de destinos que não têm todas as variáveis delas (efeito sobre as variáveis que ficam perdido): CSA - Demissão voluntária; CSA - Abandono de emprego.",
+ "vars": {
+  "att_evidencia_indicador": {
+   "label": "Anexar evidência"
+  },
+  "v_justificativa_expurgo": {
+   "label": "Informe a justificativa para o expurgo"
+  },
+  "v_colaborador_expansao": {
+   "label": "Colaborador é da Expansão?"
+  },
+  "att_evidencia_divergencia": {
+   "label": "Anexar evidência da divergência"
+  },
+  "att_evidencia_expurgo": {
+   "label": "Anexar evidência"
+  },
+  "v_informe_divergencia": {
+   "label": "Informe a divergência"
+  }
+ },
+ "remover": {
+  "obs_divergencia_indicador": "visual",
+  "obs_demissao_voluntaria": "visual",
+  "obs_evidencia_divergencia": "visual",
+  "obs_abandono_emprego": "visual"
+ },
+ "policies": {
+  "65e744eb87ef6250182a0d440cbb35a3": "remover",
+  "7e088ceb87ef6250182a0d440cbb359b": "remover",
+  "8d220ffd87117650182a0d440cbb358e": {
+   "conditions": "service_offering=2f71e74f87a72250182a0d440cbb3525",
+   "actions": {
+    "att_evidencia_divergencia": {
+     "visible": true
+    },
+    "v_informe_divergencia": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "95f5c4e787ef6250182a0d440cbb3581": {
+   "conditions": "service_offering=2fd1274f87a72250182a0d440cbb35e0^v_colaborador_expansao=No",
+   "actions": {
+    "att_evidencia_indicador": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "e9c1c3fd87117650182a0d440cbb35d0": {
+   "conditions": "service_offering=2fd1274f87a72250182a0d440cbb35e0^v_colaborador_expansao=No",
+   "actions": {
+    "att_evidencia_indicador": {
+     "visible": true
+    }
+   }
+  },
+  "f86348e387ef6250182a0d440cbb3591": {
+   "conditions": "service_offering=2f71e74f87a72250182a0d440cbb3525",
+   "actions": {
+    "v_informe_divergencia": {
+     "visible": true,
+     "mandatory": true
+    },
+    "att_evidencia_divergencia": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_1": {
+   "short_description": "CSA - Anexo (Solicitação de expurgo)",
+   "conditions": "v_justificativa_expurgo!=",
+   "actions": {
+    "att_evidencia_expurgo": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "nova_g1_4": {
+   "short_description": "CSA - Anexo (Solicitação de expurgo) (Resolvedora)",
+   "conditions": "v_justificativa_expurgo!=",
+   "actions": {
+    "att_evidencia_expurgo": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "itens": [
+  {
+   "name": "Programa Seja Bem-vindo ao Assaí (Universidade Assaí - problema)",
+   "short_description": "Programa Seja Bem-vindo ao Assaí",
+   "description": "Solicita es referentes ao Programa Seja Bem-vindo ao Assa",
+   "frases_exemplo": [
+    "Divergência na plataforma Neolude",
+    "Divergência no indicador do programa Seja Bem-vindo ao Assaí"
+   ],
+   "sem_vars": [
+    "v_justificativa_expurgo",
+    "att_evidencia_expurgo"
+   ],
+   "sem_policies": [
+    "nova_g1_1",
+    "nova_g1_4",
+    "3e4808eb87ef6250182a0d440cbb359c",
+    "409704eb87ef6250182a0d440cbb35bf",
+    "c7714bbd87117650182a0d440cbb3523"
+   ]
+  },
+  {
+   "name": "Programa Seja Bem-vindo ao Assaí (Universidade Assaí - servico)",
+   "short_description": "Programa Seja Bem-vindo ao Assaí",
+   "description": "Solicita es referentes ao Programa Seja Bem-vindo ao Assa",
+   "frases_exemplo": [
+    "Solicitação de expurgo do indicador do programa Seja Bem-vindo ao Assaí"
+   ],
+   "sem_vars": [
+    "att_evidencia_indicador",
+    "v_colaborador_expansao",
+    "att_evidencia_divergencia",
+    "v_informe_divergencia"
+   ],
+   "vars": {
+    "v_justificativa_expurgo": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   },
+   "sem_policies": [
+    "1bf204e387ef6250182a0d440cbb35f4",
+    "3e4808eb87ef6250182a0d440cbb359c",
+    "409704eb87ef6250182a0d440cbb35bf",
+    "8d220ffd87117650182a0d440cbb358e",
+    "95f5c4e787ef6250182a0d440cbb3581",
+    "c7714bbd87117650182a0d440cbb3523",
+    "ca4500e787ef6250182a0d440cbb3558",
+    "e9c1c3fd87117650182a0d440cbb35d0",
+    "f86348e387ef6250182a0d440cbb3591"
+   ]
+  }
+ ]
+}

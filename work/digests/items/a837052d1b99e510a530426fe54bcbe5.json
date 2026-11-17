@@ -1,0 +1,853 @@
+{
+ "sys_id": "a837052d1b99e510a530426fe54bcbe5",
+ "name": "Consulta de Fornecedores \"Externo\"",
+ "sys_name": "Consulta de proveedores externos",
+ "tipo": "record_producer",
+ "table": "x_nasm_ptp_case",
+ "category": "Consulta de Fornecedores",
+ "catalogs": "PTP_, Virtual Agent Search",
+ "short_description": "Utilize este formulário para consultar o status de pagamento de notas fiscais, solicitar comprovantes de pagamento e obter informações sobre previsões e composição de pagamentos para fornecedor.",
+ "description": "Utilize este formulário para consultar o status de pagamento de notas fiscais, solicitar comprovantes de pagamento e obter informações sobre previsões e composição de pagamentos para fornecedor.",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "44",
+   "variaveis_ativas": "45",
+   "bloqueadores": "3",
+   "avisos": "4",
+   "perguntas_sem_conversational_label": "44"
+  },
+  "bloqueadores": [
+   {
+    "code": "tipo_nao_suportado",
+    "detail": "Custom (tipo personalizado) (type 14 / Personalizado)",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "widget",
+    "detail": "variavel usa widget de portal, que nao renderiza em conversa",
+    "onde": "vs_add_attachment"
+   },
+   {
+    "code": "client_script_sem_va",
+    "detail": "3 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show Var prod, improd, serv, EY: Show Var prod, improd, serv 2, Auto Populate Infos"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_label_produtivo_improdutivo_servico: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 44 de 44 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 44 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 37 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Consulta de Fornecedores na versão 'Externo'. Grava x_nasm_hr_item e força requested_for e opened_by para o usuário genérico da system property 'acn_guest_user', guardando o e-mail real em requested_for_email. Mesmo padrão de atendimento a externo visto nas fatias TAX e OTC.",
+ "variaveis": [
+  {
+   "name": "v_buying_company",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Buying Company",
+   "include_none": true,
+   "choices": [
+    "Natura [=natura]",
+    "TBS [=tbs]",
+    "Avon [=avon_latam]"
+   ]
+  },
+  {
+   "name": "v_buying_company_country",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Borrowing Company's Country",
+   "include_none": true,
+   "choices": [
+    "Argentina [=arg]",
+    "Brazil [=bra]",
+    "Chile [=ch]",
+    "Colombia [=col]",
+    "Equador [=ecu]",
+    "Mexico [=mex]",
+    "Peru [=per]",
+    "Uruguay [=urg]"
+   ]
+  },
+  {
+   "name": "v_buying_company_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Buying Company ID"
+  },
+  {
+   "name": "v_your_fiscal_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Your Company Tax ID"
+  },
+  {
+   "name": "v_your_e_mail",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Your E-mail"
+  },
+  {
+   "name": "v_requestor_s_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Requestor's name"
+  },
+  {
+   "name": "v_vendor_s_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name of the Supplier Company"
+  },
+  {
+   "name": "v_vendor_s_registration_code",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Vendor's Registration Code"
+  },
+  {
+   "name": "v_type_of_query",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Type of Query",
+   "include_none": true,
+   "choices": [
+    "Request Receipt of Payment [=request_receipt_of_payment]",
+    "Request Composition of Payment [=request_composition_of_payment]",
+    "Payment Status [=invoice_payment_status]",
+    "Entry Consultation [=entry_consultation]",
+    "Divergence of Releases [=divergence_releases]"
+   ]
+  },
+  {
+   "name": "v_produtivo_improdutivo_servicos",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Provider Type",
+   "include_none": true,
+   "choices": [
+    "Direct [=productive]",
+    "Indirect/Services [=unproductive_services]"
+   ]
+  },
+  {
+   "name": "v_label_produtivo_improdutivo_servico",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Diretos - Produtos acabados, Insumos para processo produtivo\r\nIndiretos/ serviços - Materiais para uso interno e serviços prestados em gera"
+  },
+  {
+   "name": "v_how_many_records_do_you_want_to_insert",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "How many records do you want to insert?",
+   "include_none": true,
+   "choices": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  {
+   "name": "v_request_number",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "1 Request number"
+  },
+  {
+   "name": "v_document_number_invoice",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "1 Document Number (Invoice)",
+   "hidden": true
+  },
+  {
+   "name": "v_invoice_amount_status",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "1 Invoice Amount"
+  },
+  {
+   "name": "v_payment_amount",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "1 Payment Amount"
+  },
+  {
+   "name": "v_payment_receipt_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "1 Payment Receipt Date"
+  },
+  {
+   "name": "v_purchase_order_number_diverg",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "1 Purchase Order Number"
+  },
+  {
+   "name": "v_request_number_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "2 Request number"
+  },
+  {
+   "name": "v_numero_da_fatura_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "2 Document Number (Invoice)"
+  },
+  {
+   "name": "v_nvoice_amount_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "2 Invoice Amount"
+  },
+  {
+   "name": "v_payment_amount_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "2 Payment Amount"
+  },
+  {
+   "name": "v_payment_receipt_date_2",
+   "type": "Data",
+   "type_code": "9",
+   "label": "2 Payment Receipt Date"
+  },
+  {
+   "name": "v_purchase_order_number_2",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "2 Purchase Order Number"
+  },
+  {
+   "name": "v_request_number_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "3 Request number"
+  },
+  {
+   "name": "v_document_number_invoice_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "3 Document Number (Invoice)"
+  },
+  {
+   "name": "v_invoice_amount_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "3 Invoice Amount"
+  },
+  {
+   "name": "v_payment_amount_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "3 Payment Amount"
+  },
+  {
+   "name": "v_payment_receipt_date_3",
+   "type": "Data",
+   "type_code": "9",
+   "label": "3 Payment Receipt Date"
+  },
+  {
+   "name": "v_purchase_order_number_3",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "3 Purchase Order Number"
+  },
+  {
+   "name": "v_request_number_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "4 Request number"
+  },
+  {
+   "name": "v_document_number_invoice_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "4 Document Number (Invoice)"
+  },
+  {
+   "name": "v_invoice_amount_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "4 Invoice Amount"
+  },
+  {
+   "name": "v_payment_amount_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "4 Payment Amount"
+  },
+  {
+   "name": "v_payment_receipt_date_4",
+   "type": "Data",
+   "type_code": "9",
+   "label": "4 Payment Receipt Date"
+  },
+  {
+   "name": "v_purchase_order_number_4",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "4 Purchase Order Number"
+  },
+  {
+   "name": "v_request_number_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "5 Request number"
+  },
+  {
+   "name": "v_document_number_invoice_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "5 Document Number (Invoice)"
+  },
+  {
+   "name": "v_invoice_amount_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "5 Invoice Amount"
+  },
+  {
+   "name": "v_payment_amount_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "5 Payment Amount"
+  },
+  {
+   "name": "v_payment_receipt_date_5",
+   "type": "Data",
+   "type_code": "9",
+   "label": "5 Payment Receipt Date"
+  },
+  {
+   "name": "v_purchase_order_number_5",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "5 Purchase Order Number"
+  },
+  {
+   "name": "v_what_needs_to_be_fixed",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "What needs to be fixed?"
+  },
+  {
+   "name": "additional_information_2",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Describe your request in detail"
+  },
+  {
+   "name": "vs_add_attachment",
+   "type": "Personalizado",
+   "type_code": "14",
+   "label": "Add attachment",
+   "reference": "sys_user",
+   "widget": "EY: Enable public attachment"
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "5 Número do documento Visible",
+   "when": "IO:v_type_of_query!=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number_invoice_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "2 Data de Recebimento do Pagamento e Valor do Pagamento Visible ",
+   "when": "IO:v_type_of_query=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_receipt_date_2: visible=true,mandatory=true",
+    "v_payment_amount_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Variaveis Obrigatorias ",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_your_fiscal_id: mandatory=true",
+    "v_buying_company_id: mandatory=true",
+    "v_your_e_mail: mandatory=true",
+    "v_buying_company: mandatory=true",
+    "v_buying_company_country: mandatory=true",
+    "v_vendor_s_name: mandatory=true",
+    "v_opened_by: mandatory=true",
+    "v_invoice_send_date: mandatory=true",
+    "v_your_e_mail: mandatory=true",
+    "v_requestor_s_name: mandatory=true",
+    "v_how_many_records_do_you_want_to_insert: mandatory=true",
+    "v_type_of_query: mandatory=true",
+    "v_invoice_issuance_date: mandatory=true"
+   ]
+  },
+  {
+   "name": "0 Numero do pedido hidden",
+   "when": "IO:v_how_many_records_do_you_want_to_insert=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number_4: visible=false",
+    "v_request_number_3: visible=false",
+    "v_request_number: visible=false",
+    "v_request_number_2: visible=false",
+    "v_request_number_5: visible=false"
+   ]
+  },
+  {
+   "name": "4 Valor da Fatura Visible ",
+   "when": "IO:v_type_of_query=request_receipt_of_payment^ORIO:v_type_of_query=invoice_payment_status^IO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_amount_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Informaçoes Adicionais Visible",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "additional_information_2: visible=true",
+    "v_additional_information: visible=false"
+   ]
+  },
+  {
+   "name": "5 Valor da Fatura Visible ",
+   "when": "IO:v_type_of_query=request_receipt_of_payment^ORIO:v_type_of_query=invoice_payment_status^IO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_amount_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Read Only Variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_amount_status: readonly=true",
+    "v_payment_receipt_date: readonly=true",
+    "v_buying_company_country: readonly=true",
+    "v_purchase_order_number_diverg: readonly=true",
+    "v_document_number_invoice: readonly=true",
+    "v_what_needs_to_be_fixed: readonly=true",
+    "v_purchase_order_number_4: readonly=true",
+    "v_buying_company_id: readonly=true",
+    "v_payment_receipt_date_5: readonly=true",
+    "v_document_number_invoice_4: readonly=true",
+    "v_vendor_s_name: readonly=true",
+    "v_numero_da_fatura_2: readonly=true",
+    "v_your_e_mail: readonly=true",
+    "v_document_number_invoice_5: readonly=true",
+    "v_invoice_amount_4: readonly=true",
+    "v_purchase_order_number_2: readonly=true",
+    "solicitar_comprovante_de_pagamento: readonly=true",
+    "v_payment_receipt_date_2: readonly=true",
+    "v_purchase_order_number_5: readonly=true",
+    "v_payment_amount_4: readonly=true",
+    "v_payment_amount: readonly=true",
+    "v_payment_amount_2: readonly=true",
+    "v_payment_receipt_date_4: readonly=true",
+    "v_your_fiscal_id: readonly=true",
+    "v_nvoice_amount_2: readonly=true",
+    "v_payment_amount_3: readonly=true",
+    "mr_consulta_de_lan_amentos: readonly=true",
+    "v_vendor_s_registration_code: readonly=true",
+    "solicitar_composicao_de_pagamento: readonly=true",
+    "v_document_number_invoice_3: readonly=true",
+    "v_how_many_records_do_you_want_to_insert: readonly=true",
+    "v_payment_amount_5: readonly=true",
+    "additional_information_2: readonly=true",
+    "v_type_of_query: readonly=true",
+    "v_invoice_amount_5: readonly=true",
+    "mr_solicitar_comprovante_de_pagamento: readonly=true",
+    "v_invoice_amount_3: readonly=true",
+    "status_de_pagamentos_de_nota_fiscal: readonly=true",
+    "v_buying_company: readonly=true",
+    "mr_solicitar_composi_o_de_pagamento: readonly=true",
+    "mr_payment_status: readonly=true",
+    "v_payment_receipt_date_3: readonly=true",
+    "mr_diverg_ncia_de_lan_amentos: readonly=true",
+    "v_purchase_order_number_3: readonly=true"
+   ]
+  },
+  {
+   "name": "EY: Show Var Produtivo/Improdutivo/Servicos",
+   "when": "IO:v_buying_company=avon_latam^ORIO:v_buying_company=natura^IO:v_buying_company_country=arg^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_label_produtivo_improdutivo_servico: visible=true",
+    "v_produtivo_improdutivo_servicos: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "3 Data de Recebimento do Pagamento e Valor do Pagamento Visible ",
+   "when": "IO:v_type_of_query=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_receipt_date_3: visible=true,mandatory=true",
+    "v_payment_amount_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "1 Número do Pedido de Compra Visible ",
+   "when": "IO:v_type_of_query=entry_consultation^ORIO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=1^ORIO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number_diverg: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "2 Valor da Fatura Visible ",
+   "when": "IO:v_type_of_query=request_receipt_of_payment^ORIO:v_type_of_query=invoice_payment_status^IO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_nvoice_amount_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "3 Número de registro",
+   "when": "IO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "Regis3: visible=true"
+   ]
+  },
+  {
+   "name": "1 O que precisa ser corrigido? Visible ",
+   "when": "IO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=1^ORIO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_what_needs_to_be_fixed: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "1 Numero do pedido visible",
+   "when": "IO:v_how_many_records_do_you_want_to_insertIN1^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number: visible=true",
+    "v_request_number_4: visible=false",
+    "v_request_number_2: visible=false",
+    "v_request_number_3: visible=false",
+    "v_request_number_5: visible=false"
+   ]
+  },
+  {
+   "name": "3 Número do documento Visible",
+   "when": "IO:v_type_of_query!=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number_invoice_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "4 Data de Recebimento do Pagamento e Valor do Pagamento Visible ",
+   "when": "IO:v_type_of_query=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_amount_4: visible=true,mandatory=true",
+    "v_payment_receipt_date_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "5 Data de Recebimento do Pagamento e Valor do Pagamento Visible ",
+   "when": "IO:v_type_of_query=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_amount_5: visible=true,mandatory=true",
+    "v_payment_receipt_date_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "5 Número do Pedido de Compra Visible ",
+   "when": "IO:v_type_of_query=entry_consultation^ORIO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number_5: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "5 Número de registro",
+   "when": "IO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "Regis5: visible=true"
+   ]
+  },
+  {
+   "name": "1 Número do documento Visible",
+   "when": "IO:v_type_of_query!=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=1^ORIO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number_invoice: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "4 Número do Pedido de Compra Visible ",
+   "when": "IO:v_type_of_query=entry_consultation^ORIO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "2 Número do Pedido de Compra Visible ",
+   "when": "IO:v_type_of_query=entry_consultation^ORIO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "3 Numero do pedido visible",
+   "when": "IO:v_how_many_records_do_you_want_to_insertIN3^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number_2: visible=true",
+    "v_request_number_3: visible=true",
+    "v_request_number: visible=true"
+   ]
+  },
+  {
+   "name": "5 Numero do pedido visible",
+   "when": "IO:v_how_many_records_do_you_want_to_insertIN5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number_4: visible=true",
+    "v_request_number_5: visible=true",
+    "v_request_number: visible=true",
+    "v_request_number_2: visible=true",
+    "v_request_number_3: visible=true"
+   ]
+  },
+  {
+   "name": "4 Número de registro",
+   "when": "IO:v_how_many_records_do_you_want_to_insert=4^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "Regis4: visible=true"
+   ]
+  },
+  {
+   "name": "2 Número do documento Visible",
+   "when": "IO:v_type_of_query!=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_numero_da_fatura_2: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "valor do pagamento / data do pagamento visible ",
+   "when": "IO:3dbe05a91b1de510a530426fe54bcba4=request_composition_of_payment^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_amount: visible=true,mandatory=true",
+    "v_payment_receipt_date: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "2 Número de registo",
+   "when": "IO:v_how_many_records_do_you_want_to_insert=2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "Regis2: visible=true"
+   ]
+  },
+  {
+   "name": "2 Numero do pedido visible",
+   "when": "IO:v_how_many_records_do_you_want_to_insertIN2^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number: visible=true",
+    "v_request_number_2: visible=true"
+   ]
+  },
+  {
+   "name": "4 Numero do pedido visible",
+   "when": "IO:v_how_many_records_do_you_want_to_insertIN4^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_request_number_4: visible=true",
+    "v_request_number_3: visible=true",
+    "v_request_number: visible=true",
+    "v_request_number_2: visible=true"
+   ]
+  },
+  {
+   "name": "3 Valor da Fatura Visible ",
+   "when": "IO:v_type_of_query=request_receipt_of_payment^ORIO:v_type_of_query=invoice_payment_status^IO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_amount_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "3 Número do Pedido de Compra Visible ",
+   "when": "IO:v_type_of_query=entry_consultation^ORIO:v_type_of_query=divergence_releases^IO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_purchase_order_number_3: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "Numero documento / valor nota fiscal visible ",
+   "when": "IO:3dbe05a91b1de510a530426fe54bcba4=request_composition_of_payment^ORIO:3dbe05a91b1de510a530426fe54bcba4=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_number: visible=false,mandatory=false",
+    "v_invoice_amount: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "1 Data de Recebimento do Pagamento e Valor do Pagamento Visible ",
+   "when": "IO:v_type_of_query=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=1^ORIO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_payment_receipt_date: visible=true,mandatory=true",
+    "v_payment_amount: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "4 Número do documento Visible",
+   "when": "IO:v_type_of_query!=request_composition_of_payment^IO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_document_number_invoice_4: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "1 Valor da Fatura Visible ",
+   "when": "IO:v_type_of_query=request_receipt_of_payment^ORIO:v_type_of_query=invoice_payment_status^IO:v_how_many_records_do_you_want_to_insert=1^ORIO:v_how_many_records_do_you_want_to_insert=2^ORIO:v_how_many_records_do_you_want_to_insert=3^ORIO:v_how_many_records_do_you_want_to_insert=4^ORIO:v_how_many_records_do_you_want_to_insert=5^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_invoice_amount_status: visible=true,mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "Clear Info Company ID",
+   "type": "onChange",
+   "on": "15c495ac1b4e6d14d1abda4ce54bcb4a",
+   "va_supported": "true",
+   "ui_type": "1",
+   "what": "Catalog Client Script onChange que limpa 'v_buying_company_id' sempre que o valor muda em relação ao anterior."
+  },
+  {
+   "name": "EY: Show Var prod, improd, serv",
+   "type": "onChange",
+   "on": "15c495ac1b4e6d14d1abda4ce54bcb4a",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Terceira variante do script de 'Comprovante de Retenção' com rótulo traduzido por idioma. Praticamente idêntica às irmãs."
+  },
+  {
+   "name": "EY: Show Var prod, improd, serv 2",
+   "type": "onChange",
+   "on": "900b68961bbcbd10a530426fe54bcbe7",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Quarta variante do script de 'Comprovante de Retenção' traduzido por idioma. Quatro cópias quase iguais do mesmo código no mesmo catálogo."
+  },
+  {
+   "name": "EY: When country is Colombia",
+   "type": "onChange",
+   "on": "900b68961bbcbd10a530426fe54bcbe7",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange para o caso Colômbia, comparando o país pela sigla 'col' (e não pelo nome por extenso como o irmão). Tem uma condição alternativa comentada no meio do if."
+  },
+  {
+   "name": "EY: Clear country",
+   "type": "onChange",
+   "on": "15c495ac1b4e6d14d1abda4ce54bcb4a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa 'v_buying_company_country' quando a empresa muda."
+  },
+  {
+   "name": "EY: Show country by company",
+   "type": "onChange",
+   "on": "15c495ac1b4e6d14d1abda4ce54bcb4a",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que restringe países por empresa, variante do irmão — aqui as linhas que removeriam Argentina e Chile estão COMENTADAS, então o comportamento efetivo difere do gêmeo apesar do nome igual."
+  },
+  {
+   "name": "Auto Populate Infos",
+   "type": "onChange",
+   "on": "102691601b8e6d14d1abda4ce54bcbbb",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche um texto-modelo de instruções conforme o idioma do usuário. Monta blocos como 'No máximo 5 registros — Número do documento (Nota Fiscal), Valor da Nota Fiscal' em português e equivalentes nos demais idiomas, e grava no campo de orientação do formulário."
+  },
+  {
+   "name": "EY: Clear records",
+   "type": "onChange",
+   "on": "950bb64a1b817510a530426fe54bcba8",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que zera o bloco de nota fiscal e pagamento: número do documento, status do valor da nota, data de recebimento do pagamento e demais campos dependentes."
+  },
+  {
+   "name": "EY: Validate e-mail",
+   "type": "onChange",
+   "on": "f1a519201b8e6d14d1abda4ce54bcb7d",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida e-mail com uma regex mais rigorosa que a usada nas outras fatias — cobre aspas e caracteres especiais no nome. Inválido: limpa o campo e mostra erro."
+  }
+ ]
+}

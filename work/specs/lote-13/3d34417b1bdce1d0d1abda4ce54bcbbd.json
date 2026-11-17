@@ -1,0 +1,53 @@
+{
+ "sys_id": "3d34417b1bdce1d0d1abda4ce54bcbbd",
+ "status": "conversacional",
+ "motivo": "Intenção única (pedir verba evento ou verba mês) com poucas perguntas condicionadas ao tipo de verba e à audiência. Policies onLoad sem condição viram prop; rótulos de template (type 32) e o label decorativo saem da conversa; as duas policies condicionais de anexo mantêm só a ação sobre o anexo.",
+ "vars": {
+  "v_which_audience_do_you_belong_to": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_application_for_what_type_of_funding": {
+   "props": {
+    "mandatory": true
+   }
+  }
+ },
+ "remover": {
+  "v_request_for_event_budget_and_month_budget_natura_sales_force": "visual",
+  "v_template_verba_evento": "visual",
+  "v_template_verba_mes": "visual",
+  "v_document_repository": "visual"
+ },
+ "policies": {
+  "d9e555f31b1425d0d1abda4ce54bcb8d": "remover",
+  "e89a98cb1b6ce990d1abda4ce54bcb73": "remover",
+  "dea695b71b1425d0d1abda4ce54bcbb3": {
+   "conditions": "v_application_for_what_type_of_funding=event_budget",
+   "actions": {
+    "v_attach_the_event_fund_advance_base": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  },
+  "6627593b1b1425d0d1abda4ce54bcbf4": {
+   "conditions": "v_application_for_what_type_of_funding=monthly_budget",
+   "actions": {
+    "v_attach_the_monthly_budget_advance_base": {
+     "visible": true,
+     "mandatory": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "8c5600431b68e990d1abda4ce54bcb4e": {
+   "remover": "sem_efeito"
+  },
+  "9475c08f1b28e990d1abda4ce54bcb9f": {
+   "remover": "sem_efeito"
+  }
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "sys_id": "64e980ff1bc37c10a530426fe54bcbf3",
+ "name": "Solicitação de cadastro de pensão alimentícia",
+ "sys_name": " Request for child support registration",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Meus Pagamentos e Folha de Pagamento",
+ "catalogs": "Hire to Retire (HTR), Virtual Agent Search",
+ "short_description": "Faça sua solicitação de pensão aqui!",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "11",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "11"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @attach_letter: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @update_information_link: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @employee: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 11 de 11 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 5 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de cadastro de pensão alimentícia. Lê o perfil pela variável 'employee' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "name_pensioner",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Name Pensioner",
+   "example": "Write full name, no abbreviations"
+  },
+  {
+   "name": "pensioner_cpf",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Pensioner CPF",
+   "example": "000.000.000-00"
+  },
+  {
+   "name": "bank",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Bank",
+   "include_none": true,
+   "choices": [
+    "Banco A.J.Renner S.A. [=126]",
+    "Banco ABC Brasil S.A. [=74]",
+    "Banco Alfa S.A. [=10]",
+    "Banco Alvorada S.A. [=122]",
+    "Banco Arbi S.A. [=60]",
+    "Banco Azteca do Brasil S.A. [=7]",
+    "Banco Banerj S.A. [=11]",
+    "Banco Bankpar S.A. [=1]",
+    "Banco Barclays S.A. [=136]",
+    "Banco BBM S.A. [=54]",
+    "Banco Beg S.A. [=12]",
+    "Banco BGN S.A. [=135]",
+    "Banco BM&F de Serviços de Liquidação e Custódia S.A [=50]",
+    "Banco BMG S.A. [=83]",
+    "Banco BNP Paribas Brasil S.A. [=146]",
+    "Banco Boavista Interatlântico S.A. [=75]",
+    "Banco Bonsucesso S.A. [=64]",
+    "Banco Bracce S.A. [=25]",
+    "Banco Bradesco BBI S.A. [=14]",
+    "Banco Bradesco Cartões S.A. [=57]",
+    "Banco Bradesco Financiamentos S.A. [=91]",
+    "Banco Bradesco S.A. [=71]",
+    "Banco Brascan S.A. [=67]",
+    "Banco BRJ S.A. [=161]",
+    "Banco BTG Pactual S.A. [=58]",
+    "Banco BVA S.A. [=19]",
+    "Banco Cacique S.A. [=79]",
+    "Banco Caixa Geral – Brasil S.A. [=100]",
+    "Banco Capital S.A. [=94]",
+    "Banco Cargill S.A. [=17]",
+    "Banco Cédula S.A. [=81]",
+    "Banco Citibank S.A. [=140]",
+    "Banco Citicard S.A. [=166]",
+    "Banco Clássico S.A. [=72]",
+    "Banco CNH Capital S.A. [=170]",
+    "Banco Comercial e de Investimento Sudameris S.A. [=62]",
+    "Banco Cooperativo do Brasil S.A. – BANCOOB [=149]",
+    "Banco Cooperativo Sicredi S.A. [=143]",
+    "Banco CR2 S.A. [=32]",
+    "Banco Credibel S.A. [=130]",
+    "… +131"
+   ]
+  },
+  {
+   "name": "agency",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Agency"
+  },
+  {
+   "name": "account",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Account"
+  },
+  {
+   "name": "bank_account_digit",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Bank Account Digit",
+   "example": "If you don't have a digit, fill in with x"
+  },
+  {
+   "name": "pensioner_phone",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Pensioner phone",
+   "example": "(DDD) 9999-9999 / (DDD) 99999-9999"
+  },
+  {
+   "name": "comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Comments"
+  },
+  {
+   "name": "attach_letter",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Attach letter"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "72fc62d51b6af410d1abda4ce54bcb2d",
+   "name": "Informações pessoais",
+   "order": "300",
+   "perguntas": [
+    "solicitation_whom (Selecionar Caixa): Solicitation to whom?",
+    "employee (Referência): Employee",
+    "update_information_link (Rótulo de Rich Text): ",
+    "global_id (Texto de Linha Única): ID"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "pensioner_cpf: mandatory=true",
+    "bank: mandatory=true",
+    "account: mandatory=true",
+    "agency: mandatory=true",
+    "name_pensioner: mandatory=true",
+    "pensioner_cpf: mandatory=true",
+    "bank_account_digit: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "ACN: Validate CPF",
+   "type": "onChange",
+   "on": "6f22e8fd1b63fc10d1abda4ce54bcb3c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange de validação de CPF com máscara. Duplicata de outro validador 'ACN' do mesmo lote."
+  },
+  {
+   "name": "ACN: Validate Pensioner Phone",
+   "type": "onChange",
+   "on": "0f9d98671b17b010a530426fe54bcb0f",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida o telefone do pensionista, normalizando o valor antes de testar."
+  }
+ ]
+}

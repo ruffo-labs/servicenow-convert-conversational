@@ -1,0 +1,103 @@
+{
+ "sys_id": "5f13e4311bbfd154d1abda4ce54bcb3e",
+ "status": "conversacional",
+ "motivo": "Intenção única de regularizar título em aberto ou duplicidade de pagamento. Documento (CPF/CNPJ) foi unificado numa nova variável de texto com regex, pois o alvo original (document_number_cpf) tem tipo diferente do que seria removido (document_type, tipo lista); nome/código/e-mail de consultora e franqueado foram mesclados nos campos de consultora, com a policy de TBS reescrita para agir sobre eles. opened_by passa a ser preenchido e ocultado automaticamente, e a policy incondicional de obrigatoriedade virou prop.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "opened_by": {
+   "props": {
+    "default_value": "javascript:gs.getUserID()",
+    "read_only": true,
+    "hidden": true
+   }
+  },
+  "which_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "which_sub_company": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_type_deal": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_title_number": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "select_the_approver": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "email_consultant": {
+   "props": {
+    "validation_regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+   }
+  },
+  "nova_documento_numero": {
+   "nova": {
+    "type": "6",
+    "question_text": "Qual é o CPF ou CNPJ do cliente?",
+    "mandatory": true,
+    "order": 300,
+    "validation_regex": "^[0-9]{11}$|^[0-9]{14}$"
+   }
+  }
+ },
+ "remover": {
+  "document_type": {
+   "substituida_por": "nova_documento_numero"
+  },
+  "document_number_cpf": {
+   "substituida_por": "nova_documento_numero"
+  },
+  "document_number_cnpj": {
+   "substituida_por": "nova_documento_numero"
+  },
+  "full_name_franchisees": {
+   "substituida_por": "full_name_consultant_representative"
+  },
+  "code_franchisee": {
+   "substituida_por": "code_consultant"
+  },
+  "email_franchisee": {
+   "substituida_por": "email_consultant"
+  },
+  "v_attach_evidence": "texto_movido_descricao"
+ },
+ "policies": {
+  "27ade8801b2a4a10d1abda4ce54bcb61": "remover",
+  "30dd24801b2a4a10d1abda4ce54bcbfe": "remover",
+  "d0b89bee1bb39594d1abda4ce54bcbb6": "remover",
+  "c74d20401b2a4a10d1abda4ce54bcb8f": {
+   "conditions": "which_company=TBS",
+   "actions": {
+    "full_name_consultant_representative": {
+     "visible": true,
+     "mandatory": true
+    },
+    "email_consultant": {
+     "visible": true,
+     "mandatory": true
+    },
+    "code_consultant": {
+     "visible": true
+    }
+   }
+  }
+ },
+ "scripts": {
+  "99c4a80c1ba64a10d1abda4ce54bcb5c": {
+   "converter": "default"
+  }
+ }
+}

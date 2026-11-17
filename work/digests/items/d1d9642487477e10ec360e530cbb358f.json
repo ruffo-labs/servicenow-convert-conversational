@@ -1,0 +1,278 @@
+{
+ "sys_id": "d1d9642487477e10ec360e530cbb358f",
+ "name": "Indicadores",
+ "sys_name": "Indicators",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Serviços de Ações de Aprendizagem",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Este caminho é para solicitar serviços relacionados ao ajuste ou inclusão dos dados que usamos nos indicadores",
+ "description": "",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "21",
+   "variaveis_ativas": "21",
+   "bloqueadores": "0",
+   "avisos": "11",
+   "perguntas_sem_conversational_label": "21"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attachment_of_registered_hc: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_hc_attendance_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_ajust_existing_data_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attachment_of_eligible_called_hc: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_reaction_assessment_attachment: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_collaborator_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_select_collaborators_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "reference_qualifier @vs_select_the_collaborator: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 21 de 21 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "muitas_perguntas: 21 perguntas; acima de 20 (glide.sc.va.inline_render.question.limit) a VA abre janela em vez de conversar",
+   "ui_policy_on_load: 9 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Logística de Ações de Aprendizagem. Lê o perfil em x_nasm_hr_profile pela variável 'employee' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "v_learning_category",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Learning Category",
+   "include_none": true,
+   "choices": [
+    "Core [=core]",
+    "HUB [=hub]",
+    "Cells [=cells]",
+    "Portas de Entrada [=porta_de_entrada]"
+   ]
+  },
+  {
+   "name": "v_hub_selection",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Select the HUB",
+   "include_none": true,
+   "choices": [
+    "Culture and Regeneration [=essence_culture_regeneration]",
+    "Operational Excellence [=operational_excellence]",
+    "Customer Focus [=customer_focus]",
+    "Talent Management and Compliance [=management_compliance]",
+    "Regenerative Innovation [=regenerative_innovation]",
+    "Multi Platform [=multi_platform]",
+    "Technology and Data [=technology_data]"
+   ]
+  },
+  {
+   "name": "v_name_cell",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Cell name"
+  },
+  {
+   "name": "v_mandatory_action",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Mandatory action?",
+   "include_none": true,
+   "choices": [
+    "Yes [=yes]",
+    "No [=no]"
+   ]
+  },
+  {
+   "name": "v_what_is_the_request",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What is the request?",
+   "include_none": true,
+   "choices": [
+    "Existing data adjustments [=existing_djustments]",
+    "Data entry [=data_entry]"
+   ]
+  },
+  {
+   "name": "v_ajust_existing_data_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment for data ajustment"
+  },
+  {
+   "name": "v_training_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Training name"
+  },
+  {
+   "name": "v_attachment_of_eligible_called_hc",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment of Eligible/Called HC"
+  },
+  {
+   "name": "v_attachment_of_registered_hc",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attachment of Registered HC"
+  },
+  {
+   "name": "v_hc_attendance_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "HC Attendance Attachment"
+  },
+  {
+   "name": "v_reaction_assessment_attachment",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Reaction Assessment Attachment"
+  },
+  {
+   "name": "v_the_application_format",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "The application format",
+   "include_none": true,
+   "choices": [
+    "Online [=online]",
+    "In-person [=inperson]"
+   ]
+  },
+  {
+   "name": "v_hours_per_class",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Workload per class"
+  },
+  {
+   "name": "v_extra_comments",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Use this field for any extra comments"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "2579a7048707f610ec360e530cbb35cb",
+   "name": "EY: Informação Básica do colaborador",
+   "order": "100",
+   "perguntas": [
+    "vs_for_who (Selecionar Caixa): Request for whom?",
+    "vs_select_the_collaborator (Referência): Select the collaborator",
+    "vs_select_collaborators_name (Referência): Collaborator's Name",
+    "vs_collaborator_name (Texto de Linha Única): Collaborator's name",
+    "vs_collaborato_global_id (Texto de Linha Única): Collaborator's Global ID",
+    "vs_collaborator_e_mail (Texto de Linha Única): Corporate Email",
+    "vs_public (Texto de Linha Única): Public"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Category fields handle HUB",
+   "when": "IO:v_learning_category=hub^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_hub_selection: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY - Check if \"for whom\" is \"for me\"",
+   "when": "IO:vs_for_who=for_me^ORIO:vs_for_who=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_the_collaborator: visible=false",
+    "vs_select_collaborators_name: visible=false"
+   ]
+  },
+  {
+   "name": "EY: Check if Category is Cells",
+   "when": "IO:v_learning_category=cells^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_name_cell: visible=true"
+   ]
+  },
+  {
+   "name": "EY: Check colaborator field",
+   "when": "IO:vs_for_who=another_user^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_select_the_collaborator: visible=false",
+    "vs_select_collaborators_name: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: Check if  the solicitation is Data ajustment",
+   "when": "IO:v_what_is_the_request=existing_djustments^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_ajust_existing_data_attachment: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY - Fix Variable set Visibility",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "vs_collaborator_name: visible=false,mandatory=false",
+    "vs_collaborator_e_mail: visible=false,mandatory=false",
+    "vs_for_who: mandatory=true",
+    "vs_select_the_collaborator: visible=false,mandatory=false",
+    "vs_select_collaborators_name: ",
+    "vs_public: visible=false,mandatory=false",
+    "vs_collaborato_global_id: visible=false,mandatory=false"
+   ]
+  },
+  {
+   "name": "EY: Check if solicitation is data entry",
+   "when": "IO:v_what_is_the_request=data_entry^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_hc_attendance_attachment: visible=true",
+    "v_data_required_for_adherence_indicator_2: visible=true",
+    "v_the_application_format: visible=true,mandatory=true",
+    "v_data_required_for_adherence_indicator_label: visible=true",
+    "v_reaction_assessment_attachment: visible=true",
+    "v_attachment_of_registered_hc: visible=true",
+    "v_attachment_of_eligible_called_hc: visible=true"
+   ]
+  },
+  {
+   "name": "EY -  Set RP variables",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_reaction_assessment_attachment: visible=false",
+    "v_ajust_existing_data_attachment: visible=false",
+    "v_attachment_of_eligible_called_hc: visible=false",
+    "v_mandatory_action: mandatory=true",
+    "v_the_application_format: visible=false",
+    "v_learning_category: mandatory=true",
+    "v_extra_comments: mandatory=false",
+    "v_hc_attendance_attachment: visible=false",
+    "v_name_cell: visible=false",
+    "v_hub_selection: visible=false",
+    "v_what_is_the_request: mandatory=true",
+    "v_data_required_for_adherence_indicator_2: visible=false",
+    "v_data_required_for_adherence_indicator_label: visible=false",
+    "v_hours_per_class: mandatory=true",
+    "v_training_name: mandatory=true",
+    "v_attachment_of_registered_hc: visible=false"
+   ]
+  }
+ ],
+ "client_scripts": []
+}

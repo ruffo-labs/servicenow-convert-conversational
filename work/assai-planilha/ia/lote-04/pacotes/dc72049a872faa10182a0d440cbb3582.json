@@ -1,0 +1,230 @@
+{
+ "sys_id": "dc72049a872faa10182a0d440cbb3582",
+ "name": "Pagamento Mensal (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Pagamento mensal",
+ "description": "Pagamento mensal",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "VS - Atenção",
+   "perguntas": []
+  },
+  {
+   "title": "VS - Anexo",
+   "perguntas": [
+    "vs_anexo_opcional"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Folha de Pagamento"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de demonstrativo de pagamento",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Cópia de Documentos"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "mes_ano_referencia"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "Show - VS - Anexo Opcional",
+     "quando": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Demonstrativo de pagamento",
+     "description": "Use para pedir o demonstrativo (contracheque) de um mês (oferta \"Solicitação de demonstrativo de pagamento\"). Informe o mês e ano de referência. Atendimento do RH - Cópia de Documentos, SLA de 24h."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Pagamento Mensal"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de demonstrativo de pagamento",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Cópia de Documentos"
+    }
+   ],
+   "sai_do_formulario": [
+    "informe_mes_divergencia",
+    "mes_nao_recebimento",
+    "demonstrativo_divergencia"
+   ],
+   "passa_a_obrigatoria": [
+    "mes_ano_referencia"
+   ],
+   "condicoes_que_continuam": [
+    {
+     "policy": "Show - VS - Anexo Opcional",
+     "quando": "mes_ano_referencia=Maio/2025^ORmes_ano_referencia=Junho/2025^ORmes_ano_referencia=Julho/2025^ORmes_ano_referencia=Agosto/2025^ORmes_ano_referencia=Setembro/2025^ORmes_ano_referencia=Outubro/2025^ORmes_ano_referencia=Novembro/2025^ORmes_ano_referencia=Dezembro/2025^ORmes_ano_referencia=Janeiro/2026^ORmes_ano_referencia=Fevereiro/2026^ORmes_ano_referencia=Março/2026^ORmes_ano_referencia=Abril/2026^ORmes_ano_referencia=Maio/2026"
+    }
+   ],
+   "anterior": [
+    {
+     "name": "Demonstrativo de pagamento",
+     "description": "Use para pedir o demonstrativo (contracheque) de um mês (oferta \"Solicitação de demonstrativo de pagamento\"). Informe o mês e ano de referência. Atendimento do RH - Cópia de Documentos, SLA de 24h."
+    }
+   ]
+  },
+  {
+   "k": 2,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Pagamento Mensal"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência no pagamento mensal",
+     "sla": "SLA - GESTÃO DE GENTE - 32H",
+     "grupo_suporte": "RH - Atendimento Matriz"
+    },
+    {
+     "name": "Não recebimento do pagamento mensal",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Pagamento Mensal"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 32H",
+     "SLA - GESTÃO DE GENTE - 24H"
+    ],
+    "support_group": [
+     "RH - Atendimento Matriz",
+     "RH - Pagamento Mensal"
+    ]
+   },
+   "sai_do_formulario": [
+    "mes_ano_referencia"
+   ],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência no pagamento mensal",
+     "description": "Use quando o pagamento mensal veio com valor diferente do esperado (oferta \"Divergência no pagamento mensal\"). Informe o mês da divergência e anexe o demonstrativo. Atendimento do RH - Atendimento Matriz, SLA de 32h."
+    },
+    {
+     "name": "Não recebimento do pagamento mensal",
+     "description": "Use quando o pagamento mensal não caiu na conta (oferta \"Não recebimento do pagamento mensal\"). Informe o mês do não recebimento. Atendimento do RH - Pagamento Mensal, SLA de 24h."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "informe_mes_divergencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês da divergência",
+   "choices": [
+    "Janeiro",
+    "Junho",
+    "Abril",
+    "Maio",
+    "Fevereiro",
+    "Setembro",
+    "Dezembro",
+    "Março",
+    "Outubro",
+    "Agosto",
+    "Julho",
+    "Novembro"
+   ],
+   "label_atual": "Em qual mês houve a divergência?"
+  },
+  {
+   "name": "mes_nao_recebimento",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês do não recebimento",
+   "choices": [
+    "Outubro",
+    "Abril",
+    "Dezembro",
+    "Junho",
+    "Janeiro",
+    "Maio",
+    "Novembro",
+    "Setembro",
+    "Março",
+    "Agosto",
+    "Fevereiro",
+    "Julho"
+   ],
+   "label_atual": "De qual mês é o pagamento não recebido?"
+  },
+  {
+   "name": "demonstrativo_divergencia",
+   "type": "Anexo",
+   "question_text": "Demonstrativo de pagamento com a divergência",
+   "choices": [],
+   "label_atual": "Envie o demonstrativo de pagamento com a divergência."
+  },
+  {
+   "name": "mes_ano_referencia",
+   "type": "Selecionar Caixa",
+   "question_text": "Informe o mês/ano de referência",
+   "choices": [
+    "Novembro/2025",
+    "Outubro/2025",
+    "Maio/2025",
+    "Maio/2026",
+    "Janeiro/2026",
+    "Dezembro/2025",
+    "Março/2026",
+    "Agosto/2025",
+    "Fevereiro/2026",
+    "Junho/2025",
+    "Julho/2025",
+    "Abril/2026",
+    "Setembro/2025"
+   ],
+   "label_atual": "De qual mês e ano você quer o demonstrativo?"
+  }
+ ],
+ "client_scripts": []
+}

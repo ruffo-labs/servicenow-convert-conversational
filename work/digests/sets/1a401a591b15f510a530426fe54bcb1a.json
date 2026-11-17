@@ -1,0 +1,212 @@
+{
+ "sys_id": "1a401a591b15f510a530426fe54bcb1a",
+ "title": "Informações pessoais - Benefícios",
+ "internal_name": "informa_es_pessoais_benef_cios",
+ "description": "",
+ "usado_por": 1,
+ "itens_exemplo": [
+  "Dúvidas, reclamações e sugestões relacionadas a benefícios"
+ ],
+ "variaveis": [
+  {
+   "name": "solicitation_to_whom",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Solicitation to whom?",
+   "include_none": true,
+   "choices": [
+    "My request [=my_request]",
+    "Request for another employee [=another_employee]"
+   ]
+  },
+  {
+   "name": "why_opening",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "Employee status",
+   "include_none": true,
+   "choices": [
+    "Active [=active]",
+    "Away [=leave_license]"
+   ]
+  },
+  {
+   "name": "employee",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Employee",
+   "read_only": true,
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^user.location.country=BRA^EQ"
+  },
+  {
+   "name": "information_workday",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  },
+  {
+   "name": "id_global",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global",
+   "read_only": true
+  },
+  {
+   "name": "corporate_email",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Corporate email",
+   "read_only": true
+  },
+  {
+   "name": "manegar_name",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Manager name",
+   "read_only": true
+  },
+  {
+   "name": "country",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Country",
+   "read_only": true
+  },
+  {
+   "name": "company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company",
+   "read_only": true
+  },
+  {
+   "name": "location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Location",
+   "read_only": true
+  },
+  {
+   "name": "discharge_date",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Discharge date",
+   "read_only": true
+  },
+  {
+   "name": "position_title",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Position",
+   "read_only": true
+  },
+  {
+   "name": "management_level",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Management level",
+   "read_only": true
+  },
+  {
+   "name": "address",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Address",
+   "read_only": true
+  },
+  {
+   "name": "national_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "National ID",
+   "read_only": true
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Campos Obrigatorios",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "solicitation_to_whom: mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: HTR  When \"Solicitation Whom\" is not \"-- None --\" show \"Employee\" field",
+   "when": "IO:solicitation_to_whom=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "company: visible=false",
+    "id_global: visible=false",
+    "country: visible=false",
+    "discharge_date: visible=false",
+    "management_level: visible=false",
+    "location: visible=false",
+    "position_title: visible=false",
+    "manegar_name: visible=false",
+    "corporate_email: visible=false",
+    "employee: visible=false"
+   ]
+  },
+  {
+   "name": "EY: HTR_When \"Solicitation Whom\" is \"None\" doesn't show \"Update information link\"",
+   "when": "IO:solicitation_to_whom=^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "information_workday: visible=false"
+   ]
+  },
+  {
+   "name": "EY: HTR_When \"Solicitation Whom\" is \"Other employee\" the employee is Mandatory",
+   "when": "IO:solicitation_to_whom=another_employee^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: visible=true,mandatory=true",
+    "why_opening: visible=true,mandatory=true"
+   ]
+  },
+  {
+   "name": "EY: HTR_When \"Solicitation Whom\" is \"My request\" show \"Update information link\" , \"Adress\", \"National ID\" , \"name\" fields",
+   "when": "IO:solicitation_to_whom=my_request^EQ",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "employee: readonly=true",
+    "national_id: visible=true",
+    "address: visible=true",
+    "full_name: visible=true,readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: HTR_Employee for whom",
+   "type": "onChange",
+   "on": "703196d91b15f510a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que resolve para qual colaborador é a solicitação, consultando o servidor via GlideAjax."
+  },
+  {
+   "name": "EY: HTR If the solicitation changes",
+   "type": "onChange",
+   "on": "703196d91b15f510a530426fe54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que limpa a categoria quando a solicitação muda."
+  },
+  {
+   "name": "EY: HTR_Fill employee information",
+   "type": "onChange",
+   "on": "dc715ad91b15f510a530426fe54bcb40",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche as informações do colaborador a partir do valor selecionado."
+  }
+ ]
+}

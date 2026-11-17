@@ -1,0 +1,100 @@
+{
+ "sys_id": "f43681331b38f510d1abda4ce54bcb5a",
+ "name": "Cancelar ou Corrigir Nota Fiscal",
+ "sys_name": "Cancel or Correct Invoice",
+ "tipo": "record_producer",
+ "table": "x_nasm_tax_case",
+ "category": "Fiscal",
+ "catalogs": {
+  "_display_value": "TAX",
+  "__text": "f38b713e1b78b110d1abda4ce54bcb44"
+ },
+ "short_description": "",
+ "description": "Solicitação de Cancelamento ou Correção de Nota Fiscal de saída",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "5",
+   "variaveis_ativas": "6",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "5"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_click_here_to_download_the_template: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "tipo_com_limitacao @v_attach_outgoing_invoice: Attachment: anexo exige tratamento a parte na conversa",
+   "reference_qualifier @vs_which_sub_company_is_the_request_from: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @vs_attach_template: Attachment: anexo exige tratamento a parte na conversa",
+   "sem_conversational_label: 5 de 5 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer. Grava em current.x_nasm_hr_item o sysparm_id da URL (o sys_id do próprio producer), que é o campo usado pelas triggers de flow para identificar a origem. Em seguida instancia o Script Include x_nasm_hr.EY_ProducerUtils e chama dois métodos: setRequestedForDefaultVS, que define o solicitante a partir do variable set padrão, e setItemAsPriorityIfUserVip, que eleva a prioridade para 2 quando o usuário é VIP. Não foi lido o conteúdo do Script Include.",
+ "variaveis": [
+  {
+   "name": "v_which_invoice_number_do_you_want_to_cancel_or_correct",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Which invoice number do you want to cancel or correct?"
+  },
+  {
+   "name": "v_attach_outgoing_invoice",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach outgoing invoice"
+  },
+  {
+   "name": "v_click_here_to_download_the_template",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the template that must be used in the field below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "77c5dffa1bb0f110d1abda4ce54bcbb8",
+   "name": "EY: Tax - Company Avon/Natura - Subcompany",
+   "order": "100",
+   "perguntas": [
+    "vs_which_company_is_your_request (Selecionar Caixa): Which company is your request for?",
+    "vs_which_sub_company_is_the_request_from (Referência): Which sub-company is the request from?"
+   ]
+  },
+  {
+   "sys_id": "b3b65b7e1bb0f110d1abda4ce54bcb1b",
+   "name": "EY: Tax - Attachments",
+   "order": "500",
+   "perguntas": [
+    "vs_attach_template (Anexo): Attach template"
+   ]
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory Fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_click_here_to_download_the_template: mandatory=true",
+    "v_which_invoice_number_do_you_want_to_cancel_or_correct: mandatory=true",
+    "v_attach_outgoing_invoice: mandatory=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Regex Validation 9-1;3",
+   "type": "onChange",
+   "on": "a0ae813f1b38f510d1abda4ce54bcb7c",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Mesma validação de número de nota (9 dígitos, hífen, 1 a 3 dígitos), aqui sobre 'v_which_invoice_number_do_you_want_to_cancel_or_correct'. Limpa e mostra erro com exemplos quando não casa."
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "sys_id": "5a4445e23b809210924d0247f4e45a9d",
+ "status": "conversacional",
+ "motivo": "Intenção única (dúvida/consulta/reclamação/sugestão sobre remuneração) com poucas perguntas sequenciais. Mandatories onLoad sem condição viram props; v_caption (legenda visual) é removida, com seu conteúdo informativo coberto pela description; v_minimun_characters e os scripts de legenda são substituídos por validation_regex em v_detail_field. v_subcategory_lookup não tinha hidden nem policy onLoad de ocultação no original, então não pode iniciar oculta na conversa (regra de zero perda); mantemos a pergunta, convertendo a policy readonly onLoad para prop e preservando a policy condicional existente que a torna visível/obrigatória quando há subcategoria.",
+ "divergencias": [
+  "limite_formato"
+ ],
+ "vars": {
+  "v_type_of_request": {
+   "props": {
+    "mandatory": true
+   }
+  },
+  "v_subcategory_lookup": {
+   "props": {
+    "read_only": true
+   }
+  },
+  "v_detail_field": {
+   "props": {
+    "mandatory": true,
+    "validation_regex": "^[\\s\\S]{40,}$"
+   }
+  }
+ },
+ "remover": {
+  "v_caption": "texto_movido_descricao",
+  "v_minimun_characters": "visual"
+ },
+ "policies": {
+  "04d12f6a3b08d210924d0247f4e45a92": "remover",
+  "2c6745031bc81610514cbaef4b4bcb2b": "remover",
+  "4d9e20ac3ba416d0924d0247f4e45a36": "remover",
+  "924e2f2a3bc8d210924d0247f4e45a12": "remover"
+ },
+ "scripts": {
+  "068f81a63bc09210924d0247f4e45afe": {
+   "converter": "regex"
+  },
+  "118f81a63bc09210924d0247f4e45a82": {
+   "remover": "sem_efeito"
+  },
+  "1ae685cf1b881610514cbaef4b4bcb96": {
+   "remover": "sem_efeito"
+  },
+  "be8fc1a63bc09210924d0247f4e45a01": {
+   "remover": "sem_efeito"
+  }
+ }
+}

@@ -1,0 +1,191 @@
+{
+ "sys_id": "7153436d1b046d58d1abda4ce54bcb54",
+ "name": "Desligamento Transferência Permanente Internacional",
+ "sys_name": "Termination Permanent International Transfer",
+ "tipo": "record_producer",
+ "table": "x_nasm_hr_case",
+ "category": "Desligamento",
+ "catalogs": "Virtual Agent Search, Hire to Retire (HTR)",
+ "short_description": "Solicitar desligamento para colaborador que será desligado do Brasil e admitido em outro país",
+ "description": ".",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "bloqueado",
+  "resumo": {
+   "perguntas": "14",
+   "variaveis_ativas": "16",
+   "bloqueadores": "1",
+   "avisos": "5",
+   "perguntas_sem_conversational_label": "14"
+  },
+  "bloqueadores": [
+   {
+    "code": "client_script_sem_va",
+    "detail": "1 catalog client script(s) ativo(s) sem \"VA Supported\": EY: Show Msg"
+   }
+  ],
+  "avisos": [
+   "tipo_com_limitacao @v_text_resolv: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @v_name: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "tipo_com_limitacao @v_text_start: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "sem_conversational_label: 14 de 14 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 1 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Desligamento por Transferência Permanente Internacional. Lê o perfil pela variável 'v_name' e usa o campo 'user' como requested_for.",
+ "variaveis": [
+  {
+   "name": "v_text_start",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Dismissal International Permanent Transfer - Fill in the details of the terminated employee below"
+  },
+  {
+   "name": "v_name",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Name",
+   "reference": "x_nasm_hr_profile",
+   "ref_qual": "user.active=true^ORuser.locked_out=true^EQ"
+  },
+  {
+   "name": "v_id",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID Global"
+  },
+  {
+   "name": "v_admission_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Admission Date",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_reason_for_dismissal",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Reason for dismissal",
+   "default": "Pedido de demissão"
+  },
+  {
+   "name": "v_termination_date",
+   "type": "Data",
+   "type_code": "9",
+   "label": "Termination Date"
+  },
+  {
+   "name": "v_employment_type",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Type of Contract"
+  },
+  {
+   "name": "v_job_profile",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Job Profile"
+  },
+  {
+   "name": "v_company",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Company"
+  },
+  {
+   "name": "v_supervisory",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Supervisory org"
+  },
+  {
+   "name": "v_location",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Location"
+  },
+  {
+   "name": "v_manager",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "Head"
+  },
+  {
+   "name": "v_id_manager",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "ID of Head"
+  },
+  {
+   "name": "v_yes_no",
+   "type": "Sim/Não",
+   "type_code": "1",
+   "label": "Will there be a vacancy replenishment?",
+   "include_none": true
+  },
+  {
+   "name": "v_description",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Description"
+  },
+  {
+   "name": "v_text_resolv",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": ""
+  }
+ ],
+ "variable_sets": [],
+ "ui_policies": [
+  {
+   "name": "EY: Mandatory and read only fields",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_company: readonly=true",
+    "v_manager: readonly=true",
+    "v_id: readonly=true",
+    "v_id_manager: readonly=true",
+    "v_location: readonly=true",
+    "v_reason_for_dismissal: visible=true,readonly=true",
+    "v_admission_date: readonly=true",
+    "v_name: mandatory=true",
+    "v_supervisory: readonly=true",
+    "v_yes_no: mandatory=true",
+    "v_termination_date: mandatory=true",
+    "v_employment_type: readonly=true",
+    "v_job_profile: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: End date Script",
+   "type": "onChange",
+   "on": "a26a8ba11bc46d58d1abda4ce54bcbfe",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que calcula ou valida a data final a partir da data de rescisão."
+  },
+  {
+   "name": "EY: Show Msg",
+   "type": "onLoad",
+   "va_supported": "false",
+   "ui_type": "10",
+   "what": "Catalog Client Script onLoad que detecta se o formulário está sendo aberto no Portal ou na visão nativa, testando se spModal está definido, e esconde o texto de resolvedor conforme o contexto. Boa prática: adapta o comportamento à interface em uso."
+  },
+  {
+   "name": "EY: Fill data job",
+   "type": "onChange",
+   "on": "6b52f9671b8c6dd8a530426fe54bcbea",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que preenche os dados do cargo. Mais uma variante da família 'Fill data job'."
+  }
+ ]
+}

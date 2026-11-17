@@ -1,0 +1,173 @@
+{
+ "sys_id": "d3db4f793b976610b28dd047f4e45abc",
+ "name": "Pensão Alimentícia (Autoatendimento)",
+ "category": "Folha de Pagamento",
+ "short_description": "Pensão alimentícia",
+ "description": "Pens&atilde;o aliment&iacute;cia",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso de um serviço de RH > Autoatendimento - Gestão de Gente",
+    "item": "Pensão Alimentícia"
+   },
+   "ofertas": [
+    {
+     "name": "Solicitação de cadastro de pensão alimentícia",
+     "sla": "SLA - GESTÃO DE GENTE - 36H",
+     "grupo_suporte": "RH - Pensão Alimentícia N3"
+    },
+    {
+     "name": "Solicitação de exclusão de pensão alimentícia",
+     "sla": "SLA - GESTÃO DE GENTE - 36H",
+     "grupo_suporte": "RH - Pensão Alimentícia N3"
+    },
+    {
+     "name": "Solicitação de alteração dos dados bancários do(a) pensionista",
+     "sla": "SLA - GESTÃO DE GENTE - 24H",
+     "grupo_suporte": "RH - Pensão Alimentícia N3"
+    }
+   ],
+   "variacoes_entre_ofertas": {
+    "sla": [
+     "SLA - GESTÃO DE GENTE - 24H",
+     "SLA - GESTÃO DE GENTE - 36H"
+    ]
+   },
+   "sai_do_formulario": [],
+   "passa_a_obrigatoria": [],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Alterar dados bancários do pensionista",
+     "description": "Use para alterar os dados bancários do pensionista. Corresponde à oferta Solicitação de alteração dos dados bancários do(a) pensionista. Informe os dados da nova conta e anexe o comprovante."
+    },
+    {
+     "name": "Cadastrar pensão alimentícia",
+     "description": "Use para cadastrar uma pensão alimentícia. Corresponde à oferta Solicitação de cadastro de pensão alimentícia. Informe os dados do pensionista e anexe o ofício do juiz."
+    },
+    {
+     "name": "Excluir pensão alimentícia",
+     "description": "Use para excluir uma pensão alimentícia. Corresponde à oferta Solicitação de exclusão de pensão alimentícia. Anexe o ofício emitido pelo juiz."
+    }
+   ]
+  },
+  {
+   "k": 1,
+   "destino": {
+    "caminho": "Autoatendimento > Preciso reportar um problema > Autoatendimento - Gestão de Gente",
+    "item": "Pensão Alimentícia"
+   },
+   "ofertas": [
+    {
+     "name": "Divergência no valor da pensão alimentícia",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Pensão Alimentícia N3"
+    },
+    {
+     "name": "Não recebimento da pensão alimentícia",
+     "sla": "SLA - GESTÃO DE GENTE - 16H",
+     "grupo_suporte": "RH - Pensão Alimentícia N3"
+    }
+   ],
+   "sai_do_formulario": [
+    "agencia_pensionista",
+    "banco_pensionista",
+    "cpf_pensionista",
+    "anexo_comprovante_dados_bancarios",
+    "anexo_oficio_emitido_juiz",
+    "conta_pensionista"
+   ],
+   "passa_a_obrigatoria": [
+    "nome_pensionista"
+   ],
+   "condicoes_que_continuam": [],
+   "anterior": [
+    {
+     "name": "Divergência ou não recebimento da pensão alimentícia",
+     "description": "Use quando o valor da pensão alimentícia está divergente ou não foi recebido. Corresponde à oferta Divergência no valor da pensão alimentícia / Não recebimento da pensão alimentícia. Informe o nome do pensionista."
+    }
+   ]
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "agencia_pensionista",
+   "type": "Texto de Linha Única",
+   "question_text": "Agência do(a) pensionista",
+   "choices": [],
+   "label_atual": "Qual é a agência do(a) pensionista?"
+  },
+  {
+   "name": "banco_pensionista",
+   "type": "Texto de Linha Única",
+   "question_text": "Banco do(a) pensionista",
+   "choices": [],
+   "label_atual": "Qual é o banco do(a) pensionista?"
+  },
+  {
+   "name": "cpf_pensionista",
+   "type": "Texto de Linha Única",
+   "question_text": "CPF do(a) pensionista",
+   "choices": [],
+   "label_atual": "Qual é o CPF do(a) pensionista?"
+  },
+  {
+   "name": "anexo_comprovante_dados_bancarios",
+   "type": "Anexo",
+   "question_text": "Comprovante dos dados bancários",
+   "choices": [],
+   "label_atual": "Envie o comprovante dos dados bancários."
+  },
+  {
+   "name": "anexo_oficio_emitido_juiz",
+   "type": "Anexo",
+   "question_text": "Ofício emitido pelo juiz",
+   "choices": [],
+   "label_atual": "Envie o ofício emitido pelo juiz."
+  },
+  {
+   "name": "nome_pensionista",
+   "type": "Texto de Linha Única",
+   "question_text": "Nome completo do(a) pensionista",
+   "choices": [],
+   "label_atual": "Qual é o nome completo do(a) pensionista?"
+  },
+  {
+   "name": "conta_pensionista",
+   "type": "Texto de Linha Única",
+   "question_text": "Número da conta do(a) pensionista (com dígito)",
+   "choices": [],
+   "label_atual": "Qual é o número da conta do(a) pensionista, com dígito?"
+  }
+ ],
+ "client_scripts": []
+}

@@ -1,0 +1,162 @@
+{
+ "sys_id": "bd575a8f1bb8e550d1abda4ce54bcb1d",
+ "name": "Realizar Prestação de Contas - LATAM",
+ "sys_name": "Performing Accountability - LATAM",
+ "tipo": "record_producer",
+ "table": "x_nasm_finance_case",
+ "category": "Reembolso e prestação de contas",
+ "catalogs": "Virtual Agent Search, OTC Serviços de Suporte Administrativo",
+ "short_description": "",
+ "description": "Realizar Prestação de Contas para países da LATAM (Argentina, Chile, Colômbia, Peru, México)",
+ "flags": {
+  "make_item_non_conversational": "false",
+  "turn_off_nowassist_conversation": "false"
+ },
+ "diagnostico_previo": {
+  "veredito": "com_ressalvas",
+  "resumo": {
+   "perguntas": "10",
+   "variaveis_ativas": "13",
+   "bloqueadores": "0",
+   "avisos": "6",
+   "perguntas_sem_conversational_label": "10"
+  },
+  "bloqueadores": [],
+  "avisos": [
+   "tipo_com_limitacao @v_attach_the_template: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_attach_approval: Attachment: anexo exige tratamento a parte na conversa",
+   "tipo_com_limitacao @v_click_here_to_download_the_template_that_should_be_used_in_the_field_below: Rich Text Label: a midia e removida, so a URL sobrevive",
+   "reference_qualifier @vs_what_is_the_sub_company: reference qualifier avancado/dinamico: a doc avisa que pode nao resolver em conversa",
+   "sem_conversational_label: 10 de 10 pergunta(s) sem \"Conversational label\" — a VA vai ler o texto da pergunta do formulario",
+   "ui_policy_on_load: 3 UI policy(ies) com \"On load\": a doc pede definir o atributo direto na pergunta em vez de policy onLoad"
+  ]
+ },
+ "producer_script": "Script do Record Producer de Solicitação de RPE. Grava x_nasm_hr_item com o sysparm_id da URL e chama x_nasm_hr.EY_ProducerUtils, método setRequestedForDefaultVS, para definir o solicitante a partir do variable set padrão. Não aplica a regra de VIP que os irmãos aplicam.",
+ "variaveis": [
+  {
+   "name": "v_opened_by",
+   "type": "Referência",
+   "type_code": "8",
+   "label": "Opened by",
+   "default": "javascript:gs.getUserID()",
+   "reference": "sys_user"
+  },
+  {
+   "name": "v_what_kind_of_accountability",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What kind of accountability?",
+   "include_none": true,
+   "choices": [
+    "Advance Sales Force [=v_advanced_sales_force]",
+    "Advance Retail [=v_advanced_retail]",
+    "Advance Corporate Travel [=v_advanced_corporate_travel]",
+    "Corporate Card [=v_corporate_card]"
+   ]
+  },
+  {
+   "name": "v_how_many_accountability_write_downs_are_being_requested",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "How many accountability write-downs are being requested?"
+  },
+  {
+   "name": "v_what_is_the_total_amount_being_held_accountable",
+   "type": "Texto de Linha Única",
+   "type_code": "6",
+   "label": "What is the total amount being held accountable?"
+  },
+  {
+   "name": "v_what_currency_is_used",
+   "type": "Selecionar Caixa",
+   "type_code": "5",
+   "label": "What currency is used?",
+   "include_none": true,
+   "choices": [
+    "Argentine peso [=v_argentine_peso]",
+    "Chilean Peso [=v_chilean_peso]",
+    "Mexican Peso [=v_peso_mexicano]",
+    "Peruvian Sol [=v_peruvian_sol]",
+    "Colombian Peso [=v_colombian_peso]",
+    "American Dollar [=v_american_dollar]",
+    "Other(a) [=v_other]"
+   ]
+  },
+  {
+   "name": "v_click_here_to_download_the_template_that_should_be_used_in_the_field_below",
+   "type": "Rótulo de Rich Text",
+   "type_code": "32",
+   "label": "Click here to download the template that should be used in the field below"
+  },
+  {
+   "name": "v_attach_the_template",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach the template"
+  },
+  {
+   "name": "v_attach_approval",
+   "type": "Anexo",
+   "type_code": "33",
+   "label": "Attach approval"
+  },
+  {
+   "name": "v_additional_information",
+   "type": "Texto de Várias Linhas",
+   "type_code": "2",
+   "label": "Additional information"
+  },
+  {
+   "name": "v_attach_the_support_documents_for_accountability_below",
+   "type": "Rótulo",
+   "type_code": "11",
+   "label": "Attach the support documents for accountability below"
+  }
+ ],
+ "variable_sets": [
+  {
+   "sys_id": "9994ae4b1bbce550d1abda4ce54bcb11",
+   "name": "EY: Company: Natura/TBS - Country Subcompany",
+   "order": "200",
+   "perguntas": [
+    "vs_which_company (Selecionar Caixa): Which company?",
+    "vs_what_is_the_sub_company (Referência): What is the sub-company?"
+   ]
+  },
+  {
+   "sys_id": "cec8dff71b04251ca530426fe54bcb76",
+   "name": "EY: Document repository",
+   "order": "1400",
+   "perguntas": []
+  }
+ ],
+ "ui_policies": [
+  {
+   "name": "EY: Make fields Visible and Mandatory On Load",
+   "when": "(sempre)",
+   "on_load": true,
+   "va_supported": "true",
+   "actions": [
+    "v_attach_approval: visible=true,mandatory=true",
+    "v_attach_the_template: visible=true,mandatory=true",
+    "v_what_kind_of_accountability: visible=true,mandatory=true",
+    "v_how_many_accountability_write_downs_are_being_requested: visible=true,mandatory=true",
+    "v_what_currency_is_used: visible=true,mandatory=true",
+    "v_click_here_to_download_the_template_that_should_be_used_in_the_field_below: visible=true,mandatory=true",
+    "v_what_is_the_total_amount_being_held_accountable: visible=true,mandatory=true",
+    "v_which_country: visible=true,mandatory=true",
+    "v_opened_by: readonly=true"
+   ]
+  }
+ ],
+ "client_scripts": [
+  {
+   "name": "EY: Validate Value",
+   "type": "onChange",
+   "on": "32ee9bc31b306950d1abda4ce54bcb05",
+   "va_supported": "true",
+   "ui_type": "10",
+   "what": "Catalog Client Script onChange que valida valor monetário brasileiro em 'v_what_is_the_total_amount_being_held_accountable'. Inválido: limpa e mostra 'Valor inválido'."
+  }
+ ]
+}

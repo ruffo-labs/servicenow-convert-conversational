@@ -1,0 +1,199 @@
+{
+ "sys_id": "1eec22ac871f2210182a0d440cbb35de",
+ "name": "Manutenção Cadastral",
+ "category": "Autoatendimento - Gestão de Gente",
+ "short_description": "Manutenção cadastral",
+ "description": "Manuten&ccedil;&atilde;o cadastral",
+ "sets": [
+  {
+   "title": "Dados do solicitante",
+   "perguntas": [
+    "rh_originating",
+    "vs_centro_custo",
+    "vs_email",
+    "vs_matricula",
+    "vs_localidade",
+    "vs_role",
+    "vs_department",
+    "vs_superior_imediato",
+    "vs_solicitado_para"
+   ]
+  },
+  {
+   "title": "Ofertas de serviço (O que deseja?)",
+   "perguntas": [
+    "service_offering"
+   ]
+  },
+  {
+   "title": "ALP - Descrição",
+   "perguntas": [
+    "description"
+   ]
+  }
+ ],
+ "grupos": [
+  {
+   "k": 0,
+   "ofertas": [
+    {
+     "name": "Solicitação de atualização de declaração de raça",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Manutenção Cadastral"
+    }
+   ],
+   "sai_do_formulario": [
+    "nome_completo_excluido"
+   ],
+   "passa_a_obrigatoria": [
+    "como_voce_se_autodeclara"
+   ],
+   "condicoes_que_continuam": []
+  },
+  {
+   "k": 1,
+   "ofertas": [
+    {
+     "name": "Solicitação de exclusão de dependente do Imposto de Renda",
+     "sla": "SLA - GESTÃO DE GENTE - 40H",
+     "grupo_suporte": "RH - Manutenção Cadastral"
+    }
+   ],
+   "sai_do_formulario": [
+    "como_voce_se_autodeclara"
+   ],
+   "passa_a_obrigatoria": [
+    "nome_completo_excluido"
+   ],
+   "condicoes_que_continuam": []
+  }
+ ],
+ "perguntas": [
+  {
+   "name": "rg_dependente",
+   "type": "Anexo",
+   "question_text": "RG",
+   "choices": []
+  },
+  {
+   "name": "novo_e_mail",
+   "type": "Texto de Linha Única",
+   "question_text": "Novo e-mail",
+   "choices": []
+  },
+  {
+   "name": "comprovante_de_escolaridade",
+   "type": "Anexo",
+   "question_text": "Comprovante de escolaridade",
+   "choices": []
+  },
+  {
+   "name": "rg",
+   "type": "Anexo",
+   "question_text": "RG",
+   "choices": []
+  },
+  {
+   "name": "certidao_de_nascimento",
+   "type": "Anexo",
+   "question_text": "Certidão de nascimento",
+   "choices": []
+  },
+  {
+   "name": "cnh",
+   "type": "Anexo",
+   "question_text": "CNH",
+   "choices": []
+  },
+  {
+   "name": "qual_dado_deseja_alterar_dependente",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual dado deseja alterar?",
+   "choices": [
+    "Data de nascimento",
+    "Nome",
+    "RG",
+    "Nome da mãe",
+    "Sexo",
+    "Outros",
+    "CPF"
+   ]
+  },
+  {
+   "name": "comprovante_da_receita_federal",
+   "type": "Anexo",
+   "question_text": "Comprovante da receita federal",
+   "choices": []
+  },
+  {
+   "name": "como_voce_se_autodeclara",
+   "type": "Selecionar Caixa",
+   "question_text": "Como você se autodeclara?",
+   "choices": [
+    "Pardo",
+    "Indígena",
+    "Preto",
+    "Amarelo",
+    "Branco"
+   ]
+  },
+  {
+   "name": "nome_completo_excluido",
+   "type": "Texto de Linha Única",
+   "question_text": "Informar o nome completo do(s) dependente(s) que deve(m) ser excluído(s)",
+   "choices": []
+  },
+  {
+   "name": "qual_dado_deseja_alterar",
+   "type": "Selecionar Caixa",
+   "question_text": "Qual dado deseja alterar?",
+   "choices": [
+    "Nome da mãe",
+    "Grau de instrução",
+    "E-mail",
+    "Nome",
+    "CNH",
+    "CPF",
+    "PIS",
+    "Sexo",
+    "Data de nascimento",
+    "Nome do pai",
+    "RG",
+    "Outros"
+   ]
+  },
+  {
+   "name": "copia_ou_pesquisa_do_pis",
+   "type": "Anexo",
+   "question_text": "Cópia ou pesquisa do PIS",
+   "choices": []
+  },
+  {
+   "name": "comprovante_de_situacao_cadastral_no_cpf",
+   "type": "Anexo",
+   "question_text": "Comprovante de situação cadastral no CPF",
+   "choices": []
+  }
+ ],
+ "tecnicas_ocultas": [
+  "cep_valido"
+ ],
+ "client_scripts": [
+  {
+   "sys_id": "48d4e2da87f87e10182a0d440cbb35a8",
+   "name": "CSA - Impede abertura sem endereço",
+   "type": "onSubmit",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "onSubmit. Se a oferta for o sys_id fixo (montado pela junção de duas strings no código), exige bairro, estado, rua, município e país preenchidos; se faltar algum, mostra mensagem listando os campos obrigatórios e bloqueia o envio."
+  },
+  {
+   "sys_id": "d90753e487136210182a0d440cbb3545",
+   "name": "CSA - ViaCep",
+   "type": "onChange",
+   "va_supported": "true",
+   "ativo": "true",
+   "resumo": "No onChange do CEP, limpa os campos de endereço; se o CEP foi apagado, para. Senão chama CepUtils.getEndereco via GlideAjax; se o retorno não tiver erro, preenche rua, bairro, município, estado e país e marca cep_valido='true'; com erro, marca cep_valido='false'."
+  }
+ ]
+}

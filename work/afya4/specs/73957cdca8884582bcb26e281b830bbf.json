@@ -1,0 +1,141 @@
+{
+ "sys_id": "73957cdca8884582bcb26e281b830bbf",
+ "status": "dividido",
+ "motivo": "Restaurar arquivo ou pasta pede servidor de origem, caminho e ponto de restauração com autorização do gestor; restaurar servidor pede impacto, prioridade e autorização do gestor de infraestrutura. v_o_que_deseja é referência a service_offering: fixada pelo texto da opção; trocar pelo sys_id da oferta depois do cadastro.",
+ "vars": {
+  "v_o_que_deseja": {
+   "label": "O que você deseja solicitar?"
+  },
+  "v_servidor_de_origem": {
+   "label": "De qual servidor vem o arquivo ou pasta?"
+  },
+  "v_caminho_completo": {
+   "label": "Qual o caminho completo do arquivo ou pasta?"
+  },
+  "v_data_e_hora_do_ponto_de_restauracao": {
+   "label": "A qual data e hora deve voltar a restauração?"
+  },
+  "v_destino_da_restauracao": {
+   "label": "Para onde deve ser restaurado?"
+  },
+  "v_autorizacao_do_gestor": {
+   "label": "Quem é o gestor que autoriza a restauração?"
+  },
+  "v_anexos": {
+   "label": "Envie os arquivos que ajudem no atendimento, se tiver."
+  },
+  "v_servidor": {
+   "label": "Qual servidor deve ser restaurado?"
+  },
+  "v_ponto_de_restauracao": {
+   "label": "A qual ponto de restauração o servidor deve voltar?"
+  },
+  "v_impacto_no_negocio": {
+   "label": "Qual o impacto no negócio?"
+  },
+  "v_prioridade": {
+   "label": "Qual a prioridade do pedido?"
+  },
+  "v_autorizacao_do_gestor_de_infra": {
+   "label": "Quem é o gestor de infraestrutura que autoriza?"
+  }
+ },
+ "policies": {
+  "b0449ecfb431467c854492a0e8c89777": "remover",
+  "801b2a0d3ee94b2f8117829c74ccdf9a": "remover"
+ },
+ "itens": [
+  {
+   "name": "Restaurar um arquivo ou pasta de backup",
+   "short_description": "Pedir a recuperação de um arquivo ou pasta a partir de um backup.",
+   "description": "Use quando um arquivo ou pasta foi apagado ou alterado e precisa voltar. A opção atendida é Restaurar arquivo ou pasta. Informe o servidor de origem, o caminho, a data e hora de restauração, o destino e o gestor que autoriza.",
+   "frases_exemplo": [
+    "Apaguei uma pasta sem querer, dá pra recuperar?",
+    "Preciso restaurar um arquivo de ontem",
+    "Quero voltar uma planilha da rede ao que era na semana passada",
+    "Recuperar uma pasta do servidor de arquivos",
+    "Pedido de restauração de arquivo do backup"
+   ],
+   "sem_vars": [
+    "v_servidor",
+    "v_ponto_de_restauracao",
+    "v_impacto_no_negocio",
+    "v_prioridade",
+    "v_autorizacao_do_gestor_de_infra"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Restaurar arquivo ou pasta"
+   },
+   "vars": {
+    "v_servidor_de_origem": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_caminho_completo": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_data_e_hora_do_ponto_de_restauracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_autorizacao_do_gestor": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  },
+  {
+   "name": "Restaurar um servidor a partir de backup",
+   "short_description": "Pedir a restauração de um servidor inteiro, com prioridade e autorização.",
+   "description": "Use quando um servidor precisa voltar a um ponto anterior. A opção atendida é Restaurar servidor. Informe o servidor, o ponto de restauração, o destino, o impacto, a prioridade e o gestor de infraestrutura que autoriza.",
+   "frases_exemplo": [
+    "O servidor parou e preciso restaurar do backup",
+    "Quero voltar o servidor ao estado de ontem",
+    "Preciso restaurar um servidor crítico com urgência",
+    "Solicito a restauração completa do servidor",
+    "O servidor foi corrompido, podem restaurar?"
+   ],
+   "sem_vars": [
+    "v_servidor_de_origem",
+    "v_caminho_completo",
+    "v_data_e_hora_do_ponto_de_restauracao",
+    "v_autorizacao_do_gestor"
+   ],
+   "fixas": {
+    "v_o_que_deseja": "Restaurar servidor"
+   },
+   "vars": {
+    "v_servidor": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_ponto_de_restauracao": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_impacto_no_negocio": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_prioridade": {
+     "props": {
+      "mandatory": true
+     }
+    },
+    "v_autorizacao_do_gestor_de_infra": {
+     "props": {
+      "mandatory": true
+     }
+    }
+   }
+  }
+ ]
+}
